@@ -35,6 +35,11 @@ import javafx.scene.paint.Color
  */
 open class ColorContainer(var r: Int, var g: Int, var b: Int) {
 
+    /**
+     * Constructor for ColorContainer that makes a copy of a ColorContainer.
+     *
+     * @param ccIn The ColorContainer to copy
+     */
     constructor(ccIn: ColorContainer) : this(
         ccIn.r, ccIn.g, ccIn.b
     )
@@ -108,6 +113,9 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      */
     fun grayscale() = ((r + g + b) / 3).toLong()
 
+    /**
+     * Override function that returns the hexString property.
+     */
     override fun toString(): String {
         return hexString
     }

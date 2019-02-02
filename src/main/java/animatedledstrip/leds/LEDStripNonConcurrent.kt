@@ -27,9 +27,9 @@ import org.pmw.tinylog.Logger
 
 
 /**
- * Class that represents an led strip.
+ * Class that represents an LED strip.
  *
- * @param numLEDs Number of leds in the strip
+ * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */

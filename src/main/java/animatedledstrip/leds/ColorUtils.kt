@@ -91,6 +91,12 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
     return returnMap
 }
 
+
+/**
+ * Try to pause the thread for an amount of time in milliseconds.
+ *
+ * @param wait The time (in milliseconds) to wait for
+ */
 fun delay(wait: Int) {
     try{
         Thread.sleep(wait.toLong())

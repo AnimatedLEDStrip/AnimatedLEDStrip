@@ -30,7 +30,7 @@ import org.pmw.tinylog.Logger
 /**
  * A subclass of [LEDStripNonConcurrent] adding animations
  *
- * @param numLEDs Number of leds in the strip
+ * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
  * @param emulated Is this strip real or emulated?
  */
@@ -303,6 +303,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
      * The index is found with `(i + a) % s`, where `i` is the pixel index, `a` is the
      * offset for this iteration and `s` is the number of pixels in the strip.
      */
+    @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
         val colorList = animation.colorList
         val movementDirection = animation.direction
@@ -366,6 +367,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
 
+
+        // TODO: Refactor to only run on specified part of the strip
         shuffleArray.shuffle()
         for (i in 0 until ledStrip.numLEDs) {
             setPixelColor(shuffleArray[i], destinationColor)

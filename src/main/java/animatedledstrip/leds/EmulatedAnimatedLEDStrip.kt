@@ -23,6 +23,14 @@ package animatedledstrip.leds
  */
 
 
+/**
+ * Class for emulating an `LEDStrip`.
+ *
+ * @param numLEDs Number of LEDs in the strip
+ * @param pin GPIO pin connected for signal
+ * @param imageDebugging Should a csv file be created containing all renders of
+ * the strip?
+ */
 class EmulatedAnimatedLEDStrip(numLEDs: Int,
                                pin: Int,
                                imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, pin, imageDebugging){

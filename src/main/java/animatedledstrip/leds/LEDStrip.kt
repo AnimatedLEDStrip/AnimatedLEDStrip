@@ -35,10 +35,9 @@ import kotlin.text.StringBuilder
 
 
 /**
- * An LED Strip with concurrency added. Bridge between the `AnimatedLEDStrip`
- * class and the `WS281x` class
+ * An LED Strip with concurrency added.
  *
- * @param numLEDs Number of leds in the strip
+ * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
@@ -64,13 +63,13 @@ abstract class LEDStrip(
     /**
      * The thread in which the rendering loop will run.
      */
-    private val renderThread = newFixedThreadPoolContext(50, "Render Loops")    // Ignore Overload Resolution Ambiguity error
+    private val renderThread = newFixedThreadPoolContext(50, "Render Loops")
 
     /**
      * The thread used to save values to `outFile` so the program doesn't
      * experience slowdowns because of I/O.
      */
-    private val outThread = newSingleThreadContext("Image Debug Save Thread")           // Ignore Overload Resolution Ambiguity error
+    private val outThread = newSingleThreadContext("Image Debug Save Thread")
 
     /**
      * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.

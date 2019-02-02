@@ -33,7 +33,7 @@ import javax.script.*
 /**
  * A subclass of [LEDStrip] adding animations.
  *
- * @param numLEDs Number of leds in the strip
+ * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
  */
 @Suppress("EXPERIMENTAL_API_USAGE")
@@ -126,7 +126,15 @@ abstract class AnimatedLEDStrip(
     }
 
 
+    /**
+     * Map containing compiled animations.
+     *
+     * NOTE: Must include the animatedledstrip-custom-animations library and
+     * call setupCustomAnimations() first. Use addCustomAnimation(String,
+     * String) to add a custom animation.
+     */
     val customAnimationMap = mutableMapOf<String, CompiledScript>()
+
 
     /**
      * The compiler used when a custom animation is sent.
@@ -178,6 +186,13 @@ abstract class AnimatedLEDStrip(
         }
     }
 
+
+    /**
+     * Run a custom animation. Identify the animation using the ID parameter in
+     * the AnimationData instance.
+     *
+     * @param animation The AnimationData instance to use in the animation
+     */
     private fun runCustomAnimation(animation: AnimationData) {
         customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
             put("animation", animation)

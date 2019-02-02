@@ -66,7 +66,7 @@ import java.nio.ByteBuffer
  *
  * @property pin Pin the strip is connected to
  * @property brightness Brightness of the strip
- * @property numPixels Number of pixels in the strip
+ * @property numLEDs Number of LEDs in the strip
  */
 open class EmulatedWS281x(val pin: Int, val brightness: Int, final override val numLEDs: Int) : LEDStripInterface {
 

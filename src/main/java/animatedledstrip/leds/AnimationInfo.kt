@@ -28,6 +28,7 @@ package animatedledstrip.leds
  * not used for an animation along with default values for `delay` and `spacing`,
  * when applicable.
  *
+ * @property abbr The abbreviation used to identify this animation
  * @property color1 First color
  * @property color2 Second color
  * @property color3 Third color

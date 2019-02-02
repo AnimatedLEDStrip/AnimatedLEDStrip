@@ -37,8 +37,16 @@ enum class Animation {
      */
     @NonRepetitive
     MULTICOLOR,
+    /**
+     * Used to represent a custom animation. Put the animation's abbreviation
+     * in the AnimationData instance's ID parameter.
+     */
     @NonRepetitive
     CUSTOMANIMATION,
+    /**
+     * Used to represent a repetitive custom animation. Put the animation's
+     * abbreviation in the AnimationData instance's ID parameter.
+     */
     CUSTOMREPETITIVEANIMATION,
     /**
      * @see AnimatedLEDStrip.alternate
