@@ -42,7 +42,6 @@ import kotlin.text.StringBuilder
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
-@Suppress("EXPERIMENTAL_API_USAGE")
 abstract class LEDStrip(
     var numLEDs: Int,
     pin: Int,
@@ -63,12 +62,14 @@ abstract class LEDStrip(
     /**
      * The thread in which the rendering loop will run.
      */
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private val renderThread = newFixedThreadPoolContext(50, "Render Loops")
 
     /**
      * The thread used to save values to `outFile` so the program doesn't
      * experience slowdowns because of I/O.
      */
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private val outThread = newSingleThreadContext("Image Debug Save Thread")
 
     /**

@@ -36,7 +36,6 @@ import javax.script.*
  * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
  */
-@Suppress("EXPERIMENTAL_API_USAGE")
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
     pin: Int,
@@ -56,6 +55,7 @@ abstract class AnimatedLEDStrip(
      * (with the exception of sparkle-type animations, those use the
      * [sparkleThreadPool]).
      */
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private val animationThreadPool =
         newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
 
@@ -64,6 +64,7 @@ abstract class AnimatedLEDStrip(
      * number of threads a concurrent sparkle animation uses. This prevents
      * memory leaks caused by the overhead associated with creating new threads.
      */
+    @Suppress("EXPERIMENTAL_API_USAGE")
     private val sparkleThreadPool =
         newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
@@ -194,10 +195,17 @@ abstract class AnimatedLEDStrip(
      * @param animation The AnimationData instance to use in the animation
      */
     private fun runCustomAnimation(animation: AnimationData) {
-        customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
-            put("animation", animation)
+        try {
+            customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
+                put("animation", animation)
+            }
+            customAnimationMap[animation.id]?.eval()
+        } catch (e: UninitializedPropertyAccessException) {
+            Logger.error("""Custom animations not initialized:
+                |   - Include animatedledstrip-custom-animations in your project
+                |   - Call extension function setupCustomAnimations()
+            """.trimMargin())
         }
-        customAnimationMap[animation.id]?.eval()
     }
 
 
