@@ -79,9 +79,9 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
                 if ((i - j) == 0) returnMap[i] = palette[purePixels.indexOf(j)]
                 else {
                     returnMap[i] = blend(
-                        palette[purePixels.indexOf(j)],
-                        palette[(purePixels.indexOf(j) + 1) % purePixels.size],
-                        if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                            palette[purePixels.indexOf(j)],
+                            palette[(purePixels.indexOf(j) + 1) % purePixels.size],
+                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
                     )
                 }
                 break
@@ -97,10 +97,16 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
  *
  * @param wait The time (in milliseconds) to wait for
  */
-fun delay(wait: Int) {
-    try{
+fun delayBlocking(wait: Int) {
+    try {
         Thread.sleep(wait.toLong())
-    } catch (e: InterruptedException) {}
+    } catch (e: InterruptedException) {
+    }
+}
+
+
+suspend fun delay(wait: Int) {
+    kotlinx.coroutines.delay(wait.toLong())
 }
 
 

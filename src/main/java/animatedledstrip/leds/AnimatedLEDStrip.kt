@@ -104,7 +104,7 @@ abstract class AnimatedLEDStrip(
             while (getPixelColor(pixel).hex != destinationColor.hex && i <= 40) {
                 if (owner != myName) break
                 setPixelColor(pixel, blend(getPixelColor(pixel), destinationColor, amountOfOverlay))
-                delay(delay)
+                delayBlocking(delay)
                 i++
             }
         }
@@ -218,9 +218,9 @@ abstract class AnimatedLEDStrip(
         val delay = animation.delay
 
         setSectionColor(startPixel, endPixel, colorValues1)
-        delay((delay * delayMod).toInt())
+        delayBlocking((delay * delayMod).toInt())
         setSectionColor(startPixel, endPixel, colorValues2)
-        delay((delay * delayMod).toInt())
+        delayBlocking((delay * delayMod).toInt())
     }
 
 
@@ -283,13 +283,13 @@ abstract class AnimatedLEDStrip(
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
                 setPixelColor(j, animation.color1)
-                delay(animation.delay)
+                delayBlocking(animation.delay)
                 setPixelColor(j, CCBlack)
             }
             setPixelColor(animation.endPixel - i, animation.color1)
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
                 setPixelColor(j, animation.color1)
-                delay(animation.delay)
+                delayBlocking(animation.delay)
                 setPixelColor(j, CCBlack)
             }
             setPixelColor(i, animation.color1)
@@ -305,7 +305,7 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Multi-Pixel Run animation.
      *
-     * Similar to Pixel Run but with multiple leds at a specified spacing.
+     * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
     private val multiPixelRun = { animation: AnimationData ->
         val chaseDirection = animation.direction
@@ -323,7 +323,7 @@ abstract class AnimatedLEDStrip(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -335,7 +335,7 @@ abstract class AnimatedLEDStrip(
                     i + (-(q - (spacing - 1))),
                     colorValues1
                 )
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -348,7 +348,7 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Multi-Pixel Run To Color animation.
      *
-     * Similar to Multi-Pixel Run but leds do not revert back to their original
+     * Similar to Multi-Pixel Run but LEDs do not revert back to their original
      * color.
      */
     @NonRepetitive
@@ -366,14 +366,14 @@ abstract class AnimatedLEDStrip(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     destinationColor
                 )
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }
@@ -440,14 +440,14 @@ abstract class AnimatedLEDStrip(
                 GlobalScope.launch(animationThreadPool) {
                     fadePixel(q, colorValues2, 60, 25)
                 }
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
                 setPixelColor(q, colorValues1)
                 GlobalScope.launch(animationThreadPool) {
                     fadePixel(q, colorValues2, 60, 25)
                 }
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }
@@ -485,11 +485,11 @@ abstract class AnimatedLEDStrip(
         when (movementDirection) {
             Direction.FORWARD -> for (m in startPixel..endPixel) {
                 setStripColorWithPalette(palette, m - startPixel)
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
                 setStripColorWithPalette(palette, m - startPixel)
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }
@@ -503,7 +503,7 @@ abstract class AnimatedLEDStrip(
 
         for (i in animation.startPixel..animation.endPixel) {
             setStripColor(palette[i]!!)
-            delay(animation.delay)
+            delayBlocking(animation.delay)
         }
 
     }
@@ -655,11 +655,11 @@ abstract class AnimatedLEDStrip(
         when (wipeDirection) {
             Direction.BACKWARD -> for (i in endPixel downTo startPixel) {
                 setPixelColor(i, colorValues)
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.FORWARD -> for (i in startPixel..endPixel) {
                 setPixelColor(i, colorValues)
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }

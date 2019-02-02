@@ -92,9 +92,9 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
         val delay = animation.delay
 
         setSectionColor(startPixel, endPixel, colorValues1)
-        delay((delay * delayMod).toInt())
+        delayBlocking((delay * delayMod).toInt())
         setSectionColor(startPixel, endPixel, colorValues2)
-        delay((delay * delayMod).toInt())
+        delayBlocking((delay * delayMod).toInt())
     }
 
 
@@ -110,7 +110,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
                 setPixelColor(j, animation.color1)
                 show()
-                delay(animation.delay)
+                delayBlocking(animation.delay)
                 setPixelColor(j, CCBlack)
                 show()
             }
@@ -118,7 +118,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
                 setPixelColor(j, animation.color1)
                 show()
-                delay(animation.delay)
+                delayBlocking(animation.delay)
                 setPixelColor(j, CCBlack)
                 show()
             }
@@ -135,7 +135,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
     /**
      * Runs a Multi-Pixel Run animation.
      *
-     * Similar to Pixel Run but with multiple leds at a specified spacing.
+     * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
     private val multiPixelRun = { animation: AnimationData ->
         val chaseDirection = animation.direction
@@ -154,7 +154,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     colorValues1
                 )
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -168,7 +168,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     colorValues1
                 )
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 for (i in startPixel..endPixel step spacing) setPixelColor(
                     i + (-(q - (spacing - 1))),
                     colorValues2
@@ -182,7 +182,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
     /**
      * Runs a Multi-Pixel Run To Color animation.
      *
-     * Similar to Multi-Pixel Run but leds do not revert back to their original
+     * Similar to Multi-Pixel Run but LEDs do not revert back to their original
      * color.
      */
     @NonRepetitive
@@ -201,7 +201,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     destinationColor
                 )
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 for (i in startPixel..endPixel step spacing) setPixelColor(
@@ -209,7 +209,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     destinationColor
                 )
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }
@@ -232,14 +232,14 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 setPixelColor(q, colorValues2)
                 show()
             }
             Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0) {
                 setPixelColor(q, colorValues1)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
                 setPixelColor(q, colorValues2)
                 show()
             }
@@ -270,7 +270,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                 }
                 setPixelColor(q, colorValues1)
                 show()
-                delay(delay)
+                delayBlocking(delay)
             }
             Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
                 for (i in startPixel until endPixel) {
@@ -278,7 +278,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                 }
                 setPixelColor(q, colorValues1)
                 show()
-                delay(delay)
+                delayBlocking(delay)
             }
         }
     }
@@ -317,12 +317,12 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             Direction.FORWARD -> for (m in startPixel..endPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
                 setStripColorWithPalette(palette, m)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }
@@ -347,7 +347,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             originalColor = getPixelColor(shuffleArray[i])
             setPixelColor(shuffleArray[i], sparkleColor)
             show()
-            delay(delay)
+            delayBlocking(delay)
             setPixelColor(shuffleArray[i], originalColor)
             show()
         }
@@ -373,7 +373,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
         for (i in 0 until ledStrip.numLEDs) {
             setPixelColor(shuffleArray[i], destinationColor)
             show()
-            delay(delay)
+            delayBlocking(delay)
         }
     }
 
@@ -395,7 +395,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
                     show()
-                    delay((delay * delayMod).toInt())
+                    delayBlocking((delay * delayMod).toInt())
                     setPixelColor(i, originalColor)
                 }
                 setPixelColor(q, colorValues1)
@@ -407,7 +407,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
                     originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
                     show()
-                    delay((delay * delayMod).toInt())
+                    delayBlocking((delay * delayMod).toInt())
                     setPixelColor(i, originalColor)
                 }
                 setPixelColor(q, colorValues1)
@@ -435,12 +435,12 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: B
             Direction.BACKWARD -> for (i in endPixel downTo startPixel) {
                 setPixelColor(i, colorValues)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
             Direction.FORWARD -> for (i in startPixel..endPixel) {
                 setPixelColor(i, colorValues)
                 show()
-                delay((delay * delayMod).toInt())
+                delayBlocking((delay * delayMod).toInt())
             }
         }
     }

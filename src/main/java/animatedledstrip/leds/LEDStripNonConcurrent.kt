@@ -120,7 +120,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
     }
 
     /**
-     * Set the color of a section of the strip. Loops through all leds between start
+     * Set the color of a section of the strip. Loops through all LEDs between start
      * and end (inclusive) and sets their color to `colorValues`.
      *
      * @param start First pixel in section
