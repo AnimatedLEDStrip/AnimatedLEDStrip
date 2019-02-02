@@ -50,7 +50,7 @@ data class AnimationInfo(
     val color5: ReqLevel = ReqLevel.NOTUSED,
     val colorList: ReqLevel = ReqLevel.NOTUSED,
     val delay: ReqLevel = ReqLevel.NOTUSED,
-    val delayDefault: Int = 0,
+    val delayDefault: Long = 0,
     val direction: ReqLevel = ReqLevel.NOTUSED,
     val spacing: ReqLevel = ReqLevel.NOTUSED,
     val spacingDefault: Int = 0

@@ -410,7 +410,7 @@ abstract class AnimatedLEDStrip(
                 runBlocking {
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
-                        delay((delay * delayMod).toInt())
+                        delay((delay * delayMod).toLong())
                         setPixelColor(q, colorValues2)
                     }
                 }
@@ -419,7 +419,7 @@ abstract class AnimatedLEDStrip(
                 runBlocking {
                     locks[q]!!.tryWithLock {
                         setPixelColor(q, colorValues1)
-                        delay((delay * delayMod).toInt())
+                        delay((delay * delayMod).toLong())
                         setPixelColor(q, colorValues2)
                     }
                 }
@@ -534,9 +534,9 @@ abstract class AnimatedLEDStrip(
         val deferred = (startPixel..endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
                 val originalColor: ColorContainer = getPixelColor(n)
-                delay((random() * 5000).toInt() % 4950)
+                delay((random() * 5000).toLong() % 4950)
                 setPixelColor(n, sparkleColor)
-                delay((delay * delayMod).toInt())
+                delay((delay * delayMod).toLong())
                 setPixelColor(n, originalColor)
             }
         }
@@ -555,7 +555,7 @@ abstract class AnimatedLEDStrip(
     private val sparkleFade = { animation: AnimationData ->
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
-                delay((random() * 5000).toInt())
+                delay((random() * 5000).toLong())
                 setPixelColor(n, animation.color1)
                 GlobalScope.launch(sparkleThreadPool) {
                     fadePixel(n, animation.color2, 25)
@@ -585,9 +585,9 @@ abstract class AnimatedLEDStrip(
 
         val deferred = (startPixel..endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
-                delay((random() * 5000).toInt() % 4950)
+                delay((random() * 5000).toLong() % 4950)
                 setPixelColor(n, destinationColor)
-                delay((delay * delayMod).toInt())
+                delay((delay * delayMod).toLong())
             }
         }
         runBlocking {
@@ -616,7 +616,7 @@ abstract class AnimatedLEDStrip(
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
                             setPixelColor(i, colorValues1)
-                            delay((delay * delayMod).toInt())
+                            delay((delay * delayMod).toLong())
                             setPixelColor(i, originalColor)
                         }
                     }
@@ -630,7 +630,7 @@ abstract class AnimatedLEDStrip(
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
                             setPixelColor(i, colorValues1)
-                            delay((delay * delayMod).toInt())
+                            delay((delay * delayMod).toLong())
                             setPixelColor(i, originalColor)
                         }
                     }

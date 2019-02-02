@@ -97,18 +97,16 @@ fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, Col
  *
  * @param wait The time (in milliseconds) to wait for
  */
-fun delayBlocking(wait: Int) {
+fun delayBlocking(wait: Long) {
     try {
-        Thread.sleep(wait.toLong())
+        Thread.sleep(wait)
     } catch (e: InterruptedException) {
     }
 }
 
-
-suspend fun delay(wait: Int) {
-    kotlinx.coroutines.delay(wait.toLong())
+fun delayBlocking(wait: Int) {
+    delayBlocking(wait.toLong())
 }
-
 
 /**
  * Returns a `Long` from a hexadecimal String.

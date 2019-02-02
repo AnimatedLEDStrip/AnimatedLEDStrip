@@ -73,19 +73,19 @@ class AnimationData() {
     /**
      * Delay time (in milliseconds) used in the animation.
      */
-    var delay = 0
+    var delay = 0L
         get() {
             return (when (field) {
-                0 -> {
+                0L -> {
                     when (animationInfoMap[animation]?.delay) {
                         ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
-                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 50
-                        ReqLevel.NOTUSED -> 50
-                        null -> 50
+                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 50L
+                        ReqLevel.NOTUSED -> 50L
+                        null -> 50L
                     }
                 }
                 else -> field
-            } * delayMod).toInt()
+            } * delayMod).toLong()
         }
 
     /**
@@ -476,6 +476,17 @@ class AnimationData() {
      * animation will use
      */
     fun delay(delay: Int): AnimationData {
+        this.delay = delay.toLong()
+        return this
+    }
+
+    /**
+     * Set the `delay` parameter.
+     *
+     * @param delay A `Long` representing the delay time in milliseconds the
+     * animation will use
+     */
+    fun delay(delay: Long): AnimationData {
         this.delay = delay
         return this
     }
@@ -620,9 +631,9 @@ class AnimationData() {
             }
         }
         continuous = params["Continuous"] as Boolean? ?: false
-        delay = params["Delay"] as Int? ?: when (animationInfoMap[animation]?.delay) {
+        delay = params["Delay"] as Long? ?: when (animationInfoMap[animation]?.delay) {
             ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
-            else -> 0
+            else -> 0L
         }
         delayMod = params["DelayMod"] as Double? ?: 1.0
         direction = when (params["Direction"] as Char?) {
