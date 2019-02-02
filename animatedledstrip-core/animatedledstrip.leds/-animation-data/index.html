@@ -1,0 +1,396 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AnimationData - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">AnimationData</a><br/>
+<br/>
+<h1>AnimationData</h1>
+<code><span class="keyword">class </span><span class="identifier">AnimationData</span></code>
+<p>Class used when calling animations to specify colors, parameters, etc.
+for the animation.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AnimationData</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$<init>(kotlin.collections.Map((kotlin.Any, )))/params">params</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">,</span>&nbsp;<span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<p>Constructor used by the server when receiving a <code>Map</code> from a client</p>
+<code><span class="identifier">AnimationData</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Class used when calling animations to specify colors, parameters, etc.
+for the animation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="animation.html">animation</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">animation</span><span class="symbol">: </span><a href="../-animation/index.html"><span class="identifier">Animation</span></a></code>
+<p>The animation to be run (REQUIRED).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color1.html">color1</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color1</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>The first color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color2.html">color2</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color2</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>The second color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color3.html">color3</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color3</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>The third color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color4.html">color4</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color4</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>The fourth color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color5.html">color5</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">color5</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>The fifth color.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color-list.html">colorList</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">colorList</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span></code>
+<p>A variable-length list of colors for the animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="continuous.html">continuous</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">continuous</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Specifies if the animation will run endlessly until stopped.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delay.html">delay</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">delay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Delay time (in milliseconds) used in the animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delay-mod.html">delayMod</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">delayMod</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>Multiplier for the <code>delay</code> value.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="direction.html">direction</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">direction</span><span class="symbol">: </span><a href="../-direction/index.html"><span class="identifier">Direction</span></a></code>
+<p>'Direction' the animation should run.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="end-pixel.html">endPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">endPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Last pixel on the strip that will show the animation (inclusive).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="id.html">id</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>ID for the animation (used by server and client for stopping continuous
+animations).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="spacing.html">spacing</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">spacing</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Spacing used in the animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start-pixel.html">startPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">startPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>First pixel on the strip will show the animation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-to-color-list.html">addToColorList</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addToColorList</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$addToColorList(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Add a color to the colorList (added by reference).</p>
+<code><span class="keyword">fun </span><span class="identifier">addToColorList</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$addToColorList(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Add a color to the colorList (creates new <code>ColorContainer</code> instance)</p>
+<code><span class="keyword">fun </span><span class="identifier">addToColorList</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$addToColorList(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Add a color to <code>colorList</code> (creates new ColorContainer instance)</p>
+<code><span class="keyword">fun </span><span class="identifier">addToColorList</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$addToColorList(kotlin.collections.List((kotlin.Any)))/colorList">colorList</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Append a <code>List</code> of <code>ColorContainer</code>s, <code>Long</code>s, or <code>String</code>s in hexadecimal
+format to the end of <code>colorList</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="animation.html">animation</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">animation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$animation(animatedledstrip.leds.Animation)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Sets the <code>animation</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color.html">color</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color1.html">color1</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color1</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color1(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color1</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color1(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color1</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color1(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color1</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color1(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the first color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color2.html">color2</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color2</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color2(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the second color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color2</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color2(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the second color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color2</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color2(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the second color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color2</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color2(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the second color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color3.html">color3</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color3</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color3(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the third color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color3</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color3(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the third color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color3</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color3(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the third color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color3</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color3(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the third color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color4.html">color4</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color4</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color4(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fourth color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color4</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color4(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fourth color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color4</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color4(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fourth color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color4</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color4(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fourth color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color5.html">color5</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">color5</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color5(animatedledstrip.leds.ColorContainer)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fifth color with a <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color5</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color5(kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fifth color with a <code>Long</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color5</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color5(kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fifth color with an <code>Int</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">color5</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$color5(kotlin.String)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the fifth color with a hexadecimal string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="color-list.html">colorList</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">colorList</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$colorList(kotlin.collections.List((kotlin.Any)))/colorList">colorList</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the colorList with a <code>List</code> of <code>ColorContainer</code>s, <code>Long</code>s, or <code>String</code>s in
+hexadecimal format.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="continuous.html">continuous</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">continuous</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$continuous(kotlin.Boolean)/continuous">continuous</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>continuous</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delay.html">delay</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">delay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$delay(kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">delay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$delay(kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>delay</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delay-mod.html">delayMod</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">delayMod</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$delayMod(kotlin.Double)/delayMod">delayMod</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>delayMod</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="direction.html">direction</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">direction</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$direction(animatedledstrip.leds.Direction)/direction">direction</span><span class="symbol">:</span>&nbsp;<a href="../-direction/index.html"><span class="identifier">Direction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>direction</code> parameter.</p>
+<code><span class="keyword">fun </span><span class="identifier">direction</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$direction(kotlin.Char)/direction">direction</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char/index.html"><span class="identifier">Char</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>direction</code> parameter with a <code>Char</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="end-pixel.html">endPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">endPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$endPixel(kotlin.Int)/endPixel">endPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>endPixel</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="id.html">id</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">id</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$id(kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>id</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="spacing.html">spacing</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">spacing</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$spacing(kotlin.Int)/spacing">spacing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>spacing</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start-pixel.html">startPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">startPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimationData$startPixel(kotlin.Int)/startPixel">startPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>startPixel</code> parameter.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-map.html">toMap</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toMap</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Create a <code>Map</code> that can be sent over a socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Create a <code>String</code> out of the values of this instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

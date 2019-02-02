@@ -1,0 +1,1510 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ColorContainer - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">ColorContainer</a><br/>
+<br/>
+<h1>ColorContainer</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span></code>
+<p>A class used to hold a color value.</p>
+<h3>Parameters</h3>
+<p><a name="r"></a>
+<code>r</code> - The red intensity</p>
+<p><a name="g"></a>
+<code>g</code> - The green intensity</p>
+<p><a name="b"></a>
+<code>b</code> - The blue intensity</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(animatedledstrip.leds.ColorContainer)/ccIn">ccIn</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span></code>
+<p>Constructor for ColorContainer that makes a copy of a ColorContainer.</p>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code>
+<p>Constructor for ColorContainer that extracts <code>r</code>, <code>g</code> and <code>b</code> from a <code>Long</code>.</p>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/r">r</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/g">g</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
+<p>A class used to hold a color value.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="b.html">b</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">b</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The blue intensity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="g.html">g</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">g</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The green intensity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="hex.html">hex</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">hex</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Returns a <code>Long</code> containing the RGB data held by this <code>ColorContainer</code>.
+Color can also be set using a <code>Long</code> via this property.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="hex-string.html">hexString</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">hexString</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Returns a hexadecimal string representation (without a 0x) of the color held
+by this <code>ColorContainer</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="r.html">r</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">r</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The red intensity</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-color-hex.html">getColorHex</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><s><span class="identifier">getColorHex</span></s><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="grayscale.html">grayscale</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Returns the average of <code>r</code>, <code>g</code>, <code>b</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="invert.html">invert</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">invert</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Returns a <code>ColorContainer</code> with the inverse of the color held by this <code>ColorContainer</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-r-g-b.html">setRGB</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setRGB</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the color held by this <code>ColorContainer</code> using individual <code>r</code>, <code>g</code>, <code>b</code> values.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-r-g-b-from-hex.html">setRGBFromHex</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><s><span class="identifier">setRGBFromHex</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGBFromHex(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="to-color.html">toColor</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toColor</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Color</span></code>
+<p>Returns the color held by this <code>ColorContainer</code> as a JavaFX <code>Color</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Override function that returns the hexString property.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-alice-blue.html">CCAliceBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAliceBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color AliceBlue (0xF0F8FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-amethyst.html">CCAmethyst</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAmethyst</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Amethyst (0x9966CC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-antique-white.html">CCAntiqueWhite</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAntiqueWhite</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color AntiqueWhite (0xFAEBD7)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-aqua.html">CCAqua</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAqua</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Aqua (0x00FFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-aquamarine.html">CCAquamarine</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAquamarine</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Aquamarine (0x7FFFD4)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-azure.html">CCAzure</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCAzure</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Azure (0xF0FFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-beige.html">CCBeige</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBeige</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Beige (0xF5F5DC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-bisque.html">CCBisque</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBisque</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Bisque (0xFFE4C4)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-black.html">CCBlack</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBlack</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Black (0x000000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-blanched-almond.html">CCBlanchedAlmond</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBlanchedAlmond</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color BlanchedAlmond (0xFFEBCD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-blue.html">CCBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Blue (0x0000FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-blue-violet.html">CCBlueViolet</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBlueViolet</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color BlueViolet (0x8A2BE2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-brown.html">CCBrown</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBrown</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Brown (0xA52A2A)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-burly-wood.html">CCBurlyWood</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCBurlyWood</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color BurlyWood (0xDEB887)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-cadet-blue.html">CCCadetBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCadetBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color CadetBlue (0x5F9EA0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-chartreuse.html">CCChartreuse</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCChartreuse</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Chartreuse (0x7FFF00)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-chocolate.html">CCChocolate</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCChocolate</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Chocolate (0xD2691E)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-coral.html">CCCoral</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCoral</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Coral (0xFF7F50)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-cornflower-blue.html">CCCornflowerBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCornflowerBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color CornflowerBlue (0x6495ED)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-cornsilk.html">CCCornsilk</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCornsilk</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Cornsilk (0xFFF8DC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-crimson.html">CCCrimson</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCrimson</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Crimson (0xDC143C)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-cyan.html">CCCyan</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCCyan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Cyan (0x00FFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-blue.html">CCDarkBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkBlue (0x00008B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-cyan.html">CCDarkCyan</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkCyan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkCyan (0x008B8B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-goldenrod.html">CCDarkGoldenrod</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkGoldenrod</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkGoldenrod (0xB8860B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-gray.html">CCDarkGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkGray (0xA9A9A9)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-green.html">CCDarkGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkGreen (0x006400)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-grey.html">CCDarkGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkGrey (0xA9A9A9)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-khaki.html">CCDarkKhaki</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkKhaki</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkKhaki (0xBDB76B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-magenta.html">CCDarkMagenta</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkMagenta</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkMagenta (0x8B008B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-olive-green.html">CCDarkOliveGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkOliveGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkOliveGreen (0x556B2F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-orange.html">CCDarkOrange</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkOrange</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkOrange (0xFF8C00)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-orchid.html">CCDarkOrchid</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkOrchid</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkOrchid (0x9932CC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-red.html">CCDarkRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkRed (0x8B0000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-salmon.html">CCDarkSalmon</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkSalmon</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkSalmon (0xE9967A)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-sea-green.html">CCDarkSeaGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkSeaGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkSeaGreen (0x8FBC8F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-slate-blue.html">CCDarkSlateBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkSlateBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkSlateBlue (0x483D8B)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-slate-gray.html">CCDarkSlateGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkSlateGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkSlateGray (0x2F4F4F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-slate-grey.html">CCDarkSlateGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkSlateGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkSlateGrey (0x2F4F4F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-turquoise.html">CCDarkTurquoise</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkTurquoise</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkTurquoise (0x00CED1)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dark-violet.html">CCDarkViolet</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDarkViolet</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DarkViolet (0x9400D3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-deep-pink.html">CCDeepPink</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDeepPink</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DeepPink (0xFF1493)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-deep-sky-blue.html">CCDeepSkyBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDeepSkyBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DeepSkyBlue (0x00BFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dim-gray.html">CCDimGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDimGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DimGray (0x696969)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dim-grey.html">CCDimGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDimGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DimGrey (0x696969)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-dodger-blue.html">CCDodgerBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCDodgerBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color DodgerBlue (0x1E90FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-fairy-light.html">CCFairyLight</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCFairyLight</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for FastLED Color FairyLight (0xFFE42D)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-fairy-light-n-c-c.html">CCFairyLightNCC</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCFairyLightNCC</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for FastLED Color FairyLightNCC (0xFF9D2A)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-fire-brick.html">CCFireBrick</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCFireBrick</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color FireBrick (0xB22222)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-floral-white.html">CCFloralWhite</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCFloralWhite</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color FloralWhite (0xFFFAF0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-forest-green.html">CCForestGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCForestGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color ForestGreen (0x228B22)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-fuchsia.html">CCFuchsia</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCFuchsia</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Fuchsia (0xFF00FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-gainsboro.html">CCGainsboro</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGainsboro</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Gainsboro (0xDCDCDC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-ghost-white.html">CCGhostWhite</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGhostWhite</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color GhostWhite (0xF8F8FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-gold.html">CCGold</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGold</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Gold (0xFFD700)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-goldenrod.html">CCGoldenrod</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGoldenrod</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Goldenrod (0xDAA520)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-gray.html">CCGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Gray (0x808080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-green.html">CCGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Green (0x008000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-green-yellow.html">CCGreenYellow</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGreenYellow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color GreenYellow (0xADFF2F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-grey.html">CCGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Grey (0x808080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-honeydew.html">CCHoneydew</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCHoneydew</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Honeydew (0xF0FFF0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-hot-pink.html">CCHotPink</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCHotPink</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color HotPink (0xFF69B4)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-indian-red.html">CCIndianRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCIndianRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color IndianRed (0xCD5C5C)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-indigo.html">CCIndigo</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCIndigo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Indigo (0x4B0082)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-ivory.html">CCIvory</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCIvory</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Ivory (0xFFFFF0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-khaki.html">CCKhaki</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCKhaki</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Khaki (0xF0E68C)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lavender.html">CCLavender</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLavender</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Lavender (0xE6E6FA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lavender-blush.html">CCLavenderBlush</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLavenderBlush</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LavenderBlush (0xFFF0F5)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lawn-green.html">CCLawnGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLawnGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LawnGreen (0x7CFC00)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lemon-chiffon.html">CCLemonChiffon</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLemonChiffon</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LemonChiffon (0xFFFACD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-blue.html">CCLightBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightBlue (0xADD8E6)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-coral.html">CCLightCoral</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightCoral</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightCoral (0xF08080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-cyan.html">CCLightCyan</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightCyan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightCyan (0xE0FFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-goldenrod-yellow.html">CCLightGoldenrodYellow</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightGoldenrodYellow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightGoldenrodYellow (0xFAFAD2)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-green.html">CCLightGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightGreen (0x90EE90)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-grey.html">CCLightGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightGrey (0xD3D3D3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-pink.html">CCLightPink</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightPink</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightPink (0xFFB6C1)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-salmon.html">CCLightSalmon</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSalmon</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSalmon (0xFFA07A)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-sea-green.html">CCLightSeaGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSeaGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSeaGreen (0x20B2AA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-sky-blue.html">CCLightSkyBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSkyBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSkyBlue (0x87CEFA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-slate-gray.html">CCLightSlateGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSlateGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSlateGray (0x778899)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-slate-grey.html">CCLightSlateGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSlateGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSlateGrey (0x778899)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-steel-blue.html">CCLightSteelBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightSteelBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightSteelBlue (0xB0C4DE)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-light-yellow.html">CCLightYellow</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLightYellow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LightYellow (0xFFFFE0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lime.html">CCLime</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLime</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Lime (0x00FF00)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-lime-green.html">CCLimeGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLimeGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color LimeGreen (0x32CD32)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-linen.html">CCLinen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCLinen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Linen (0xFAF0E6)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-magenta.html">CCMagenta</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMagenta</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Magenta (0xFF00FF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-maroon.html">CCMaroon</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMaroon</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Maroon (0x800000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-aquamarine.html">CCMediumAquamarine</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumAquamarine</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumAquamarine (0x66CDAA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-blue.html">CCMediumBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumBlue (0x0000CD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-orchid.html">CCMediumOrchid</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumOrchid</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumOrchid (0xBA55D3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-purple.html">CCMediumPurple</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumPurple</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumPurple (0x9370DB)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-sea-green.html">CCMediumSeaGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumSeaGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumSeaGreen (0x3CB371)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-slate-blue.html">CCMediumSlateBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumSlateBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumSlateBlue (0x7B68EE)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-spring-green.html">CCMediumSpringGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumSpringGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumSpringGreen (0x00FA9A)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-turquoise.html">CCMediumTurquoise</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumTurquoise</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumTurquoise (0x48D1CC)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-medium-violet-red.html">CCMediumVioletRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMediumVioletRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MediumVioletRed (0xC71585)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-midnight-blue.html">CCMidnightBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMidnightBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MidnightBlue (0x191970)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-mint-cream.html">CCMintCream</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMintCream</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MintCream (0xF5FFFA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-misty-rose.html">CCMistyRose</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMistyRose</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color MistyRose (0xFFE4E1)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-moccasin.html">CCMoccasin</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCMoccasin</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Moccasin (0xFFE4B5)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-navajo-white.html">CCNavajoWhite</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCNavajoWhite</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color NavajoWhite (0xFFDEAD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-navy.html">CCNavy</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCNavy</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Navy (0x000080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-old-lace.html">CCOldLace</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOldLace</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color OldLace (0xFDF5E6)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-olive.html">CCOlive</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOlive</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Olive (0x808000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-olive-drab.html">CCOliveDrab</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOliveDrab</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color OliveDrab (0x6B8E23)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-orange.html">CCOrange</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOrange</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Orange (0xFFA500)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-orange-red.html">CCOrangeRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOrangeRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color OrangeRed (0xFF4500)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-orchid.html">CCOrchid</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCOrchid</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Orchid (0xDA70D6)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-pale-goldenrod.html">CCPaleGoldenrod</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPaleGoldenrod</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PaleGoldenrod (0xEEE8AA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-pale-green.html">CCPaleGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPaleGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PaleGreen (0x98FB98)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-pale-turquoise.html">CCPaleTurquoise</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPaleTurquoise</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PaleTurquoise (0xAFEEEE)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-pale-violet-red.html">CCPaleVioletRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPaleVioletRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PaleVioletRed (0xDB7093)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-papaya-whip.html">CCPapayaWhip</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPapayaWhip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PapayaWhip (0xFFEFD5)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-peach-puff.html">CCPeachPuff</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPeachPuff</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PeachPuff (0xFFDAB9)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-peru.html">CCPeru</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPeru</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Peru (0xCD853F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-pink.html">CCPink</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPink</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Pink (0xFFC0CB)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-plaid.html">CCPlaid</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPlaid</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Plaid (0xCC5533)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-plum.html">CCPlum</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPlum</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Plum (0xDDA0DD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-powder-blue.html">CCPowderBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPowderBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color PowderBlue (0xB0E0E6)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-purple.html">CCPurple</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCPurple</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Purple (0x800080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-red.html">CCRed</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCRed</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Red (0xFF0000)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-rosy-brown.html">CCRosyBrown</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCRosyBrown</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color RosyBrown (0xBC8F8F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-royal-blue.html">CCRoyalBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCRoyalBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color RoyalBlue (0x4169E1)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-saddle-brown.html">CCSaddleBrown</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSaddleBrown</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SaddleBrown (0x8B4513)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-salmon.html">CCSalmon</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSalmon</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Salmon (0xFA8072)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-sandy-brown.html">CCSandyBrown</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSandyBrown</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SandyBrown (0xF4A460)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-sea-green.html">CCSeaGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSeaGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SeaGreen (0x2E8B57)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-seashell.html">CCSeashell</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSeashell</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Seashell (0xFFF5EE)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-sienna.html">CCSienna</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSienna</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Sienna (0xA0522D)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-silver.html">CCSilver</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSilver</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Silver (0xC0C0C0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-sky-blue.html">CCSkyBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSkyBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SkyBlue (0x87CEEB)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-slate-blue.html">CCSlateBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSlateBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SlateBlue (0x6A5ACD)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-slate-gray.html">CCSlateGray</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSlateGray</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SlateGray (0x708090)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-slate-grey.html">CCSlateGrey</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSlateGrey</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SlateGrey (0x708090)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-snow.html">CCSnow</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSnow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Snow (0xFFFAFA)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-spring-green.html">CCSpringGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSpringGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SpringGreen (0x00FF7F)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-steel-blue.html">CCSteelBlue</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCSteelBlue</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color SteelBlue (0x4682B4)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-tan.html">CCTan</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCTan</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Tan (0xD2B48C)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-teal.html">CCTeal</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCTeal</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Teal (0x008080)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-thistle.html">CCThistle</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCThistle</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Thistle (0xD8BFD8)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-tomato.html">CCTomato</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCTomato</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Tomato (0xFF6347)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-turquoise.html">CCTurquoise</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCTurquoise</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Turquoise (0x40E0D0)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-violet.html">CCViolet</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCViolet</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Violet (0xEE82EE)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-wheat.html">CCWheat</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCWheat</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Wheat (0xF5DEB3)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-white.html">CCWhite</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCWhite</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color White (0xFFFFFF)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-white-smoke.html">CCWhiteSmoke</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCWhiteSmoke</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color WhiteSmoke (0xF5F5F5)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-yellow.html">CCYellow</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCYellow</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color Yellow (0xFFFF00)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.ccpresets/-c-c-yellow-green.html">CCYellowGreen</a></p>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">CCYellowGreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>A default ColorContainer for HTML Named Color YellowGreen (0x9ACD32)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

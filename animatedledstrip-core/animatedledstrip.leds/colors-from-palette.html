@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>colorsFromPalette - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./colors-from-palette.html">colorsFromPalette</a><br/>
+<br/>
+<h1>colorsFromPalette</h1>
+<a name="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">colorsFromPalette</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/palette">palette</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span></code>
+<p>Create a collection of colors that blend between multiple colors along a 'strip'.</p>
+<p>The palette colors are spread out along the strip at approximately equal
+intervals. All pixels between these 'pure' pixels are a blend between the
+colors of the two nearest pure pixels. The blend ratio is determined by the
+location of the pixel relative to the nearest pure pixels.</p>
+<h3>Parameters</h3>
+<p><a name="palette"></a>
+<code>palette</code> - A list of <a href="-color-container/index.html">ColorContainer</a>s used to create the collection's colors</p>
+<p><a name="numLEDs"></a>
+<code>numLEDs</code> - The number of LEDs to create colors for</p>
+<p><strong>Return</strong><br/>
+A <code>Map&lt;Int, ColorContainer&gt;</code> with each pixel index mapped to a <code>ColorContainer</code></p>
+</BODY>
+</HTML>

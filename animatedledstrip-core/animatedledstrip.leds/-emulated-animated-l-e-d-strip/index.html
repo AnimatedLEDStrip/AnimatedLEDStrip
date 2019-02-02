@@ -1,0 +1,294 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>EmulatedAnimatedLEDStrip - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">EmulatedAnimatedLEDStrip</a><br/>
+<br/>
+<h1>EmulatedAnimatedLEDStrip</h1>
+<code><span class="keyword">class </span><span class="identifier">EmulatedAnimatedLEDStrip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-animated-l-e-d-strip/index.html"><span class="identifier">AnimatedLEDStrip</span></a></code>
+<p>Class for emulating an <code>LEDStrip</code>.</p>
+<h3>Parameters</h3>
+<p><a name="numLEDs"></a>
+<code>numLEDs</code> - Number of LEDs in the strip</p>
+<p><a name="pin"></a>
+<code>pin</code> - GPIO pin connected for signal</p>
+<p><a name="imageDebugging"></a>
+<code>imageDebugging</code> - Should a csv file be created containing all renders of
+the strip?</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">EmulatedAnimatedLEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.EmulatedAnimatedLEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.EmulatedAnimatedLEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/pin">pin</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.EmulatedAnimatedLEDStrip$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code>
+<p>Class for emulating an <code>LEDStrip</code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="led-strip.html">ledStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">ledStrip</span><span class="symbol">: </span><a href="../-l-e-d-strip-interface/index.html"><span class="identifier">LEDStripInterface</span></a></code>
+<p>The LED Strip. Chooses between <code>WS281x</code> and <code>EmulatedWS281x</code> based on value of emulated.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/alternate.html">alternate</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">alternate</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs an Alternate animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/animation-thread-pool.html">animationThreadPool</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">animationThreadPool</span><span class="symbol">: </span><span class="identifier">ExecutorCoroutineDispatcher</span></code>
+<p>A pool of threads to be used for animations that spawn new sub-threads
+(with the exception of sparkle-type animations, those use the
+<a href="../-animated-l-e-d-strip/sparkle-thread-pool.html">sparkleThreadPool</a>).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/bounce.html">bounce</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">bounce</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Bounce animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/bounce-to-color.html">bounceToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">bounceToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Bounce to Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/custom-animation-compiler.html">customAnimationCompiler</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">customAnimationCompiler</span><span class="symbol">: </span><a href="http://docs.oracle.com/javase/6/docs/api/javax/script/ScriptEngine.html"><span class="identifier">ScriptEngine</span></a></code>
+<p>The compiler used when a custom animation is sent.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/custom-animation-map.html">customAnimationMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">customAnimationMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/javax/script/CompiledScript.html"><span class="identifier">CompiledScript</span></a><span class="symbol">&gt;</span></code>
+<p>Map containing compiled animations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/delay-mod.html">delayMod</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">delayMod</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/fade-map.html">fadeMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">fadeMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="../-animated-l-e-d-strip/-fade-pixel/index.html"><span class="identifier">FadePixel</span></a><span class="symbol">&gt;</span></code>
+<p>Map of pixel indices to <code>FadePixel</code> instances.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/locks.html">locks</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">locks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">Mutex</span><span class="symbol">&gt;</span></code>
+<p>Map containing Mutex instances for locking access to each led while it is
+being used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/multi-pixel-run.html">multiPixelRun</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">multiPixelRun</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Multi-Pixel Run animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/multi-pixel-run-to-color.html">multiPixelRunToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">multiPixelRunToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Multi-Pixel Run To Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/pixel-marathon.html">pixelMarathon</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pixelMarathon</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/pixel-run.html">pixelRun</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pixelRun</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Pixel Run animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/pixel-run-with-trail.html">pixelRunWithTrail</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pixelRunWithTrail</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Pixel Run with Trail animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/smooth-chase.html">smoothChase</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">smoothChase</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Smooth Chase animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/smooth-fade.html">smoothFade</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">smoothFade</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Smooth Fade animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/sparkle.html">sparkle</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sparkle</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Sparkle animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/sparkle-fade.html">sparkleFade</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sparkleFade</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Sparkle Fade animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/sparkle-thread-pool.html">sparkleThreadPool</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sparkleThreadPool</span><span class="symbol">: </span><span class="identifier">ExecutorCoroutineDispatcher</span></code>
+<p>A pool of threads to be used for sparkle-type animations due to the
+number of threads a concurrent sparkle animation uses. This prevents
+memory leaks caused by the overhead associated with creating new threads.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/sparkle-to-color.html">sparkleToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sparkleToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Sparkle To Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/stack.html">stack</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">stack</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>TODO (Katie)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/stack-overflow.html">stackOverflow</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">stackOverflow</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/wipe.html">wipe</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">wipe</span><span class="symbol">: </span><span class="symbol">(</span><a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Wipe animation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/fade-pixel.html">fadePixel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">fadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Int)/destinationColor">destinationColor</span><span class="symbol">:</span>&nbsp;<a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, animatedledstrip.leds.ColorContainer, kotlin.Int, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;30<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Helper function for fading a pixel from its current color to <code>destinationColor</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/run.html">run</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">run</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$run(animatedledstrip.leds.AnimationData)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Run an animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../-animated-l-e-d-strip/run-custom-animation.html">runCustomAnimation</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">runCustomAnimation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$runCustomAnimation(animatedledstrip.leds.AnimationData)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Run a custom animation. Identify the animation using the ID parameter in
+the AnimationData instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
