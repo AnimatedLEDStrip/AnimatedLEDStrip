@@ -35,15 +35,13 @@ import javax.script.*
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
- * @param emulated Is this strip real or emulated?
  */
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
     pin: Int,
-    emulated: Boolean = false,
     imageDebugging: Boolean = false
 ) :
-    LEDStrip(numLEDs, pin, emulated, imageDebugging) {
+    LEDStrip(numLEDs, pin, imageDebugging) {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is

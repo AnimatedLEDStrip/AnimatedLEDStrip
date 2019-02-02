@@ -40,14 +40,12 @@ import kotlin.text.StringBuilder
  *
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
- * @param emulated Is this strip real or emulated?
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
 abstract class LEDStrip(
     var numLEDs: Int,
     pin: Int,
-    private val emulated: Boolean = false,
     private val imageDebugging: Boolean = false
 ) {
 
@@ -157,12 +155,6 @@ abstract class LEDStrip(
         fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
             LEDStripSection(startPixel, endPixel, ledStrip)
     }
-
-
-    /**
-     * Returns `true` if this is an emulated LED strip.
-     */
-    fun isEmulated() = emulated
 
 
     /**
