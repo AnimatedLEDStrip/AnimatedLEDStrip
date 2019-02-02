@@ -36,6 +36,7 @@ import javax.script.*
  * @param numLEDs Number of leds in the strip
  * @param pin GPIO pin connected for signal
  */
+@Suppress("EXPERIMENTAL_API_USAGE")
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
     pin: Int,
@@ -456,6 +457,7 @@ abstract class AnimatedLEDStrip(
      * The index is found with `(i + a) % s`, where `i` is the pixel index, `a` is the
      * offset for this iteration and `s` is the number of pixels in the strip.
      */
+    @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
         val colorList = animation.colorList
         val movementDirection = animation.direction

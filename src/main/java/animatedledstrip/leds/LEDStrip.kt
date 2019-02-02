@@ -43,6 +43,7 @@ import kotlin.text.StringBuilder
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
+@Suppress("EXPERIMENTAL_API_USAGE")
 abstract class LEDStrip(
     var numLEDs: Int,
     pin: Int,
