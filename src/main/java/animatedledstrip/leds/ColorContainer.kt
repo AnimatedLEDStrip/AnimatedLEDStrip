@@ -129,7 +129,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
     override fun equals(other: Any?): Boolean {
         return if (other is ColorContainer)
             (this.r == other.r && this.g == other.g && this.b == other.b)
-        else false
+        else super.equals(other)
     }
 
     /**
