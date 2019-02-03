@@ -1,7 +1,7 @@
 [![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStrip/animatedledstrip-core/)
 
 # AnimatedLEDStrip
-A port of the [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStripCppArduino) to Kotlin.
+A port of the original [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStripCppArduino) to Kotlin. Concurrency and many animations have been added.
 
 ## Uses Java 9
 Because we use the dokka plugin to generate our documentation, we must use Java <=9
