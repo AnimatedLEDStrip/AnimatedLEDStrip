@@ -41,7 +41,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      * @param ccIn The ColorContainer to copy
      */
     constructor(ccIn: ColorContainer) : this(
-        ccIn.r, ccIn.g, ccIn.b
+            ccIn.r, ccIn.g, ccIn.b
     )
 
     /**
@@ -50,9 +50,9 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      * @param hexIn The integer representation of the color's RGB
      */
     constructor(hexIn: Long) : this(
-        (hexIn and 0xFF0000 shr 16).toInt(),
-        (hexIn and 0x00FF00 shr 8).toInt(),
-        (hexIn and 0x0000FF).toInt()
+            (hexIn and 0xFF0000 shr 16).toInt(),
+            (hexIn and 0x00FF00 shr 8).toInt(),
+            (hexIn and 0x0000FF).toInt()
     )
 
     /**
@@ -65,9 +65,9 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
         }
         set(hexIn) {
             setRGB(
-                (hexIn and 0xFF0000 shr 16).toInt(),
-                (hexIn and 0x00FF00 shr 8).toInt(),
-                (hexIn and 0x0000FF).toInt()
+                    (hexIn and 0xFF0000 shr 16).toInt(),
+                    (hexIn and 0x00FF00 shr 8).toInt(),
+                    (hexIn and 0x0000FF).toInt()
             )
         }
 
@@ -101,7 +101,7 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      * Returns the color held by this `ColorContainer` as a JavaFX `Color`.
      */
     fun toColor(): Color =
-        Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
+            Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
 
     /**
      * Returns a `ColorContainer` with the inverse of the color held by this `ColorContainer`.
@@ -118,6 +118,29 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
      */
     override fun toString(): String {
         return hexString
+    }
+
+
+    /**
+     * Custom override for ColorContainer comparisons.
+     *
+     * @param other The value to compare this to
+     */
+    override fun equals(other: Any?): Boolean {
+        return if (other is ColorContainer)
+            (this.r == other.r && this.g == other.g && this.b == other.b)
+        else false
+    }
+
+    /**
+     * Auto-generated hashCode override.
+     */
+    override fun hashCode(): Int {
+        var result = r
+        result = 31 * result + g
+        result = 31 * result + b
+        result = 31 * result + hexString.hashCode()
+        return result
     }
 
 }
