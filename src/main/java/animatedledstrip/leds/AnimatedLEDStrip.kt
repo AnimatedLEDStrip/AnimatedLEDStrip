@@ -34,20 +34,18 @@ import javax.script.*
  * A subclass of [LEDStrip] adding animations.
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
  */
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
-    pin: Int,
     imageDebugging: Boolean = false
 ) :
-    LEDStrip(numLEDs, pin, imageDebugging) {
+    LEDStrip(numLEDs, imageDebugging) {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is
      * being used.
      */
-    private val locks = mutableMapOf<Int, Mutex>()
+    val locks = mutableMapOf<Int, Mutex>()
 
 
     /**
@@ -56,7 +54,7 @@ abstract class AnimatedLEDStrip(
      * [sparkleThreadPool]).
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private val animationThreadPool =
+    val animationThreadPool =
         newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
 
     /**
@@ -65,7 +63,7 @@ abstract class AnimatedLEDStrip(
      * memory leaks caused by the overhead associated with creating new threads.
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
-    private val sparkleThreadPool =
+    val sparkleThreadPool =
         newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 

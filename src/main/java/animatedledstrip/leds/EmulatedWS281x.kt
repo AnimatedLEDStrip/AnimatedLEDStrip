@@ -64,11 +64,10 @@ import java.nio.ByteBuffer
  * Modification on the `WS281x` class from the diozero-ws281x-java library that
  * doesn't attempt to send data to any LEDs.
  *
- * @property pin Pin the strip is connected to
  * @property brightness Brightness of the strip
  * @property numLEDs Number of LEDs in the strip
  */
-open class EmulatedWS281x(val pin: Int, val brightness: Int, final override val numLEDs: Int) : LEDStripInterface {
+open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override val numLEDs: Int) : LEDStripInterface {
 
     /** Empty override for `render()` */
     override fun render() {}

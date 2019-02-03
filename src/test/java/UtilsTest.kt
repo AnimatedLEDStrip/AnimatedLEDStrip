@@ -17,4 +17,9 @@ class UtilsTest {
         assertTrue { parseHex("0xG") == 0L }
     }
 
+    @Test
+    fun testBlend() {
+
+    }
+
 }

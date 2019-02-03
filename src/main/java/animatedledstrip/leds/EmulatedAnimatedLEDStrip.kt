@@ -27,13 +27,11 @@ package animatedledstrip.leds
  * Class for emulating an `LEDStrip`.
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
 class EmulatedAnimatedLEDStrip(numLEDs: Int,
-                               pin: Int,
-                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, pin, imageDebugging){
-    override var ledStrip: LEDStripInterface = EmulatedWS281x(pin, 255, numLEDs)
+                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, imageDebugging){
+    override var ledStrip: LEDStripInterface = EmulatedWS281x( 0, 255, numLEDs)
 
 }
