@@ -38,13 +38,11 @@ import kotlin.text.StringBuilder
  * An LED Strip with concurrency added.
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
 abstract class LEDStrip(
     var numLEDs: Int,
-    pin: Int,
     private val imageDebugging: Boolean = false
 ) {
 
@@ -75,7 +73,7 @@ abstract class LEDStrip(
     /**
      * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.
      */
-    private var rendering = false
+    var rendering = false
 
     /**
      * The file that the csv output will be saved to if image debugging is enabled.
@@ -100,7 +98,6 @@ abstract class LEDStrip(
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
         Logger.info("numLEDs: $numLEDs")
-        Logger.info("using GPIO pin $pin")
         toggleRender()
     }
 
