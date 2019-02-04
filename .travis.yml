@@ -22,11 +22,6 @@ stages:
 
 jobs:
   include:
-    - stage: install
-      install: mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
-
-    - stage: test
-
     - stage: deploy gh-pages
       deploy:
         provider: pages
