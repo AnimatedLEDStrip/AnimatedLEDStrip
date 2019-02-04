@@ -1,8 +1,14 @@
 ---
 language: java
 
+before_install:
+  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+
 install:
-  mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+  mvn --settings .maven.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 #script:
 #  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
@@ -16,22 +22,30 @@ branches:
 stages:
   - name: test
   - name: deploy gh-pages
-#    if:
-
-#before_install:
-#  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
-#  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-
-#before_deploy:
-#  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-#  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+  - name: deploy snapshot
+    if: env(project_version) =~ ^.*-SNAPSHOT$
 
 jobs:
   include:
     - stage: test
     - stage: deploy gh-pages
+      before_deploy: mvn dokka:dokka
       deploy:
-      - provider: script
-        script: mvn site --settings .maven.xml && pwd && ls
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
         on:
           branch: master
+#      deploy:
+#      - provider: script
+#        script: mvn site --settings .maven.xml -B
+#        on:
+#          branch: master
+    - stage: deploy snapshot
+      deploy:
+      - provider: script
+        script: mvn deploy --settings .maven.xml -B
+        on:
+          branch: master
+
