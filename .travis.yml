@@ -29,12 +29,13 @@ jobs:
   include:
     - stage: test
     - stage: deploy gh-pages
-      before_deploy: mvn dokka:dokka && ls -r
+      before_deploy: mvn dokka:dokka
       deploy:
-        provider: pages
+      - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
         keep-history: true
+        verbose: true
         on:
           branch: master
 #      deploy:
