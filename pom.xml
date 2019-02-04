@@ -171,7 +171,7 @@
                             <goal>dokka</goal>
                         </goals>
                         <configuration>
-                            <outputDir>${project.basedir}</outputDir>
+                            <outputDir>${project.basedir}/dokka</outputDir>
                         </configuration>
                     </execution>
                 </executions>
@@ -195,14 +195,14 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-site-plugin</artifactId>-->
-                <!--<version>3.7.1</version>-->
-                <!--<configuration>-->
-                    <!--<skipDeploy>true</skipDeploy>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+                <configuration>
+                    <skipDeploy>true</skipDeploy>
+                </configuration>
+            </plugin>
             <!--<plugin>-->
                 <!--<groupId>com.github.github</groupId>-->
                 <!--<artifactId>site-maven-plugin</artifactId>-->
