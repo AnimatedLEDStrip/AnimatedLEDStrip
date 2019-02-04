@@ -31,11 +31,9 @@ import org.pmw.tinylog.Logger
  * A subclass of [LEDStripNonConcurrent] adding animations
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
- * @param emulated Is this strip real or emulated?
  */
-abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int, pin: Int, emulated: Boolean = false) :
-    LEDStripNonConcurrent(numLEDs, pin, emulated) {
+abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
+    LEDStripNonConcurrent(numLEDs) {
 
 
     /**

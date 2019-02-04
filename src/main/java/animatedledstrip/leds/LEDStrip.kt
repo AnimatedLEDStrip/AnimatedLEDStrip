@@ -35,7 +35,7 @@ import kotlin.text.StringBuilder
 
 
 /**
- * An LED Strip with concurrency added.
+ * A subclass of [LEDStripNonConcurrent] adding support for concurrency.
  *
  * @param numLEDs Number of LEDs in the strip
  * @param imageDebugging Should a csv file be created containing all renders of
