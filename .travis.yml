@@ -33,7 +33,7 @@ jobs:
       - provider: script
         script: mvn --settings .maven.xml site -B
       - provider: script
-        script: git add dokka
+        script: git add -r dokka
       - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
