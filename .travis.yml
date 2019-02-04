@@ -7,6 +7,12 @@ install:
 #script:
 #  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
+branches:
+  only:
+    - master
+    - /^travis/
+    - /^v.*/
+
 stages:
   - name: test
   - name: deploy gh-pages
