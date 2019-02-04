@@ -1,6 +1,7 @@
 package animatedledstrip.test
 
 import animatedledstrip.leds.parseHex
+import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -18,6 +19,7 @@ class UtilsTest {
     }
 
     @Test
+    @Ignore
     fun testBlend() {
 
     }
