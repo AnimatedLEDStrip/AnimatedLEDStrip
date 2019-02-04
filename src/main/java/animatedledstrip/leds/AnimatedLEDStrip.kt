@@ -325,27 +325,39 @@ abstract class AnimatedLEDStrip(
         when (chaseDirection) {
             Direction.BACKWARD -> for (q in 0 until spacing) {
                 setStripColor(colorValues2)
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    colorValues1
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            colorValues1
+                    )
+                }
                 delayBlocking((delay * delayMod).toInt())
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    colorValues2
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            colorValues2
+                    )
+                }
             }
             Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
                 setStripColor(colorValues2)
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    colorValues1
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            colorValues1
+                    )
+                }
                 delayBlocking((delay * delayMod).toInt())
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    colorValues2
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            colorValues2
+                    )
+                }
             }
         }
     }
@@ -368,17 +380,23 @@ abstract class AnimatedLEDStrip(
 
         when (chaseDirection) {
             Direction.BACKWARD -> for (q in 0 until spacing) {
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    destinationColor
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            destinationColor
+                    )
+                }
                 delayBlocking((delay * delayMod).toInt())
             }
             Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
-                for (i in startPixel..endPixel step spacing) setPixelColor(
-                    i + (-(q - (spacing - 1))),
-                    destinationColor
-                )
+                for (i in startPixel..endPixel step spacing) {
+                    if (i + (-(q - (spacing - 1))) >= endPixel) continue
+                    setPixelColor(
+                            i + (-(q - (spacing - 1))),
+                            destinationColor
+                    )
+                }
                 delayBlocking((delay * delayMod).toInt())
             }
         }

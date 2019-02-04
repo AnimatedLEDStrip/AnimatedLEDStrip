@@ -92,7 +92,7 @@ open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override 
      */
     private fun validatePixel(pixel: Int) {
         if (pixel < 0 || pixel >= numLEDs) {
-            throw IllegalArgumentException("pixel must be 0.." + (numLEDs - 1))
+            throw IllegalArgumentException("pixel $pixel not in 0.." + (numLEDs - 1))
         }
     }
 
