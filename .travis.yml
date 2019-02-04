@@ -7,7 +7,7 @@ before_install:
   - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
-install:
+instaxll:
   mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 #script:
@@ -29,8 +29,9 @@ jobs:
   include:
     - stage: test
     - stage: deploy gh-pages
-      before_deploy: mvn dokka:dokka -output /home/travis/build/AnimatedLEDStrip/AnimatedLEDStrip
       deploy:
+      - provider: script
+        script: mvn --settings .maven.xml site -B
       - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
