@@ -31,9 +31,7 @@ jobs:
     - stage: deploy gh-pages
       deploy:
       - provider: script
-        script: mvn --settings .maven.xml site -B
-      - provider: script
-        script: git add -r dokka
+        script: mvn --settings .maven.xml site -B && git add dokka
       - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
