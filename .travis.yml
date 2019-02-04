@@ -4,8 +4,8 @@ language: java
 before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
-  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+#  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+#  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
 #script:
 #  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
