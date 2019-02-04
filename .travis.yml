@@ -30,6 +30,7 @@ jobs:
   include:
     - stage: deploy gh-pages
       deploy:
+        install: mvn pre-site
         provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
