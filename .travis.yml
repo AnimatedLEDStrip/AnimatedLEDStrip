@@ -7,9 +7,6 @@ before_install:
   - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
 
-install:
-  mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
-
 #script:
 #  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
 
@@ -26,7 +23,12 @@ stages:
 jobs:
   include:
     - stage: test
+      install:
+        mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+      after_success: coveralls
     - stage: deploy
+      install:
+      -
       deploy:
       - provider: script
         script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
@@ -39,6 +41,8 @@ jobs:
         on:
           branch: master
     - stage: deploy
+      install:
+      -
       deploy:
       - provider: script
         script: mvn deploy --settings .maven.xml -DskipTests=true -B
