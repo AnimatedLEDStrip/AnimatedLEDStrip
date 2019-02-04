@@ -1,5 +1,6 @@
 [![KDoc](https://img.shields.io/badge/KDoc-read-green.svg)](https://animatedledstrip.github.io/AnimatedLEDStrip/animatedledstrip-core/)
 [![Build Status](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStrip.svg?branch=master)](https://travis-ci.com/AnimatedLEDStrip/AnimatedLEDStrip)
+[![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStrip/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStrip)
 
 # AnimatedLEDStrip
 A port of the original [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStripCppArduino) to Kotlin. Concurrency and many animations have been added.
