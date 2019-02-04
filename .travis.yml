@@ -1,0 +1,38 @@
+---
+language: java
+
+install:
+  mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+
+#script:
+#  mvn clean deploy --settings .maven.xml -DskipTests=true -B -U -Prelease
+
+branches:
+  only:
+    - master
+    - /^travis/
+    - /^v.*/
+
+stages:
+  - name: test
+  - name: deploy gh-pages
+#    if:
+
+#before_install:
+#  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
+#  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+
+#before_deploy:
+#  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
+#  - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
+
+jobs:
+  include:
+    - stage: deploy gh-pages
+      deploy:
+        provider: pages
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+        on:
+          branch: master
