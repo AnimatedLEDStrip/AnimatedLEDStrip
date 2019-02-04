@@ -21,16 +21,15 @@ branches:
 
 stages:
   - name: test
-  - name: deploy gh-pages
-  - name: deploy snapshot
+  - name: deploy
 
 jobs:
   include:
     - stage: test
-    - stage: deploy gh-pages
+    - stage: deploy
       deploy:
       - provider: script
-        script: mvn --settings .maven.xml site -B && git add dokka
+        script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
       - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
@@ -39,10 +38,10 @@ jobs:
         local_dir: ./dokka
         on:
           branch: master
-    - stage: deploy snapshot
+    - stage: deploy
       deploy:
       - provider: script
-        script: mvn deploy --settings .maven.xml -B
+        script: mvn deploy --settings .maven.xml -DskipTests=true -B
         on:
           branch: master
 
