@@ -34,7 +34,7 @@ package animatedledstrip.leds
  * @property endPixel Last pixel in the section (inclusive)
  * @property ledStrip Strip that this section is a part of
  */
-class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStrip) {
+class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStripInterface) {
 
     constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip): this(pixels.first, pixels.endInclusive, ledStrip)
 

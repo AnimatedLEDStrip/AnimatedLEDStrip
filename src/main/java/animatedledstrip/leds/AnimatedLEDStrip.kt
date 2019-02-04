@@ -39,7 +39,7 @@ abstract class AnimatedLEDStrip(
     numLEDs: Int,
     imageDebugging: Boolean = false
 ) :
-    LEDStrip(numLEDs, imageDebugging) {
+    LEDStrip(numLEDs, imageDebugging), AnimatedLEDStripInterface, LEDStripSectionInterface {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is
@@ -156,7 +156,7 @@ abstract class AnimatedLEDStrip(
      * @param animation An [AnimationData] instance with details about the
      * animation to run
      */
-    fun run(animation: AnimationData) {
+    override fun run(animation: AnimationData) {
         animation.endPixel = when (animation.endPixel) {
             0 -> numLEDs - 1
             else -> animation.endPixel

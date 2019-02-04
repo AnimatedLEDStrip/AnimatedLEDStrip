@@ -31,7 +31,7 @@ import org.pmw.tinylog.Logger
  *
  * @param numLEDs Number of LEDs in the strip
  */
-abstract class LEDStripNonConcurrent(var numLEDs: Int) {
+abstract class LEDStripNonConcurrent(var numLEDs: Int): LEDStripSectionInterface {
 
     /**
      * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.
@@ -83,6 +83,18 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) {
     }
 
     operator fun set(pixels: IntRange, color: Long) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    operator fun set(vararg pixels: Int, color: ColorContainer) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    operator fun set(pixels: IntRange, color: ColorContainer) {
         for (pixel in pixels) {
             setPixelColor(pixel, color)
         }
@@ -143,7 +155,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) {
      * @param end Last pixel in section
      * @param colorValues The color to set the section to
      */
-    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainer) {
+    override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainer) {
         for (i in start..end) setPixelColor(i, colorValues.r, colorValues.g, colorValues.b)
         show()
     }

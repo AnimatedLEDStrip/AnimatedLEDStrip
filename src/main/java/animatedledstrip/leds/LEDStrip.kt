@@ -182,17 +182,17 @@ abstract class LEDStrip(
         }
     }
 
-    operator fun set(vararg pixels: Int, color: ColorContainer) {
-        for (pixel in pixels) {
-            setPixelColor(pixel, color)
-        }
-    }
-
-    operator fun set(pixels: IntRange, color: ColorContainer) {
-        for (pixel in pixels) {
-            setPixelColor(pixel, color)
-        }
-    }
+//    operator fun set(vararg pixels: Int, color: ColorContainer) {
+//        for (pixel in pixels) {
+//            setPixelColor(pixel, color)
+//        }
+//    }
+//
+//    operator fun set(pixels: IntRange, color: ColorContainer) {
+//        for (pixel in pixels) {
+//            setPixelColor(pixel, color)
+//        }
+//    }
 
 //    /**
 //     * Set a pixel's color with `r`, `g`, `b` (ranges 0-255). If another thread has

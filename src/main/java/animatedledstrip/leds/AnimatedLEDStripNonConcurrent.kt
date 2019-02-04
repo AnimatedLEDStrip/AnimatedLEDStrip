@@ -33,7 +33,7 @@ import org.pmw.tinylog.Logger
  * @param numLEDs Number of LEDs in the strip
  */
 abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
-    LEDStripNonConcurrent(numLEDs) {
+    LEDStripNonConcurrent(numLEDs), AnimatedLEDStripInterface, LEDStripSectionInterface {
 
 
     /**
@@ -51,7 +51,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      * @param animation An [AnimationData] instance with details about the
      * animation to run
      */
-    fun run(animation: AnimationData) {
+    override fun run(animation: AnimationData) {
         animation.endPixel = when (animation.endPixel) {
             0 -> numLEDs - 1
             else -> animation.endPixel
