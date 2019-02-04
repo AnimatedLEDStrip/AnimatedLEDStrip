@@ -32,11 +32,14 @@ jobs:
       deploy:
       - provider: script
         script: mvn --settings .maven.xml site -B
+      - provider: script
+        script: git add dokka
       - provider: pages
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
         keep-history: true
         verbose: true
+        local_dir: ./dokka
         on:
           branch: master
 #      deploy:
