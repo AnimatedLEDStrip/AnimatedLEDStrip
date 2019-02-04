@@ -28,9 +28,10 @@ stages:
 
 jobs:
   include:
+    - stage: test
     - stage: deploy gh-pages
       deploy:
       - provider: script
-        script: mvn site
+        script: mvn site --settings .maven.xml
         on:
           branch: master
