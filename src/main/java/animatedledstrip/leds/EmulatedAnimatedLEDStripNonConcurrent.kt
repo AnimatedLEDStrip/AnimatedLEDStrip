@@ -28,11 +28,8 @@ package animatedledstrip.leds
  *
  * @param numLEDs Number of LEDs in the strip
  * @param pin GPIO pin connected for signal
- * @param imageDebugging Should a csv file be created containing all renders of
- * the strip?
  */
 class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int,
-                               pin: Int,
-                               imageDebugging: Boolean = false): AnimatedLEDStripNonConcurrent(numLEDs, pin, imageDebugging){
+                               pin: Int): AnimatedLEDStripNonConcurrent(numLEDs){
     override var ledStrip: LEDStripInterface = EmulatedWS281x(pin, 255, numLEDs)
 }
