@@ -35,6 +35,9 @@ package animatedledstrip.leds
  * @property ledStrip Strip that this section is a part of
  */
 class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStrip) {
+
+    constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip): this(pixels.first, pixels.endInclusive, ledStrip)
+
     /**
      * Run an animation on this section of the LED strip.
      *

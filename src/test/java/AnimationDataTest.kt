@@ -28,6 +28,7 @@ import animatedledstrip.leds.Animation
 import animatedledstrip.leds.AnimationData
 import animatedledstrip.leds.ColorContainer
 import animatedledstrip.leds.Direction
+import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -137,8 +138,9 @@ class AnimationDataTest {
     }
 
     @Test
+    @Ignore
     fun testColorList() {
-        // TODO()
+        TODO()
     }
 
     @Test
@@ -241,13 +243,15 @@ class AnimationDataTest {
     }
 
     @Test
+    @Ignore
     fun testMapConstructor() {
-        // TODO()
+        TODO()
     }
 
     @Test
+    @Ignore
     fun testToString() {
-        // TODO()
+        TODO()
     }
 
     @Test

@@ -42,8 +42,8 @@ import kotlin.text.StringBuilder
  * the strip?
  */
 abstract class LEDStrip(
-    var numLEDs: Int,
-    private val imageDebugging: Boolean = false
+        var numLEDs: Int,
+        private val imageDebugging: Boolean = false
 ) {
 
     /**
@@ -79,8 +79,8 @@ abstract class LEDStrip(
      * The file that the csv output will be saved to if image debugging is enabled.
      */
     private val outFile = if (imageDebugging) FileWriter(
-        "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
-        true
+            "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
+            true
     ) else null
 
     /**
@@ -112,13 +112,13 @@ abstract class LEDStrip(
         rendering = when (rendering) {
             true -> false
             false -> {
-                Thread.sleep(500)
                 GlobalScope.launch(renderThread) {
+                    delay(500)
                     var renderNum = 0
                     while (rendering) {
                         ledStrip.render()
                         if (imageDebugging) {
-                            getPixelColorList().forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
+                            pixelColorList.forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
                             buffer!!.append("0,0,0\n")
 
                             if (renderNum++ >= 1000) {
@@ -151,7 +151,16 @@ abstract class LEDStrip(
          * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
          */
         fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
-            LEDStripSection(startPixel, endPixel, ledStrip)
+                LEDStripSection(startPixel, endPixel, ledStrip)
+
+        /**
+         * Create a new [LEDStripSection].
+         *
+         * @param pixels An IntRange denoting the pixels in the section
+         * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
+         */
+        fun new(pixels: IntRange, ledStrip: AnimatedLEDStrip) =
+                LEDStripSection(pixels, ledStrip)
     }
 
 
@@ -174,6 +183,17 @@ abstract class LEDStrip(
         }
     }
 
+    operator fun set(vararg pixels: Int, color: ColorContainer) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    operator fun set(pixels: IntRange, color: ColorContainer) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
 
     /**
      * Set a pixel's color with `r`, `g`, `b` (ranges 0-255). If another thread has
@@ -201,6 +221,32 @@ abstract class LEDStrip(
         setPixelColor(pixel, ColorContainer(hexIn))
     }
 
+    operator fun set(vararg pixels: Int, color: Long) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    operator fun set(pixels: IntRange, color: Long) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+
+    /**
+     * Set the color of the whole strip.
+     */
+    var color: Any?
+        get() = throw Exception("Cannot get color of whole strip")
+        set(value) {
+            when (value) {
+                is ColorContainer -> setStripColor(value)
+                is Long -> setStripColor(value)
+                is Int -> setStripColor(value.toLong())
+                else -> throw Exception("Invalid type")
+            }
+        }
 
     /**
      * Loops through all pixels and sets their color to `colorValues`. If a pixel's
@@ -301,6 +347,14 @@ abstract class LEDStrip(
 
 
     /**
+     * Use index operator for getPixelColor operations.
+     *
+     * @param pixel The pixel to find the color of
+     */
+    operator fun get(pixel: Int) = getPixelColor(pixel)
+
+
+    /**
      * Get the color of a pixel as a `Long`. Waits until the pixel's `Mutex` is
      * unlocked.
      *
@@ -328,11 +382,12 @@ abstract class LEDStrip(
      * Get the colors of all pixels as a `List<Long>`. Waits until each pixel's
      * `Mutex` is unlocked.
      */
-    fun getPixelColorList(): List<Long> {
-        val temp = mutableListOf<Long>()
-        for (i in 0 until numLEDs) temp.add(getPixelLong(i))
-        return temp
-    }
+    val pixelColorList: List<Long>
+        get() {
+            val temp = mutableListOf<Long>()
+            for (i in 0 until numLEDs) temp.add(getPixelLong(i))
+            return temp
+        }
 
 
     /**
@@ -344,9 +399,9 @@ abstract class LEDStrip(
      * index 0
      */
     fun setStripColorWithPalette(palette: Map<Int, ColorContainer>, offset: Int = 0) =
-        palette.forEach { i, j ->
-            setPixelColor((i + offset) % numLEDs, j)
-        }
+            palette.forEach { i, j ->
+                setPixelColor((i + offset) % numLEDs, j)
+            }
 
 
     /**
