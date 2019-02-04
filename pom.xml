@@ -171,7 +171,7 @@
                             <goal>dokka</goal>
                         </goals>
                         <configuration>
-                            <outputDir>${project.basedir}\target\site</outputDir>
+                            <outputDir>${project.basedir}/target/site</outputDir>
                         </configuration>
                     </execution>
                 </executions>
