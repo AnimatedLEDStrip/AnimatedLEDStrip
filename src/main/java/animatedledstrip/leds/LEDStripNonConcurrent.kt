@@ -30,10 +30,8 @@ import org.pmw.tinylog.Logger
  * Class that represents an LED strip.
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
- * @param emulated Is this strip real or emulated?
  */
-abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emulated: Boolean = false) {
+abstract class LEDStripNonConcurrent(var numLEDs: Int) {
 
     /**
      * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.
@@ -42,14 +40,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
 
     init {
         Logger.info("numLEDs: $numLEDs")
-        Logger.info("using GPIO pin $pin")
     }
-
-    /**
-     * Returns `true` if this is an emulated LED strip.
-     */
-    fun isEmulated() = emulated
-
 
     /**
      * Sets a pixel's color with a `ColorContainer`.
@@ -57,7 +48,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
      * @param pixel The pixel to change
      * @param colorValues The color to set the pixel to
      */
-    fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
+    open fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
         ledStrip.setPixelColorRGB(pixel, colorValues.r, colorValues.g, colorValues.b)
     }
 
@@ -85,6 +76,31 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
         setPixelColor(pixel, ColorContainer(hexIn))
     }
 
+    operator fun set(vararg pixels: Int, color: Long) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    operator fun set(pixels: IntRange, color: Long) {
+        for (pixel in pixels) {
+            setPixelColor(pixel, color)
+        }
+    }
+
+    /**
+     * Set the color of the whole strip.
+     */
+    var color: Any?
+        get() = throw Exception("Cannot get color of whole strip")
+        set(value) {
+            when (value) {
+                is ColorContainer -> setStripColor(value)
+                is Long -> setStripColor(value)
+                is Int -> setStripColor(value.toLong())
+                else -> throw Exception("Invalid type")
+            }
+        }
 
     /**
      * Loops through all pixels and sets their color to `colorValues`.
@@ -167,9 +183,16 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
      */
-    fun getPixelColor(pixel: Int): ColorContainer =
+    open fun getPixelColor(pixel: Int): ColorContainer =
         ColorContainer(ledStrip.getPixelColor(pixel).toLong())
 
+
+    /**
+     * Use index operator for getPixelColor operations.
+     *
+     * @param pixel The pixel to find the color of
+     */
+    operator fun get(pixel: Int) = getPixelColor(pixel)
 
     /**
      * Get the color of a pixel as a `Long`.
@@ -192,16 +215,16 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
         return getPixelLong(pixel).toString(16)
     }
 
-
     /**
-     * Get the colors of all pixels as a `List<Long>`.
+     * Get the colors of all pixels as a `List<Long>`. Waits until each pixel's
+     * `Mutex` is unlocked.
      */
-    fun getPixelColorList(): List<Long> {
-        val temp = mutableListOf<Long>()
-        for (i in 0 until numLEDs) temp.add(getPixelLong(i))
-        return temp
-    }
-
+    val pixelColorList: List<Long>
+        get() {
+            val temp = mutableListOf<Long>()
+            for (i in 0 until numLEDs) temp.add(getPixelLong(i))
+            return temp
+        }
 
     /**
      * Set the color of the strip using a map with each pixel index mapped to a
@@ -232,7 +255,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int, pin: Int, private val emu
     /**
      * Send data to the LEDs.
      */
-    fun show() {
+    open fun show() {
         ledStrip.render()
     }
 }
