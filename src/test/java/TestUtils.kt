@@ -24,9 +24,16 @@ package animatedledstrip.test
 
 
 import animatedledstrip.leds.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.EmulatedAnimatedLEDStripNonConcurrent
 import kotlin.test.assertTrue
 
 fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+    testLEDs.pixelColorList.forEach {
+        assertTrue { it == color }
+    }
+}
+
+fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStripNonConcurrent, color: Long) {
     testLEDs.pixelColorList.forEach {
         assertTrue { it == color }
     }
