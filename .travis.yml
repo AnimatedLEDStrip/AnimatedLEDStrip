@@ -32,6 +32,6 @@ jobs:
     - stage: deploy gh-pages
       deploy:
       - provider: script
-        script: mvn site --settings .maven.xml
+        script: mvn site --settings .maven.xml && pwd && ls
         on:
           branch: master
