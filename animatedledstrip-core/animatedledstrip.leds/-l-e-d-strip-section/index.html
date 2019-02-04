@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LEDStripSection - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">LEDStripSection</a><br/>
+<br/>
+<h1>LEDStripSection</h1>
+<code><span class="keyword">class </span><span class="identifier">LEDStripSection</span></code>
+<p>Class used for running animations on only part of an LED strip.</p>
+<p>When this instance's run method is called, it modifies the <code>startPixel</code> and
+<code>endPixel</code> parameters in the <code>AnimationData</code> instance before passing it on to
+the <code>ledStrip</code> specified.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">LEDStripSection</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$<init>(kotlin.ranges.IntRange, animatedledstrip.leds.AnimatedLEDStrip)/pixels">pixels</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$<init>(kotlin.ranges.IntRange, animatedledstrip.leds.AnimatedLEDStrip)/ledStrip">ledStrip</span><span class="symbol">:</span>&nbsp;<a href="../-animated-l-e-d-strip/index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">)</span></code><code><span class="identifier">LEDStripSection</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$<init>(kotlin.Int, kotlin.Int, animatedledstrip.leds.AnimatedLEDStripInterface)/startPixel">startPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$<init>(kotlin.Int, kotlin.Int, animatedledstrip.leds.AnimatedLEDStripInterface)/endPixel">endPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$<init>(kotlin.Int, kotlin.Int, animatedledstrip.leds.AnimatedLEDStripInterface)/ledStrip">ledStrip</span><span class="symbol">:</span>&nbsp;<a href="../-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">)</span></code>
+<p>Class used for running animations on only part of an LED strip.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="end-pixel.html">endPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">endPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Last pixel in the section (inclusive)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="led-strip.html">ledStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">ledStrip</span><span class="symbol">: </span><a href="../-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a></code>
+<p>Strip that this section is a part of</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start-pixel.html">startPixel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">startPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>First pixel in the section</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="run.html">run</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">run</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStripSection$run(animatedledstrip.leds.AnimationData)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Run an animation on this section of the LED strip.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
