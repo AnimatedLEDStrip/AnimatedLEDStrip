@@ -1,5 +1,0 @@
-$dokka.format:html
-$dokka.linkExtension:html
-$dokka.location:animatedledstrip.leds$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.leds.tryWithLock.T)))animatedledstrip.leds/kotlinx.coroutines.sync.-mutex/try-with-lock.html
-animatedledstrip.ccpresets
-animatedledstrip.leds
