@@ -23,7 +23,6 @@ stages:
   - name: test
   - name: deploy gh-pages
   - name: deploy snapshot
-    if: env(project_version) =~ /^.*-SNAPSHOT$/
 
 jobs:
   include:
