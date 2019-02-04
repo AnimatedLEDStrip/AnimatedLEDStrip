@@ -39,6 +39,7 @@
         <kotlin.version>1.3.20</kotlin.version>
         <dokka.version>0.9.17</dokka.version>
         <github.global.server>github</github.global.server>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <distributionManagement>
