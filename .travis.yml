@@ -25,27 +25,30 @@ jobs:
     - stage: test
       install:
         mvn --settings .maven.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
-      after_success: coveralls
     - stage: deploy
       install:
-      -
+        -
+      test:
+        -
       deploy:
-      - provider: script
-        script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
-      - provider: pages
-        skip-cleanup: true
-        github-token: $GITHUB_TOKEN
-        keep-history: true
-        verbose: true
-        local_dir: ./dokka
-        on:
-          branch: master
+        - provider: script
+          script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+        - provider: pages
+          skip-cleanup: true
+          github-token: $GITHUB_TOKEN
+          keep-history: true
+          verbose: true
+          local_dir: ./dokka
+          on:
+            branch: master
     - stage: deploy
       install:
-      -
+        -
+      test:
+        -
       deploy:
-      - provider: script
-        script: mvn deploy --settings .maven.xml -DskipTests=true -B
-        on:
-          branch: master
+        - provider: script
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          on:
+            branch: master
 
