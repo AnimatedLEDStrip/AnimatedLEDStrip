@@ -1,7 +1,6 @@
 /out
 /target
 /.idea
-*.MF
 *.xml
 *.iml
 !pom.xml
