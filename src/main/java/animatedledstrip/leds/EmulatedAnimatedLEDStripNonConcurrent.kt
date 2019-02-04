@@ -27,9 +27,7 @@ package animatedledstrip.leds
  * Class for emulating an `LEDStripNonConcurrent`.
  *
  * @param numLEDs Number of LEDs in the strip
- * @param pin GPIO pin connected for signal
  */
-class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int,
-                               pin: Int): AnimatedLEDStripNonConcurrent(numLEDs){
-    override var ledStrip: LEDStripInterface = EmulatedWS281x(pin, 255, numLEDs)
+class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int): AnimatedLEDStripNonConcurrent(numLEDs){
+    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
 }
