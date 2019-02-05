@@ -29,6 +29,7 @@ import animatedledstrip.leds.EmulatedAnimatedLEDStrip
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
+import kotlin.test.assertFailsWith
 
 
 class AnimatedLEDStripTest {
@@ -84,4 +85,22 @@ class AnimatedLEDStripTest {
         testLEDs.run(AnimationData().animation(Animation.WIPE).color(0xFF))
         checkAllPixels(testLEDs, 0xFF)
     }
+
+    @Test
+    fun testCustomAnimationCompiler() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        assertFailsWith(UninitializedPropertyAccessException::class) {
+            testLEDs.customAnimationCompiler
+        }
+
+        assertFailsWith(UninitializedPropertyAccessException::class) {
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION).id("TEST"))
+        }
+
+        assertFailsWith(UninitializedPropertyAccessException::class) {
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION).id("TEST"))
+        }
+    }
+
 }
