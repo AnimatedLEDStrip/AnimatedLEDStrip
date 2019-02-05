@@ -89,14 +89,6 @@ open class ColorContainer(var r: Int, var g: Int, var b: Int) {
         b = bIn
     }
 
-    @Deprecated("Use hex property instead", ReplaceWith("hex"))
-    fun setRGBFromHex(hexIn: Long) {
-        setRGB((hexIn and 0xFF0000 shr 16).toInt(), (hexIn and 0x00FF00 shr 8).toInt(), (hexIn and 0x0000FF).toInt())
-    }
-
-    @Deprecated("Use hex property instead", ReplaceWith("hex"))
-    fun getColorHex() = hex
-
     /**
      * Returns the color held by this `ColorContainer` as a JavaFX `Color`.
      */
