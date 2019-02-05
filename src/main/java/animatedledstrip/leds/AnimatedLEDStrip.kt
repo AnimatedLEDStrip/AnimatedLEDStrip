@@ -203,6 +203,7 @@ abstract class AnimatedLEDStrip(
                 |   - Include animatedledstrip-custom-animations in your project
                 |   - Call extension function setupCustomAnimations()
             """.trimMargin())
+            throw UninitializedPropertyAccessException()
         }
     }
 
