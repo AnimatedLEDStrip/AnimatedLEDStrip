@@ -183,6 +183,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    @Ignore
     fun testSmoothFade() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -207,7 +208,6 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    @Ignore
     fun testSparkleFade() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
