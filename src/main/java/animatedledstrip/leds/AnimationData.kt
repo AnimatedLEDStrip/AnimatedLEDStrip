@@ -575,7 +575,7 @@ class AnimationData() {
         val a = params["Animation"]
         animation = when (a) {
             null -> throw Exception("Animation not defined")
-            is Animation -> params["Animation"] as Animation? ?: throw Exception("Animation not defined")
+            is Animation -> params["Animation"] as Animation
             is String -> {
                 when (a.toUpperCase()) {
                     "COL" -> Animation.COLOR
@@ -592,32 +592,32 @@ class AnimationData() {
             else -> throw Exception("Invalid type for animation parameter")
         }
         color1 = when (params["Color1"]) {
-            is Long -> ColorContainer(params["Color1"] as Long? ?: 0x0)
+            is Long -> ColorContainer(params["Color1"] as Long)
             is ColorContainer -> ColorContainer(params["Color1"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
 
         color2 = when (params["Color2"]) {
-            is Long -> ColorContainer(params["Color2"] as Long? ?: 0x0)
+            is Long -> ColorContainer(params["Color2"] as Long)
             is ColorContainer -> ColorContainer(params["Color2"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color3 = when (params["Color3"]) {
-            is Long -> ColorContainer(params["Color3"] as Long? ?: 0x0)
+            is Long -> ColorContainer(params["Color3"] as Long)
             is ColorContainer -> ColorContainer(params["Color3"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color4 = when (params["Color4"]) {
-            is Long -> ColorContainer(params["Color4"] as Long? ?: 0x0)
+            is Long -> ColorContainer(params["Color4"] as Long)
             is ColorContainer -> ColorContainer(params["Color4"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color5 = when (params["Color5"]) {
-            is Long -> ColorContainer(params["Color5"] as Long? ?: 0x0)
+            is Long -> ColorContainer(params["Color5"] as Long)
             is ColorContainer -> ColorContainer(params["Color5"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
@@ -636,53 +636,55 @@ class AnimationData() {
             else -> 0L
         }
         delayMod = params["DelayMod"] as Double? ?: 1.0
-        direction = when (params["Direction"] as Char?) {
-            'F', 'f' -> Direction.FORWARD
-            'B', 'b' -> Direction.BACKWARD
+        direction = when (params["Direction"]) {
+            is Char -> when (params["Direction"]) {
+                'F', 'f' -> Direction.FORWARD
+                'B', 'b' -> Direction.BACKWARD
+                else -> throw Exception("Direction chars can be 'F' or 'B'")
+            }
+            is Direction -> params["Direction"] as Direction
             else -> Direction.FORWARD
         }
         endPixel = params["EndPixel"] as Int? ?: 0
         id = params["ID"] as String? ?: ""
-        spacing = params["Spacing"] as Int? ?: 3
+        spacing = params["Spacing"] as Int? ?: 3        // TODO: Replace with default like delay
         startPixel = params["StartPixel"] as Int? ?: 0
     }
 
 
     /**
      * Create a `String` out of the values of this instance.
-     *
      */
     override fun toString() =
-        "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
+            "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
 
 
     /**
      * Create a `Map` that can be sent over a socket.
-     *
      */
     fun toMap() = mapOf<String, Any?>(
-        "Animation" to animation,
-        "Color1" to color1.hex,
-        "Color2" to color2.hex,
-        "Color3" to color3.hex,
-        "Color4" to color4.hex,
-        "Color5" to color5.hex,
-        "ColorList" to mutableListOf<Long>().apply {
-            colorList.forEach {
-                this.add(it.hex)
-            }
-        },
-        "Continuous" to continuous,
-        "Delay" to delay,
-        "DelayMod" to delayMod,
-        "Direction" to when (direction) {
-            Direction.FORWARD -> 'F'
-            Direction.BACKWARD -> 'B'
-        },
-        "EndPixel" to endPixel,
-        "ID" to id,
-        "Spacing" to spacing,
-        "StartPixel" to startPixel
+            "Animation" to animation,
+            "Color1" to color1.hex,
+            "Color2" to color2.hex,
+            "Color3" to color3.hex,
+            "Color4" to color4.hex,
+            "Color5" to color5.hex,
+            "ColorList" to mutableListOf<Long>().apply {
+                colorList.forEach {
+                    this.add(it.hex)
+                }
+            },
+            "Continuous" to continuous,
+            "Delay" to delay,
+            "DelayMod" to delayMod,
+            "Direction" to when (direction) {
+                Direction.FORWARD -> 'F'
+                Direction.BACKWARD -> 'B'
+            },
+            "EndPixel" to endPixel,
+            "ID" to id,
+            "Spacing" to spacing,
+            "StartPixel" to startPixel
     )
 
 }
