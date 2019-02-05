@@ -139,6 +139,7 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50)
 
         assertTrue { testCC == ColorContainer(0xFF7B50) }
+        assertFalse { testCC == ColorContainer(0xFF7B51) }
         assertFalse { testCC.equals(10) }
 
         testCC.hashCode()
