@@ -200,6 +200,57 @@ class LEDStripTest {
         assertTrue { testLEDs[25] == ColorContainer(0xFF) }
         assertTrue { testLEDs[26] == ColorContainer(0) }
         assertTrue { testLEDs[45] == ColorContainer(0) }
+
+        testSection2.run(AnimationData().animation(Animation.STACK).color(0xFFFF))
+
+        assertTrue { testLEDs[0] == ColorContainer(0) }
+        assertTrue { testLEDs[9] == ColorContainer(0) }
+        assertTrue { testLEDs[10] == ColorContainer(0xFFFF) }
+        assertTrue { testLEDs[15] == ColorContainer(0xFFFF) }
+        assertTrue { testLEDs[25] == ColorContainer(0xFFFF) }
+        assertTrue { testLEDs[26] == ColorContainer(0) }
+        assertTrue { testLEDs[45] == ColorContainer(0) }
+
+        testSection2.run(AnimationData().animation(Animation.WIPE).color(0xFF00))
+
+        assertTrue { testLEDs[0] == ColorContainer(0) }
+        assertTrue { testLEDs[9] == ColorContainer(0) }
+        assertTrue { testLEDs[10] == ColorContainer(0xFF00) }
+        assertTrue { testLEDs[15] == ColorContainer(0xFF00) }
+        assertTrue { testLEDs[25] == ColorContainer(0xFF00) }
+        assertTrue { testLEDs[26] == ColorContainer(0) }
+        assertTrue { testLEDs[45] == ColorContainer(0) }
+
+        // TODO: Fix test
+//        testSection2.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
+
+//        assertTrue { testLEDs[0] == ColorContainer(0) }
+//        assertTrue { testLEDs[9] == ColorContainer(0) }
+//        assertTrue { testLEDs[10] == ColorContainer(0xFF00FF) }
+//        assertTrue { testLEDs[15] == ColorContainer(0xFF00FF) }
+//        assertTrue { testLEDs[25] == ColorContainer(0xFF00FF) }
+//        assertTrue { testLEDs[26] == ColorContainer(0) }
+//        assertTrue { testLEDs[45] == ColorContainer(0) }
+
+        testSection2.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
+
+        assertTrue { testLEDs[0] == ColorContainer(0) }
+        assertTrue { testLEDs[9] == ColorContainer(0) }
+        assertTrue { testLEDs[10] == ColorContainer(0xFF0000) }
+        assertTrue { testLEDs[15] == ColorContainer(0xFF0000) }
+        assertTrue { testLEDs[25] == ColorContainer(0xFF0000) }
+        assertTrue { testLEDs[26] == ColorContainer(0) }
+        assertTrue { testLEDs[45] == ColorContainer(0) }
+
+        testSection2.run(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))
+
+        assertTrue { testLEDs[0] == ColorContainer(0) }
+        assertTrue { testLEDs[9] == ColorContainer(0) }
+        assertTrue { testLEDs[10] == ColorContainer(0xFFFFFF) }
+        assertTrue { testLEDs[15] == ColorContainer(0xFFFFFF) }
+        assertTrue { testLEDs[25] == ColorContainer(0xFFFFFF) }
+        assertTrue { testLEDs[26] == ColorContainer(0) }
+        assertTrue { testLEDs[45] == ColorContainer(0) }
     }
 
     @Test
