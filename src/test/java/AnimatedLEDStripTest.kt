@@ -23,6 +23,7 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import org.junit.Ignore
 import org.junit.Test
@@ -124,7 +125,6 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    @Ignore
     fun testPixelMarathon() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -243,7 +243,6 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    @Ignore
     fun testStackOverflow() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -286,12 +285,19 @@ class AnimatedLEDStripTest {
         }
 
         assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION).id("TEST"))
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION))
         }
 
         assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION).id("TEST"))
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
         }
+    }
+
+    @Test
+    fun testFadePixel() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.fadePixel(50, CCBlue)
     }
 
 }
