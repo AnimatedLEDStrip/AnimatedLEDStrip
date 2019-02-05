@@ -23,6 +23,9 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.ccpresets.CCBlue
+import animatedledstrip.leds.blend
 import animatedledstrip.leds.parseHex
 import org.junit.Ignore
 import org.junit.Test
@@ -42,9 +45,9 @@ class UtilsTest {
     }
 
     @Test
-    @Ignore
     fun testBlend() {
-
+        blend(CCBlack, CCBlue, 0)
+        blend(CCBlack, CCBlue, 255)
     }
 
 }
