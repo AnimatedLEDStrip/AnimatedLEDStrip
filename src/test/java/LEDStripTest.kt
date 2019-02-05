@@ -23,6 +23,7 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.ccpresets.CCBlack
 import animatedledstrip.leds.*
 import org.junit.Test
 import org.pmw.tinylog.Configurator
@@ -76,6 +77,8 @@ class LEDStripTest {
         assertTrue { testLEDs[10] == ColorContainer(0xFF0000) }
         assertTrue { testLEDs[11] == ColorContainer(0xFF0000) }
         assertTrue { testLEDs[12] == ColorContainer(0xFF0000) }
+
+        testLEDs.setPixelColor(50, CCBlack)
     }
 
     @Test
@@ -157,6 +160,7 @@ class LEDStripTest {
         assertTrue { testLEDs.getPixelLong(15) == 0xFFL }
         assertTrue { testLEDs.getPixelHexString(15) == "ff" }
         assertTrue { testLEDs[15] == ColorContainer(0xFF) }
+        assertTrue { testLEDs.getPixelColor(50) == ColorContainer(0) }
     }
 
     @Test
@@ -265,5 +269,10 @@ class LEDStripTest {
         testLEDs.toggleRender()
         delayBlocking(1000)
         assertTrue { testLEDs.rendering }
+    }
+
+    @Test
+    fun testImageDebugging() {
+        EmulatedAnimatedLEDStrip(50, true)
     }
 }
