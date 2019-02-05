@@ -23,7 +23,7 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.*
+import animatedledstrip.ccpresets.CCBlack
 import org.pmw.tinylog.Logger
 
 
@@ -64,6 +64,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELRUN -> pixelRun(animation)
+            Animation.PIXELRUNWITHTRAIL -> pixelRunWithTrail(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SPARKLE -> sparkle(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
