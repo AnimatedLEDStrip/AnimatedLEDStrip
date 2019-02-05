@@ -25,6 +25,7 @@ package animatedledstrip.test
 
 import animatedledstrip.leds.ColorContainer
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ColorContainerTest {
@@ -86,6 +87,9 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50)
 
         assertTrue { testCC.hex == 0xFF7B50L }
+
+        testCC.hex = 0x84AF
+        assertTrue { testCC.hex == 0x84AFL }
     }
 
     @Test
@@ -93,6 +97,7 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50)
 
         assertTrue { testCC.hexString == "FF7B50" }
+        assertTrue { testCC.toString() == "FF7B50" }
     }
 
     @Test
@@ -134,5 +139,8 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50)
 
         assertTrue { testCC == ColorContainer(0xFF7B50) }
+        assertFalse { testCC.equals(10) }
+
+        testCC.hashCode()
     }
 }
