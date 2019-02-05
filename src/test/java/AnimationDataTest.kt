@@ -201,6 +201,10 @@ class AnimationDataTest {
 
         testAnimation.direction('b')
         assertTrue { testAnimation.direction == Direction.BACKWARD }
+
+        assertFailsWith(Exception::class) {
+            testAnimation.direction('G')
+        }
     }
 
     @Test
@@ -243,9 +247,86 @@ class AnimationDataTest {
     }
 
     @Test
-    @Ignore
     fun testMapConstructor() {
-        TODO()
+
+        assertFailsWith(Exception::class) {
+            AnimationData(mapOf("Color1" to 0xFFL))
+            Unit
+        }
+
+        val a1 = AnimationData(mapOf("Animation" to Animation.ALTERNATE))
+        assertTrue { a1.animation == Animation.ALTERNATE }
+        val a2 = AnimationData(mapOf("Animation" to Animation.BOUNCE))
+        assertTrue { a2.animation == Animation.BOUNCE }
+        val a3 = AnimationData(mapOf("Animation" to Animation.BOUNCETOCOLOR))
+        assertTrue { a3.animation == Animation.BOUNCETOCOLOR }
+        val a4 = AnimationData(mapOf("Animation" to Animation.COLOR))
+        assertTrue { a4.animation == Animation.COLOR }
+        val a5 = AnimationData(mapOf("Animation" to Animation.MULTICOLOR))
+        assertTrue { a5.animation == Animation.MULTICOLOR }
+        val a6 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUN))
+        assertTrue { a6.animation == Animation.MULTIPIXELRUN }
+        val a7 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUNTOCOLOR))
+        assertTrue { a7.animation == Animation.MULTIPIXELRUNTOCOLOR }
+        val a8 = AnimationData(mapOf("Animation" to Animation.PIXELMARATHON))
+        assertTrue { a8.animation == Animation.PIXELMARATHON }
+        val a9 = AnimationData(mapOf("Animation" to Animation.PIXELRUN))
+        assertTrue { a9.animation == Animation.PIXELRUN }
+        val a10 = AnimationData(mapOf("Animation" to Animation.PIXELRUNWITHTRAIL))
+        assertTrue { a10.animation == Animation.PIXELRUNWITHTRAIL }
+        val a11 = AnimationData(mapOf("Animation" to Animation.SMOOTHCHASE))
+        assertTrue { a11.animation == Animation.SMOOTHCHASE }
+        val a12 = AnimationData(mapOf("Animation" to Animation.SMOOTHFADE))
+        assertTrue { a12.animation == Animation.SMOOTHFADE }
+        val a13 = AnimationData(mapOf("Animation" to Animation.SPARKLE))
+        assertTrue { a13.animation == Animation.SPARKLE }
+        val a14 = AnimationData(mapOf("Animation" to Animation.SPARKLEFADE))
+        assertTrue { a14.animation == Animation.SPARKLEFADE }
+        val a15 = AnimationData(mapOf("Animation" to Animation.SPARKLETOCOLOR))
+        assertTrue { a15.animation == Animation.SPARKLETOCOLOR }
+        val a16 = AnimationData(mapOf("Animation" to Animation.STACK))
+        assertTrue { a16.animation == Animation.STACK }
+        val a17 = AnimationData(mapOf("Animation" to Animation.STACKOVERFLOW))
+        assertTrue { a17.animation == Animation.STACKOVERFLOW }
+        val a18 = AnimationData(mapOf("Animation" to Animation.WIPE))
+        assertTrue { a18.animation == Animation.WIPE }
+        val a19 = AnimationData(mapOf("Animation" to Animation.CUSTOMANIMATION))
+        assertTrue { a19.animation == Animation.CUSTOMANIMATION }
+        val a20 = AnimationData(mapOf("Animation" to Animation.CUSTOMREPETITIVEANIMATION))
+        assertTrue { a20.animation == Animation.CUSTOMREPETITIVEANIMATION }
+
+        val as1 = AnimationData(mapOf("Animation" to "ALT"))
+        assertTrue { as1.animation == Animation.ALTERNATE }
+
+        val as2 = AnimationData(mapOf("Animation" to "COL"))
+        assertTrue { as2.animation == Animation.COLOR }
+
+        val as3 = AnimationData(mapOf("Animation" to "MCOL"))
+        assertTrue { as3.animation == Animation.MULTICOLOR }
+
+        assertFailsWith(Exception::class) {
+            AnimationData(mapOf("Animation" to "ABC"))
+        }
+
+        assertFailsWith(Exception::class) {
+            AnimationData(mapOf("Animation" to 10))
+        }
+
+
+        val c1 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color1" to 0xFFFFL))
+        assertTrue { c1.color1 == ColorContainer(0xFFFF) }
+
+        val c2 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color2" to 0xFFFFL))
+        assertTrue { c2.color2 == ColorContainer(0xFFFF) }
+
+        val c3 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color3" to 0xFFFFL))
+        assertTrue { c3.color3 == ColorContainer(0xFFFF) }
+
+        val c4 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color4" to 0xFFFFL))
+        assertTrue { c4.color4 == ColorContainer(0xFFFF) }
+
+        val c5 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color5" to 0xFFFFL))
+        assertTrue { c5.color5 == ColorContainer(0xFFFF) }
     }
 
     @Test
