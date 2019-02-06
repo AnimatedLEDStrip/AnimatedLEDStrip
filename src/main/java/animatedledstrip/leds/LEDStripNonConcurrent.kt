@@ -31,7 +31,7 @@ import org.pmw.tinylog.Logger
  *
  * @param numLEDs Number of LEDs in the strip
  */
-abstract class LEDStripNonConcurrent(var numLEDs: Int) : LEDStripSectionInterface {
+abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
 
     /**
      * The LED Strip. Chooses between `WS281x` and `EmulatedWS281x` based on value of emulated.
@@ -54,7 +54,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : LEDStripSectionInterfac
             is ColorContainer -> colorValues.prepare(numLEDs)
             else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
         }
-        ledStrip.setPixelColorRGB(pixel, colors[pixel].r, colors[pixel].g, colors[pixel].b)
+        ledStrip.setPixelColor(pixel, colors[pixel].toInt())
     }
 
 
@@ -257,10 +257,18 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : LEDStripSectionInterfac
      * @param offset The index of the pixel that will be set to the color at
      * index 0
      */
-    fun setStripColorWithPalette(palette: Map<Int, ColorContainer>, offset: Int = 0) =
-            palette.forEach { i, j ->
-                setPixelColor((i + offset) % numLEDs, j)
-            }
+    fun setStripColorWithOffset(palette: PreparedColorContainer, offset: Int = 0) {
+        val temp = mutableListOf<Long>()
+
+        for (i in 0 until palette.size) {
+            temp += palette[i + offset % palette.size]
+        }
+
+        setStripColor(PreparedColorContainer(temp))
+//        palette.forEachIndexed { i, j ->
+//            setPixelColor((i + offset) % numLEDs, j)
+//        }
+    }
 
 
     /**

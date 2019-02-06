@@ -38,10 +38,10 @@ import javax.script.ScriptEngine
  * @param numLEDs Number of LEDs in the strip
  */
 abstract class AnimatedLEDStrip(
-    numLEDs: Int,
-    imageDebugging: Boolean = false
+        numLEDs: Int,
+        imageDebugging: Boolean = false
 ) :
-    LEDStrip(numLEDs, imageDebugging), AnimatedLEDStripInterface, LEDStripSectionInterface {
+        LEDStrip(numLEDs, imageDebugging), AnimatedLEDStripInterface, SectionableLEDStrip {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is
@@ -57,7 +57,7 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val animationThreadPool =
-        newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
+            newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
@@ -66,7 +66,7 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val sparkleThreadPool =
-        newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
+            newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 
     /**
@@ -163,12 +163,18 @@ abstract class AnimatedLEDStrip(
             0 -> numLEDs - 1
             else -> animation.endPixel
         }
+        animation.color1 = animation.color1.prepare(animation.endPixel - animation.startPixel + 1)
+        animation.color2 = animation.color2.prepare(animation.endPixel - animation.startPixel + 1)
+        animation.color3 = animation.color3.prepare(animation.endPixel - animation.startPixel + 1)
+        animation.color4 = animation.color4.prepare(animation.endPixel - animation.startPixel + 1)
+        animation.color5 = animation.color5.prepare(animation.endPixel - animation.startPixel + 1)
+
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCE -> bounce(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
             Animation.COLOR -> setStripColor(animation.color1)
-            Animation.MULTICOLOR -> setStripColorWithGradient(animation.colorList)
+            Animation.MULTICOLOR -> setStripColor(animation.color1)
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELMARATHON -> pixelMarathon(animation)
@@ -501,24 +507,22 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
-        val colorList = animation.colorList
+        val palette = animation.color1
         val movementDirection = animation.direction
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
         val delay = animation.delay
 
-//        val palette = colorsFromPalette(colorList, endPixel - startPixel + 1)
-//
-//        when (movementDirection) {
-//            Direction.FORWARD -> for (m in startPixel..endPixel) {
-//                setStripColorWithPalette(palette, m - startPixel)
-//                delayBlocking((delay * delayMod).toInt())
-//            }
-//            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
-//                setStripColorWithPalette(palette, m - startPixel)
-//                delayBlocking((delay * delayMod).toInt())
-//            }
-//        }
+        when (movementDirection) {
+            Direction.FORWARD -> for (m in startPixel..endPixel) {
+                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+                delayBlocking((delay * delayMod).toInt())
+            }
+            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
+                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+                delayBlocking((delay * delayMod).toInt())
+            }
+        }
     }
 
 
@@ -526,12 +530,10 @@ abstract class AnimatedLEDStrip(
      * Runs a Smooth Fade animation.
      */
     private val smoothFade = { animation: AnimationData ->
-//        val palette = colorsFromPalette(animation.colorList, animation.endPixel - animation.startPixel + 1)
-//
-//        for (i in animation.startPixel..animation.endPixel) {
-//            setStripColor(palette[i])
-//            delayBlocking(animation.delay)
-//        }
+        for (i in animation.startPixel..animation.endPixel) {
+            setStripColor((animation.color1 as PreparedColorContainer)[i])
+            delayBlocking(animation.delay)
+        }
 
     }
 

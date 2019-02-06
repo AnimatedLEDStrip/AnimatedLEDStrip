@@ -162,7 +162,7 @@ class ColorPresetsTest {
         )
 
         for (i in 0 until colorList.size) {
-            assertTrue { CCPresets[i].hex == colorList[i] }
+            assertTrue { CCPresets[i].color == colorList[i] }
         }
 
     }

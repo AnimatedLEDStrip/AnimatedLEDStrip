@@ -33,7 +33,7 @@ import org.pmw.tinylog.Logger
  * @param numLEDs Number of LEDs in the strip
  */
 abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
-    LEDStripNonConcurrent(numLEDs), AnimatedLEDStripInterface, LEDStripSectionInterface {
+    LEDStripNonConcurrent(numLEDs), AnimatedLEDStripInterface, SectionableLEDStrip {
 
 
     /**
@@ -60,7 +60,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
             Animation.COLOR -> setStripColor(animation.color1)
-            Animation.MULTICOLOR -> setStripColorWithGradient(animation.colorList)
+            Animation.MULTICOLOR -> setStripColor(animation.color1)
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELRUN -> pixelRun(animation)
@@ -322,26 +322,24 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
-        val colorList = animation.colorList
+        val palette = animation.color1
         val movementDirection = animation.direction
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
         val delay = animation.delay
 
-//        val palette = colorsFromPalette(colorList, numLEDs)
-//
-//        when (movementDirection) {
-//            Direction.FORWARD -> for (m in startPixel..endPixel) {
-//                setStripColorWithPalette(palette, m)
-//                show()
-//                delayBlocking((delay * delayMod).toInt())
-//            }
-//            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
-//                setStripColorWithPalette(palette, m)
-//                show()
-//                delayBlocking((delay * delayMod).toInt())
-//            }
-//        }
+        when (movementDirection) {
+            Direction.FORWARD -> for (m in startPixel..endPixel) {
+                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+                show()
+                delayBlocking((delay * delayMod).toInt())
+            }
+            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
+                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+                show()
+                delayBlocking((delay * delayMod).toInt())
+            }
+        }
     }
 
 

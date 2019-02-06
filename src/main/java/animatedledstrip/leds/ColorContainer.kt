@@ -86,7 +86,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     /* Utility functions */
 
-    fun prepare(numLEDs: Int): PreparedColorContainer {
+    override fun prepare(numLEDs: Int): PreparedColorContainer {
         val returnMap = mutableMapOf<Int, Long>()
 
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
@@ -221,6 +221,9 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     override fun hashCode(): Int {
         return colors.hashCode()
     }
+
+    val size: Int
+        get() = colors.size
 
 
     /* Deprecated properties */

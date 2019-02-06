@@ -1,6 +1,6 @@
 package animatedledstrip.leds
 
-interface LEDStripSectionInterface {
+interface SectionableLEDStrip {
 
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface)
 }

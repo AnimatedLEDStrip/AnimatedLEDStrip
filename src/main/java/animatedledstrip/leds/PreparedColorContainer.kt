@@ -20,4 +20,9 @@ class PreparedColorContainer(private val colors: List<Long>): ColorContainerInte
 
     operator fun contains(value: Long): Boolean = colors.contains(value)
 
+    override fun prepare(numLEDs: Int): PreparedColorContainer = this
+
+    val size: Int
+        get() = colors.size
+
 }

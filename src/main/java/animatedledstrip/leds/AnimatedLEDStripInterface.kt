@@ -1,6 +1,6 @@
 package animatedledstrip.leds
 
-interface AnimatedLEDStripInterface: LEDStripSectionInterface {
+interface AnimatedLEDStripInterface: SectionableLEDStrip {
 
     fun run(animation: AnimationData)
 

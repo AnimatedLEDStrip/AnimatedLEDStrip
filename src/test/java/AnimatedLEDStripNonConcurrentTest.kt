@@ -1,13 +1,10 @@
 package animatedledstrip.test
 
-import animatedledstrip.leds.Animation
-import animatedledstrip.leds.AnimationData
-import animatedledstrip.leds.Direction
-import animatedledstrip.leds.EmulatedAnimatedLEDStripNonConcurrent
-import org.junit.Ignore
+import animatedledstrip.leds.*
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
+import kotlin.test.assertTrue
 
 class AnimatedLEDStripNonConcurrentTest {
 
@@ -42,22 +39,18 @@ class AnimatedLEDStripNonConcurrentTest {
     }
 
     @Test
-    @Ignore
     fun testMultiColor() {
         val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
         testLEDs.run(AnimationData()
                 .animation(Animation.MULTICOLOR)
-                .colorList(listOf<Long>(0xFF, 0xFFFF)))
+                .color1(ColorContainer(0xFF, 0xFFFF)))
 
-//        val testGradient = colorsFromPalette(listOf(
-//                ColorContainer(0xFF),
-//                ColorContainer(0xFFFF))
-//                , 50)
-//
-//        for (i in 0 until 50) {
-//            assertTrue { testGradient[i] == testLEDs[i] }
-//        }
+        val testGradient = ColorContainer(0xFF, 0xFFFF).prepare(50)
+
+        for (i in 0 until 50) {
+            assertTrue { testGradient[i] == testLEDs[i] }
+        }
     }
 
     @Test
@@ -128,12 +121,12 @@ class AnimatedLEDStripNonConcurrentTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .colorList(listOf(0xFF, 0xFF00))
+                .color(ColorContainer(0xFF, 0xFF00))
                 .direction(Direction.FORWARD))
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .colorList(listOf(0xFF00, 0xFF))
+                .color(ColorContainer(0xFF00, 0xFF))
                 .direction(Direction.BACKWARD))
     }
 
