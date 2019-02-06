@@ -41,11 +41,12 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     if (amountOfOverlay == 255) return overlay
 
     if (existing == overlay) return existing
+
     val r = blend8(existing.r, overlay.r, amountOfOverlay)
     val g = blend8(existing.g, overlay.g, amountOfOverlay)
     val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
-    return (r shl 16 or g shl 8 or b).toLong()
+    return ((r shl 16) or (g shl 8) or b).toLong()
 
 }
 
@@ -123,12 +124,7 @@ fun parseHex(string: String): Long {
 }
 
 fun Long.grayscale(): Long {
-    val avg = (
-            (this and 0xFF0000 shr 16).toInt()
-                    + (this and 0x00FF00 shr 8).toInt()
-                    + (this and 0x0000FF).toInt()
-                    / 3)
-            .toString(16)
+    val avg = (((this shr 16 and 0xFF) + (this shr 8 and 0xFF) + (this and 0xFF)) / 3) base 16
     return parseHex("$avg$avg$avg")
 }
 
@@ -138,3 +134,5 @@ val Long.g
     get() = (this shr 8 and 0xFF).toInt()
 val Long.b
     get() = (this and 0xFF).toInt()
+
+infix fun Long.base(b: Int) = this.toString(b)

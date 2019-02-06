@@ -8,12 +8,16 @@ class PreparedColorContainer(private val colors: List<Long>): ColorContainerInte
         get() = 0
 
     override fun toString(): String {
-        var temp = ""
-        for (i in 0 until colors.size) temp += "${colors[i].toString(16)} "
-
+        var temp = "["
+        for (c in colors) {
+            temp += c base 16
+            temp += ", "
+        }
+        temp = temp.removeSuffix(", ")
+        temp += "]"
         return temp
     }
 
-
+    operator fun contains(value: Long): Boolean = colors.contains(value)
 
 }

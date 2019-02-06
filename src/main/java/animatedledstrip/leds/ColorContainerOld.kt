@@ -98,7 +98,7 @@ open class ColorContainerOld(var r: Int, var g: Int, var b: Int) {
     /**
      * Returns a `ColorContainer` with the inverse of the color held by this `ColorContainer`.
      */
-    fun invert() = ColorContainer(255 - this.r, 255 - this.g, 255 - this.b)
+    fun invert() = ColorContainer(Triple(255 - this.r, 255 - this.g, 255 - this.b))
 
     /**
      * Returns the average of `r`, `g`, `b`.

@@ -18,7 +18,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
     }
 
-    constructor(r: Int, g: Int, b: Int) : this((r shl 16).toLong() or (g shl 8).toLong() or b.toLong())
+    constructor(rgb: Triple<Int, Int, Int>) : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
 
     constructor(colorList: List<Long>) : this(colorList[0]) {
         colorList.forEachIndexed { index, color ->
@@ -26,31 +26,71 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
     }
 
-    constructor(ccIn: ColorContainer) : this()
+    constructor(ccIn: ColorContainer) : this() {
+        for (c in ccIn) {
+            colors += c
+        }
+    }
 
-    fun grayscale() {
+    fun grayscale(): ColorContainer {
         colors.forEachIndexed { index, color ->
             colors[index] = color.grayscale()
         }
+        return this
     }
 
-    fun grayscale(vararg indices: Int) {
+    fun grayscale(vararg indices: Int): ColorContainer  {
         for (index in indices) {
             if (colors.indices.contains(index)) colors[index] = colors[index].grayscale()
         }
+        return this
+    }
+
+    fun grayscaled(): ColorContainer {
+        val temp = ColorContainer()
+        for (c in colors) {
+            temp += c.grayscale()
+        }
+        return temp
+    }
+
+    fun grayscaled(vararg indices: Int): ColorContainer {
+        val temp = ColorContainer()
+        for (i in indices) {
+            if (colors.indices.contains(i)) temp += colors[i].grayscale()
+        }
+        return temp
     }
 
 
-    fun invert() {
+    fun invert(): ColorContainer {
         colors.forEachIndexed { index, color ->
-            colors[index] = color.inv()
+            colors[index] = color.inv() and 0xFFFFFF
         }
+        return this
     }
 
-    fun invert(vararg indices: Int) {
+    fun invert(vararg indices: Int): ColorContainer {
         for (index in indices) {
-            if (colors.indices.contains(index)) colors[index] = colors[index].inv()
+            if (colors.indices.contains(index)) colors[index] = colors[index].inv() and 0xFFFFFF
         }
+        return this
+    }
+
+    fun inverse(): ColorContainer {
+        val temp = ColorContainer()
+        for (c in colors) {
+            temp += c.inv() and 0xFFFFFF
+        }
+        return temp
+    }
+
+    fun inverse(vararg indices: Int): ColorContainer {
+        val temp = ColorContainer()
+        for (i in indices) {
+            if (colors.indices.contains(i)) temp += colors[i].inv() and 0xFFFFFF
+        }
+        return temp
     }
 
 
@@ -109,9 +149,16 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     override fun toString(): String {
         return if (singleColor) color.toString(16)
-        else "[${colors.forEachIndexed { index, color ->
-            color.toString(16) + if (index != colors.lastIndex) "," else ""
-        }}]"
+        else {
+            var temp = "["
+            for (c in colors) {
+                temp += c base 16
+                temp += ", "
+            }
+            temp = temp.removeSuffix(", ")
+            temp += "]"
+            temp
+        }
     }
 
     override fun equals(other: Any?): Boolean {
@@ -124,7 +171,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
                 }
                 i
             } else false
-        } else if (other is Long) other == this.color
+        } else if (other is Long) singleColor && other == this.color
         else super.equals(other)
     }
 
@@ -137,6 +184,17 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
             }
 
     operator fun get(vararg indices: Int): List<Long> =
+            if (singleColor) listOf(color)
+            else {
+                val temp = mutableListOf<Long>()
+                for (index in indices) {
+                    temp += if (colors.indices.contains(index)) colors[index]
+                    else 0
+                }
+                temp
+            }
+
+    operator fun get(indices: IntRange): List<Long> =
             if (singleColor) listOf(color)
             else {
                 val temp = mutableListOf<Long>()

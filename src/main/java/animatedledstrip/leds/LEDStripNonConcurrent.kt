@@ -67,7 +67,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : LEDStripSectionInterfac
      * @param bIn Blue intensity of the color
      */
     fun setPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
-        setPixelColor(pixel, ColorContainer(rIn, gIn, bIn))
+        setPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
     }
 
 

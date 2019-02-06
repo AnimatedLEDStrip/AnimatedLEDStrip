@@ -33,88 +33,36 @@ class ColorContainerTest {
 
     @Test
     fun testPrimaryConstructor() {
-        val testCC = ColorContainer(255, 123, 80)
+        val testCC = ColorContainer(0xFF7B50)
 
-        assertTrue { testCC.r == 255 }
-        assertTrue { testCC.g == 123 }
-        assertTrue { testCC.b == 80 }
+        assertTrue { testCC.color == 0xFF7B50L }
     }
 
     @Test
     fun testCCConstructor() {
-        val cc = ColorContainer(255, 123, 80)
+        val cc = ColorContainer(0xFF7B50)
         val testCC = ColorContainer(cc)
 
-        assertTrue { testCC.r == 255 }
-        assertTrue { testCC.g == 123 }
-        assertTrue { testCC.b == 80 }
+        assertTrue { testCC.color == 0xFF7B50L }
     }
 
     @Test
-    fun testLongConstructor() {
-        val testCC = ColorContainer(0xFF7B50)
+    fun testRGBConstructor() {
+        val testCC = ColorContainer(Triple(255, 123, 80))
 
-        assertTrue { testCC.r == 255 }
-        assertTrue { testCC.g == 123 }
-        assertTrue { testCC.b == 80 }
+        assertTrue { testCC.color == 0xFF7B50L }
     }
 
     @Test
-    @Ignore
-    fun testR() {
-        val testCC = ColorContainer(0)
-//        testCC.r = 255
+    fun testToString() {
+        val testCC = ColorContainer(0xFF3B82)
+        assertTrue { testCC.toString() == "ff3b82" }
 
-        assertTrue { testCC.r == 255 }
-    }
+        val testCC2 = ColorContainer(0xFF7B50, 0xFFFFFF)
+        assertTrue { testCC2.toString() == "[ff7b50, ffffff]" }
 
-    @Test
-    @Ignore
-    fun testG() {
-        val testCC = ColorContainer(0)
-//        testCC.g = 255
-
-        assertTrue { testCC.g == 255 }
-    }
-
-    @Test
-    @Ignore
-    fun testB() {
-        val testCC = ColorContainer(0)
-//        testCC.b = 255
-
-        assertTrue { testCC.b == 255 }
-    }
-
-    @Test
-    @Ignore
-    fun testHex() {
-        val testCC = ColorContainer(0xFF7B50)
-
-        assertTrue { testCC.hex == 0xFF7B50L }
-
-//        testCC.hex = 0x84AF
-        assertTrue { testCC.hex == 0x84AFL }
-    }
-
-    @Test
-    @Ignore
-    fun testHexString() {
-        val testCC = ColorContainer(0xFF7B50)
-
-        assertTrue { testCC.hexString == "FF7B50" }
-        assertTrue { testCC.toString() == "FF7B50" }
-    }
-
-    @Test
-    @Ignore
-    fun testSetRGB() {
-        val testCC = ColorContainer(0)
-//        testCC.setRGB(255, 123, 80)
-
-        assertTrue { testCC.r == 255 }
-        assertTrue { testCC.g == 123 }
-        assertTrue { testCC.b == 80 }
+        val testCC3 = ColorContainer()
+        assertTrue { testCC3.toString() == "[]" }
     }
 
     @Test
@@ -129,19 +77,69 @@ class ColorContainerTest {
     }
 
     @Test
-    @Ignore
     fun testInvert() {
-        val testCC = ColorContainer(0xFF7B50)
+        val testCC = ColorContainer(0xFF7B50, 0xFF99C2)
+        assertTrue { testCC.invert(0)[0] == 0x0084AFL }
+        assertTrue { testCC[1] == 0xFF99C2L }
 
-//        assertTrue { testCC.invert() == ColorContainer(0x0084AF) }
+        val testCC2 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC2.invert(0, 2)[0, 2] == listOf<Long>(0x0084AF, 0xC3AC74) }
+        assertTrue { testCC2.colors == listOf<Long>(0x0084AF, 0xF0AF29, 0xC3AC74) }
+
+        val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC3.invert().colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
     }
 
     @Test
-    @Ignore
-    fun testGrayscale() {
-        val testCC = ColorContainer(0xFF7B51)
+    fun testInverse() {
+        val testCC = ColorContainer(0xFF7B50, 0xFF99C2)
+        val invCC = testCC.inverse(0)
+        assertTrue { invCC[0] == 0x0084AFL }
+        assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xFF99C2) }
 
-//        assertTrue { testCC.grayscale() == 0x99L }
+        val testCC2 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        val invCC2 = testCC2.inverse(0, 2)
+        assertTrue { invCC2.colors == listOf<Long>(0x0084AF, 0xC3AC74) }
+        assertTrue { testCC2.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+
+
+        val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        val invCC3 = testCC3.inverse()
+        assertTrue { invCC3.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
+        assertTrue { testCC2.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+    }
+
+    @Test
+    fun testGrayscale() {
+        val testCC = ColorContainer(0xFF7B51, 0xFF99C2)
+        assertTrue { testCC.grayscale(0)[0] == 0x999999L }
+        assertTrue { testCC[1] == 0xFF99C2L }
+
+        val testCC2 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC2.grayscale(0, 2)[0, 2] == listOf<Long>(0x999999, 0x5E5E5E) }
+        assertTrue { testCC2.colors == listOf<Long>(0x999999, 0xF0AF29, 0x5E5E5E) }
+
+        val testCC3 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC3.grayscale().colors == listOf<Long>(0x999999, 0x989898, 0x5E5E5E) }
+    }
+
+    @Test
+    fun testGrayscaled() {
+        val testCC = ColorContainer(0xFF7B51, 0xFF99C2)
+        val grayCC = testCC.grayscaled(0)
+        assertTrue { grayCC[0] == 0x999999L }
+        assertTrue { testCC.colors == listOf<Long>(0xFF7B51, 0xFF99C2) }
+
+        val testCC2 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        val grayCC2 = testCC2.grayscaled(0, 2)
+        assertTrue { grayCC2.colors == listOf<Long>(0x999999, 0x5E5E5E) }
+        assertTrue { testCC2.colors == listOf<Long>(0xFF7B51, 0xF0AF29, 0x3C538B) }
+
+
+        val testCC3 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        val grayCC3 = testCC3.grayscaled()
+        assertTrue { grayCC3.colors == listOf<Long>(0x999999, 0x989898, 0X5E5E5E) }
+        assertTrue { testCC2.colors == listOf<Long>(0xFF7B51, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -153,5 +151,15 @@ class ColorContainerTest {
         assertFalse { testCC.equals(10) }
 
         testCC.hashCode()
+    }
+
+    @Test
+    fun testPrepare() {
+        val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        val p = testCC.prepare(50)
+
+        assertTrue { p[0] == testCC[0] }
+        assertTrue { p.contains(testCC[1]) }
+        assertTrue { p.contains(testCC[2]) }
     }
 }
