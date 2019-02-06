@@ -1,5 +1,12 @@
 package animatedledstrip.leds
 
+
+/**
+ * A prepared [ColorContainer] that holds a set of colors that blend from one
+ * to the next. This is created by calling the prepare() function on a
+ * ColorContainer
+ *
+ */
 class PreparedColorContainer(private val colors: List<Long>): ColorContainerInterface {
 
     operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0

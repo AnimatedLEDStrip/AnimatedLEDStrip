@@ -86,6 +86,20 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     /* Utility functions */
 
+    /**
+     * Create a collection of colors that blend between multiple colors along a 'strip'.
+     *
+     * The palette colors are spread out along the strip at approximately equal
+     * intervals. All pixels between these 'pure' pixels are a blend between the
+     * colors of the two nearest pure pixels. The blend ratio is determined by the
+     * location of the pixel relative to the nearest pure pixels.
+     *
+     * If this is not used prior to sending this ColorContainer to setPixelColor (or other
+     * set methods), then it will be called before any LEDs are set.
+     *
+     * @param numLEDs The number of LEDs to create colors for
+     * @return A `PreparedColorContainer` containing all the colors
+     */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
         val returnMap = mutableMapOf<Int, Long>()
 
