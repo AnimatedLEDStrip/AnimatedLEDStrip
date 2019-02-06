@@ -24,7 +24,6 @@ package animatedledstrip.test
 
 
 import animatedledstrip.leds.ColorContainer
-import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -54,6 +53,12 @@ class ColorContainerTest {
     }
 
     @Test
+    fun testListConstructor() {
+        val testCC = ColorContainer(listOf<Long>(0xFF2431, 0x5F3C4B))
+        assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B)}
+    }
+
+    @Test
     fun testEquals() {
         val testCC = ColorContainer(0xFF7B50)
 
@@ -62,6 +67,13 @@ class ColorContainerTest {
         assertFalse { testCC.equals(10) }
 
         testCC.hashCode()
+    }
+
+    @Test
+    fun testContains() {
+        val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
+        assertTrue { testCC.contains(0xFF7B50) }
+        assertFalse { testCC.contains(0xFF145C) }
     }
 
     @Test
@@ -97,14 +109,13 @@ class ColorContainerTest {
 
         testCC[3..7] = 0x526BE2
         assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0x526BE2, 0x526BE2, 0x526BE2, 0x526BE2, 0x526BE2) }
-
-
     }
 
     @Test
     fun testToString() {
         val testCC = ColorContainer(0xFF3B82)
         assertTrue { testCC.toString() == "ff3b82" }
+        assertTrue { testCC.hexString == "ff3b82" }
 
         val testCC2 = ColorContainer(0xFF7B50, 0xFFFFFF)
         assertTrue { testCC2.toString() == "[ff7b50, ffffff]" }
@@ -113,16 +124,16 @@ class ColorContainerTest {
         assertTrue { testCC3.toString() == "[]" }
     }
 
-    @Test
-    @Ignore
-    fun testToColor() {
-        val testCC = ColorContainer(0xFF7B50)
-
-//        assertTrue { testCC.toColor().red == 1.0 }
-//        assertTrue { testCC.toColor().green == 0.48235294222831726 }
-//        assertTrue { testCC.toColor().blue == 0.3137255012989044 }
-
-    }
+//    @Test
+//    @Ignore
+//    fun testToColor() {
+//        val testCC = ColorContainer(0xFF7B50)
+//
+////        assertTrue { testCC.toColor().red == 1.0 }
+////        assertTrue { testCC.toColor().green == 0.48235294222831726 }
+////        assertTrue { testCC.toColor().blue == 0.3137255012989044 }
+//
+//    }
 
     @Test
     fun testInvert() {
@@ -200,5 +211,18 @@ class ColorContainerTest {
         assertTrue { p[0] == testCC[0] }
         assertTrue { p.contains(testCC[1]) }
         assertTrue { p.contains(testCC[2]) }
+    }
+
+    @Test
+    fun testToLong() {
+        val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC.toLong() == 0xFF7B51L }
+    }
+
+    @Test
+    fun testToRGB() {
+        val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC.toRGB() == Triple(0xFF, 0x7B, 0x51) }
+        assertTrue { testCC.toTriple() == Triple(0xFF, 0x7B, 0x51) }
     }
 }

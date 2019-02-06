@@ -21,9 +21,9 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     constructor(rgb: Triple<Int, Int, Int>) : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
 
-    constructor(colorList: List<Long>) : this(colorList[0]) {
-        colorList.forEachIndexed { index, color ->
-            colors[index] = color
+    constructor(colorList: List<Long>) : this() {
+        colorList.forEach {
+            colors += it
         }
     }
 
