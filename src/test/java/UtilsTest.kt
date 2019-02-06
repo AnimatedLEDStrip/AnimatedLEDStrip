@@ -27,7 +27,6 @@ import animatedledstrip.ccpresets.CCBlack
 import animatedledstrip.ccpresets.CCBlue
 import animatedledstrip.leds.blend
 import animatedledstrip.leds.parseHex
-import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -46,8 +45,8 @@ class UtilsTest {
 
     @Test
     fun testBlend() {
-        blend(CCBlack, CCBlue, 0)
-        blend(CCBlack, CCBlue, 255)
+        blend(CCBlack.color, CCBlue.color, 0)
+        blend(CCBlack.color, CCBlue.color, 255)
     }
 
 }

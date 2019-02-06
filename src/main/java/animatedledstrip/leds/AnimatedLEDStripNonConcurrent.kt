@@ -283,7 +283,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
         when (movementDirection) {
             Direction.FORWARD -> for (q in startPixel..endPixel) {
                 for (i in startPixel until endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
+                    setPixelColor(i, blend(getPixelColor(i), colorValues2.color, 60))
                 }
                 setPixelColor(q, colorValues1)
                 show()
@@ -291,7 +291,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             }
             Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
                 for (i in startPixel until endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2, 60))
+                    setPixelColor(i, blend(getPixelColor(i), colorValues2.color, 60))
                 }
                 setPixelColor(q, colorValues1)
                 show()
@@ -328,20 +328,20 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
         val endPixel = animation.endPixel
         val delay = animation.delay
 
-        val palette = colorsFromPalette(colorList, numLEDs)
-
-        when (movementDirection) {
-            Direction.FORWARD -> for (m in startPixel..endPixel) {
-                setStripColorWithPalette(palette, m)
-                show()
-                delayBlocking((delay * delayMod).toInt())
-            }
-            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
-                setStripColorWithPalette(palette, m)
-                show()
-                delayBlocking((delay * delayMod).toInt())
-            }
-        }
+//        val palette = colorsFromPalette(colorList, numLEDs)
+//
+//        when (movementDirection) {
+//            Direction.FORWARD -> for (m in startPixel..endPixel) {
+//                setStripColorWithPalette(palette, m)
+//                show()
+//                delayBlocking((delay * delayMod).toInt())
+//            }
+//            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
+//                setStripColorWithPalette(palette, m)
+//                show()
+//                delayBlocking((delay * delayMod).toInt())
+//            }
+//        }
     }
 
 
@@ -358,7 +358,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
         val startPixel = animation.startPixel
         val endPixel = animation.endPixel
 
-        var originalColor: ColorContainer
+        var originalColor: Long
         shuffleArray.shuffle()
         for (i in startPixel..endPixel) {
             originalColor = getPixelColor(shuffleArray[i])
@@ -407,7 +407,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
 
         when (stackDirection) {
             Direction.FORWARD -> for (q in endPixel downTo startPixel) {
-                var originalColor: ColorContainer
+                var originalColor: Long
                 for (i in startPixel until q) {
                     originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)
@@ -419,7 +419,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 show()
             }
             Direction.BACKWARD -> for (q in startPixel..endPixel) {
-                var originalColor: ColorContainer
+                var originalColor: Long
                 for (i in endPixel downTo q) {
                     originalColor = getPixelColor(i)
                     setPixelColor(i, colorValues1)

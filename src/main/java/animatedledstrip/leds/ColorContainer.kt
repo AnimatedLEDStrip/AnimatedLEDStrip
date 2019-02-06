@@ -1,138 +1,183 @@
 package animatedledstrip.leds
 
-/*
- *  Copyright (c) 2019 AnimatedLEDStrip
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
+import kotlin.math.roundToInt
+
+open class ColorContainer(vararg c: Long) : ColorContainerInterface {
+
+    val colors = mutableListOf<Long>()
+    override val color: Long
+        get() = colors[0]
+
+    private val singleColor: Boolean
+        get() = colors.size == 1
 
 
-import javafx.scene.paint.Color
-
-
-/**
- * A class used to hold a color value.
- *
- * @param r The red intensity
- * @param g The green intensity
- * @param b The blue intensity
- */
-open class ColorContainer(var r: Int, var g: Int, var b: Int) {
-
-    /**
-     * Constructor for ColorContainer that makes a copy of a ColorContainer.
-     *
-     * @param ccIn The ColorContainer to copy
-     */
-    constructor(ccIn: ColorContainer) : this(
-            ccIn.r, ccIn.g, ccIn.b
-    )
-
-    /**
-     * Constructor for ColorContainer that extracts `r`, `g` and `b` from a `Long`.
-     *
-     * @param hexIn The integer representation of the color's RGB
-     */
-    constructor(hexIn: Long) : this(
-            (hexIn and 0xFF0000 shr 16).toInt(),
-            (hexIn and 0x00FF00 shr 8).toInt(),
-            (hexIn and 0x0000FF).toInt()
-    )
-
-    /**
-     * Returns a `Long` containing the RGB data held by this `ColorContainer`.
-     * Color can also be set using a `Long` via this property.
-     */
-    var hex: Long
-        get() {
-            return (r shl 16).toLong() or (g shl 8).toLong() or b.toLong()
+    init {
+        for (i in c) {
+            colors += i
         }
-        set(hexIn) {
-            setRGB(
-                    (hexIn and 0xFF0000 shr 16).toInt(),
-                    (hexIn and 0x00FF00 shr 8).toInt(),
-                    (hexIn and 0x0000FF).toInt()
-            )
-        }
-
-    /**
-     * Returns a hexadecimal string representation (without a 0x) of the color held
-     * by this `ColorContainer`.
-     */
-    var hexString = hex.toString(16).toUpperCase()
-
-    /**
-     * Set the color held by this `ColorContainer` using individual `r`, `g`, `b` values.
-     * @param rIn Red intensity
-     * @param gIn Green intensity
-     * @param bIn Blue intensity
-     */
-    fun setRGB(rIn: Int, gIn: Int, bIn: Int) {
-        r = rIn
-        g = gIn
-        b = bIn
     }
 
-    /**
-     * Returns the color held by this `ColorContainer` as a JavaFX `Color`.
-     */
-    fun toColor(): Color =
-            Color.color((hex shr 16 and 0xFF) / 255.0, (hex shr 8 and 0xFF) / 255.0, (hex and 0xFF) / 255.0)
+    constructor(r: Int, g: Int, b: Int) : this((r shl 16).toLong() or (g shl 8).toLong() or b.toLong())
 
-    /**
-     * Returns a `ColorContainer` with the inverse of the color held by this `ColorContainer`.
-     */
-    fun invert() = ColorContainer(255 - this.r, 255 - this.g, 255 - this.b)
+    constructor(colorList: List<Long>) : this(colorList[0]) {
+        colorList.forEachIndexed { index, color ->
+            colors[index] = color
+        }
+    }
 
-    /**
-     * Returns the average of `r`, `g`, `b`.
-     */
-    fun grayscale() = ((r + g + b) / 3).toLong()
+    constructor(ccIn: ColorContainer) : this()
 
-    /**
-     * Override function that returns the hexString property.
-     */
+    fun grayscale() {
+        colors.forEachIndexed { index, color ->
+            colors[index] = color.grayscale()
+        }
+    }
+
+    fun grayscale(vararg indices: Int) {
+        for (index in indices) {
+            if (colors.indices.contains(index)) colors[index] = colors[index].grayscale()
+        }
+    }
+
+
+    fun invert() {
+        colors.forEachIndexed { index, color ->
+            colors[index] = color.inv()
+        }
+    }
+
+    fun invert(vararg indices: Int) {
+        for (index in indices) {
+            if (colors.indices.contains(index)) colors[index] = colors[index].inv()
+        }
+    }
+
+
+    fun prepare(numLEDs: Int): PreparedColorContainer {
+        val returnMap = mutableMapOf<Int, Long>()
+
+        val spacing = numLEDs.toDouble() / colors.size.toDouble()
+
+        val purePixels = mutableListOf<Int>()
+        for (i in 0 until colors.size) {
+            purePixels.add((spacing * i).roundToInt())
+        }
+
+        for (i in 0 until numLEDs) {
+            for (j in purePixels) {
+                if ((i - j) < spacing) {
+                    if ((i - j) == 0) returnMap[i] = colors[purePixels.indexOf(j)]
+                    else {
+                        returnMap[i] = blend(
+                                colors[purePixels.indexOf(j)],
+                                colors[(purePixels.indexOf(j) + 1) % purePixels.size],
+                                if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                        )
+                    }
+                    break
+                }
+            }
+        }
+        return PreparedColorContainer(returnMap.values.toList())
+    }
+
+
+    fun toLong(): Long = color
+
+    fun toRGB(): Triple<Int, Int, Int> = Triple(
+            (color and 0xFF0000 shr 16).toInt(),
+            (color and 0x00FF00 shr 8).toInt(),
+            (color and 0x0000FF).toInt())
+
+    fun toTriple() = toRGB()
+
+    @Deprecated("Use color property and r extension property", ReplaceWith("color.r"))
+    val r: Int
+        get() = (color shr 16 and 0xFF).toInt()
+    val red = r
+
+    @Deprecated("Use color property and g extension property", ReplaceWith("color.g"))
+    val g: Int
+        get() = (color shr 8 and 0xFF).toInt()
+    val green = g
+
+    @Deprecated("Use color property and b extension property", ReplaceWith("color.b"))
+    val b: Int
+        get() = (color and 0xFF).toInt()
+    val blue = b
+
     override fun toString(): String {
-        return hexString
+        return if (singleColor) color.toString(16)
+        else "[${colors.forEachIndexed { index, color ->
+            color.toString(16) + if (index != colors.lastIndex) "," else ""
+        }}]"
     }
 
-
-    /**
-     * Custom override for ColorContainer comparisons.
-     *
-     * @param other The value to compare this to
-     */
     override fun equals(other: Any?): Boolean {
-        return if (other is ColorContainer)
-            (this.r == other.r && this.g == other.g && this.b == other.b)
+        return if (other is ColorContainer) {
+            if (other.colors.size == this.colors.size) {
+                var i = true
+
+                other.colors.forEachIndexed { index, color ->
+                    if (i) i = i && (color == this.colors[index])
+                }
+                i
+            } else false
+        } else if (other is Long) other == this.color
         else super.equals(other)
     }
 
-    /**
-     * Auto-generated hashCode override.
-     */
-    override fun hashCode(): Int {
-        var result = r
-        result = 31 * result + g
-        result = 31 * result + b
-        result = 31 * result + hexString.hashCode()
-        return result
+
+    operator fun get(index: Int): Long =
+            when {
+                singleColor -> color
+                colors.indices.contains(index) -> colors[index]
+                else -> 0
+            }
+
+    operator fun get(vararg indices: Int): List<Long> =
+            if (singleColor) listOf(color)
+            else {
+                val temp = mutableListOf<Long>()
+                for (index in indices) {
+                    temp += if (colors.indices.contains(index)) colors[index]
+                    else 0
+                }
+                temp
+            }
+
+
+    operator fun set(vararg indices: Int, c: Long) {
+        for (index in indices.sorted()) {
+            if (colors.indices.contains(index)) colors[index] = c
+            else colors += c
+        }
     }
+
+    operator fun unaryMinus() {
+        invert()
+    }
+
+    operator fun plusAssign(c: Long) {
+        colors.add(c)
+    }
+
+    operator fun iterator() = colors.iterator()
+
+    operator fun contains(c: Long): Boolean = colors.contains(c)
+
+    override fun hashCode(): Int {
+        return colors.hashCode()
+    }
+
+
+    @Deprecated("Use color property", ReplaceWith("color"))
+    val hex
+        get() = color
+
+    @Deprecated("Use toString()", ReplaceWith("toString()"))
+    val hexString
+        get() = toString()
 
 }

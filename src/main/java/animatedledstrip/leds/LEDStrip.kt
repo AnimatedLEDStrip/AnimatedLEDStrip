@@ -31,7 +31,6 @@ import org.pmw.tinylog.Logger
 import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.text.StringBuilder
 
 
 /**
@@ -165,7 +164,7 @@ abstract class LEDStrip(
      * @param pixel The pixel to change
      * @param colorValues The color to set the pixel to
      */
-    override fun setPixelColor(pixel: Int, colorValues: ColorContainer) {
+    override fun setPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
         try {
             runBlocking {
                 locks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
@@ -173,7 +172,7 @@ abstract class LEDStrip(
                 }
             }
         } catch (e: Exception) {
-            Logger.error("ERROR in setPixelColor: $e\npixel: $pixel to color ${colorValues.hexString}")
+            Logger.error("ERROR in setPixelColor: $e\npixel: $pixel to color $colorValues")
         }
     }
 
@@ -184,7 +183,7 @@ abstract class LEDStrip(
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
      */
-    override fun getPixelColor(pixel: Int): ColorContainer {
+    override fun getPixelColor(pixel: Int): Long {
         try {
             return if (!imageDebugging) runBlocking {
                 locks[pixel]!!.withLock {
@@ -196,7 +195,7 @@ abstract class LEDStrip(
             Logger.error("ERROR in getPixelColor: $e")
         }
         Logger.warn("Color not retrieved")
-        return CCBlack
+        return CCBlack.color
     }
 
 

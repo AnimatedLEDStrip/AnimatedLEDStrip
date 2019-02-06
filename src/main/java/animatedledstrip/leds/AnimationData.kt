@@ -42,23 +42,23 @@ class AnimationData() {
     /**
      * The first color.
      */
-    var color1: ColorContainer = CCBlack
+    var color1: ColorContainerInterface = CCBlack
     /**
      * The second color.
      */
-    var color2: ColorContainer = CCBlack
+    var color2: ColorContainerInterface = CCBlack
     /**
      * The third color.
      */
-    var color3: ColorContainer = CCBlack
+    var color3: ColorContainerInterface = CCBlack
     /**
      * The fourth color.
      */
-    var color4: ColorContainer = CCBlack
+    var color4: ColorContainerInterface = CCBlack
     /**
      * The fifth color.
      */
-    var color5: ColorContainer = CCBlack
+    var color5: ColorContainerInterface = CCBlack
 
     /**
      * A variable-length list of colors for the animation.
@@ -664,11 +664,11 @@ class AnimationData() {
      */
     fun toMap() = mapOf<String, Any?>(
             "Animation" to animation,
-            "Color1" to color1.hex,
-            "Color2" to color2.hex,
-            "Color3" to color3.hex,
-            "Color4" to color4.hex,
-            "Color5" to color5.hex,
+            "Color1" to color1,
+            "Color2" to color2,
+            "Color3" to color3,
+            "Color4" to color4,
+            "Color5" to color5,
             "ColorList" to mutableListOf<Long>().apply {
                 colorList.forEach {
                     this.add(it.hex)

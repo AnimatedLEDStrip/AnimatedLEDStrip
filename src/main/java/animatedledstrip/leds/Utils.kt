@@ -25,8 +25,6 @@ package animatedledstrip.leds
 
 
 import org.pmw.tinylog.Logger
-import java.lang.NumberFormatException
-import kotlin.math.roundToInt
 
 /**
  * Blend two [ColorContainer]s together and return a new `ColorContainer`.
@@ -37,16 +35,17 @@ import kotlin.math.roundToInt
  * @param overlay The `ColorContainer` to blend toward
  * @param amountOfOverlay The proportion (0-255) of `b` to blend
  */
-fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: Int): ColorContainer {
+fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     if (amountOfOverlay == 0) return existing
 
     if (amountOfOverlay == 255) return overlay
 
+    if (existing == overlay) return existing
     val r = blend8(existing.r, overlay.r, amountOfOverlay)
     val g = blend8(existing.g, overlay.g, amountOfOverlay)
     val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
-    return ColorContainer(r, g, b)
+    return (r shl 16 or g shl 8 or b).toLong()
 
 }
 
@@ -62,34 +61,34 @@ fun blend(existing: ColorContainer, overlay: ColorContainer, amountOfOverlay: In
  * @param numLEDs The number of LEDs to create colors for
  * @return A `Map<Int, ColorContainer>` with each pixel index mapped to a `ColorContainer`
  */
-fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
-
-    val returnMap = mutableMapOf<Int, ColorContainer>()
-
-    val spacing = numLEDs.toDouble() / palette.size.toDouble()
-
-    val purePixels = mutableListOf<Int>()
-    for (i in 0 until palette.size) {
-        purePixels.add((spacing * i).roundToInt())
-    }
-
-    for (i in 0 until numLEDs) {
-        for (j in purePixels) {
-            if ((i - j) < spacing) {
-                if ((i - j) == 0) returnMap[i] = palette[purePixels.indexOf(j)]
-                else {
-                    returnMap[i] = blend(
-                            palette[purePixels.indexOf(j)],
-                            palette[(purePixels.indexOf(j) + 1) % purePixels.size],
-                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
-                    )
-                }
-                break
-            }
-        }
-    }
-    return returnMap
-}
+//fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
+//
+//    val returnMap = mutableMapOf<Int, ColorContainer>()
+//
+//    val spacing = numLEDs.toDouble() / palette.size.toDouble()
+//
+//    val purePixels = mutableListOf<Int>()
+//    for (i in 0 until palette.size) {
+//        purePixels.add((spacing * i).roundToInt())
+//    }
+//
+//    for (i in 0 until numLEDs) {
+//        for (j in purePixels) {
+//            if ((i - j) < spacing) {
+//                if ((i - j) == 0) returnMap[i] = palette[purePixels.indexOf(j)]
+//                else {
+//                    returnMap[i] = blend(
+//                            palette[purePixels.indexOf(j)],
+//                            palette[(purePixels.indexOf(j) + 1) % purePixels.size],
+//                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+//                    )
+//                }
+//                break
+//            }
+//        }
+//    }
+//    return returnMap
+//}
 
 
 /**
@@ -122,3 +121,20 @@ fun parseHex(string: String): Long {
         0x0
     }
 }
+
+fun Long.grayscale(): Long {
+    val avg = (
+            (this and 0xFF0000 shr 16).toInt()
+                    + (this and 0x00FF00 shr 8).toInt()
+                    + (this and 0x0000FF).toInt()
+                    / 3)
+            .toString(16)
+    return parseHex("$avg$avg$avg")
+}
+
+val Long.r
+    get() = (this shr 16 and 0xFF).toInt()
+val Long.g
+    get() = (this shr 8 and 0xFF).toInt()
+val Long.b
+    get() = (this and 0xFF).toInt()
