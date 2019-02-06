@@ -50,47 +50,6 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
 
 }
 
-/**
- * Create a collection of colors that blend between multiple colors along a 'strip'.
- *
- * The palette colors are spread out along the strip at approximately equal
- * intervals. All pixels between these 'pure' pixels are a blend between the
- * colors of the two nearest pure pixels. The blend ratio is determined by the
- * location of the pixel relative to the nearest pure pixels.
- *
- * @param palette A list of [ColorContainer]s used to create the collection's colors
- * @param numLEDs The number of LEDs to create colors for
- * @return A `Map<Int, ColorContainer>` with each pixel index mapped to a `ColorContainer`
- */
-//fun colorsFromPalette(palette: List<ColorContainer>, numLEDs: Int): Map<Int, ColorContainer> {
-//
-//    val returnMap = mutableMapOf<Int, ColorContainer>()
-//
-//    val spacing = numLEDs.toDouble() / palette.size.toDouble()
-//
-//    val purePixels = mutableListOf<Int>()
-//    for (i in 0 until palette.size) {
-//        purePixels.add((spacing * i).roundToInt())
-//    }
-//
-//    for (i in 0 until numLEDs) {
-//        for (j in purePixels) {
-//            if ((i - j) < spacing) {
-//                if ((i - j) == 0) returnMap[i] = palette[purePixels.indexOf(j)]
-//                else {
-//                    returnMap[i] = blend(
-//                            palette[purePixels.indexOf(j)],
-//                            palette[(purePixels.indexOf(j) + 1) % purePixels.size],
-//                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
-//                    )
-//                }
-//                break
-//            }
-//        }
-//    }
-//    return returnMap
-//}
-
 
 /**
  * Try to pause the thread for an amount of time in milliseconds.
