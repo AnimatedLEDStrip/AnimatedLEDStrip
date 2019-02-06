@@ -24,6 +24,7 @@ package animatedledstrip.test
 
 
 import animatedledstrip.leds.ColorContainer
+import animatedledstrip.leds.PreparedColorContainer
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -231,5 +232,12 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
         assertTrue { testCC.toRGB() == Triple(0xFF, 0x7B, 0x51) }
         assertTrue { testCC.toTriple() == Triple(0xFF, 0x7B, 0x51) }
+    }
+
+    @Test
+    fun testPreparedColorContainer() {
+        val testPCC = PreparedColorContainer(listOf(0xFF, 0xFFFF))
+        assertTrue { testPCC.prepare(10) === testPCC }
+        assertTrue { testPCC.toString() == "[ff, ffff]" }
     }
 }
