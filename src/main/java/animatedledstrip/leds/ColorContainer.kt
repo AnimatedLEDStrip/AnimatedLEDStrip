@@ -100,7 +100,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param numLEDs The number of LEDs to create colors for
      * @return A `PreparedColorContainer` containing all the colors
      */
-    override fun prepare(numLEDs: Int): PreparedColorContainer {
+    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer {
         val returnMap = mutableMapOf<Int, Long>()
 
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
@@ -125,7 +125,12 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
                 }
             }
         }
-        return PreparedColorContainer(returnMap.values.toList())
+
+        val returnList = returnMap.values.toMutableList()
+
+        for (i in 1..leadingZeros) returnList.add(0, 0)
+
+        return PreparedColorContainer(returnList)
     }
 
 

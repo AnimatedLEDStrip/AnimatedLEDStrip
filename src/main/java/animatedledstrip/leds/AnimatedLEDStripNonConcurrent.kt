@@ -56,11 +56,16 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             0 -> numLEDs - 1
             else -> animation.endPixel
         }
-        animation.color1 = animation.color1.prepare(animation.endPixel - animation.startPixel + 1)
-        animation.color2 = animation.color2.prepare(animation.endPixel - animation.startPixel + 1)
-        animation.color3 = animation.color3.prepare(animation.endPixel - animation.startPixel + 1)
-        animation.color4 = animation.color4.prepare(animation.endPixel - animation.startPixel + 1)
-        animation.color5 = animation.color5.prepare(animation.endPixel - animation.startPixel + 1)
+        animation.color1 = animation.color1.prepare(animation.endPixel - animation.startPixel + 1,
+                leadingZeros = animation.startPixel)
+        animation.color2 = animation.color2.prepare(animation.endPixel - animation.startPixel + 1,
+                leadingZeros = animation.startPixel)
+        animation.color3 = animation.color3.prepare(animation.endPixel - animation.startPixel + 1,
+                leadingZeros = animation.startPixel)
+        animation.color4 = animation.color4.prepare(animation.endPixel - animation.startPixel + 1,
+                leadingZeros = animation.startPixel)
+        animation.color5 = animation.color5.prepare(animation.endPixel - animation.startPixel + 1,
+                leadingZeros = animation.startPixel)
 
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
