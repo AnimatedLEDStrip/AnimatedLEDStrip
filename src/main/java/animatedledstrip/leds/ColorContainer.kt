@@ -6,7 +6,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     val colors = mutableListOf<Long>()
     override val color: Long
-        get() = colors[0]
+        get() = try { colors[0] } catch (e: IndexOutOfBoundsException) { 0 }
 
     private val singleColor: Boolean
         get() = colors.size == 1
