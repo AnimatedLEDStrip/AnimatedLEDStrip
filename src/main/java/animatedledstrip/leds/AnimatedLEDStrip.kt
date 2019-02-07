@@ -579,40 +579,34 @@ abstract class AnimatedLEDStrip(
      */
     @NonRepetitive
     private val stack = { animation: AnimationData ->
-        val colorValues1 = animation.color1
-        val stackDirection = animation.direction
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
-        when (stackDirection) {
-            Direction.FORWARD -> for (q in endPixel downTo startPixel) {
+        when (animation.direction) {
+            Direction.FORWARD -> for (q in animation.endPixel downTo animation.startPixel) {
                 var originalColor: Long
-                for (i in startPixel until q) {
+                for (i in animation.startPixel until q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
-                            setPixelColor(i, colorValues1)
-                            delay((delay * delayMod).toLong())
+                            setPixelColor(i, animation.color1)
+                            delay(animation.delay)
                             setPixelColor(i, originalColor)
                         }
                     }
                 }
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
             }
-            Direction.BACKWARD -> for (q in startPixel..endPixel) {
+            Direction.BACKWARD -> for (q in animation.startPixel..animation.endPixel) {
                 var originalColor: Long
-                for (i in endPixel downTo q) {
+                for (i in animation.endPixel downTo q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
                             originalColor = getPixelColor(i)
-                            setPixelColor(i, colorValues1)
-                            delay((delay * delayMod).toLong())
+                            setPixelColor(i, animation.color1)
+                            delay(animation.delay)
                             setPixelColor(i, originalColor)
                         }
                     }
                 }
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
             }
         }
     }
