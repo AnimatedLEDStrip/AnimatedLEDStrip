@@ -231,16 +231,10 @@ abstract class AnimatedLEDStrip(
      * (delay between changes).
      */
     private val alternate = { animation: AnimationData ->
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val delay = animation.delay
-
-        setSectionColor(startPixel, endPixel, colorValues1)
-        delayBlocking((delay * delayMod).toInt())
-        setSectionColor(startPixel, endPixel, colorValues2)
-        delayBlocking((delay * delayMod).toInt())
+        setSectionColor(animation.startPixel, animation.endPixel, animation.color1)
+        delayBlocking(animation.delay)
+        setSectionColor(animation.startPixel, animation.endPixel, animation.color2)
+        delayBlocking(animation.delay)
     }
 
 
