@@ -8,15 +8,7 @@
 <a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="./index.html">ColorContainer</a><br/>
 <br/>
 <h1>ColorContainer</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span></code>
-<p>A class used to hold a color value.</p>
-<h3>Parameters</h3>
-<p><a name="r"></a>
-<code>r</code> - The red intensity</p>
-<p><a name="g"></a>
-<code>g</code> - The green intensity</p>
-<p><a name="b"></a>
-<code>b</code> - The blue intensity</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
 <h3>Constructors</h3>
 <table>
 <tbody>
@@ -25,13 +17,10 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(animatedledstrip.leds.ColorContainer)/ccIn">ccIn</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span></code>
-<p>Constructor for ColorContainer that makes a copy of a ColorContainer.</p>
-<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Long)/hexIn">hexIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code>
-<p>Constructor for ColorContainer that extracts <code>r</code>, <code>g</code> and <code>b</code> from a <code>Long</code>.</p>
-<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/r">r</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/g">g</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
-<p>A class used to hold a color value.</p>
-</td>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.Triple((kotlin.Int, , )))/rgb">rgb</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-triple/index.html"><span class="identifier">Triple</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.collections.List((kotlin.Long)))/colorList">colorList</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(animatedledstrip.leds.ColorContainer)/ccIn">ccIn</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">)</span></code><br/>
+<code><span class="identifier">ColorContainer</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$<init>(kotlin.LongArray)/c">c</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -43,47 +32,84 @@
 <p><a href="b.html">b</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">b</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>The blue intensity</p>
+<code><span class="keyword">val </span><s><span class="identifier">b</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="blue.html">blue</a></p>
 </td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">blue</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color.html">color</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">color</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="colors.html">colors</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">colors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="g.html">g</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">g</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>The green intensity</p>
+<code><span class="keyword">val </span><s><span class="identifier">g</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="green.html">green</a></p>
 </td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">green</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="hex.html">hex</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">hex</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Returns a <code>Long</code> containing the RGB data held by this <code>ColorContainer</code>.
-Color can also be set using a <code>Long</code> via this property.</p>
-</td>
+<code><span class="keyword">val </span><s><span class="identifier">hex</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="hex-string.html">hexString</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">hexString</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
-<p>Returns a hexadecimal string representation (without a 0x) of the color held
-by this <code>ColorContainer</code>.</p>
-</td>
+<code><span class="keyword">val </span><s><span class="identifier">hexString</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="r.html">r</a></p>
 </td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">r</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>The red intensity</p>
+<code><span class="keyword">val </span><s><span class="identifier">r</span></s><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="red.html">red</a></p>
 </td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">red</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="single-color.html">singleColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">singleColor</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="size.html">size</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">size</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -92,66 +118,131 @@ by this <code>ColorContainer</code>.</p>
 <tbody>
 <tr>
 <td>
+<p><a href="contains.html">contains</a></p>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">contains</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$contains(kotlin.Long)/c">c</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="equals.html">equals</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
-<p>Custom override for ColorContainer comparisons.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get.html">get</a></p>
 </td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$get(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code><br/>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$get(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$get(kotlin.ranges.IntRange)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="grayscale.html">grayscale</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Returns the average of <code>r</code>, <code>g</code>, <code>b</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$grayscale(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="grayscaled.html">grayscaled</a></p>
 </td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$grayscaled(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="hash-code.html">hashCode</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>Auto-generated hashCode override.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="inverse.html">inverse</a></p>
 </td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">inverse</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">inverse</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$inverse(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="invert.html">invert</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">invert</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a <code>ColorContainer</code> with the inverse of the color held by this <code>ColorContainer</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">invert</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">invert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$invert(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="iterator.html">iterator</a></p>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">iterator</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-iterator/index.html"><span class="identifier">MutableIterator</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="plus-assign.html">plusAssign</a></p>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">plusAssign</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$plusAssign(kotlin.Long)/c">c</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="prepare.html">prepare</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">prepare</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$prepare(kotlin.Int, kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$prepare(kotlin.Int, kotlin.Int)/leadingZeros">leadingZeros</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-prepared-color-container/index.html"><span class="identifier">PreparedColorContainer</span></a></code>
+<p>Create a collection of colors that blend between multiple colors along a 'strip'.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="set-r-g-b.html">setRGB</a></p>
+<p><a href="set.html">set</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setRGB</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$setRGB(kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Set the color held by this <code>ColorContainer</code> using individual <code>r</code>, <code>g</code>, <code>b</code> values.</p>
-</td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">set</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds.ColorContainer$set(kotlin.IntArray, kotlin.Long)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$set(kotlin.IntArray, kotlin.Long)/c">c</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">set</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.ColorContainer$set(kotlin.ranges.IntRange, kotlin.Long)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.ColorContainer$set(kotlin.ranges.IntRange, kotlin.Long)/c">c</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="to-color.html">toColor</a></p>
+<p><a href="to-long.html">toLong</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">toColor</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Color</span></code>
-<p>Returns the color held by this <code>ColorContainer</code> as a JavaFX <code>Color</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">toLong</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="to-r-g-b.html">toRGB</a></p>
 </td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toRGB</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-triple/index.html"><span class="identifier">Triple</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="to-string.html">toString</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
-<p>Override function that returns the hexString property.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="to-triple.html">toTriple</a></p>
 </td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toTriple</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-triple/index.html"><span class="identifier">Triple</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="unary-minus.html">unaryMinus</a></p>
+</td>
+<td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">unaryMinus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 </tbody>
 </table>

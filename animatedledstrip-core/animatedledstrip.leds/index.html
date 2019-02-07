@@ -16,7 +16,7 @@
 <p><a href="-animated-l-e-d-strip/index.html">AnimatedLEDStrip</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStrip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">, </span><a href="-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="-l-e-d-strip-section-interface/index.html"><span class="identifier">LEDStripSectionInterface</span></a></code>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStrip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">, </span><a href="-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="-sectionable-l-e-d-strip/index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
 <p>A subclass of <a href="-l-e-d-strip/index.html">LEDStrip</a> adding animations.</p>
 </td>
 </tr>
@@ -25,14 +25,14 @@
 <p><a href="-animated-l-e-d-strip-interface/index.html">AnimatedLEDStripInterface</a></p>
 </td>
 <td>
-<code><span class="keyword">interface </span><span class="identifier">AnimatedLEDStripInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-section-interface/index.html"><span class="identifier">LEDStripSectionInterface</span></a></code></td>
+<code><span class="keyword">interface </span><span class="identifier">AnimatedLEDStripInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-sectionable-l-e-d-strip/index.html"><span class="identifier">SectionableLEDStrip</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="-animated-l-e-d-strip-non-concurrent/index.html">AnimatedLEDStripNonConcurrent</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-non-concurrent/index.html"><span class="identifier">LEDStripNonConcurrent</span></a><span class="symbol">, </span><a href="-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="-l-e-d-strip-section-interface/index.html"><span class="identifier">LEDStripSectionInterface</span></a></code>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-non-concurrent/index.html"><span class="identifier">LEDStripNonConcurrent</span></a><span class="symbol">, </span><a href="-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="-sectionable-l-e-d-strip/index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
 <p>A subclass of <a href="-l-e-d-strip-non-concurrent/index.html">LEDStripNonConcurrent</a> adding animations</p>
 </td>
 </tr>
@@ -71,9 +71,14 @@ when applicable.</p>
 <p><a href="-color-container/index.html">ColorContainer</a></p>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span></code>
-<p>A class used to hold a color value.</p>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-color-container-interface/index.html">ColorContainerInterface</a></p>
 </td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ColorContainerInterface</span></code></td>
 </tr>
 <tr>
 <td>
@@ -136,7 +141,7 @@ doesn't attempt to send data to any LEDs.</p>
 <p><a href="-l-e-d-strip-non-concurrent/index.html">LEDStripNonConcurrent</a></p>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">LEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-l-e-d-strip-section-interface/index.html"><span class="identifier">LEDStripSectionInterface</span></a></code>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">LEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-sectionable-l-e-d-strip/index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
 <p>Class that represents an LED strip.</p>
 </td>
 </tr>
@@ -151,10 +156,14 @@ doesn't attempt to send data to any LEDs.</p>
 </tr>
 <tr>
 <td>
-<p><a href="-l-e-d-strip-section-interface/index.html">LEDStripSectionInterface</a></p>
+<p><a href="-prepared-color-container/index.html">PreparedColorContainer</a></p>
 </td>
 <td>
-<code><span class="keyword">interface </span><span class="identifier">LEDStripSectionInterface</span></code></td>
+<code><span class="keyword">class </span><span class="identifier">PreparedColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
+<p>A prepared <a href="-color-container/index.html">ColorContainer</a> that holds a set of colors that blend from one
+to the next. This is created by calling the prepare() function on a
+ColorContainer</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -164,6 +173,13 @@ doesn't attempt to send data to any LEDs.</p>
 <code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ReqLevel</span></code>
 <p>Helper enum for specifying the requirement level of an animation parameter.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="-sectionable-l-e-d-strip/index.html">SectionableLEDStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">SectionableLEDStrip</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -193,6 +209,13 @@ doesn't attempt to send data to any LEDs.</p>
 <h3>Extensions for External Classes</h3>
 <table>
 <tbody>
+<tr>
+<td>
+<p><a href="kotlin.-long/index.html">kotlin.Long</a></p>
+</td>
+<td>
+</td>
+</tr>
 <tr>
 <td>
 <p><a href="kotlinx.coroutines.sync.-mutex/index.html">kotlinx.coroutines.sync.Mutex</a></p>
@@ -368,7 +391,7 @@ doesn't attempt to send data to any LEDs.</p>
 <p><a href="blend.html">blend</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(animatedledstrip.leds.ColorContainer, animatedledstrip.leds.ColorContainer, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend(kotlin.Long, kotlin.Long, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(kotlin.Long, kotlin.Long, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend(kotlin.Long, kotlin.Long, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
 <p>Blend two <a href="-color-container/index.html">ColorContainer</a>s together and return a new <code>ColorContainer</code>.</p>
 </td>
 </tr>
@@ -379,15 +402,6 @@ doesn't attempt to send data to any LEDs.</p>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">blend8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/a">a</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfB">amountOfB</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
 <p>Blend a variable proportion (0-255) of one byte to another.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="colors-from-palette.html">colorsFromPalette</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">colorsFromPalette</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/palette">palette</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$colorsFromPalette(kotlin.collections.List((animatedledstrip.leds.ColorContainer)), kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">&gt;</span></code>
-<p>Create a collection of colors that blend between multiple colors along a 'strip'.</p>
 </td>
 </tr>
 <tr>
