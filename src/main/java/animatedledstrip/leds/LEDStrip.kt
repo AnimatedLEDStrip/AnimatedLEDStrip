@@ -91,6 +91,7 @@ abstract class LEDStrip(
 
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
+        runBlocking { delay(2000) }
         toggleRender()
     }
 

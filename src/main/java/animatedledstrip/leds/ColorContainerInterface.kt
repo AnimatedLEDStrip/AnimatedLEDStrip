@@ -1,5 +1,7 @@
 package animatedledstrip.leds
 
+import java.io.Serializable
+
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -23,8 +25,10 @@ package animatedledstrip.leds
  */
 
 
-interface ColorContainerInterface {
+interface ColorContainerInterface: Serializable {
     val color: Long
 
     fun prepare(numLEDs: Int, leadingZeros: Int = 0): PreparedColorContainer
+
+    fun toColorContainer(): ColorContainer
 }
