@@ -300,8 +300,6 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
-        val delay = animation.delay
-
         when (animation.direction) {
             Direction.FORWARD -> for (m in animation.startPixel..animation.endPixel) {
                 setStripColorWithOffset(animation.color1 as PreparedColorContainer, m - animation.startPixel)
@@ -325,18 +323,13 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      * the LEDs are sparkled in the order given in shuffleArray.
      */
     private val sparkle = { animation: AnimationData ->
-        val sparkleColor = animation.color1
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
         var originalColor: Long
         shuffleArray.shuffle()
-        for (i in startPixel..endPixel) {
+        for (i in animation.startPixel..animation.endPixel) {
             originalColor = getPixelColor(shuffleArray[i])
-            setPixelColor(shuffleArray[i], sparkleColor)
+            setPixelColor(shuffleArray[i], animation.color1)
             show()
-            delayBlocking(delay)
+            delayBlocking(animation.delay)
             setPixelColor(shuffleArray[i], originalColor)
             show()
         }
