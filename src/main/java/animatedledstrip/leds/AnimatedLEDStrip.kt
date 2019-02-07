@@ -221,9 +221,6 @@ abstract class AnimatedLEDStrip(
     }
 
 
-    private val delayMod = 1.0  // TODO: Remove delayMod from animations as it is now applied in AnimationData
-
-
     /**
      * Runs an Alternate animation.
      *
