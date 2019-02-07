@@ -239,5 +239,6 @@ class ColorContainerTest {
         val testPCC = PreparedColorContainer(listOf(0xFF, 0xFFFF))
         assertTrue { testPCC.prepare(10) === testPCC }
         assertTrue { testPCC.toString() == "[ff, ffff]" }
+
     }
 }

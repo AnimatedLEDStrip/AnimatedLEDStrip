@@ -54,4 +54,6 @@ class PreparedColorContainer(private val colors: List<Long>): ColorContainerInte
     val size: Int
         get() = colors.size
 
+    override fun toColorContainer() = ColorContainer(colors)
+
 }

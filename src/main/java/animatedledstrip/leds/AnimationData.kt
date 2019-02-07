@@ -662,8 +662,13 @@ class AnimationData() {
             }
         }
         continuous = params["Continuous"] as Boolean? ?: false
-        delay = params["Delay"] as Long? ?: when (animationInfoMap[animation]?.delay) {
-            ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
+        delay = when (params["delay"]) {
+            is Long -> params["delay"] as Long
+            is Int -> (params["delay"] as Int).toLong()
+            null -> when (animationInfoMap[animation]?.delay) {
+                ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
+                else -> animationInfoMap[animation]?.delayDefault ?: 0L
+            }
             else -> 0L
         }
         delayMod = params["DelayMod"] as Double? ?: 1.0
@@ -676,6 +681,7 @@ class AnimationData() {
             is Direction -> params["Direction"] as Direction
             else -> Direction.FORWARD
         }
+
         endPixel = params["EndPixel"] as Int? ?: 0
         id = params["ID"] as String? ?: ""
         spacing = params["Spacing"] as Int? ?: 3        // TODO: Replace with default like delay
@@ -695,11 +701,11 @@ class AnimationData() {
      */
     fun toMap() = mapOf<String, Any?>(
             "Animation" to animation,
-            "Color1" to color1,
-            "Color2" to color2,
-            "Color3" to color3,
-            "Color4" to color4,
-            "Color5" to color5,
+            "Color1" to color1.toColorContainer().colors,
+            "Color2" to color2.toColorContainer().colors,
+            "Color3" to color3.toColorContainer().colors,
+            "Color4" to color4.toColorContainer().colors,
+            "Color5" to color5.toColorContainer().colors,
             "Continuous" to continuous,
             "Delay" to delay,
             "DelayMod" to delayMod,
