@@ -479,20 +479,14 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
-        val palette = animation.color1
-        val movementDirection = animation.direction
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-        val delay = animation.delay
-
-        when (movementDirection) {
-            Direction.FORWARD -> for (m in startPixel..endPixel) {
-                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
-                delayBlocking((delay * delayMod).toInt())
+        when (animation.direction) {
+            Direction.FORWARD -> for (m in animation.startPixel..animation.endPixel) {
+                setStripColorWithOffset(animation.color1 as PreparedColorContainer, m - animation.startPixel)
+                delayBlocking(animation.delay)
             }
-            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
-                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
-                delayBlocking((delay * delayMod).toInt())
+            Direction.BACKWARD -> for (m in animation.endPixel downTo animation.startPixel) {
+                setStripColorWithOffset(animation.color1 as PreparedColorContainer, m - animation.startPixel)
+                delayBlocking(animation.delay)
             }
         }
     }
