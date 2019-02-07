@@ -408,28 +408,23 @@ abstract class AnimatedLEDStrip(
      * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val movementDirection = animation.direction
-        val delay = animation.delay
-
-        setStripColor(colorValues2)
-        when (movementDirection) {
+        setStripColor(animation.color2)
+        when (animation.direction) {
             Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs) {
                 runBlocking {
                     locks[q]!!.tryWithLock {
-                        setPixelColor(q, colorValues1)
-                        delay((delay * delayMod).toLong())
-                        setPixelColor(q, colorValues2)
+                        setPixelColor(q, animation.color1)
+                        delay(animation.delay)
+                        setPixelColor(q, animation.color2)
                     }
                 }
             }
             Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0) {
                 runBlocking {
                     locks[q]!!.tryWithLock {
-                        setPixelColor(q, colorValues1)
-                        delay((delay * delayMod).toLong())
-                        setPixelColor(q, colorValues2)
+                        setPixelColor(q, animation.color1)
+                        delay(animation.delay)
+                        setPixelColor(q, animation.color2)
                     }
                 }
             }
