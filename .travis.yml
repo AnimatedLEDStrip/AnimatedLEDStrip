@@ -14,6 +14,7 @@ branches:
 stages:
   - name: test
   - name: deploy
+    if: branch = master AND type != pull_request
 
 jobs:
   include:
@@ -35,8 +36,6 @@ jobs:
           keep-history: true
           verbose: true
           local_dir: ./dokka
-          on:
-            branch: master
     - stage: deploy
       install:
         -

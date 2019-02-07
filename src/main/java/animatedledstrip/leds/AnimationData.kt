@@ -42,27 +42,28 @@ class AnimationData() {
     /**
      * The first color.
      */
-    var color1: ColorContainer = CCBlack
+    var color1: ColorContainerInterface = CCBlack
     /**
      * The second color.
      */
-    var color2: ColorContainer = CCBlack
+    var color2: ColorContainerInterface = CCBlack
     /**
      * The third color.
      */
-    var color3: ColorContainer = CCBlack
+    var color3: ColorContainerInterface = CCBlack
     /**
      * The fourth color.
      */
-    var color4: ColorContainer = CCBlack
+    var color4: ColorContainerInterface = CCBlack
     /**
      * The fifth color.
      */
-    var color5: ColorContainer = CCBlack
+    var color5: ColorContainerInterface = CCBlack
 
     /**
      * A variable-length list of colors for the animation.
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     var colorList = mutableListOf<ColorContainer>()
 
     /**
@@ -393,6 +394,7 @@ class AnimationData() {
      *
      * @param colorList A `List<ColorContainer>`, `List<Long>`, or `List<String>` instance
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     fun colorList(colorList: List<*>): AnimationData {
         this.colorList = mutableListOf<ColorContainer>().apply {
             colorList.forEach {
@@ -412,6 +414,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance that will be added by reference
      * to colorList
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     fun addToColorList(color: ColorContainer): AnimationData {
         this.colorList.add(color)
         return this
@@ -423,6 +426,7 @@ class AnimationData() {
      * @param color A `Long` that will be converted to `ColorContainer` and added
      * to `colorList`
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     fun addToColorList(color: Long): AnimationData {
         this.colorList.add(ColorContainer(color))
         return this
@@ -434,6 +438,7 @@ class AnimationData() {
      * @param color A `String` in hexadecimal format that will be converted
      * to `ColorContainer` and added to colorList
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     fun addToColorList(color: String): AnimationData {
         this.colorList.add(ColorContainer(parseHex(color)))
         return this
@@ -446,6 +451,7 @@ class AnimationData() {
      * @param colorList A `List<ColorContainer>`, `List<Long>` or `List<String>`
      * instance to be added to `colorList`
      */
+    @Deprecated("Use color1", ReplaceWith("color1"))
     fun addToColorList(colorList: List<*>): AnimationData {
         this.colorList.apply {
             colorList.forEach {
@@ -593,6 +599,11 @@ class AnimationData() {
         }
         color1 = when (params["Color1"]) {
             is Long -> ColorContainer(params["Color1"] as Long)
+            is List<*> -> ColorContainer(mutableListOf<Long>().apply {
+                (params["Color1"] as List<*>).forEach {
+                    this.add(it as Long)
+                }
+            })
             is ColorContainer -> ColorContainer(params["Color1"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
@@ -600,24 +611,44 @@ class AnimationData() {
 
         color2 = when (params["Color2"]) {
             is Long -> ColorContainer(params["Color2"] as Long)
+            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
+                (params["Color2"] as List<*>).forEach {
+                    this.add(it as Long)
+                }
+            }))
             is ColorContainer -> ColorContainer(params["Color2"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color3 = when (params["Color3"]) {
             is Long -> ColorContainer(params["Color3"] as Long)
+            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
+                (params["Color3"] as List<*>).forEach {
+                    this.add(it as Long)
+                }
+            }))
             is ColorContainer -> ColorContainer(params["Color3"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color4 = when (params["Color4"]) {
             is Long -> ColorContainer(params["Color4"] as Long)
+            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
+                (params["Color4"] as List<*>).forEach {
+                    this.add(it as Long)
+                }
+            }))
             is ColorContainer -> ColorContainer(params["Color4"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
 
         color5 = when (params["Color5"]) {
             is Long -> ColorContainer(params["Color5"] as Long)
+            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
+                (params["Color5"] as List<*>).forEach {
+                    this.add(it as Long)
+                }
+            }))
             is ColorContainer -> ColorContainer(params["Color5"] as ColorContainer)
             else -> ColorContainer(0x0)
         }
@@ -625,8 +656,8 @@ class AnimationData() {
         if (params["ColorList"] as List<*>? != null) {
             (params["ColorList"] as List<*>).forEach { c ->
                 when (c) {
-                    is Long -> colorList.add(ColorContainer(c))
-                    is ColorContainer -> colorList.add(ColorContainer(c))
+                    is Long -> color1 as ColorContainer += (c)
+                    is ColorContainer -> color1 = c
                 }
             }
         }
@@ -656,7 +687,7 @@ class AnimationData() {
      * Create a `String` out of the values of this instance.
      */
     override fun toString() =
-            "$animation: $color1, $color2, $color3, $color4, $color5, $colorList, $continuous, $delay, $direction, $id, $spacing"
+            "$animation: $color1, $color2, $color3, $color4, $color5, $continuous, $delay, $direction, $id, $spacing"
 
 
     /**
@@ -664,16 +695,11 @@ class AnimationData() {
      */
     fun toMap() = mapOf<String, Any?>(
             "Animation" to animation,
-            "Color1" to color1.hex,
-            "Color2" to color2.hex,
-            "Color3" to color3.hex,
-            "Color4" to color4.hex,
-            "Color5" to color5.hex,
-            "ColorList" to mutableListOf<Long>().apply {
-                colorList.forEach {
-                    this.add(it.hex)
-                }
-            },
+            "Color1" to color1,
+            "Color2" to color2,
+            "Color3" to color3,
+            "Color4" to color4,
+            "Color5" to color5,
             "Continuous" to continuous,
             "Delay" to delay,
             "DelayMod" to delayMod,

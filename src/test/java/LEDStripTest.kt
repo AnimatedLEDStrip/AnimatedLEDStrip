@@ -42,41 +42,41 @@ class LEDStripTest {
     fun testSetPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        assertTrue { testLEDs[10] == ColorContainer(0) }
-        assertTrue { testLEDs[11] == ColorContainer(0) }
-        assertTrue { testLEDs[12] == ColorContainer(0) }
+        assertTrue { testLEDs[10] == 0L }
+        assertTrue { testLEDs[11] == 0L }
+        assertTrue { testLEDs[12] == 0L }
 
         testLEDs.setPixelColor(10, ColorContainer(0xFF))
-        assertTrue { testLEDs[10] == ColorContainer(0xFF) }
+        assertTrue { testLEDs[10] == 0xFFL }
 
         testLEDs.setPixelColor(10, 0, 255, 0)
-        assertTrue { testLEDs[10] == ColorContainer(0xFF00) }
+        assertTrue { testLEDs[10] == 0xFF00L }
 
         testLEDs.setPixelColor(10, 0xFF0000)
-        assertTrue { testLEDs[10] == ColorContainer(0xFF0000) }
+        assertTrue { testLEDs[10] == 0xFF0000L }      // TODO: Fix test
 
         testLEDs[10] = ColorContainer(0xFF)
-        assertTrue { testLEDs[10] == ColorContainer(0xFF) }
+        assertTrue { testLEDs[10] == 0xFFL }
 
         testLEDs[10, 11, 12] = ColorContainer(0xFFFF)
-        assertTrue { testLEDs[10] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[11] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[12] == ColorContainer(0xFFFF) }
+        assertTrue { testLEDs[10] == 0xFFFFL }
+        assertTrue { testLEDs[11] == 0xFFFFL }
+        assertTrue { testLEDs[12] == 0xFFFFL }
 
         testLEDs[10..12] = ColorContainer(0xFF00FF)
-        assertTrue { testLEDs[10] == ColorContainer(0xFF00FF) }
-        assertTrue { testLEDs[11] == ColorContainer(0xFF00FF) }
-        assertTrue { testLEDs[12] == ColorContainer(0xFF00FF) }
+        assertTrue { testLEDs[10] == 0xFF00FFL }  // TODO: Fix test
+        assertTrue { testLEDs[11] == 0xFF00FFL }
+        assertTrue { testLEDs[12] == 0xFF00FFL }
 
         testLEDs[10, 11, 12] = 0xFF00
-        assertTrue { testLEDs[10] == ColorContainer(0xFF00) }
-        assertTrue { testLEDs[11] == ColorContainer(0xFF00) }
-        assertTrue { testLEDs[12] == ColorContainer(0xFF00) }
+        assertTrue { testLEDs[10] == 0xFF00L }
+        assertTrue { testLEDs[11] == 0xFF00L }
+        assertTrue { testLEDs[12] == 0xFF00L }
 
         testLEDs[10..12] = 0xFF0000
-        assertTrue { testLEDs[10] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[11] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[12] == ColorContainer(0xFF0000) }
+        assertTrue { testLEDs[10] == 0xFF0000L }  // TODO: Fix test
+        assertTrue { testLEDs[11] == 0xFF0000L }
+        assertTrue { testLEDs[12] == 0xFF0000L }
 
         testLEDs.setPixelColor(50, CCBlack)
     }
@@ -88,34 +88,34 @@ class LEDStripTest {
         checkAllPixels(testLEDs, 0)
 
         testLEDs.setSectionColor(15, 30, ColorContainer(0xFF))
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[14] == ColorContainer(0) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[30] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[31] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[14] == 0L }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs[30] == 0xFFL }
+        assertTrue { testLEDs[31] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testLEDs.setSectionColor(10, 20, 0xFFFF)
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[20] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[21] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[30] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[31] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFFFL }
+        assertTrue { testLEDs[20] == 0xFFFFL }
+        assertTrue { testLEDs[21] == 0xFFL }
+        assertTrue { testLEDs[30] == 0xFFL }
+        assertTrue { testLEDs[31] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testLEDs.setSectionColor(25, 40, 255, 0, 0)
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[20] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[21] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[24] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[40] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[41] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFFFL }
+        assertTrue { testLEDs[20] == 0xFFFFL }
+        assertTrue { testLEDs[21] == 0xFFL }
+        assertTrue { testLEDs[24] == 0xFFL }
+        assertTrue { testLEDs[25] == 0xFF0000L }
+        assertTrue { testLEDs[40] == 0xFF0000L }
+        assertTrue { testLEDs[41] == 0L }
+        assertTrue { testLEDs[45] == 0L }
     }
 
     @Test
@@ -156,11 +156,11 @@ class LEDStripTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         testLEDs.setPixelColor(15, 0xFF)
 
-        assertTrue { testLEDs.getPixelColor(15) == ColorContainer(0xFF) }
+        assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
         assertTrue { testLEDs.getPixelLong(15) == 0xFFL }
         assertTrue { testLEDs.getPixelHexString(15) == "ff" }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF) }
-        assertTrue { testLEDs.getPixelColor(50) == ColorContainer(0) }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(50) == 0L }
     }
 
     @Test
@@ -169,92 +169,92 @@ class LEDStripTest {
 
         val testSection = LEDStrip.SectionCreator.new(15, 40, testLEDs)
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[15] == ColorContainer(0) }
-        assertTrue { testLEDs[30] == ColorContainer(0) }
-        assertTrue { testLEDs[40] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[15] == 0L }
+        assertTrue { testLEDs[30] == 0L }
+        assertTrue { testLEDs[40] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection.run(AnimationData().animation(Animation.COLOR).color(0xFF))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[14] == ColorContainer(0) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[30] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[40] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[41] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[14] == 0L }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs[30] == 0xFFL }
+        assertTrue { testLEDs[40] == 0xFFL }
+        assertTrue { testLEDs[41] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testLEDs.setStripColor(0)
 
         val testSection2 = LEDStrip.SectionCreator.new(10..25, testLEDs)
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0) }
-        assertTrue { testLEDs[20] == ColorContainer(0) }
-        assertTrue { testLEDs[25] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[10] == 0L }
+        assertTrue { testLEDs[20] == 0L }
+        assertTrue { testLEDs[25] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection2.run(AnimationData().animation(Animation.COLOR).color(0xFF))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFF) }
-        assertTrue { testLEDs[26] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFL }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs[25] == 0xFFL }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection2.run(AnimationData().animation(Animation.STACK).color(0xFFFF))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFFFF) }
-        assertTrue { testLEDs[26] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFFFL }
+        assertTrue { testLEDs[15] == 0xFFFFL }
+        assertTrue { testLEDs[25] == 0xFFFFL }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection2.run(AnimationData().animation(Animation.WIPE).color(0xFF00))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFF00) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF00) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFF00) }
-        assertTrue { testLEDs[26] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFF00L }
+        assertTrue { testLEDs[15] == 0xFF00L }
+        assertTrue { testLEDs[25] == 0xFF00L }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
-        // TODO: Fix test
+        // TODO: Fix
 //        testSection2.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
-
-//        assertTrue { testLEDs[0] == ColorContainer(0) }
-//        assertTrue { testLEDs[9] == ColorContainer(0) }
-//        assertTrue { testLEDs[10] == ColorContainer(0xFF00FF) }
-//        assertTrue { testLEDs[15] == ColorContainer(0xFF00FF) }
-//        assertTrue { testLEDs[25] == ColorContainer(0xFF00FF) }
-//        assertTrue { testLEDs[26] == ColorContainer(0) }
-//        assertTrue { testLEDs[45] == ColorContainer(0) }
+//
+//        assertTrue { testLEDs[0] == 0L }
+//        assertTrue { testLEDs[9] == 0L }
+//        assertTrue { testLEDs[10] == 0xFF00FFL }
+//        assertTrue { testLEDs[15] == 0xFF00FFL }
+//        assertTrue { testLEDs[25] == 0xFF00FFL }
+//        assertTrue { testLEDs[26] == 0L }
+//        assertTrue { testLEDs[45] == 0L }
 
         testSection2.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFF0000) }
-        assertTrue { testLEDs[26] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFF0000L }
+        assertTrue { testLEDs[15] == 0xFF0000L }
+        assertTrue { testLEDs[25] == 0xFF0000L }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection2.run(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))
 
-        assertTrue { testLEDs[0] == ColorContainer(0) }
-        assertTrue { testLEDs[9] == ColorContainer(0) }
-        assertTrue { testLEDs[10] == ColorContainer(0xFFFFFF) }
-        assertTrue { testLEDs[15] == ColorContainer(0xFFFFFF) }
-        assertTrue { testLEDs[25] == ColorContainer(0xFFFFFF) }
-        assertTrue { testLEDs[26] == ColorContainer(0) }
-        assertTrue { testLEDs[45] == ColorContainer(0) }
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFFFFFL }
+        assertTrue { testLEDs[15] == 0xFFFFFFL }
+        assertTrue { testLEDs[25] == 0xFFFFFFL }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
     }
 
     @Test
