@@ -195,35 +195,28 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     @NonRepetitive
     private val multiPixelRunToColor = { animation: AnimationData ->
-        val chaseDirection = animation.direction
-        val spacing = animation.spacing
-        val destinationColor = animation.color1
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-        val delay = animation.delay
-
-        when (chaseDirection) {
-            Direction.BACKWARD -> for (q in 0 until spacing) {
-                for (i in startPixel..endPixel step spacing){
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+        when (animation.direction) {
+            Direction.BACKWARD -> for (q in 0 until animation.spacing) {
+                for (i in animation.startPixel..animation.endPixel step animation.spacing){
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            destinationColor
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color1
                     )
                 }
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
-            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
-                for (i in startPixel..endPixel step spacing) {
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+            Direction.FORWARD -> for (q in animation.spacing - 1 downTo 0) {
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            destinationColor
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color1
                     )
                 }
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
         }
     }
