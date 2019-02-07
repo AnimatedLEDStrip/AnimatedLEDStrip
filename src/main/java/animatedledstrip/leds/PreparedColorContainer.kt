@@ -1,4 +1,4 @@
-package animatedledstrip.test
+package animatedledstrip.leds
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -23,30 +23,35 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
-import animatedledstrip.ccpresets.CCBlue
-import animatedledstrip.leds.blend
-import animatedledstrip.leds.parseHex
-import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
-import kotlin.test.assertTrue
+/**
+ * A prepared [ColorContainer] that holds a set of colors that blend from one
+ * to the next. This is created by calling the prepare() function on a
+ * ColorContainer
+ *
+ */
+class PreparedColorContainer(private val colors: List<Long>): ColorContainerInterface {
 
-class UtilsTest {
+    operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0
 
-    @Test
-    fun testParseHex() {
-        assertTrue { parseHex("0xFF") == 0xFFL }
-        assertTrue { parseHex("FFFF") == 0xFFFFL }
-        assertTrue { parseHex("FF0000") == 0xFF0000L }
-        Configurator.defaultConfig().level(Level.OFF).activate()
-        assertTrue { parseHex("0xG") == 0L }
+    override val color: Long
+        get() = 0
+
+    override fun toString(): String {
+        var temp = "["
+        for (c in colors) {
+            temp += c base 16
+            temp += ", "
+        }
+        temp = temp.removeSuffix(", ")
+        temp += "]"
+        return temp
     }
 
-    @Test
-    fun testBlend() {
-        blend(CCBlack.color, CCBlue.color, 0)
-        blend(CCBlack.color, CCBlue.color, 255)
-    }
+    operator fun contains(value: Long): Boolean = colors.contains(value)
+
+    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer = this
+
+    val size: Int
+        get() = colors.size
 
 }

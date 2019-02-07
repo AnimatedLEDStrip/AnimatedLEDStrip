@@ -23,30 +23,36 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
-import animatedledstrip.ccpresets.CCBlue
-import animatedledstrip.leds.blend
-import animatedledstrip.leds.parseHex
+import animatedledstrip.leds.tryWithLock
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class UtilsTest {
+class MutexTest {
 
     @Test
-    fun testParseHex() {
-        assertTrue { parseHex("0xFF") == 0xFFL }
-        assertTrue { parseHex("FFFF") == 0xFFFFL }
-        assertTrue { parseHex("FF0000") == 0xFF0000L }
-        Configurator.defaultConfig().level(Level.OFF).activate()
-        assertTrue { parseHex("0xG") == 0L }
-    }
+    fun testTryWithLock() {
+        var success1 = false
+        val m = Mutex()
 
-    @Test
-    fun testBlend() {
-        blend(CCBlack.color, CCBlue.color, 0)
-        blend(CCBlack.color, CCBlue.color, 255)
+        m.tryWithLock { success1 = true }
+        assertTrue { success1 }
+
+        var success2 = false
+        val m2 = Mutex()
+
+        GlobalScope.launch {
+            m2.lock()
+        }
+
+        runBlocking { delay(1000) }
+        m2.tryWithLock { success2 = true }
+        assertFalse { success2 }
     }
 
 }

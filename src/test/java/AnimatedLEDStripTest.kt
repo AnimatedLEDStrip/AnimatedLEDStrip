@@ -25,7 +25,6 @@ package animatedledstrip.test
 
 import animatedledstrip.ccpresets.CCBlue
 import animatedledstrip.leds.*
-import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -80,12 +79,9 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.MULTICOLOR)
-                .colorList(listOf<Long>(0xFF, 0xFFFF)))
+                .color(ColorContainer(0xFF, 0xFFFF)))
 
-        val testGradient = colorsFromPalette(listOf(
-                ColorContainer(0xFF),
-                ColorContainer(0xFFFF))
-                , 50)
+        val testGradient = ColorContainer(0xFF, 0xFFFF).prepare(50)
 
         for (i in 0 until 50) {
             assertTrue { testGradient[i] == testLEDs[i] }
@@ -173,28 +169,27 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .colorList(listOf(0xFF, 0xFF00))
+                .color1(ColorContainer(0xFF, 0xFF00))
                 .direction(Direction.FORWARD))
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .colorList(listOf(0xFF00, 0xFF))
+                .color1(ColorContainer(0xFF00, 0xFF))
                 .direction(Direction.BACKWARD))
     }
 
     @Test
-    @Ignore
     fun testSmoothFade() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHFADE)
-                .colorList(listOf(0xFF, 0xFF00))
+                .color(ColorContainer(0xFF, 0xFF00))
                 .direction(Direction.FORWARD))
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHFADE)
-                .colorList(listOf(0xFF00, 0xFF))
+                .color(ColorContainer(0xFF00, 0xFF))
                 .direction(Direction.BACKWARD))
     }
 
@@ -297,7 +292,7 @@ class AnimatedLEDStripTest {
     fun testFadePixel() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        testLEDs.fadePixel(50, CCBlue)
+        testLEDs.fadePixel(50, CCBlue.color)
     }
 
 }
