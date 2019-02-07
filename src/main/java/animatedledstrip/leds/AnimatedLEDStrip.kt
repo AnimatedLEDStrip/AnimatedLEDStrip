@@ -322,48 +322,40 @@ abstract class AnimatedLEDStrip(
      * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
     private val multiPixelRun = { animation: AnimationData ->
-        val chaseDirection = animation.direction
-        val spacing = animation.spacing
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
-        when (chaseDirection) {
-            Direction.BACKWARD -> for (q in 0 until spacing) {
-                setStripColor(colorValues2)
-                for (i in startPixel..endPixel step spacing) {
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+        when (animation.direction) {
+            Direction.BACKWARD -> for (q in 0 until animation.spacing) {
+                setStripColor(animation.color2)
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            colorValues1
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color1
                     )
                 }
-                delayBlocking((delay * delayMod).toInt())
-                for (i in startPixel..endPixel step spacing) {
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+                delayBlocking(animation.delay)
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            colorValues2
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color2
                     )
                 }
             }
-            Direction.FORWARD -> for (q in spacing - 1 downTo 0) {
-                setStripColor(colorValues2)
-                for (i in startPixel..endPixel step spacing) {
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+            Direction.FORWARD -> for (q in animation.spacing - 1 downTo 0) {
+                setStripColor(animation.color2)
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            colorValues1
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color1
                     )
                 }
-                delayBlocking((delay * delayMod).toInt())
-                for (i in startPixel..endPixel step spacing) {
-                    if (i + (-(q - (spacing - 1))) > endPixel) continue
+                delayBlocking(animation.delay)
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (spacing - 1))),
-                            colorValues2
+                            i + (-(q - (animation.spacing - 1))),
+                            animation.color2
                     )
                 }
             }
