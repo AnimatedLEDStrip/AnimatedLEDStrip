@@ -25,6 +25,9 @@ package animatedledstrip.test
 
 import animatedledstrip.ccpresets.CCBlue
 import animatedledstrip.leds.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -58,11 +61,24 @@ class AnimatedLEDStripTest {
 
     @Test
     fun testBounce() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        val job1 = GlobalScope.launch {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        testLEDs.run(AnimationData()
-                .animation(Animation.BOUNCE)
-                .color(0xFF))
+            testLEDs.run(AnimationData()
+                    .animation(Animation.BOUNCE)
+                    .color(0xFF))
+        }
+
+        val job2 = GlobalScope.launch {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+            testLEDs.run(AnimationData()
+                    .animation(Animation.BOUNCE)
+                    .color(0xFF)
+                    .delay(-1))
+        }
+
+        runBlocking { job2.join(); job1.join() }
     }
 
     @Test
@@ -145,7 +161,8 @@ class AnimatedLEDStripTest {
         testLEDs.run(AnimationData()
                 .animation(Animation.PIXELRUN)
                 .color(0xFF00)
-                .direction(Direction.BACKWARD))
+                .direction(Direction.BACKWARD)
+                .delay(-1))
     }
 
     @Test
@@ -200,6 +217,11 @@ class AnimatedLEDStripTest {
         testLEDs.run(AnimationData()
                 .animation(Animation.SPARKLE)
                 .color(0xFF))
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.SPARKLE)
+                .color(0xFF)
+                .delay(-1))
     }
 
     @Test
@@ -209,6 +231,11 @@ class AnimatedLEDStripTest {
         testLEDs.run(AnimationData()
                 .animation(Animation.SPARKLEFADE)
                 .color(0xFF00))
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.SPARKLEFADE)
+                .color(0xFF00)
+                .delay(-1))
     }
 
     @Test
@@ -223,18 +250,29 @@ class AnimatedLEDStripTest {
 
     @Test
     fun testStack() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        val job2 = GlobalScope.launch {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        testLEDs.run(AnimationData().animation(Animation.STACK)
-                .color(0xFF)
-                .direction(Direction.FORWARD))
-        checkAllPixels(testLEDs, 0xFF)
+            testLEDs.run(AnimationData()
+                    .animation(Animation.STACK)
+                    .color(0xFF)
+                    .direction(Direction.FORWARD))
+            checkAllPixels(testLEDs, 0xFF)
+        }
 
-        testLEDs.run(AnimationData()
-                .animation(Animation.STACK)
-                .color(0xFF00)
-                .direction(Direction.BACKWARD))
-        checkAllPixels(testLEDs, 0xFF00)
+        val job1 = GlobalScope.launch {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+            testLEDs.run(AnimationData()
+                    .animation(Animation.STACK)
+                    .color(0xFF00)
+                    .direction(Direction.BACKWARD)
+                    .delay(-1))
+            checkAllPixels(testLEDs, 0xFF00)
+        }
+
+        runBlocking { job2.join(); job1.join() }
+
     }
 
     @Test
@@ -269,6 +307,19 @@ class AnimatedLEDStripTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData().animation(Animation.ENDANIMATION))
+    }
+
+    @Test
+    fun testRunCustomAnimation() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        assertFailsWith(UninitializedPropertyAccessException::class) {
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION))
+        }
+        assertFailsWith(UninitializedPropertyAccessException::class) {
+            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
+        }
+
     }
 
     @Test
