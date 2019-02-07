@@ -229,25 +229,20 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val movementDirection = animation.direction
-        val delay = animation.delay
-
-        setStripColor(colorValues2)
-        when (movementDirection) {
+        setStripColor(animation.color2)
+        when (animation.direction) {
             Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs) {
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
                 show()
-                delayBlocking((delay * delayMod).toInt())
-                setPixelColor(q, colorValues2)
+                delayBlocking(animation.delay)
+                setPixelColor(q, animation.color2)
                 show()
             }
             Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0) {
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
                 show()
-                delayBlocking((delay * delayMod).toInt())
-                setPixelColor(q, colorValues2)
+                delayBlocking(animation.delay)
+                setPixelColor(q, animation.color2)
                 show()
             }
         }
