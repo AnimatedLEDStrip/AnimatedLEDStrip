@@ -344,18 +344,11 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      * the LEDs are sparkled in the order given in `shuffleArray`.
      */
     private val sparkleToColor = { animation: AnimationData ->
-        val destinationColor = animation.color1
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
-
-        // TODO: Refactor to only run on specified part of the strip
         shuffleArray.shuffle()
-        for (i in 0 until ledStrip.numLEDs) {
-            setPixelColor(shuffleArray[i], destinationColor)
+        for (i in animation.startPixel..animation.endPixel) {
+            setPixelColor(shuffleArray[i], animation.color1)
             show()
-            delayBlocking(delay)
+            delayBlocking(animation.delay)
         }
     }
 
