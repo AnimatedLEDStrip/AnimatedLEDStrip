@@ -86,9 +86,6 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
     }
 
 
-    private val delayMod = 1.0      // TODO: Remove delayMod from animations as it is implemented in AnimationData
-
-
     /**
      * Runs an Alternate animation.
      *
