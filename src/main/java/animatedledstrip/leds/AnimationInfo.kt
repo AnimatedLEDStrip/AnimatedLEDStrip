@@ -34,7 +34,6 @@ package animatedledstrip.leds
  * @property color3 Third color
  * @property color4 Fourth color
  * @property color5 Fifth color
- * @property colorList List of colors
  * @property delay Delay in animation
  * @property delayDefault Default if delay is missing
  * @property direction Direction of animation
@@ -48,7 +47,6 @@ data class AnimationInfo(
     val color3: ReqLevel = ReqLevel.NOTUSED,
     val color4: ReqLevel = ReqLevel.NOTUSED,
     val color5: ReqLevel = ReqLevel.NOTUSED,
-    val colorList: ReqLevel = ReqLevel.NOTUSED,
     val delay: ReqLevel = ReqLevel.NOTUSED,
     val delayDefault: Long = 0,
     val direction: ReqLevel = ReqLevel.NOTUSED,
@@ -204,7 +202,7 @@ val PixelRunWithTrail = AnimationInfo(
  */
 val SmoothChase = AnimationInfo(
     abbr = "SCH",
-    colorList = ReqLevel.REQUIRED,
+    color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50,
     direction = ReqLevel.REQUIRED
@@ -218,7 +216,7 @@ val SmoothChase = AnimationInfo(
  */
 val SmoothFade = AnimationInfo(
     abbr = "SMF",
-    colorList = ReqLevel.REQUIRED,
+    color1 = ReqLevel.REQUIRED,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 50
 )
