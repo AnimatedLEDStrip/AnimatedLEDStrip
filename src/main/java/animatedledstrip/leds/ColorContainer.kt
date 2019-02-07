@@ -264,6 +264,8 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         return colors.hashCode()
     }
 
+    override fun toColorContainer(): ColorContainer = this
+
     val size: Int
         get() = colors.size
 
