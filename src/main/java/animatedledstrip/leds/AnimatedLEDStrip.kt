@@ -560,16 +560,11 @@ abstract class AnimatedLEDStrip(
      */
     @NonRepetitive
     private val sparkleToColor = { animation: AnimationData ->
-        val destinationColor = animation.color1
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
-        val deferred = (startPixel..endPixel).map { n ->
+        val deferred = (animation.startPixel..animation.endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
                 delay((random() * 5000).toLong() % 4950)
-                setPixelColor(n, destinationColor)
-                delay((delay * delayMod).toLong())
+                setPixelColor(n, animation.color1)
+                delay(animation.delay)
             }
         }
         runBlocking {
