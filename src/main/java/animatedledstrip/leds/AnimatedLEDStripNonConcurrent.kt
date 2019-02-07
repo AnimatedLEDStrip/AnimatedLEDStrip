@@ -258,29 +258,22 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      * another Pixel Run with Trail is run.
      */
     private val pixelRunWithTrail = { animation: AnimationData ->
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val movementDirection = animation.direction
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-        val delay = animation.delay
-
-        when (movementDirection) {
-            Direction.FORWARD -> for (q in startPixel..endPixel) {
-                for (i in startPixel until endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2.color, 60))
+        when (animation.direction) {
+            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
+                for (i in animation.startPixel until animation.endPixel) {
+                    setPixelColor(i, blend(getPixelColor(i), animation.color2.color, 60))
                 }
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
                 show()
-                delayBlocking(delay)
+                delayBlocking(animation.delay)
             }
-            Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
-                for (i in startPixel until endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), colorValues2.color, 60))
+            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
+                for (i in animation.startPixel until animation.endPixel) {
+                    setPixelColor(i, blend(getPixelColor(i), animation.color2.color, 60))
                 }
-                setPixelColor(q, colorValues1)
+                setPixelColor(q, animation.color1)
                 show()
-                delayBlocking(delay)
+                delayBlocking(animation.delay)
             }
         }
     }
@@ -307,22 +300,18 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     @Suppress("KDocUnresolvedReference")
     private val smoothChase = { animation: AnimationData ->
-        val palette = animation.color1
-        val movementDirection = animation.direction
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
         val delay = animation.delay
 
-        when (movementDirection) {
-            Direction.FORWARD -> for (m in startPixel..endPixel) {
-                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+        when (animation.direction) {
+            Direction.FORWARD -> for (m in animation.startPixel..animation.endPixel) {
+                setStripColorWithOffset(animation.color1 as PreparedColorContainer, m - animation.startPixel)
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
-            Direction.BACKWARD -> for (m in endPixel downTo startPixel) {
-                setStripColorWithOffset(palette as PreparedColorContainer, m - startPixel)
+            Direction.BACKWARD -> for (m in animation.endPixel downTo animation.startPixel) {
+                setStripColorWithOffset(animation.color1 as PreparedColorContainer, m - animation.startPixel)
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
         }
     }
