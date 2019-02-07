@@ -439,27 +439,20 @@ abstract class AnimatedLEDStrip(
      * where the pixels fade from `color1` to `color2` over ~20 iterations.
      */
     private val pixelRunWithTrail = { animation: AnimationData ->
-        val colorValues1 = animation.color1
-        val colorValues2 = animation.color2
-        val movementDirection = animation.direction
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-        val delay = animation.delay
-
-        when (movementDirection) {
-            Direction.FORWARD -> for (q in startPixel..endPixel) {
-                setPixelColor(q, colorValues1)
+        when (animation.direction) {
+            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
+                setPixelColor(q, animation.color1)
                 GlobalScope.launch(animationThreadPool) {
-                    fadePixel(q, colorValues2.color, 60, 25)
+                    fadePixel(q, animation.color2.color, 60, 25)
                 }
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
-            Direction.BACKWARD -> for (q in endPixel downTo startPixel) {
-                setPixelColor(q, colorValues1)
+            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
+                setPixelColor(q, animation.color1)
                 GlobalScope.launch(animationThreadPool) {
-                    fadePixel(q, colorValues2.color, 60, 25)
+                    fadePixel(q, animation.color2.color, 60, 25)
                 }
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
         }
     }
