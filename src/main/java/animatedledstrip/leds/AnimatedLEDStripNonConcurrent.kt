@@ -394,22 +394,16 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     @NonRepetitive
     private val wipe = { animation: AnimationData ->
-        val colorValues = animation.color1
-        val wipeDirection = animation.direction
-        val delay = animation.delay
-        val startPixel = animation.startPixel
-        val endPixel = animation.endPixel
-
-        when (wipeDirection) {
-            Direction.BACKWARD -> for (i in endPixel downTo startPixel) {
-                setPixelColor(i, colorValues)
+        when (animation.direction) {
+            Direction.BACKWARD -> for (i in animation.endPixel downTo animation.startPixel) {
+                setPixelColor(i, animation.color1)
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
-            Direction.FORWARD -> for (i in startPixel..endPixel) {
-                setPixelColor(i, colorValues)
+            Direction.FORWARD -> for (i in animation.startPixel..animation.endPixel) {
+                setPixelColor(i, animation.color1)
                 show()
-                delayBlocking((delay * delayMod).toInt())
+                delayBlocking(animation.delay)
             }
         }
     }
