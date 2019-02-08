@@ -26,16 +26,30 @@ package animatedledstrip.leds
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
  * to the next. This is created by calling the prepare() function on a
- * ColorContainer
- *
+ * ColorContainer. Used by methods that set the color of pixel(s) on a strip.
  */
 class PreparedColorContainer(private val colors: List<Long>): ColorContainerInterface {
 
+    /**
+     * Get the color in [colors] at the specified index.
+     *
+     * @param index The index of the color to retrieve
+     */
     operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0
 
+    /**
+     * @return 0
+     */
     override val color: Long
         get() = 0
 
+    /**
+     * Create a string representation of this PreparedColorContainer.
+     * The hexadecimal representation of each color in [colors] is
+     * listed in comma delimited format, between brackets `[` & `]`
+     * If there is only one color in this ColorContainer, the brackets
+     * are dropped.
+     */
     override fun toString(): String {
         var temp = "["
         for (c in colors) {
@@ -47,13 +61,29 @@ class PreparedColorContainer(private val colors: List<Long>): ColorContainerInte
         return temp
     }
 
+    /**
+     * Checks if the specified value is in [colors].
+     *
+     * @param value The value to search for
+     */
     operator fun contains(value: Long): Boolean = colors.contains(value)
 
+    /**
+     * @return This PreparedColorContainer instance
+     */
     override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer = this
 
+    /**
+     * Returns the size of [colors].
+     */
     val size: Int
         get() = colors.size
 
+    /**
+     * Creates a new ColorContainer instance with the colors in [colors].
+     *
+     * @return A new ColorContainer
+     */
     override fun toColorContainer() = ColorContainer(colors)
 
 }
