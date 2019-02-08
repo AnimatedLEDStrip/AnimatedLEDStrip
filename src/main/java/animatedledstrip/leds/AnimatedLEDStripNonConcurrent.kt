@@ -277,6 +277,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
 
 
     /**
+     * TODO: Update
      * Runs a Smooth Chase animation.
      *
      * The [colorsFromPalette] function is used to create a collection of colors

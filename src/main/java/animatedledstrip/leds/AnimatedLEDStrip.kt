@@ -456,9 +456,10 @@ abstract class AnimatedLEDStrip(
 
 
     /**
+     * TODO: Update
      * Runs a Smooth Chase animation.
      *
-     * The [colorsFromPalette] function is used to create a collection of colors
+     * The prepare function is used to create a collection of colors
      * for the strip:
      * *The palette colors are spread out along the strip at approximately equal
      * intervals. All pixels between these 'pure' pixels are a blend of the

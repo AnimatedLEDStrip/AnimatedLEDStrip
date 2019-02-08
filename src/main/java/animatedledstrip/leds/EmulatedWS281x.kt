@@ -64,6 +64,7 @@ import java.nio.ByteBuffer
  * Modification on the `WS281x` class from the diozero-ws281x-java library that
  * doesn't attempt to send data to any LEDs.
  *
+ * @property pin The 'pin' that this 'strip' is connected to (doesn't do anything)
  * @property brightness Brightness of the strip
  * @property numLEDs Number of LEDs in the strip
  */
