@@ -23,7 +23,11 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.leds.*
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level

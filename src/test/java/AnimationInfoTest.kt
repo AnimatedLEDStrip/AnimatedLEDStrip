@@ -1,7 +1,7 @@
 package animatedledstrip.test
 
-import animatedledstrip.leds.AnimationInfo
-import animatedledstrip.leds.ReqLevel
+import animatedledstrip.animationutils.AnimationInfo
+import animatedledstrip.animationutils.ReqLevel
 import org.junit.Test
 import kotlin.test.assertTrue
 

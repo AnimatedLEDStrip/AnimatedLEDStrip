@@ -1,4 +1,6 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.sections
+
+import animatedledstrip.colors.ColorContainerInterface
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -22,22 +24,19 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+
 /**
- * Helper enum that determines if an animation should appear to move 'Forward'
- * or 'Backward'.
- *
- * The start of the LED strip is the end where the signal is connected (small
- * arrows on strip pointing away from it).
- * The end of the LED strip is the opposite end from the start (small arrows on
- * strip point towards it).
+ * An interface used to denote that a LED strip class supports running
+ * animations on parts of the strip.
  */
-enum class Direction {
+interface SectionableLEDStrip {
+
     /**
-     * Animation appears to move from the start to the end of the strip.
+     * Set a section to a color.
+     *
+     * @param start The first pixel in the section
+     * @param end The last pixel (inclusive) in the section
+     * @param colorValues The color(s) to set the section to
      */
-    FORWARD,
-    /**
-     * Animation appears to move from the end to the start of the strip.
-     */
-    BACKWARD
+    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface)
 }
