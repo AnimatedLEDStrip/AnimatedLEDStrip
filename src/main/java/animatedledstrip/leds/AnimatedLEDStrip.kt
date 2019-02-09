@@ -23,7 +23,16 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.NonRepetitive
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.sections.SectionableLEDStrip
+import animatedledstrip.utils.blend
+import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger

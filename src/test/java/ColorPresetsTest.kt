@@ -23,7 +23,7 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCPresets
+import animatedledstrip.colors.ccpresets.CCPresets
 import org.junit.Test
 import kotlin.test.assertTrue
 

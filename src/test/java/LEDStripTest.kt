@@ -23,8 +23,13 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.*
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.utils.delayBlocking
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level

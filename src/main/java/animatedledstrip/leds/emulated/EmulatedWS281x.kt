@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.emulated
 
 /*
  * Parts of this file were converted to Kotlin by IntelliJ from a file with this
@@ -57,6 +57,7 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.leds.LEDStripInterface
 import java.nio.ByteBuffer
 
 

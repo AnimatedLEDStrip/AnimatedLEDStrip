@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.utils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -27,7 +27,7 @@ package animatedledstrip.leds
 import org.pmw.tinylog.Logger
 
 /**
- * Blend two [ColorContainer]s together and return a new `ColorContainer`.
+ * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
  *
  * Adapted from the FastLED library.
  *

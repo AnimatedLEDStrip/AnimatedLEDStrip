@@ -23,7 +23,7 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.leds.tryWithLock
+import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

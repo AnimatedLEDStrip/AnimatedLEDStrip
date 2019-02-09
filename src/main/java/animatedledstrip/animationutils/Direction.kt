@@ -1,6 +1,4 @@
-package animatedledstrip.leds
-
-import java.io.Serializable
+package animatedledstrip.animationutils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -24,24 +22,22 @@ import java.io.Serializable
  *  THE SOFTWARE.
  */
 
-
 /**
- * An interface connecting ColorContainer and PreparedColorContainer.
+ * Helper enum that determines if an animation should appear to move 'Forward'
+ * or 'Backward'.
+ *
+ * The start of the LED strip is the end where the signal is connected (small
+ * arrows on strip pointing away from it).
+ * The end of the LED strip is the opposite end from the start (small arrows on
+ * strip point towards it).
  */
-interface ColorContainerInterface: Serializable {
-
+enum class Direction {
     /**
-     * The first color in `colors`.
+     * Animation appears to move from the start to the end of the strip.
      */
-    val color: Long
-
+    FORWARD,
     /**
-     * Prepare the ColorContainer or return this PreparedColorContainer.
+     * Animation appears to move from the end to the start of the strip.
      */
-    fun prepare(numLEDs: Int, leadingZeros: Int = 0): PreparedColorContainer
-
-    /**
-     * Create a ColorContainer or return this ColorContainer.
-     */
-    fun toColorContainer(): ColorContainer
+    BACKWARD
 }

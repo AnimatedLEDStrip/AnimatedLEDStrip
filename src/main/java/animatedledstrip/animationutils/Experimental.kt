@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.animationutils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -24,12 +24,10 @@ package animatedledstrip.leds
 
 
 /**
- * A non-repetitive animation is annotated with this tag.
+ * An experimental animation is annotated with this tag.
  *
- * Non-repetitive animations are ones which change the color of the strip
- * without reverting it, such as Wipe. The end result is as if you had
- * set the strip color with `setStripColor()`.
+ * Experimental animations will likely change and may be renamed.
  *
  */
 @MustBeDocumented
-annotation class NonRepetitive
+annotation class Experimental
