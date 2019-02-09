@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>animatedledstrip.colors - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="./index.html">animatedledstrip.colors</a><br/>
+<br/>
+<h2>Package animatedledstrip.colors</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-color-container/index.html">ColorContainer</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
+<p>A class for storing colors that can be used in animations. This can store a
+variable number of colors (stored as 24-bit Longs).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-color-container-interface/index.html">ColorContainerInterface</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ColorContainerInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>An interface connecting ColorContainer and PreparedColorContainer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-prepared-color-container/index.html">PreparedColorContainer</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PreparedColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
+<p>A prepared <a href="-color-container/index.html">ColorContainer</a> that holds a set of colors that blend from one
+to the next. This is created by calling the prepare() function on a
+ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

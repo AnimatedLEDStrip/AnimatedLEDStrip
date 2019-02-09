@@ -1,10 +1,15 @@
 $dokka.format:html
 $dokka.linkExtension:html
-$dokka.location:animatedledstrip.leds$b#kotlin.Longanimatedledstrip.leds/kotlin.-long/b.html
-$dokka.location:animatedledstrip.leds$base(kotlin.Long, kotlin.Int)animatedledstrip.leds/kotlin.-long/base.html
-$dokka.location:animatedledstrip.leds$g#kotlin.Longanimatedledstrip.leds/kotlin.-long/g.html
-$dokka.location:animatedledstrip.leds$grayscale(kotlin.Long)animatedledstrip.leds/kotlin.-long/grayscale.html
-$dokka.location:animatedledstrip.leds$r#kotlin.Longanimatedledstrip.leds/kotlin.-long/r.html
-$dokka.location:animatedledstrip.leds$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.leds.tryWithLock.T)))animatedledstrip.leds/kotlinx.coroutines.sync.-mutex/try-with-lock.html
-animatedledstrip.ccpresets
+$dokka.location:animatedledstrip.utils$b#kotlin.Longanimatedledstrip.utils/kotlin.-long/b.html
+$dokka.location:animatedledstrip.utils$base(kotlin.Long, kotlin.Int)animatedledstrip.utils/kotlin.-long/base.html
+$dokka.location:animatedledstrip.utils$g#kotlin.Longanimatedledstrip.utils/kotlin.-long/g.html
+$dokka.location:animatedledstrip.utils$grayscale(kotlin.Long)animatedledstrip.utils/kotlin.-long/grayscale.html
+$dokka.location:animatedledstrip.utils$r#kotlin.Longanimatedledstrip.utils/kotlin.-long/r.html
+$dokka.location:animatedledstrip.utils$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.utils.tryWithLock.T)))animatedledstrip.utils/kotlinx.coroutines.sync.-mutex/try-with-lock.html
+animatedledstrip.animationutils
+animatedledstrip.colors
+animatedledstrip.colors.ccpresets
 animatedledstrip.leds
+animatedledstrip.leds.emulated
+animatedledstrip.leds.sections
+animatedledstrip.utils

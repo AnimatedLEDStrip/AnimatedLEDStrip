@@ -1,0 +1,247 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>animatedledstrip.animationutils - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="./index.html">animatedledstrip.animationutils</a><br/>
+<br/>
+<h2>Package animatedledstrip.animationutils</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-animation/index.html">Animation</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Animation</span></code>
+<p>A list of animations used when communicating between clients and servers.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-animation-data/index.html">AnimationData</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">AnimationData</span></code>
+<p>Class used when calling animations to specify colors, parameters, etc.
+for the animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-animation-info/index.html">AnimationInfo</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">AnimationInfo</span></code>
+<p>Helper data class for specifying what parameters are required, optional and
+not used for an animation along with default values for <code>delay</code> and <code>spacing</code>,
+when applicable.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-direction/index.html">Direction</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Direction</span></code>
+<p>Helper enum that determines if an animation should appear to move 'Forward'
+or 'Backward'.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-req-level/index.html">ReqLevel</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ReqLevel</span></code>
+<p>Helper enum for specifying the requirement level of an animation parameter.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Annotations</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-experimental/index.html">Experimental</a></p>
+</td>
+<td>
+<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">Experimental</span></code>
+<p>An experimental animation is annotated with this tag.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-non-repetitive/index.html">NonRepetitive</a></p>
+</td>
+<td>
+<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">NonRepetitive</span></code>
+<p>A non-repetitive animation is annotated with this tag.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-alternate.html">Alternate</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Alternate</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Alternate animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-bounce.html">Bounce</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Bounce</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Bounce animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-bounce-to-color.html">BounceToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">BounceToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Bounce to Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-multi-pixel-run.html">MultiPixelRun</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">MultiPixelRun</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Multi-Pixel Run animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-multi-pixel-run-to-color.html">MultiPixelRunToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">MultiPixelRunToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Multi-Pixel Run to Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-pixel-marathon.html">PixelMarathon</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">PixelMarathon</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Pixel Marathon animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-pixel-run.html">PixelRun</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">PixelRun</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Pixel Run animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-pixel-run-with-trail.html">PixelRunWithTrail</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">PixelRunWithTrail</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Pixel Run with Trail animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-smooth-chase.html">SmoothChase</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">SmoothChase</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Smooth Chase animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-smooth-fade.html">SmoothFade</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">SmoothFade</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Smooth Fade animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sparkle.html">Sparkle</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Sparkle</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Sparkle animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sparkle-fade.html">SparkleFade</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">SparkleFade</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Sparkle Fade animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-sparkle-to-color.html">SparkleToColor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">SparkleToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Sparkle to Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-stack.html">Stack</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Stack</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Stack animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-stack-overflow.html">StackOverflow</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">StackOverflow</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Stack Overflow animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-wipe.html">Wipe</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">Wipe</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
+<p>Info about the Wipe animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="animation-info-map.html">animationInfoMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">animationInfoMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">,</span>&nbsp;<a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a><span class="symbol">&gt;</span></code>
+<p>Map of animations to their <code>AnimationInfo</code> instances.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

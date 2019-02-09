@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SectionableLEDStrip - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.leds.sections</a>&nbsp;/&nbsp;<a href="./index.html">SectionableLEDStrip</a><br/>
+<br/>
+<h1>SectionableLEDStrip</h1>
+<code><span class="keyword">interface </span><span class="identifier">SectionableLEDStrip</span></code>
+<p>An interface used to denote that a LED strip class supports running
+animations on parts of the strip.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="set-section-color.html">setSectionColor</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">setSectionColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.sections.SectionableLEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/start">start</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.sections.SectionableLEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/end">end</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.sections.SectionableLEDStrip$setSectionColor(kotlin.Int, kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set a section to a color.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/index.html">AnimatedLEDStrip</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStrip</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.leds/-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">, </span><a href="../../animatedledstrip.leds/-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="./index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
+<p>A subclass of <a href="../../animatedledstrip.leds/-l-e-d-strip/index.html">LEDStrip</a> adding animations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip-interface/index.html">AnimatedLEDStripInterface</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">AnimatedLEDStripInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
+<p>An interface used to connect the AnimatedLEDStrip and AnimatedLEDStripNonConcurrent
+classes.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip-non-concurrent/index.html">AnimatedLEDStripNonConcurrent</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">AnimatedLEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.leds/-l-e-d-strip-non-concurrent/index.html"><span class="identifier">LEDStripNonConcurrent</span></a><span class="symbol">, </span><a href="../../animatedledstrip.leds/-animated-l-e-d-strip-interface/index.html"><span class="identifier">AnimatedLEDStripInterface</span></a><span class="symbol">, </span><a href="./index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
+<p>A subclass of <a href="../../animatedledstrip.leds/-l-e-d-strip-non-concurrent/index.html">LEDStripNonConcurrent</a> adding animations</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.leds/-l-e-d-strip-non-concurrent/index.html">LEDStripNonConcurrent</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">LEDStripNonConcurrent</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SectionableLEDStrip</span></a></code>
+<p>Class that represents an LED strip.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
