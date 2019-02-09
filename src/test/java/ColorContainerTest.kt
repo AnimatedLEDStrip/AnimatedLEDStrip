@@ -23,8 +23,8 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.leds.ColorContainer
-import animatedledstrip.leds.PreparedColorContainer
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.PreparedColorContainer
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

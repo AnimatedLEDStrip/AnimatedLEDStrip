@@ -23,8 +23,12 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlue
-import animatedledstrip.leds.*
+import animatedledstrip.colors.ccpresets.CCBlue
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

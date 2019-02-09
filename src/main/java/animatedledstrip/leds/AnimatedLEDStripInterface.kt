@@ -1,5 +1,8 @@
 package animatedledstrip.leds
 
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.leds.sections.SectionableLEDStrip
+
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -23,8 +26,18 @@ package animatedledstrip.leds
  */
 
 
+/**
+ * An interface used to connect the AnimatedLEDStrip and AnimatedLEDStripNonConcurrent
+ * classes.
+ */
 interface AnimatedLEDStripInterface: SectionableLEDStrip {
 
+    /**
+     * Run an animation.
+     *
+     * @param animation An [AnimationData] instance with details about the
+     * animation to run
+     */
     fun run(animation: AnimationData)
 
 }

@@ -23,11 +23,11 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
-import animatedledstrip.leds.Animation
-import animatedledstrip.leds.AnimationData
-import animatedledstrip.leds.ColorContainer
-import animatedledstrip.leds.Direction
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.animationutils.Direction
 import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertFails

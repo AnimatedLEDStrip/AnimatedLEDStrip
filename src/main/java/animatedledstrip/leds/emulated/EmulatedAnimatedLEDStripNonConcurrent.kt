@@ -1,4 +1,7 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.emulated
+
+import animatedledstrip.leds.AnimatedLEDStripNonConcurrent
+import animatedledstrip.leds.LEDStripInterface
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -24,10 +27,10 @@ package animatedledstrip.leds
 
 
 /**
- * An experimental animation is annotated with this tag.
+ * Class for emulating an `LEDStripNonConcurrent`.
  *
- * Experimental animations will likely change and may be renamed.
- *
+ * @param numLEDs Number of LEDs in the strip
  */
-@MustBeDocumented
-annotation class Experimental
+class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int): AnimatedLEDStripNonConcurrent(numLEDs){
+    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
+}

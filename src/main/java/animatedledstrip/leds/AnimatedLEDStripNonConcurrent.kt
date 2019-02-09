@@ -23,7 +23,15 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.NonRepetitive
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.sections.SectionableLEDStrip
+import animatedledstrip.utils.blend
+import animatedledstrip.utils.delayBlocking
 import org.pmw.tinylog.Logger
 
 
@@ -277,6 +285,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
 
 
     /**
+     * TODO: Update
      * Runs a Smooth Chase animation.
      *
      * The [colorsFromPalette] function is used to create a collection of colors
