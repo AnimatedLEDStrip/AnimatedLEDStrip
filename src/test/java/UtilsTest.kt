@@ -23,10 +23,10 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
-import animatedledstrip.ccpresets.CCBlue
-import animatedledstrip.leds.blend
-import animatedledstrip.leds.parseHex
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlue
+import animatedledstrip.utils.blend
+import animatedledstrip.utils.parseHex
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level

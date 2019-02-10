@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.emulated
 
 /*
  * Parts of this file were converted to Kotlin by IntelliJ from a file with this
@@ -57,6 +57,7 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.leds.LEDStripInterface
 import java.nio.ByteBuffer
 
 
@@ -64,6 +65,7 @@ import java.nio.ByteBuffer
  * Modification on the `WS281x` class from the diozero-ws281x-java library that
  * doesn't attempt to send data to any LEDs.
  *
+ * @property pin The 'pin' that this 'strip' is connected to (doesn't do anything)
  * @property brightness Brightness of the strip
  * @property numLEDs Number of LEDs in the strip
  */

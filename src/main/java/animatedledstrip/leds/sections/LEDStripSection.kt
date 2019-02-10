@@ -1,4 +1,9 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.sections
+
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.leds.AnimatedLEDStripInterface
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip

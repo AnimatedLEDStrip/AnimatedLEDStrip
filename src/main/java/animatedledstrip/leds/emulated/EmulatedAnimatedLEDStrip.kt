@@ -1,11 +1,9 @@
-package animatedledstrip.leds
+package animatedledstrip.leds.emulated
+
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.leds.LEDStripInterface
 
 /*
- *  Small modification on a method with this copyright:
- *  Copyright 2016-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
- *
- *
- *
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -28,31 +26,15 @@ package animatedledstrip.leds
  */
 
 
-import kotlinx.coroutines.sync.Mutex
-import org.pmw.tinylog.Logger
-
-
 /**
- * An extension function based on `Mutex.withLock()`.
+ * Class for emulating an `LEDStrip`.
  *
- * If another thread has already locked the `Mutex`, this will return and print a
- * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
- * action.
- *
- * @param T
- * @param owner
- * @param action
+ * @param numLEDs Number of LEDs in the strip
+ * @param imageDebugging Should a csv file be created containing all renders of
+ * the strip?
  */
-inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
-    if (tryLock(owner)) {
-        try {
-            action()
-            return
-        } finally {
-            unlock(owner)
-        }
-    } else {
-        Logger.debug("Access Overlap: $owner")
-        return
-    }
+class EmulatedAnimatedLEDStrip(numLEDs: Int,
+                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, imageDebugging){
+    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
+
 }

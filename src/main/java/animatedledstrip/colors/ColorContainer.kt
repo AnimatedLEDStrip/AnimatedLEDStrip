@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.colors
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -23,6 +23,7 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.utils.*
 import kotlin.math.roundToInt
 
 /**
@@ -410,10 +411,21 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
     }
 
+    /**
+     * @return The iterator for [colors]
+     */
     operator fun iterator() = colors.iterator()
 
+    /**
+     * Checks if the specified color (Long) is in [colors].
+     *
+     * @param c The color to search for
+     */
     operator fun contains(c: Long): Boolean = colors.contains(c)
 
+    /**
+     * @return The hashCode of [colors]
+     */
     override fun hashCode(): Int {
         return colors.hashCode()
     }
@@ -434,19 +446,22 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     @Deprecated("Use color property and r extension property", ReplaceWith("color.r"))
     val r: Int
-        get() = (color shr 16 and 0xFF).toInt()
+        get() = color.r
+    @Deprecated("Use color property and r extension property", ReplaceWith("color.r"))
     val red: Int
         get() = color.r
 
     @Deprecated("Use color property and g extension property", ReplaceWith("color.g"))
     val g: Int
-        get() = (color shr 16 and 0xFF).toInt()
+        get() = color.g
+    @Deprecated("Use color property and g extension property", ReplaceWith("color.g"))
     val green: Int
         get() = color.g
 
     @Deprecated("Use color property and b extension property", ReplaceWith("color.b"))
     val b: Int
-        get() = (color and 0xFF).toInt()
+        get() = color.b
+    @Deprecated("Use color property and b extension property", ReplaceWith("color.b"))
     val blue: Int
         get() = color.b
 

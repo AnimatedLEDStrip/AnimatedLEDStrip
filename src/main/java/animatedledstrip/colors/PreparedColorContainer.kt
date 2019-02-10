@@ -1,4 +1,6 @@
-package animatedledstrip.leds
+package animatedledstrip.colors
+
+import animatedledstrip.utils.base
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -27,6 +29,9 @@ package animatedledstrip.leds
  * A prepared [ColorContainer] that holds a set of colors that blend from one
  * to the next. This is created by calling the prepare() function on a
  * ColorContainer. Used by methods that set the color of pixel(s) on a strip.
+ *
+ * @property colors The List of colors that will be used to create this
+ * PreparedColorContainer
  */
 class PreparedColorContainer(private val colors: List<Long>): ColorContainerInterface {
 
