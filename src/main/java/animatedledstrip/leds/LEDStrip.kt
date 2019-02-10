@@ -23,7 +23,10 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.leds.sections.LEDStripSection
+import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

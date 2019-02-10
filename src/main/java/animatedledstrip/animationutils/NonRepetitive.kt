@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.animationutils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -24,10 +24,12 @@ package animatedledstrip.leds
 
 
 /**
- * Class for emulating an `LEDStripNonConcurrent`.
+ * A non-repetitive animation is annotated with this tag.
  *
- * @param numLEDs Number of LEDs in the strip
+ * Non-repetitive animations are ones which change the color of the strip
+ * without reverting it, such as Wipe. The end result is as if you had
+ * set the strip color with `setStripColor()`.
+ *
  */
-class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int): AnimatedLEDStripNonConcurrent(numLEDs){
-    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
-}
+@MustBeDocumented
+annotation class NonRepetitive

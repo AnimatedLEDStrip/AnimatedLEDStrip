@@ -23,8 +23,8 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.leds.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.EmulatedAnimatedLEDStripNonConcurrent
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import kotlin.test.assertTrue
 
 fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {

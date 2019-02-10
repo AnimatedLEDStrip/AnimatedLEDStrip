@@ -23,7 +23,16 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.NonRepetitive
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.sections.SectionableLEDStrip
+import animatedledstrip.utils.blend
+import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger
@@ -456,9 +465,10 @@ abstract class AnimatedLEDStrip(
 
 
     /**
+     * TODO: Update
      * Runs a Smooth Chase animation.
      *
-     * The [colorsFromPalette] function is used to create a collection of colors
+     * The prepare function is used to create a collection of colors
      * for the strip:
      * *The palette colors are spread out along the strip at approximately equal
      * intervals. All pixels between these 'pure' pixels are a blend of the

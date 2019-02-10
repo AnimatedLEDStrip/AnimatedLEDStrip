@@ -1,10 +1,12 @@
-package animatedledstrip.leds
-
-import org.pmw.tinylog.Logger
+package animatedledstrip.utils
 
 /*
+ *  Small modification on a method with this copyright:
+ *  Copyright 2016-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
+ *
+ *
+ *
  *  Copyright (c) 2019 AnimatedLEDStrip
- *  Copyright (c) 2013 FastLED
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -26,36 +28,31 @@ import org.pmw.tinylog.Logger
  */
 
 
+import kotlinx.coroutines.sync.Mutex
+import org.pmw.tinylog.Logger
+
+
 /**
- * Blend a variable proportion (0-255) of one byte to another.
+ * An extension function based on `Mutex.withLock()`.
  *
- * From the FastLED Library.
+ * If another thread has already locked the `Mutex`, this will return and print a
+ * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
+ * action.
  *
- * @param a The starting byte value
- * @param b The byte value to blend toward
- * @param amountOfB The proportion (0-255) of b to blend
- * @return A byte value between `a` and `b`, inclusive
+ * @param T
+ * @param owner
+ * @param action
  */
-fun blend8(a: Int, b: Int, amountOfB: Int): Int {
-    Logger.trace("params: a = $a, b = $b, amountOfB = $amountOfB")
-
-    var partial: Int
-
-    val amountOfA = 255 - amountOfB
-    Logger.trace("amountOfA = $amountOfA")
-
-    partial = a * amountOfA
-    Logger.trace("partial = a * amountOfA = $partial")
-
-    partial += a
-    Logger.trace("partial += a = $partial")
-
-    partial += (b * amountOfB)
-    Logger.trace("partial += b * amountOfB = $partial")
-
-    partial += b
-    Logger.trace("partial += b = $partial")
-
-    Logger.trace("partial shr 8 = ${partial shr 8}")
-    return partial shr 8
+inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
+    if (tryLock(owner)) {
+        try {
+            action()
+            return
+        } finally {
+            unlock(owner)
+        }
+    } else {
+        Logger.debug("Access Overlap: $owner")
+        return
+    }
 }

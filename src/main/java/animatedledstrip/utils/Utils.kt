@@ -1,4 +1,4 @@
-package animatedledstrip.leds
+package animatedledstrip.utils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -27,7 +27,7 @@ package animatedledstrip.leds
 import org.pmw.tinylog.Logger
 
 /**
- * Blend two [ColorContainer]s together and return a new `ColorContainer`.
+ * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
  *
  * Adapted from the FastLED library.
  *
@@ -63,6 +63,11 @@ fun delayBlocking(wait: Long) {
     }
 }
 
+/**
+ * Overload for delayBlocking for when an Int is sent.
+ *
+ * @param wait The time (in milliseconds) to wait for
+ */
 fun delayBlocking(wait: Int) {
     delayBlocking(wait.toLong())
 }
@@ -82,16 +87,36 @@ fun parseHex(string: String): Long {
     }
 }
 
+/**
+ * Returns the 'grayscale' version of the color.
+ */
 fun Long.grayscale(): Long {
     val avg = (((this shr 16 and 0xFF) + (this shr 8 and 0xFF) + (this and 0xFF)) / 3) base 16
     return parseHex("$avg$avg$avg")
 }
 
+/**
+ * Returns the 'red' part of a color.
+ */
 val Long.r
     get() = (this shr 16 and 0xFF).toInt()
+
+/**
+ * Returns the 'green' part of a color.
+ */
 val Long.g
     get() = (this shr 8 and 0xFF).toInt()
+
+/**
+ * Returns the 'blue' part of a color.
+ */
 val Long.b
     get() = (this and 0xFF).toInt()
 
+/**
+ * Infix function for easily creating strings representations of a Long in
+ * different bases.
+ *
+ * @param b The base to use
+ */
 infix fun Long.base(b: Int) = this.toString(b)
