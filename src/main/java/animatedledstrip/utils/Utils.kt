@@ -114,7 +114,7 @@ val Long.b
     get() = (this and 0xFF).toInt()
 
 /**
- * Infix function for easily creating strings representations of a Long in
+ * Infix function for easily creating string representations of a Long in
  * different bases.
  *
  * @param b The base to use

@@ -268,13 +268,10 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
         val temp = mutableListOf<Long>()
 
         for (i in 0 until palette.size) {
-            temp += palette[i + offset % palette.size]
+            temp += palette[(i + offset) % palette.size]
         }
 
         setStripColor(PreparedColorContainer(temp))
-//        palette.forEachIndexed { i, j ->
-//            setPixelColor((i + offset) % numLEDs, j)
-//        }
     }
 
 
@@ -284,6 +281,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      *
      * @param colorList The list of colors
      */
+    @Deprecated("Use ColorContainer instead")
     fun setStripColorWithGradient(colorList: List<ColorContainer>) {
 //        val palette = colorsFromPalette(colorList, numLEDs)
 //        setStripColorWithPalette(palette)

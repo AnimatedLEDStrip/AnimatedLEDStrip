@@ -5,3 +5,4 @@
 *.iml
 !pom.xml
 !.maven.xml
+signature*.csv

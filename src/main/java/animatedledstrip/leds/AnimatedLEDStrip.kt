@@ -23,7 +23,6 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.Direction
@@ -302,15 +301,17 @@ abstract class AnimatedLEDStrip(
     private val bounceToColor = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
+                val originalColor: Long = getPixelColor(j)
                 setPixelColor(j, animation.color1)
                 delayBlocking(animation.delay)
-                setPixelColor(j, CCBlack)
+                setPixelColor(j, originalColor)
             }
             setPixelColor(animation.endPixel - i, animation.color1)
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
+                val originalColor: Long = getPixelColor(j)
                 setPixelColor(j, animation.color1)
                 delayBlocking(animation.delay)
-                setPixelColor(j, CCBlack)
+                setPixelColor(j, originalColor)
             }
             setPixelColor(i, animation.color1)
         }
@@ -761,7 +762,6 @@ abstract class AnimatedLEDStrip(
 //    }
 //
 //    /**
-//     * TODO(Katie)
 //     * @param stackDirection
 //     * @param colorValues1
 //     * @param delay
