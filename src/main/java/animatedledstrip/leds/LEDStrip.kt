@@ -113,7 +113,11 @@ abstract class LEDStrip(
                     delay(500)
                     var renderNum = 0
                     while (rendering) {
-                        ledStrip.render()
+                        try {
+                            ledStrip.render()
+                        } catch (e: NullPointerException) {
+                            Logger.error("LEDStrip NullPointerException")
+                        }
                         if (imageDebugging) {
                             pixelColorList.forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
                             buffer!!.append("0,0,0\n")
