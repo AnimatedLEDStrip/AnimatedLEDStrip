@@ -42,20 +42,20 @@ fun blend8(a: Int, b: Int, amountOfB: Int): Int {
     var partial: Int
 
     val amountOfA = 255 - amountOfB
-    Logger.trace("amountOfA = $amountOfA")
+//    Logger.trace("amountOfA = $amountOfA")
 
     partial = a * amountOfA
-    Logger.trace("partial = a * amountOfA = $partial")
+//    Logger.trace("partial = a * amountOfA = $partial")
 
     partial += a
-    Logger.trace("partial += a = $partial")
+//    Logger.trace("partial += a = $partial")
 
     partial += (b * amountOfB)
-    Logger.trace("partial += b * amountOfB = $partial")
+//    Logger.trace("partial += b * amountOfB = $partial")
 
     partial += b
-    Logger.trace("partial += b = $partial")
+//    Logger.trace("partial += b = $partial")
 
-    Logger.trace("partial shr 8 = ${partial shr 8}")
+//    Logger.trace("partial shr 8 = ${partial shr 8}")
     return partial shr 8
 }
