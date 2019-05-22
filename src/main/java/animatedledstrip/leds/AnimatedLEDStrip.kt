@@ -403,8 +403,50 @@ abstract class AnimatedLEDStrip(
     }
 
 
+    // TODO: test
     private val pixelMarathon = { animation: AnimationData ->
-        // TODO: Add pixelMarathon
+
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color5))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color4))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color2))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color3))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color1))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color2))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color5))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color3))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color4))
+        }
+        delayBlocking((random() * 500).toInt())
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.PIXELRUN).color(animation.color1))
+        }
+        delayBlocking((random() * 500).toInt())
+
     }
 
 
@@ -620,8 +662,16 @@ abstract class AnimatedLEDStrip(
     }
 
 
+    // TODO: documentation
+    @NonRepetitive
     private val stackOverflow = { animation: AnimationData ->
         // TODO: Add stackOverflow
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.STACK).color(animation.color1).direction(Direction.FORWARD).delay(2))
+        }
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.STACK).color(animation.color2).direction(Direction.BACKWARD).delay(2))
+        }
     }
 
 

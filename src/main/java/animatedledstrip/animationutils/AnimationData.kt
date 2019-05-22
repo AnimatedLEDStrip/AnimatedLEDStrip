@@ -155,8 +155,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color1(color: ColorContainer): AnimationData {
-        this.color1 = color
+    fun color1(color: ColorContainerInterface): AnimationData {
+        this.color1 = color as ColorContainer
         return this
     }
 
@@ -195,8 +195,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color(color: ColorContainer): AnimationData {
-        this.color1 = color
+    fun color(color: ColorContainerInterface): AnimationData {
+        this.color1 = color as ColorContainer
         return this
     }
 
@@ -235,8 +235,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color2(color: ColorContainer): AnimationData {
-        this.color2 = color
+    fun color2(color: ColorContainerInterface): AnimationData {
+        this.color2 = color as ColorContainer
         return this
     }
 
@@ -275,8 +275,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color3(color: ColorContainer): AnimationData {
-        this.color3 = color
+    fun color3(color: ColorContainerInterface): AnimationData {
+        this.color3 = color as ColorContainer
         return this
     }
 
@@ -315,8 +315,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color4(color: ColorContainer): AnimationData {
-        this.color4 = color
+    fun color4(color: ColorContainerInterface): AnimationData {
+        this.color4 = color as ColorContainer
         return this
     }
 
@@ -355,8 +355,8 @@ class AnimationData() {
      *
      * @param color A `ColorContainer` instance.
      */
-    fun color5(color: ColorContainer): AnimationData {
-        this.color5 = color
+    fun color5(color: ColorContainerInterface): AnimationData {
+        this.color5 = color as ColorContainer
         return this
     }
 
