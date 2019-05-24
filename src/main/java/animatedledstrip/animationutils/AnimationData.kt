@@ -156,7 +156,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color1(color: ColorContainerInterface): AnimationData {
-        this.color1 = color as ColorContainer
+        this.color1 = color.toColorContainer()
         return this
     }
 
@@ -196,7 +196,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color(color: ColorContainerInterface): AnimationData {
-        this.color1 = color as ColorContainer
+        this.color1 = color.toColorContainer()
         return this
     }
 
@@ -236,7 +236,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color2(color: ColorContainerInterface): AnimationData {
-        this.color2 = color as ColorContainer
+        this.color2 = color.toColorContainer()
         return this
     }
 
@@ -276,7 +276,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color3(color: ColorContainerInterface): AnimationData {
-        this.color3 = color as ColorContainer
+        this.color3 = color.toColorContainer()
         return this
     }
 
@@ -316,7 +316,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color4(color: ColorContainerInterface): AnimationData {
-        this.color4 = color as ColorContainer
+        this.color4 = color.toColorContainer()
         return this
     }
 
@@ -356,7 +356,7 @@ class AnimationData() {
      * @param color A `ColorContainer` instance.
      */
     fun color5(color: ColorContainerInterface): AnimationData {
-        this.color5 = color as ColorContainer
+        this.color5 = color.toColorContainer()
         return this
     }
 
@@ -665,9 +665,9 @@ class AnimationData() {
             }
         }
         continuous = params["Continuous"] as Boolean? ?: false
-        delay = when (params["delay"]) {
-            is Long -> params["delay"] as Long
-            is Int -> (params["delay"] as Int).toLong()
+        delay = when (params["Delay"]) {
+            is Long -> params["Delay"] as Long
+            is Int -> (params["Delay"] as Int).toLong()
             null -> when (animationInfoMap[animation]?.delay) {
                 ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
                 else -> animationInfoMap[animation]?.delayDefault ?: 0L
@@ -687,7 +687,14 @@ class AnimationData() {
 
         endPixel = params["EndPixel"] as Int? ?: 0
         id = params["ID"] as String? ?: ""
-        spacing = params["Spacing"] as Int? ?: 3        // TODO: Replace with default like delay
+        spacing = when (params["Spacing"]) {
+            is Int -> params["Spacing"] as Int
+            null -> when (animationInfoMap[animation]?.spacing) {
+                ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
+                else -> animationInfoMap[animation]?.spacingDefault ?: 3
+            }
+            else -> 3
+        }
         startPixel = params["StartPixel"] as Int? ?: 0
     }
 
