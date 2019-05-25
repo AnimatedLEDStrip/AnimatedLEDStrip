@@ -665,11 +665,14 @@ abstract class AnimatedLEDStrip(
     // TODO: documentation
     @NonRepetitive
     private val stackOverflow = { animation: AnimationData ->
-        GlobalScope.launch(animationThreadPool) {
+        val forwardThread = GlobalScope.launch(animationThreadPool) {
             run(AnimationData().animation(Animation.STACK).color(animation.color1).direction(Direction.FORWARD).delay(2))
         }
-        GlobalScope.launch(animationThreadPool) {
+        val backwardThread = GlobalScope.launch(animationThreadPool) {
             run(AnimationData().animation(Animation.STACK).color(animation.color2).direction(Direction.BACKWARD).delay(2))
+        }
+        runBlocking {
+            joinAll(forwardThread, backwardThread)
         }
     }
 
