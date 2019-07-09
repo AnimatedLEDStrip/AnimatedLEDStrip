@@ -53,8 +53,8 @@ class AnimatedLEDStripNonConcurrentTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.ALTERNATE)
-                .color1(0xFF)
-                .color2(0xFFFF))
+                .color0(0xFF)
+                .color1(0xFFFF))
     }
 
     @Test
@@ -71,7 +71,7 @@ class AnimatedLEDStripNonConcurrentTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.MULTICOLOR)
-                .color1(ColorContainer(0xFF, 0xFFFF)))
+                .color0(ColorContainer(0xFF, 0xFFFF)))
 
         val testGradient = ColorContainer(0xFF, 0xFFFF).prepare(50)
 

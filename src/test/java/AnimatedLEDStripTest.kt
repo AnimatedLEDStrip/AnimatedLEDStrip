@@ -59,8 +59,8 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.ALTERNATE)
-                .color1(0xFF)
-                .color2(0xFFFF))
+                .color0(0xFF)
+                .color1(0xFFFF))
     }
 
     @Test
@@ -146,11 +146,11 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.PIXELMARATHON)
-                .color1(0xFF)
-                .color2(0xFFFF)
-                .color3(0xFF00FF)
-                .color4(0xFF00)
-                .color5(0xFFFF00))
+                .color0(0xFF)
+                .color1(0xFFFF)
+                .color2(0xFF00FF)
+                .color3(0xFF00)
+                .color4(0xFFFF00))
     }
 
     @Test
@@ -190,12 +190,12 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .color1(ColorContainer(0xFF, 0xFF00))
+                .color0(ColorContainer(0xFF, 0xFF00))
                 .direction(Direction.FORWARD))
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .color1(ColorContainer(0xFF00, 0xFF))
+                .color0(ColorContainer(0xFF00, 0xFF))
                 .direction(Direction.BACKWARD))
     }
 
@@ -285,8 +285,8 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.STACKOVERFLOW)
-                .color1(0xFF)
-                .color2(0xFF00))
+                .color0(0xFF)
+                .color1(0xFF00))
     }
 
     @Test

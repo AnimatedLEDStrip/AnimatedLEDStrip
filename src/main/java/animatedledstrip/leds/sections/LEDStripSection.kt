@@ -51,7 +51,7 @@ class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: Anim
      */
     fun run(animation: AnimationData) {
         when (animation.animation) {
-            Animation.COLOR -> ledStrip.setSectionColor(startPixel, endPixel, animation.color1)
+            Animation.COLOR -> ledStrip.setSectionColor(startPixel, endPixel, animation.color0)
             else -> {
                 animation.startPixel = startPixel
                 animation.endPixel = endPixel
