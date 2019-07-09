@@ -33,7 +33,7 @@ import java.io.Serializable
  * Class used when calling animations to specify colors, parameters, etc.
  * for the animation.
  */
-class AnimationData() : Serializable {
+class AnimationData : Serializable {
 
     /* parameters */
 
@@ -46,7 +46,6 @@ class AnimationData() : Serializable {
      * The list of ColorContainers
      */
     val colors = mutableListOf<ColorContainerInterface>()
-
 
     /* Helper properties for the first 5 ColorContainers */
 
@@ -177,6 +176,7 @@ class AnimationData() : Serializable {
 
         return this
     }
+
 
     /* Helpers for setting the first 5 ColorContainers */
 
@@ -314,156 +314,41 @@ class AnimationData() : Serializable {
         return this
     }
 
-//    /**
-//     * Constructor used by the server when receiving a `Map` from a client
-//     */
-//    constructor(params: Map<*, *>) : this() {
-//        val a = params["Animation"]
-//        animation = when (a) {
-//            null -> throw Exception("Animation not defined")
-//            is Animation -> params["Animation"] as Animation
-//            is String -> {
-//                when (a.toUpperCase()) {
-//                    "COL" -> Animation.COLOR
-//                    "MCOL" -> Animation.MULTICOLOR
-//                    else -> try {
-//                        animationInfoMap.entries.filter {
-//                            it.value.abbr == (params["Animation"] as String).toUpperCase()
-//                        }[0].key
-//                    } catch (e: IndexOutOfBoundsException) {
-//                        throw Exception("Animation parameter not defined")
-//                    }
-//                }
-//            }
-//            else -> throw Exception("Invalid type for animation parameter")
-//        }
-//        color0 = when (params["Color0"]) {
-//            is Long -> ColorContainer(params["Color0"] as Long)
-//            is List<*> -> ColorContainer(mutableListOf<Long>().apply {
-//                (params["Color0"] as List<*>).forEach {
-//                    this.add(it as Long)
-//                }
-//            })
-//            is ColorContainer -> ColorContainer(params["Color0"] as ColorContainer)
-//            else -> ColorContainer(0x0)
-//        }
-//
-//
-//        color1 = when (params["Color1"]) {
-//            is Long -> ColorContainer(params["Color1"] as Long)
-//            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
-//                (params["Color1"] as List<*>).forEach {
-//                    this.add(it as Long)
-//                }
-//            }))
-//            is ColorContainer -> ColorContainer(params["Color1"] as ColorContainer)
-//            else -> ColorContainer(0x0)
-//        }
-//
-//        color2 = when (params["Color2"]) {
-//            is Long -> ColorContainer(params["Color2"] as Long)
-//            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
-//                (params["Color2"] as List<*>).forEach {
-//                    this.add(it as Long)
-//                }
-//            }))
-//            is ColorContainer -> ColorContainer(params["Color2"] as ColorContainer)
-//            else -> ColorContainer(0x0)
-//        }
-//
-//        color3 = when (params["Color3"]) {
-//            is Long -> ColorContainer(params["Color3"] as Long)
-//            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
-//                (params["Color3"] as List<*>).forEach {
-//                    this.add(it as Long)
-//                }
-//            }))
-//            is ColorContainer -> ColorContainer(params["Color3"] as ColorContainer)
-//            else -> ColorContainer(0x0)
-//        }
-//
-//        color4 = when (params["Color4"]) {
-//            is Long -> ColorContainer(params["Color4"] as Long)
-//            is List<*> -> ColorContainer(ColorContainer(mutableListOf<Long>().apply {
-//                (params["Color4"] as List<*>).forEach {
-//                    this.add(it as Long)
-//                }
-//            }))
-//            is ColorContainer -> ColorContainer(params["Color4"] as ColorContainer)
-//            else -> ColorContainer(0x0)
-//        }
-//
-//        if (params["ColorList"] as List<*>? != null) {
-//            (params["ColorList"] as List<*>).forEach { c ->
-//                when (c) {
-//                    is Long -> color0 as ColorContainer += (c)
-//                    is ColorContainer -> color0 = c
-//                }
-//            }
-//        }
-//        continuous = params["Continuous"] as Boolean? ?: false
-//        delay = when (params["Delay"]) {
-//            is Long -> params["Delay"] as Long
-//            is Int -> (params["Delay"] as Int).toLong()
-//            null -> when (animationInfoMap[animation]?.delay) {
-//                ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
-//                else -> animationInfoMap[animation]?.delayDefault ?: 0L
-//            }
-//            else -> 0L
-//        }
-//        delayMod = params["DelayMod"] as Double? ?: 1.0
-//        direction = when (params["Direction"]) {
-//            is Char -> when (params["Direction"]) {
-//                'F', 'f' -> Direction.FORWARD
-//                'B', 'b' -> Direction.BACKWARD
-//                else -> throw Exception("Direction chars can be 'F' or 'B'")
-//            }
-//            is Direction -> params["Direction"] as Direction
-//            else -> Direction.FORWARD
-//        }
-//
-//        endPixel = params["EndPixel"] as Int? ?: 0
-//        id = params["ID"] as String? ?: ""
-//        spacing = when (params["Spacing"]) {
-//            is Int -> params["Spacing"] as Int
-//            null -> when (animationInfoMap[animation]?.spacing) {
-//                ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
-//                else -> animationInfoMap[animation]?.spacingDefault ?: 3
-//            }
-//            else -> 3
-//        }
-//        startPixel = params["StartPixel"] as Int? ?: 0
-//    }
 
+    /* Utility Functions */
 
     /**
      * Create a `String` out of the values of this instance.
      */
     override fun toString() =
-            "$animation: $color0, $color1, $color2, $color3, $color4, $continuous, $delay, $direction, $id, $spacing"
+            "$animation: $colors, $continuous, $delay, $direction, $id, $spacing"
 
+    override fun equals(other: Any?): Boolean {
+        if (other !is AnimationData) return false
+        if (animation != other.animation) return false
+        if (colors != other.colors) return false
+        if (continuous != other.continuous) return false
+        if (delay != other.delay) return false
+        if (delayMod != other.delayMod) return false
+        if (direction != other.direction) return false
+        if (endPixel != other.endPixel) return false
+        if (id != other.id) return false
+        if (spacing != other.spacing) return false
+        if (startPixel != other.startPixel) return false
 
-//    /**
-//     * Create a `Map` that can be sent over a socket.
-//     */
-//    fun toMap() = mapOf<String, Any?>(
-//            "Animation" to animation,
-//            "Color0" to color0.toColorContainer().colors,
-//            "Color1" to color1.toColorContainer().colors,
-//            "Color2" to color2.toColorContainer().colors,
-//            "Color3" to color3.toColorContainer().colors,
-//            "Color4" to color4.toColorContainer().colors,
-//            "Continuous" to continuous,
-//            "Delay" to delay,
-//            "DelayMod" to delayMod,
-//            "Direction" to when (direction) {
-//                Direction.FORWARD -> 'F'
-//                Direction.BACKWARD -> 'B'
-//            },
-//            "EndPixel" to endPixel,
-//            "ID" to id,
-//            "Spacing" to spacing,
-//            "StartPixel" to startPixel
-//    )
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = animation.hashCode()
+        result = 31 * result + colors.hashCode()
+        result = 31 * result + continuous.hashCode()
+        result = 31 * result + delayMod.hashCode()
+        result = 31 * result + direction.hashCode()
+        result = 31 * result + endPixel
+        result = 31 * result + id.hashCode()
+        result = 31 * result + startPixel
+        return result
+    }
 
 }
