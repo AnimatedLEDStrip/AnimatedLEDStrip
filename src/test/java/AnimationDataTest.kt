@@ -23,17 +23,17 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.colors.ColorContainer
 import animatedledstrip.animationutils.Direction
+import animatedledstrip.colors.ColorContainer
 import org.junit.Ignore
 import org.junit.Test
 import java.io.*
+import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 
@@ -58,93 +58,20 @@ class AnimationDataTest {
     fun testColors() {
         val testAnimation = AnimationData()
 
-        assertTrue { testAnimation.color0 == CCBlack }
-        assertTrue { testAnimation.color1 == CCBlack }
-        assertTrue { testAnimation.color2 == CCBlack }
-        assertTrue { testAnimation.color3 == CCBlack }
-        assertTrue { testAnimation.color4 == CCBlack }
-
         testAnimation.color(0xFF)
-        assertTrue { testAnimation.color0 == ColorContainer(0xFF) }
+        assertTrue { testAnimation.colors[0] == ColorContainer(0xFF) }
 
         testAnimation.color(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color0 == ColorContainer(0xFFFF) }
+        assertTrue { testAnimation.colors[0] == ColorContainer(0xFFFF) }
 
         testAnimation.color(0xFFFFFFL)
-        assertTrue { testAnimation.color0 == ColorContainer(0xFFFFFF) }
+        assertTrue { testAnimation.colors[0] == ColorContainer(0xFFFFFF) }
 
         testAnimation.color("0xFF00")
-        assertTrue { testAnimation.color0 == ColorContainer(0xFF00) }
+        assertTrue { testAnimation.colors[0] == ColorContainer(0xFF00) }
 
-        testAnimation.color0(0xFF)
-        assertTrue { testAnimation.color0 == ColorContainer(0xFF) }
-
-        testAnimation.color0(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color0 == ColorContainer(0xFFFF) }
-
-        testAnimation.color0(0xFFFFFFL)
-        assertTrue { testAnimation.color0 == ColorContainer(0xFFFFFF) }
-
-        testAnimation.color0("0xFF00")
-        assertTrue { testAnimation.color0 == ColorContainer(0xFF00) }
-
-
-        testAnimation.color1(0xFF)
-        assertTrue { testAnimation.color1 == ColorContainer(0xFF) }
-
-        testAnimation.color1(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color1 == ColorContainer(0xFFFF) }
-
-        testAnimation.color1(0xFFFFFFL)
-        assertTrue { testAnimation.color1 == ColorContainer(0xFFFFFF) }
-
-        testAnimation.color1("0xFF00")
-        assertTrue { testAnimation.color1 == ColorContainer(0xFF00) }
-
-
-        testAnimation.color2(0xFF)
-        assertTrue { testAnimation.color2 == ColorContainer(0xFF) }
-
-        testAnimation.color2(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color2 == ColorContainer(0xFFFF) }
-
-        testAnimation.color2(0xFFFFFFL)
-        assertTrue { testAnimation.color2 == ColorContainer(0xFFFFFF) }
-
-        testAnimation.color2("0xFF00")
-        assertTrue { testAnimation.color2 == ColorContainer(0xFF00) }
-
-
-        testAnimation.color3(0xFF)
-        assertTrue { testAnimation.color3 == ColorContainer(0xFF) }
-
-        testAnimation.color3(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color3 == ColorContainer(0xFFFF) }
-
-        testAnimation.color3(0xFFFFFFL)
-        assertTrue { testAnimation.color3 == ColorContainer(0xFFFFFF) }
-
-        testAnimation.color3("0xFF00")
-        assertTrue { testAnimation.color3 == ColorContainer(0xFF00) }
-
-
-        testAnimation.color4(0xFF)
-        assertTrue { testAnimation.color4 == ColorContainer(0xFF) }
-
-        testAnimation.color4(ColorContainer(0xFFFF))
-        assertTrue { testAnimation.color4 == ColorContainer(0xFFFF) }
-
-        testAnimation.color4(0xFFFFFFL)
-        assertTrue { testAnimation.color4 == ColorContainer(0xFFFFFF) }
-
-        testAnimation.color4("0xFF00")
-        assertTrue { testAnimation.color4 == ColorContainer(0xFF00) }
-    }
-
-    @Test
-    @Ignore
-    fun testColorList() {
-        TODO()
+        testAnimation.color(0xFF, index = 3)
+        assertTrue { testAnimation.colors[3] == ColorContainer(0xFF) }
     }
 
     @Test
@@ -250,255 +177,20 @@ class AnimationDataTest {
         assertTrue { testAnimation.startPixel == 100 }
     }
 
-//    @Test
-//    fun testMapConstructor() {
-//
-//        assertFails {
-//            AnimationData(mapOf("Color1" to 0xFFL))
-//            Unit
-//        }
-//
-//        val a1 = AnimationData(mapOf("Animation" to Animation.ALTERNATE))
-//        assertTrue { a1.animation == Animation.ALTERNATE }
-//        val a2 = AnimationData(mapOf("Animation" to Animation.BOUNCE))
-//        assertTrue { a2.animation == Animation.BOUNCE }
-//        val a3 = AnimationData(mapOf("Animation" to Animation.BOUNCETOCOLOR))
-//        assertTrue { a3.animation == Animation.BOUNCETOCOLOR }
-//        val a4 = AnimationData(mapOf("Animation" to Animation.COLOR))
-//        assertTrue { a4.animation == Animation.COLOR }
-//        val a5 = AnimationData(mapOf("Animation" to Animation.MULTICOLOR))
-//        assertTrue { a5.animation == Animation.MULTICOLOR }
-//        val a6 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUN))
-//        assertTrue { a6.animation == Animation.MULTIPIXELRUN }
-//        val a7 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUNTOCOLOR))
-//        assertTrue { a7.animation == Animation.MULTIPIXELRUNTOCOLOR }
-//        val a8 = AnimationData(mapOf("Animation" to Animation.PIXELMARATHON))
-//        assertTrue { a8.animation == Animation.PIXELMARATHON }
-//        val a9 = AnimationData(mapOf("Animation" to Animation.PIXELRUN))
-//        assertTrue { a9.animation == Animation.PIXELRUN }
-//        val a10 = AnimationData(mapOf("Animation" to Animation.PIXELRUNWITHTRAIL))
-//        assertTrue { a10.animation == Animation.PIXELRUNWITHTRAIL }
-//        val a11 = AnimationData(mapOf("Animation" to Animation.SMOOTHCHASE))
-//        assertTrue { a11.animation == Animation.SMOOTHCHASE }
-//        val a12 = AnimationData(mapOf("Animation" to Animation.SMOOTHFADE))
-//        assertTrue { a12.animation == Animation.SMOOTHFADE }
-//        val a13 = AnimationData(mapOf("Animation" to Animation.SPARKLE))
-//        assertTrue { a13.animation == Animation.SPARKLE }
-//        val a14 = AnimationData(mapOf("Animation" to Animation.SPARKLEFADE))
-//        assertTrue { a14.animation == Animation.SPARKLEFADE }
-//        val a15 = AnimationData(mapOf("Animation" to Animation.SPARKLETOCOLOR))
-//        assertTrue { a15.animation == Animation.SPARKLETOCOLOR }
-//        val a16 = AnimationData(mapOf("Animation" to Animation.STACK))
-//        assertTrue { a16.animation == Animation.STACK }
-//        val a17 = AnimationData(mapOf("Animation" to Animation.STACKOVERFLOW))
-//        assertTrue { a17.animation == Animation.STACKOVERFLOW }
-//        val a18 = AnimationData(mapOf("Animation" to Animation.WIPE))
-//        assertTrue { a18.animation == Animation.WIPE }
-//        val a19 = AnimationData(mapOf("Animation" to Animation.CUSTOMANIMATION))
-//        assertTrue { a19.animation == Animation.CUSTOMANIMATION }
-//        val a20 = AnimationData(mapOf("Animation" to Animation.CUSTOMREPETITIVEANIMATION))
-//        assertTrue { a20.animation == Animation.CUSTOMREPETITIVEANIMATION }
-//
-//        val as1 = AnimationData(mapOf("Animation" to "ALT"))
-//        assertTrue { as1.animation == Animation.ALTERNATE }
-//
-//        val as2 = AnimationData(mapOf("Animation" to "COL"))
-//        assertTrue { as2.animation == Animation.COLOR }
-//
-//        val as3 = AnimationData(mapOf("Animation" to "MCOL"))
-//        assertTrue { as3.animation == Animation.MULTICOLOR }
-//
-//        assertFails {
-//            AnimationData(mapOf("Animation" to "ABC"))
-//        }
-//
-//        assertFails {
-//            AnimationData(mapOf("Animation" to 10))
-//        }
-//
-//        val c0 = AnimationData(mapOf("Animation" to Animation.WIPE))
-//        assertTrue { c0.color0 == ColorContainer(0) }
-//        assertTrue { c0.color1 == ColorContainer(0) }
-//        assertTrue { c0.color2 == ColorContainer(0) }
-//        assertTrue { c0.color3 == ColorContainer(0) }
-//        assertTrue { c0.color4 == ColorContainer(0) }
-//
-//        val c11 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color1" to 0xFFFFL))
-//        assertTrue { c11.color0 == ColorContainer(0xFFFF) }
-//
-//        val c21 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color2" to 0xFFFFL))
-//        assertTrue { c21.color1 == ColorContainer(0xFFFF) }
-//
-//        val c31 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color3" to 0xFFFFL))
-//        assertTrue { c31.color2 == ColorContainer(0xFFFF) }
-//
-//        val c41 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color4" to 0xFFFFL))
-//        assertTrue { c41.color3 == ColorContainer(0xFFFF) }
-//
-//        val c51 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color5" to 0xFFFFL))
-//        assertTrue { c51.color4 == ColorContainer(0xFFFF) }
-//
-//        val c12 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color1" to ColorContainer(0xFFFF, 0xFF)))
-//        assertTrue { c12.color0 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c22 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color2" to ColorContainer(0xFFFF, 0xFF)))
-//        assertTrue { c22.color1 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c32 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color3" to ColorContainer(0xFFFF, 0xFF)))
-//        assertTrue { c32.color2 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c42 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color4" to ColorContainer(0xFFFF, 0xFF)))
-//        assertTrue { c42.color3 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c52 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color5" to ColorContainer(0xFFFF, 0xFF)))
-//        assertTrue { c52.color4 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c13 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color1" to listOf<Long>(0xFFFF, 0xFF)))
-//        assertTrue { c13.color0 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c23 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color2" to listOf<Long>(0xFFFF, 0xFF)))
-//        assertTrue { c23.color1 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c33 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color3" to listOf<Long>(0xFFFF, 0xFF)))
-//        assertTrue { c33.color2 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c43 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color4" to listOf<Long>(0xFFFF, 0xFF)))
-//        assertTrue { c43.color3 == ColorContainer(0xFFFF, 0xFF) }
-//
-//        val c53 = AnimationData(mapOf("Animation" to Animation.WIPE, "Color5" to listOf<Long>(0xFFFF, 0xFF)))
-//        assertTrue { c53.color4 == ColorContainer(0xFFFF, 0xFF) }
-//
-//
-//        val c1 = AnimationData(mapOf("Animation" to Animation.STACK, "Continuous" to true))
-//        assertTrue { c1.continuous }
-//
-//        val c2 = AnimationData(mapOf("Animation" to Animation.STACK, "Continuous" to false))
-//        assertFalse { c2.continuous }
-//
-//
-//        val dm1 = AnimationData(mapOf("Animation" to Animation.SPARKLE))
-//        assertTrue { dm1.delayMod == 1.0 }
-//
-//        val dm2 = AnimationData(mapOf("Animation" to Animation.SPARKLE, "DelayMod" to 2.0))
-//        assertTrue { dm2.delayMod == 2.0 }
-//
-//
-//        val d1 = AnimationData(mapOf("Animation" to Animation.PIXELRUN))
-//        assertTrue { d1.direction == Direction.FORWARD }
-//
-//        val d2 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to Direction.FORWARD))
-//        assertTrue { d2.direction == Direction.FORWARD }
-//
-//        val d3 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to 'F'))
-//        assertTrue { d3.direction == Direction.FORWARD }
-//
-//        val d4 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to 'f'))
-//        assertTrue { d4.direction == Direction.FORWARD }
-//
-//        val d5 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to Direction.BACKWARD))
-//        assertTrue { d5.direction == Direction.BACKWARD }
-//
-//        val d6 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to 'B'))
-//        assertTrue { d6.direction == Direction.BACKWARD }
-//
-//        val d7 = AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to 'b'))
-//        assertTrue { d7.direction == Direction.BACKWARD }
-//
-//        assertFails {
-//            AnimationData(mapOf("Animation" to Animation.PIXELRUN, "Direction" to 'G'))
-//        }
-//
-//
-//        val ep1 = AnimationData(mapOf("Animation" to Animation.BOUNCE))
-//        assertTrue { ep1.endPixel == 0 }
-//
-//        val ep2 = AnimationData(mapOf("Animation" to Animation.BOUNCE, "EndPixel" to 15))
-//        assertTrue { ep2.endPixel == 15 }
-//
-//
-//        val i1 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUN))
-//        assertTrue { i1.id == "" }
-//
-//        val i2 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUN, "ID" to "TEST"))
-//        assertTrue { i2.id == "TEST" }
-//
-//
-//        val s1 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUNTOCOLOR))
-//        assertTrue { s1.spacing == 3 }
-//
-//        val s2 = AnimationData(mapOf("Animation" to Animation.MULTIPIXELRUNTOCOLOR, "Spacing" to 5))
-//        assertTrue { s2.spacing == 5 }
-//
-//
-//        val sp1 = AnimationData(mapOf("Animation" to Animation.SMOOTHCHASE))
-//        assertTrue { sp1.startPixel == 0 }
-//
-//        val sp2 = AnimationData(mapOf("Animation" to Animation.SMOOTHCHASE, "StartPixel" to 10))
-//        assertTrue { sp2.startPixel == 10 }
-//    }
-
     @Test
     @Ignore
     fun testToString() {
         TODO()
     }
 
-//    @Test
-//    fun testToMap() {
-//        val testAnimation = AnimationData().animation(Animation.STACK)
-//                .color0(0xFF)
-//                .color1(0xFF)
-//                .color2(0xFF)
-//                .color3(0xFF)
-//                .color4(0xFF)
-////                .colorList(listOf(0xFF))
-//                .continuous(true)
-//                .delay(50)
-//                .direction(Direction.FORWARD)
-//                .id("TEST")
-//                .spacing(5)
-//                .toMap()
-//        assertTrue { testAnimation["Animation"] is Animation }
-//        assertTrue { testAnimation["Animation"] == Animation.STACK }
-////        assertTrue { testAnimation["Color1"] is Long }
-////        assertTrue { testAnimation["Color1"] == 0xFFL }
-////        assertTrue { testAnimation["Color2"] is Long }
-////        assertTrue { testAnimation["Color2"] == 0xFFL }
-////        assertTrue { testAnimation["Color3"] is Long }
-////        assertTrue { testAnimation["Color3"] == 0xFFL }
-////        assertTrue { testAnimation["Color4"] is Long }
-////        assertTrue { testAnimation["Color4"] == 0xFFL }
-////        assertTrue { testAnimation["Color5"] is Long }
-////        assertTrue { testAnimation["Color5"] == 0xFFL }
-////        assertTrue { testAnimation["ColorList"] is List<*> }
-////        assertTrue { (testAnimation["ColorList"] as List<*>).size != 0 }  // TODO: Fix test
-//        assertTrue { testAnimation["Continuous"] is Boolean }
-//        assertTrue { testAnimation["Continuous"] == true }
-//        assertTrue { testAnimation["Delay"] is Long }
-//        assertTrue { testAnimation["Delay"] == 50L }
-//        assertTrue { testAnimation["DelayMod"] is Double }
-//        assertTrue { testAnimation["DelayMod"] == 1.0 }
-//        assertTrue { testAnimation["Direction"] is Char }
-//        assertTrue { testAnimation["Direction"] == 'F' }
-//        assertTrue { testAnimation["EndPixel"] is Int }
-//        assertTrue { testAnimation["EndPixel"] == 0 }
-//        assertTrue { testAnimation["ID"] is String }
-//        assertTrue { testAnimation["ID"] == "TEST" }
-//        assertTrue { testAnimation["Spacing"] is Int }
-//        assertTrue { testAnimation["Spacing"] == 5 }
-//        assertTrue { testAnimation["StartPixel"] is Int }
-//        assertTrue { testAnimation["StartPixel"] == 0 }
-//    }
-
     @Test
     fun testIsSerializable() {
         val testAnimation = AnimationData().animation(Animation.STACK)
-                .color0(ColorContainer(0xFF, 0xFFFF).prepare(5))
-                .color1(0xFF)
-                .color2(0xFF)
-                .color3(0xFF)
-                .color4(0xFF)
-//                .colorList(listOf(0xFF))
+                .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
+                .color(0xFF, index = 1)
+                .color(0xFF, index = 2)
+                .color(0xFF, index = 3)
+                .color(0xFF, index = 4)
                 .continuous(true)
                 .delay(50)
                 .direction(Direction.FORWARD)
@@ -510,7 +202,6 @@ class AnimationDataTest {
             out.writeObject(testAnimation)
             out.close()
             fileOut.close()
-            println("Serialized data is saved in /tmp/employee.ser")
         } catch (i: IOException) {
             i.printStackTrace()
         }
@@ -520,11 +211,10 @@ class AnimationDataTest {
             val testAnimation2: AnimationData = input.readObject() as AnimationData
             input.close()
             fileIn.close()
-            println(testAnimation)
-            println(testAnimation2)
             assertTrue {testAnimation == testAnimation2}
         } catch (i: IOException) {
             i.printStackTrace()
         }
+        Files.delete(Paths.get("animation.ser"))
     }
 }

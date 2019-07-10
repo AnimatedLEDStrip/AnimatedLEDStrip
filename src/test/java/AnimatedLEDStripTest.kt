@@ -23,11 +23,11 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.Direction
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -59,8 +59,8 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.ALTERNATE)
-                .color0(0xFF)
-                .color1(0xFFFF))
+                .color(0xFF, index = 0)
+                .color(0xFFFF, index = 1))
     }
 
     @Test
@@ -146,11 +146,11 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.PIXELMARATHON)
-                .color0(0xFF)
-                .color1(0xFFFF)
-                .color2(0xFF00FF)
-                .color3(0xFF00)
-                .color4(0xFFFF00))
+                .color(0xFF, index = 0)
+                .color(0xFFFF, index = 1)
+                .color(0xFF00FF, index = 2)
+                .color(0xFF00, index = 3)
+                .color(0xFFFF00, index = 4))
     }
 
     @Test
@@ -190,12 +190,12 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .color0(ColorContainer(0xFF, 0xFF00))
+                .color(ColorContainer(0xFF, 0xFF00))
                 .direction(Direction.FORWARD))
 
         testLEDs.run(AnimationData()
                 .animation(Animation.SMOOTHCHASE)
-                .color0(ColorContainer(0xFF00, 0xFF))
+                .color(ColorContainer(0xFF00, 0xFF))
                 .direction(Direction.BACKWARD))
     }
 
@@ -285,8 +285,8 @@ class AnimatedLEDStripTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.STACKOVERFLOW)
-                .color0(0xFF)
-                .color1(0xFF00))
+                .color(0xFF, index = 1)
+                .color(0xFF00, index = 1))
     }
 
     @Test

@@ -29,11 +29,9 @@ package animatedledstrip.animationutils
  * when applicable.
  *
  * @property abbr The abbreviation used to identify this animation
- * @property color1 First color
- * @property color2 Second color
- * @property color3 Third color
- * @property color4 Fourth color
- * @property color5 Fifth color
+ * @property numReqColors The minimum number of colors required for the animation
+ * @property numOptColors The number of additional colors beyond the required number
+ * supported by the animation
  * @property delay Delay in animation
  * @property delayDefault Default if delay is missing
  * @property direction Direction of animation
@@ -42,17 +40,16 @@ package animatedledstrip.animationutils
  */
 data class AnimationInfo(
         val abbr: String = "",
-        val color1: ReqLevel = ReqLevel.NOTUSED,
-        val color2: ReqLevel = ReqLevel.NOTUSED,
-        val color3: ReqLevel = ReqLevel.NOTUSED,
-        val color4: ReqLevel = ReqLevel.NOTUSED,
-        val color5: ReqLevel = ReqLevel.NOTUSED,
+        val numReqColors: Int = 0,
+        val numOptColors: Int = 0,
         val delay: ReqLevel = ReqLevel.NOTUSED,
         val delayDefault: Long = 0,
         val direction: ReqLevel = ReqLevel.NOTUSED,
         val spacing: ReqLevel = ReqLevel.NOTUSED,
         val spacingDefault: Int = 0
-)
+){
+    val numColors = numReqColors + numOptColors
+}
 
 /**
  * Helper enum for specifying the requirement level of an animation parameter.
@@ -81,8 +78,7 @@ enum class ReqLevel {
  */
 val Alternate = AnimationInfo(
         abbr = "ALT",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.REQUIRED,
+        numReqColors = 2,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 1000
 )
@@ -95,8 +91,8 @@ val Alternate = AnimationInfo(
  */
 val Bounce = AnimationInfo(
         abbr = "BNC",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.OPTIONAL,
+        numReqColors = 1,
+        numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10
 )
@@ -109,7 +105,7 @@ val Bounce = AnimationInfo(
  */
 val BounceToColor = AnimationInfo(
         abbr = "BTC",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 5
 )
@@ -122,8 +118,8 @@ val BounceToColor = AnimationInfo(
  */
 val MultiPixelRun = AnimationInfo(
         abbr = "MPR",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.OPTIONAL,
+        numReqColors = 1,
+        numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 100,
         direction = ReqLevel.REQUIRED,
@@ -139,7 +135,7 @@ val MultiPixelRun = AnimationInfo(
  */
 val MultiPixelRunToColor = AnimationInfo(
         abbr = "MTC",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 150,
         direction = ReqLevel.REQUIRED,
@@ -155,11 +151,7 @@ val MultiPixelRunToColor = AnimationInfo(
  */
 val PixelMarathon = AnimationInfo(
         abbr = "PXM",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.REQUIRED,
-        color3 = ReqLevel.REQUIRED,
-        color4 = ReqLevel.REQUIRED,
-        color5 = ReqLevel.REQUIRED,
+        numReqColors = 5,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 8
 )
@@ -172,8 +164,8 @@ val PixelMarathon = AnimationInfo(
  */
 val PixelRun = AnimationInfo(
         abbr = "PXR",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.OPTIONAL,
+        numReqColors = 1,
+        numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
         direction = ReqLevel.REQUIRED
@@ -187,8 +179,8 @@ val PixelRun = AnimationInfo(
  */
 val PixelRunWithTrail = AnimationInfo(
         abbr = "PXRT",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.OPTIONAL,
+        numReqColors = 1,
+        numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
         direction = ReqLevel.REQUIRED
@@ -202,7 +194,7 @@ val PixelRunWithTrail = AnimationInfo(
  */
 val SmoothChase = AnimationInfo(
         abbr = "SCH",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50,
         direction = ReqLevel.REQUIRED
@@ -216,7 +208,7 @@ val SmoothChase = AnimationInfo(
  */
 val SmoothFade = AnimationInfo(
         abbr = "SMF",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50
 )
@@ -228,7 +220,7 @@ val SmoothFade = AnimationInfo(
  */
 val Sparkle = AnimationInfo(
         abbr = "SPK",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50
 )
@@ -241,8 +233,8 @@ val Sparkle = AnimationInfo(
  */
 val SparkleFade = AnimationInfo(
         abbr = "SPF",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.OPTIONAL,
+        numReqColors = 1,
+        numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50
 )
@@ -255,7 +247,7 @@ val SparkleFade = AnimationInfo(
  */
 val SparkleToColor = AnimationInfo(
         abbr = "STC",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50
 )
@@ -268,7 +260,7 @@ val SparkleToColor = AnimationInfo(
  */
 val Stack = AnimationInfo(
         abbr = "STK",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
         direction = ReqLevel.REQUIRED
@@ -282,8 +274,7 @@ val Stack = AnimationInfo(
  */
 val StackOverflow = AnimationInfo(
         abbr = "STO",
-        color1 = ReqLevel.REQUIRED,
-        color2 = ReqLevel.REQUIRED
+        numReqColors = 2
 )
 
 
@@ -294,7 +285,7 @@ val StackOverflow = AnimationInfo(
  */
 val Wipe = AnimationInfo(
         abbr = "WIP",
-        color1 = ReqLevel.REQUIRED,
+        numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
         direction = ReqLevel.REQUIRED

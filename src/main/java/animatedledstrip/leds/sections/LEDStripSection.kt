@@ -41,7 +41,7 @@ import animatedledstrip.leds.AnimatedLEDStripInterface
  */
 class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStripInterface) {
 
-    constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip): this(pixels.first, pixels.endInclusive, ledStrip)
+    constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip): this(pixels.first, pixels.last, ledStrip)
 
     /**
      * Run an animation on this section of the LED strip.
@@ -51,7 +51,7 @@ class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: Anim
      */
     fun run(animation: AnimationData) {
         when (animation.animation) {
-            Animation.COLOR -> ledStrip.setSectionColor(startPixel, endPixel, animation.color0)
+            Animation.COLOR -> ledStrip.setSectionColor(startPixel, endPixel, animation.pCols[0])
             else -> {
                 animation.startPixel = startPixel
                 animation.endPixel = endPixel

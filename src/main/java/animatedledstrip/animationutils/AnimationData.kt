@@ -23,9 +23,10 @@ package animatedledstrip.animationutils
  */
 
 
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
 import java.io.Serializable
 
@@ -47,28 +48,34 @@ class AnimationData : Serializable {
      */
     val colors = mutableListOf<ColorContainerInterface>()
 
-    /* Helper properties for the first 5 ColorContainers */
+    lateinit var pCols: MutableList<PreparedColorContainer>
 
+    /* Helper properties for the first 5 ColorContainers */
+    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
     var color0: ColorContainerInterface
         get() = if (colors.size > 0) colors[0] else CCBlack
         set(value) {
             color(value, 0)
         }
+    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
     var color1: ColorContainerInterface
         get() = if (colors.size > 1) colors[1] else CCBlack
         set(value) {
             color(value, 1)
         }
+    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
     var color2: ColorContainerInterface
         get() = if (colors.size > 2) colors[2] else CCBlack
         set(value) {
             color(value, 2)
         }
+    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
     var color3: ColorContainerInterface
         get() = if (colors.size > 3) colors[3] else CCBlack
         set(value) {
             color(value, 3)
         }
+    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
     var color4: ColorContainerInterface
         get() = if (colors.size > 4) colors[4] else CCBlack
         set(value) {
@@ -180,30 +187,11 @@ class AnimationData : Serializable {
 
     /* Helpers for setting the first 5 ColorContainers */
 
-    fun color0(color: ColorContainerInterface) = color(color, 0)
-    fun color0(color: Long) = color(color, 0)
-    fun color0(color: Int) = color(color, 0)
-    fun color0(color: String) = color(color, 0)
-
-    fun color1(color: ColorContainerInterface) = color(color, 1)
-    fun color1(color: Long) = color(color, 1)
-    fun color1(color: Int) = color(color, 1)
-    fun color1(color: String) = color(color, 1)
-
-    fun color2(color: ColorContainerInterface) = color(color, 2)
-    fun color2(color: Long) = color(color, 2)
-    fun color2(color: Int) = color(color, 2)
-    fun color2(color: String) = color(color, 2)
-
-    fun color3(color: ColorContainerInterface) = color(color, 3)
-    fun color3(color: Long) = color(color, 3)
-    fun color3(color: Int) = color(color, 3)
-    fun color3(color: String) = color(color, 3)
-
-    fun color4(color: ColorContainerInterface) = color(color, 4)
-    fun color4(color: Long) = color(color, 4)
-    fun color4(color: Int) = color(color, 4)
-    fun color4(color: String) = color(color, 4)
+    fun color0(color: Any) = color(color, 0)
+    fun color1(color: Any) = color(color, 1)
+    fun color2(color: Any) = color(color, 2)
+    fun color3(color: Any) = color(color, 3)
+    fun color4(color: Any) = color(color, 4)
 
     /**
      * Set the `continuous` parameter.
