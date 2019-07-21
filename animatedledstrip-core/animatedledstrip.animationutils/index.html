@@ -25,7 +25,7 @@
 <p><a href="-animation-data/index.html">AnimationData</a></p>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">AnimationData</span></code>
+<code><span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
 <p>Class used when calling animations to specify colors, parameters, etc.
 for the animation.</p>
 </td>
@@ -95,6 +95,15 @@ or 'Backward'.</p>
 <td>
 <code><span class="keyword">val </span><span class="identifier">Alternate</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
 <p>Info about the Alternate animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="animation-info-map.html">animationInfoMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">animationInfoMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">,</span>&nbsp;<a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a><span class="symbol">&gt;</span></code>
+<p>Map of animations to their <code>AnimationInfo</code> instances.</p>
 </td>
 </tr>
 <tr>
@@ -230,15 +239,6 @@ or 'Backward'.</p>
 <td>
 <code><span class="keyword">val </span><span class="identifier">Wipe</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
 <p>Info about the Wipe animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="animation-info-map.html">animationInfoMap</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">animationInfoMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">,</span>&nbsp;<a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a><span class="symbol">&gt;</span></code>
-<p>Map of animations to their <code>AnimationInfo</code> instances.</p>
 </td>
 </tr>
 </tbody>
