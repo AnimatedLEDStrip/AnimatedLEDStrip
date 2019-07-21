@@ -45,6 +45,7 @@ data class AnimationInfo(
         val delay: ReqLevel = ReqLevel.NOTUSED,
         val delayDefault: Long = 0,
         val direction: ReqLevel = ReqLevel.NOTUSED,
+        val repetitive: Boolean = false,
         val spacing: ReqLevel = ReqLevel.NOTUSED,
         val spacingDefault: Int = 0
 ){
@@ -80,7 +81,8 @@ val Alternate = AnimationInfo(
         abbr = "ALT",
         numReqColors = 2,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 1000
+        delayDefault = 1000,
+        repetitive = true
 )
 
 
@@ -94,7 +96,8 @@ val Bounce = AnimationInfo(
         numReqColors = 1,
         numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 10
+        delayDefault = 10,
+        repetitive = true
 )
 
 
@@ -123,6 +126,7 @@ val MultiPixelRun = AnimationInfo(
         delay = ReqLevel.OPTIONAL,
         delayDefault = 100,
         direction = ReqLevel.REQUIRED,
+        repetitive = true,
         spacing = ReqLevel.OPTIONAL,
         spacingDefault = 3
 )
@@ -153,7 +157,8 @@ val PixelMarathon = AnimationInfo(
         abbr = "PXM",
         numReqColors = 5,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 8
+        delayDefault = 8,
+        repetitive = true
 )
 
 
@@ -168,7 +173,8 @@ val PixelRun = AnimationInfo(
         numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
-        direction = ReqLevel.REQUIRED
+        direction = ReqLevel.REQUIRED,
+        repetitive = true
 )
 
 
@@ -183,7 +189,8 @@ val PixelRunWithTrail = AnimationInfo(
         numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 10,
-        direction = ReqLevel.REQUIRED
+        direction = ReqLevel.REQUIRED,
+        repetitive = true
 )
 
 
@@ -197,7 +204,8 @@ val SmoothChase = AnimationInfo(
         numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
         delayDefault = 50,
-        direction = ReqLevel.REQUIRED
+        direction = ReqLevel.REQUIRED,
+        repetitive = true
 )
 
 
@@ -210,7 +218,8 @@ val SmoothFade = AnimationInfo(
         abbr = "SMF",
         numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 50
+        delayDefault = 50,
+        repetitive = true
 )
 
 /**
@@ -222,7 +231,8 @@ val Sparkle = AnimationInfo(
         abbr = "SPK",
         numReqColors = 1,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 50
+        delayDefault = 50,
+        repetitive = true
 )
 
 
@@ -236,7 +246,8 @@ val SparkleFade = AnimationInfo(
         numReqColors = 1,
         numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
-        delayDefault = 50
+        delayDefault = 50,
+        repetitive = true
 )
 
 
@@ -274,7 +285,8 @@ val Stack = AnimationInfo(
  */
 val StackOverflow = AnimationInfo(
         abbr = "STO",
-        numReqColors = 2
+        numReqColors = 2,
+        repetitive = true
 )
 
 
