@@ -26,6 +26,7 @@ package animatedledstrip.leds
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
+import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
@@ -110,13 +111,14 @@ abstract class LEDStrip(
             true -> false
             false -> {
                 GlobalScope.launch(renderThread) {
-                    delay(500)
+                    delay(5000)
                     var renderNum = 0
                     while (rendering) {
                         try {
                             ledStrip.render()
                         } catch (e: NullPointerException) {
                             Logger.error("LEDStrip NullPointerException")
+                            delayBlocking(1000)
                         }
                         if (imageDebugging) {
                             pixelColorList.forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
@@ -132,6 +134,8 @@ abstract class LEDStrip(
                                 renderNum = 0
                             }
                         }
+                        delay(10)
+//                        Logger.debug("Render")
                     }
                 }
                 true        // Set rendering to true
