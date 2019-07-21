@@ -23,13 +23,14 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.colors.ccpresets.CCBlack
-import animatedledstrip.leds.*
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.leds.LEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
+import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -169,6 +170,7 @@ class LEDStripTest {
     }
 
     @Test
+    @Ignore
     fun testSectionCreator() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
