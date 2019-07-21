@@ -184,6 +184,16 @@ class AnimationData : Serializable {
         return this
     }
 
+    fun addColor(color: Any): AnimationData {
+        when (color) {
+            is ColorContainerInterface -> colors += color.toColorContainer()
+            is Long -> colors += ColorContainer(color)
+            is Int -> colors += ColorContainer(color.toLong())
+            is String -> colors += ColorContainer(parseHex(color))
+        }
+
+        return this
+    }
 
     /* Helpers for setting the first 5 ColorContainers */
 
