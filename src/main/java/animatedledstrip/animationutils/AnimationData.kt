@@ -50,38 +50,6 @@ class AnimationData : Serializable {
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
-    /* Helper properties for the first 5 ColorContainers */
-    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
-    var color0: ColorContainerInterface
-        get() = if (colors.size > 0) colors[0] else CCBlack
-        set(value) {
-            color(value, 0)
-        }
-    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
-    var color1: ColorContainerInterface
-        get() = if (colors.size > 1) colors[1] else CCBlack
-        set(value) {
-            color(value, 1)
-        }
-    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
-    var color2: ColorContainerInterface
-        get() = if (colors.size > 2) colors[2] else CCBlack
-        set(value) {
-            color(value, 2)
-        }
-    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
-    var color3: ColorContainerInterface
-        get() = if (colors.size > 3) colors[3] else CCBlack
-        set(value) {
-            color(value, 3)
-        }
-    @Deprecated(replaceWith = ReplaceWith("colors[0]"), message = "deprecated")
-    var color4: ColorContainerInterface
-        get() = if (colors.size > 4) colors[4] else CCBlack
-        set(value) {
-            color(value, 4)
-        }
-
     /**
      * Specifies if the animation will run endlessly until stopped.
      */

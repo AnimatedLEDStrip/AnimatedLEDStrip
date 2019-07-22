@@ -176,6 +176,7 @@
                         </goals>
                         <configuration>
                             <outputDir>${project.basedir}/dokka</outputDir>
+                            <jdkVersion>9</jdkVersion>
                         </configuration>
                     </execution>
                 </executions>

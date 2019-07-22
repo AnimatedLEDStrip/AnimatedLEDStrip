@@ -29,7 +29,10 @@ import animatedledstrip.animationutils.Direction
 import animatedledstrip.colors.ColorContainer
 import org.junit.Ignore
 import org.junit.Test
-import java.io.*
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFails
@@ -179,8 +182,16 @@ class AnimationDataTest {
 
     @Test
     @Ignore
-    fun testToString() {
-        TODO()
+    fun testEquals() {
+
+        val testAnimation1 = AnimationData()
+                .animation(Animation.STACK)
+                .color(0xFFFF)
+                .color(0xFFFFFF)
+                .delay(10)
+                .direction(Direction.BACKWARD)
+                .spacing(4)
+
     }
 
     @Test
@@ -196,25 +207,17 @@ class AnimationDataTest {
                 .direction(Direction.FORWARD)
                 .id("TEST")
                 .spacing(5)
-        try {
-            val fileOut = FileOutputStream("animation.ser")
-            val out = ObjectOutputStream(fileOut)
-            out.writeObject(testAnimation)
-            out.close()
-            fileOut.close()
-        } catch (i: IOException) {
-            i.printStackTrace()
-        }
-        try {
-            val fileIn = FileInputStream("animation.ser")
-            val input = ObjectInputStream(fileIn)
-            val testAnimation2: AnimationData = input.readObject() as AnimationData
-            input.close()
-            fileIn.close()
-            assertTrue {testAnimation == testAnimation2}
-        } catch (i: IOException) {
-            i.printStackTrace()
-        }
+        val fileOut = FileOutputStream("animation.ser")
+        val out = ObjectOutputStream(fileOut)
+        out.writeObject(testAnimation)
+        out.close()
+        fileOut.close()
+        val fileIn = FileInputStream("animation.ser")
+        val input = ObjectInputStream(fileIn)
+        val testAnimation2: AnimationData = input.readObject() as AnimationData
+        input.close()
+        fileIn.close()
+        assertTrue { testAnimation == testAnimation2 }
         Files.delete(Paths.get("animation.ser"))
     }
 }
