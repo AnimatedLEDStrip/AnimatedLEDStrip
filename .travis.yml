@@ -29,6 +29,7 @@ jobs:
         -
       deploy:
         - provider: script
+          jdk: oraclejdk8
           script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
         - provider: pages
           skip-cleanup: true
