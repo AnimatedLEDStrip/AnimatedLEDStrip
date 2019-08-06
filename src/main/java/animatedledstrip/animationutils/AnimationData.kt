@@ -34,7 +34,7 @@ import java.io.Serializable
  * Class used when calling animations to specify colors, parameters, etc.
  * for the animation.
  */
-class AnimationData : Serializable {
+open class AnimationData() : Serializable {
 
     /* parameters */
 
@@ -280,7 +280,6 @@ class AnimationData : Serializable {
         return this
     }
 
-
     /* Utility Functions */
 
     /**
@@ -316,5 +315,7 @@ class AnimationData : Serializable {
         result = 31 * result + startPixel
         return result
     }
+
+    var endAnimation = false
 
 }
