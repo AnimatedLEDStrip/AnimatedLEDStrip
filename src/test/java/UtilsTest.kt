@@ -27,6 +27,7 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.parseHex
+import animatedledstrip.utils.toARGB
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -48,5 +49,12 @@ class UtilsTest {
         blend(CCBlack.color, CCBlue.color, 0)
         blend(CCBlack.color, CCBlue.color, 255)
     }
+
+    @Test
+    fun testToARGB() {
+        assertTrue { CCBlack.color.toARGB() == 0xFF000000.toInt() }
+        assertTrue { 0xFF00FF.toARGB() == 0xFFFF00FF.toInt() }
+    }
+
 
 }

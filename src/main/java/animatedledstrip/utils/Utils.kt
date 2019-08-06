@@ -122,3 +122,4 @@ val Long.b
 infix fun Long.base(b: Int) = this.toString(b)
 
 fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
+fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
