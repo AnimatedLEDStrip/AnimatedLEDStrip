@@ -316,6 +316,4 @@ open class AnimationData() : Serializable {
         return result
     }
 
-    var endAnimation = false
-
 }
