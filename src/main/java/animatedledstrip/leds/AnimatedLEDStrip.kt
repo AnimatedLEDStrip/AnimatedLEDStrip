@@ -44,9 +44,9 @@ import javax.script.ScriptEngine
  */
 abstract class AnimatedLEDStrip(
         numLEDs: Int,
-        imageDebugging: Boolean = false
-) :
-        LEDStrip(numLEDs, imageDebugging), AnimatedLEDStripInterface, SectionableLEDStrip {
+        imageDebugging: Boolean = false,
+        fileName: String? = null
+) : LEDStrip(numLEDs, imageDebugging, fileName), AnimatedLEDStripInterface, SectionableLEDStrip {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is

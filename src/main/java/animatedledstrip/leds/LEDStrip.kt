@@ -46,8 +46,9 @@ import java.util.*
  */
 abstract class LEDStrip(
         numLEDs: Int,
-        private val imageDebugging: Boolean = false
-) : LEDStripNonConcurrent(numLEDs){
+        private val imageDebugging: Boolean = false,
+        fileName: String? = null
+) : LEDStripNonConcurrent(numLEDs) {
 
     /**
      * `Map` containing `Mutex` instances for locking access to each led while it is
@@ -73,13 +74,13 @@ abstract class LEDStrip(
      */
     var rendering = false
 
+    private val _fileName =
+            fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+
     /**
      * The file that the csv output will be saved to if image debugging is enabled.
      */
-    private val outFile = if (imageDebugging) FileWriter(
-            "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv",
-            true
-    ) else null
+    private lateinit var outFile: FileWriter
 
     /**
      * Buffer that stores renders until `renderNum` in `toggleRender` reaches 1000,
@@ -108,8 +109,12 @@ abstract class LEDStrip(
      */
     fun toggleRender() {
         rendering = when (rendering) {
-            true -> false
+            true -> {
+                if (imageDebugging && ::outFile.isInitialized) outFile.close()      // Close debug file
+                false
+            }
             false -> {
+                if (imageDebugging) outFile = FileWriter(_fileName, true)   // Open debug file if appropriate
                 GlobalScope.launch(renderThread) {
                     delay(5000)
                     var renderNum = 0
@@ -127,7 +132,7 @@ abstract class LEDStrip(
                             if (renderNum++ >= 1000) {
                                 GlobalScope.launch(outThread) {
                                     outLock.withLock {
-                                        outFile!!.append(buffer)
+                                        outFile.append(buffer)
                                         buffer.clear()
                                     }
                                 }
@@ -216,5 +221,5 @@ abstract class LEDStrip(
      * thread created during an init block above. Overrides LEDStripNonConcurrent's
      * show() to stop any manual renders.
      */
-    override fun show() { }
+    override fun show() {}
 }
