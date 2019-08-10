@@ -35,7 +35,7 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">AnimatedLEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span></code>
+<code><span class="identifier">AnimatedLEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/fileName">fileName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
 <p>A subclass of <a href="../-l-e-d-strip/index.html">LEDStrip</a> adding animations.</p>
 </td>
 </tr>
@@ -251,6 +251,13 @@ memory leaks caused by the overhead associated with creating new threads.</p>
 <tbody>
 <tr>
 <td>
+<p><a href="../-l-e-d-strip/_file-name.html">_fileName</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">_fileName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="../-l-e-d-strip/buffer.html">buffer</a></p>
 </td>
 <td>
@@ -274,7 +281,7 @@ the strip?</p>
 <p><a href="../-l-e-d-strip/out-file.html">outFile</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">outFile</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/9/docs/api/java/io/FileWriter.html"><span class="identifier">FileWriter</span></a><span class="symbol">?</span></code>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">outFile</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/9/docs/api/java/io/FileWriter.html"><span class="identifier">FileWriter</span></a></code>
 <p>The file that the csv output will be saved to if image debugging is enabled.</p>
 </td>
 </tr>

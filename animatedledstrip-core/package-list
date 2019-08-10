@@ -5,6 +5,7 @@ $dokka.location:animatedledstrip.utils$base(kotlin.Long, kotlin.Int)animatedled
 $dokka.location:animatedledstrip.utils$g#kotlin.Longanimatedledstrip.utils/kotlin.-long/g.html
 $dokka.location:animatedledstrip.utils$grayscale(kotlin.Long)animatedledstrip.utils/kotlin.-long/grayscale.html
 $dokka.location:animatedledstrip.utils$r#kotlin.Longanimatedledstrip.utils/kotlin.-long/r.html
+$dokka.location:animatedledstrip.utils$toARGB(kotlin.Int)animatedledstrip.utils/kotlin.-int/to-a-r-g-b.html
 $dokka.location:animatedledstrip.utils$toARGB(kotlin.Long)animatedledstrip.utils/kotlin.-long/to-a-r-g-b.html
 $dokka.location:animatedledstrip.utils$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.utils.tryWithLock.T)))animatedledstrip.utils/kotlinx.coroutines.sync.-mutex/try-with-lock.html
 animatedledstrip.animationutils

@@ -8,7 +8,7 @@
 <a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.animationutils</a>&nbsp;/&nbsp;<a href="./index.html">AnimationData</a><br/>
 <br/>
 <h1>AnimationData</h1>
-<code><span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/9/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/9/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
 <p>Class used when calling animations to specify colors, parameters, etc.
 for the animation.</p>
 <h3>Constructors</h3>
@@ -246,14 +246,14 @@ in range(0..16777215)</p>
 <p><a href="equals.html">equals</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
 </tr>
 <tr>
 <td>
 <p><a href="hash-code.html">hashCode</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -287,7 +287,7 @@ in range(0..16777215)</p>
 <p><a href="to-string.html">toString</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
 <p>Create a <code>String</code> out of the values of this instance.</p>
 </td>
 </tr>
