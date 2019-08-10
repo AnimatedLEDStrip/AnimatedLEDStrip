@@ -30,10 +30,14 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.LEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
+import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -280,6 +284,11 @@ class LEDStripTest {
 
     @Test
     fun testImageDebugging() {
-        EmulatedAnimatedLEDStrip(50, true)
+        val leds = EmulatedAnimatedLEDStrip(50, true, fileName = "test.csv")
+        runBlocking { delay(2000) }
+        leds.toggleRender()
+        runBlocking { delay(1000) }
+        assertTrue { Files.exists(Paths.get("test.csv")) }
+        Files.delete(Paths.get("test.csv"))
     }
 }

@@ -33,8 +33,11 @@ import animatedledstrip.leds.LEDStripInterface
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
  */
-class EmulatedAnimatedLEDStrip(numLEDs: Int,
-                               imageDebugging: Boolean = false): AnimatedLEDStrip(numLEDs, imageDebugging){
+class EmulatedAnimatedLEDStrip(
+        numLEDs: Int,
+        imageDebugging: Boolean = false,
+        fileName: String? = null
+) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName) {
     override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
 
 }
