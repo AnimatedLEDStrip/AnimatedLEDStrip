@@ -34,7 +34,7 @@ import java.io.Serializable
  * Class used when calling animations to specify colors, parameters, etc.
  * for the animation.
  */
-open class AnimationData() : Serializable {
+open class AnimationData : Serializable {
 
     /* parameters */
 
@@ -72,11 +72,25 @@ open class AnimationData() : Serializable {
                 else -> field
             } * delayMod).toLong()
         }
+        set(value) {
+            delayMod = 1.0
+            speed = AnimationSpeed.CUSTOM
+            field = value
+        }
 
     /**
      * Multiplier for the `delay` value.
      */
     var delayMod = 1.0
+        set(value) {
+            when (value) {
+                0.5 -> if (speed != AnimationSpeed.SLOW) speed = AnimationSpeed.SLOW
+                1.0 -> if (speed != AnimationSpeed.DEFAULT) speed = AnimationSpeed.DEFAULT
+                2.0 -> if (speed != AnimationSpeed.FAST) speed = AnimationSpeed.FAST
+                else -> speed = AnimationSpeed.CUSTOM
+            }
+            field = value
+        }
 
     /**
      * 'Direction' the animation should run.
@@ -110,6 +124,18 @@ open class AnimationData() : Serializable {
                 }
                 else -> field
             })
+        }
+
+    var speed = AnimationSpeed.DEFAULT
+        set(value) {
+            when (value) {
+                AnimationSpeed.SLOW -> delayMod = 0.5
+                AnimationSpeed.DEFAULT -> delayMod = 1.0
+                AnimationSpeed.FAST -> delayMod = 2.0
+                AnimationSpeed.CUSTOM -> {
+                }
+            }
+            field = value
         }
 
     /**
@@ -266,6 +292,17 @@ open class AnimationData() : Serializable {
      */
     fun spacing(spacing: Int): AnimationData {
         this.spacing = spacing
+        return this
+    }
+
+
+    /**
+     * Set the 'speed' parameter
+     *
+     * @param speed The speed to set
+     */
+    fun speed(speed: AnimationSpeed): AnimationData {
+        this.speed = speed
         return this
     }
 
