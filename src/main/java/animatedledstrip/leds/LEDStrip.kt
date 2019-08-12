@@ -43,6 +43,8 @@ import java.util.*
  * @param numLEDs Number of LEDs in the strip
  * @param imageDebugging Should a csv file be created containing all renders of
  * the strip?
+ * @param fileName Specify a name for the image debug file (only useful if imageDebugging
+ * is enabled)
  */
 abstract class LEDStrip(
         numLEDs: Int,
