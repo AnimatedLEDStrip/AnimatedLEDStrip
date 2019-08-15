@@ -83,13 +83,13 @@ open class AnimationData : Serializable {
      */
     var delayMod = 1.0
         set(value) {
+            field = value
             when (value) {
                 0.5 -> if (speed != AnimationSpeed.SLOW) speed = AnimationSpeed.SLOW
                 1.0 -> if (speed != AnimationSpeed.DEFAULT) speed = AnimationSpeed.DEFAULT
                 2.0 -> if (speed != AnimationSpeed.FAST) speed = AnimationSpeed.FAST
                 else -> speed = AnimationSpeed.CUSTOM
             }
-            field = value
         }
 
     /**
@@ -128,14 +128,14 @@ open class AnimationData : Serializable {
 
     var speed = AnimationSpeed.DEFAULT
         set(value) {
+            field = value
             when (value) {
-                AnimationSpeed.SLOW -> delayMod = 0.5
-                AnimationSpeed.DEFAULT -> delayMod = 1.0
-                AnimationSpeed.FAST -> delayMod = 2.0
+                AnimationSpeed.SLOW -> if (delayMod != 0.5) delayMod = 0.5
+                AnimationSpeed.DEFAULT -> if (delayMod != 1.0) delayMod = 1.0
+                AnimationSpeed.FAST -> if (delayMod != 2.0) delayMod = 2.0
                 AnimationSpeed.CUSTOM -> {
                 }
             }
-            field = value
         }
 
     /**
