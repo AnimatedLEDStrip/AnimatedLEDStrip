@@ -1,7 +1,5 @@
 package animatedledstrip.colors
 
-import java.io.Serializable
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -24,6 +22,8 @@ import java.io.Serializable
  *  THE SOFTWARE.
  */
 
+
+import java.io.Serializable
 
 /**
  * An interface connecting ColorContainer and PreparedColorContainer.
