@@ -59,9 +59,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     /* Constructors */
 
     init {
-        for (i in c) {
-            colors += i
-        }
+        for (i in c) colors += i
     }
 
     /**
@@ -155,10 +153,9 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param c The color to store
      */
     operator fun set(vararg indices: Int, c: Long) {
-        for (index in indices.sorted()) {
+        for (index in indices.sorted())
             if (colors.indices.contains(index)) colors[index] = c
             else colors += c
-        }
     }
 
     /**
@@ -170,10 +167,9 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param c The color to store
      */
     operator fun set(indices: IntRange, c: Long) {
-        for (index in indices) {
+        for (index in indices)
             if (colors.indices.contains(index)) colors[index] = c
             else colors += c
-        }
     }
 
     /**
@@ -256,9 +252,22 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @return This ColorContainer instance
      */
     fun grayscale(vararg indices: Int): ColorContainer {
-        for (index in indices) {
+        for (index in indices)
             if (colors.indices.contains(index)) colors[index] = colors[index].grayscale()
-        }
+        return this
+    }
+
+    /**
+     * Replaces the colors at the indices in the specified ranges with a
+     * grayscaled version of themselves.
+     *
+     * @param indices The ranges of indices to grayscale
+     * @return This ColorContainer instance
+     */
+    fun grayscale(vararg indices: IntRange): ColorContainer {
+        for (range in indices)
+            for (index in range)
+                if (colors.indices.contains(index)) colors[index] = colors[index].grayscale()
         return this
     }
 
@@ -270,9 +279,8 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     fun grayscaled(): ColorContainer {
         val temp = ColorContainer()
-        for (c in colors) {
+        for (c in colors)
             temp += c.grayscale()
-        }
         return temp
     }
 
@@ -285,9 +293,23 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     fun grayscaled(vararg indices: Int): ColorContainer {
         val temp = ColorContainer()
-        for (i in indices) {
+        for (i in indices)
             if (colors.indices.contains(i)) temp += colors[i].grayscale()
-        }
+        return temp
+    }
+
+    /**
+     * Returns a new ColorContainer with the same colors as this instance,
+     * grayscaled, but only including the ranges of indices specified.
+     *
+     * @param indices The ranges of indices to include in the new ColorContainer
+     * @return A new ColorContainer
+     */
+    fun grayscaled(vararg indices: IntRange): ColorContainer {
+        val temp = ColorContainer()
+        for (r in indices)
+            for (i in r)
+                if (colors.indices.contains(i)) temp += colors[i].grayscale()
         return temp
     }
 
@@ -310,9 +332,22 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @return This ColorContainer instance
      */
     fun invert(vararg indices: Int): ColorContainer {
-        for (index in indices) {
+        for (index in indices)
             if (colors.indices.contains(index)) colors[index] = colors[index].inv() and 0xFFFFFF
-        }
+        return this
+    }
+
+    /**
+     * Replaces the colors at the indices in the specified ranges with
+     * their inverse
+     *
+     * @param indices The ranges of indices to invert
+     * @return This ColorContainer instance
+     */
+    fun invert(vararg indices: IntRange): ColorContainer {
+        for (range in indices)
+            for (index in range)
+                if (colors.indices.contains(index)) colors[index] = colors[index].inv() and 0xFFFFFF
         return this
     }
 
@@ -324,9 +359,8 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     fun inverse(): ColorContainer {
         val temp = ColorContainer()
-        for (c in colors) {
+        for (c in colors)
             temp += c.inv() and 0xFFFFFF
-        }
         return temp
     }
 
@@ -339,9 +373,23 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     fun inverse(vararg indices: Int): ColorContainer {
         val temp = ColorContainer()
-        for (i in indices) {
+        for (i in indices)
             if (colors.indices.contains(i)) temp += colors[i].inv() and 0xFFFFFF
-        }
+        return temp
+    }
+
+    /**
+     * Returns a new ColorContainer with the same colors as this instance,
+     * inverted, but only including the ranges of indices specified.
+     *
+     * @param indices The ranges of indices to include in the new ColorContainer
+     * @return A new ColorContainer
+     */
+    fun inverse(vararg indices: IntRange): ColorContainer {
+        val temp = ColorContainer()
+        for (r in indices)
+            for (i in r)
+                if (colors.indices.contains(i)) temp += colors[i].inv() and 0xFFFFFF
         return temp
     }
 

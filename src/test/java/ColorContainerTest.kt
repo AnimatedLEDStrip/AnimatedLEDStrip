@@ -148,6 +148,10 @@ class ColorContainerTest {
 
         val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
         assertTrue { testCC3.invert().colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
+
+        val testCC4 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC4.invert(0..1, 5..5)[0, 1] == listOf<Long>(0x0084AF, 0x0F50D6) }
+        assertTrue { testCC4.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0x3C538B) }
     }
 
     @Test
@@ -162,13 +166,17 @@ class ColorContainerTest {
         assertTrue { invCC2.colors == listOf<Long>(0x0084AF, 0xC3AC74) }
         assertTrue { testCC2.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
 
-
         val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        val invCC3 = testCC3.inverse()
-        val invCC4 = -testCC3
-        assertTrue { invCC3.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
+        val invCC3 = testCC2.inverse(0..1, 5..5)
+        assertTrue { invCC3.colors == listOf<Long>(0x0084AF, 0x0F50D6) }
+        assertTrue { testCC3.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+
+        val testCC4 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        val invCC4 = testCC4.inverse()
+        val invCC5 = -testCC4
         assertTrue { invCC4.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
-        assertTrue { testCC2.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+        assertTrue { invCC5.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
+        assertTrue { testCC4.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -183,6 +191,10 @@ class ColorContainerTest {
 
         val testCC3 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
         assertTrue { testCC3.grayscale().colors == listOf<Long>(0x999999, 0x989898, 0x5E5E5E) }
+
+        val testCC4 = ColorContainer(0xFF7B51, 0x3C538B, 0xF0AF29)
+        assertTrue { testCC4.grayscale(0..1, 5..5)[0, 1] == listOf<Long>(0x999999, 0x5E5E5E) }
+        assertTrue { testCC4.colors == listOf<Long>(0x999999, 0x5E5E5E, 0xF0AF29) }
     }
 
     @Test
@@ -202,6 +214,11 @@ class ColorContainerTest {
         val grayCC3 = testCC3.grayscaled()
         assertTrue { grayCC3.colors == listOf<Long>(0x999999, 0x989898, 0X5E5E5E) }
         assertTrue { testCC2.colors == listOf<Long>(0xFF7B51, 0xF0AF29, 0x3C538B) }
+
+        val testCC4 = ColorContainer(0xFF7B51, 0x3C538B, 0xF0AF29)
+        val grayCC4 = testCC4.grayscaled(0..1, 5..5)
+        assertTrue { grayCC4.colors == listOf<Long>(0x999999, 0x5E5E5E) }
+        assertTrue { testCC4.colors == listOf<Long>(0xFF7B51, 0x3C538B, 0xF0AF29) }
     }
 
     @Test
