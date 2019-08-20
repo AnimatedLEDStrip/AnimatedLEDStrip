@@ -167,7 +167,6 @@ class LEDStripTest {
         testLEDs.setPixelColor(15, 0xFF)
 
         assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
-        assertTrue { testLEDs.getPixelLong(15) == 0xFFL }
         assertTrue { testLEDs.getPixelHexString(15) == "ff" }
         assertTrue { testLEDs[15] == 0xFFL }
         assertTrue { testLEDs.getPixelColor(50) == 0L }

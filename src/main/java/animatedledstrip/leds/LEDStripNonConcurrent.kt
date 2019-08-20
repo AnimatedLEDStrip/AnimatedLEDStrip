@@ -277,7 +277,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
 
     /**
      * Sets the color of the strip with a `List<ColorContainer>`. The list is converted to a map
-     * before that map is sent to [setStripColorWithPalette] with an offset of 0.
+     * before that map is sent to `setStripColorWithPalette` with an offset of 0.
      *
      * @param colorList The list of colors
      */

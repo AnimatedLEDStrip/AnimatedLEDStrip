@@ -55,6 +55,7 @@ class ColorContainerTest {
 
     @Test
     fun testListConstructor() {
+        @Suppress("RemoveExplicitTypeArguments")
         val testCC = ColorContainer(listOf<Long>(0xFF2431, 0x5F3C4B))
         assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B)}
     }
@@ -65,7 +66,10 @@ class ColorContainerTest {
 
         assertTrue { testCC == ColorContainer(0xFF7B50) }
         assertFalse { testCC == ColorContainer(0xFF7B51) }
-        assertFalse { testCC.equals(10) }
+        assertFalse {
+            @Suppress("ReplaceCallWithBinaryOperator")
+            testCC.equals(10)
+        }
 
         testCC.hashCode()
     }
@@ -123,17 +127,6 @@ class ColorContainerTest {
         val testCC3 = ColorContainer()
         assertTrue { testCC3.toString() == "[]" }
     }
-
-//    @Test
-//    @Ignore
-//    fun testToColor() {
-//        val testCC = ColorContainer(0xFF7B50)
-//
-////        assertTrue { testCC.toColor().red == 1.0 }
-////        assertTrue { testCC.toColor().green == 0.48235294222831726 }
-////        assertTrue { testCC.toColor().blue == 0.3137255012989044 }
-//
-//    }
 
     @Test
     fun testInvert() {

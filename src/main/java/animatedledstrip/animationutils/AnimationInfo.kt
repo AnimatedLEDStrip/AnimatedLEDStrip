@@ -23,6 +23,8 @@ package animatedledstrip.animationutils
  */
 
 
+import animatedledstrip.leds.AnimatedLEDStrip
+
 /**
  * Helper data class for specifying what parameters are required, optional and
  * not used for an animation along with default values for `delay` and `spacing`,
@@ -63,7 +65,7 @@ enum class ReqLevel {
     REQUIRED,
     /**
      * Animation parameter may be set by the user, otherwise will be set to a
-     * default as specified (`color#` will default to [animatedledstrip.ccpresets.CCBlack])
+     * default as specified (`color#` will default to [animatedledstrip.colors.ccpresets.CCBlack])
      */
     OPTIONAL,
     /**

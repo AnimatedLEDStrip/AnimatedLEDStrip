@@ -29,5 +29,6 @@ package animatedledstrip.animationutils
  * Experimental animations will likely change and may be renamed.
  *
  */
+@Suppress("unused")
 @MustBeDocumented
 annotation class Experimental
