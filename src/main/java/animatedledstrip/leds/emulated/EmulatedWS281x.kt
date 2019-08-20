@@ -80,6 +80,7 @@ open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override 
     /**
      * Size of an `Int` for use in `ByteBuffer` index calculations.
      */
+    @Suppress("PrivatePropertyName")
     private val SIZE_OF_INT = 4
 
     /**

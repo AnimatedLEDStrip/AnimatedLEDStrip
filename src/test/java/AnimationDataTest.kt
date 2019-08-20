@@ -25,9 +25,9 @@ package animatedledstrip.test
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.AnimationSpeed
 import animatedledstrip.animationutils.Direction
 import animatedledstrip.colors.ColorContainer
-import org.junit.Ignore
 import org.junit.Test
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -75,6 +75,25 @@ class AnimationDataTest {
 
         testAnimation.color(0xFF, index = 3)
         assertTrue { testAnimation.colors[3] == ColorContainer(0xFF) }
+        assertTrue { testAnimation.colors[2] == ColorContainer(0x0) }
+
+        testAnimation.color0(0xFFFF)
+        assertTrue { testAnimation.colors[0] == ColorContainer(0xFFFF) }
+
+        testAnimation.color1(0xFFFF)
+        assertTrue { testAnimation.colors[1] == ColorContainer(0xFFFF) }
+
+        testAnimation.color2(0xFFFF)
+        assertTrue { testAnimation.colors[2] == ColorContainer(0xFFFF) }
+
+        testAnimation.color3(0xFFFF)
+        assertTrue { testAnimation.colors[3] == ColorContainer(0xFFFF) }
+
+        testAnimation.color4(0xFFFF)
+        assertTrue { testAnimation.colors[4] == ColorContainer(0xFFFF) }
+
+        testAnimation.addColor(0xFFFFFF)
+        assertTrue { testAnimation.colors[5] == ColorContainer(0xFFFFFF) }
     }
 
     @Test
@@ -85,6 +104,7 @@ class AnimationDataTest {
 
         testAnimation.delay = 15
         assertTrue { testAnimation.delay == 15L }
+        assertTrue { testAnimation.speed == AnimationSpeed.CUSTOM }
 
         testAnimation.delay(30)
         assertTrue { testAnimation.delay == 30L }
@@ -101,6 +121,7 @@ class AnimationDataTest {
 
         testAnimation.delayMod = 2.5
         assertTrue { testAnimation.delayMod == 2.5 }
+        assertTrue { testAnimation.speed == AnimationSpeed.CUSTOM }
 
         testAnimation.delayMod(0.5)
         assertTrue { testAnimation.delayMod == 0.5 }
@@ -168,6 +189,21 @@ class AnimationDataTest {
     }
 
     @Test
+    fun testSpeed() {
+        val testAnimation = AnimationData()
+
+        assertTrue { testAnimation.speed == AnimationSpeed.DEFAULT }
+
+        testAnimation.speed = AnimationSpeed.FAST
+        assertTrue { testAnimation.speed == AnimationSpeed.FAST }
+        assertTrue { testAnimation.delayMod == 2.0 }
+
+        testAnimation.speed(AnimationSpeed.SLOW)
+        assertTrue { testAnimation.speed == AnimationSpeed.SLOW }
+        assertTrue { testAnimation.delayMod == 0.5 }
+    }
+
+    @Test
     fun testStartPixel() {
         val testAnimation = AnimationData()
 
@@ -181,17 +217,26 @@ class AnimationDataTest {
     }
 
     @Test
-    @Ignore
     fun testEquals() {
 
         val testAnimation1 = AnimationData()
                 .animation(Animation.STACK)
-                .color(0xFFFF)
-                .color(0xFFFFFF)
+                .color0(0xFFFF)
+                .color1(0xFFFFFF)
                 .delay(10)
                 .direction(Direction.BACKWARD)
                 .spacing(4)
 
+        val testAnimation2 = AnimationData().apply {
+            animation = Animation.STACK
+            addColor(0xFFFF)
+            addColor(0xFFFFFF)
+            delay = 10
+            direction = Direction.BACKWARD
+            spacing = 4
+        }
+
+        assertTrue { testAnimation1 == testAnimation2 }
     }
 
     @Test
