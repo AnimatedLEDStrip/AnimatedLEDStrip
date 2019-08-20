@@ -23,7 +23,9 @@ package animatedledstrip.colors
  */
 
 
-import animatedledstrip.utils.*
+import animatedledstrip.utils.base
+import animatedledstrip.utils.blend
+import animatedledstrip.utils.grayscale
 import kotlin.math.roundToInt
 
 /**
@@ -488,37 +490,5 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     val size: Int
         get() = colors.size
-
-
-    /* Deprecated properties */
-
-    @Deprecated("Use color property and r extension property", ReplaceWith("color.r"))
-    val r: Int
-        get() = color.r
-    @Deprecated("Use color property and r extension property", ReplaceWith("color.r"))
-    val red: Int
-        get() = color.r
-
-    @Deprecated("Use color property and g extension property", ReplaceWith("color.g"))
-    val g: Int
-        get() = color.g
-    @Deprecated("Use color property and g extension property", ReplaceWith("color.g"))
-    val green: Int
-        get() = color.g
-
-    @Deprecated("Use color property and b extension property", ReplaceWith("color.b"))
-    val b: Int
-        get() = color.b
-    @Deprecated("Use color property and b extension property", ReplaceWith("color.b"))
-    val blue: Int
-        get() = color.b
-
-    @Deprecated("Use color property", ReplaceWith("color"))
-    val hex
-        get() = color
-
-    @Deprecated("Use toString()", ReplaceWith("toString()"))
-    val hexString
-        get() = toString()
 
 }

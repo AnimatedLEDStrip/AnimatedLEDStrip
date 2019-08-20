@@ -116,7 +116,6 @@ class ColorContainerTest {
     fun testToString() {
         val testCC = ColorContainer(0xFF3B82)
         assertTrue { testCC.toString() == "ff3b82" }
-        assertTrue { testCC.hexString == "ff3b82" }
 
         val testCC2 = ColorContainer(0xFF7B50, 0xFFFFFF)
         assertTrue { testCC2.toString() == "[ff7b50, ffffff]" }
