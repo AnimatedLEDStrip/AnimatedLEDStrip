@@ -34,9 +34,6 @@ enum class Animation {
      */
     @NonRepetitive
     COLOR,
-    /**
-     * See [LEDStrip.setStripColorWithGradient]
-     */
     @NonRepetitive
     MULTICOLOR,
     /**

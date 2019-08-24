@@ -27,9 +27,6 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.sections.SectionableLEDStrip
-import animatedledstrip.utils.b
-import animatedledstrip.utils.g
-import animatedledstrip.utils.r
 import org.pmw.tinylog.Logger
 
 
@@ -48,6 +45,9 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     init {
         Logger.info("numLEDs: $numLEDs")
     }
+
+
+    /* Set individual pixels */
 
     /**
      * Sets a pixel's color with a `ColorContainer`.
@@ -82,10 +82,10 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * Set a pixel's color with a `Long`, such as a 24-bit integer.
      *
      * @param pixel The pixel to change
-     * @param hexIn The color to set the pixel to
+     * @param color The color to set the pixel to
      */
-    fun setPixelColor(pixel: Int, hexIn: Long) {
-        setPixelColor(pixel, ColorContainer(hexIn))
+    fun setPixelColor(pixel: Int, color: Long) {
+        setPixelColor(pixel, ColorContainer(color))
     }
 
     operator fun set(vararg pixels: Int, color: Long) {
@@ -112,6 +112,8 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
         }
     }
 
+    /* Set whole strip */
+
     /**
      * Set the color of the whole strip.
      */
@@ -131,7 +133,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      *
      * @param colorValues The color to set the strip to
      */
-    fun setStripColor(colorValues: ColorContainerInterface) {
+    open fun setStripColor(colorValues: ColorContainerInterface) {
         for (i in 0 until numLEDs) setPixelColor(i, colorValues)
         show()
     }
@@ -139,13 +141,12 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     /**
      * Set the strip color with a `Long`, such as a 24-bit integer.
      *
-     * @param hexIn The color to set the strip to
+     * @param color The color to set the strip to
      */
-    fun setStripColor(hexIn: Long) {
-        for (i in 0 until numLEDs) setPixelColor(i, hexIn)
+    open fun setStripColor(color: Long) {
+        for (i in 0 until numLEDs) setPixelColor(i, color)
         show()
     }
-
 
     /**
      * Set the strip color with `r`, `g`, `b` (ranges 0-255).
@@ -154,10 +155,14 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param gIn Green intensity of the color
      * @param bIn Blue intensity of the color
      */
-    fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
+    open fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
         for (i in 0 until numLEDs) setPixelColor(i, rIn, gIn, bIn)
         show()
     }
+
+
+
+    /* Set a section of the strip */
 
     /**
      * Set the color of a section of the strip. Loops through all LEDs between start
@@ -173,7 +178,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
             is ColorContainer -> colorValues.prepare(numLEDs)
             else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
         }
-        for (i in start..end) setPixelColor(i, colors[i - start].r, colors[i - start].g, colors[i - start].b)
+        for (i in start..end) setPixelColor(i, colors[i - start])
         show()
     }
 
@@ -183,10 +188,10 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      *
      * @param start First pixel in section
      * @param end Last pixel in section
-     * @param hexIn The color to set the section to
+     * @param color The color to set the section to
      */
-    fun setSectionColor(start: Int, end: Int, hexIn: Long) {
-        for (i in start..end) setPixelColor(i, hexIn)
+    open fun setSectionColor(start: Int, end: Int, color: Long) {
+        for (i in start..end) setPixelColor(i, color)
         show()
     }
 
@@ -200,11 +205,14 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param gIn Green intensity of the color
      * @param bIn Blue intensity of the color
      */
-    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
+    open fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
         for (i in start..end) ledStrip.setPixelColorRGB(i, rIn, gIn, bIn)
         show()
     }
 
+
+
+    /* Get methods */
 
     /**
      * Get the color of a pixel.
@@ -223,17 +231,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      */
     operator fun get(pixel: Int) = getPixelColor(pixel)
 
-    /**
-     * Get the color of a pixel as a `Long`.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel as a Long
-     */
-    @Deprecated("Use getPixelColor()", ReplaceWith("getPixelColor()"))
-    fun getPixelLong(pixel: Int): Long {
-        return getPixelColor(pixel)
-    }
-
 
     /**
      * Get the color of a pixel as a hexadecimal string.
@@ -246,10 +243,9 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     }
 
     /**
-     * Get the colors of all pixels as a `List<Long>`. Waits until each pixel's
-     * `Mutex` is unlocked.
+     * Get the colors of all pixels as a `List<Long>`
      */
-    val pixelColorList: List<Long>
+    open val pixelColorList: List<Long>
         get() {
             val temp = mutableListOf<Long>()
             for (i in 0 until numLEDs) temp.add(getPixelColor(i))
@@ -274,18 +270,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
         setStripColor(PreparedColorContainer(temp))
     }
 
-
-    /**
-     * Sets the color of the strip with a `List<ColorContainer>`. The list is converted to a map
-     * before that map is sent to `setStripColorWithPalette` with an offset of 0.
-     *
-     * @param colorList The list of colors
-     */
-    @Deprecated("Use ColorContainer instead")
-    fun setStripColorWithGradient(colorList: List<ColorContainer>) {
-//        val palette = colorsFromPalette(colorList, numLEDs)
-//        setStripColorWithPalette(palette)
-    }
 
 
     /**

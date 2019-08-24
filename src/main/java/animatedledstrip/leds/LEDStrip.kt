@@ -23,7 +23,9 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.utils.delayBlocking
@@ -95,6 +97,11 @@ abstract class LEDStrip(
      * overlaps.
      */
     private val outLock = Mutex()
+
+
+    val prolongedColors = mutableListOf<Long>().apply {
+        for (i in 0 until numLEDs) add(0)
+    }
 
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
@@ -176,6 +183,8 @@ abstract class LEDStrip(
     }
 
 
+    /* Set pixel color*/
+
     /**
      * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
      * this skips setting the pixel's color and returns.
@@ -195,21 +204,107 @@ abstract class LEDStrip(
         }
     }
 
+    fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
+        val colors = when (colorValues) {
+            is PreparedColorContainer -> colorValues
+            is ColorContainer -> colorValues.prepare(numLEDs)
+            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
+        }
+        prolongedColors[pixel] = colors[pixel]
+        setPixelColor(pixel, colors[pixel])
+    }
+
+    fun setProlongedPixelColor(pixel: Int, color: Long) {
+        setProlongedPixelColor(pixel, ColorContainer(color))
+    }
+
+    fun setProlongedPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
+        setProlongedPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
+    }
+
+    fun revertPixel(pixel: Int) {
+        ledStrip.setPixelColor(pixel, prolongedColors[pixel].toInt())
+    }
+
+
+    /* Set strip color */
+
+    override fun setStripColor(colorValues: ColorContainerInterface) {
+        setStripColor(colorValues, true)
+    }
+
+    override fun setStripColor(color: Long) {
+        setStripColor(color, true)
+    }
+
+    override fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
+        setStripColor(rIn, gIn, bIn, true)
+    }
+
+    fun setStripColor(colorValues: ColorContainerInterface, prolonged: Boolean) {
+        val colors = when (colorValues) {
+            is PreparedColorContainer -> colorValues
+            is ColorContainer -> colorValues.prepare(numLEDs)
+            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
+        }
+        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
+        else super.setStripColor(colors)
+    }
+
+    fun setStripColor(color: Long, prolonged: Boolean) {
+        setStripColor(ColorContainer(color), prolonged)
+    }
+
+    fun setStripColor(rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
+        setStripColor(ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
+    }
+
+
+    /* Set section color */
+
+    override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface) {
+        setSectionColor(start, end, colorValues, true)
+    }
+
+    override fun setSectionColor(start: Int, end: Int, color: Long) {
+        setSectionColor(start, end, color, true)
+    }
+
+    override fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
+        setSectionColor(start, end, rIn, gIn, bIn, true)
+    }
+
+
+    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
+        val colors = when (colorValues) {
+            is PreparedColorContainer -> colorValues
+            is ColorContainer -> colorValues.prepare(numLEDs)
+            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
+        }
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors)
+        else super.setSectionColor(start, end, colors)
+    }
+
+    fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean) {
+        setSectionColor(start, end, ColorContainer(color), prolonged)
+    }
+
+    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
+        setSectionColor(start, end, ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
+    }
+
+
+    /* Get methods */
 
     /**
-     * Get the color of a pixel. Waits until the pixel's `Mutex` is unlocked.
+     * Get the color of a pixel.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
      */
     override fun getPixelColor(pixel: Int): Long {
         try {
-            return if (!imageDebugging) runBlocking {
-                locks[pixel]!!.withLock {
-                    return@runBlocking super.getPixelColor(pixel)
-                }
-            }
-            else super.getPixelColor(pixel)
+            return prolongedColors[pixel]
         } catch (e: Exception) {
             Logger.error("ERROR in getPixelColor: $e")
         }
@@ -218,10 +313,29 @@ abstract class LEDStrip(
     }
 
 
+    fun getActualPixelColor(pixel: Int): Long {
+        try {
+            return super.getPixelColor(pixel)
+        } catch (e: Exception) {
+            Logger.error("ERROR in getActualPixelColor: $e")
+        }
+        Logger.warn("Color not retrieved")
+        return CCBlack.color
+    }
+
     /**
-     * Method that used to be used to render the led strip. Now handled by a
-     * thread created during an init block above. Overrides LEDStripNonConcurrent's
-     * show() to stop any manual renders.
+     * Get the colors of all pixels as a `List<Long>`
+     */
+    override val pixelColorList: List<Long>
+        get() {
+            val temp = mutableListOf<Long>()
+            for (i in 0 until numLEDs) temp.add(getActualPixelColor(i))
+            return temp
+        }
+
+    /**
+     * Overrides LEDStripNonConcurrent's show() to stop any manual renders.
+     * Renders are handled by a thread created during an init block above.
      */
     override fun show() {}
 }
