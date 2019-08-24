@@ -323,7 +323,6 @@ class AnimatedLEDStripTest {
         assertFailsWith(UninitializedPropertyAccessException::class) {
             testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
         }
-
     }
 
     @Test
@@ -333,21 +332,13 @@ class AnimatedLEDStripTest {
         assertFailsWith(UninitializedPropertyAccessException::class) {
             testLEDs.customAnimationCompiler
         }
-
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION))
-        }
-
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
-        }
     }
 
     @Test
     fun testFadePixel() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        testLEDs.fadePixel(50, CCBlue.color)
+        testLEDs.fadePixel(50, CCBlue.color.toInt())
     }
 
 }
