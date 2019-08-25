@@ -117,6 +117,22 @@ val BounceToColor = AnimationInfo(
 
 
 /**
+ * Info about the Meteor animation.
+ *
+ * @see AnimatedLEDStrip.meteor
+ */
+val Meteor = AnimationInfo(
+        abbr = "PXRT",
+        numReqColors = 1,
+        numOptColors = 1,
+        delay = ReqLevel.OPTIONAL,
+        delayDefault = 10,
+        direction = ReqLevel.REQUIRED,
+        repetitive = true
+)
+
+
+/**
  * Info about the Multi-Pixel Run animation.
  *
  * @see AnimatedLEDStrip.multiPixelRun
@@ -171,22 +187,6 @@ val PixelMarathon = AnimationInfo(
  */
 val PixelRun = AnimationInfo(
         abbr = "PXR",
-        numReqColors = 1,
-        numOptColors = 1,
-        delay = ReqLevel.OPTIONAL,
-        delayDefault = 10,
-        direction = ReqLevel.REQUIRED,
-        repetitive = true
-)
-
-
-/**
- * Info about the Pixel Run with Trail animation.
- *
- * @see AnimatedLEDStrip.pixelRunWithTrail
- */
-val PixelRunWithTrail = AnimationInfo(
-        abbr = "PXRT",
         numReqColors = 1,
         numOptColors = 1,
         delay = ReqLevel.OPTIONAL,
@@ -313,11 +313,11 @@ val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,
     Animation.BOUNCE to Bounce,
     Animation.BOUNCETOCOLOR to BounceToColor,
+    Animation.METEOR to Meteor,
     Animation.MULTIPIXELRUN to MultiPixelRun,
     Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
     Animation.PIXELMARATHON to PixelMarathon,
     Animation.PIXELRUN to PixelRun,
-    Animation.PIXELRUNWITHTRAIL to PixelRunWithTrail,
     Animation.SMOOTHCHASE to SmoothChase,
     Animation.SMOOTHFADE to SmoothFade,
     Animation.SPARKLE to Sparkle,
