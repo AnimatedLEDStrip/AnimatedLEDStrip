@@ -61,6 +61,10 @@ enum class Animation {
     @NonRepetitive
     BOUNCETOCOLOR,
     /**
+     * See [AnimatedLEDStrip.meteor]
+     */
+    METEOR,
+    /**
      * See [AnimatedLEDStrip.multiPixelRun]
      */
     MULTIPIXELRUN,
@@ -77,9 +81,7 @@ enum class Animation {
      * See [AnimatedLEDStrip.pixelRun]
      */
     PIXELRUN,
-    /**
-     * See [AnimatedLEDStrip.pixelRunWithTrail]
-     */
+    @Deprecated("Use METEOR")
     PIXELRUNWITHTRAIL,
     /**
      * See [AnimatedLEDStrip.smoothChase]
