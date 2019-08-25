@@ -106,9 +106,9 @@ abstract class AnimatedLEDStrip(
             val myName = Thread.currentThread().name
             owner = myName
             var i = 0
-            while (getPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
+            while (getActualPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
                 if (owner != myName) break
-                setPixelColor(pixel, blend(getPixelColor(pixel), prolongedColors[pixel], amountOfOverlay))
+                setPixelColor(pixel, blend(getActualPixelColor(pixel), prolongedColors[pixel], amountOfOverlay))
                 delayBlocking(delay)
                 i++
             }
@@ -450,7 +450,6 @@ abstract class AnimatedLEDStrip(
      * Similar to Multi-Pixel Run but with only one pixel.
      */
     private val pixelRun = { animation: AnimationData ->
-        setStripColor(animation.pCols[1])
         when (animation.direction) {
             Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs) {
                 runBlocking {
