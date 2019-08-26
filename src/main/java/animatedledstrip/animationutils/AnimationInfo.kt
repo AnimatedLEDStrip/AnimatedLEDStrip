@@ -200,7 +200,7 @@ val Ripple = AnimationInfo(
     abbr = "RPL",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
-    delayDefault = 5,
+    delayDefault = 30,
     repetitive = true
 )
 
