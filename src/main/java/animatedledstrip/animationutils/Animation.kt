@@ -73,6 +73,8 @@ enum class Animation {
      */
     @NonRepetitive
     MULTIPIXELRUNTOCOLOR,
+    @Radial
+    RIPPLE,
     /**
      * See [AnimatedLEDStrip.pixelMarathon]
      */

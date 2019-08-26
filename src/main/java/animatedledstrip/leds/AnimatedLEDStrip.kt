@@ -203,6 +203,7 @@ abstract class AnimatedLEDStrip(
             Animation.PIXELMARATHON -> pixelMarathon(animation)
             Animation.PIXELRUN -> pixelRun(animation)
             Animation.PIXELRUNWITHTRAIL -> Logger.warn("PixelRunWithTrail is deprecated. Use Meteor")
+            Animation.RIPPLE -> ripple(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SMOOTHFADE -> smoothFade(animation)
             Animation.SPARKLE -> sparkle(animation)
@@ -510,6 +511,22 @@ abstract class AnimatedLEDStrip(
                 }
             }
         }
+    }
+
+    @Radial
+    @Experimental
+    private val ripple = { animation: AnimationData ->
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
+                    .direction(Direction.FORWARD).startPixel(animation.center)
+                    .endPixel(min(animation.center + animation.distance, animation.endPixel)))
+        }
+        GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
+                    .direction(Direction.BACKWARD).endPixel(animation.center)
+                    .startPixel(max(animation.center - animation.distance, animation.startPixel)))
+        }
+        delayBlocking(animation.delay * 20)
     }
 
 

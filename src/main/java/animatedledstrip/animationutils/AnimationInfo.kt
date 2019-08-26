@@ -196,6 +196,14 @@ val PixelRun = AnimationInfo(
 )
 
 
+val Ripple = AnimationInfo(
+        abbr = "RPL",
+        numReqColors = 1,
+        delay = ReqLevel.OPTIONAL,
+        delayDefault = 5,
+        repetitive = true
+)
+
 /**
  * Info about the Smooth Chase animation.
  *
@@ -326,6 +334,7 @@ val animationInfoMap = mapOf(
         Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
         Animation.PIXELMARATHON to PixelMarathon,
         Animation.PIXELRUN to PixelRun,
+        Animation.RIPPLE to Ripple,
         Animation.SMOOTHCHASE to SmoothChase,
         Animation.SMOOTHFADE to SmoothFade,
         Animation.SPARKLE to Sparkle,
