@@ -25,7 +25,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.utils.blend
@@ -110,7 +109,11 @@ abstract class LEDStrip(
     private val fadeMap = mutableMapOf<Int, FadePixel>()
 
     init {
-        for (i in 0 until numLEDs) locks += Pair(i, Mutex())
+        if (fileName != null) require(imageDebugging)
+        for (i in 0 until numLEDs) {
+            locks += Pair(i, Mutex())
+            fadeMap += Pair(i, FadePixel(i))
+        }
         runBlocking { delay(2000) }
         toggleRender()
     }
@@ -211,13 +214,9 @@ abstract class LEDStrip(
     }
 
     fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
-        val colors = when (colorValues) {
-            is PreparedColorContainer -> colorValues
-            is ColorContainer -> colorValues.prepare(numLEDs)
-            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
-        }
+        val colors = colorValues.prepare(numLEDs)
         prolongedColors[pixel] = colors[pixel]
-        setPixelColor(pixel, colors[pixel])
+        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, colors[pixel])
     }
 
     fun setProlongedPixelColor(pixel: Int, color: Long) {
@@ -229,7 +228,7 @@ abstract class LEDStrip(
     }
 
     fun revertPixel(pixel: Int) {
-        ledStrip.setPixelColor(pixel, prolongedColors[pixel].toInt())
+        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, prolongedColors[pixel])
     }
 
 
