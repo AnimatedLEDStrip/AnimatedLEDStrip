@@ -49,9 +49,9 @@ import java.util.*
  * is enabled)
  */
 abstract class LEDStrip(
-        numLEDs: Int,
-        private val imageDebugging: Boolean = false,
-        fileName: String? = null
+    numLEDs: Int,
+    private val imageDebugging: Boolean = false,
+    fileName: String? = null
 ) : LEDStripNonConcurrent(numLEDs) {
 
     /**
@@ -79,7 +79,7 @@ abstract class LEDStrip(
     var rendering = false
 
     private val _fileName =
-            fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+        fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
 
     /**
      * The file that the csv output will be saved to if image debugging is enabled.
@@ -179,7 +179,7 @@ abstract class LEDStrip(
          * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
          */
         fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
-                LEDStripSection(startPixel, endPixel, ledStrip)
+            LEDStripSection(startPixel, endPixel, ledStrip)
 
         /**
          * Create a new [LEDStripSection].
@@ -188,7 +188,7 @@ abstract class LEDStrip(
          * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
          */
         fun new(pixels: IntRange, ledStrip: AnimatedLEDStrip) =
-                LEDStripSection(pixels, ledStrip)
+            LEDStripSection(pixels, ledStrip)
     }
 
 
@@ -388,6 +388,7 @@ abstract class LEDStrip(
 
         var isFading = false
             private set
+
         /**
          * Fade a pixel from its current color to `destinationColor`.
          *
@@ -406,9 +407,13 @@ abstract class LEDStrip(
                 if (owner != myName) break
                 isFading = true
                 i++
-                setPixelColor(pixel,
-                        blend(getActualPixelColorOrNull(pixel) ?: continue,
-                        prolongedColors[pixel], amountOfOverlay))
+                setPixelColor(
+                    pixel,
+                    blend(
+                        getActualPixelColorOrNull(pixel) ?: continue,
+                        prolongedColors[pixel], amountOfOverlay
+                    )
+                )
                 delayBlocking(delay)
             }
             if (owner == myName) revertPixel(pixel)

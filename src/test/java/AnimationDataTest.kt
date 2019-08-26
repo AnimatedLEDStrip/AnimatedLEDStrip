@@ -220,12 +220,12 @@ class AnimationDataTest {
     fun testEquals() {
 
         val testAnimation1 = AnimationData()
-                .animation(Animation.STACK)
-                .color0(0xFFFF)
-                .color1(0xFFFFFF)
-                .delay(10)
-                .direction(Direction.BACKWARD)
-                .spacing(4)
+            .animation(Animation.STACK)
+            .color0(0xFFFF)
+            .color1(0xFFFFFF)
+            .delay(10)
+            .direction(Direction.BACKWARD)
+            .spacing(4)
 
         val testAnimation2 = AnimationData().apply {
             animation = Animation.STACK
@@ -242,16 +242,16 @@ class AnimationDataTest {
     @Test
     fun testIsSerializable() {
         val testAnimation = AnimationData().animation(Animation.STACK)
-                .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
-                .color(0xFF, index = 1)
-                .color(0xFF, index = 2)
-                .color(0xFF, index = 3)
-                .color(0xFF, index = 4)
-                .continuous(true)
-                .delay(50)
-                .direction(Direction.FORWARD)
-                .id("TEST")
-                .spacing(5)
+            .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
+            .color(0xFF, index = 1)
+            .color(0xFF, index = 2)
+            .color(0xFF, index = 3)
+            .color(0xFF, index = 4)
+            .continuous(true)
+            .delay(50)
+            .direction(Direction.FORWARD)
+            .id("TEST")
+            .spacing(5)
         val fileOut = FileOutputStream("animation.ser")
         val out = ObjectOutputStream(fileOut)
         out.writeObject(testAnimation)

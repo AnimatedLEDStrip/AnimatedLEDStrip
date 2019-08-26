@@ -31,6 +31,6 @@ import animatedledstrip.leds.LEDStripInterface
  *
  * @param numLEDs Number of LEDs in the strip
  */
-class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int): AnimatedLEDStripNonConcurrent(numLEDs){
+class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int) : AnimatedLEDStripNonConcurrent(numLEDs) {
     override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
 }

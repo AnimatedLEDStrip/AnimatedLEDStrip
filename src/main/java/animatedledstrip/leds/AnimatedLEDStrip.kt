@@ -44,9 +44,9 @@ import kotlin.math.min
  * @param numLEDs Number of LEDs in the strip
  */
 abstract class AnimatedLEDStrip(
-        numLEDs: Int,
-        imageDebugging: Boolean = false,
-        fileName: String? = null
+    numLEDs: Int,
+    imageDebugging: Boolean = false,
+    fileName: String? = null
 ) : LEDStrip(numLEDs, imageDebugging, fileName), AnimatedLEDStripInterface, SectionableLEDStrip {
 
     /**
@@ -63,7 +63,7 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val animationThreadPool =
-            newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
+        newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
@@ -72,7 +72,7 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val sparkleThreadPool =
-            newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
+        newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 
     /**
@@ -123,13 +123,21 @@ abstract class AnimatedLEDStrip(
 
         animation.pCols = mutableListOf()
         animation.colors.forEach {
-            animation.pCols.add(it.prepare(animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel))
+            animation.pCols.add(
+                it.prepare(
+                    animation.endPixel - animation.startPixel + 1,
+                    leadingZeros = animation.startPixel
+                )
+            )
         }
 
         for (i in animation.colors.size..(animationInfoMap[animation.animation]?.numColors ?: 0)) {
-            animation.pCols.add(CCBlack.prepare(animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel))
+            animation.pCols.add(
+                CCBlack.prepare(
+                    animation.endPixel - animation.startPixel + 1,
+                    leadingZeros = animation.startPixel
+                )
+            )
         }
 
         when (animation.animation) {
@@ -173,10 +181,12 @@ abstract class AnimatedLEDStrip(
             }
             customAnimationMap[animation.id]?.eval()
         } catch (e: UninitializedPropertyAccessException) {
-            Logger.error("""Custom animations not initialized:
+            Logger.error(
+                """Custom animations not initialized:
                 |   - Include animatedledstrip-custom-animations in your project
                 |   - Call extension function setupCustomAnimations()
-            """.trimMargin())
+            """.trimMargin()
+            )
             throw UninitializedPropertyAccessException()
         }
     }
@@ -265,7 +275,10 @@ abstract class AnimatedLEDStrip(
             setProlongedPixelColor(i, animation.pCols[0])
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
-            setProlongedPixelColor((animation.endPixel - animation.startPixel) / 2 + animation.startPixel, animation.pCols[0])
+            setProlongedPixelColor(
+                (animation.endPixel - animation.startPixel) / 2 + animation.startPixel,
+                animation.pCols[0]
+            )
         }
     }
 
@@ -310,16 +323,16 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 delayBlocking(animation.delay)
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[1]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[1]
                     )
                 }
             }
@@ -328,16 +341,16 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 delayBlocking(animation.delay)
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[1]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[1]
                     )
                 }
             }
@@ -358,8 +371,8 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setProlongedPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 delayBlocking(animation.delay)
@@ -368,8 +381,8 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setProlongedPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 delayBlocking(animation.delay)
@@ -458,14 +471,18 @@ abstract class AnimatedLEDStrip(
     @Experimental
     private val ripple = { animation: AnimationData ->
         GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
+            run(
+                AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.FORWARD).startPixel(animation.center)
-                    .endPixel(min(animation.center + animation.distance, animation.endPixel)))
+                    .endPixel(min(animation.center + animation.distance, animation.endPixel))
+            )
         }
         GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
+            run(
+                AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.BACKWARD).endPixel(animation.center)
-                    .startPixel(max(animation.center - animation.distance, animation.startPixel)))
+                    .startPixel(max(animation.center - animation.distance, animation.startPixel))
+            )
         }
         delayBlocking(animation.delay * 20)
     }
@@ -590,16 +607,20 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     @Radial
     @Experimental
-    private val splat = {animation: AnimationData ->
+    private val splat = { animation: AnimationData ->
         val forwardThread = GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
+            run(
+                AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.FORWARD).startPixel(animation.center)
-                    .endPixel(min(animation.center + animation.distance, animation.endPixel)))
+                    .endPixel(min(animation.center + animation.distance, animation.endPixel))
+            )
         }
         val backwardThread = GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
+            run(
+                AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.BACKWARD).endPixel(animation.center)
-                    .startPixel(max(animation.center - animation.distance, animation.startPixel)))
+                    .startPixel(max(animation.center - animation.distance, animation.startPixel))
+            )
         }
         runBlocking {
             joinAll(forwardThread, backwardThread)
@@ -644,10 +665,18 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val stackOverflow = { animation: AnimationData ->
         val forwardThread = GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.STACK).color(animation.pCols[0]).direction(Direction.FORWARD).delay(2))
+            run(
+                AnimationData().animation(Animation.STACK).color(animation.pCols[0]).direction(Direction.FORWARD).delay(
+                    2
+                )
+            )
         }
         val backwardThread = GlobalScope.launch(animationThreadPool) {
-            run(AnimationData().animation(Animation.STACK).color(animation.pCols[1]).direction(Direction.BACKWARD).delay(2))
+            run(
+                AnimationData().animation(Animation.STACK).color(animation.pCols[1]).direction(Direction.BACKWARD).delay(
+                    2
+                )
+            )
         }
         runBlocking {
             joinAll(forwardThread, backwardThread)

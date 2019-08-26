@@ -337,7 +337,7 @@ open class AnimationData : Serializable {
      * Create a `String` out of the values of this instance.
      */
     override fun toString() =
-            "$animation: $colors, $continuous, $delay, $direction, $id, $spacing"
+        "$animation: $colors, $continuous, $delay, $direction, $id, $spacing"
 
     override fun equals(other: Any?): Boolean {
         if (other !is AnimationData) return false

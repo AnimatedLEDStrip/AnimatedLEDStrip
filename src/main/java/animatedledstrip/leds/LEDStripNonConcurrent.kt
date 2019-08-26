@@ -161,7 +161,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     }
 
 
-
     /* Set a section of the strip */
 
     /**
@@ -211,7 +210,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     }
 
 
-
     /* Get methods */
 
     /**
@@ -221,7 +219,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @return The color of the pixel
      */
     open fun getPixelColor(pixel: Int): Long =
-            ColorContainer(ledStrip.getPixelColor(pixel).toLong()).color
+        ColorContainer(ledStrip.getPixelColor(pixel).toLong()).color
 
 
     /**
@@ -269,7 +267,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
 
         setStripColor(PreparedColorContainer(temp))
     }
-
 
 
     /**

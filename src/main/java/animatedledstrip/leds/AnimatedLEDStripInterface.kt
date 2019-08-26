@@ -30,7 +30,7 @@ import animatedledstrip.leds.sections.SectionableLEDStrip
  * An interface used to connect the AnimatedLEDStrip and AnimatedLEDStripNonConcurrent
  * classes.
  */
-interface AnimatedLEDStripInterface: SectionableLEDStrip {
+interface AnimatedLEDStripInterface : SectionableLEDStrip {
 
     /**
      * Run an animation.
