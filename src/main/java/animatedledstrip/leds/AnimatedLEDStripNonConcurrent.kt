@@ -76,11 +76,12 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
             Animation.COLOR -> setStripColor(animation.pCols[0])
+            Animation.METEOR -> meteor(animation)
             Animation.MULTICOLOR -> setStripColor(animation.pCols[0])
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELRUN -> pixelRun(animation)
-            Animation.PIXELRUNWITHTRAIL -> pixelRunWithTrail(animation)
+            Animation.PIXELRUNWITHTRAIL -> Logger.warn("PixelRunWithTrail is deprecated. Use Meteor")
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SPARKLE -> sparkle(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
@@ -137,6 +138,34 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
         }
     }
 
+    /**
+     * Runs a Pixel Run with Trail animation.
+     *
+     * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
+     * where the pixels fade from `pCols[1]` to `pCols[0]`. Note: the end of the strip
+     * might remain lit with the tail after the animation completes unless if
+     * another Pixel Run with Trail is run.
+     */
+    private val meteor = { animation: AnimationData ->
+        when (animation.direction) {
+            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
+                for (i in animation.startPixel until animation.endPixel) {
+                    setPixelColor(i, blend(getPixelColor(i), animation.pCols[1].color, 60))
+                }
+                setPixelColor(q, animation.pCols[0])
+                show()
+                delayBlocking(animation.delay)
+            }
+            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
+                for (i in animation.startPixel until animation.endPixel) {
+                    setPixelColor(i, blend(getPixelColor(i), animation.pCols[1].color, 60))
+                }
+                setPixelColor(q, animation.pCols[0])
+                show()
+                delayBlocking(animation.delay)
+            }
+        }
+    }
 
     /**
      * Runs a Multi-Pixel Run animation.
@@ -246,36 +275,6 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 delayBlocking(animation.delay)
                 setPixelColor(q, animation.pCols[1])
                 show()
-            }
-        }
-    }
-
-
-    /**
-     * Runs a Pixel Run with Trail animation.
-     *
-     * Like a Pixel Run animation, but the 'running' pixel has a trail behind it
-     * where the pixels fade from `pCols[1]` to `pCols[0]`. Note: the end of the strip
-     * might remain lit with the tail after the animation completes unless if
-     * another Pixel Run with Trail is run.
-     */
-    private val pixelRunWithTrail = { animation: AnimationData ->
-        when (animation.direction) {
-            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
-                for (i in animation.startPixel until animation.endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), animation.pCols[1].color, 60))
-                }
-                setPixelColor(q, animation.pCols[0])
-                show()
-                delayBlocking(animation.delay)
-            }
-            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
-                for (i in animation.startPixel until animation.endPixel) {
-                    setPixelColor(i, blend(getPixelColor(i), animation.pCols[1].color, 60))
-                }
-                setPixelColor(q, animation.pCols[0])
-                show()
-                delayBlocking(animation.delay)
             }
         }
     }

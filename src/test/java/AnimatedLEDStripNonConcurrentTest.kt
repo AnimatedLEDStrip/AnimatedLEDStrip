@@ -66,6 +66,21 @@ class AnimatedLEDStripNonConcurrentTest {
     }
 
     @Test
+    fun testMeteor() {
+        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.METEOR)
+                .color(0xFF)
+                .direction(Direction.FORWARD))
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.METEOR)
+                .color(0xFF00)
+                .direction(Direction.BACKWARD))
+    }
+
+    @Test
     fun testMultiColor() {
         val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
@@ -123,21 +138,6 @@ class AnimatedLEDStripNonConcurrentTest {
 
         testLEDs.run(AnimationData()
                 .animation(Animation.PIXELRUN)
-                .color(0xFF00)
-                .direction(Direction.BACKWARD))
-    }
-
-    @Test
-    fun testPixelRunWithTrail() {
-        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
-
-        testLEDs.run(AnimationData()
-                .animation(Animation.PIXELRUNWITHTRAIL)
-                .color(0xFF)
-                .direction(Direction.FORWARD))
-
-        testLEDs.run(AnimationData()
-                .animation(Animation.PIXELRUNWITHTRAIL)
                 .color(0xFF00)
                 .direction(Direction.BACKWARD))
     }
