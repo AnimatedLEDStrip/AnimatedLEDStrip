@@ -26,7 +26,6 @@ package animatedledstrip.leds
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
-import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
@@ -77,63 +76,6 @@ abstract class AnimatedLEDStrip(
 
 
     /**
-     * Map of pixel indices to `FadePixel` instances.
-     */
-    private val fadeMap = mutableMapOf<Int, FadePixel>()
-
-    /**
-     * Helper class for fading a pixel from one color to another.
-     *
-     * @property pixel The pixel associated with this instance
-     */
-    inner class FadePixel(private val pixel: Int) {
-        /**
-         * Which thread is currently fading a pixel?
-         * Used so another thread can take over mid-fade if necessary.
-         */
-        var owner = ""
-
-
-        /**
-         * Fade a pixel from its current color to `destinationColor`.
-         *
-         * Blends the current color with `destinationColor` using [blend] every
-         * `delay` milliseconds until the pixel reaches `destinationColor` or 40
-         * iterations have passed, whichever comes first.
-         *
-         * @param amountOfOverlay How much the pixel should fade in each iteration
-         * @param delay Time in milliseconds between iterations
-         */
-        fun fade(amountOfOverlay: Int = 25, delay: Int = 30) {
-            val myName = Thread.currentThread().name
-            owner = myName
-            var i = 0
-            while (getActualPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
-                if (owner != myName) break
-                setPixelColor(pixel, blend(getActualPixelColor(pixel), prolongedColors[pixel], amountOfOverlay))
-                delayBlocking(delay)
-                i++
-            }
-            revertPixel(pixel)
-        }
-    }
-
-    /**
-     * Helper function for fading a pixel from its current color to `destinationColor`.
-     *
-     * @param pixel The pixel to be faded
-     * @param amountOfOverlay How much the pixel should fade in each iteration
-     * @param delay Time in milliseconds between iterations
-     * @see FadePixel
-     */
-    fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
-        Logger.trace("Fading pixel $pixel")
-        fadeMap[pixel]?.fade(amountOfOverlay =  amountOfOverlay, delay = delay)
-        Logger.trace("Fade of pixel $pixel complete")
-    }
-
-
-    /**
      * Map containing compiled animations.
      *
      * NOTE: Must include the animatedledstrip-custom-animations library and
@@ -154,7 +96,6 @@ abstract class AnimatedLEDStrip(
     init {
         for (i in 0 until numLEDs) {
             locks += Pair(i, Mutex())        // Initialize locks map
-            fadeMap += Pair(i, FadePixel(i))
         }
     }
 
