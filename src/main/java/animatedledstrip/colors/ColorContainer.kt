@@ -99,11 +99,11 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param index The index of the color to get
      */
     operator fun get(index: Int): Long =
-            when {
-                singleColor -> color
-                colors.indices.contains(index) -> colors[index]
-                else -> 0
-            }
+        when {
+            singleColor -> color
+            colors.indices.contains(index) -> colors[index]
+            else -> 0
+        }
 
     /**
      * Get colors from [colors]. Accepts a variable number of arguments
@@ -118,15 +118,15 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param indices The indices of the colors to retrieve
      */
     operator fun get(vararg indices: Int): List<Long> =
-            if (singleColor) listOf(color)
-            else {
-                val temp = mutableListOf<Long>()
-                for (index in indices) {
-                    temp += if (colors.indices.contains(index)) colors[index]
-                    else 0
-                }
-                temp
+        if (singleColor) listOf(color)
+        else {
+            val temp = mutableListOf<Long>()
+            for (index in indices) {
+                temp += if (colors.indices.contains(index)) colors[index]
+                else 0
             }
+            temp
+        }
 
     /**
      * Get colors from [colors]. If there is only one color in `colors`,
@@ -136,15 +136,15 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * @param indices A range of indices of the colors to retrieve
      */
     operator fun get(indices: IntRange): List<Long> =
-            if (singleColor) listOf(color)
-            else {
-                val temp = mutableListOf<Long>()
-                for (index in indices) {
-                    temp += if (colors.indices.contains(index)) colors[index]
-                    else 0
-                }
-                temp
+        if (singleColor) listOf(color)
+        else {
+            val temp = mutableListOf<Long>()
+            for (index in indices) {
+                temp += if (colors.indices.contains(index)) colors[index]
+                else 0
             }
+            temp
+        }
 
     /**
      * Set some indices of [colors] to [c]. If an index is not a valid index
@@ -216,9 +216,11 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
                     if ((i - j) == 0) returnMap[i] = colors[purePixels.indexOf(j)]
                     else {
                         returnMap[i] = blend(
-                                colors[purePixels.indexOf(j)],
-                                colors[(purePixels.indexOf(j) + 1) % purePixels.size],
-                                if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                            colors[purePixels.indexOf(j)],
+                            colors[(purePixels.indexOf(j) + 1) % purePixels.size],
+                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(
+                                j
+                            ) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
                         )
                     }
                     break
@@ -436,9 +438,10 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * Returns the first color in [colors] a Triple containing r, g, b.
      */
     fun toRGB(): Triple<Int, Int, Int> = Triple(
-            (color shr 16 and 0xFF).toInt(),
-            (color shr 8 and 0xFF).toInt(),
-            (color and 0xFF).toInt())
+        (color shr 16 and 0xFF).toInt(),
+        (color shr 8 and 0xFF).toInt(),
+        (color and 0xFF).toInt()
+    )
 
     /**
      * Calls toRGB()

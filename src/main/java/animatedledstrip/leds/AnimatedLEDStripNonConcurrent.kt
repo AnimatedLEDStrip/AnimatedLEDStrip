@@ -37,7 +37,7 @@ import org.pmw.tinylog.Logger
  * @param numLEDs Number of LEDs in the strip
  */
 abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
-        LEDStripNonConcurrent(numLEDs), AnimatedLEDStripInterface, SectionableLEDStrip {
+    LEDStripNonConcurrent(numLEDs), AnimatedLEDStripInterface, SectionableLEDStrip {
 
 
     /**
@@ -63,13 +63,21 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
 
         animation.pCols = mutableListOf()
         animation.colors.forEach {
-            animation.pCols.add(it.prepare(animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel))
+            animation.pCols.add(
+                it.prepare(
+                    animation.endPixel - animation.startPixel + 1,
+                    leadingZeros = animation.startPixel
+                )
+            )
         }
 
         for (i in animation.colors.size..(animationInfoMap[animation.animation]?.numColors ?: 0)) {
-            animation.pCols.add(CCBlack.prepare(animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel))
+            animation.pCols.add(
+                CCBlack.prepare(
+                    animation.endPixel - animation.startPixel + 1,
+                    leadingZeros = animation.startPixel
+                )
+            )
         }
 
         when (animation.animation) {
@@ -179,8 +187,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 show()
@@ -188,8 +196,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[1]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[1]
                     )
                 }
                 show()
@@ -199,8 +207,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 show()
@@ -208,8 +216,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[1]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[1]
                     )
                 }
                 show()
@@ -231,8 +239,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 show()
@@ -242,8 +250,8 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
                     setPixelColor(
-                            i + (-(q - (animation.spacing - 1))),
-                            animation.pCols[0]
+                        i + (-(q - (animation.spacing - 1))),
+                        animation.pCols[0]
                     )
                 }
                 show()

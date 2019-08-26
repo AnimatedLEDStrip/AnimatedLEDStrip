@@ -27,7 +27,6 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
-import java.lang.IllegalArgumentException
 import kotlin.test.assertFailsWith
 
 class EmulatedWS281xTest {
@@ -45,10 +44,10 @@ class EmulatedWS281xTest {
     fun testValidatePixel() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        assertFailsWith(IllegalArgumentException::class){
+        assertFailsWith(IllegalArgumentException::class) {
             testLEDs.ledStrip.getPixelColor(50)
         }
-        assertFailsWith(IllegalArgumentException::class){
+        assertFailsWith(IllegalArgumentException::class) {
             testLEDs.ledStrip.getPixelColor(-1)
         }
     }

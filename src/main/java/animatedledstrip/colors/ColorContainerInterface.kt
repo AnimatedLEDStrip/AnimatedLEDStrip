@@ -28,7 +28,7 @@ import java.io.Serializable
 /**
  * An interface connecting ColorContainer and PreparedColorContainer.
  */
-interface ColorContainerInterface: Serializable {
+interface ColorContainerInterface : Serializable {
 
     /**
      * The first color in `colors`.

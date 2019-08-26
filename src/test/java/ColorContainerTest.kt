@@ -57,7 +57,7 @@ class ColorContainerTest {
     fun testListConstructor() {
         @Suppress("RemoveExplicitTypeArguments")
         val testCC = ColorContainer(listOf<Long>(0xFF2431, 0x5F3C4B))
-        assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B)}
+        assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B) }
     }
 
     @Test
@@ -86,7 +86,7 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
 
         assertTrue { testCC[0] == 0xFF7B50L }
-        assertTrue { testCC[0,2] == listOf<Long>(0xFF7B50, 0x3C538B) }
+        assertTrue { testCC[0, 2] == listOf<Long>(0xFF7B50, 0x3C538B) }
         assertTrue { testCC[0..2] == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
         assertTrue { testCC.color == 0xFF7B50L }
 
@@ -107,13 +107,24 @@ class ColorContainerTest {
         val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
 
         testCC[2] = 0xFF753C
-        assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0x0084AF)}
+        assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0x0084AF) }
 
         testCC[3, 5] = 0xB39247
         assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0xB39247, 0xB39247) }
 
         testCC[3..7] = 0x526BE2
-        assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0x526BE2, 0x526BE2, 0x526BE2, 0x526BE2, 0x526BE2) }
+        assertTrue {
+            testCC.colors == listOf<Long>(
+                0xFF7B50,
+                0xF0AF29,
+                0xFF753C,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2
+            )
+        }
     }
 
     @Test
