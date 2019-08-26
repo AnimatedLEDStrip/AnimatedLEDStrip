@@ -73,6 +73,10 @@ enum class Animation {
      */
     @NonRepetitive
     MULTIPIXELRUNTOCOLOR,
+    /**
+     * See [AnimatedLEDStrip.ripple]
+     */
+    @Experimental
     @Radial
     RIPPLE,
     /**
@@ -109,6 +113,7 @@ enum class Animation {
     /**
      * See [AnimatedLEDStrip.splat]
      */
+    @Experimental
     @NonRepetitive
     @Radial
     SPLAT,

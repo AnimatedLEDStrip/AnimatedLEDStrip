@@ -23,5 +23,11 @@ package animatedledstrip.animationutils
  */
 
 
+/**
+ * A radial animation is annotated with this tag.
+ *
+ * Radial animations start from a center and "radiate" outwards.
+ *
+ */
 @MustBeDocumented
 annotation class Radial
