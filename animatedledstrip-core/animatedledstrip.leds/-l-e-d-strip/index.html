@@ -24,6 +24,15 @@ is enabled)</p>
 <tbody>
 <tr>
 <td>
+<p><a href="-fade-pixel/index.html">FadePixel</a></p>
+</td>
+<td>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">FadePixel</span></code>
+<p>Helper class for fading a pixel from one color to another.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="-section-creator/index.html">SectionCreator</a></p>
 </td>
 <td>
@@ -65,6 +74,15 @@ is enabled)</p>
 <code><span class="keyword">val </span><span class="identifier">buffer</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/-string-builder/index.html"><span class="identifier">StringBuilder</span></a><span class="symbol">?</span></code>
 <p>Buffer that stores renders until <code>renderNum</code> in <code>toggleRender</code> reaches 1000,
 at which point buffer is appended to <code>outFile</code> and cleared.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="fade-map.html">fadeMap</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">fadeMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="-fade-pixel/index.html"><span class="identifier">LEDStrip.FadePixel</span></a><span class="symbol">&gt;</span></code>
+<p>Map of pixel indices to <code>FadePixel</code> instances.</p>
 </td>
 </tr>
 <tr>
@@ -189,10 +207,30 @@ experience slowdowns because of I/O.</p>
 <tbody>
 <tr>
 <td>
+<p><a href="fade-pixel.html">fadePixel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">fadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;30<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Helper function for fading a pixel from its current color to <code>destinationColor</code>.</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="get-actual-pixel-color.html">getActualPixelColor</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getActualPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getActualPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getActualPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getActualPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Get the actual color of a pixel.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-actual-pixel-color-or-null.html">getActualPixelColorOrNull</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getActualPixelColorOrNull</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getActualPixelColorOrNull(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">?</span></code>
+<p>Get the actual color of a pixel.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -200,7 +238,16 @@ experience slowdowns because of I/O.</p>
 </td>
 <td>
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelColor(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Get the color of a pixel.</p>
+<p>Get the prolonged color of a pixel.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-pixel-color-or-null.html">getPixelColorOrNull</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPixelColorOrNull</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$getPixelColorOrNull(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">?</span></code>
+<p>Get the prolonged color of a pixel.</p>
 </td>
 </tr>
 <tr>

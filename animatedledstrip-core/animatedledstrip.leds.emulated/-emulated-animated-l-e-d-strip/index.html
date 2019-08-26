@@ -105,21 +105,21 @@ the strip?</p>
 </tr>
 <tr>
 <td>
-<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/fade-map.html">fadeMap</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">fadeMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="../../animatedledstrip.leds/-animated-l-e-d-strip/-fade-pixel/index.html"><span class="identifier">AnimatedLEDStrip.FadePixel</span></a><span class="symbol">&gt;</span></code>
-<p>Map of pixel indices to <code>FadePixel</code> instances.</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/locks.html">locks</a></p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">locks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">Mutex</span><span class="symbol">&gt;</span></code>
 <p>Map containing Mutex instances for locking access to each led while it is
 being used.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/meteor.html">meteor</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">meteor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Runs a Meteor animation.</p>
 </td>
 </tr>
 <tr>
@@ -158,12 +158,10 @@ being used.</p>
 </tr>
 <tr>
 <td>
-<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/pixel-run-with-trail.html">pixelRunWithTrail</a></p>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/ripple.html">ripple</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">pixelRunWithTrail</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Runs a Pixel Run with Trail animation.</p>
-</td>
+<code><span class="keyword">val </span><span class="identifier">ripple</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -224,6 +222,13 @@ memory leaks caused by the overhead associated with creating new threads.</p>
 </tr>
 <tr>
 <td>
+<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/splat.html">splat</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">splat</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/stack.html">stack</a></p>
 </td>
 <td>
@@ -252,15 +257,6 @@ memory leaks caused by the overhead associated with creating new threads.</p>
 <h3>Inherited Functions</h3>
 <table>
 <tbody>
-<tr>
-<td>
-<p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/fade-pixel.html">fadePixel</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">fadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;30<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Helper function for fading a pixel from its current color to <code>destinationColor</code>.</p>
-</td>
-</tr>
 <tr>
 <td>
 <p><a href="../../animatedledstrip.leds/-animated-l-e-d-strip/run.html">run</a></p>
