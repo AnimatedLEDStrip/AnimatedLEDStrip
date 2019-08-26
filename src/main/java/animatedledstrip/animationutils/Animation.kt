@@ -105,6 +105,12 @@ enum class Animation {
     @NonRepetitive
     SPARKLETOCOLOR,
     /**
+     * See [AnimatedLEDStrip.splat]
+     */
+    @NonRepetitive
+    @Radial
+    SPLAT,
+    /**
      * See [AnimatedLEDStrip.stack]
      */
     @NonRepetitive
