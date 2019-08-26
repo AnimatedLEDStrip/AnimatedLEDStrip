@@ -170,7 +170,6 @@ open class AnimationData : Serializable {
      * @param index The index of the color in the list of colors
      */
     fun color(color: Any, index: Int = 0): AnimationData {
-
         if (colors.size <= index) for (i in colors.size..index) colors += CCBlack
 
         when (color) {
