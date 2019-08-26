@@ -50,7 +50,7 @@ data class AnimationInfo(
         val repetitive: Boolean = false,
         val spacing: ReqLevel = ReqLevel.NOTUSED,
         val spacingDefault: Int = 0
-){
+) {
     val numColors = numReqColors + numOptColors
 }
 
@@ -266,6 +266,14 @@ val SparkleToColor = AnimationInfo(
 )
 
 
+val Splat = AnimationInfo(
+        abbr = "SPT",
+        numReqColors = 1,
+        delay = ReqLevel.OPTIONAL,
+        delayDefault = 5
+)
+
+
 /**
  * Info about the Stack animation.
  *
@@ -310,20 +318,21 @@ val Wipe = AnimationInfo(
  * Map of animations to their `AnimationInfo` instances.
  */
 val animationInfoMap = mapOf(
-    Animation.ALTERNATE to Alternate,
-    Animation.BOUNCE to Bounce,
-    Animation.BOUNCETOCOLOR to BounceToColor,
-    Animation.METEOR to Meteor,
-    Animation.MULTIPIXELRUN to MultiPixelRun,
-    Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
-    Animation.PIXELMARATHON to PixelMarathon,
-    Animation.PIXELRUN to PixelRun,
-    Animation.SMOOTHCHASE to SmoothChase,
-    Animation.SMOOTHFADE to SmoothFade,
-    Animation.SPARKLE to Sparkle,
-    Animation.SPARKLEFADE to SparkleFade,
-    Animation.SPARKLETOCOLOR to SparkleToColor,
-    Animation.STACK to Stack,
-    Animation.STACKOVERFLOW to StackOverflow,
-    Animation.WIPE to Wipe
+        Animation.ALTERNATE to Alternate,
+        Animation.BOUNCE to Bounce,
+        Animation.BOUNCETOCOLOR to BounceToColor,
+        Animation.METEOR to Meteor,
+        Animation.MULTIPIXELRUN to MultiPixelRun,
+        Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
+        Animation.PIXELMARATHON to PixelMarathon,
+        Animation.PIXELRUN to PixelRun,
+        Animation.SMOOTHCHASE to SmoothChase,
+        Animation.SMOOTHFADE to SmoothFade,
+        Animation.SPARKLE to Sparkle,
+        Animation.SPARKLEFADE to SparkleFade,
+        Animation.SPARKLETOCOLOR to SparkleToColor,
+        Animation.SPLAT to Splat,
+        Animation.STACK to Stack,
+        Animation.STACKOVERFLOW to StackOverflow,
+        Animation.WIPE to Wipe
 )

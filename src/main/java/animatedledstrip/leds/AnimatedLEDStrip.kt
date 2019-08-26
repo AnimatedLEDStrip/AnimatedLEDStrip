@@ -36,6 +36,8 @@ import java.lang.Math.random
 import javax.script.CompiledScript
 import javax.script.ScriptContext
 import javax.script.ScriptEngine
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * A subclass of [LEDStrip] adding animations.
@@ -168,6 +170,16 @@ abstract class AnimatedLEDStrip(
             else -> animation.endPixel
         }
 
+        animation.center = when (animation.center) {
+            -1 -> numLEDs / 2
+            else -> animation.center
+        }
+
+        animation.distance = when (animation.distance) {
+            -1 -> numLEDs
+            else -> animation.distance
+        }
+
         animation.pCols = mutableListOf()
         animation.colors.forEach {
             animation.pCols.add(it.prepare(animation.endPixel - animation.startPixel + 1,
@@ -196,6 +208,7 @@ abstract class AnimatedLEDStrip(
             Animation.SPARKLE -> sparkle(animation)
             Animation.SPARKLEFADE -> sparkleFade(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
+            Animation.SPLAT -> splat(animation)
             Animation.STACK -> stack(animation)
             Animation.STACKOVERFLOW -> stackOverflow(animation)
             Animation.WIPE -> wipe(animation)
@@ -615,6 +628,25 @@ abstract class AnimatedLEDStrip(
         Unit        // Ensure sparkleToColor is of type (AnimationData) -> Unit
     }
 
+
+    @NonRepetitive
+    @Radial
+    @Experimental
+    private val splat = {animation: AnimationData ->
+        val forwardThread = GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
+                    .direction(Direction.FORWARD).startPixel(animation.center)
+                    .endPixel(min(animation.center + animation.distance, animation.endPixel)))
+        }
+        val backwardThread = GlobalScope.launch(animationThreadPool) {
+            run(AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
+                    .direction(Direction.BACKWARD).endPixel(animation.center)
+                    .startPixel(max(animation.center - animation.distance, animation.startPixel)))
+        }
+        runBlocking {
+            joinAll(forwardThread, backwardThread)
+        }
+    }
 
     /**
      * TODO: documentation

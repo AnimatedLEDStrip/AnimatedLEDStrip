@@ -50,6 +50,8 @@ open class AnimationData : Serializable {
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
+    var center = -1
+
     /**
      * Specifies if the animation will run endlessly until stopped.
      */
@@ -96,6 +98,9 @@ open class AnimationData : Serializable {
      * 'Direction' the animation should run.
      */
     var direction = Direction.FORWARD
+
+
+    var distance = -1
 
     /**
      * Last pixel on the strip that will show the animation (inclusive).
@@ -207,6 +212,11 @@ open class AnimationData : Serializable {
         return this
     }
 
+    fun center(pixel: Int): AnimationData {
+        center = pixel
+        return this
+    }
+
     /**
      * Set the `delay` parameter.
      *
@@ -261,6 +271,11 @@ open class AnimationData : Serializable {
             'B', 'b' -> Direction.BACKWARD
             else -> throw Exception("Direction chars can be 'F' or 'B'")
         }
+        return this
+    }
+
+    fun distance(pixels: Int): AnimationData {
+        distance = pixels
         return this
     }
 
