@@ -28,6 +28,7 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
+import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
@@ -102,6 +103,11 @@ abstract class LEDStrip(
     val prolongedColors = mutableListOf<Long>().apply {
         for (i in 0 until numLEDs) add(0)
     }
+
+    /**
+     * Map of pixel indices to `FadePixel` instances.
+     */
+    private val fadeMap = mutableMapOf<Int, FadePixel>()
 
     init {
         for (i in 0 until numLEDs) locks += Pair(i, Mutex())
@@ -242,11 +248,7 @@ abstract class LEDStrip(
     }
 
     fun setStripColor(colorValues: ColorContainerInterface, prolonged: Boolean) {
-        val colors = when (colorValues) {
-            is PreparedColorContainer -> colorValues
-            is ColorContainer -> colorValues.prepare(numLEDs)
-            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
-        }
+        val colors = colorValues.prepare(numLEDs)
         if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
         else super.setStripColor(colors)
     }
@@ -276,11 +278,7 @@ abstract class LEDStrip(
 
 
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
-        val colors = when (colorValues) {
-            is PreparedColorContainer -> colorValues
-            is ColorContainer -> colorValues.prepare(numLEDs)
-            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
-        }
+        val colors = colorValues.prepare(numLEDs)
         if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors)
         else super.setSectionColor(start, end, colors)
     }
@@ -338,4 +336,59 @@ abstract class LEDStrip(
      * Renders are handled by a thread created during an init block above.
      */
     override fun show() {}
+
+
+    /**
+     * Helper class for fading a pixel from one color to another.
+     *
+     * @property pixel The pixel associated with this instance
+     */
+    inner class FadePixel(private val pixel: Int) {
+        /**
+         * Which thread is currently fading a pixel?
+         * Used so another thread can take over mid-fade if necessary.
+         */
+        var owner = ""
+
+        var isFading = false
+            private set
+        /**
+         * Fade a pixel from its current color to `destinationColor`.
+         *
+         * Blends the current color with `destinationColor` using [blend] every
+         * `delay` milliseconds until the pixel reaches `destinationColor` or 40
+         * iterations have passed, whichever comes first.
+         *
+         * @param amountOfOverlay How much the pixel should fade in each iteration
+         * @param delay Time in milliseconds between iterations
+         */
+        fun fade(amountOfOverlay: Int = 25, delay: Int = 30) {
+            val myName = Thread.currentThread().name
+            owner = myName
+            var i = 0
+            while (getActualPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
+                if (owner != myName) break
+                isFading = true
+                setPixelColor(pixel, blend(getActualPixelColor(pixel), prolongedColors[pixel], amountOfOverlay))
+                delayBlocking(delay)
+                i++
+            }
+            if (owner == myName) revertPixel(pixel)
+            if (owner == myName) isFading = false
+        }
+    }
+
+    /**
+     * Helper function for fading a pixel from its current color to `destinationColor`.
+     *
+     * @param pixel The pixel to be faded
+     * @param amountOfOverlay How much the pixel should fade in each iteration
+     * @param delay Time in milliseconds between iterations
+     * @see FadePixel
+     */
+    fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
+        Logger.trace("Fading pixel $pixel")
+        fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay)
+        Logger.trace("Fade of pixel $pixel complete")
+    }
 }
