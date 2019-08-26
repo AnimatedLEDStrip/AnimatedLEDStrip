@@ -294,7 +294,7 @@ abstract class LEDStrip(
     /* Get methods */
 
     /**
-     * Get the color of a pixel.
+     * Get the prolonged color of a pixel.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
@@ -309,7 +309,28 @@ abstract class LEDStrip(
         return CCBlack.color
     }
 
+    /**
+     * Get the prolonged color of a pixel.
+     *
+     * @param pixel The pixel to find the color of
+     * @return The color of the pixel or null if an error occurs
+     */
+    fun getPixelColorOrNull(pixel: Int): Long? {
+        try {
+            return prolongedColors[pixel]
+        } catch (e: Exception) {
+            Logger.error("ERROR in getPixelColor: $e")
+        }
+        Logger.warn("Color not retrieved")
+        return null
+    }
 
+    /**
+     * Get the actual color of a pixel.
+     *
+     * @param pixel The pixel to find the color of
+     * @return The color of the pixel
+     */
     fun getActualPixelColor(pixel: Int): Long {
         try {
             return super.getPixelColor(pixel)
@@ -318,6 +339,22 @@ abstract class LEDStrip(
         }
         Logger.warn("Color not retrieved")
         return CCBlack.color
+    }
+
+    /**
+     * Get the actual color of a pixel.
+     *
+     * @param pixel The pixel to find the color of
+     * @return The color of the pixel or null if an error occurs
+     */
+    fun getActualPixelColorOrNull(pixel: Int): Long? {
+        try {
+            return super.getPixelColor(pixel)
+        } catch (e: Exception) {
+            Logger.error("ERROR in getActualPixelColor: $e")
+        }
+        Logger.warn("Color not retrieved")
+        return null
     }
 
     /**
@@ -368,9 +405,11 @@ abstract class LEDStrip(
             while (getActualPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
                 if (owner != myName) break
                 isFading = true
-                setPixelColor(pixel, blend(getActualPixelColor(pixel), prolongedColors[pixel], amountOfOverlay))
-                delayBlocking(delay)
                 i++
+                setPixelColor(pixel,
+                        blend(getActualPixelColorOrNull(pixel) ?: continue,
+                        prolongedColors[pixel], amountOfOverlay))
+                delayBlocking(delay)
             }
             if (owner == myName) revertPixel(pixel)
             if (owner == myName) isFading = false
