@@ -94,6 +94,21 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    fun testMeteor() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.METEOR)
+                .color(0xFF)
+                .direction(Direction.FORWARD))
+
+        testLEDs.run(AnimationData()
+                .animation(Animation.METEOR)
+                .color(0xFF00)
+                .direction(Direction.BACKWARD))
+    }
+
+    @Test
     fun testMultiColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -167,21 +182,6 @@ class AnimatedLEDStripTest {
                 .color(0xFF00)
                 .direction(Direction.BACKWARD)
                 .delay(-1))
-    }
-
-    @Test
-    fun testPixelRunWithTrail() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.run(AnimationData()
-                .animation(Animation.PIXELRUNWITHTRAIL)
-                .color(0xFF)
-                .direction(Direction.FORWARD))
-
-        testLEDs.run(AnimationData()
-                .animation(Animation.PIXELRUNWITHTRAIL)
-                .color(0xFF00)
-                .direction(Direction.BACKWARD))
     }
 
     @Test
