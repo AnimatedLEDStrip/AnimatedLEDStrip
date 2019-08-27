@@ -319,7 +319,7 @@ abstract class LEDStrip(
         try {
             return prolongedColors[pixel]
         } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColor: $e")
+            Logger.error("ERROR in getPixelColorOrNull: $e")
         }
         Logger.warn("Color not retrieved")
         return null
@@ -351,7 +351,7 @@ abstract class LEDStrip(
         try {
             return super.getPixelColor(pixel)
         } catch (e: Exception) {
-            Logger.error("ERROR in getActualPixelColor: $e")
+            Logger.error("ERROR in getActualPixelColorOrNull: $e")
         }
         Logger.warn("Color not retrieved")
         return null
@@ -375,7 +375,7 @@ abstract class LEDStrip(
 
 
     /**
-     * Helper class for fading a pixel from one color to another.
+     * Helper class for fading a pixel from its current color to its prolonged color.
      *
      * @property pixel The pixel associated with this instance
      */
@@ -390,11 +390,13 @@ abstract class LEDStrip(
             private set
 
         /**
-         * Fade a pixel from its current color to `destinationColor`.
+         * Fade a pixel from its current color to its current prolonged color.
          *
-         * Blends the current color with `destinationColor` using [blend] every
-         * `delay` milliseconds until the pixel reaches `destinationColor` or 40
-         * iterations have passed, whichever comes first.
+         * Blends the current color with pixel's current prolonged color using [blend] every
+         * `delay` milliseconds until the pixel reaches its prolonged color or 40
+         * iterations have passed, whichever comes first. The pixel's prolonged color
+         * is reevaluated every iteration, allowing it to fade into a changing background
+         * (i.e. a Smooth Chase animation).
          *
          * @param amountOfOverlay How much the pixel should fade in each iteration
          * @param delay Time in milliseconds between iterations
@@ -422,7 +424,7 @@ abstract class LEDStrip(
     }
 
     /**
-     * Helper function for fading a pixel from its current color to `destinationColor`.
+     * Helper function for fading a pixel.
      *
      * @param pixel The pixel to be faded
      * @param amountOfOverlay How much the pixel should fade in each iteration

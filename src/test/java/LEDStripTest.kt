@@ -23,8 +23,7 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.LEDStrip
