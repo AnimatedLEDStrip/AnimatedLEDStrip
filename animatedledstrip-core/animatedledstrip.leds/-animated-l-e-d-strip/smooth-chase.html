@@ -10,18 +10,16 @@
 <h1>smoothChase</h1>
 <a name="animatedledstrip.leds.AnimatedLEDStrip$smoothChase"></a>
 <code><span class="keyword">private</span> <span class="keyword">val </span><span class="identifier">smoothChase</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>TODO: Update
-Runs a Smooth Chase animation.</p>
-<p>The prepare function is used to create a collection of colors
-for the strip:
+<p>Runs a Smooth Chase animation.</p>
+<p>PreparedColorContainer and setStripColorWithOffset are used to 'move' the
+colors down the strip.</p>
+<p>The prepare function from ColorContainer is used to create a collection
+of colors for the strip:
 <em>The palette colors are spread out along the strip at approximately equalintervals. All pixels between these 'pure' pixels are a blend of thecolors of the two nearest pure pixels. The blend ratio is determined by thelocation of the pixel relative to the nearest pure pixels.</em></p>
-<p>The collection created, <code>palette2</code>, is a map of integers to <code>ColorContainer</code>s
-where each integer is a pixel index. Each pixel is set to <code>palette2[i]</code>,
-where <code>i</code> is the pixel index. Then, if the direction is <a href="../../animatedledstrip.animationutils/-direction/index.html">Direction</a>.<code>FORWARD</code>,
-each pixel is set to <code>palette2[i + 1]</code>, then <code>palette[i + 2]</code>, etc.
+<p>Each pixel is set to its respective color in the PreparedColorContainer.
+Then, if the direction is <a href="../../animatedledstrip.animationutils/-direction/index.html">Direction</a>.<code>FORWARD</code>,
+each pixel is set to <code>pCols[0][i + 1]</code>, then <code>pCols[0][i + 2]</code>, etc.
 to create the illusion that the animation is 'moving'. If the direction is
-<a href="../../animatedledstrip.animationutils/-direction/index.html">Direction</a>.<code>BACKWARD</code>, the same happens but with indices <code>i</code>, <code>i-1</code>, <code>i-2</code>, etc.
-The index is found with <code>(i + a) % s</code>, where <code>i</code> is the pixel index, <code>a</code> is the
-offset for this iteration and <code>s</code> is the number of pixels in the strip.</p>
+<a href="../../animatedledstrip.animationutils/-direction/index.html">Direction</a>.<code>BACKWARD</code>, the same happens but with indices <code>i</code>, <code>i-1</code>, <code>i-2</code>, etc.</p>
 </BODY>
 </HTML>

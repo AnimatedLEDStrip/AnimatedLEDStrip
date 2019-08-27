@@ -74,10 +74,10 @@ or 'Backward'.</p>
 <tbody>
 <tr>
 <td>
-<p><a href="-experimental/index.html">Experimental</a></p>
+<p><a href="-experimental-animation/index.html">ExperimentalAnimation</a></p>
 </td>
 <td>
-<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">Experimental</span></code>
+<code><span class="keyword">annotation</span> <span class="keyword">class </span><span class="identifier">ExperimentalAnimation</span></code>
 <p>An experimental animation is annotated with this tag.</p>
 </td>
 </tr>
@@ -101,174 +101,166 @@ or 'Backward'.</p>
 </tr>
 </tbody>
 </table>
-<h3>Properties</h3>
+<h3>Functions</h3>
 <table>
 <tbody>
 <tr>
 <td>
-<p><a href="-alternate.html">Alternate</a></p>
+<p><a href="add-color.html">addColor</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">Alternate</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Alternate animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">addColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$addColor(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="animation.html">animation</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">animation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$animation(animatedledstrip.animationutils.AnimationData, animatedledstrip.animationutils.Animation)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Sets the <code>animation</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="animation-info-map.html">animationInfoMap</a></p>
+<p><a href="center.html">center</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">animationInfoMap</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="-animation/index.html"><span class="identifier">Animation</span></a><span class="symbol">,</span>&nbsp;<a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a><span class="symbol">&gt;</span></code>
-<p>Map of animations to their <code>AnimationInfo</code> instances.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">center</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$center(animatedledstrip.animationutils.AnimationData, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color.html">color</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color(animatedledstrip.animationutils.AnimationData, kotlin.Any, kotlin.Int)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils$color(animatedledstrip.animationutils.AnimationData, kotlin.Any, kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the color using a ColorContainer, hex String, or Int or Long
+in range(0..16777215)</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-bounce.html">Bounce</a></p>
+<p><a href="color0.html">color0</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">Bounce</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Bounce animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color0</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color0(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color1.html">color1</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color1</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color1(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color2.html">color2</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color2</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color2(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color3.html">color3</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color3</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color3(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="color4.html">color4</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">color4</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$color4(animatedledstrip.animationutils.AnimationData, kotlin.Any)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="continuous.html">continuous</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">continuous</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$continuous(animatedledstrip.animationutils.AnimationData, kotlin.Boolean)/continuous">continuous</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>continuous</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-bounce-to-color.html">BounceToColor</a></p>
+<p><a href="delay.html">delay</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">BounceToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Bounce to Color animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-meteor.html">Meteor</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">Meteor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Meteor animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">delay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$delay(animatedledstrip.animationutils.AnimationData, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code><br/>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">delay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$delay(animatedledstrip.animationutils.AnimationData, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>delay</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-multi-pixel-run.html">MultiPixelRun</a></p>
+<p><a href="delay-mod.html">delayMod</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">MultiPixelRun</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Multi-Pixel Run animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-multi-pixel-run-to-color.html">MultiPixelRunToColor</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">MultiPixelRunToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Multi-Pixel Run to Color animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">delayMod</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$delayMod(animatedledstrip.animationutils.AnimationData, kotlin.Double)/delayMod">delayMod</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>delayMod</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-pixel-marathon.html">PixelMarathon</a></p>
+<p><a href="direction.html">direction</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">PixelMarathon</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Pixel Marathon animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-pixel-run.html">PixelRun</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">PixelRun</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Pixel Run animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">direction</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$direction(animatedledstrip.animationutils.AnimationData, animatedledstrip.animationutils.Direction)/direction">direction</span><span class="symbol">:</span>&nbsp;<a href="-direction/index.html"><span class="identifier">Direction</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>direction</code> parameter.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">direction</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$direction(animatedledstrip.animationutils.AnimationData, kotlin.Char)/direction">direction</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-char/index.html"><span class="identifier">Char</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>direction</code> parameter with a <code>Char</code>.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-ripple.html">Ripple</a></p>
+<p><a href="distance.html">distance</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">Ripple</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code></td>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">distance</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$distance(animatedledstrip.animationutils.AnimationData, kotlin.Int)/pixels">pixels</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="-smooth-chase.html">SmoothChase</a></p>
+<p><a href="end-pixel.html">endPixel</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">SmoothChase</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Smooth Chase animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-smooth-fade.html">SmoothFade</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">SmoothFade</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Smooth Fade animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">endPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$endPixel(animatedledstrip.animationutils.AnimationData, kotlin.Int)/endPixel">endPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>endPixel</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-sparkle.html">Sparkle</a></p>
+<p><a href="id.html">id</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">Sparkle</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Sparkle animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-sparkle-fade.html">SparkleFade</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">SparkleFade</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Sparkle Fade animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">id</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$id(animatedledstrip.animationutils.AnimationData, kotlin.String)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>id</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-sparkle-to-color.html">SparkleToColor</a></p>
+<p><a href="spacing.html">spacing</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">SparkleToColor</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Sparkle to Color animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-splat.html">Splat</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">Splat</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="-stack.html">Stack</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">Stack</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Stack animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">spacing</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$spacing(animatedledstrip.animationutils.AnimationData, kotlin.Int)/spacing">spacing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>spacing</code> parameter.</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-stack-overflow.html">StackOverflow</a></p>
+<p><a href="speed.html">speed</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">StackOverflow</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Stack Overflow animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">speed</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$speed(animatedledstrip.animationutils.AnimationData, animatedledstrip.animationutils.AnimationSpeed)/speed">speed</span><span class="symbol">:</span>&nbsp;<a href="-animation-speed/index.html"><span class="identifier">AnimationSpeed</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the 'speed' parameter</p>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="-wipe.html">Wipe</a></p>
+<p><a href="start-pixel.html">startPixel</a></p>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">Wipe</span><span class="symbol">: </span><a href="-animation-info/index.html"><span class="identifier">AnimationInfo</span></a></code>
-<p>Info about the Wipe animation.</p>
+<code><span class="keyword">fun </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">startPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$startPixel(animatedledstrip.animationutils.AnimationData, kotlin.Int)/startPixel">startPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-animation-data/index.html"><span class="identifier">AnimationData</span></a></code>
+<p>Set the <code>startPixel</code> parameter.</p>
 </td>
 </tr>
 </tbody>
