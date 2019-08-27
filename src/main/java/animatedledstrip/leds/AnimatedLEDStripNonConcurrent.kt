@@ -23,7 +23,11 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.NonRepetitive
+import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.blend
