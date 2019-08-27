@@ -20,6 +20,7 @@ stages:
 jobs:
   include:
     - stage: test
+      install: true
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy
       install: true
