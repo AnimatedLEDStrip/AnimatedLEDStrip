@@ -30,4 +30,4 @@ package animatedledstrip.animationutils
  *
  */
 @MustBeDocumented
-annotation class Radial
+internal annotation class Radial

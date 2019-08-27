@@ -84,6 +84,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             )
         }
 
+        @Suppress("DEPRECATION")
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
