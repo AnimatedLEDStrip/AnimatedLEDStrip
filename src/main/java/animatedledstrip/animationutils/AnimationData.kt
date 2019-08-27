@@ -23,6 +23,7 @@ package animatedledstrip.animationutils
  */
 
 
+import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import java.io.Serializable
@@ -47,6 +48,10 @@ open class AnimationData : Serializable {
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
+    /**
+     * The pixel at the center of a radial animation.
+     * Defaults to the center of the strip.
+     */
     var center = -1
 
     /**
@@ -55,12 +60,13 @@ open class AnimationData : Serializable {
     var continuous = true
 
     /**
-     * Delay time (in milliseconds) used in the animation.
+     * Delay time (in milliseconds) used in the animation. Setting this sets
+     * speed to AnimationSpeed.DEFAULT (and thus delayMod to 1.0).
      */
-    var delay = 0L
+    var delay = -1L
         get() {
             return (when (field) {
-                0L -> {
+                -1L, 0L -> {
                     check(this::animation.isInitialized)
                     when (animationInfoMap[animation]?.delay) {
                         ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
@@ -73,13 +79,13 @@ open class AnimationData : Serializable {
             } * delayMod).toLong()
         }
         set(value) {
-            delayMod = 1.0
-            speed = AnimationSpeed.CUSTOM
+            speed = AnimationSpeed.DEFAULT
             field = value
         }
 
     /**
-     * Multiplier for the `delay` value.
+     * Multiplier for the `delay` value. Setting this will set speed to
+     * AnimationSpeed.CUSTOM if not set to 0.5, 1.0 or 1.5.
      */
     var delayMod = 1.0
         set(value) {
@@ -97,7 +103,10 @@ open class AnimationData : Serializable {
      */
     var direction = Direction.FORWARD
 
-
+    /**
+     * The distance a radial animation will travel from its center.
+     * Defaults to the ends of the strip.
+     */
     var distance = -1
 
     /**
@@ -106,18 +115,19 @@ open class AnimationData : Serializable {
     var endPixel = 0
 
     /**
-     * ID for the animation (used by server and client for stopping continuous
-     * animations).
+     * ID for the animation
+     *
+     * Used by server and client for stopping continuous animations.
      */
     var id = ""
 
     /**
      * Spacing used in the animation.
      */
-    var spacing = 0
+    var spacing = -1
         get() {
             return (when (field) {
-                0 -> {
+                -1, 0 -> {
                     check(this::animation.isInitialized)
                     when (animationInfoMap[animation]?.spacing) {
                         ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
@@ -130,6 +140,9 @@ open class AnimationData : Serializable {
             })
         }
 
+    /**
+     * Simple way to set the speed of an animation. Setting this will modify delayMod accordingly.
+     */
     var speed = AnimationSpeed.DEFAULT
         set(value) {
             field = value
