@@ -141,6 +141,7 @@ abstract class AnimatedLEDStrip(
             )
         }
 
+        @Suppress("EXPERIMENTAL_API_USAGE", "DEPRECATION")
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCE -> bounce(animation)
@@ -493,7 +494,7 @@ abstract class AnimatedLEDStrip(
     }
 
     @Radial
-    @Experimental
+    @ExperimentalAnimation
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
         GlobalScope.launch(animationThreadPool) {
             run(
@@ -633,7 +634,7 @@ abstract class AnimatedLEDStrip(
 
     @NonRepetitive
     @Radial
-    @Experimental
+    @ExperimentalAnimation
     private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
         val forwardThread = GlobalScope.launch(animationThreadPool) {
             run(

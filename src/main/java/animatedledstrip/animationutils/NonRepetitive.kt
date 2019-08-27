@@ -32,4 +32,4 @@ package animatedledstrip.animationutils
  *
  */
 @MustBeDocumented
-annotation class NonRepetitive
+internal annotation class NonRepetitive

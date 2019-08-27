@@ -38,7 +38,7 @@ package animatedledstrip.animationutils
  * @property spacing Spacing for animation
  * @property spacingDefault Default if spacing is missing
  */
-data class AnimationInfo(
+internal data class AnimationInfo(
     val abbr: String = "",
     val numReqColors: Int = 0,
     val numOptColors: Int = 0,

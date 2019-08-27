@@ -101,7 +101,7 @@ class AnimationDataTest {
 
         testAnimation.delay = 15
         assertTrue { testAnimation.delay == 15L }
-        assertTrue { testAnimation.speed == AnimationSpeed.CUSTOM }
+        assertTrue { testAnimation.speed == AnimationSpeed.DEFAULT }
 
         testAnimation.delay(30)
         assertTrue { testAnimation.delay == 30L }
