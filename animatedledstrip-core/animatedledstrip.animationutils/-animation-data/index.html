@@ -8,7 +8,7 @@
 <a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.animationutils</a>&nbsp;/&nbsp;<a href="./index.html">AnimationData</a><br/>
 <br/>
 <h1>AnimationData</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
 <p>Class used when calling animations to specify colors, parameters, etc.
 for the animation.</p>
 <h3>Constructors</h3>
@@ -19,7 +19,7 @@ for the animation.</p>
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">AnimationData</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<code><span class="identifier">AnimationData</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../-animation/index.html"><span class="identifier">Animation</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Animation.COLOR<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/colors">colors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;mutableListOf()<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/center">center</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/continuous">continuous</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/_delay">_delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1L<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/delayMod">delayMod</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1.0<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/direction">direction</span><span class="symbol">:</span>&nbsp;<a href="../-direction/index.html"><span class="identifier">Direction</span></a>&nbsp;<span class="symbol">=</span>&nbsp;Direction.FORWARD<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/distance">distance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/endPixel">endPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;""<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/_spacing">_spacing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$<init>(animatedledstrip.animationutils.Animation, kotlin.collections.MutableList((animatedledstrip.colors.ColorContainerInterface)), kotlin.Int, kotlin.Boolean, kotlin.Long, kotlin.Double, animatedledstrip.animationutils.Direction, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.Int)/startPixel">startPixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">)</span></code>
 <p>Class used when calling animations to specify colors, parameters, etc.
 for the animation.</p>
 </td>
@@ -31,11 +31,29 @@ for the animation.</p>
 <tbody>
 <tr>
 <td>
+<p><a href="_delay.html">_delay</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">_delay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Delay time (in milliseconds) used in the animation</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="_spacing.html">_spacing</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">_spacing</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Spacing used in the animation</p>
+</td>
+</tr>
+<tr>
+<td>
 <p><a href="animation.html">animation</a></p>
 </td>
 <td>
-<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">animation</span><span class="symbol">: </span><a href="../-animation/index.html"><span class="identifier">Animation</span></a></code>
-<p>The animation to be run (REQUIRED).</p>
+<code><span class="keyword">var </span><span class="identifier">animation</span><span class="symbol">: </span><a href="../-animation/index.html"><span class="identifier">Animation</span></a></code>
+<p>The animation to be run</p>
 </td>
 </tr>
 <tr>
@@ -54,7 +72,7 @@ Defaults to the center of the strip.</p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">colors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">&gt;</span></code>
-<p>The list of ColorContainers</p>
+<p>The list of <a href="../../animatedledstrip.colors/-color-container/index.html">ColorContainer</a>s to use</p>
 </td>
 </tr>
 <tr>
@@ -63,7 +81,7 @@ Defaults to the center of the strip.</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">continuous</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
-<p>Specifies if the animation will run endlessly until stopped.</p>
+<p>If the animation will run endlessly until stopped</p>
 </td>
 </tr>
 <tr>
@@ -72,8 +90,7 @@ Defaults to the center of the strip.</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">delay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Delay time (in milliseconds) used in the animation. Setting this sets
-speed to AnimationSpeed.DEFAULT (and thus delayMod to 1.0).</p>
+<p>Delay time (in milliseconds) used in the animation.</p>
 </td>
 </tr>
 <tr>
@@ -82,8 +99,7 @@ speed to AnimationSpeed.DEFAULT (and thus delayMod to 1.0).</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">delayMod</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
-<p>Multiplier for the <code>delay</code> value. Setting this will set speed to
-AnimationSpeed.CUSTOM if not set to 0.5, 1.0 or 1.5.</p>
+<p>Multiplier for <code>delay</code></p>
 </td>
 </tr>
 <tr>
@@ -92,7 +108,7 @@ AnimationSpeed.CUSTOM if not set to 0.5, 1.0 or 1.5.</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">direction</span><span class="symbol">: </span><a href="../-direction/index.html"><span class="identifier">Direction</span></a></code>
-<p>'Direction' the animation should run.</p>
+<p>The direction the animation will run</p>
 </td>
 </tr>
 <tr>
@@ -102,7 +118,7 @@ AnimationSpeed.CUSTOM if not set to 0.5, 1.0 or 1.5.</p>
 <td>
 <code><span class="keyword">var </span><span class="identifier">distance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
 <p>The distance a radial animation will travel from its center.
-Defaults to the ends of the strip.</p>
+Defaults to running until the ends of the strip.</p>
 </td>
 </tr>
 <tr>
@@ -111,7 +127,8 @@ Defaults to the ends of the strip.</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">endPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>Last pixel on the strip that will show the animation (inclusive).</p>
+<p>Last pixel on the strip that will show the
+animation (inclusive)</p>
 </td>
 </tr>
 <tr>
@@ -120,7 +137,8 @@ Defaults to the ends of the strip.</p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">id</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
-<p>ID for the animation</p>
+<p>ID for the animation. Used by server and client for
+stopping continuous animations.</p>
 </td>
 </tr>
 <tr>
@@ -141,48 +159,11 @@ Defaults to the ends of the strip.</p>
 </tr>
 <tr>
 <td>
-<p><a href="speed.html">speed</a></p>
-</td>
-<td>
-<code><span class="keyword">var </span><span class="identifier">speed</span><span class="symbol">: </span><a href="../-animation-speed/index.html"><span class="identifier">AnimationSpeed</span></a></code>
-<p>Simple way to set the speed of an animation. Setting this will modify delayMod accordingly.</p>
-</td>
-</tr>
-<tr>
-<td>
 <p><a href="start-pixel.html">startPixel</a></p>
 </td>
 <td>
 <code><span class="keyword">var </span><span class="identifier">startPixel</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
-<p>First pixel on the strip will show the animation.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3>Functions</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="equals.html">equals</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.AnimationData$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="hash-code.html">hashCode</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="to-string.html">toString</a></p>
-</td>
-<td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
-<p>Create a <code>String</code> out of the values of this instance.</p>
+<p>First pixel on the strip will show the animation</p>
 </td>
 </tr>
 </tbody>
@@ -337,7 +318,7 @@ in range(0..16777215)</p>
 </td>
 <td>
 <code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">speed</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils$speed(animatedledstrip.animationutils.AnimationData, animatedledstrip.animationutils.AnimationSpeed)/speed">speed</span><span class="symbol">:</span>&nbsp;<a href="../-animation-speed/index.html"><span class="identifier">AnimationSpeed</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">AnimationData</span></a></code>
-<p>Set the 'speed' parameter</p>
+<p>Simple way to set the speed of an animation. Setting this will modify delayMod accordingly.</p>
 </td>
 </tr>
 <tr>
