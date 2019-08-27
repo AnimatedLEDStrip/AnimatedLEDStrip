@@ -23,10 +23,7 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.AnimationSpeed
-import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import org.junit.Test
 import java.io.FileInputStream

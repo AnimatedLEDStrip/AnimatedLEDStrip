@@ -23,9 +23,7 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import org.junit.Test
