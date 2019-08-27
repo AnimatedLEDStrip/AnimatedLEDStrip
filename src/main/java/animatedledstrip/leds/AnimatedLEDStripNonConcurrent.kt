@@ -61,7 +61,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
      */
     override fun run(animation: AnimationData) {
         animation.endPixel = when (animation.endPixel) {
-            0 -> numLEDs - 1
+            -1 -> numLEDs - 1
             else -> animation.endPixel
         }
 

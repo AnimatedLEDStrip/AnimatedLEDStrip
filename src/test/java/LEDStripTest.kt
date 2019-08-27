@@ -23,9 +23,13 @@ package animatedledstrip.test
  */
 
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.animation
+import animatedledstrip.animationutils.color
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.LEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
@@ -291,6 +295,14 @@ class LEDStripTest {
         assertTrue { testLEDs[25] == 0xFFFFFFL }
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
+    }
+
+
+    @Test
+    fun testFadePixel() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.fadePixel(50, CCBlue.color.toInt())
     }
 
     @Test

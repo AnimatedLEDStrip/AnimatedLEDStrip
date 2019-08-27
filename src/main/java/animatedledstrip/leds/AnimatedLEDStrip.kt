@@ -33,9 +33,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
-import javax.script.CompiledScript
-import javax.script.ScriptContext
-import javax.script.ScriptEngine
 import kotlin.math.max
 import kotlin.math.min
 
@@ -77,22 +74,9 @@ abstract class AnimatedLEDStrip(
 
 
     /**
-     * Map containing compiled animations.
-     *
-     * NOTE: Must include the animatedledstrip-custom-animations library and
-     * call setupCustomAnimations() first. Use addCustomAnimation(String,
-     * String) to add a custom animation.
+     * Map containing custom animations.
      */
-    val customAnimationMap = mutableMapOf<String, CompiledScript>()
-
-
-    /**
-     * The compiler used when a custom animation is sent.
-     *
-     * NOTE: Must include the animatedledstrip-custom-animations library and
-     * call setupCustomAnimations() first.
-     */
-    lateinit var customAnimationCompiler: ScriptEngine
+    private val customAnimationMap = mutableMapOf<String, (AnimationData) -> Unit>()
 
     init {
         for (i in 0 until numLEDs) {
@@ -108,7 +92,7 @@ abstract class AnimatedLEDStrip(
      */
     override fun run(animation: AnimationData) {
         animation.endPixel = when (animation.endPixel) {
-            0 -> numLEDs - 1
+            -1 -> numLEDs - 1
             else -> animation.endPixel
         }
 
@@ -177,22 +161,8 @@ abstract class AnimatedLEDStrip(
      * @param animation The AnimationData instance to use in the animation
      */
     private fun runCustomAnimation(animation: AnimationData) {
-        try {
-            customAnimationCompiler.getBindings(ScriptContext.ENGINE_SCOPE).apply {
-                put("animation", animation)
-            }
-            customAnimationMap[animation.id]?.eval()
-        } catch (e: UninitializedPropertyAccessException) {
-            Logger.error(
-                """Custom animations not initialized:
-                |   - Include animatedledstrip-custom-animations in your project
-                |   - Call extension function setupCustomAnimations()
-            """.trimMargin()
-            )
-            throw e
-        }
+        customAnimationMap[animation.id]?.invoke(animation)
     }
-
 
     /**
      * Runs an Alternate animation.

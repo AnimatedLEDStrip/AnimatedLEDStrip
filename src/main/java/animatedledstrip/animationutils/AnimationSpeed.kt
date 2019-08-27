@@ -26,6 +26,5 @@ package animatedledstrip.animationutils
 enum class AnimationSpeed {
     SLOW,
     DEFAULT,
-    FAST,
-    CUSTOM
+    FAST
 }
