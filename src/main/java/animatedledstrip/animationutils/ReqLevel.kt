@@ -34,7 +34,7 @@ internal enum class ReqLevel {
     REQUIRED,
     /**
      * Animation parameter may be set by the user, otherwise will be set to a
-     * default as specified (`color#` will default to [animatedledstrip.colors.ccpresets.CCBlack])
+     * default as specified
      */
     OPTIONAL,
     /**
