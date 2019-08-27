@@ -25,11 +25,11 @@ package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.junit.Ignore
 import org.junit.Test
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -366,6 +366,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    @Ignore
     fun testRunCustomAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -376,21 +377,4 @@ class AnimatedLEDStripTest {
             testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
         }
     }
-
-    @Test
-    fun testCustomAnimationCompiler() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.customAnimationCompiler
-        }
-    }
-
-    @Test
-    fun testFadePixel() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.fadePixel(50, CCBlue.color.toInt())
-    }
-
 }

@@ -33,7 +33,6 @@ import java.io.ObjectOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 
@@ -43,9 +42,7 @@ class AnimationDataTest {
     fun testAnimation() {
         val testAnimation = AnimationData()
 
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testAnimation.animation
-        }
+        assertTrue { testAnimation.animation == Animation.COLOR }
 
         testAnimation.animation = Animation.BOUNCE
         assertTrue { testAnimation.animation == Animation.BOUNCE }
@@ -101,7 +98,6 @@ class AnimationDataTest {
 
         testAnimation.delay = 15
         assertTrue { testAnimation.delay == 15L }
-        assertTrue { testAnimation.speed == AnimationSpeed.DEFAULT }
 
         testAnimation.delay(30)
         assertTrue { testAnimation.delay == 30L }
@@ -118,7 +114,6 @@ class AnimationDataTest {
 
         testAnimation.delayMod = 2.5
         assertTrue { testAnimation.delayMod == 2.5 }
-        assertTrue { testAnimation.speed == AnimationSpeed.CUSTOM }
 
         testAnimation.delayMod(0.5)
         assertTrue { testAnimation.delayMod == 0.5 }
@@ -163,7 +158,7 @@ class AnimationDataTest {
     fun testEndPixel() {
         val testAnimation = AnimationData()
 
-        assertTrue { testAnimation.endPixel == 0 }
+        assertTrue { testAnimation.endPixel == -1 }
 
         testAnimation.endPixel = 50
         assertTrue { testAnimation.endPixel == 50 }
@@ -189,14 +184,10 @@ class AnimationDataTest {
     fun testSpeed() {
         val testAnimation = AnimationData()
 
-        assertTrue { testAnimation.speed == AnimationSpeed.DEFAULT }
-
-        testAnimation.speed = AnimationSpeed.FAST
-        assertTrue { testAnimation.speed == AnimationSpeed.FAST }
+        testAnimation.speed(AnimationSpeed.FAST)
         assertTrue { testAnimation.delayMod == 2.0 }
 
         testAnimation.speed(AnimationSpeed.SLOW)
-        assertTrue { testAnimation.speed == AnimationSpeed.SLOW }
         assertTrue { testAnimation.delayMod == 0.5 }
     }
 

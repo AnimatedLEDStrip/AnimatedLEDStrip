@@ -190,12 +190,16 @@ fun AnimationData.spacing(spacing: Int): AnimationData {
 
 
 /**
- * Set the 'speed' parameter
+ * Simple way to set the speed of an animation. Setting this will modify delayMod accordingly.
  *
  * @param speed The speed to set
  */
 fun AnimationData.speed(speed: AnimationSpeed): AnimationData {
-    this.speed = speed
+    delayMod = when (speed) {
+        AnimationSpeed.SLOW -> 0.5
+        AnimationSpeed.DEFAULT -> 1.0
+        AnimationSpeed.FAST -> 2.0
+    }
     return this
 }
 
