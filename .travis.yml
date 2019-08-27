@@ -20,12 +20,9 @@ stages:
 jobs:
   include:
     - stage: test
-      install:
-        -
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy
-      install:
-        -
+      install: true
       test:
         -
       deploy:
@@ -38,8 +35,7 @@ jobs:
           verbose: true
           local_dir: ./dokka
     - stage: deploy
-      install:
-        -
+      install: true
       test:
         -
       deploy:
