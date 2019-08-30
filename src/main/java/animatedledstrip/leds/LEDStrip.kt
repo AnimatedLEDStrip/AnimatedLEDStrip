@@ -77,6 +77,7 @@ abstract class LEDStrip(
      * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.
      */
     var rendering = false
+        private set
 
     private val _fileName =
         fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
@@ -97,6 +98,8 @@ abstract class LEDStrip(
      * overlaps.
      */
     private val outLock = Mutex()
+
+    var rendersBeforeSave = 1000
 
 
     val prolongedColors = mutableListOf<Long>().apply {
@@ -147,17 +150,18 @@ abstract class LEDStrip(
                             pixelColorList.forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
                             buffer!!.append("0,0,0\n")
 
-                            if (renderNum++ >= 1000) {
+                            if (renderNum++ >= rendersBeforeSave) {
                                 GlobalScope.launch(outThread) {
                                     outLock.withLock {
                                         outFile.append(buffer)
                                         buffer.clear()
                                     }
+                                    Logger.debug("Wrote $rendersBeforeSave renders to file")
                                 }
                                 renderNum = 0
                             }
                         }
-                        delay(10)
+                        delay(5)
 //                        Logger.debug("Render")
                     }
                 }
