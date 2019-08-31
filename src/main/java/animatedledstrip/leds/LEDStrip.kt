@@ -51,7 +51,8 @@ import java.util.*
 abstract class LEDStrip(
     numLEDs: Int,
     private val imageDebugging: Boolean = false,
-    fileName: String? = null
+    fileName: String? = null,
+    private val rendersBeforeSave: Int = 1000
 ) : LEDStripNonConcurrent(numLEDs) {
 
     /**
@@ -98,9 +99,6 @@ abstract class LEDStrip(
      * overlaps.
      */
     private val outLock = Mutex()
-
-    var rendersBeforeSave = 1000
-
 
     val prolongedColors = mutableListOf<Long>().apply {
         for (i in 0 until numLEDs) add(0)

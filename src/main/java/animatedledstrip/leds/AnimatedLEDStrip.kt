@@ -44,8 +44,9 @@ import kotlin.math.min
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
     imageDebugging: Boolean = false,
-    fileName: String? = null
-) : LEDStrip(numLEDs, imageDebugging, fileName), AnimatedLEDStripInterface, SectionableLEDStrip {
+    fileName: String? = null,
+    rendersBeforeSave: Int = 1000
+) : LEDStrip(numLEDs, imageDebugging, fileName, rendersBeforeSave), AnimatedLEDStripInterface, SectionableLEDStrip {
 
     /**
      * Map containing Mutex instances for locking access to each led while it is
