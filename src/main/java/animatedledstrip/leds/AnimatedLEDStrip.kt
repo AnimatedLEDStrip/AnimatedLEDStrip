@@ -364,80 +364,30 @@ abstract class AnimatedLEDStrip(
     }
 
 
-    // TODO: test
     private val pixelMarathon: (AnimationData) -> Unit = { animation: AnimationData ->
+        val baseAnimation = AnimationData().animation(Animation.PIXELRUN)
+            .direction(animation.direction).delay(animation.delay)
 
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[4])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[4]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[3])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[3]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[1])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[1]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[2])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[2]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[0])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[0]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[1])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[1]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[4])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[4]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[2])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[2]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[3])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[3]))
         delayBlocking((random() * 500).toInt())
-        GlobalScope.launch(animationThreadPool) {
-            run(
-                AnimationData().animation(Animation.PIXELRUN).color(animation.pCols[0])
-                    .direction(animation.direction).delay(animation.delay)
-            )
-        }
+        runParallel(baseAnimation.copy().color(animation.pCols[0]))
         delayBlocking((random() * 500).toInt())
-
     }
 
 
