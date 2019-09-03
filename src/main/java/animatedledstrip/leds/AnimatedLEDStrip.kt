@@ -586,9 +586,7 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.startPixel until q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
-                            setPixelColor(i, animation.pCols[0])
-                            delay(animation.delay)
-                            revertPixel(i)
+                            setAndRevertPixelAfterDelay(i, animation.pCols[0], animation.delay)
                         }
                     }
                 }
@@ -598,9 +596,7 @@ abstract class AnimatedLEDStrip(
                 for (i in animation.endPixel downTo q) {
                     runBlocking {
                         locks[i]!!.tryWithLock {
-                            setPixelColor(i, animation.pCols[0])
-                            delay(animation.delay)
-                            revertPixel(i)
+                            setAndRevertPixelAfterDelay(i, animation.pCols[0], animation.delay)
                         }
                     }
                 }
