@@ -61,8 +61,8 @@ abstract class AnimatedLEDStrip(
      * [sparkleThreadPool]).
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
-    val animationThreadPool =
-        newFixedThreadPoolContext(2 * numLEDs, "Animation Pool")
+    val parallelAnimationThreadPool =
+        newFixedThreadPoolContext(2 * numLEDs, "Parallel Animation Pool")
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
@@ -154,6 +154,12 @@ abstract class AnimatedLEDStrip(
         }
     }
 
+    fun runParallel(animation: AnimationData) {
+        GlobalScope.launch(parallelAnimationThreadPool) {
+            run(animation)
+        }
+    }
+
 
     /**
      * Run a custom animation. Identify the animation using the ID parameter in
@@ -197,7 +203,7 @@ abstract class AnimatedLEDStrip(
                 }
             }
             setPixelColor(animation.endPixel - i, animation.pCols[0])
-            GlobalScope.launch(animationThreadPool) {
+            GlobalScope.launch(parallelAnimationThreadPool) {
                 val p = animation.endPixel - i
                 fadePixel(p, amountOfOverlay = 25, delay = 50)
             }
@@ -211,13 +217,13 @@ abstract class AnimatedLEDStrip(
                 }
             }
             setPixelColor(i, animation.pCols[0])
-            GlobalScope.launch(animationThreadPool) {
+            GlobalScope.launch(parallelAnimationThreadPool) {
                 fadePixel(i, 25, 50)
             }
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
             setPixelColor((animation.endPixel - animation.startPixel) / 2 + animation.startPixel, animation.pCols[0])
-            GlobalScope.launch(animationThreadPool) {
+            GlobalScope.launch(parallelAnimationThreadPool) {
                 val p = (animation.endPixel - animation.startPixel) / 2 + animation.startPixel
                 fadePixel(p, 25, 50)
             }
@@ -268,14 +274,14 @@ abstract class AnimatedLEDStrip(
         when (animation.direction) {
             Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
                 setPixelColor(q, animation.pCols[0])
-                GlobalScope.launch(animationThreadPool) {
+                GlobalScope.launch(parallelAnimationThreadPool) {
                     fadePixel(q, 60, 25)
                 }
                 delayBlocking(animation.delay)
             }
             Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
                 setPixelColor(q, animation.pCols[0])
-                GlobalScope.launch(animationThreadPool) {
+                GlobalScope.launch(parallelAnimationThreadPool) {
                     fadePixel(q, 60, 25)
                 }
                 delayBlocking(animation.delay)
@@ -467,14 +473,14 @@ abstract class AnimatedLEDStrip(
     @Radial
     @ExperimentalAnimation
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
-        GlobalScope.launch(animationThreadPool) {
+        GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.FORWARD).startPixel(animation.center)
                     .endPixel(min(animation.center + animation.distance, animation.endPixel))
             )
         }
-        GlobalScope.launch(animationThreadPool) {
+        GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.BACKWARD).endPixel(animation.center)
@@ -607,14 +613,14 @@ abstract class AnimatedLEDStrip(
     @Radial
     @ExperimentalAnimation
     private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
-        val forwardThread = GlobalScope.launch(animationThreadPool) {
+        val forwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.FORWARD).startPixel(animation.center)
                     .endPixel(min(animation.center + animation.distance, animation.endPixel))
             )
         }
-        val backwardThread = GlobalScope.launch(animationThreadPool) {
+        val backwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
                     .direction(Direction.BACKWARD).endPixel(animation.center)
@@ -663,14 +669,14 @@ abstract class AnimatedLEDStrip(
     // TODO: documentation
     @NonRepetitive
     private val stackOverflow: (AnimationData) -> Unit = { animation: AnimationData ->
-        val forwardThread = GlobalScope.launch(animationThreadPool) {
+        val forwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.STACK).color(animation.pCols[0]).direction(Direction.FORWARD).delay(
                     2
                 )
             )
         }
-        val backwardThread = GlobalScope.launch(animationThreadPool) {
+        val backwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
             run(
                 AnimationData().animation(Animation.STACK).color(animation.pCols[1]).direction(Direction.BACKWARD).delay(
                     2
@@ -736,7 +742,7 @@ abstract class AnimatedLEDStrip(
 //            endptC = (numLEDs * 2 / 3) - 1
 //        }
 //
-//        // TODO: Change to use threads from animationThreadPool
+//        // TODO: Change to use threads from parallelAnimationThreadPool
 //        GlobalScope.launch(newSingleThreadContext("Thread ${Thread.currentThread().name}-1")) {
 //            setSectionColor(endptA, endptB, color0)
 //            delay((delay * delayMod).toInt())
