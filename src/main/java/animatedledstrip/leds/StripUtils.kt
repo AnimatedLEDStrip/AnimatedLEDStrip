@@ -27,6 +27,10 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.utils.delayBlocking
 
 
+/**
+ * Helper extension method that sets a pixel, waits a specified time in
+ * milliseconds, then reverts the pixel.
+ */
 fun LEDStrip.setAndRevertPixelAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     setPixelColor(pixel, color)
     delayBlocking(delay)
