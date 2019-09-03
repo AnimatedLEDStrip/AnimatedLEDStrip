@@ -240,17 +240,12 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val bounceToColor: (AnimationData) -> Unit = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
-            for (j in (animation.startPixel + i)..(animation.endPixel - i)) {
-                setPixelColor(j, animation.pCols[0])
-                delayBlocking(animation.delay)
-                revertPixel(j)
-            }
+            for (j in (animation.startPixel + i)..(animation.endPixel - i))
+                setAndRevertPixelAfterDelay(j, animation.pCols[0], animation.delay)
             setProlongedPixelColor(animation.endPixel - i, animation.pCols[0])
-            for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
-                setPixelColor(j, animation.pCols[0])
-                delayBlocking(animation.delay)
-                revertPixel(j)
-            }
+
+            for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel))
+                setAndRevertPixelAfterDelay(j, animation.pCols[0], animation.delay)
             setProlongedPixelColor(i, animation.pCols[0])
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
