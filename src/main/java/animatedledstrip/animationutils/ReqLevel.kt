@@ -27,7 +27,7 @@ package animatedledstrip.animationutils
  * Helper enum for specifying the requirement level of an animation parameter.
  *
  */
-internal enum class ReqLevel {
+enum class ReqLevel {
     /**
      * Animation parameter must be set by the user
      */

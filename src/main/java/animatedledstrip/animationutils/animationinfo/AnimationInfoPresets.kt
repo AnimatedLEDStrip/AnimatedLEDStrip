@@ -33,7 +33,7 @@ import animatedledstrip.leds.AnimatedLEDStrip
  *
  * @see AnimatedLEDStrip.alternate
  */
-internal val Alternate = AnimationInfo(
+val Alternate = AnimationInfo(
     abbr = "ALT",
     numReqColors = 2,
     delay = ReqLevel.OPTIONAL,
@@ -47,7 +47,7 @@ internal val Alternate = AnimationInfo(
  *
  * @see AnimatedLEDStrip.bounce
  */
-internal val Bounce = AnimationInfo(
+val Bounce = AnimationInfo(
     abbr = "BNC",
     numReqColors = 1,
     numOptColors = 1,
@@ -62,7 +62,7 @@ internal val Bounce = AnimationInfo(
  *
  * @see AnimatedLEDStrip.bounceToColor
  */
-internal val BounceToColor = AnimationInfo(
+val BounceToColor = AnimationInfo(
     abbr = "BTC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -75,7 +75,7 @@ internal val BounceToColor = AnimationInfo(
  *
  * @see AnimatedLEDStrip.meteor
  */
-internal val Meteor = AnimationInfo(
+val Meteor = AnimationInfo(
     abbr = "PXRT",
     numReqColors = 1,
     numOptColors = 1,
@@ -91,7 +91,7 @@ internal val Meteor = AnimationInfo(
  *
  * @see AnimatedLEDStrip.multiPixelRun
  */
-internal val MultiPixelRun = AnimationInfo(
+val MultiPixelRun = AnimationInfo(
     abbr = "MPR",
     numReqColors = 1,
     numOptColors = 1,
@@ -109,7 +109,7 @@ internal val MultiPixelRun = AnimationInfo(
  *
  * @see AnimatedLEDStrip.multiPixelRunToColor
  */
-internal val MultiPixelRunToColor = AnimationInfo(
+val MultiPixelRunToColor = AnimationInfo(
     abbr = "MTC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -125,7 +125,7 @@ internal val MultiPixelRunToColor = AnimationInfo(
  *
  *
  */
-internal val PixelMarathon = AnimationInfo(
+val PixelMarathon = AnimationInfo(
     abbr = "PXM",
     numReqColors = 5,
     delay = ReqLevel.OPTIONAL,
@@ -139,7 +139,7 @@ internal val PixelMarathon = AnimationInfo(
  *
  * @see AnimatedLEDStrip.pixelRun
  */
-internal val PixelRun = AnimationInfo(
+val PixelRun = AnimationInfo(
     abbr = "PXR",
     numReqColors = 1,
     numOptColors = 1,
@@ -150,7 +150,7 @@ internal val PixelRun = AnimationInfo(
 )
 
 
-internal val Ripple = AnimationInfo(
+val Ripple = AnimationInfo(
     abbr = "RPL",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -163,7 +163,7 @@ internal val Ripple = AnimationInfo(
  *
  * @see AnimatedLEDStrip.smoothChase
  */
-internal val SmoothChase = AnimationInfo(
+val SmoothChase = AnimationInfo(
     abbr = "SCH",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -178,7 +178,7 @@ internal val SmoothChase = AnimationInfo(
  *
  * @see AnimatedLEDStrip.smoothFade
  */
-internal val SmoothFade = AnimationInfo(
+val SmoothFade = AnimationInfo(
     abbr = "SMF",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -191,7 +191,7 @@ internal val SmoothFade = AnimationInfo(
  *
  * @see AnimatedLEDStrip.sparkle
  */
-internal val Sparkle = AnimationInfo(
+val Sparkle = AnimationInfo(
     abbr = "SPK",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -205,7 +205,7 @@ internal val Sparkle = AnimationInfo(
  *
  * @see AnimatedLEDStrip.sparkleFade
  */
-internal val SparkleFade = AnimationInfo(
+val SparkleFade = AnimationInfo(
     abbr = "SPF",
     numReqColors = 1,
     numOptColors = 1,
@@ -220,7 +220,7 @@ internal val SparkleFade = AnimationInfo(
  *
  * @see AnimatedLEDStrip.sparkleToColor
  */
-internal val SparkleToColor = AnimationInfo(
+val SparkleToColor = AnimationInfo(
     abbr = "STC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -228,7 +228,7 @@ internal val SparkleToColor = AnimationInfo(
 )
 
 
-internal val Splat = AnimationInfo(
+val Splat = AnimationInfo(
     abbr = "SPT",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -241,7 +241,7 @@ internal val Splat = AnimationInfo(
  *
  * @see AnimatedLEDStrip.stack
  */
-internal val Stack = AnimationInfo(
+val Stack = AnimationInfo(
     abbr = "STK",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -255,7 +255,7 @@ internal val Stack = AnimationInfo(
  *
  *
  */
-internal val StackOverflow = AnimationInfo(
+val StackOverflow = AnimationInfo(
     abbr = "STO",
     numReqColors = 2,
     repetitive = true
@@ -267,7 +267,7 @@ internal val StackOverflow = AnimationInfo(
  *
  * @see AnimatedLEDStrip.wipe
  */
-internal val Wipe = AnimationInfo(
+val Wipe = AnimationInfo(
     abbr = "WIP",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -280,7 +280,7 @@ internal val Wipe = AnimationInfo(
  * Map of animations to their `AnimationInfo` instances.
  */
 @Suppress("EXPERIMENTAL_API_USAGE")
-internal val animationInfoMap = mapOf(
+val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,
     Animation.BOUNCE to Bounce,
     Animation.BOUNCETOCOLOR to BounceToColor,
