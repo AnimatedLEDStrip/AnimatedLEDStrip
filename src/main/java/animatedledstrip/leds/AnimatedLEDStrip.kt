@@ -418,20 +418,21 @@ abstract class AnimatedLEDStrip(
     @Radial
     @ExperimentalAnimation
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
-        GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
-                    .direction(Direction.FORWARD).startPixel(animation.center)
-                    .endPixel(min(animation.center + animation.distance, animation.endPixel))
+        val baseAnimation = AnimationData().animation(Animation.METEOR)
+            .color(animation.pCols[0]).delay(animation.delay).direction(Direction.FORWARD)
+
+        runParallel(
+            baseAnimation.copy(
+                startPixel = animation.center,
+                endPixel = min(animation.center + animation.distance, animation.endPixel)
             )
-        }
-        GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.METEOR).color(animation.pCols[0]).delay(animation.delay)
-                    .direction(Direction.BACKWARD).endPixel(animation.center)
-                    .startPixel(max(animation.center - animation.distance, animation.startPixel))
+        )
+        runParallel(
+            baseAnimation.copy(
+                startPixel = max(animation.center - animation.distance, animation.startPixel),
+                endPixel = animation.center
             )
-        }
+        )
         delayBlocking(animation.delay * 20)
     }
 
