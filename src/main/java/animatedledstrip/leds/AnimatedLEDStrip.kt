@@ -498,9 +498,7 @@ abstract class AnimatedLEDStrip(
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
                 delay((random() * 5000).toLong() % 4950)
-                setPixelColor(n, animation.pCols[0])
-                delay(animation.delay)
-                revertPixel(n)
+                setAndRevertPixelAfterDelay(n, animation.pCols[0], animation.delay)
             }
         }
         runBlocking {
