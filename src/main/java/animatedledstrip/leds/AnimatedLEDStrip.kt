@@ -85,6 +85,8 @@ abstract class AnimatedLEDStrip(
         }
     }
 
+    override fun run(animation: AnimationData) = run(animation, GlobalScope)
+
     /**
      * Run an animation.
      *
@@ -241,11 +243,11 @@ abstract class AnimatedLEDStrip(
     private val bounceToColor: (AnimationData) -> Unit = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (animation.startPixel + i)..(animation.endPixel - i))
-                setAndRevertPixelAfterDelay(j, animation.pCols[0], animation.delay)
+                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
             setProlongedPixelColor(animation.endPixel - i, animation.pCols[0])
 
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel))
-                setAndRevertPixelAfterDelay(j, animation.pCols[0], animation.delay)
+                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
             setProlongedPixelColor(i, animation.pCols[0])
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
@@ -267,21 +269,36 @@ abstract class AnimatedLEDStrip(
      */
     private val meteor: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
-            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel) {
-                setPixelColor(q, animation.pCols[0])
+            Direction.FORWARD -> iterateOverPixels(animation) {
+                setPixelColor(it, animation.pCols[0])
                 GlobalScope.launch(parallelAnimationThreadPool) {
-                    fadePixel(q, 60, 25)
+                    fadePixel(it, 60, 25)
                 }
                 delayBlocking(animation.delay)
             }
-            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel) {
-                setPixelColor(q, animation.pCols[0])
+            Direction.BACKWARD -> iterateOverPixelsReverse(animation) {
+                setPixelColor(it, animation.pCols[0])
                 GlobalScope.launch(parallelAnimationThreadPool) {
-                    fadePixel(q, 60, 25)
+                    fadePixel(it, 60, 25)
                 }
                 delayBlocking(animation.delay)
             }
+
+//                for (q in animation.endPixel downTo animation.startPixel) {
+//                setPixelColor(q, animation.pCols[0])
+//                GlobalScope.launch(parallelAnimationThreadPool) {
+//                    fadePixel(q, 60, 25)
+//                }
+//                delayBlocking(animation.delay)
+//            }
         }
+        //                for (q in animation.startPixel..animation.endPixel) {
+        //                    setPixelColor(q, animation.pCols[0])
+        //                    GlobalScope.launch(parallelAnimationThreadPool) {
+        //                        fadePixel(q, 60, 25)
+        //                    }
+        //                    delayBlocking(animation.delay)
+        //                }
     }
 
 
@@ -394,49 +411,38 @@ abstract class AnimatedLEDStrip(
      */
     private val pixelRun: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
-            Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs) {
-                runBlocking {
-                    locks[q]!!.tryWithLock {
-                        setPixelColor(q, animation.pCols[0])
-                        delay(animation.delay)
-                        revertPixel(q)
-                    }
-                }
-            }
-            Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0) {
-                runBlocking {
-                    locks[q]!!.tryWithLock {
-                        setPixelColor(q, animation.pCols[0])
-                        delay(animation.delay)
-                        revertPixel(q)
-                    }
-                }
-            }
+            Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs)
+                setPixelAndRevertAfterDelay(q, animation.pCols[0], animation.delay)
+            Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0)
+                setPixelAndRevertAfterDelay(q, animation.pCols[0], animation.delay)
         }
     }
 
     @Radial
     @ExperimentalAnimation
-    private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
-        val baseAnimation = AnimationData().animation(Animation.METEOR)
-            .color(animation.pCols[0]).delay(animation.delay)
+    private val ripple: (AnimationData, CoroutineScope) -> Unit =
+        { animation: AnimationData, scope: CoroutineScope ->
+            val baseAnimation = AnimationData().animation(Animation.METEOR)
+                .color(animation.pCols[0]).delay(animation.delay)
 
-        runParallel(
-            baseAnimation.copy(
-                startPixel = animation.center,
-                endPixel = min(animation.center + animation.distance, animation.endPixel),
-                direction = Direction.FORWARD
+            runParallel(
+                baseAnimation.copy(
+                    startPixel = animation.center,
+                    endPixel = min(animation.center + animation.distance, animation.endPixel),
+                    direction = Direction.FORWARD
+                ),
+                scope = scope
             )
-        )
-        runParallel(
-            baseAnimation.copy(
-                startPixel = max(animation.center - animation.distance, animation.startPixel),
-                endPixel = animation.center,
-                direction = Direction.BACKWARD
+            runParallel(
+                baseAnimation.copy(
+                    startPixel = max(animation.center - animation.distance, animation.startPixel),
+                    endPixel = animation.center,
+                    direction = Direction.BACKWARD
+                ),
+                scope = scope
             )
-        )
-        delayBlocking(animation.delay * 20)
-    }
+            delayBlocking(animation.delay * 20)
+        }
 
 
     /**
@@ -558,25 +564,25 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     @Radial
     @ExperimentalAnimation
-    private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
-        val forwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
-                    .direction(Direction.FORWARD).startPixel(animation.center)
-                    .endPixel(min(animation.center + animation.distance, animation.endPixel))
+    private val splat: (AnimationData, CoroutineScope) -> Unit =
+        { animation: AnimationData, scope: CoroutineScope ->
+            val baseAnimation = AnimationData().animation(Animation.WIPE).color(animation.pCols[0])
+                .delay(animation.delay)
+
+            runParallelAndJoin(
+                baseAnimation.copy(
+                    startPixel = animation.center,
+                    endPixel = min(animation.center + animation.distance, animation.endPixel),
+                    direction = Direction.FORWARD
+                ),
+                baseAnimation.copy(
+                    startPixel = max(animation.center - animation.distance, animation.startPixel),
+                    endPixel = animation.center,
+                    direction = Direction.BACKWARD
+                ),
+                scope = scope
             )
         }
-        val backwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.WIPE).color(animation.pCols[0]).delay(animation.delay)
-                    .direction(Direction.BACKWARD).endPixel(animation.center)
-                    .startPixel(max(animation.center - animation.distance, animation.startPixel))
-            )
-        }
-        runBlocking {
-            joinAll(forwardThread, backwardThread)
-        }
-    }
 
     /**
      * TODO: documentation
@@ -585,23 +591,13 @@ abstract class AnimatedLEDStrip(
     private val stack: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
             Direction.FORWARD -> for (q in animation.endPixel downTo animation.startPixel) {
-                for (i in animation.startPixel until q) {
-                    runBlocking {
-                        locks[i]!!.tryWithLock {
-                            setAndRevertPixelAfterDelay(i, animation.pCols[0], animation.delay)
-                        }
-                    }
-                }
+                for (i in animation.startPixel until q)
+                    setPixelAndRevertAfterDelay(i, animation.pCols[0], animation.delay)
                 setProlongedPixelColor(q, animation.pCols[0])
             }
             Direction.BACKWARD -> for (q in animation.startPixel..animation.endPixel) {
-                for (i in animation.endPixel downTo q) {
-                    runBlocking {
-                        locks[i]!!.tryWithLock {
-                            setAndRevertPixelAfterDelay(i, animation.pCols[0], animation.delay)
-                        }
-                    }
-                }
+                for (i in animation.endPixel downTo q)
+                    setPixelAndRevertAfterDelay(i, animation.pCols[0], animation.delay)
                 setProlongedPixelColor(q, animation.pCols[0])
             }
         }
@@ -610,25 +606,19 @@ abstract class AnimatedLEDStrip(
 
     // TODO: documentation
     @NonRepetitive
-    private val stackOverflow: (AnimationData) -> Unit = { animation: AnimationData ->
-        val forwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.STACK).color(animation.pCols[0]).direction(Direction.FORWARD).delay(
-                    2
-                )
+    private val stackOverflow: (AnimationData, CoroutineScope) -> Unit =
+        { animation: AnimationData, scope: CoroutineScope ->
+            val baseAnimation = AnimationData().animation(Animation.STACK).delay(animation.delay)
+            runParallelAndJoin(
+                baseAnimation.copy(
+                    direction = Direction.FORWARD
+                ).color(animation.pCols[0]),
+                baseAnimation.copy(
+                    direction = Direction.BACKWARD
+                ).color(animation.pCols[1]),
+                scope = scope
             )
         }
-        val backwardThread = GlobalScope.launch(parallelAnimationThreadPool) {
-            run(
-                AnimationData().animation(Animation.STACK).color(animation.pCols[1]).direction(Direction.BACKWARD).delay(
-                    2
-                )
-            )
-        }
-        runBlocking {
-            joinAll(forwardThread, backwardThread)
-        }
-    }
 
 
     /**
