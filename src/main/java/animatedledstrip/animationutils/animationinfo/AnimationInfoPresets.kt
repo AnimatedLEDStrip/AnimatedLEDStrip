@@ -258,6 +258,8 @@ val Stack = AnimationInfo(
 val StackOverflow = AnimationInfo(
     abbr = "STO",
     numReqColors = 2,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 2,
     repetitive = true
 )
 

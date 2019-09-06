@@ -23,21 +23,50 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
+
+fun iterateOverPixels(
+    animation: AnimationData,
+    operation: (Int) -> Unit
+) {
+    for (q in animation.startPixel..animation.endPixel) operation.invoke(q)
+}
+
+fun iterateOverPixelsReverse(
+    animation: AnimationData,
+    operation: (Int) -> Unit
+) {
+    for (q in animation.endPixel downTo animation.startPixel) operation.invoke(q)
+}
 
 /**
  * Helper extension method that sets a pixel, waits a specified time in
  * milliseconds, then reverts the pixel.
  */
-fun AnimatedLEDStrip.setAndRevertPixelAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
         setPixelColor(pixel, color)
         delayBlocking(delay)
         revertPixel(pixel)
+    }
+}
+
+fun AnimatedLEDStrip.runParallelAndJoin(
+    vararg animations: AnimationData,
+    pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
+    scope: CoroutineScope = GlobalScope
+) {
+    val jobs = mutableListOf<Job>()
+    animations.forEach {
+        jobs += runParallel(it, pool, scope)
+    }
+    runBlocking {
+        jobs.joinAll()
     }
 }
 
