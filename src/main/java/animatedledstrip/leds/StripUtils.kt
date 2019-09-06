@@ -27,7 +27,10 @@ import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExecutorCoroutineDispatcher
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.runBlocking
 
 
 fun iterateOverPixels(
@@ -58,12 +61,11 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
 
 fun AnimatedLEDStrip.runParallelAndJoin(
     vararg animations: AnimationData,
-    pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
-    scope: CoroutineScope = GlobalScope
+    pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
 ) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
-        jobs += runParallel(it, pool, scope)
+        jobs += runParallel(it, pool)
     }
     runBlocking {
         jobs.joinAll()
