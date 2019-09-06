@@ -33,14 +33,14 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.runBlocking
 
 
-fun iterateOverPixels(
+inline fun iterateOverPixels(
     animation: AnimationData,
     operation: (Int) -> Unit
 ) {
     for (q in animation.startPixel..animation.endPixel) operation.invoke(q)
 }
 
-fun iterateOverPixelsReverse(
+inline fun iterateOverPixelsReverse(
     animation: AnimationData,
     operation: (Int) -> Unit
 ) {

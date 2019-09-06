@@ -285,22 +285,7 @@ abstract class AnimatedLEDStrip(
                 }
                 delayBlocking(animation.delay)
             }
-
-//                for (q in animation.endPixel downTo animation.startPixel) {
-//                setPixelColor(q, animation.pCols[0])
-//                GlobalScope.launch(parallelAnimationThreadPool) {
-//                    fadePixel(q, 60, 25)
-//                }
-//                delayBlocking(animation.delay)
-//            }
         }
-        //                for (q in animation.startPixel..animation.endPixel) {
-        //                    setPixelColor(q, animation.pCols[0])
-        //                    GlobalScope.launch(parallelAnimationThreadPool) {
-        //                        fadePixel(q, 60, 25)
-        //                    }
-        //                    delayBlocking(animation.delay)
-        //                }
     }
 
 
