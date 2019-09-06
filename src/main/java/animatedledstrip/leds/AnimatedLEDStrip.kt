@@ -85,7 +85,6 @@ abstract class AnimatedLEDStrip(
         }
     }
 
-    override fun run(animation: AnimationData) = run(animation, GlobalScope)
 
     /**
      * Run an animation.
@@ -128,6 +127,7 @@ abstract class AnimatedLEDStrip(
             )
         }
 
+        Logger.debug("pCols: ${animation.pCols}")
         @Suppress("EXPERIMENTAL_API_USAGE", "DEPRECATION")
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
@@ -156,12 +156,14 @@ abstract class AnimatedLEDStrip(
         }
     }
 
-    private fun runParallel(animation: AnimationData) {
-        GlobalScope.launch(parallelAnimationThreadPool) {
+    fun runParallel(
+        animation: AnimationData,
+        pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
+    ): Job {
+        return GlobalScope.launch(pool) {
             run(animation)
         }
     }
-
 
     /**
      * Run a custom animation. Identify the animation using the ID parameter in
@@ -420,29 +422,26 @@ abstract class AnimatedLEDStrip(
 
     @Radial
     @ExperimentalAnimation
-    private val ripple: (AnimationData, CoroutineScope) -> Unit =
-        { animation: AnimationData, scope: CoroutineScope ->
-            val baseAnimation = AnimationData().animation(Animation.METEOR)
-                .color(animation.pCols[0]).delay(animation.delay)
+    private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
+        val baseAnimation = AnimationData().animation(Animation.METEOR)
+            .color(animation.pCols[0]).delay(animation.delay)
 
-            runParallel(
-                baseAnimation.copy(
-                    startPixel = animation.center,
-                    endPixel = min(animation.center + animation.distance, animation.endPixel),
-                    direction = Direction.FORWARD
-                ),
-                scope = scope
+        runParallel(
+            baseAnimation.copy(
+                startPixel = animation.center,
+                endPixel = min(animation.center + animation.distance, animation.endPixel),
+                direction = Direction.FORWARD
             )
-            runParallel(
-                baseAnimation.copy(
-                    startPixel = max(animation.center - animation.distance, animation.startPixel),
-                    endPixel = animation.center,
-                    direction = Direction.BACKWARD
-                ),
-                scope = scope
+        )
+        runParallel(
+            baseAnimation.copy(
+                startPixel = max(animation.center - animation.distance, animation.startPixel),
+                endPixel = animation.center,
+                direction = Direction.BACKWARD
             )
-            delayBlocking(animation.delay * 20)
-        }
+        )
+        delayBlocking(animation.delay * 20)
+    }
 
 
     /**
@@ -506,7 +505,7 @@ abstract class AnimatedLEDStrip(
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
             GlobalScope.async(sparkleThreadPool) {
                 delay((random() * 5000).toLong() % 4950)
-                setAndRevertPixelAfterDelay(n, animation.pCols[0], animation.delay)
+                setPixelAndRevertAfterDelay(n, animation.pCols[0], animation.delay)
             }
         }
         runBlocking {
@@ -564,25 +563,23 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     @Radial
     @ExperimentalAnimation
-    private val splat: (AnimationData, CoroutineScope) -> Unit =
-        { animation: AnimationData, scope: CoroutineScope ->
-            val baseAnimation = AnimationData().animation(Animation.WIPE).color(animation.pCols[0])
-                .delay(animation.delay)
+    private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
+        val baseAnimation = AnimationData().animation(Animation.WIPE).color(animation.pCols[0])
+            .delay(animation.delay)
 
-            runParallelAndJoin(
-                baseAnimation.copy(
-                    startPixel = animation.center,
-                    endPixel = min(animation.center + animation.distance, animation.endPixel),
-                    direction = Direction.FORWARD
-                ),
-                baseAnimation.copy(
-                    startPixel = max(animation.center - animation.distance, animation.startPixel),
-                    endPixel = animation.center,
-                    direction = Direction.BACKWARD
-                ),
-                scope = scope
+        runParallelAndJoin(
+            baseAnimation.copy(
+                startPixel = animation.center,
+                endPixel = min(animation.center + animation.distance, animation.endPixel),
+                direction = Direction.FORWARD
+            ),
+            baseAnimation.copy(
+                startPixel = max(animation.center - animation.distance, animation.startPixel),
+                endPixel = animation.center,
+                direction = Direction.BACKWARD
             )
-        }
+        )
+    }
 
     /**
      * TODO: documentation
@@ -606,19 +603,17 @@ abstract class AnimatedLEDStrip(
 
     // TODO: documentation
     @NonRepetitive
-    private val stackOverflow: (AnimationData, CoroutineScope) -> Unit =
-        { animation: AnimationData, scope: CoroutineScope ->
-            val baseAnimation = AnimationData().animation(Animation.STACK).delay(animation.delay)
-            runParallelAndJoin(
-                baseAnimation.copy(
-                    direction = Direction.FORWARD
-                ).color(animation.pCols[0]),
-                baseAnimation.copy(
-                    direction = Direction.BACKWARD
-                ).color(animation.pCols[1]),
-                scope = scope
-            )
-        }
+    private val stackOverflow: (AnimationData) -> Unit = { animation: AnimationData ->
+        val baseAnimation = AnimationData().animation(Animation.STACK).delay(animation.delay)
+        runParallelAndJoin(
+            baseAnimation.copy(
+                direction = Direction.FORWARD
+            ).color(animation.pCols[0]),
+            baseAnimation.copy(
+                direction = Direction.BACKWARD
+            ).color(animation.pCols[1])
+        )
+    }
 
 
     /**
