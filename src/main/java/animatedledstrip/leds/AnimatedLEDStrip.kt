@@ -154,7 +154,7 @@ abstract class AnimatedLEDStrip(
         }
     }
 
-    fun runParallel(animation: AnimationData) {
+    private fun runParallel(animation: AnimationData) {
         GlobalScope.launch(parallelAnimationThreadPool) {
             run(animation)
         }
@@ -419,18 +419,20 @@ abstract class AnimatedLEDStrip(
     @ExperimentalAnimation
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData().animation(Animation.METEOR)
-            .color(animation.pCols[0]).delay(animation.delay).direction(Direction.FORWARD)
+            .color(animation.pCols[0]).delay(animation.delay)
 
         runParallel(
             baseAnimation.copy(
                 startPixel = animation.center,
-                endPixel = min(animation.center + animation.distance, animation.endPixel)
+                endPixel = min(animation.center + animation.distance, animation.endPixel),
+                direction = Direction.FORWARD
             )
         )
         runParallel(
             baseAnimation.copy(
                 startPixel = max(animation.center - animation.distance, animation.startPixel),
-                endPixel = animation.center
+                endPixel = animation.center,
+                direction = Direction.BACKWARD
             )
         )
         delayBlocking(animation.delay * 20)

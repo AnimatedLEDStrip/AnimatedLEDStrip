@@ -25,14 +25,26 @@ package animatedledstrip.leds
 
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.tryWithLock
+import kotlinx.coroutines.runBlocking
 
 
 /**
  * Helper extension method that sets a pixel, waits a specified time in
  * milliseconds, then reverts the pixel.
  */
-fun LEDStrip.setAndRevertPixelAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
-    setPixelColor(pixel, color)
-    delayBlocking(delay)
-    revertPixel(pixel)
+fun AnimatedLEDStrip.setAndRevertPixelAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+    withPixelLock(pixel) {
+        setPixelColor(pixel, color)
+        delayBlocking(delay)
+        revertPixel(pixel)
+    }
+}
+
+fun AnimatedLEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
+    runBlocking {
+        locks[pixel]!!.tryWithLock {
+            operation.invoke()
+        }
+    }
 }

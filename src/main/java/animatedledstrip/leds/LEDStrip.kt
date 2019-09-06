@@ -383,8 +383,8 @@ abstract class LEDStrip(
      */
     inner class FadePixel(private val pixel: Int) {
         /**
-         * Which thread is currently fading a pixel?
-         * Used so another thread can take over mid-fade if necessary.
+         * Which thread is currently fading this pixel -
+         * used so another thread can take over mid-fade if necessary.
          */
         var owner = ""
 
