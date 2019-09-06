@@ -610,12 +610,12 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val wipe: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
-            Direction.BACKWARD -> for (i in animation.endPixel downTo animation.startPixel) {
-                setProlongedPixelColor(i, animation.pCols[0])
+            Direction.FORWARD -> iterateOverPixels(animation) {
+                setProlongedPixelColor(it, animation.pCols[0])
                 delayBlocking(animation.delay)
             }
-            Direction.FORWARD -> for (i in animation.startPixel..animation.endPixel) {
-                setProlongedPixelColor(i, animation.pCols[0])
+            Direction.BACKWARD -> iterateOverPixelsReverse(animation) {
+                setProlongedPixelColor(it, animation.pCols[0])
                 delayBlocking(animation.delay)
             }
         }
