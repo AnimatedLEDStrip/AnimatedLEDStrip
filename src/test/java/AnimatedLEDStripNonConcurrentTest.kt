@@ -27,14 +27,15 @@ import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import org.tinylog.configuration.Configuration
 import kotlin.test.assertTrue
+
+
 
 class AnimatedLEDStripNonConcurrentTest {
 
     init {
-        Configurator.defaultConfig().level(Level.OFF).activate()
+        Configuration.set("level", "off")
     }
 
     @Test

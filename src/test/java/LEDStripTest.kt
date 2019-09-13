@@ -37,8 +37,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Ignore
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import org.tinylog.configuration.Configuration
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFailsWith
@@ -48,7 +47,7 @@ import kotlin.test.assertTrue
 class LEDStripTest {
 
     init {
-        Configurator.defaultConfig().level(Level.OFF).activate()
+        Configuration.set("level", "off")
     }
 
     @Test

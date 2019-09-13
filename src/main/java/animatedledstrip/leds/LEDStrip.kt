@@ -33,7 +33,7 @@ import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.pmw.tinylog.Logger
+import org.tinylog.Logger
 import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -141,7 +141,7 @@ abstract class LEDStrip(
                         try {
                             ledStrip.render()
                         } catch (e: NullPointerException) {
-                            Logger.error("LEDStrip NullPointerException")
+                            Logger.error { "LEDStrip NullPointerException" }
                             delayBlocking(1000)
                         }
                         if (imageDebugging) {
@@ -154,7 +154,7 @@ abstract class LEDStrip(
                                         outFile.append(buffer)
                                         buffer.clear()
                                     }
-                                    Logger.debug("Wrote $rendersBeforeSave renders to file")
+                                    Logger.debug { "Wrote $rendersBeforeSave renders to file" }
                                 }
                                 renderNum = 0
                             }
@@ -211,7 +211,7 @@ abstract class LEDStrip(
                 }
             }
         } catch (e: Exception) {
-            Logger.error("ERROR in setPixelColor: $e\npixel: $pixel to color $colorValues")
+            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $colorValues" }
         }
     }
 
@@ -305,9 +305,9 @@ abstract class LEDStrip(
         try {
             return prolongedColors[pixel]
         } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColor: $e")
+            Logger.error { "ERROR in getPixelColor: $e" }
         }
-        Logger.warn("Color not retrieved")
+        Logger.warn { "Color not retrieved" }
         return CCBlack.color
     }
 
@@ -321,9 +321,9 @@ abstract class LEDStrip(
         try {
             return prolongedColors[pixel]
         } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColorOrNull: $e")
+            Logger.error { "ERROR in getPixelColorOrNull: $e" }
         }
-        Logger.warn("Color not retrieved")
+        Logger.warn { "Color not retrieved" }
         return null
     }
 
@@ -337,9 +337,9 @@ abstract class LEDStrip(
         try {
             return super.getPixelColor(pixel)
         } catch (e: Exception) {
-            Logger.error("ERROR in getActualPixelColor: $e")
+            Logger.error { "ERROR in getActualPixelColor: $e" }
         }
-        Logger.warn("Color not retrieved")
+        Logger.warn { "Color not retrieved" }
         return CCBlack.color
     }
 
@@ -353,9 +353,9 @@ abstract class LEDStrip(
         try {
             return super.getPixelColor(pixel)
         } catch (e: Exception) {
-            Logger.error("ERROR in getActualPixelColorOrNull: $e")
+            Logger.error { "ERROR in getActualPixelColorOrNull: $e" }
         }
-        Logger.warn("Color not retrieved")
+        Logger.warn { "Color not retrieved" }
         return null
     }
 
@@ -434,8 +434,8 @@ abstract class LEDStrip(
      * @see FadePixel
      */
     fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
-        Logger.trace("Fading pixel $pixel")
+        Logger.trace { "Fading pixel $pixel" }
         fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay)
-        Logger.trace("Fade of pixel $pixel complete")
+        Logger.trace { "Fade of pixel $pixel complete" }
     }
 }

@@ -29,8 +29,7 @@ import animatedledstrip.utils.blend
 import animatedledstrip.utils.parseHex
 import animatedledstrip.utils.toARGB
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import org.tinylog.configuration.Configuration
 import kotlin.test.assertTrue
 
 class UtilsTest {
@@ -40,7 +39,7 @@ class UtilsTest {
         assertTrue { parseHex("0xFF") == 0xFFL }
         assertTrue { parseHex("FFFF") == 0xFFFFL }
         assertTrue { parseHex("FF0000") == 0xFF0000L }
-        Configurator.defaultConfig().level(Level.OFF).activate()
+        Configuration.set("level", "off")
         assertTrue { parseHex("0xG") == 0L }
     }
 

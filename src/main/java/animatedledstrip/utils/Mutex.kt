@@ -29,7 +29,7 @@ package animatedledstrip.utils
 
 
 import kotlinx.coroutines.sync.Mutex
-import org.pmw.tinylog.Logger
+import org.tinylog.Logger
 
 
 /**
@@ -52,7 +52,7 @@ inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
             unlock(owner)
         }
     } else {
-        Logger.trace("Access Overlap: $owner")
+        Logger.trace { "Access Overlap: $owner" }
         return
     }
 }
