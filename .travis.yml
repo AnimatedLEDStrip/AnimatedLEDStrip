@@ -27,10 +27,13 @@ jobs:
       install: skip
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy
+      script: skip
       install: skip
       deploy:
         - provider: script
           script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+          on:
+            all_branches: true
         - provider: pages
           skip-cleanup: true
           github-token: $GITHUB_TOKEN
@@ -40,7 +43,7 @@ jobs:
           on:
             all_branches: true
     - stage: deploy
-      script: mvn compile --settings .maven.xml -DskipTests=true -B
+      script: skip
       install: skip
       deploy:
         - provider: script
