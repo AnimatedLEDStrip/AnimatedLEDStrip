@@ -31,7 +31,7 @@ import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import org.pmw.tinylog.Logger
+import org.tinylog.Logger
 import java.lang.Math.random
 import kotlin.math.max
 import kotlin.math.min
@@ -118,7 +118,7 @@ abstract class AnimatedLEDStrip(
             )
         }
 
-        for (i in animation.colors.size..(animationInfoMap[animation.animation]?.numColors ?: 0)) {
+        for (i in animation.colors.size until (animationInfoMap[animation.animation]?.numColors ?: 0)) {
             animation.pCols.add(
                 CCBlack.prepare(
                     animation.endPixel - animation.startPixel + 1,
@@ -127,7 +127,7 @@ abstract class AnimatedLEDStrip(
             )
         }
 
-        Logger.debug("pCols: ${animation.pCols}")
+        Logger.debug { "pCols: ${animation.pCols}" }
         @Suppress("EXPERIMENTAL_API_USAGE", "DEPRECATION")
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
@@ -140,7 +140,7 @@ abstract class AnimatedLEDStrip(
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELMARATHON -> pixelMarathon(animation)
             Animation.PIXELRUN -> pixelRun(animation)
-            Animation.PIXELRUNWITHTRAIL -> Logger.warn("PixelRunWithTrail is deprecated. Use Meteor")
+            Animation.PIXELRUNWITHTRAIL -> Logger.warn { "PixelRunWithTrail is deprecated. Use Meteor" }
             Animation.RIPPLE -> ripple(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SMOOTHFADE -> smoothFade(animation)
@@ -152,7 +152,7 @@ abstract class AnimatedLEDStrip(
             Animation.STACKOVERFLOW -> stackOverflow(animation)
             Animation.WIPE -> wipe(animation)
             Animation.CUSTOMANIMATION, Animation.CUSTOMREPETITIVEANIMATION -> runCustomAnimation(animation)
-            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
+            else -> Logger.warn { "Animation ${animation.animation} not supported by AnimatedLEDStrip" }
         }
     }
 
@@ -448,7 +448,6 @@ abstract class AnimatedLEDStrip(
      * to create the illusion that the animation is 'moving'. If the direction is
      * [Direction].`BACKWARD`, the same happens but with indices `i`, `i-1`, `i-2`, etc.
      */
-    @Suppress("KDocUnresolvedReference")
     private val smoothChase: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
             Direction.FORWARD -> for (m in animation.endPixel downTo animation.startPixel) {
@@ -590,6 +589,7 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val stackOverflow: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData().animation(Animation.STACK).delay(animation.delay)
+        Logger.debug(animation.pCols)
         runParallelAndJoin(
             baseAnimation.copy(
                 direction = Direction.FORWARD

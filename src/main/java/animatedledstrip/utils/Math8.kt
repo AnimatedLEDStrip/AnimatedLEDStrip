@@ -1,7 +1,5 @@
 package animatedledstrip.utils
 
-import org.pmw.tinylog.Logger
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
@@ -26,6 +24,8 @@ import org.pmw.tinylog.Logger
  */
 
 
+import org.tinylog.Logger
+
 /**
  * Blend a variable proportion (0-255) of one byte to another.
  *
@@ -37,7 +37,7 @@ import org.pmw.tinylog.Logger
  * @return A byte value between `a` and `b`, inclusive
  */
 fun blend8(a: Int, b: Int, amountOfB: Int): Int {
-    Logger.trace("params: a = $a, b = $b, amountOfB = $amountOfB")
+    Logger.trace { "params: a = $a, b = $b, amountOfB = $amountOfB" }
 
     var partial: Int
 

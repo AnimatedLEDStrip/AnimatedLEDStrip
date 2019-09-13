@@ -27,7 +27,7 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.sections.SectionableLEDStrip
-import org.pmw.tinylog.Logger
+import org.tinylog.Logger
 
 
 /**
@@ -43,7 +43,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
     abstract var ledStrip: LEDStripInterface
 
     init {
-        Logger.info("numLEDs: $numLEDs")
+        Logger.info { "numLEDs: $numLEDs" }
     }
 
 

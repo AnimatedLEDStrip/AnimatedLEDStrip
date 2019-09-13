@@ -31,8 +31,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Ignore
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import org.tinylog.configuration.Configuration
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
@@ -40,7 +39,7 @@ import kotlin.test.assertTrue
 class AnimatedLEDStripTest {
 
     init {
-        Configurator.defaultConfig().level(Level.OFF).activate()
+        Configuration.set("level", "off")
     }
 
     @Test

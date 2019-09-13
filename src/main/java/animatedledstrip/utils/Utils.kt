@@ -24,7 +24,7 @@ package animatedledstrip.utils
  */
 
 
-import org.pmw.tinylog.Logger
+import org.tinylog.Logger
 
 /**
  * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
@@ -82,7 +82,7 @@ fun parseHex(string: String): Long {
     return try {
         java.lang.Long.parseLong(s, 16)
     } catch (e: NumberFormatException) {
-        Logger.warn("Format of string \"$string\" is malformed: $e")
+        Logger.warn { "Format of string \"$string\" is malformed: $e" }
         0x0
     }
 }
