@@ -21,7 +21,7 @@
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">AnimatedLEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/fileName">fileName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<code><span class="identifier">AnimatedLEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/fileName">fileName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/rendersBeforeSave">rendersBeforeSave</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1000<span class="symbol">)</span></code>
 <p>A subclass of <a href="../-l-e-d-strip/index.html">LEDStrip</a> adding animations.</p>
 </td>
 </tr>
@@ -37,17 +37,6 @@
 <td>
 <code><span class="keyword">val </span><span class="identifier">alternate</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Runs an Alternate animation.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="animation-thread-pool.html">animationThreadPool</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">animationThreadPool</span><span class="symbol">: </span><span class="identifier">ExecutorCoroutineDispatcher</span></code>
-<p>A pool of threads to be used for animations that spawn new sub-threads
-(with the exception of sparkle-type animations, those use the
-<a href="sparkle-thread-pool.html">sparkleThreadPool</a>).</p>
 </td>
 </tr>
 <tr>
@@ -112,6 +101,17 @@ being used.</p>
 <td>
 <code><span class="keyword">val </span><span class="identifier">multiPixelRunToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Runs a Multi-Pixel Run To Color animation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="parallel-animation-thread-pool.html">parallelAnimationThreadPool</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">parallelAnimationThreadPool</span><span class="symbol">: </span><span class="identifier">ExecutorCoroutineDispatcher</span></code>
+<p>A pool of threads to be used for animations that spawn new sub-threads
+(with the exception of sparkle-type animations, those use the
+<a href="sparkle-thread-pool.html">sparkleThreadPool</a>).</p>
 </td>
 </tr>
 <tr>
@@ -322,6 +322,13 @@ experience slowdowns because of I/O.</p>
 </tr>
 <tr>
 <td>
+<p><a href="../-l-e-d-strip/renders-before-save.html">rendersBeforeSave</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">rendersBeforeSave</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="../-l-e-d-strip/render-thread.html">renderThread</a></p>
 </td>
 <td>
@@ -352,6 +359,13 @@ experience slowdowns because of I/O.</p>
 <p>Run a custom animation. Identify the animation using the ID parameter in
 the AnimationData instance.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="run-parallel.html">runParallel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">runParallel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.ExecutorCoroutineDispatcher)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.ExecutorCoroutineDispatcher)/pool">pool</span><span class="symbol">:</span>&nbsp;<span class="identifier">ExecutorCoroutineDispatcher</span>&nbsp;<span class="symbol">=</span>&nbsp;parallelAnimationThreadPool<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Job</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -479,6 +493,35 @@ Renders are handled by a thread created during an init block above.</p>
 <p>Toggle strip rendering. If strip is not rendering, this will launch a new
 thread that renders the strip constantly until this is called again.</p>
 </td>
+</tr>
+</tbody>
+</table>
+<h3>Extension Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../run-parallel-and-join.html">runParallelAndJoin</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">.</span><span class="identifier">runParallelAndJoin</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.leds$runParallelAndJoin(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Array((animatedledstrip.animationutils.AnimationData)), kotlinx.coroutines.ExecutorCoroutineDispatcher)/animations">animations</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$runParallelAndJoin(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Array((animatedledstrip.animationutils.AnimationData)), kotlinx.coroutines.ExecutorCoroutineDispatcher)/pool">pool</span><span class="symbol">:</span>&nbsp;<span class="identifier">ExecutorCoroutineDispatcher</span>&nbsp;<span class="symbol">=</span>&nbsp;parallelAnimationThreadPool<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../set-pixel-and-revert-after-delay.html">setPixelAndRevertAfterDelay</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">.</span><span class="identifier">setPixelAndRevertAfterDelay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Helper extension method that sets a pixel, waits a specified time in
+milliseconds, then reverts the pixel.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../with-pixel-lock.html">withPixelLock</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">.</span><span class="identifier">withPixelLock</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, kotlin.Function0((kotlin.Any)))/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, kotlin.Function0((kotlin.Any)))/operation">operation</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 </tbody>
 </table>

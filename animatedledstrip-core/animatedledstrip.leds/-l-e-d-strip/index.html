@@ -50,7 +50,7 @@ is enabled)</p>
 <p><a href="-init-.html">&lt;init&gt;</a></p>
 </td>
 <td>
-<code><span class="identifier">LEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String)/fileName">fileName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span></code>
+<code><span class="identifier">LEDStrip</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/imageDebugging">imageDebugging</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/fileName">fileName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$<init>(kotlin.Int, kotlin.Boolean, kotlin.String, kotlin.Int)/rendersBeforeSave">rendersBeforeSave</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;1000<span class="symbol">)</span></code>
 <p>A subclass of <a href="../-l-e-d-strip-non-concurrent/index.html">LEDStripNonConcurrent</a> adding support for concurrency.</p>
 </td>
 </tr>
@@ -158,6 +158,13 @@ experience slowdowns because of I/O.</p>
 <code><span class="keyword">var </span><span class="identifier">rendering</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
 <p>Tracks if the strip is rendering. Starts <code>false</code> and is set to <code>true</code> in init.</p>
 </td>
+</tr>
+<tr>
+<td>
+<p><a href="renders-before-save.html">rendersBeforeSave</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">rendersBeforeSave</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
