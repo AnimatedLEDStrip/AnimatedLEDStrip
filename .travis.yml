@@ -20,6 +20,7 @@ stages:
 jobs:
   include:
     - stage: test
+      install: ""
       after_success: bash <(curl -s https://codecov.io/bash)
     - stage: deploy
       deploy:
@@ -34,7 +35,7 @@ jobs:
           on:
             all_branches: true
     - stage: deploy
-      install: mvn compile --settings .maven.xml -DskipTests=true -B
+      build: mvn compile --settings .maven.xml -DskipTests=true -B
       deploy:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
