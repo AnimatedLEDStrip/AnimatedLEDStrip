@@ -35,11 +35,12 @@ jobs:
           verbose: true
           local_dir: ./dokka
     - stage: deploy
+      if: branch = master OR branch = /v.*/
       install:
       - ""
       deploy:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
-          on:
-            branch: master
+
+
 
