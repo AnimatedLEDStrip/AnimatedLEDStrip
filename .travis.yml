@@ -34,6 +34,7 @@ jobs:
           on:
             all_branches: true
     - stage: deploy
+      install: mvn compile --settings .maven.xml -DskipTests=true -B
       deploy:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
