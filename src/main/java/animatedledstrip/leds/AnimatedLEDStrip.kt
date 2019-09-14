@@ -109,6 +109,7 @@ abstract class AnimatedLEDStrip(
         }
 
         animation.pCols = mutableListOf()
+        if (animation.colors.isEmpty()) animation.color(CCBlack)
         animation.colors.forEach {
             animation.pCols.add(
                 it.prepare(
