@@ -108,8 +108,9 @@ abstract class AnimatedLEDStrip(
             else -> animation.distance
         }
 
-        animation.pCols = mutableListOf()
         if (animation.colors.isEmpty()) animation.color(CCBlack)
+
+        animation.pCols = mutableListOf()
         animation.colors.forEach {
             animation.pCols.add(
                 it.prepare(

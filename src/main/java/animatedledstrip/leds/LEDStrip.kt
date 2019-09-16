@@ -25,7 +25,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
@@ -160,7 +159,6 @@ abstract class LEDStrip(
                             }
                         }
                         delay(5)
-//                        Logger.debug("Render")
                     }
                 }
                 true        // Set rendering to true
@@ -201,36 +199,45 @@ abstract class LEDStrip(
      * this skips setting the pixel's color and returns.
      *
      * @param pixel The pixel to change
-     * @param colorValues The color to set the pixel to
+     * @param color The color to set the pixel to
      */
-    override fun setPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
+    override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
         try {
             runBlocking {
-                locks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
-                    super.setPixelColor(pixel, colorValues)
-                }
+                locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+                    super.setPixelColor(pixel, color)
+                } ?: Logger.warn { "Pixel $pixel does not exist" }
             }
         } catch (e: Exception) {
-            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $colorValues" }
+            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $color" }
+        }
+    }
+
+    override fun setPixelColor(pixel: Int, color: Long) {
+        try {
+            runBlocking {
+                locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+                    super.setPixelColor(pixel, color)
+                } ?: Logger.warn { "Pixel $pixel does not exist" }
+            }
+        } catch (e: Exception) {
+            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $color" }
         }
     }
 
     fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
         val colors = colorValues.prepare(numLEDs)
         prolongedColors[pixel] = colors[pixel]
-        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, colors[pixel])
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, colors[pixel])
     }
 
     fun setProlongedPixelColor(pixel: Int, color: Long) {
         setProlongedPixelColor(pixel, ColorContainer(color))
     }
 
-    fun setProlongedPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
-        setProlongedPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
-    }
-
+    // TODO: Maybe rethink the guard here
     fun revertPixel(pixel: Int) {
-        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, prolongedColors[pixel])
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, prolongedColors[pixel])
     }
 
 
@@ -244,10 +251,6 @@ abstract class LEDStrip(
         setStripColor(color, true)
     }
 
-    override fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
-        setStripColor(rIn, gIn, bIn, true)
-    }
-
     fun setStripColor(colorValues: ColorContainerInterface, prolonged: Boolean) {
         val colors = colorValues.prepare(numLEDs)
         if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
@@ -255,11 +258,8 @@ abstract class LEDStrip(
     }
 
     fun setStripColor(color: Long, prolonged: Boolean) {
-        setStripColor(ColorContainer(color), prolonged)
-    }
-
-    fun setStripColor(rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
-        setStripColor(ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
+        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, color)
+        else super.setStripColor(color)
     }
 
 
@@ -273,23 +273,15 @@ abstract class LEDStrip(
         setSectionColor(start, end, color, true)
     }
 
-    override fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
-        setSectionColor(start, end, rIn, gIn, bIn, true)
-    }
-
-
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
-        val colors = colorValues.prepare(numLEDs)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors)
+        require(end >= start)
+        val colors = colorValues.prepare(end - start + 1)
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i - start, colors)
         else super.setSectionColor(start, end, colors)
     }
 
     fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean) {
         setSectionColor(start, end, ColorContainer(color), prolonged)
-    }
-
-    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
-        setSectionColor(start, end, ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
     }
 
 
@@ -302,13 +294,8 @@ abstract class LEDStrip(
      * @return The color of the pixel
      */
     override fun getPixelColor(pixel: Int): Long {
-        try {
-            return prolongedColors[pixel]
-        } catch (e: Exception) {
-            Logger.error { "ERROR in getPixelColor: $e" }
-        }
-        Logger.warn { "Color not retrieved" }
-        return CCBlack.color
+        require(pixel in prolongedColors.indices)
+        return prolongedColors[pixel]
     }
 
     /**
@@ -317,14 +304,10 @@ abstract class LEDStrip(
      * @param pixel The pixel to find the color of
      * @return The color of the pixel or null if an error occurs
      */
-    fun getPixelColorOrNull(pixel: Int): Long? {
-        try {
-            return prolongedColors[pixel]
-        } catch (e: Exception) {
-            Logger.error { "ERROR in getPixelColorOrNull: $e" }
-        }
-        Logger.warn { "Color not retrieved" }
-        return null
+    fun getPixelColorOrNull(pixel: Int): Long? = try {
+        getPixelColor(pixel)
+    } catch (e: IllegalArgumentException) {
+        null
     }
 
     /**
@@ -333,15 +316,7 @@ abstract class LEDStrip(
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
      */
-    fun getActualPixelColor(pixel: Int): Long {
-        try {
-            return super.getPixelColor(pixel)
-        } catch (e: Exception) {
-            Logger.error { "ERROR in getActualPixelColor: $e" }
-        }
-        Logger.warn { "Color not retrieved" }
-        return CCBlack.color
-    }
+    fun getActualPixelColor(pixel: Int): Long = super.getPixelColor(pixel)
 
     /**
      * Get the actual color of a pixel.
@@ -349,14 +324,10 @@ abstract class LEDStrip(
      * @param pixel The pixel to find the color of
      * @return The color of the pixel or null if an error occurs
      */
-    fun getActualPixelColorOrNull(pixel: Int): Long? {
-        try {
-            return super.getPixelColor(pixel)
-        } catch (e: Exception) {
-            Logger.error { "ERROR in getActualPixelColorOrNull: $e" }
-        }
-        Logger.warn { "Color not retrieved" }
-        return null
+    fun getActualPixelColorOrNull(pixel: Int): Long? = try {
+        getActualPixelColor(pixel)
+    } catch (e: IllegalArgumentException) {
+        null
     }
 
     /**

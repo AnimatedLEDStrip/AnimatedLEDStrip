@@ -1,0 +1,73 @@
+package animatedledstrip.leds
+
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.offsetBy
+
+
+operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, color)
+    }
+}
+
+operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, color)
+    }
+}
+
+operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: Long) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, ColorContainer(color))
+    }
+}
+
+operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: Long) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, ColorContainer(color))
+    }
+}
+
+
+/**
+ * Set a pixel's color with `r`, `g`, `b` (ranges 0-255).
+ *
+ * @param pixel The pixel to change
+ * @param rIn Red intensity of the color
+ * @param gIn Green intensity of the color
+ * @param bIn Blue intensity of the color
+ */
+@Deprecated("Use long version", ReplaceWith("setPixelColor(pixel, long)"))
+fun LEDStripNonConcurrent.setPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
+    setPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
+}
+
+
+/**
+ * Set the color of a strip using a ColorContainer offset by `offset`
+ *
+ * @param colors The colors
+ * @param offset The index of the pixel that will be set to the color at
+ * index 0
+ */
+fun LEDStripNonConcurrent.setStripColorWithOffset(colors: PreparedColorContainer, offset: Int = 0) {
+    setStripColor(colors.offsetBy(offset))
+}
+
+/**
+ * Get the color of a pixel as a hexadecimal string.
+ *
+ * @param pixel The pixel to find the color of
+ * @return A `String` containing the color of the pixel in hexadecimal
+ */
+fun LEDStripNonConcurrent.getPixelHexString(pixel: Int): String {
+    return getPixelColor(pixel).toString(16)
+}
+
+fun LEDStripNonConcurrent.getPixelColorOrNull(pixel: Int): Long? = try {
+    getPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
