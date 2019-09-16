@@ -72,6 +72,31 @@ fun AnimationData.addColor(color: Any): AnimationData {
     return this
 }
 
+fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationData {
+    colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColors(vararg colors: Long): AnimationData {
+    colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColors(vararg colors: Int): AnimationData {
+    colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColors(vararg colors: String): AnimationData {
+    colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColors(colors: List<Any>): AnimationData {
+    colors.forEach { addColor(it) }
+    return this
+}
+
 /* Helpers for setting the first 5 ColorContainers */
 
 fun AnimationData.color0(color: Any) = color(color, 0)
