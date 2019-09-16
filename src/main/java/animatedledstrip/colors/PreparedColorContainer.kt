@@ -33,7 +33,7 @@ import animatedledstrip.utils.base
  * @property colors The List of colors that will be used to create this
  * PreparedColorContainer
  */
-class PreparedColorContainer(private val colors: List<Long>) : ColorContainerInterface {
+class PreparedColorContainer(val colors: List<Long>) : ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
