@@ -186,6 +186,14 @@ fun ColorContainer.inverse(vararg indices: IntRange): ColorContainer {
     return temp
 }
 
+internal fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
+    val temp = mutableListOf<Long>()
+    for (i in colors.indices) {
+        temp += colors[(i + offset) % colors.size]
+    }
+    return PreparedColorContainer(temp)
+}
+
 /**
  * Operator overload that returns a new ColorContainer containing the
  * inverse of the colors in this ColorContainer.
