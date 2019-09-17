@@ -202,27 +202,15 @@ abstract class LEDStrip(
      * @param color The color to set the pixel to
      */
     override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
-        try {
-            runBlocking {
-                locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
-                    super.setPixelColor(pixel, color)
-                } ?: Logger.warn { "Pixel $pixel does not exist" }
-            }
-        } catch (e: Exception) {
-            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $color" }
-        }
+        locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+            super.setPixelColor(pixel, color)
+        } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
     override fun setPixelColor(pixel: Int, color: Long) {
-        try {
-            runBlocking {
-                locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
-                    super.setPixelColor(pixel, color)
-                } ?: Logger.warn { "Pixel $pixel does not exist" }
-            }
-        } catch (e: Exception) {
-            Logger.error { "ERROR in setPixelColor: $e\npixel: $pixel to color $color" }
-        }
+        locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+            super.setPixelColor(pixel, color)
+        } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
     fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
