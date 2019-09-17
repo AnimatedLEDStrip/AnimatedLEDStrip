@@ -290,7 +290,7 @@ abstract class LEDStrip(
      * Get the prolonged color of a pixel.
      *
      * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if an error occurs
+     * @return The color of the pixel or null if the index is invalid
      */
     fun getPixelColorOrNull(pixel: Int): Long? = try {
         getPixelColor(pixel)
@@ -310,7 +310,7 @@ abstract class LEDStrip(
      * Get the actual color of a pixel.
      *
      * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if an error occurs
+     * @return The color of the pixel or null if the index is invalid
      */
     fun getActualPixelColorOrNull(pixel: Int): Long? = try {
         getActualPixelColor(pixel)

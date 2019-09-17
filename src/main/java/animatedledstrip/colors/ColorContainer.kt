@@ -231,7 +231,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
         for (i in 1..leadingZeros) returnList.add(0, 0)
 
-        return PreparedColorContainer(returnList)
+        return PreparedColorContainer(returnList, colors)
     }
 
 

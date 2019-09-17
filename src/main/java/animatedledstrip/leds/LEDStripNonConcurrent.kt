@@ -23,9 +23,7 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.sections.SectionableLEDStrip
 
 
@@ -50,11 +48,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param color The color to set the pixel to
      */
     open fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
-        val colors = when (color) {
-            is PreparedColorContainer -> color
-            is ColorContainer -> color.prepare(numLEDs)
-            else -> throw IllegalArgumentException("color must implement ColorContainerInterface")
-        }
+        val colors = color.prepare(numLEDs)
         ledStrip.setPixelColor(pixel, colors[pixel].toInt())
     }
 
@@ -111,11 +105,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param colorValues The color to set the section to
      */
     override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface) {
-        val colors = when (colorValues) {
-            is PreparedColorContainer -> colorValues        // TODO: Check size and resize if necessary
-            is ColorContainer -> colorValues.prepare(end - start + 1)
-            else -> throw IllegalArgumentException("colorValues must implement ColorContainerInterface")
-        }
+        val colors =colorValues.prepare(end - start + 1)
         for (i in start..end) setPixelColor(i, colors[i - start])
         show()
     }
