@@ -9,7 +9,6 @@ $dokka.location:animatedledstrip.utils$toARGB(kotlin.Int)animatedledstrip.utils
 $dokka.location:animatedledstrip.utils$toARGB(kotlin.Long)animatedledstrip.utils/kotlin.-long/to-a-r-g-b.html
 $dokka.location:animatedledstrip.utils$toColorContainer(kotlin.Int)animatedledstrip.utils/kotlin.-int/to-color-container.html
 $dokka.location:animatedledstrip.utils$toColorContainer(kotlin.Long)animatedledstrip.utils/kotlin.-long/to-color-container.html
-$dokka.location:animatedledstrip.utils$toColorContainer(kotlin.Triple((kotlin.Int, , )))animatedledstrip.utils/kotlin.-triple/to-color-container.html
 $dokka.location:animatedledstrip.utils$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.utils.tryWithLock.T)))animatedledstrip.utils/kotlinx.coroutines.sync.-mutex/try-with-lock.html
 animatedledstrip.animationutils
 animatedledstrip.animationutils.animationinfo
