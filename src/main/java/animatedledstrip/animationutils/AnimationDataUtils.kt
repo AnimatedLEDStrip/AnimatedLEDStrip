@@ -135,7 +135,6 @@ fun AnimationData.continuous(continuous: Boolean): AnimationData {
     return this
 }
 
-// TODO: test
 fun AnimationData.center(pixel: Int): AnimationData {
     center = pixel
     return this
@@ -198,7 +197,6 @@ fun AnimationData.direction(direction: Char): AnimationData {
     return this
 }
 
-// TODO: Test
 fun AnimationData.distance(pixels: Int): AnimationData {
     distance = pixels
     return this
@@ -244,7 +242,7 @@ fun AnimationData.spacing(spacing: Int): AnimationData {
 fun AnimationData.speed(speed: AnimationSpeed): AnimationData {
     delayMod = when (speed) {
         AnimationSpeed.SLOW -> 0.5
-        AnimationSpeed.DEFAULT -> 1.0       // TODO: Test
+        AnimationSpeed.DEFAULT -> 1.0
         AnimationSpeed.FAST -> 2.0
     }
     return this

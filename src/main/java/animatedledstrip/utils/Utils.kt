@@ -24,8 +24,6 @@ package animatedledstrip.utils
  */
 
 
-import org.tinylog.Logger
-
 /**
  * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
  *
@@ -77,11 +75,15 @@ fun delayBlocking(wait: Int) {
  * @param string The hex `String` to decode
  */
 fun parseHex(string: String): Long {
-    val s = string.removePrefix("0x")     // remove leading 0x if present
+    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
+    return java.lang.Long.parseLong(s, 16)
+}
+
+fun parseHexOrDefault(string: String, default: Long = 0x0L): Long {
+    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
     return try {
         java.lang.Long.parseLong(s, 16)
     } catch (e: NumberFormatException) {
-        Logger.warn { "Format of string \"$string\" is malformed: $e" }
         0x0
     }
 }
