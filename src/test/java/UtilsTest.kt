@@ -27,9 +27,10 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.parseHex
+import animatedledstrip.utils.parseHexOrDefault
 import animatedledstrip.utils.toARGB
 import org.junit.Test
-import org.tinylog.configuration.Configuration
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class UtilsTest {
@@ -39,9 +40,21 @@ class UtilsTest {
         assertTrue { parseHex("0xFF") == 0xFFL }
         assertTrue { parseHex("FFFF") == 0xFFFFL }
         assertTrue { parseHex("FF0000") == 0xFF0000L }
-        Configuration.set("level", "off")
-        assertTrue { parseHex("0xG") == 0L }
+        assertFailsWith<NumberFormatException> { parseHex("0xG") }
     }
+
+    @Test
+    fun testParseHexOrDefault() {
+        assertTrue { parseHexOrDefault("0xFF") == 0xFFL }
+        assertTrue { parseHexOrDefault("FFFF") == 0xFFFFL }
+        assertTrue { parseHexOrDefault("FF0000") == 0xFF0000L }
+        assertTrue { parseHexOrDefault("0xFF", 10) == 0xFFL }
+        assertTrue { parseHexOrDefault("FFFF", 20) == 0xFFFFL }
+        assertTrue { parseHexOrDefault("FF0000", 15) == 0xFF0000L }
+        assertTrue { parseHexOrDefault("0xG") == 0L }
+        assertTrue { parseHexOrDefault("0xG", 15) == 15L }
+    }
+
 
     @Test
     fun testBlend() {
