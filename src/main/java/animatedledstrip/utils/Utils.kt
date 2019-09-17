@@ -84,7 +84,7 @@ fun parseHexOrDefault(string: String, default: Long = 0x0L): Long {
     return try {
         java.lang.Long.parseLong(s, 16)
     } catch (e: NumberFormatException) {
-        0x0
+        default
     }
 }
 
