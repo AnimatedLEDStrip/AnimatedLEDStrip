@@ -52,8 +52,26 @@ fun LEDStripNonConcurrent.getPixelHexString(pixel: Int): String {
     return getPixelColor(pixel).toString(16)
 }
 
+/**
+ * Get the color of a pixel.
+ *
+ * @param pixel The pixel to find the color of
+ * @return The color of the pixel or null if the index is invalid
+ */
 fun LEDStripNonConcurrent.getPixelColorOrNull(pixel: Int): Long? = try {
     getPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
+/**
+ * Get the actual color of a pixel.
+ *
+ * @param pixel The pixel to find the color of
+ * @return The color of the pixel or null if the index is invalid
+ */
+fun LEDStrip.getActualPixelColorOrNull(pixel: Int): Long? = try {
+    getActualPixelColor(pixel)
 } catch (e: IllegalArgumentException) {
     null
 }

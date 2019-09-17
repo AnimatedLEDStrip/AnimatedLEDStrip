@@ -131,6 +131,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
+     * @throws IllegalArgumentException If pixel is not a valid index
      */
     open fun getPixelColor(pixel: Int): Long {
         require(pixel in 0 until numLEDs)       // TODO: Test
