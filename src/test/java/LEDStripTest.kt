@@ -44,6 +44,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LEDStripTest {
@@ -161,7 +162,16 @@ class LEDStripTest {
         assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
         assertTrue { testLEDs.getPixelHexString(15) == "ff" }
         assertTrue { testLEDs[15] == 0xFFL }
-        assertTrue { testLEDs.getPixelColor(50) == 0L }
+        assertFailsWith<IllegalArgumentException> { testLEDs.getPixelColor(50) }
+    }
+
+    @Test
+    fun testGetPixelColorOrNull() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        testLEDs.setProlongedPixelColor(15, 0xFF)
+
+        assertTrue { testLEDs.getPixelColorOrNull(15) == 0xFFL }
+        assertNull(testLEDs.getPixelColorOrNull(50))
     }
 
     @Test
@@ -170,6 +180,16 @@ class LEDStripTest {
         testLEDs.setPixelColor(15, 0xFF)
 
         assertTrue { testLEDs.getActualPixelColor(15) == 0xFFL }
+        assertFailsWith<IllegalArgumentException> { testLEDs.getActualPixelColor(50) }
+    }
+
+    @Test
+    fun testGetActualPixelColorOrNull() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        testLEDs.setPixelColor(15, 0xFF)
+
+        assertTrue { testLEDs.getActualPixelColorOrNull(15) == 0xFFL }
+        assertNull(testLEDs.getActualPixelColorOrNull(50))
     }
 
     @Test

@@ -262,8 +262,6 @@ abstract class AnimatedLEDStrip(
         }
     }
 
-    // TODO: Add multiAlternate
-
 
     /**
      * Runs a Meteor animation.

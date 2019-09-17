@@ -256,8 +256,7 @@ class ColorContainerTest {
     @Test
     fun testPreparedColorContainer() {
         val testPCC = PreparedColorContainer(listOf(0xFF, 0xFFFF))
-        assertTrue { testPCC.prepare(10) === testPCC }
+        assertTrue { testPCC.prepare(2) === testPCC }
         assertTrue { testPCC.toString() == "[ff, ffff]" }
-
     }
 }
