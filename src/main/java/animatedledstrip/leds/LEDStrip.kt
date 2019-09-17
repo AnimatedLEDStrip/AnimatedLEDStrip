@@ -280,6 +280,7 @@ abstract class LEDStrip(
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
+     * @throws IllegalArgumentException If pixel is not a valid index
      */
     override fun getPixelColor(pixel: Int): Long {
         require(pixel in prolongedColors.indices)
@@ -287,36 +288,13 @@ abstract class LEDStrip(
     }
 
     /**
-     * Get the prolonged color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if the index is invalid
-     */
-    fun getPixelColorOrNull(pixel: Int): Long? = try {
-        getPixelColor(pixel)
-    } catch (e: IllegalArgumentException) {
-        null
-    }
-
-    /**
      * Get the actual color of a pixel.
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
+     * @throws IllegalArgumentException If pixel is not a valid index
      */
     fun getActualPixelColor(pixel: Int): Long = super.getPixelColor(pixel)
-
-    /**
-     * Get the actual color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if the index is invalid
-     */
-    fun getActualPixelColorOrNull(pixel: Int): Long? = try {
-        getActualPixelColor(pixel)
-    } catch (e: IllegalArgumentException) {
-        null
-    }
 
     /**
      * Get the colors of all pixels as a `List<Long>`
@@ -393,8 +371,6 @@ abstract class LEDStrip(
      * @see FadePixel
      */
     fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
-        Logger.trace { "Fading pixel $pixel" }
         fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay)
-        Logger.trace { "Fade of pixel $pixel complete" }
     }
 }
