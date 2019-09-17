@@ -264,7 +264,7 @@ abstract class LEDStrip(
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
         require(end >= start)
         val colors = colorValues.prepare(end - start + 1)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i - start, colors)
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors[i - start])
         else super.setSectionColor(start, end, colors)
     }
 
