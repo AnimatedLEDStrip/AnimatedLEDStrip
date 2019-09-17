@@ -9,14 +9,23 @@
 <br/>
 <h1>setPixelColor</h1>
 <a name="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)"></a>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/colorValues">colorValues</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Overrides <a href="../-l-e-d-strip-non-concurrent/set-pixel-color.html">LEDStripNonConcurrent.setPixelColor</a></p>
 <p>Sets a pixel's color. If another thread has locked the pixel's <code>Mutex</code>,
 this skips setting the pixel's color and returns.</p>
 <h3>Parameters</h3>
 <p><a name="pixel"></a>
 <code>pixel</code> - The pixel to change</p>
-<p><a name="colorValues"></a>
-<code>colorValues</code> - The color to set the pixel to</p>
+<p><a name="color"></a>
+<code>color</code> - The color to set the pixel to</p>
+<a name="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)"></a>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">setPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setPixelColor(kotlin.Int, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Overrides <a href="../-l-e-d-strip-non-concurrent/set-pixel-color.html">LEDStripNonConcurrent.setPixelColor</a></p>
+<p>Set a pixel's color with a <code>Long</code>, such as a 24-bit integer.</p>
+<h3>Parameters</h3>
+<p><a name="pixel"></a>
+<code>pixel</code> - The pixel to change</p>
+<p><a name="color"></a>
+<code>color</code> - The color to set the pixel to</p>
 </BODY>
 </HTML>
