@@ -54,7 +54,10 @@
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">bounceToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Runs a Bounce to Color animation.</p>
+<p>Runs a Bounce to Color animation.
+TODO: Fix Sectioned
+Pixel 'bounces' back and forth, leaving behind a pixel set to pCols<a href="#">0</a>
+at each end like Stack, eventually ending in the middle.</p>
 </td>
 </tr>
 <tr>
@@ -535,15 +538,6 @@ thread that renders the strip constantly until this is called again.</p>
 <code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">.</span><span class="identifier">setPixelAndRevertAfterDelay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Helper extension method that sets a pixel, waits a specified time in
 milliseconds, then reverts the pixel.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="../set-pixel-color.html">setPixelColor</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><a href="../-l-e-d-strip-non-concurrent/index.html"><span class="identifier">LEDStripNonConcurrent</span></a><span class="symbol">.</span><s><span class="identifier">setPixelColor</span></s><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelColor(animatedledstrip.leds.LEDStripNonConcurrent, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelColor(animatedledstrip.leds.LEDStripNonConcurrent, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/rIn">rIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelColor(animatedledstrip.leds.LEDStripNonConcurrent, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/gIn">gIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelColor(animatedledstrip.leds.LEDStripNonConcurrent, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int)/bIn">bIn</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Set a pixel's color with <code>r</code>, <code>g</code>, <code>b</code> (ranges 0-255).</p>
 </td>
 </tr>
 <tr>
