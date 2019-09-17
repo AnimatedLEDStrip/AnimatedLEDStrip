@@ -199,12 +199,10 @@ abstract class AnimatedLEDStrip(
     private val bounce: (AnimationData) -> Unit = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (i + animation.startPixel)..(animation.endPixel - i)) {
-                runBlocking {
-                    locks[j]!!.tryWithLock {
-                        setPixelColor(j, animation.pCols[0])
-                        delay(animation.delay)
-                        revertPixel(j)
-                    }
+                locks[j]!!.tryWithLock {
+                    setPixelColor(j, animation.pCols[0])
+                    delayBlocking(animation.delay)
+                    revertPixel(j)
                 }
             }
             setPixelColor(animation.endPixel - i, animation.pCols[0])
@@ -213,17 +211,15 @@ abstract class AnimatedLEDStrip(
                 fadePixel(p, amountOfOverlay = 25, delay = 50)
             }
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
-                runBlocking {
-                    locks[j]!!.tryWithLock {
-                        setPixelColor(j, animation.pCols[0])
-                        delay(animation.delay)
-                        revertPixel(j)
-                    }
+                locks[j]!!.tryWithLock {
+                    setPixelColor(j, animation.pCols[0])
+                    delayBlocking(animation.delay)
+                    revertPixel(j)
                 }
             }
-            setPixelColor(i, animation.pCols[0])
+            setPixelColor(animation.startPixel + i, animation.pCols[0])
             GlobalScope.launch(parallelAnimationThreadPool) {
-                fadePixel(i, 25, 50)
+                fadePixel(animation.startPixel + i, 25, 50)
             }
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
