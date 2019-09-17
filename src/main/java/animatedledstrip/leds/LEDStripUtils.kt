@@ -32,20 +32,6 @@ operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: Long) {
 
 
 /**
- * Set a pixel's color with `r`, `g`, `b` (ranges 0-255).
- *
- * @param pixel The pixel to change
- * @param rIn Red intensity of the color
- * @param gIn Green intensity of the color
- * @param bIn Blue intensity of the color
- */
-@Deprecated("Use long version", ReplaceWith("setPixelColor(pixel, long)"))
-fun LEDStripNonConcurrent.setPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
-    setPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
-}
-
-
-/**
  * Set the color of a strip using a ColorContainer offset by `offset`
  *
  * @param colors The colors

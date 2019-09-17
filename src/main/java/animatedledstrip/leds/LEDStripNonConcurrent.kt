@@ -105,7 +105,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param colorValues The color to set the section to
      */
     override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface) {
-        val colors =colorValues.prepare(end - start + 1)
+        val colors = colorValues.prepare(end - start + 1)
         for (i in start..end) setPixelColor(i, colors[i - start])
         show()
     }
@@ -133,7 +133,7 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @return The color of the pixel
      */
     open fun getPixelColor(pixel: Int): Long {
-        require(pixel in 0 until numLEDs)
+        require(pixel in 0 until numLEDs)       // TODO: Test
         return ledStrip.getPixelColor(pixel).toLong()
     }
 

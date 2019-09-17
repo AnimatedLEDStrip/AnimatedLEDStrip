@@ -32,14 +32,14 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.LEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
+import animatedledstrip.leds.getPixelColorOrNull
 import animatedledstrip.leds.getPixelHexString
 import animatedledstrip.leds.set
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import org.junit.Ignore
 import org.junit.Test
-import org.tinylog.configuration.Configuration
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFailsWith
@@ -48,10 +48,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class LEDStripTest {
-
-    init {
-        Configuration.set("level", "off")
-    }
 
     @Test
     fun testSetPixelColor() {
@@ -135,6 +131,31 @@ class LEDStripTest {
     }
 
     @Test
+    fun testSetSectionColorNonConcurrent() {
+        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
+
+        checkAllPixels(testLEDs, 0)
+
+        testLEDs.setSectionColor(15, 30, ColorContainer(0xFF))
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[14] == 0L }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs[30] == 0xFFL }
+        assertTrue { testLEDs[31] == 0L }
+        assertTrue { testLEDs[45] == 0L }
+
+        testLEDs.setSectionColor(10, 20, 0xFFFF)
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFFFL }
+        assertTrue { testLEDs[20] == 0xFFFFL }
+        assertTrue { testLEDs[21] == 0xFFL }
+        assertTrue { testLEDs[30] == 0xFFL }
+        assertTrue { testLEDs[31] == 0L }
+        assertTrue { testLEDs[45] == 0L }
+    }
+
+    @Test
     fun testSetStripColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -149,10 +170,31 @@ class LEDStripTest {
         testLEDs.color = ColorContainer(0xFF0000)
         checkAllPixels(testLEDs, 0xFF0000)
 
-        assertFailsWith(Exception::class) {
+        assertFailsWith(IllegalStateException::class) {
             testLEDs.color
         }
     }
+
+    @Test
+    fun testSetStripColorNonConcurrent() {
+        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
+
+        checkAllPixels(testLEDs, 0)
+
+        testLEDs.setStripColor(ColorContainer(0xFF))
+        checkAllPixels(testLEDs, 0xFF)
+
+        testLEDs.setStripColor(0xFFFF)
+        checkAllPixels(testLEDs, 0xFFFF)
+
+        testLEDs.color = ColorContainer(0xFF0000)
+        checkAllPixels(testLEDs, 0xFF0000)
+
+        assertFailsWith(IllegalStateException::class) {
+            testLEDs.color
+        }
+    }
+
 
     @Test
     fun testGetPixelColor() {
@@ -169,6 +211,15 @@ class LEDStripTest {
     fun testGetPixelColorOrNull() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         testLEDs.setProlongedPixelColor(15, 0xFF)
+
+        assertTrue { testLEDs.getPixelColorOrNull(15) == 0xFFL }
+        assertNull(testLEDs.getPixelColorOrNull(50))
+    }
+
+    @Test
+    fun testGetPixelColorOrNullNonConcurrent() {
+        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
+        testLEDs.setPixelColor(15, 0xFF)
 
         assertTrue { testLEDs.getPixelColorOrNull(15) == 0xFFL }
         assertNull(testLEDs.getPixelColorOrNull(50))
@@ -193,7 +244,6 @@ class LEDStripTest {
     }
 
     @Test
-    @Ignore
     fun testSectionCreator() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -234,8 +284,24 @@ class LEDStripTest {
         assertTrue { testLEDs[25] == 0xFFL }
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
+    }
 
-        testSection2.run(AnimationData().animation(Animation.STACK).color(0xFFFF))
+    @Test
+    fun testSectionRun() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        val testSection = LEDStrip.SectionCreator.new(10..25, testLEDs)
+
+        testSection.run(AnimationData().animation(Animation.COLOR).color(0xFF))
+
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFFL }
+        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs[25] == 0xFFL }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
+
+        testSection.run(AnimationData().animation(Animation.STACK).color(0xFFFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -245,7 +311,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection2.run(AnimationData().animation(Animation.WIPE).color(0xFF00))
+        testSection.run(AnimationData().animation(Animation.WIPE).color(0xFF00))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -255,8 +321,8 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        // TODO: Fix
-//        testSection2.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
+        // TODO: Fix BTC
+//        testSection.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
 //
 //        assertTrue { testLEDs[0] == 0L }
 //        assertTrue { testLEDs[9] == 0L }
@@ -266,7 +332,7 @@ class LEDStripTest {
 //        assertTrue { testLEDs[26] == 0L }
 //        assertTrue { testLEDs[45] == 0L }
 
-        testSection2.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
+        testSection.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -276,7 +342,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection2.run(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))
+        testSection.run(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -312,7 +378,7 @@ class LEDStripTest {
     @Test
     fun testImageDebugging() {
         val leds = EmulatedAnimatedLEDStrip(50, true, fileName = "test.csv")
-        runBlocking { delay(2000) }
+        runBlocking { delay(5000) }
         leds.toggleRender()
         runBlocking { delay(1000) }
         assertTrue { Files.exists(Paths.get("test.csv")) }
