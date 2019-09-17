@@ -30,12 +30,9 @@ import animatedledstrip.animationutils.color
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
-import animatedledstrip.leds.LEDStrip
+import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
-import animatedledstrip.leds.getPixelColorOrNull
-import animatedledstrip.leds.getPixelHexString
-import animatedledstrip.leds.set
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -321,16 +318,15 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        // TODO: Fix BTC
-//        testSection.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
-//
-//        assertTrue { testLEDs[0] == 0L }
-//        assertTrue { testLEDs[9] == 0L }
-//        assertTrue { testLEDs[10] == 0xFF00FFL }
-//        assertTrue { testLEDs[15] == 0xFF00FFL }
-//        assertTrue { testLEDs[25] == 0xFF00FFL }
-//        assertTrue { testLEDs[26] == 0L }
-//        assertTrue { testLEDs[45] == 0L }
+        testSection.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
+
+        assertTrue { testLEDs[0] == 0L }
+        assertTrue { testLEDs[9] == 0L }
+        assertTrue { testLEDs[10] == 0xFF00FFL }
+        assertTrue { testLEDs[15] == 0xFF00FFL }
+        assertTrue { testLEDs[25] == 0xFF00FFL }
+        assertTrue { testLEDs[26] == 0L }
+        assertTrue { testLEDs[45] == 0L }
 
         testSection.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
 
