@@ -129,7 +129,6 @@ abstract class AnimatedLEDStrip(
             )
         }
 
-        Logger.debug { "pCols: ${animation.pCols}" }
         @Suppress("EXPERIMENTAL_API_USAGE", "DEPRECATION")
         when (animation.animation) {
             Animation.ALTERNATE -> alternate(animation)
@@ -239,7 +238,7 @@ abstract class AnimatedLEDStrip(
 
     /**
      * Runs a Bounce to Color animation.
-     *  TODO: Fix Sectioned
+     *
      * Pixel 'bounces' back and forth, leaving behind a pixel set to pCols[0]
      * at each end like Stack, eventually ending in the middle.
      */
@@ -252,7 +251,7 @@ abstract class AnimatedLEDStrip(
 
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel))
                 setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
-            setProlongedPixelColor(i, animation.pCols[0])
+            setProlongedPixelColor(animation.startPixel + i, animation.pCols[0])
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
             setProlongedPixelColor(
