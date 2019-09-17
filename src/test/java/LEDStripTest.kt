@@ -32,6 +32,8 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.LEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.getPixelHexString
+import animatedledstrip.leds.set
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -60,9 +62,6 @@ class LEDStripTest {
 
         testLEDs.setPixelColor(10, ColorContainer(0xFF))
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
-
-        testLEDs.setPixelColor(10, 0, 255, 0)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFF00L }
 
         testLEDs.setPixelColor(10, 0xFF0000)
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFF0000L }
@@ -104,9 +103,6 @@ class LEDStripTest {
         testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF))
         assertTrue { testLEDs[10] == 0xFFL }
 
-        testLEDs.setProlongedPixelColor(10, 0, 255, 0)
-        assertTrue { testLEDs[10] == 0xFF00L }
-
         testLEDs.setProlongedPixelColor(10, 0xFF0000)
         assertTrue { testLEDs[10] == 0xFF0000L }
     }
@@ -135,18 +131,6 @@ class LEDStripTest {
         assertTrue { testLEDs[30] == 0xFFL }
         assertTrue { testLEDs[31] == 0L }
         assertTrue { testLEDs[45] == 0L }
-
-        testLEDs.setSectionColor(25, 40, 255, 0, 0)
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[9] == 0L }
-        assertTrue { testLEDs[10] == 0xFFFFL }
-        assertTrue { testLEDs[20] == 0xFFFFL }
-        assertTrue { testLEDs[21] == 0xFFL }
-        assertTrue { testLEDs[24] == 0xFFL }
-        assertTrue { testLEDs[25] == 0xFF0000L }
-        assertTrue { testLEDs[40] == 0xFF0000L }
-        assertTrue { testLEDs[41] == 0L }
-        assertTrue { testLEDs[45] == 0L }
     }
 
     @Test
@@ -161,24 +145,11 @@ class LEDStripTest {
         testLEDs.setStripColor(0xFFFF)
         checkAllPixels(testLEDs, 0xFFFF)
 
-        testLEDs.setStripColor(255, 0, 0)
-        checkAllPixels(testLEDs, 0xFF0000)
-
-        testLEDs.color = 0xFF
-        checkAllPixels(testLEDs, 0xFF)
-
-        testLEDs.color = 0xFFFFL
-        checkAllPixels(testLEDs, 0xFFFF)
-
         testLEDs.color = ColorContainer(0xFF0000)
         checkAllPixels(testLEDs, 0xFF0000)
 
         assertFailsWith(Exception::class) {
             testLEDs.color
-        }
-
-        assertFailsWith(Exception::class) {
-            testLEDs.color = 1.0
         }
     }
 
