@@ -88,6 +88,29 @@ class AnimationDataTest {
 
         testAnimation.addColor(0xFFFFFF)
         assertTrue { testAnimation.colors[5] == ColorContainer(0xFFFFFF) }
+
+        testAnimation.addColors(ColorContainer(0xFFFF), ColorContainer(0xFF00FF))
+        assertTrue { testAnimation.colors[6] == ColorContainer(0xFFFF) }
+        assertTrue { testAnimation.colors[7] == ColorContainer(0xFF00FF) }
+
+        testAnimation.addColors(0xFF88L, 0xFFL)
+        assertTrue { testAnimation.colors[8] == ColorContainer(0xFF88) }
+        assertTrue { testAnimation.colors[9] == ColorContainer(0xFF) }
+
+        testAnimation.addColors(0xFF, 0xFF00)
+        assertTrue { testAnimation.colors[10] == ColorContainer(0xFF) }
+        assertTrue { testAnimation.colors[11] == ColorContainer(0xFF00) }
+
+        testAnimation.addColors("0xFF", "0x88")
+        assertTrue { testAnimation.colors[12] == ColorContainer(0xFF) }
+        assertTrue { testAnimation.colors[13] == ColorContainer(0x88) }
+
+        testAnimation.addColors(listOf(0xAA, "0xFFFF", 0xFF00FFL, ColorContainer(0x8888)))
+        assertTrue { testAnimation.colors[14] == ColorContainer(0xAA) }
+        assertTrue { testAnimation.colors[15] == ColorContainer(0xFFFF) }
+        assertTrue { testAnimation.colors[16] == ColorContainer(0xFF00FF) }
+        assertTrue { testAnimation.colors[17] == ColorContainer(0x8888) }
+
     }
 
     @Test

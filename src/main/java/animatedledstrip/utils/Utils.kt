@@ -47,7 +47,6 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
     return ((r shl 16) or (g shl 8) or b).toLong()
-
 }
 
 

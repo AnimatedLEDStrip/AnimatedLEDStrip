@@ -61,19 +61,18 @@ fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
     return this
 }
 
-fun AnimationData.addColor(color: Any): AnimationData {
-    when (color) {
-        is ColorContainerInterface -> colors += color.toColorContainer()
-        is Long -> colors += ColorContainer(color)
-        is Int -> colors += ColorContainer(color.toLong())
-        is String -> colors += ColorContainer(parseHex(color))
-    }
-
+fun AnimationData.addColor(color: ColorContainerInterface): AnimationData {
+    colors += color.toColorContainer()
     return this
 }
-// TODO: tests
+
 fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationData {
     colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColor(color: Long): AnimationData {
+    colors += ColorContainer(color)
     return this
 }
 
@@ -82,8 +81,18 @@ fun AnimationData.addColors(vararg colors: Long): AnimationData {
     return this
 }
 
+fun AnimationData.addColor(color: Int): AnimationData {
+    colors += ColorContainer(color.toLong())
+    return this
+}
+
 fun AnimationData.addColors(vararg colors: Int): AnimationData {
     colors.forEach { addColor(it) }
+    return this
+}
+
+fun AnimationData.addColor(color: String): AnimationData {
+    colors += ColorContainer(parseHex(color))
     return this
 }
 
@@ -92,10 +101,21 @@ fun AnimationData.addColors(vararg colors: String): AnimationData {
     return this
 }
 
-fun AnimationData.addColors(colors: List<Any>): AnimationData {
-    colors.forEach { addColor(it) }
+
+fun AnimationData.addColors(colors: List<*>): AnimationData {
+    require(colors.isNotEmpty())
+    require(colors.all { it is ColorContainerInterface || it is Long || it is Int || it is String })
+    colors.forEach {
+        when (it) {
+            is ColorContainerInterface -> addColor(it)
+            is Long -> addColor(it)
+            is Int -> addColor(it)
+            is String -> addColor(it)
+        }
+    }
     return this
 }
+
 
 /* Helpers for setting the first 5 ColorContainers */
 
@@ -114,6 +134,7 @@ fun AnimationData.continuous(continuous: Boolean): AnimationData {
     this.continuous = continuous
     return this
 }
+
 // TODO: test
 fun AnimationData.center(pixel: Int): AnimationData {
     center = pixel
@@ -176,6 +197,7 @@ fun AnimationData.direction(direction: Char): AnimationData {
     }
     return this
 }
+
 // TODO: Test
 fun AnimationData.distance(pixels: Int): AnimationData {
     distance = pixels
