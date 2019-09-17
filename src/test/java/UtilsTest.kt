@@ -23,12 +23,10 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
-import animatedledstrip.utils.blend
-import animatedledstrip.utils.parseHex
-import animatedledstrip.utils.parseHexOrDefault
-import animatedledstrip.utils.toARGB
+import animatedledstrip.utils.*
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
@@ -68,5 +66,9 @@ class UtilsTest {
         assertTrue { 0xFF00FF.toARGB() == 0xFFFF00FF.toInt() }
     }
 
-
+    @Test
+    fun testToColorContainer() {
+        assertTrue { 0xFF.toColorContainer() == ColorContainer(0xFF) }
+        assertTrue { 0xFFFFFFL.toColorContainer() == ColorContainer(0xFFFFFF) }
+    }
 }
