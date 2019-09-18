@@ -87,6 +87,40 @@ class LEDStripTest {
     }
 
     @Test
+    fun testSetPixelColors() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.setPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
+        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
+        assertTrue { testLEDs.getActualPixelColor(15) == 0xFFL }
+        assertTrue { testLEDs.getActualPixelColor(20) == 0xFFL }
+        assertTrue { testLEDs.getActualPixelColor(18) == 0L }
+
+        testLEDs.setPixelColors(listOf(12, 17, 24), 0xFF00)
+        assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00L }
+        assertTrue { testLEDs.getActualPixelColor(17) == 0xFF00L }
+        assertTrue { testLEDs.getActualPixelColor(24) == 0xFF00L }
+        assertTrue { testLEDs.getActualPixelColor(21) == 0L }
+    }
+
+    @Test
+    fun testSetProlongedPixelColors() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.setProlongedPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
+        assertTrue { testLEDs.getPixelColor(10) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(18) == 0L }
+
+        testLEDs.setProlongedPixelColors(listOf(12, 17, 24), 0xFF00)
+        assertTrue { testLEDs.getPixelColor(12) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(17) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(24) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(21) == 0L }
+    }
+
+    @Test
     fun testSetProlongedPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
