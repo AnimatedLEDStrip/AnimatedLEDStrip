@@ -58,7 +58,7 @@ abstract class LEDStrip(
      * `Map` containing `Mutex` instances for locking access to each led while it is
      * being used.
      */
-    private val locks = mutableMapOf<Int, Mutex>()
+    internal val pixelLocks = mutableMapOf<Int, Mutex>()
 
     /**
      * The thread in which the rendering loop will run.
@@ -192,7 +192,7 @@ abstract class LEDStrip(
     }
 
 
-    /* Set pixel color*/
+    /* Set pixel color */
 
     /**
      * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
@@ -202,13 +202,13 @@ abstract class LEDStrip(
      * @param color The color to set the pixel to
      */
     override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
-        locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+        pixelLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
     override fun setPixelColor(pixel: Int, color: Long) {
-        locks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+        pixelLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
