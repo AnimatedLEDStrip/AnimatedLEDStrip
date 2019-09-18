@@ -401,7 +401,6 @@ abstract class AnimatedLEDStrip(
     }
 
     @Radial
-    @ExperimentalAnimation
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData().animation(Animation.METEOR)
             .color(animation.pCols[0]).delay(animation.delay)
@@ -541,7 +540,6 @@ abstract class AnimatedLEDStrip(
 
     @NonRepetitive
     @Radial
-    @ExperimentalAnimation
     private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData().animation(Animation.WIPE).color(animation.pCols[0])
             .delay(animation.delay)

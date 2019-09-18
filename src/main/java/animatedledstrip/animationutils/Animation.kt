@@ -76,7 +76,6 @@ enum class Animation {
     /**
      * See [AnimatedLEDStrip.ripple]
      */
-    @ExperimentalAnimation
     @Radial
     RIPPLE,
     /**
@@ -113,7 +112,6 @@ enum class Animation {
     /**
      * See [AnimatedLEDStrip.splat]
      */
-    @ExperimentalAnimation
     @NonRepetitive
     @Radial
     SPLAT,
