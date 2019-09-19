@@ -203,25 +203,6 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testRipple() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.run(
-            AnimationData()
-                .animation(Animation.RIPPLE)
-                .color(0xFFFF)
-                .center(25)
-                .distance(10)
-        )
-
-        testLEDs.run(
-            AnimationData()
-                .animation(Animation.RIPPLE)
-                .color(0xFF)
-        )
-    }
-
-    @Test
     fun testSmoothChase() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -305,29 +286,6 @@ class AnimatedLEDStripTest {
                 .color(0xFF)
         )
         checkAllPixels(testLEDs, 0xFF)
-    }
-
-    @Test
-    fun testSplat() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.run(
-            AnimationData()
-                .animation(Animation.SPLAT)
-                .color(0xFFFF)
-                .center(15)
-                .distance(10)
-        )
-
-        checkPixels(6..25, testLEDs, 0xFFFF)
-
-        testLEDs.run(
-            AnimationData()
-                .animation(Animation.SPLAT)
-                .color(0xFF00)
-        )
-
-        checkAllPixels(testLEDs, 0xFF00)
     }
 
     @Test

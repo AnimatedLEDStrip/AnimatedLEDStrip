@@ -48,7 +48,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param color The color to set the pixel to
      */
     open fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
-        require(pixel in 0 until numLEDs)
         val colors = color.prepare(numLEDs)
         ledStrip.setPixelColor(pixel, colors[pixel].toInt())
     }
@@ -60,7 +59,6 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      * @param color The color to set the pixel to
      */
     open fun setPixelColor(pixel: Int, color: Long) {
-        require(pixel in 0 until numLEDs)
         ledStrip.setPixelColor(pixel, color.toInt())
     }
 
