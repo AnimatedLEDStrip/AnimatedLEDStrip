@@ -38,9 +38,3 @@ fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStripNonConcurrent, color: Long)
         assertTrue { it == color }
     }
 }
-
-fun checkPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
-    leds.forEach {
-        assertTrue { testLEDs.pixelColorList[it] == color }
-    }
-}
