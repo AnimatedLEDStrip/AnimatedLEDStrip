@@ -111,7 +111,7 @@ abstract class LEDStrip(
     init {
         if (fileName != null) require(imageDebugging)
         for (i in 0 until numLEDs) {
-            locks += Pair(i, Mutex())
+            pixelLocks += Pair(i, Mutex())
             fadeMap += Pair(i, FadePixel(i))
         }
         runBlocking { delay(2000) }
