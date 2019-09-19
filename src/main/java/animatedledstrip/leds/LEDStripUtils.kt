@@ -27,6 +27,8 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
+import animatedledstrip.utils.tryWithLock
+import org.pmw.tinylog.Logger
 
 
 operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainerInterface) {
@@ -99,11 +101,11 @@ fun LEDStrip.getActualPixelColorOrNull(pixel: Int): Long? = try {
     null
 }
 
-//fun LEDStrip.withPixelLock(pixel: Int, owner: String = "", operation: () -> Any?) {
-//    pixelLocks[pixel]?.tryWithLock(owner = owner) {
-//        operation.invoke()
-//    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
-//}
+fun LEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
+    pixelLocks[pixel]?.tryWithLock {
+        operation.invoke()
+    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
+}
 
 ///**
 // * Helper extension method that sets a pixel, waits a specified time in

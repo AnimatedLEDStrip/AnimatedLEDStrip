@@ -26,7 +26,6 @@ package animatedledstrip.leds
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
@@ -69,13 +68,5 @@ fun AnimatedLEDStrip.runParallelAndJoin(
     }
     runBlocking {
         jobs.joinAll()
-    }
-}
-
-fun AnimatedLEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
-    runBlocking {
-        locks[pixel]!!.tryWithLock {
-            operation.invoke()
-        }
     }
 }
