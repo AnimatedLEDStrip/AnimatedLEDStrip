@@ -29,7 +29,7 @@ package animatedledstrip.utils
 
 
 import kotlinx.coroutines.sync.Mutex
-import org.tinylog.Logger
+import org.pmw.tinylog.Logger
 
 
 /**
@@ -38,6 +38,7 @@ import org.tinylog.Logger
  * If another thread has already locked the `Mutex`, this will return and print a
  * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
  * action.
+ *
  *
  * @param T
  * @param owner

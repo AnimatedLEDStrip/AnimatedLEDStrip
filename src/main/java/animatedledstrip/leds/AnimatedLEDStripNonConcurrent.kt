@@ -32,7 +32,7 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
-import org.tinylog.Logger
+import org.pmw.tinylog.Logger
 
 
 /**

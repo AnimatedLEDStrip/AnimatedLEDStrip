@@ -25,14 +25,9 @@ package animatedledstrip.test
 
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import org.junit.Test
-import org.tinylog.configuration.Configuration
 import kotlin.test.assertFailsWith
 
 class EmulatedWS281xTest {
-
-    init {
-        Configuration.set("level", "off")
-    }
 
     @Test
     fun testClose() {

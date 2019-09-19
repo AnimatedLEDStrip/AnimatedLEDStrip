@@ -27,11 +27,6 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
-import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.tryWithLock
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.tinylog.kotlin.Logger
 
 
 operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainerInterface) {
@@ -104,41 +99,41 @@ fun LEDStrip.getActualPixelColorOrNull(pixel: Int): Long? = try {
     null
 }
 
-fun LEDStrip.withPixelLock(pixel: Int, owner: String = "", operation: () -> Any?) {
-    pixelLocks[pixel]?.tryWithLock(owner = owner) {
-        operation.invoke()
-    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
-}
+//fun LEDStrip.withPixelLock(pixel: Int, owner: String = "", operation: () -> Any?) {
+//    pixelLocks[pixel]?.tryWithLock(owner = owner) {
+//        operation.invoke()
+//    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
+//}
 
-/**
- * Helper extension method that sets a pixel, waits a specified time in
- * milliseconds, then reverts the pixel.
- */
-fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
-    withPixelLock(pixel) {
-        setLockedPixelColor(pixel, color)
-        delayBlocking(delay)
-        revertLockedPixel(pixel)
-    }
-}
+///**
+// * Helper extension method that sets a pixel, waits a specified time in
+// * milliseconds, then reverts the pixel.
+// */
+//fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+//    withPixelLock(pixel) {
+//        setLockedPixelColor(pixel, color)
+//        delayBlocking(delay)
+//        revertLockedPixel(pixel)
+//    }
+//}
 
-/**
- * Helper extension method that sets a pixel, waits a specified time in
- * milliseconds, then reverts the pixel.
- */
-fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: Long, delay: Long) {
-    withPixelLock(pixel) {
-        setLockedPixelColor(pixel, color)
-        delayBlocking(delay)
-        revertLockedPixel(pixel)
-    }
-}
+///**
+// * Helper extension method that sets a pixel, waits a specified time in
+// * milliseconds, then reverts the pixel.
+// */
+//fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: Long, delay: Long) {
+//    withPixelLock(pixel) {
+//        setLockedPixelColor(pixel, color)
+//        delayBlocking(delay)
+//        revertLockedPixel(pixel)
+//    }
+//}
 
-fun LEDStrip.revertPixelWithFade(pixel: Int, amountOfOverlay: Int = 25) {
-    GlobalScope.launch {
-        fadePixel(pixel, amountOfOverlay)
-    }
-}
+//fun LEDStrip.revertPixelWithFade(pixel: Int, amountOfOverlay: Int = 25) {
+//    GlobalScope.launch {
+//        fadePixel(pixel, amountOfOverlay)
+//    }
+//}
 
 /* Set pixels based on indices in a list */
 
