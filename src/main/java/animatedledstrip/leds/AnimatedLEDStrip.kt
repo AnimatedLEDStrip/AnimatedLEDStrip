@@ -31,7 +31,7 @@ import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
-import org.tinylog.Logger
+import org.pmw.tinylog.Logger
 import java.lang.Math.random
 import kotlin.math.max
 import kotlin.math.min

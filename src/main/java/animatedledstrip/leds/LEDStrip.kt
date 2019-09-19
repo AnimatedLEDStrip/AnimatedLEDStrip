@@ -32,7 +32,7 @@ import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.tinylog.Logger
+import org.pmw.tinylog.Logger
 import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,6 +59,8 @@ abstract class LEDStrip(
      * being used.
      */
     internal val pixelLocks = mutableMapOf<Int, Mutex>()
+
+    private val writeLocks = mutableMapOf<Int, Mutex>()
 
     /**
      * The thread in which the rendering loop will run.
@@ -112,6 +114,7 @@ abstract class LEDStrip(
         if (fileName != null) require(imageDebugging)
         for (i in 0 until numLEDs) {
             pixelLocks += Pair(i, Mutex())
+            writeLocks += Pair(i, Mutex())
             fadeMap += Pair(i, FadePixel(i))
         }
         runBlocking { delay(2000) }
@@ -202,13 +205,13 @@ abstract class LEDStrip(
      * @param color The color to set the pixel to
      */
     override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
-        pixelLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
     override fun setPixelColor(pixel: Int, color: Long) {
-        pixelLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
