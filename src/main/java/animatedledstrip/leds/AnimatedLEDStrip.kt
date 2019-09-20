@@ -29,7 +29,6 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
-import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
 import kotlin.math.max
@@ -46,13 +45,6 @@ abstract class AnimatedLEDStrip(
     fileName: String? = null,
     rendersBeforeSave: Int = 1000
 ) : LEDStrip(numLEDs, imageDebugging, fileName, rendersBeforeSave), AnimatedLEDStripInterface, SectionableLEDStrip {
-
-    /**
-     * Map containing Mutex instances for locking access to each led while it is
-     * being used.
-     */
-    val locks = mutableMapOf<Int, Mutex>()
-
 
     /**
      * A pool of threads to be used for animations that spawn new sub-threads
@@ -77,13 +69,6 @@ abstract class AnimatedLEDStrip(
      * Map containing custom animations.
      */
     private val customAnimationMap = mutableMapOf<String, (AnimationData) -> Unit>()
-
-    init {
-        for (i in 0 until numLEDs) {
-            locks += Pair(i, Mutex())        // Initialize locks map
-        }
-    }
-
 
     /**
      * Run an animation.
