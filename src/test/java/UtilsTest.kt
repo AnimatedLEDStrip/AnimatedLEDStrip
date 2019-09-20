@@ -23,14 +23,12 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
-import animatedledstrip.utils.blend
-import animatedledstrip.utils.parseHex
-import animatedledstrip.utils.toARGB
+import animatedledstrip.utils.*
 import org.junit.Test
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class UtilsTest {
@@ -40,9 +38,21 @@ class UtilsTest {
         assertTrue { parseHex("0xFF") == 0xFFL }
         assertTrue { parseHex("FFFF") == 0xFFFFL }
         assertTrue { parseHex("FF0000") == 0xFF0000L }
-        Configurator.defaultConfig().level(Level.OFF).activate()
-        assertTrue { parseHex("0xG") == 0L }
+        assertFailsWith<NumberFormatException> { parseHex("0xG") }
     }
+
+    @Test
+    fun testParseHexOrDefault() {
+        assertTrue { parseHexOrDefault("0xFF") == 0xFFL }
+        assertTrue { parseHexOrDefault("FFFF") == 0xFFFFL }
+        assertTrue { parseHexOrDefault("FF0000") == 0xFF0000L }
+        assertTrue { parseHexOrDefault("0xFF", 10) == 0xFFL }
+        assertTrue { parseHexOrDefault("FFFF", 20) == 0xFFFFL }
+        assertTrue { parseHexOrDefault("FF0000", 15) == 0xFF0000L }
+        assertTrue { parseHexOrDefault("0xG") == 0L }
+        assertTrue { parseHexOrDefault("0xG", 15) == 15L }
+    }
+
 
     @Test
     fun testBlend() {
@@ -56,5 +66,9 @@ class UtilsTest {
         assertTrue { 0xFF00FF.toARGB() == 0xFFFF00FF.toInt() }
     }
 
-
+    @Test
+    fun testToColorContainer() {
+        assertTrue { 0xFF.toColorContainer() == ColorContainer(0xFF) }
+        assertTrue { 0xFFFFFFL.toColorContainer() == ColorContainer(0xFFFFFF) }
+    }
 }

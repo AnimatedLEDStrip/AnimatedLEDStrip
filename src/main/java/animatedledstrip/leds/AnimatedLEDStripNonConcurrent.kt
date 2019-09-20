@@ -94,13 +94,13 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELRUN -> pixelRun(animation)
-            Animation.PIXELRUNWITHTRAIL -> Logger.warn("PixelRunWithTrail is deprecated. Use Meteor")
+            Animation.PIXELRUNWITHTRAIL -> Logger.warn { "PixelRunWithTrail is deprecated. Use Meteor" }
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SPARKLE -> sparkle(animation)
             Animation.SPARKLETOCOLOR -> sparkleToColor(animation)
             Animation.STACK -> stack(animation)
             Animation.WIPE -> wipe(animation)
-            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStripNonConcurrent")
+            else -> Logger.warn { "Animation ${animation.animation} not supported by AnimatedLEDStripNonConcurrent" }
         }
     }
 

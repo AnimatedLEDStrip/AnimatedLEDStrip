@@ -25,7 +25,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
@@ -51,14 +50,17 @@ import java.util.*
 abstract class LEDStrip(
     numLEDs: Int,
     private val imageDebugging: Boolean = false,
-    fileName: String? = null
+    fileName: String? = null,
+    private val rendersBeforeSave: Int = 1000
 ) : LEDStripNonConcurrent(numLEDs) {
 
     /**
      * `Map` containing `Mutex` instances for locking access to each led while it is
      * being used.
      */
-    private val locks = mutableMapOf<Int, Mutex>()
+    internal val pixelLocks = mutableMapOf<Int, Mutex>()
+
+    private val writeLocks = mutableMapOf<Int, Mutex>()
 
     /**
      * The thread in which the rendering loop will run.
@@ -77,6 +79,7 @@ abstract class LEDStrip(
      * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.
      */
     var rendering = false
+        private set
 
     private val _fileName =
         fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
@@ -98,7 +101,6 @@ abstract class LEDStrip(
      */
     private val outLock = Mutex()
 
-
     val prolongedColors = mutableListOf<Long>().apply {
         for (i in 0 until numLEDs) add(0)
     }
@@ -111,7 +113,8 @@ abstract class LEDStrip(
     init {
         if (fileName != null) require(imageDebugging)
         for (i in 0 until numLEDs) {
-            locks += Pair(i, Mutex())
+            pixelLocks += Pair(i, Mutex())
+            writeLocks += Pair(i, Mutex())
             fadeMap += Pair(i, FadePixel(i))
         }
         runBlocking { delay(2000) }
@@ -140,25 +143,25 @@ abstract class LEDStrip(
                         try {
                             ledStrip.render()
                         } catch (e: NullPointerException) {
-                            Logger.error("LEDStrip NullPointerException")
+                            Logger.error { "LEDStrip NullPointerException" }
                             delayBlocking(1000)
                         }
                         if (imageDebugging) {
                             pixelColorList.forEach { buffer!!.append("${(it and 0xFF0000 shr 16).toInt()},${(it and 0x00FF00 shr 8).toInt()},${(it and 0x0000FF).toInt()},") }
                             buffer!!.append("0,0,0\n")
 
-                            if (renderNum++ >= 1000) {
+                            if (renderNum++ >= rendersBeforeSave) {
                                 GlobalScope.launch(outThread) {
                                     outLock.withLock {
                                         outFile.append(buffer)
                                         buffer.clear()
                                     }
+                                    Logger.debug { "Wrote $rendersBeforeSave renders to file" }
                                 }
                                 renderNum = 0
                             }
                         }
-                        delay(10)
-//                        Logger.debug("Render")
+                        delay(5)
                     }
                 }
                 true        // Set rendering to true
@@ -192,43 +195,40 @@ abstract class LEDStrip(
     }
 
 
-    /* Set pixel color*/
+    /* Set pixel color */
 
     /**
      * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
      * this skips setting the pixel's color and returns.
      *
      * @param pixel The pixel to change
-     * @param colorValues The color to set the pixel to
+     * @param color The color to set the pixel to
      */
-    override fun setPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
-        try {
-            runBlocking {
-                locks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
-                    super.setPixelColor(pixel, colorValues)
-                }
-            }
-        } catch (e: Exception) {
-            Logger.error("ERROR in setPixelColor: $e\npixel: $pixel to color $colorValues")
-        }
+    override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
+        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+            super.setPixelColor(pixel, color)
+        } ?: Logger.warn { "Pixel $pixel does not exist" }
+    }
+
+    override fun setPixelColor(pixel: Int, color: Long) {
+        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+            super.setPixelColor(pixel, color)
+        } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
     fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
         val colors = colorValues.prepare(numLEDs)
         prolongedColors[pixel] = colors[pixel]
-        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, colors[pixel])
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, colors[pixel])
     }
 
     fun setProlongedPixelColor(pixel: Int, color: Long) {
         setProlongedPixelColor(pixel, ColorContainer(color))
     }
 
-    fun setProlongedPixelColor(pixel: Int, rIn: Int, gIn: Int, bIn: Int) {
-        setProlongedPixelColor(pixel, ColorContainer(Triple(rIn, gIn, bIn)))
-    }
-
+    // TODO: Maybe rethink the guard here
     fun revertPixel(pixel: Int) {
-        if (!fadeMap[pixel]?.isFading!!) setPixelColor(pixel, prolongedColors[pixel])
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, prolongedColors[pixel])
     }
 
 
@@ -242,10 +242,6 @@ abstract class LEDStrip(
         setStripColor(color, true)
     }
 
-    override fun setStripColor(rIn: Int, gIn: Int, bIn: Int) {
-        setStripColor(rIn, gIn, bIn, true)
-    }
-
     fun setStripColor(colorValues: ColorContainerInterface, prolonged: Boolean) {
         val colors = colorValues.prepare(numLEDs)
         if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
@@ -253,11 +249,8 @@ abstract class LEDStrip(
     }
 
     fun setStripColor(color: Long, prolonged: Boolean) {
-        setStripColor(ColorContainer(color), prolonged)
-    }
-
-    fun setStripColor(rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
-        setStripColor(ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
+        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, color)
+        else super.setStripColor(color)
     }
 
 
@@ -271,23 +264,15 @@ abstract class LEDStrip(
         setSectionColor(start, end, color, true)
     }
 
-    override fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int) {
-        setSectionColor(start, end, rIn, gIn, bIn, true)
-    }
-
-
     fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
-        val colors = colorValues.prepare(numLEDs)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors)
+        require(end >= start)
+        val colors = colorValues.prepare(end - start + 1)
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors[i - start])
         else super.setSectionColor(start, end, colors)
     }
 
     fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean) {
         setSectionColor(start, end, ColorContainer(color), prolonged)
-    }
-
-    fun setSectionColor(start: Int, end: Int, rIn: Int, gIn: Int, bIn: Int, prolonged: Boolean) {
-        setSectionColor(start, end, ColorContainer(Triple(rIn, gIn, bIn)), prolonged)
     }
 
 
@@ -298,31 +283,11 @@ abstract class LEDStrip(
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
+     * @throws IllegalArgumentException If pixel is not a valid index
      */
     override fun getPixelColor(pixel: Int): Long {
-        try {
-            return prolongedColors[pixel]
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColor: $e")
-        }
-        Logger.warn("Color not retrieved")
-        return CCBlack.color
-    }
-
-    /**
-     * Get the prolonged color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if an error occurs
-     */
-    fun getPixelColorOrNull(pixel: Int): Long? {
-        try {
-            return prolongedColors[pixel]
-        } catch (e: Exception) {
-            Logger.error("ERROR in getPixelColorOrNull: $e")
-        }
-        Logger.warn("Color not retrieved")
-        return null
+        require(pixel in prolongedColors.indices)
+        return prolongedColors[pixel]
     }
 
     /**
@@ -330,32 +295,9 @@ abstract class LEDStrip(
      *
      * @param pixel The pixel to find the color of
      * @return The color of the pixel
+     * @throws IllegalArgumentException If pixel is not a valid index
      */
-    fun getActualPixelColor(pixel: Int): Long {
-        try {
-            return super.getPixelColor(pixel)
-        } catch (e: Exception) {
-            Logger.error("ERROR in getActualPixelColor: $e")
-        }
-        Logger.warn("Color not retrieved")
-        return CCBlack.color
-    }
-
-    /**
-     * Get the actual color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel or null if an error occurs
-     */
-    fun getActualPixelColorOrNull(pixel: Int): Long? {
-        try {
-            return super.getPixelColor(pixel)
-        } catch (e: Exception) {
-            Logger.error("ERROR in getActualPixelColorOrNull: $e")
-        }
-        Logger.warn("Color not retrieved")
-        return null
-    }
+    fun getActualPixelColor(pixel: Int): Long = super.getPixelColor(pixel)
 
     /**
      * Get the colors of all pixels as a `List<Long>`
@@ -381,8 +323,8 @@ abstract class LEDStrip(
      */
     inner class FadePixel(private val pixel: Int) {
         /**
-         * Which thread is currently fading a pixel?
-         * Used so another thread can take over mid-fade if necessary.
+         * Which thread is currently fading this pixel -
+         * used so another thread can take over mid-fade if necessary.
          */
         var owner = ""
 
@@ -409,14 +351,17 @@ abstract class LEDStrip(
                 if (owner != myName) break
                 isFading = true
                 i++
-                setPixelColor(
-                    pixel,
-                    blend(
-                        getActualPixelColorOrNull(pixel) ?: continue,
-                        prolongedColors[pixel], amountOfOverlay
+                var doDelay = true
+                withPixelLock(pixel) {
+                    setPixelColor(
+                        pixel,
+                        blend(
+                            getActualPixelColorOrNull(pixel) ?: run { doDelay = false; return@withPixelLock Unit },
+                            prolongedColors[pixel], amountOfOverlay
+                        )
                     )
-                )
-                delayBlocking(delay)
+                }
+                if (doDelay) delayBlocking(delay)
             }
             if (owner == myName) revertPixel(pixel)
             if (owner == myName) isFading = false
@@ -432,8 +377,6 @@ abstract class LEDStrip(
      * @see FadePixel
      */
     fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
-        Logger.trace("Fading pixel $pixel")
         fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay)
-        Logger.trace("Fade of pixel $pixel complete")
     }
 }
