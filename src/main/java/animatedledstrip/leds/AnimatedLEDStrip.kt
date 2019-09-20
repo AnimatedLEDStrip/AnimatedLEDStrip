@@ -28,7 +28,6 @@ import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger
@@ -199,11 +198,7 @@ abstract class AnimatedLEDStrip(
     private val bounce: (AnimationData) -> Unit = { animation: AnimationData ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (i + animation.startPixel)..(animation.endPixel - i)) {
-                locks[j]!!.tryWithLock {
-                    setPixelColor(j, animation.pCols[0])
-                    delayBlocking(animation.delay)
-                    revertPixel(j)
-                }
+                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
             }
             setPixelColor(animation.endPixel - i, animation.pCols[0])
             GlobalScope.launch(parallelAnimationThreadPool) {
@@ -211,11 +206,7 @@ abstract class AnimatedLEDStrip(
                 fadePixel(p, amountOfOverlay = 25, delay = 50)
             }
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel)) {
-                locks[j]!!.tryWithLock {
-                    setPixelColor(j, animation.pCols[0])
-                    delayBlocking(animation.delay)
-                    revertPixel(j)
-                }
+                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
             }
             setPixelColor(animation.startPixel + i, animation.pCols[0])
             GlobalScope.launch(parallelAnimationThreadPool) {
