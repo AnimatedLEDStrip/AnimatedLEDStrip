@@ -28,7 +28,11 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.tryWithLock
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.pmw.tinylog.Logger
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 
 operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainerInterface) {
@@ -112,6 +116,19 @@ fun LEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
 //        fadePixel(pixel, amountOfOverlay)
 //    }
 //}
+
+fun LEDStrip.setAndFadePixel(
+    pixel: Int,
+    color: ColorContainerInterface,
+    amountOfOverlay: Int = 25,
+    delay: Int = 30,
+    context: CoroutineContext = EmptyCoroutineContext
+) {
+    setPixelColor(pixel, color)
+    GlobalScope.launch(context) {
+        fadePixel(pixel, amountOfOverlay, delay)
+    }
+}
 
 /* Set pixels based on indices in a list */
 
