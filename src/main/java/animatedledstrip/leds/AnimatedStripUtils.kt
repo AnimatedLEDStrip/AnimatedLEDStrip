@@ -46,6 +46,13 @@ inline fun iterateOverPixelsReverse(
     for (q in animation.endPixel downTo animation.startPixel) operation.invoke(q)
 }
 
+inline fun iterateOver(
+    indices: IntProgression,
+    operation: (Int) -> Unit
+) {
+    for (q in indices) operation.invoke(q)
+}
+
 /**
  * Helper extension method that sets a pixel, waits a specified time in
  * milliseconds, then reverts the pixel.
