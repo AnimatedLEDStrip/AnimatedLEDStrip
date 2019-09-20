@@ -258,17 +258,11 @@ abstract class AnimatedLEDStrip(
     private val meteor: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
             Direction.FORWARD -> iterateOverPixels(animation) {
-                setPixelColor(it, animation.pCols[0])
-                GlobalScope.launch(parallelAnimationThreadPool) {
-                    fadePixel(it, 60, 25)
-                }
+                setAndFadePixel(it, animation.pCols[0], 60, 25, parallelAnimationThreadPool)
                 delayBlocking(animation.delay)
             }
             Direction.BACKWARD -> iterateOverPixelsReverse(animation) {
-                setPixelColor(it, animation.pCols[0])
-                GlobalScope.launch(parallelAnimationThreadPool) {
-                    fadePixel(it, 60, 25)
-                }
+                setAndFadePixel(it, animation.pCols[0], 60, 25, parallelAnimationThreadPool)
                 delayBlocking(animation.delay)
             }
         }
