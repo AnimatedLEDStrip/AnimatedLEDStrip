@@ -351,14 +351,17 @@ abstract class LEDStrip(
                 if (owner != myName) break
                 isFading = true
                 i++
-                setPixelColor(
-                    pixel,
-                    blend(
-                        getActualPixelColorOrNull(pixel) ?: continue,
-                        prolongedColors[pixel], amountOfOverlay
+                var doDelay = true
+                withPixelLock(pixel) {
+                    setPixelColor(
+                        pixel,
+                        blend(
+                            getActualPixelColorOrNull(pixel) ?: run { doDelay = false; return@withPixelLock Unit },
+                            prolongedColors[pixel], amountOfOverlay
+                        )
                     )
-                )
-                delayBlocking(delay)
+                }
+                if (doDelay) delayBlocking(delay)
             }
             if (owner == myName) revertPixel(pixel)
             if (owner == myName) isFading = false

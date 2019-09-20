@@ -107,30 +107,6 @@ fun LEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
     } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
 }
 
-///**
-// * Helper extension method that sets a pixel, waits a specified time in
-// * milliseconds, then reverts the pixel.
-// */
-//fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
-//    withPixelLock(pixel) {
-//        setLockedPixelColor(pixel, color)
-//        delayBlocking(delay)
-//        revertLockedPixel(pixel)
-//    }
-//}
-
-///**
-// * Helper extension method that sets a pixel, waits a specified time in
-// * milliseconds, then reverts the pixel.
-// */
-//fun LEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: Long, delay: Long) {
-//    withPixelLock(pixel) {
-//        setLockedPixelColor(pixel, color)
-//        delayBlocking(delay)
-//        revertLockedPixel(pixel)
-//    }
-//}
-
 //fun LEDStrip.revertPixelWithFade(pixel: Int, amountOfOverlay: Int = 25) {
 //    GlobalScope.launch {
 //        fadePixel(pixel, amountOfOverlay)
