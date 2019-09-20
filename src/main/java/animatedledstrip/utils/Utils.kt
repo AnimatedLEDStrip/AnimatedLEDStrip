@@ -24,8 +24,6 @@ package animatedledstrip.utils
  */
 
 
-import org.pmw.tinylog.Logger
-
 /**
  * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
  *
@@ -47,7 +45,6 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
     return ((r shl 16) or (g shl 8) or b).toLong()
-
 }
 
 
@@ -78,12 +75,16 @@ fun delayBlocking(wait: Int) {
  * @param string The hex `String` to decode
  */
 fun parseHex(string: String): Long {
-    val s = string.removePrefix("0x")     // remove leading 0x if present
+    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
+    return java.lang.Long.parseLong(s, 16)
+}
+
+fun parseHexOrDefault(string: String, default: Long = 0x0L): Long {
+    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
     return try {
         java.lang.Long.parseLong(s, 16)
     } catch (e: NumberFormatException) {
-        Logger.warn("Format of string \"$string\" is malformed: $e")
-        0x0
+        default
     }
 }
 
@@ -120,6 +121,3 @@ val Long.b
  * @param b The base to use
  */
 infix fun Long.base(b: Int) = this.toString(b)
-
-fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
-fun Int.toARGB(): Int = (this or 0xFF000000.toInt())

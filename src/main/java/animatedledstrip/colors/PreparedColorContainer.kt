@@ -33,7 +33,8 @@ import animatedledstrip.utils.base
  * @property colors The List of colors that will be used to create this
  * PreparedColorContainer
  */
-class PreparedColorContainer(private val colors: List<Long>) : ColorContainerInterface {
+class PreparedColorContainer(val colors: List<Long>, private val originalColors: List<Long> = colors) :
+    ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
@@ -52,8 +53,6 @@ class PreparedColorContainer(private val colors: List<Long>) : ColorContainerInt
      * Create a string representation of this PreparedColorContainer.
      * The hexadecimal representation of each color in [colors] is
      * listed in comma delimited format, between brackets `[` & `]`
-     * If there is only one color in this ColorContainer, the brackets
-     * are dropped.
      */
     override fun toString(): String {
         var temp = "["
@@ -74,9 +73,12 @@ class PreparedColorContainer(private val colors: List<Long>) : ColorContainerInt
     operator fun contains(value: Long): Boolean = colors.contains(value)
 
     /**
-     * @return This PreparedColorContainer instance
+     * @return If this is the correct size, then this PreparedColorContainer instance,
+     * otherwise a new PreparedColorContainer of the correct size
      */
-    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer = this
+    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer =
+        if (numLEDs == size) this
+        else ColorContainer(originalColors).prepare(numLEDs, leadingZeros)
 
     /**
      * Returns the size of [colors].

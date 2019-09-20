@@ -1,4 +1,4 @@
-package animatedledstrip.animationutils
+package animatedledstrip.utils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -23,22 +23,10 @@ package animatedledstrip.animationutils
  */
 
 
-/**
- * Helper enum for specifying the requirement level of an animation parameter.
- *
- */
-enum class ReqLevel {
-    /**
-     * Animation parameter must be set by the user
-     */
-    REQUIRED,
-    /**
-     * Animation parameter may be set by the user, otherwise will be set to a
-     * default as specified
-     */
-    OPTIONAL,
-    /**
-     * Animation does not use parameter
-     */
-    NOTUSED
-}
+import animatedledstrip.colors.ColorContainer
+
+fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
+fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
+
+fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
+fun Long.toColorContainer(): ColorContainer = ColorContainer(this)

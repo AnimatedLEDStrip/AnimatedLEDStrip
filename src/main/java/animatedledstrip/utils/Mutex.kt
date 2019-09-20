@@ -39,6 +39,7 @@ import org.pmw.tinylog.Logger
  * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
  * action.
  *
+ *
  * @param T
  * @param owner
  * @param action
@@ -52,7 +53,7 @@ inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
             unlock(owner)
         }
     } else {
-        Logger.debug("Access Overlap: $owner")
+        Logger.trace { "Access Overlap: $owner" }
         return
     }
 }
