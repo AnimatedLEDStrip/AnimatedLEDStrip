@@ -81,9 +81,7 @@
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">multiPixelRun</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Runs a Multi-Pixel Run animation.
-TODO: Use setPixelColors
-Similar to Pixel Run but with multiple LEDs at a specified spacing.</p>
+<p>Runs a Multi-Pixel Run animation.</p>
 </td>
 </tr>
 <tr>
@@ -92,10 +90,7 @@ Similar to Pixel Run but with multiple LEDs at a specified spacing.</p>
 </td>
 <td>
 <code><span class="keyword">val </span><span class="identifier">multiPixelRunToColor</span><span class="symbol">: </span><span class="symbol">(</span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Runs a Multi-Pixel Run To Color animation.
-TODO: Use setProlongedPixelColors
-Similar to Multi-Pixel Run but LEDs do not revert back to their original
-color.</p>
+<p>Runs a Multi-Pixel Run To Color animation.</p>
 </td>
 </tr>
 <tr>
@@ -244,13 +239,6 @@ at which point buffer is appended to <code>outFile</code> and cleared.</p>
 </tr>
 <tr>
 <td>
-<p><a href="../-l-e-d-strip/fade-colors.html">fadeColors</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">fadeColors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
-</tr>
-<tr>
-<td>
 <p><a href="../-l-e-d-strip/fade-map.html">fadeMap</a></p>
 </td>
 <td>
@@ -348,6 +336,13 @@ being used.</p>
 <p>The thread in which the rendering loop will run.</p>
 </td>
 </tr>
+<tr>
+<td>
+<p><a href="../-l-e-d-strip/write-locks.html">writeLocks</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">writeLocks</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">Mutex</span><span class="symbol">&gt;</span></code></td>
+</tr>
 </tbody>
 </table>
 <h3>Functions</h3>
@@ -389,7 +384,7 @@ the AnimationData instance.</p>
 <p><a href="../-l-e-d-strip/fade-pixel.html">fadePixel</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">fadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">fadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$fadePixel(kotlin.Int, kotlin.Int, kotlin.Int)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;30<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Helper function for fading a pixel.</p>
 </td>
 </tr>
@@ -413,25 +408,10 @@ the AnimationData instance.</p>
 </tr>
 <tr>
 <td>
-<p><a href="../-l-e-d-strip/revert-locked-pixel.html">revertLockedPixel</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">revertLockedPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$revertLockedPixel(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
-</tr>
-<tr>
-<td>
 <p><a href="../-l-e-d-strip/revert-pixel.html">revertPixel</a></p>
 </td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">revertPixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$revertPixel(kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
-</tr>
-<tr>
-<td>
-<p><a href="../-l-e-d-strip/set-locked-pixel-color.html">setLockedPixelColor</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">setLockedPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setLockedPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setLockedPixelColor(kotlin.Int, animatedledstrip.colors.ColorContainerInterface)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><span class="identifier">setLockedPixelColor</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setLockedPixelColor(kotlin.Int, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.LEDStrip$setLockedPixelColor(kotlin.Int, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -532,13 +512,6 @@ thread that renders the strip constantly until this is called again.</p>
 </tr>
 <tr>
 <td>
-<p><a href="../revert-pixel-with-fade.html">revertPixelWithFade</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">revertPixelWithFade</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$revertPixelWithFade(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Int)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$revertPixelWithFade(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
-</tr>
-<tr>
-<td>
 <p><a href="../run-parallel-and-join.html">runParallelAndJoin</a></p>
 </td>
 <td>
@@ -556,11 +529,17 @@ thread that renders the strip constantly until this is called again.</p>
 </tr>
 <tr>
 <td>
+<p><a href="../set-and-fade-pixel.html">setAndFadePixel</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">setAndFadePixel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setAndFadePixel(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Int, kotlin.Int, kotlin.coroutines.CoroutineContext)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setAndFadePixel(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Int, kotlin.Int, kotlin.coroutines.CoroutineContext)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setAndFadePixel(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Int, kotlin.Int, kotlin.coroutines.CoroutineContext)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;25<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setAndFadePixel(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Int, kotlin.Int, kotlin.coroutines.CoroutineContext)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;30<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setAndFadePixel(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Int, kotlin.Int, kotlin.coroutines.CoroutineContext)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.coroutines/-coroutine-context/index.html"><span class="identifier">CoroutineContext</span></a>&nbsp;<span class="symbol">=</span>&nbsp;EmptyCoroutineContext<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <p><a href="../set-pixel-and-revert-after-delay.html">setPixelAndRevertAfterDelay</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">setPixelAndRevertAfterDelay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
-<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">setPixelAndRevertAfterDelay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Long, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Long, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Long, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">AnimatedLEDStrip</span></a><span class="symbol">.</span><span class="identifier">setPixelAndRevertAfterDelay</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/color">color</span><span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.colors/-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$setPixelAndRevertAfterDelay(animatedledstrip.leds.AnimatedLEDStrip, kotlin.Int, animatedledstrip.colors.ColorContainerInterface, kotlin.Long)/delay">delay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Helper extension method that sets a pixel, waits a specified time in
 milliseconds, then reverts the pixel.</p>
 </td>
@@ -595,7 +574,7 @@ milliseconds, then reverts the pixel.</p>
 <p><a href="../with-pixel-lock.html">withPixelLock</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">withPixelLock</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.String, kotlin.Function0((kotlin.Any)))/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.String, kotlin.Function0((kotlin.Any)))/owner">owner</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;""<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.String, kotlin.Function0((kotlin.Any)))/operation">operation</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><a href="../-l-e-d-strip/index.html"><span class="identifier">LEDStrip</span></a><span class="symbol">.</span><span class="identifier">withPixelLock</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Function0((kotlin.Any)))/pixel">pixel</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds$withPixelLock(animatedledstrip.leds.LEDStrip, kotlin.Int, kotlin.Function0((kotlin.Any)))/operation">operation</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 </tbody>
 </table>
