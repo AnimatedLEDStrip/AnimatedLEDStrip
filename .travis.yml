@@ -49,4 +49,4 @@ jobs:
         - provider: script
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
           on:
-            all_branches: true
+            branch: master
