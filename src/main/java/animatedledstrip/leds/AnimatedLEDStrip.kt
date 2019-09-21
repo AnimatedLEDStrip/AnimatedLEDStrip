@@ -77,6 +77,7 @@ abstract class AnimatedLEDStrip(
      * animation to run
      */
     override fun run(animation: AnimationData) {
+        Logger.trace("Starting $animation")
         animation.endPixel = when (animation.endPixel) {
             -1 -> numLEDs - 1
             else -> animation.endPixel
@@ -591,11 +592,13 @@ abstract class AnimatedLEDStrip(
 
         runParallelAndJoin(
             baseAnimation.copy(
+                colors = listOf(animation.pCols[0]),
                 direction = Direction.FORWARD
-            ).color(animation.pCols[0]),
+            ),
             baseAnimation.copy(
+                colors = listOf(animation.pCols[1]),
                 direction = Direction.BACKWARD
-            ).color(animation.pCols[1])
+            )
         )
     }
 

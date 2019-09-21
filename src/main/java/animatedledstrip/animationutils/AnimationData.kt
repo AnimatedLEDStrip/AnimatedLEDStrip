@@ -38,7 +38,7 @@ import java.io.Serializable
  * @property center The pixel at the center of a radial animation.
  * Defaults to the center of the strip.
  * @property continuous If the animation will run endlessly until stopped
- * @property _delay Delay time (in milliseconds) used in the animation
+ * @property delay Delay time (in milliseconds) used in the animation
  * @property delayMod Multiplier for `delay`
  * @property direction The direction the animation will run
  * @property distance The distance a radial animation will travel from its center.
@@ -47,32 +47,36 @@ import java.io.Serializable
  * animation (inclusive)
  * @property id ID for the animation. Used by server and client for
  * stopping continuous animations.
- * @property _spacing Spacing used in the animation
+ * @property spacing Spacing used in the animation
  * @property startPixel First pixel on the strip will show the animation
  */
-data class AnimationData(
+class AnimationData(
     var animation: Animation = Animation.COLOR,
-    val colors: MutableList<ColorContainerInterface> = mutableListOf(),
+    colors: List<ColorContainerInterface> = listOf(),
     var center: Int = -1,
     var continuous: Boolean = true,
-    private var _delay: Long = -1L,
+    delay: Long = -1L,
     var delayMod: Double = 1.0,
     var direction: Direction = Direction.FORWARD,
     var distance: Int = -1,
     var endPixel: Int = -1,
     var id: String = "",
-    private var _spacing: Int = -1,
+    spacing: Int = -1,
     var startPixel: Int = 0
 ) : Serializable {
+
+    val colors = mutableListOf<ColorContainerInterface>().apply {
+        addAll(colors)
+    }
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
     /**
      * Delay time (in milliseconds) used in the animation.
      */
-    var delay: Long
+    var delay: Long = delay
         get() {
-            return (when (_delay) {
+            return (when (field) {
                 -1L, 0L -> {
                     when (animationInfoMap[animation]?.delay) {
                         ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
@@ -81,20 +85,17 @@ data class AnimationData(
                         null -> 50L
                     }
                 }
-                else -> _delay
+                else -> field
             } * delayMod).toLong()
-        }
-        set(value) {
-            _delay = value
         }
 
 
     /**
      * Spacing used in the animation.
      */
-    var spacing: Int
+    var spacing: Int = spacing
         get() {
-            return (when (_spacing) {
+            return (when (field) {
                 -1, 0 -> {
                     when (animationInfoMap[animation]?.spacing) {
                         ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
@@ -103,10 +104,74 @@ data class AnimationData(
                         null -> 3
                     }
                 }
-                else -> _spacing
+                else -> field
             })
         }
-        set(value) {
-            _spacing = value
-        }
+
+    /* Note: If any other properties are added, they must be added to the four methods below */
+
+    fun copy(
+        animation: Animation = this.animation,
+        colors: List<ColorContainerInterface> = this.colors,
+        center: Int = this.center,
+        continuous: Boolean = this.continuous,
+        delay: Long = this.delay,
+        delayMod: Double = this.delayMod,
+        direction: Direction = this.direction,
+        distance: Int = this.distance,
+        endPixel: Int = this.endPixel,
+        id: String = this.id,
+        spacing: Int = this.spacing,
+        startPixel: Int = this.startPixel
+    ) = AnimationData(
+        animation,
+        colors,
+        center,
+        continuous,
+        delay,
+        delayMod,
+        direction,
+        distance,
+        endPixel,
+        id,
+        spacing,
+        startPixel
+    )
+
+    override fun toString() =
+        "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
+                "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
+                "endPixel=$endPixel, id=$id, spacing=$spacing, startPixel=$startPixel)"
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other) ||
+                (other is AnimationData &&
+                        animation == other.animation &&
+                        colors == other.colors &&
+                        center == other.center &&
+                        continuous == other.continuous &&
+                        delay == other.delay &&
+                        delayMod == other.delayMod &&
+                        direction == other.direction &&
+                        distance == other.distance &&
+                        endPixel == other.endPixel &&
+                        id == other.id &&
+                        spacing == other.spacing &&
+                        startPixel == other.startPixel)
+    }
+
+    override fun hashCode(): Int {
+        var result = animation.hashCode()
+        result = 31 * result + center
+        result = 31 * result + continuous.hashCode()
+        result = 31 * result + delayMod.hashCode()
+        result = 31 * result + direction.hashCode()
+        result = 31 * result + distance
+        result = 31 * result + endPixel
+        result = 31 * result + id.hashCode()
+        result = 31 * result + startPixel
+        result = 31 * result + colors.hashCode()
+        return result
+    }
+
 }
