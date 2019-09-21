@@ -591,11 +591,13 @@ abstract class AnimatedLEDStrip(
 
         runParallelAndJoin(
             baseAnimation.copy(
+                colors = listOf(animation.pCols[0]),
                 direction = Direction.FORWARD
-            ).color(animation.pCols[0]),
+            ),
             baseAnimation.copy(
+                colors = listOf(animation.pCols[1]),
                 direction = Direction.BACKWARD
-            ).color(animation.pCols[1])
+            )
         )
     }
 

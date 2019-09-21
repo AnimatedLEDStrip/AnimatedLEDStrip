@@ -368,8 +368,8 @@ class AnimatedLEDStripTest {
         testLEDs.run(
             AnimationData()
                 .animation(Animation.STACKOVERFLOW)
-                .color(0xFF, index = 1)
-                .color(0xFF00, index = 1)
+                .color(0xFF)
+                .color(0xFF00)
         )
     }
 
