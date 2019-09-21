@@ -77,6 +77,7 @@ abstract class AnimatedLEDStrip(
      * animation to run
      */
     override fun run(animation: AnimationData) {
+        Logger.trace("Starting $animation")
         animation.endPixel = when (animation.endPixel) {
             -1 -> numLEDs - 1
             else -> animation.endPixel
