@@ -167,33 +167,28 @@ fun AnimationData.addColors(colors: List<*>): AnimationData {
 
 
 /**
- * Set colors[0]
+ * Set `colors[0]`
  */
-@Suppress("KDocUnresolvedReference")
 fun AnimationData.color0(color: Any) = color(color, 0)
 
 /**
- * Set colors[1]
+ * Set `colors[1]`
  */
-@Suppress("KDocUnresolvedReference")
 fun AnimationData.color1(color: Any) = color(color, 1)
 
 /**
- * Set colors[2]
+ * Set `colors[2]`
  */
-@Suppress("KDocUnresolvedReference")
 fun AnimationData.color2(color: Any) = color(color, 2)
 
 /**
- * Set colors[3]
+ * Set `colors[3]`
  */
-@Suppress("KDocUnresolvedReference")
 fun AnimationData.color3(color: Any) = color(color, 3)
 
 /**
- * Set colors[4]
+ * Set `colors[4]`
  */
-@Suppress("KDocUnresolvedReference")
 fun AnimationData.color4(color: Any) = color(color, 4)
 
 /**

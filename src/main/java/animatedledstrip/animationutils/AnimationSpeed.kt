@@ -22,9 +22,20 @@ package animatedledstrip.animationutils
  *  THE SOFTWARE.
  */
 
-
+/**
+ * Helper enum for easily setting the speed of an animation.
+ */
 enum class AnimationSpeed {
+    /**
+     * Set delayMod to 0.5
+     */
     SLOW,
+    /**
+     * Set delayMod to 1.0
+     */
     DEFAULT,
+    /**
+     * Set delayMod to 2.0
+     */
     FAST
 }

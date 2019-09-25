@@ -35,8 +35,10 @@ package animatedledstrip.animationutils
  * @property delay Delay in animation
  * @property delayDefault Default if delay is missing
  * @property direction Direction of animation
+ * @property repetitive Whether the animation is a repetitive animation
  * @property spacing Spacing for animation
  * @property spacingDefault Default if spacing is missing
+ * @property numColors The total number of colors in the animation
  */
 data class AnimationInfo(
     val abbr: String = "",
