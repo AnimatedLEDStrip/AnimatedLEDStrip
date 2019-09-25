@@ -77,10 +77,9 @@ class AnimationData(
             return (when (field) {
                 -1L, 0L -> {
                     when (animationInfoMap[animation]?.delay) {
-                        ReqLevel.REQUIRED -> throw Exception("Animation delay required for $animation")
                         ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 50L
                         ReqLevel.NOTUSED -> 50L
-                        null -> 50L
+                        else -> 50L
                     }
                 }
                 else -> field
@@ -93,10 +92,9 @@ class AnimationData(
             return (when (field) {
                 -1, 0 -> {
                     when (animationInfoMap[animation]?.spacing) {
-                        ReqLevel.REQUIRED -> throw Exception("Animation spacing required for $animation")
                         ReqLevel.OPTIONAL -> animationInfoMap[animation]?.spacingDefault ?: 3
                         ReqLevel.NOTUSED -> 3
-                        null -> 3
+                        else -> 3
                     }
                 }
                 else -> field
