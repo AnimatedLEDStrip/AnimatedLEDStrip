@@ -23,7 +23,6 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.utils.blend
@@ -46,6 +45,8 @@ import java.util.*
  * the strip?
  * @param fileName Specify a name for the image debug file (only useful if imageDebugging
  * is enabled)
+ * @param rendersBeforeSave How many renders to perform between
+ * image debugging saves
  */
 abstract class LEDStrip(
     numLEDs: Int,
@@ -251,9 +252,9 @@ abstract class LEDStrip(
      * @param color The color to set the pixel to
      */
     fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) {
-        val colors = color.prepare(numLEDs)
-        prolongedColors[pixel] = colors[pixel]
-        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, colors[pixel])
+        val pColor = color.prepare(numLEDs)
+        prolongedColors[pixel] = pColor[pixel]
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, pColor[pixel])
     }
 
     /**
@@ -264,7 +265,8 @@ abstract class LEDStrip(
      * @param color A `Long` representing the color to set the pixel to
      */
     fun setProlongedPixelColor(pixel: Int, color: Long) {
-        setProlongedPixelColor(pixel, ColorContainer(color))
+        prolongedColors[pixel] = color
+        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color)
     }
 
     /**
@@ -309,9 +311,9 @@ abstract class LEDStrip(
      * @param color The color to use
      */
     fun setStripColor(color: ColorContainerInterface, prolonged: Boolean) {
-        val colors = color.prepare(numLEDs)
-        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
-        else super.setStripColor(colors)
+        val pColor = color.prepare(numLEDs)
+        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, pColor)
+        else super.setStripColor(pColor)
     }
 
     /**
@@ -329,23 +331,51 @@ abstract class LEDStrip(
 
     /* Set section color */
 
+    /**
+     * Override for setSectionColor that calls the [LEDStrip] implementation
+     * of `setSectionColor`
+     *
+     * @param color The color to use
+     */
     override fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface) {
         setSectionColor(start, end, color, true)
     }
 
+    /**
+     * Override for setSectionColor that calls the [LEDStrip] implementation
+     * of `setSectionColor`
+     *
+     * @param color A `Long` representing the color to use
+     */
     override fun setSectionColor(start: Int, end: Int, color: Long) {
         setSectionColor(start, end, color, true)
     }
 
-    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface, prolonged: Boolean) {
+    /**
+     * Set the color of all pixels in a section of the strip. If prolonged is true,
+     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
+     * `setSectionColor`.
+     *
+     * @param color A `Long` representing the color to use
+     */
+    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean) {
         require(end >= start)
-        val colors = colorValues.prepare(end - start + 1)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i, colors[i - start])
-        else super.setSectionColor(start, end, colors)
+        val pColor = color.prepare(end - start + 1)
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i, pColor[i - start])
+        else super.setSectionColor(start, end, pColor)
     }
 
+    /**
+     * Set the color of all pixels in a section of the strip. If prolonged is true,
+     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
+     * `setSectionColor`.
+     *
+     * @param color A `Long` representing the color to use
+     */
     fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean) {
-        setSectionColor(start, end, ColorContainer(color), prolonged)
+        require(end >= start)
+        if (prolonged) for (i in start..end) setProlongedPixelColor(i, color)
+        else super.setSectionColor(start, end, color)
     }
 
 
@@ -401,6 +431,9 @@ abstract class LEDStrip(
          */
         var owner = ""
 
+        /**
+         * Track if the pixel is in the middle of a fade
+         */
         var isFading = false
             private set
 
