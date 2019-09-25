@@ -36,7 +36,7 @@ interface SectionableLEDStrip {
      *
      * @param start The first pixel in the section
      * @param end The last pixel (inclusive) in the section
-     * @param colorValues The color(s) to set the section to
+     * @param color The color(s) to set the section to
      */
-    fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface)
+    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface)
 }
