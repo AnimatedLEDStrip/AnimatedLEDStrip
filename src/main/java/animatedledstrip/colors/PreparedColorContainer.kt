@@ -27,11 +27,12 @@ import animatedledstrip.utils.base
 
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
- * to the next. This is created by calling the prepare() function on a
- * ColorContainer. Used by methods that set the color of pixel(s) on a strip.
+ * to the next. This is created by calling the `prepare()` function on a
+ * [ColorContainer]. Used by methods that set the color of pixel(s) on a strip.
  *
- * @property colors The List of colors that will be used to create this
- * PreparedColorContainer
+ * @property colors The `List` of colors in this [PreparedColorContainer]
+ * @property originalColors The colors that were used to prepare this
+ * [PreparedColorContainer]
  */
 class PreparedColorContainer(val colors: List<Long>, private val originalColors: List<Long> = colors) :
     ColorContainerInterface {
@@ -44,6 +45,7 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
     operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0
 
     /**
+     * Override for `color` that only returns 0
      * @return 0
      */
     override val color: Long
@@ -73,8 +75,8 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
     operator fun contains(value: Long): Boolean = colors.contains(value)
 
     /**
-     * @return If this is the correct size, then this PreparedColorContainer instance,
-     * otherwise a new PreparedColorContainer of the correct size
+     * @return If this [PreparedColorContainer] is the correct size, then this instance,
+     * otherwise a new instance of the correct size
      */
     override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer =
         if (numLEDs == size) this
