@@ -30,6 +30,7 @@ import kotlin.test.assertTrue
 
 class AnimationInfoTest {
 
+    @Suppress("SimplifyBooleanWithConstants")
     @Test
     fun testDefaultConstruction() {
         val ai = AnimationInfo()
@@ -41,6 +42,7 @@ class AnimationInfoTest {
         assertTrue { ai.delay == ReqLevel.NOTUSED }
         assertTrue { ai.delayDefault == 0L }
         assertTrue { ai.direction == ReqLevel.NOTUSED }
+        assertTrue { ai.repetitive == false }
         assertTrue { ai.spacing == ReqLevel.NOTUSED }
         assertTrue { ai.spacingDefault == 0 }
     }

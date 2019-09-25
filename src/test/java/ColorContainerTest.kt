@@ -65,10 +65,7 @@ class ColorContainerTest {
 
         assertTrue { testCC == ColorContainer(0xFF7B50) }
         assertFalse { testCC == ColorContainer(0xFF7B51) }
-        assertFalse {
-            @Suppress("ReplaceCallWithBinaryOperator")
-            testCC.equals(10)
-        }
+        assertFalse { testCC.equals(10) }
 
         testCC.hashCode()
     }
@@ -99,6 +96,13 @@ class ColorContainerTest {
         assertTrue { testCC2[10] == 0xFF7B50L }
         assertTrue { testCC2[3..5] == listOf<Long>(0xFF7B50) }
         assertTrue { testCC2[5, 8, 10] == listOf<Long>(0xFF7B50) }
+
+        val testCC3 = ColorContainer()
+        assertTrue { testCC3.color == 0L }
+
+        val testPCC = testCC.prepare(50)
+        assertTrue { testPCC[0] == 0xFF7B50L }
+        assertTrue { testPCC[50] == 0L }
     }
 
     @Test
@@ -124,6 +128,13 @@ class ColorContainerTest {
                 0x526BE2
             )
         }
+    }
+
+    @Test
+    fun testSize() {
+        val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
+
+        assertTrue { testCC.size == 4 }
     }
 
     @Test

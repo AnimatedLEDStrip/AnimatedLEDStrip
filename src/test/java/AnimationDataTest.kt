@@ -25,6 +25,7 @@ package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.utils.toColorContainer
 import org.junit.Test
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -34,6 +35,7 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 
@@ -48,8 +50,8 @@ class AnimationDataTest {
         testAnimation.animation = Animation.BOUNCE
         assertTrue { testAnimation.animation == Animation.BOUNCE }
 
-        testAnimation.animation(Animation.MULTICOLOR)
-        assertTrue { testAnimation.animation == Animation.MULTICOLOR }
+        testAnimation.animation(Animation.SPLAT)
+        assertTrue { testAnimation.animation == Animation.SPLAT }
     }
 
     @Test
@@ -257,9 +259,9 @@ class AnimationDataTest {
         assertTrue { testAnimation.startPixel == 100 }
     }
 
+    @Suppress("ReplaceCallWithBinaryOperator")
     @Test
     fun testEquals() {
-
         val testAnimation1 = AnimationData()
             .animation(Animation.STACK)
             .color0(0xFFFF)
@@ -278,6 +280,41 @@ class AnimationDataTest {
         }
 
         assertTrue { testAnimation1 == testAnimation2 }
+        assertFalse { testAnimation1.equals(0xFF) }
+    }
+
+    @Test
+    fun testCopy() {
+        val testAnimation1 = AnimationData()
+            .animation(Animation.STACK)
+            .color0(0xFFFF)
+            .color1(0xFFFFFF)
+            .delay(10)
+            .direction(Direction.BACKWARD)
+            .spacing(4)
+
+        testAnimation1.copy()
+
+        testAnimation1.copy(
+            animation = Animation.COLOR,
+            colors = listOf(0xFF.toColorContainer()),
+            center = 30,
+            continuous = false,
+            delay = 10,
+            delayMod = 2.0,
+            direction = Direction.FORWARD,
+            distance = 50,
+            endPixel = 50,
+            id= "test",
+            spacing = 4,
+            startPixel = 10
+        )
+    }
+
+    @Test
+    fun testHashCode() {
+        val testAnimation = AnimationData()
+        testAnimation.hashCode()
     }
 
     @Test
