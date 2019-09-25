@@ -32,12 +32,27 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.runBlocking
 
 
+/**
+ * Iterate over the indices from startPixel to endPixel (inclusive)
+ *
+ * @param animation The animation data to use to determine startPixel
+ * and endPixel
+ * @param operation The operation to perform
+ */
 inline fun iterateOverPixels(
     animation: AnimationData,
     operation: (Int) -> Unit
 ) {
     for (q in animation.startPixel..animation.endPixel) operation.invoke(q)
 }
+
+/**
+ * Iterate over the indices from endPixel down to startPixel (inclusive)
+ *
+ * @param animation The animation data to use to determine startPixel
+ * and endPixel
+ * @param operation The operation to perform
+ */
 
 inline fun iterateOverPixelsReverse(
     animation: AnimationData,
@@ -46,8 +61,27 @@ inline fun iterateOverPixelsReverse(
     for (q in animation.endPixel downTo animation.startPixel) operation.invoke(q)
 }
 
+/**
+ * Iterate over a range of indices
+ *
+ * @param indices The indices to iterate over
+ * @param operation The operation to perform
+ */
 inline fun iterateOver(
     indices: IntProgression,
+    operation: (Int) -> Unit
+) {
+    for (q in indices) operation.invoke(q)
+}
+
+/**
+ * Iterate over indices given in a list
+ *
+ * @param indices The indices to iterate over
+ * @param operation The operation to perform
+ */
+inline fun iterateOver(
+    indices: List<Int>,
     operation: (Int) -> Unit
 ) {
     for (q in indices) operation.invoke(q)
@@ -65,6 +99,13 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
     }
 }
 
+/**
+ * Start multiple animations in parallel and wait for all to complete
+ * before returning
+ *
+ * @param animations The animations to run
+ * @param pool The pool of threads to start the animations in
+ */
 fun AnimatedLEDStrip.runParallelAndJoin(
     vararg animations: AnimationData,
     pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
