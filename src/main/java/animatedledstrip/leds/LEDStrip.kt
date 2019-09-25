@@ -85,8 +85,18 @@ abstract class LEDStrip(
     var rendering = false
         private set
 
+    /**
+     * The actual file name to use.
+     * Use `fileName` if it is set, otherwise default to `signature_date_time.csv`
+     */
     private val _fileName =
-        fileName ?: "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+        when (fileName) {
+            null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+            else -> {
+                if (fileName.endsWith(".csv")) fileName
+                else "$fileName.csv"
+            }
+        }
 
     /**
      * The file that the csv output will be saved to if image debugging is enabled.
