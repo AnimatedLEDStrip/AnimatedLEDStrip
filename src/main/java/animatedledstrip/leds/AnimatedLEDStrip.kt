@@ -35,9 +35,13 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * A subclass of [LEDStrip] adding animations.
+ * A subclass of [LEDStrip] adding concurrent animations.
  *
  * @param numLEDs Number of LEDs in the strip
+ * @param imageDebugging Enable image debugging
+ * @param fileName The file to write image debugging outputs to
+ * @param rendersBeforeSave How many renders to perform between
+ * image debugging saves
  */
 abstract class AnimatedLEDStrip(
     numLEDs: Int,
@@ -145,6 +149,13 @@ abstract class AnimatedLEDStrip(
         }
     }
 
+    /**
+     * Start another animation in a separate coroutine.
+     *
+     * @param animation The animation to run
+     * @param pool The pool of threads to start the animation in
+     * @return The `Job` associated with the new coroutine
+     */
     fun runParallel(
         animation: AnimationData,
         pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool

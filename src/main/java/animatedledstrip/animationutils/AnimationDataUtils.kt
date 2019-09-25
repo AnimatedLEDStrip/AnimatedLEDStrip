@@ -61,47 +61,93 @@ fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
     return this
 }
 
+/**
+ * Append a color to the end of `colors`
+ *
+ * @param color The color to add
+ */
 fun AnimationData.addColor(color: ColorContainerInterface): AnimationData {
     colors += color.toColorContainer()
     return this
 }
 
+/**
+ * Append multiple colors to the end of `colors`
+ *
+ * @param colors The colors to add
+ */
 fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationData {
     colors.forEach { addColor(it) }
     return this
 }
 
+/**
+ * Append a color to the end of `colors`
+ *
+ * @param color A `Long` representing the color to add
+ */
 fun AnimationData.addColor(color: Long): AnimationData {
     colors += ColorContainer(color)
     return this
 }
 
+/**
+ * Append multiple colors to the end of `colors`
+ *
+ * @param colors `Long`s representing the colors to add
+ */
 fun AnimationData.addColors(vararg colors: Long): AnimationData {
     colors.forEach { addColor(it) }
     return this
 }
 
+/**
+ * Append a color to the end of `colors`
+ *
+ * @param color An `Int` representing the color to add
+ */
 fun AnimationData.addColor(color: Int): AnimationData {
     colors += ColorContainer(color.toLong())
     return this
 }
 
+/**
+ * Append multiple colors to the end of `colors`
+ *
+ * @param colors `Int`s representing the colors to add
+ */
 fun AnimationData.addColors(vararg colors: Int): AnimationData {
     colors.forEach { addColor(it) }
     return this
 }
 
+/**
+ * Append a color to the end of `colors`
+ *
+ * @param color A hexadecimal `String` representing the color to add
+ */
 fun AnimationData.addColor(color: String): AnimationData {
     colors += ColorContainer(parseHex(color))
     return this
 }
 
+/**
+ * Append multiple colors to the end of `colors`
+ *
+ * @param colors Hexadecimal `String`s representing the colors to add
+ */
 fun AnimationData.addColors(vararg colors: String): AnimationData {
     colors.forEach { addColor(it) }
     return this
 }
 
 
+/**
+ * Append multiple colors to the end of `colors`
+ *
+ * @param colors A list of `ColorContainer`s, `Long`s, `Int`s and/or
+ * hexadecimal `String`s representing the colors to add
+ */
 fun AnimationData.addColors(colors: List<*>): AnimationData {
     require(colors.isNotEmpty())
     require(colors.all { it is ColorContainerInterface || it is Long || it is Int || it is String })
@@ -119,10 +165,35 @@ fun AnimationData.addColors(colors: List<*>): AnimationData {
 
 /* Helpers for setting the first 5 ColorContainers */
 
+
+/**
+ * Set colors[0]
+ */
+@Suppress("KDocUnresolvedReference")
 fun AnimationData.color0(color: Any) = color(color, 0)
+
+/**
+ * Set colors[1]
+ */
+@Suppress("KDocUnresolvedReference")
 fun AnimationData.color1(color: Any) = color(color, 1)
+
+/**
+ * Set colors[2]
+ */
+@Suppress("KDocUnresolvedReference")
 fun AnimationData.color2(color: Any) = color(color, 2)
+
+/**
+ * Set colors[3]
+ */
+@Suppress("KDocUnresolvedReference")
 fun AnimationData.color3(color: Any) = color(color, 3)
+
+/**
+ * Set colors[4]
+ */
+@Suppress("KDocUnresolvedReference")
 fun AnimationData.color4(color: Any) = color(color, 4)
 
 /**
@@ -135,8 +206,13 @@ fun AnimationData.continuous(continuous: Boolean): AnimationData {
     return this
 }
 
+/**
+ * Set the `center` parameter.
+ *
+ * @param pixel The index of the pixel at the center of a radial animation
+ */
 fun AnimationData.center(pixel: Int): AnimationData {
-    center = pixel
+    this.center = pixel
     return this
 }
 
@@ -197,8 +273,14 @@ fun AnimationData.direction(direction: Char): AnimationData {
     return this
 }
 
+/**
+ * Set the `distance` parameter.
+ *
+ * @param pixels The number of pixels away from the center pixel
+ * that the radial animation should travel
+ */
 fun AnimationData.distance(pixels: Int): AnimationData {
-    distance = pixels
+    this.distance = pixels
     return this
 }
 

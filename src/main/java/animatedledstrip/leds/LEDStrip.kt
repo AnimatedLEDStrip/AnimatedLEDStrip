@@ -55,11 +55,15 @@ abstract class LEDStrip(
 ) : LEDStripNonConcurrent(numLEDs) {
 
     /**
-     * `Map` containing `Mutex` instances for locking access to each led while it is
-     * being used.
+     * `Map` containing `Mutex` instances for locking access to each
+     * led while it is being used.
      */
     internal val pixelLocks = mutableMapOf<Int, Mutex>()
 
+    /**
+     * `Map` containing `Mutex` instances for locking write access to
+     * each led while it is being written.
+     */
     private val writeLocks = mutableMapOf<Int, Mutex>()
 
     /**
@@ -101,6 +105,12 @@ abstract class LEDStrip(
      */
     private val outLock = Mutex()
 
+    /**
+     * A list that tracks the prolonged color of each pixel.
+     *
+     * Each pixel has two colors, its actual color and then its prolonged color.
+     * The prolonged color is a color for it to revert or fade back to.
+     */
     val prolongedColors = mutableListOf<Long>().apply {
         for (i in 0 until numLEDs) add(0)
     }
@@ -210,22 +220,49 @@ abstract class LEDStrip(
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
+    /**
+     * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
+     * this skips setting the pixel's color and returns.
+     *
+     * @param pixel The pixel to change
+     * @param color A `Long` representing the color to set the pixel to
+     */
     override fun setPixelColor(pixel: Int, color: Long) {
         writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
         } ?: Logger.warn { "Pixel $pixel does not exist" }
     }
 
-    fun setProlongedPixelColor(pixel: Int, colorValues: ColorContainerInterface) {
-        val colors = colorValues.prepare(numLEDs)
+    /**
+     * Sets a pixel's prolonged color. If the pixel is not in the middle of a fade,
+     * also sets the pixel's actual color.
+     *
+     * @param pixel The pixel to change
+     * @param color The color to set the pixel to
+     */
+    fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) {
+        val colors = color.prepare(numLEDs)
         prolongedColors[pixel] = colors[pixel]
         if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, colors[pixel])
     }
 
+    /**
+     * Sets a pixel's prolonged color. If the pixel is not in the middle of a fade,
+     * also sets the pixel's actual color.
+     *
+     * @param pixel The pixel to change
+     * @param color A `Long` representing the color to set the pixel to
+     */
     fun setProlongedPixelColor(pixel: Int, color: Long) {
         setProlongedPixelColor(pixel, ColorContainer(color))
     }
 
+    /**
+     * Revert a pixel to its prolonged color. If it is in the middle
+     * of a fade, don't revert
+     *
+     * @param pixel The pixel to revert
+     */
     // TODO: Maybe rethink the guard here
     fun revertPixel(pixel: Int) {
         if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, prolongedColors[pixel])
@@ -234,20 +271,46 @@ abstract class LEDStrip(
 
     /* Set strip color */
 
-    override fun setStripColor(colorValues: ColorContainerInterface) {
-        setStripColor(colorValues, true)
+    /**
+     * Override for setStripColor that calls the [LEDStrip] implementation
+     * of `setStripColor`
+     *
+     * @param color The color to use
+     */
+    override fun setStripColor(color: ColorContainerInterface) {
+        setStripColor(color, true)
     }
 
+    /**
+     * Override for setStripColor that calls the [LEDStrip] implementation
+     * of `setStripColor`
+     *
+     * @param color A `Long` representing the color to use
+     */
     override fun setStripColor(color: Long) {
         setStripColor(color, true)
     }
 
-    fun setStripColor(colorValues: ColorContainerInterface, prolonged: Boolean) {
-        val colors = colorValues.prepare(numLEDs)
+    /**
+     * Set the color of all pixels in the strip. If prolonged is true,
+     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
+     * `setStripColor`.
+     *
+     * @param color The color to use
+     */
+    fun setStripColor(color: ColorContainerInterface, prolonged: Boolean) {
+        val colors = color.prepare(numLEDs)
         if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, colors)
         else super.setStripColor(colors)
     }
 
+    /**
+     * Set the color of all pixels in the strip. If prolonged is true,
+     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
+     * `setStripColor`.
+     *
+     * @param color A `Long` representing the color to use
+     */
     fun setStripColor(color: Long, prolonged: Boolean) {
         if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, color)
         else super.setStripColor(color)
