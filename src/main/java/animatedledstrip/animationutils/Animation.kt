@@ -35,6 +35,7 @@ enum class Animation {
     @NonRepetitive
     COLOR,
     @NonRepetitive
+    @Deprecated("Use COLOR", ReplaceWith("COLOR"))
     MULTICOLOR,
     /**
      * Used to represent a custom animation. Put the animation's abbreviation
