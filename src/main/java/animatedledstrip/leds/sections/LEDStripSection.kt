@@ -41,6 +41,9 @@ import animatedledstrip.leds.AnimatedLEDStripInterface
  */
 class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStripInterface) {
 
+    /**
+     * Create a LEDStripSection using a range of indices (inclusive)
+     */
     constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip) : this(pixels.first, pixels.last, ledStrip)
 
     /**

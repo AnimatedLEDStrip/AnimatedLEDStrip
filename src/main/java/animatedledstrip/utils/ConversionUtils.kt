@@ -25,8 +25,22 @@ package animatedledstrip.utils
 
 import animatedledstrip.colors.ColorContainer
 
+/**
+ * Convert a 24-bit `Long` to a 32-bit `Int`
+ */
 fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
+
+/**
+ * Convert a 24-bit `Int` to a 32-bit `Int`
+ */
 fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
 
+/**
+ * Create a [ColorContainer] from this `Int`
+ */
 fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
+
+/**
+ * Create a [ColorContainer] from this `Long`
+ */
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)

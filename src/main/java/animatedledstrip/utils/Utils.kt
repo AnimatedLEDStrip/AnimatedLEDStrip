@@ -61,7 +61,7 @@ fun delayBlocking(wait: Long) {
 }
 
 /**
- * Overload for delayBlocking for when an Int is sent.
+ * Overload for delayBlocking for when an `Int` is sent.
  *
  * @param wait The time (in milliseconds) to wait for
  */
@@ -70,7 +70,7 @@ fun delayBlocking(wait: Int) {
 }
 
 /**
- * Returns a `Long` from a hexadecimal String.
+ * Returns a `Long` from a hexadecimal `String`.
  *
  * @param string The hex `String` to decode
  */
@@ -79,6 +79,11 @@ fun parseHex(string: String): Long {
     return java.lang.Long.parseLong(s, 16)
 }
 
+/**
+ * Returns a `Long` from a hexadecimal `String` or `default` on error.
+ *
+ * @param string The hex `String` to decode
+ */
 fun parseHexOrDefault(string: String, default: Long = 0x0L): Long {
     val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
     return try {
