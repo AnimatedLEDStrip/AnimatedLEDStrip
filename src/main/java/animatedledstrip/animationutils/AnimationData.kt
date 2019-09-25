@@ -47,6 +47,7 @@ import java.io.Serializable
  * animation (inclusive)
  * @property id ID for the animation. Used by server and client for
  * stopping continuous animations.
+ * @property pCols The list of [PreparedColorContainer]s after preparation of [colors]
  * @property spacing Spacing used in the animation
  * @property startPixel First pixel on the strip will show the animation
  */
@@ -71,9 +72,6 @@ class AnimationData(
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
-    /**
-     * Delay time (in milliseconds) used in the animation.
-     */
     var delay: Long = delay
         get() {
             return (when (field) {
@@ -90,9 +88,6 @@ class AnimationData(
         }
 
 
-    /**
-     * Spacing used in the animation.
-     */
     var spacing: Int = spacing
         get() {
             return (when (field) {
@@ -110,6 +105,9 @@ class AnimationData(
 
     /* Note: If any other properties are added, they must be added to the four methods below */
 
+    /**
+     * Create a copy of this [AnimationData] instance
+     */
     fun copy(
         animation: Animation = this.animation,
         colors: List<ColorContainerInterface> = this.colors,
@@ -138,11 +136,18 @@ class AnimationData(
         startPixel
     )
 
+    /**
+     * Create a string representation of this [AnimationData] instance
+     */
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
                 "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
                 "endPixel=$endPixel, id=$id, spacing=$spacing, startPixel=$startPixel)"
 
+
+    /**
+     * Override `equals()`
+     */
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
                 (other is AnimationData &&
@@ -160,6 +165,9 @@ class AnimationData(
                         startPixel == other.startPixel)
     }
 
+    /**
+     * Override `hashCode()`
+     */
     override fun hashCode(): Int {
         var result = animation.hashCode()
         result = 31 * result + center

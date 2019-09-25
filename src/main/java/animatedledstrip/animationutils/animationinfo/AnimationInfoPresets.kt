@@ -150,6 +150,11 @@ val PixelRun = AnimationInfo(
 )
 
 
+/**
+ * Info about the Ripple animation.
+ *
+ * @see AnimatedLEDStrip.ripple
+ */
 val Ripple = AnimationInfo(
     abbr = "RPL",
     numReqColors = 1,
@@ -228,6 +233,11 @@ val SparkleToColor = AnimationInfo(
 )
 
 
+/**
+ * Info about the Splat animation.
+ *
+ * @see AnimatedLEDStrip.splat
+ */
 val Splat = AnimationInfo(
     abbr = "SPT",
     numReqColors = 1,

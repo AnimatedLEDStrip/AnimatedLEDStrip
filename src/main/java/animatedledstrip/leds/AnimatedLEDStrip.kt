@@ -233,7 +233,7 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Bounce to Color animation.
      *
-     * Pixel 'bounces' back and forth, leaving behind a pixel set to pCols[0]
+     * Pixel 'bounces' back and forth, leaving behind a pixel set to `pCols[0]`
      * at each end like Stack, eventually ending in the middle.
      */
     @NonRepetitive
