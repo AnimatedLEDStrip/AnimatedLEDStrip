@@ -65,6 +65,9 @@ abstract class AnimatedLEDStrip(
         newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 
+    private val pixelSetLists = mutableMapOf<Triple<Int, Int, Int>, MutableList<MutableList<Int>>>()
+
+
     /**
      * Map containing custom animations.
      */
@@ -273,43 +276,49 @@ abstract class AnimatedLEDStrip(
         }
     }
 
-
     /**
      * Runs a Multi-Pixel Run animation.
-     *
+     * TODO: Fix flickering
      * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
     private val multiPixelRun: (AnimationData) -> Unit = { animation: AnimationData ->
-        when (animation.direction) {
-            Direction.BACKWARD -> for (q in 0 until animation.spacing) {
-                setStripColor(animation.pCols[1])
-                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    setPixelColor(
-                        i + (-(q - (animation.spacing - 1))),
-                        animation.pCols[0]
-                    )
+        val pixelSets: MutableList<MutableList<Int>> =
+            pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] ?: run {
+                val temp = mutableListOf<MutableList<Int>>()
+                for (q in 0 until animation.spacing) {
+                    val list = mutableListOf<Int>()
+                    for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                        if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
+                        else list += i + (-(q - (animation.spacing - 1)))
+                    }
+                    temp += list
                 }
-                delayBlocking(animation.delay)
-                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    revertPixel(i + (-(q - (animation.spacing - 1))))
-                }
+                pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] = temp
+                temp
             }
-            Direction.FORWARD -> for (q in animation.spacing - 1 downTo 0) {
-                setStripColor(animation.pCols[1])
-                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    setPixelColor(
-                        i + (-(q - (animation.spacing - 1))),
-                        animation.pCols[0]
-                    )
+        when (animation.direction) {
+            Direction.BACKWARD -> {
+                revertPixels(pixelSets[animation.spacing - 1])
+                for (q in 0..animation.spacing - 2) {
+                    setPixelColors(pixelSets[q], animation.pCols[0])
+                    delayBlocking(animation.delay)
+                    revertPixels(pixelSets[q])
                 }
+                setPixelColors(pixelSets[animation.spacing - 1], animation.pCols[0])
                 delayBlocking(animation.delay)
-                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-                    if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    revertPixel(i + (-(q - (animation.spacing - 1))))
+            }
+            Direction.FORWARD -> {
+                revertPixels(pixelSets[0])
+                for (q in animation.spacing - 1 downTo 1) {
+                    setPixelColors(pixelSets[q], animation.pCols[0])
+                    delayBlocking(animation.delay)
+                    revertPixels(pixelSets[q])
+//                    setPixelColors(pixelSets[q % animation.spacing], animation.pCols[0])
+//                    revertPixels(pixelSets[q - 1])
+//                    delayBlocking(animation.delay)
                 }
+                setPixelColors(pixelSets[0], animation.pCols[0])
+                delayBlocking(animation.delay)
             }
         }
     }
@@ -348,6 +357,7 @@ abstract class AnimatedLEDStrip(
     }
 
 
+    // TODO: Documentation
     private val pixelMarathon: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData().animation(Animation.PIXELRUN)
             .direction(animation.direction).delay(animation.delay)
@@ -399,6 +409,16 @@ abstract class AnimatedLEDStrip(
         }
     }
 
+
+    /**
+     * Runs a Ripple animation.
+     *
+     * Starts two Meteor animations running in opposite directions
+     * from `center`, stopping after travelling `distance` or at
+     * the end of the strip, whichever comes first. Does not wait
+     * for the Meteor animations to be complete before returning,
+     * giving the ripple-like appearance when run continuously.
+     */
     @Radial
     private val ripple: (AnimationData) -> Unit = { animation: AnimationData ->
         val baseAnimation = AnimationData()
@@ -468,7 +488,6 @@ abstract class AnimatedLEDStrip(
             setStripColor(animation.pCols[0][i])
             delayBlocking(animation.delay)
         }
-
     }
 
 
@@ -541,6 +560,14 @@ abstract class AnimatedLEDStrip(
     }
 
 
+    /**
+     * Runs a Splat animation.
+     *
+     * Similar to a Ripple but the pixels don't fade back.
+     * Runs two Wipe animations in opposite directions starting
+     * from `center`, stopping after travelling `distance` or at
+     * the end of the strip, whichever comes first.
+     */
     @NonRepetitive
     @Radial
     private val splat: (AnimationData) -> Unit = { animation: AnimationData ->
@@ -563,9 +590,8 @@ abstract class AnimatedLEDStrip(
         )
     }
 
-    /**
-     * TODO: documentation
-     */
+
+    // TODO: documentation
     @NonRepetitive
     private val stack: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
