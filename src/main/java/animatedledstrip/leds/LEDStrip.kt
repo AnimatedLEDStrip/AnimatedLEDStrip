@@ -329,8 +329,8 @@ abstract class LEDStrip(
 
     /* Set section color */
 
-    override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface) {
-        setSectionColor(start, end, colorValues, true)
+    override fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface) {
+        setSectionColor(start, end, color, true)
     }
 
     override fun setSectionColor(start: Int, end: Int, color: Long) {

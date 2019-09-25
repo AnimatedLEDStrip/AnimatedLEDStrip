@@ -75,12 +75,12 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
         }
 
     /**
-     * Loops through all pixels and sets their color to `colorValues`.
+     * Loops through all pixels and sets their color to `color`.
      *
-     * @param colorValues The color to set the strip to
+     * @param color The color to set the strip to
      */
-    open fun setStripColor(colorValues: ColorContainerInterface) {
-        for (i in 0 until numLEDs) setPixelColor(i, colorValues)
+    open fun setStripColor(color: ColorContainerInterface) {
+        for (i in 0 until numLEDs) setPixelColor(i, color)
         show()
     }
 
@@ -98,14 +98,14 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
 
     /**
      * Set the color of a section of the strip. Loops through all LEDs between start
-     * and end (inclusive) and sets their color to `colorValues`.
+     * and end (inclusive) and sets their color to `color`.
      *
      * @param start First pixel in section
      * @param end Last pixel in section
-     * @param colorValues The color to set the section to
+     * @param color The color to set the section to
      */
-    override fun setSectionColor(start: Int, end: Int, colorValues: ColorContainerInterface) {
-        val colors = colorValues.prepare(end - start + 1)
+    override fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface) {
+        val colors = color.prepare(end - start + 1)
         for (i in start..end) setPixelColor(i, colors[i - start])
         show()
     }
