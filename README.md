@@ -3,7 +3,10 @@
 [![codecov](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStrip/branch/master/graph/badge.svg)](https://codecov.io/gh/AnimatedLEDStrip/AnimatedLEDStrip)
 
 # AnimatedLEDStrip
-A port of the original [AnimatedLEDStrip Library](https://github.com/maxnz/AnimatedLEDStripCppArduino) to Kotlin. Concurrency and many animations have been added.
+The AnimatedLEDStrip set of libraries are meant to make the process of running animations on a LED strip much easier.
+This library also supports running concurrent animations on a LED strip. Multiple animations can be run simultaneously,
+even over the same part of the strip. See the [wiki](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki)
+for more information.
 
 ## Uses Java 9
 Because we use the dokka plugin to generate our documentation, we must use Java <=9
