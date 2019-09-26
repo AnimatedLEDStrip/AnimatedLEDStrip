@@ -28,6 +28,8 @@ LEDs on a Raspberry Pi 3B, 3B+ or 4B
 #### [Raspberry Pi Server](https://github.com/AnimatedLEDStrip/AnimatedLEDStripPiServerExample)
 This repository contains an example implementation of a server for a Raspberry Pi. This can be used as-is
 with no modification, or can be used as a template for creating servers on Raspberry Pis or other devices.
+The repository includes support for installation using [`ansible-pull`](https://github.com/AnimatedLEDStrip/AnimatedLEDStripPiServerExample#install),
+further simplifying the install process.
 
 #### [Raspberry Pi Touchscreen Client](https://github.com/AnimatedLEDStrip/AnimatedLEDStripGUI)
 This repository contains an example of a GUI that uses the AnimatedLEDStripClient library to communicate with an 
