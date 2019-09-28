@@ -34,7 +34,6 @@ import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-
 class AnimatedLEDStripTest {
 
     @Test

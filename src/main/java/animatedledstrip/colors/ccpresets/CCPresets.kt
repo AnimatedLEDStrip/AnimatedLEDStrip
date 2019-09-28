@@ -1,7 +1,5 @@
 package animatedledstrip.colors.ccpresets
 
-import animatedledstrip.colors.ColorContainer
-
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
@@ -26,6 +24,7 @@ import animatedledstrip.colors.ColorContainer
  */
 
 
+import animatedledstrip.colors.ColorContainer
 
 /**
  * A default ColorContainer for HTML Named Color AliceBlue (0xF0F8FF)

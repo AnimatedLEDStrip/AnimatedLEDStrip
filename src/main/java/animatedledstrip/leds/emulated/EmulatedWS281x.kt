@@ -60,7 +60,6 @@ package animatedledstrip.leds.emulated
 import animatedledstrip.leds.LEDStripInterface
 import java.nio.ByteBuffer
 
-
 /**
  * Modification on the `WS281x` class from the diozero-ws281x-java library that
  * doesn't attempt to send data to any LEDs.

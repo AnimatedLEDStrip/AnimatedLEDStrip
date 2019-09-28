@@ -1,8 +1,5 @@
 package animatedledstrip.leds.emulated
 
-import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.LEDStripInterface
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -25,6 +22,9 @@ import animatedledstrip.leds.LEDStripInterface
  *  THE SOFTWARE.
  */
 
+
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.leds.LEDStripInterface
 
 /**
  * Class for emulating an `LEDStrip`.

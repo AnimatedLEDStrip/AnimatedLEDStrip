@@ -29,8 +29,6 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import org.junit.Test
 import kotlin.test.assertTrue
 
-
-
 class AnimatedLEDStripNonConcurrentTest {
 
     @Test

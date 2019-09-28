@@ -1,7 +1,5 @@
 package animatedledstrip.leds.sections
 
-import animatedledstrip.colors.ColorContainerInterface
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -24,6 +22,8 @@ import animatedledstrip.colors.ColorContainerInterface
  *  THE SOFTWARE.
  */
 
+
+import animatedledstrip.colors.ColorContainerInterface
 
 /**
  * An interface used to denote that a LED strip class supports running

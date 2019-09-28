@@ -1,7 +1,5 @@
 package animatedledstrip.colors
 
-import animatedledstrip.utils.base
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -24,6 +22,8 @@ import animatedledstrip.utils.base
  *  THE SOFTWARE.
  */
 
+
+import animatedledstrip.utils.base
 
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
