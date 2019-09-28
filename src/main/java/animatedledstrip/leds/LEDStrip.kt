@@ -36,7 +36,6 @@ import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 /**
  * A subclass of [LEDStripNonConcurrent] adding support for concurrency.
  *

@@ -34,7 +34,6 @@ import org.pmw.tinylog.Logger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-
 /**
  * Set the colors of pixels
  *

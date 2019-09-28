@@ -1,10 +1,5 @@
 package animatedledstrip.leds.sections
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.AnimatedLEDStripInterface
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -27,6 +22,11 @@ import animatedledstrip.leds.AnimatedLEDStripInterface
  *  THE SOFTWARE.
  */
 
+
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.leds.AnimatedLEDStripInterface
 
 /**
  * Class used for running animations on only part of an LED strip.

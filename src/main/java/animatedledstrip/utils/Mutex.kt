@@ -30,7 +30,6 @@ package animatedledstrip.utils
 
 import kotlinx.coroutines.sync.Mutex
 
-
 /**
  * An extension function based on `Mutex.withLock()`.
  *

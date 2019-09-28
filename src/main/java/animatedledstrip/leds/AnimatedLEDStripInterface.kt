@@ -1,8 +1,5 @@
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.leds.sections.SectionableLEDStrip
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -25,6 +22,9 @@ import animatedledstrip.leds.sections.SectionableLEDStrip
  *  THE SOFTWARE.
  */
 
+
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.leds.sections.SectionableLEDStrip
 
 /**
  * An interface used to connect the AnimatedLEDStrip and AnimatedLEDStripNonConcurrent

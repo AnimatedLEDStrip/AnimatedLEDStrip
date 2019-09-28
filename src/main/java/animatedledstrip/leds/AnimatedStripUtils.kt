@@ -31,7 +31,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.runBlocking
 
-
 /**
  * Iterate over the indices from startPixel to endPixel (inclusive)
  *

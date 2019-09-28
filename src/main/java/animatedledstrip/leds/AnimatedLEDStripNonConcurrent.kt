@@ -34,7 +34,6 @@ import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
 import org.pmw.tinylog.Logger
 
-
 /**
  * A subclass of [LEDStripNonConcurrent] adding animations
  *

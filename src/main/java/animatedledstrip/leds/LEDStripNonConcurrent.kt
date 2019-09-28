@@ -26,7 +26,6 @@ package animatedledstrip.leds
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.leds.sections.SectionableLEDStrip
 
-
 /**
  * Class that represents an LED strip.
  *
