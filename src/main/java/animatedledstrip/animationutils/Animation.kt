@@ -87,8 +87,6 @@ enum class Animation {
      * See [AnimatedLEDStrip.pixelRun]
      */
     PIXELRUN,
-    @Deprecated("Use METEOR")
-    PIXELRUNWITHTRAIL,
     /**
      * See [AnimatedLEDStrip.smoothChase]
      */

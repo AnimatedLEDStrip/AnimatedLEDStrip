@@ -128,12 +128,11 @@ abstract class AnimatedLEDStrip(
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
             Animation.COLOR -> setStripColor(animation.pCols[0])
             Animation.METEOR -> meteor(animation)
-            Animation.MULTICOLOR -> setStripColor(animation.pCols[0])
+            Animation.MULTICOLOR -> Logger.warn("MultiColor is deprecated. Use Color")
             Animation.MULTIPIXELRUN -> multiPixelRun(animation)
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor(animation)
             Animation.PIXELMARATHON -> pixelMarathon(animation)
             Animation.PIXELRUN -> pixelRun(animation)
-            Animation.PIXELRUNWITHTRAIL -> Logger.warn { "PixelRunWithTrail is deprecated. Use Meteor" }
             Animation.RIPPLE -> ripple(animation)
             Animation.SMOOTHCHASE -> smoothChase(animation)
             Animation.SMOOTHFADE -> smoothFade(animation)
@@ -145,7 +144,7 @@ abstract class AnimatedLEDStrip(
             Animation.STACKOVERFLOW -> stackOverflow(animation)
             Animation.WIPE -> wipe(animation)
             Animation.CUSTOMANIMATION, Animation.CUSTOMREPETITIVEANIMATION -> runCustomAnimation(animation)
-            else -> Logger.warn { "Animation ${animation.animation} not supported by AnimatedLEDStrip" }
+            else -> Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
         }
     }
 

@@ -32,7 +32,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Ignore
 import org.junit.Test
 import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
 
@@ -107,23 +106,6 @@ class AnimatedLEDStripTest {
                 .color(0xFF00)
                 .direction(Direction.BACKWARD)
         )
-    }
-
-    @Test
-    fun testMultiColor() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.run(
-            AnimationData()
-                .animation(Animation.MULTICOLOR)
-                .color(ColorContainer(0xFF, 0xFFFF))
-        )
-
-        val testGradient = ColorContainer(0xFF, 0xFFFF).prepare(50)
-
-        for (i in 0 until 50) {
-            assertTrue { testGradient[i] == testLEDs[i] }
-        }
     }
 
     @Test
