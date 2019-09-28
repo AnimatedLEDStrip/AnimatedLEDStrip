@@ -27,7 +27,6 @@ import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import org.junit.Test
-import kotlin.test.assertTrue
 
 class AnimatedLEDStripNonConcurrentTest {
 
@@ -70,21 +69,6 @@ class AnimatedLEDStripNonConcurrentTest {
                 .animation(Animation.METEOR)
                 .color(0xFF00)
                 .direction(Direction.BACKWARD))
-    }
-
-    @Test
-    fun testMultiColor() {
-        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
-
-        testLEDs.run(AnimationData()
-                .animation(Animation.MULTICOLOR)
-                .color(ColorContainer(0xFF, 0xFFFF)))
-
-        val testGradient = ColorContainer(0xFF, 0xFFFF).prepare(50)
-
-        for (i in 0 until 50) {
-            assertTrue { testGradient[i] == testLEDs[i] }
-        }
     }
 
     @Test
