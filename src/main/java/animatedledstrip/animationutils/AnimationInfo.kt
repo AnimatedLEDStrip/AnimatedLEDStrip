@@ -44,9 +44,11 @@ data class AnimationInfo(
     val abbr: String = "",
     val numReqColors: Int = 0,
     val numOptColors: Int = 0,
+    val center: ReqLevel = ReqLevel.NOTUSED,
     val delay: ReqLevel = ReqLevel.NOTUSED,
     val delayDefault: Long = 0,
     val direction: ReqLevel = ReqLevel.NOTUSED,
+    val distance: ReqLevel = ReqLevel.NOTUSED,
     val repetitive: Boolean = false,
     val spacing: ReqLevel = ReqLevel.NOTUSED,
     val spacingDefault: Int = 0

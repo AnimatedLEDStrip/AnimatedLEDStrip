@@ -38,6 +38,8 @@ abstract class LEDStripNonConcurrent(var numLEDs: Int) : SectionableLEDStrip {
      */
     abstract var ledStrip: LEDStripInterface
 
+    val stripInfo = StripInfo(numLEDs)
+
     /* Set individual pixels */
 
     /**
