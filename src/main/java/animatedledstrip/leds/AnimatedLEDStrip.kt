@@ -126,6 +126,7 @@ abstract class AnimatedLEDStrip(
             Animation.ALTERNATE -> alternate(animation)
             Animation.BOUNCE -> bounce(animation)
             Animation.BOUNCETOCOLOR -> bounceToColor(animation)
+            Animation.CATTOY -> catToy(animation)
             Animation.COLOR -> setStripColor(animation.pCols[0])
             Animation.METEOR -> meteor(animation)
             Animation.MULTICOLOR -> Logger.warn("MultiColor is deprecated. Use Color")
@@ -252,6 +253,82 @@ abstract class AnimatedLEDStrip(
                 animation.pCols[0]
             )
         }
+    }
+
+    @ExperimentalAnimation
+    private val catToy: (AnimationData) -> Unit = { animation: AnimationData ->
+
+        println("${animation.startPixel} ${animation.endPixel}")
+        val pixel1 = randomPixelIn(animation)
+        val pixel2 = randomPixelIn(animation.startPixel, pixel1)
+        val pixel3 = randomPixelIn(pixel2, animation.endPixel)
+        val pixel4 = randomPixelIn(animation.startPixel, pixel3)
+        val pixel5 = randomPixelIn(pixel4, animation.endPixel)
+
+        println("$pixel1 $pixel2 $pixel3 $pixel4 $pixel5")
+
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                endPixel = pixel1,
+                direction = Direction.FORWARD
+            )
+        )
+        setPixelColor(pixel1, animation.colors[0])
+        delayBlocking((random() * 2500).toInt())
+        revertPixel(pixel1)
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = pixel2,
+                endPixel = pixel1,
+                direction = Direction.BACKWARD
+            )
+        )
+        setPixelColor(pixel2, animation.colors[0])
+        delayBlocking((random() * 2500).toInt())
+        revertPixel(pixel2)
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = pixel2,
+                endPixel = pixel3,
+                direction = Direction.FORWARD
+            )
+        )
+        setPixelColor(pixel3, animation.colors[0])
+        delayBlocking((random() * 2500).toInt())
+        revertPixel(pixel3)
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = pixel4,
+                endPixel = pixel3,
+                direction = Direction.BACKWARD
+            )
+        )
+        setPixelColor(pixel4, animation.colors[0])
+        delayBlocking((random() * 2500).toInt())
+        revertPixel(pixel4)
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = pixel4,
+                endPixel = pixel5,
+                direction = Direction.FORWARD
+            )
+        )
+        setPixelColor(pixel5, animation.colors[0])
+        delayBlocking((random() * 2500).toInt())
+        revertPixel(pixel5)
+        run(
+            animation.copy(
+                animation = Animation.PIXELRUN,
+                endPixel = pixel5,
+                direction = Direction.BACKWARD
+            )
+        )
+
     }
 
 
@@ -412,9 +489,9 @@ abstract class AnimatedLEDStrip(
      */
     private val pixelRun: (AnimationData) -> Unit = { animation: AnimationData ->
         when (animation.direction) {
-            Direction.FORWARD -> for (q in 0 until ledStrip.numLEDs)
+            Direction.FORWARD -> for (q in animation.startPixel..animation.endPixel)
                 setPixelAndRevertAfterDelay(q, animation.pCols[0], animation.delay)
-            Direction.BACKWARD -> for (q in ledStrip.numLEDs - 1 downTo 0)
+            Direction.BACKWARD -> for (q in animation.endPixel downTo animation.startPixel)
                 setPixelAndRevertAfterDelay(q, animation.pCols[0], animation.delay)
         }
     }

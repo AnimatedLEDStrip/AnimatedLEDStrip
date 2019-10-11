@@ -90,6 +90,13 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    fun testCatToy() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.run(AnimationData().animation(Animation.CATTOY).color(0xFF))
+    }
+
+    @Test
     fun testMeteor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
