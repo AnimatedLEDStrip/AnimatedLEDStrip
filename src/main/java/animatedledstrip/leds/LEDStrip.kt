@@ -104,7 +104,7 @@ abstract class LEDStrip(
     private lateinit var outFile: FileWriter
 
     /**
-     * Buffer that stores renders until `renderNum` in `toggleRender` reaches 1000,
+     * Buffer that stores renders until `renderNum` in `toggleRender` reaches `rendersBeforeSave`
      * at which point buffer is appended to `outFile` and cleared.
      */
     private val buffer = if (imageDebugging) StringBuilder() else null
@@ -163,7 +163,7 @@ abstract class LEDStrip(
                         try {
                             ledStrip.render()
                         } catch (e: NullPointerException) {
-                            Logger.error { "LEDStrip NullPointerException" }
+                            Logger.error("LEDStrip NullPointerException")
                             delayBlocking(1000)
                         }
                         if (imageDebugging) {
@@ -176,7 +176,7 @@ abstract class LEDStrip(
                                         outFile.append(buffer)
                                         buffer.clear()
                                     }
-                                    Logger.debug { "Wrote $rendersBeforeSave renders to file" }
+                                    Logger.debug("Wrote $rendersBeforeSave renders to file")
                                 }
                                 renderNum = 0
                             }
@@ -227,7 +227,7 @@ abstract class LEDStrip(
     override fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
         writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
-        } ?: Logger.warn { "Pixel $pixel does not exist" }
+        } ?: Logger.warn("Pixel $pixel does not exist")
     }
 
     /**
@@ -240,7 +240,7 @@ abstract class LEDStrip(
     override fun setPixelColor(pixel: Int, color: Long) {
         writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
             super.setPixelColor(pixel, color)
-        } ?: Logger.warn { "Pixel $pixel does not exist" }
+        } ?: Logger.warn("Pixel $pixel does not exist")
     }
 
     /**

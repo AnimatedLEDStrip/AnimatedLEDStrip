@@ -335,3 +335,9 @@ fun AnimationData.startPixel(startPixel: Int): AnimationData {
     this.startPixel = startPixel
     return this
 }
+
+fun Animation.isNonRepetitive() =
+    this::class.java.fields[this.ordinal].annotations.find { it is NonRepetitive } is NonRepetitive
+
+fun AnimationData.isContinuous(): Boolean = continuous
+    ?: !animation.isNonRepetitive()

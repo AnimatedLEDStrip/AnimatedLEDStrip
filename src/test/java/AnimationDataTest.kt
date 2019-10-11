@@ -33,10 +33,7 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.test.assertFails
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class AnimationDataTest {
 
@@ -128,6 +125,27 @@ class AnimationDataTest {
 
         testAnimation.center(15)
         assertTrue { testAnimation.center == 15 }
+    }
+
+    @Test
+    fun testContinuous() {
+        val testAnimation = AnimationData().animation(Animation.PIXELRUN)
+        assertNull(testAnimation.continuous)
+        assertTrue { testAnimation.isContinuous() }
+
+        testAnimation.animation(Animation.WIPE)
+        assertNull(testAnimation.continuous)
+        assertFalse { testAnimation.isContinuous() }
+
+        testAnimation.continuous(true)
+        assertNotNull(testAnimation.continuous)
+        assertTrue { testAnimation.continuous == true }
+        assertTrue { testAnimation.isContinuous() }
+
+        testAnimation.continuous(false)
+        assertNotNull(testAnimation.continuous)
+        assertFalse { testAnimation.continuous == true }
+        assertFalse { testAnimation.isContinuous() }
     }
 
     @Test
@@ -258,7 +276,6 @@ class AnimationDataTest {
         assertTrue { testAnimation.startPixel == 100 }
     }
 
-    @Suppress("ReplaceCallWithBinaryOperator")
     @Test
     fun testEquals() {
         val testAnimation1 = AnimationData()
@@ -279,6 +296,7 @@ class AnimationDataTest {
         }
 
         assertTrue { testAnimation1 == testAnimation2 }
+        @Suppress("ReplaceCallWithBinaryOperator")
         assertFalse { testAnimation1.equals(0xFF) }
     }
 
