@@ -30,6 +30,7 @@ import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.runBlocking
+import java.lang.Math.random
 
 /**
  * Iterate over the indices from startPixel to endPixel (inclusive)
@@ -117,3 +118,8 @@ fun AnimatedLEDStrip.runParallelAndJoin(
         jobs.joinAll()
     }
 }
+
+fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).toInt()
+
+fun randomPixelIn(animation: AnimationData): Int =
+    ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).toInt()
