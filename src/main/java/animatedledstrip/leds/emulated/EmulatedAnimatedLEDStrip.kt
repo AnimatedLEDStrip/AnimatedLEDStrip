@@ -35,8 +35,10 @@ import animatedledstrip.leds.LEDStripInterface
  */
 class EmulatedAnimatedLEDStrip(
     numLEDs: Int,
+    pin: Int? = null,
     imageDebugging: Boolean = false,
-    fileName: String? = null
+    fileName: String? = null,
+    rendersBeforeSave: Int? = null
 ) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName) {
     override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
 

@@ -407,7 +407,7 @@ class LEDStripTest {
 
     @Test
     fun testImageDebugging() {
-        val leds = EmulatedAnimatedLEDStrip(50, true, fileName = "test.csv")
+        val leds = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test.csv")
         runBlocking { delay(5000) }
         leds.toggleRender()
         runBlocking { delay(1000) }
