@@ -69,6 +69,14 @@ val BounceToColor = AnimationInfo(
 )
 
 
+val CatToy = AnimationInfo(
+    abbr = "CAT",
+    numReqColors = 1,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 5,
+    repetitive = true
+    )
+
 /**
  * Info about the Meteor animation.
  *
@@ -295,6 +303,7 @@ val animationInfoMap = mapOf(
     Animation.ALTERNATE to Alternate,
     Animation.BOUNCE to Bounce,
     Animation.BOUNCETOCOLOR to BounceToColor,
+    Animation.CATTOY to CatToy,
     Animation.METEOR to Meteor,
     Animation.MULTIPIXELRUN to MultiPixelRun,
     Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
