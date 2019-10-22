@@ -9,13 +9,27 @@ even over the same part of the strip. See the [wiki](https://github.com/Animated
 for more information.
 
 ## Structure
+The libraries are designed so you have multiple options for how you integrate AnimatedLEDStrip into your project.
+- If you want to have a solution that works out of the box with minimal effort, then you can install the AnimatedLEDStripPiServerExample on a Raspberry Pi and use one of the client examples to control it
+- If you want to make your program into a client, you can import the AnimatedLEDStripClient library.
+Examples of this include the Android app and the Raspberry Pi Touchscreen Client.
+- If you want to control the strip directly from a Kotlin/Java program, you can import the device library for your device
+  - If your device isn't supported, you can [create your own device library](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki)
+
 ### Main Libraries
 The main set of libraries includes:
-- [Core](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip) -
-Contains all the animations and generic structure for communicating with LED strips
-- [Server](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer) -
-A library for running a server that runs animations on a LED strip and communicates with clients
-- [Client](https://github.com/AnimatedLEDStrip/AnimatedLEDStripClient) - A library for communicating with a server
+#### [Core](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip)
+Contains all the animations and generic structure for communicating with LED strips.
+
+#### [Server](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer)
+A library for running a server that runs animations on a LED strip.
+The server communicates with clients to start and end animations.
+Also contains a command line interface that can be used locally to monitor and partially control the server.
+
+#### [Client](https://github.com/AnimatedLEDStrip/AnimatedLEDStripClient) 
+A library for communicating with a server.
+Can be used by any Kotlin or Java program.
+In the future we hope to support clients in other languages.
 
 ### Device Libraries
 Each device that can run LEDs has its own device library. Currently the only device supported is the
