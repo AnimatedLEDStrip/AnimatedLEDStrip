@@ -131,7 +131,7 @@ abstract class LEDStrip(
     private val fadeMap = mutableMapOf<Int, FadePixel>()
 
     init {
-        if (fileName != null) require(imageDebugging)
+        if (fileName != null) require(imageDebugging) { "Cannot set output file name if imageDebugging is off" }
         for (i in 0 until numLEDs) {
             pixelLocks += Pair(i, Mutex())
             writeLocks += Pair(i, Mutex())
