@@ -23,6 +23,7 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -31,6 +32,7 @@ import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.pmw.tinylog.Logger
+import java.nio.charset.Charset
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 

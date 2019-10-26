@@ -23,7 +23,11 @@ package animatedledstrip.utils
  */
 
 
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.StripInfo
+import java.nio.charset.Charset
 
 /**
  * Convert a 24-bit `Long` to a 32-bit `Int`
@@ -44,3 +48,28 @@ fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
  * Create a [ColorContainer] from this `Long`
  */
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
+
+fun ByteArray?.getDataTypePrefix(): String {
+    checkNotNull(this)
+    return this.toString(Charset.forName("utf-8")).take(4)
+}
+
+fun AnimationData.json(): ByteArray = "DATA:${gson.toJson(this)}".toByteArray(Charset.forName("utf-8"))
+
+fun ByteArray?.jsonToAnimationData(size: Int): AnimationData {
+    checkNotNull(this)
+    return gson.fromJson(
+        this.toString(Charset.forName("utf-8")).take(size).removePrefix("DATA:"),
+        AnimationData::class.java
+    )
+}
+
+fun StripInfo.json(): ByteArray = "INFO:${gson.toJson(this)}".toByteArray(Charset.forName("utf-8"))
+
+fun ByteArray?.jsonToStripInfo(size: Int): StripInfo {
+    checkNotNull(this)
+    return gson.fromJson(
+        this.toString(Charset.forName("utf-8")).take(size).removePrefix("INFO:"),
+        StripInfo::class.java
+    )
+}
