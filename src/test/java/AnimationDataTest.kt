@@ -380,5 +380,10 @@ class AnimationDataTest {
         val testAnimation2 = testBytes.jsonToAnimationData(testBytes.size)
 
         assertTrue { testAnimation == testAnimation2 }
+
+        assertFailsWith<IllegalStateException> {
+            val nullBytes: ByteArray? = null
+            nullBytes.jsonToAnimationData(0)
+        }
     }
 }

@@ -423,5 +423,10 @@ class LEDStripTest {
         val info2 = infoBytes.jsonToStripInfo(infoBytes.size)
 
         assertTrue { info1 == info2 }
+
+        assertFailsWith<IllegalStateException> {
+            val nullBytes: ByteArray? = null
+            nullBytes.jsonToStripInfo(0)
+        }
     }
 }

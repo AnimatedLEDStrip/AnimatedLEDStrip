@@ -355,6 +355,6 @@ fun AnimationData.isContinuous(): Boolean = continuous
 fun AnimationData.json(): ByteArray = gson.toJson(this).toByteArray(Charset.forName("utf-8"))
 
 fun ByteArray?.jsonToAnimationData(size: Int): AnimationData {
-    requireNotNull(this)
+    checkNotNull(this)
     return gson.fromJson(this.toString(Charset.forName("utf-8")).take(size), AnimationData::class.java)
 }
