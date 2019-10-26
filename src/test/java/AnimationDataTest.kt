@@ -360,30 +360,4 @@ class AnimationDataTest {
         assertTrue { testAnimation == testAnimation2 }
         Files.delete(Paths.get("animation.ser"))
     }
-
-    @Test
-    fun testJsonify() {
-        val testAnimation = AnimationData().animation(Animation.STACK)
-            .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
-            .color(0xFF, index = 1)
-            .color(0xFF, index = 2)
-            .color(0xFF, index = 3)
-            .color(0xFF, index = 4)
-            .continuous(true)
-            .delay(50)
-            .direction(Direction.FORWARD)
-            .id("TEST")
-            .spacing(5)
-
-        val testBytes = testAnimation.json()
-
-        val testAnimation2 = testBytes.jsonToAnimationData(testBytes.size)
-
-        assertTrue { testAnimation == testAnimation2 }
-
-        assertFailsWith<IllegalStateException> {
-            val nullBytes: ByteArray? = null
-            nullBytes.jsonToAnimationData(0)
-        }
-    }
 }
