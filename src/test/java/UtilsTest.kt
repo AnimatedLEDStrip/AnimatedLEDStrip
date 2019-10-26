@@ -125,5 +125,10 @@ class UtilsTest {
         val animBytes = animTest.json()
         assertTrue { animBytes.getDataTypePrefix() == "DATA" }
 
+        assertFailsWith<IllegalStateException> {
+            val nullBytes: ByteArray? = null
+            nullBytes.getDataTypePrefix()
+        }
+
     }
 }
