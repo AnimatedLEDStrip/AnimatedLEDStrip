@@ -223,10 +223,3 @@ fun LEDStrip.setProlongedPixelColors(pixels: List<Int>, color: Long) {
         setProlongedPixelColor(pixel, color)
     }
 }
-
-fun StripInfo.json(): ByteArray = gson.toJson(this).toByteArray(Charset.forName("utf-8"))
-
-fun ByteArray?.jsonToStripInfo(size: Int): StripInfo {
-    checkNotNull(this)
-    return gson.fromJson(this.toString(Charset.forName("utf-8")).take(size), StripInfo::class.java)
-}

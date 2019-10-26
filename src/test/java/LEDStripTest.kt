@@ -34,6 +34,8 @@ import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.json
+import animatedledstrip.utils.jsonToStripInfo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -413,20 +415,5 @@ class LEDStripTest {
         runBlocking { delay(1000) }
         assertTrue { Files.exists(Paths.get("test.csv")) }
         Files.delete(Paths.get("test.csv"))
-    }
-
-    @Test
-    fun testStripInfoJson() {
-        val info1 = StripInfo()
-        val infoBytes = info1.json()
-
-        val info2 = infoBytes.jsonToStripInfo(infoBytes.size)
-
-        assertTrue { info1 == info2 }
-
-        assertFailsWith<IllegalStateException> {
-            val nullBytes: ByteArray? = null
-            nullBytes.jsonToStripInfo(0)
-        }
     }
 }
