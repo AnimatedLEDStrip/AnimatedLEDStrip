@@ -25,8 +25,17 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
+import com.google.gson.GsonBuilder
+
+/* JSON Parser */
+val gson = GsonBuilder()
+    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .create()
+    ?: error("Could not create JSON parser")
+
 
 /* Helper functions for setting values */
 

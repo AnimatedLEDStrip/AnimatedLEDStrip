@@ -258,14 +258,11 @@ abstract class AnimatedLEDStrip(
     @ExperimentalAnimation
     private val catToy: (AnimationData) -> Unit = { animation: AnimationData ->
 
-        println("${animation.startPixel} ${animation.endPixel}")
         val pixel1 = randomPixelIn(animation)
         val pixel2 = randomPixelIn(animation.startPixel, pixel1)
         val pixel3 = randomPixelIn(pixel2, animation.endPixel)
         val pixel4 = randomPixelIn(animation.startPixel, pixel3)
         val pixel5 = randomPixelIn(pixel4, animation.endPixel)
-
-        println("$pixel1 $pixel2 $pixel3 $pixel4 $pixel5")
 
         run(
             animation.copy(

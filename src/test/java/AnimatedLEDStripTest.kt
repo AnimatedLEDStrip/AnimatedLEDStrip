@@ -29,9 +29,7 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.Ignore
 import org.junit.Test
-import kotlin.test.assertFailsWith
 
 class AnimatedLEDStripTest {
 
@@ -387,18 +385,5 @@ class AnimatedLEDStripTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData().animation(Animation.ENDANIMATION))
-    }
-
-    @Test
-    @Ignore
-    fun testRunCustomAnimation() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMANIMATION))
-        }
-        assertFailsWith(UninitializedPropertyAccessException::class) {
-            testLEDs.run(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
-        }
     }
 }
