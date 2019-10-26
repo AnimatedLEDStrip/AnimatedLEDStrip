@@ -23,6 +23,7 @@ package animatedledstrip.leds
  */
 
 
+import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -31,6 +32,7 @@ import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.pmw.tinylog.Logger
+import java.nio.charset.Charset
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -220,4 +222,11 @@ fun LEDStrip.setProlongedPixelColors(pixels: List<Int>, color: Long) {
     for (pixel in pixels) {
         setProlongedPixelColor(pixel, color)
     }
+}
+
+fun StripInfo.json(): ByteArray = gson.toJson(this).toByteArray(Charset.forName("utf-8"))
+
+fun ByteArray?.jsonToStripInfo(size: Int): StripInfo {
+    requireNotNull(this)
+    return gson.fromJson(this.toString(Charset.forName("utf-8")).take(size), StripInfo::class.java)
 }
