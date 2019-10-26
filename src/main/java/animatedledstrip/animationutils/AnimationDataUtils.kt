@@ -25,8 +25,18 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
+import com.google.gson.GsonBuilder
+import java.nio.charset.Charset
+
+/* JSON Parser */
+val gson = GsonBuilder()
+    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .create()
+    ?: error("Could not create JSON parser")
+
 
 /* Helper functions for setting values */
 
@@ -341,3 +351,10 @@ fun Animation.isNonRepetitive() =
 
 fun AnimationData.isContinuous(): Boolean = continuous
     ?: !animation.isNonRepetitive()
+
+fun AnimationData.json(): ByteArray = gson.toJson(this).toByteArray(Charset.forName("utf-8"))
+
+fun ByteArray?.jsonToAnimationData(size: Int): AnimationData {
+    requireNotNull(this)
+    return gson.fromJson(this.toString(Charset.forName("utf-8")).take(size), AnimationData::class.java)
+}

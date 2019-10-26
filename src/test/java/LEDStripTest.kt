@@ -414,4 +414,14 @@ class LEDStripTest {
         assertTrue { Files.exists(Paths.get("test.csv")) }
         Files.delete(Paths.get("test.csv"))
     }
+
+    @Test
+    fun testStripInfoJson() {
+        val info1 = StripInfo()
+        val infoBytes = info1.json()
+
+        val info2 = infoBytes.jsonToStripInfo(infoBytes.size)
+
+        assertTrue { info1 == info2 }
+    }
 }
