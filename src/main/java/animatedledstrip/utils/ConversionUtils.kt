@@ -49,27 +49,35 @@ fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
  */
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 
-fun ByteArray?.getDataTypePrefix(): String {
+fun ByteArray?.toUTF8(size: Int): String {
     checkNotNull(this)
-    return this.toString(Charset.forName("utf-8")).take(4)
+    return this.toString(Charset.forName("utf-8")).take(size)
 }
 
-fun AnimationData.json(): ByteArray = "DATA:${gson.toJson(this)}".toByteArray(Charset.forName("utf-8"))
+fun String?.getDataTypePrefix(): String {
+    checkNotNull(this)
+    return this.take(4)
+}
 
-fun ByteArray?.jsonToAnimationData(size: Int): AnimationData {
+fun AnimationData.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
+fun AnimationData.jsonString(): String = "DATA:${gson.toJson(this)};"
+
+fun String?.jsonToAnimationData(): AnimationData {
     checkNotNull(this)
     return gson.fromJson(
-        this.toString(Charset.forName("utf-8")).take(size).removePrefix("DATA:"),
+        this.removePrefix("DATA:").removeSuffix(";"),
         AnimationData::class.java
     )
 }
 
-fun StripInfo.json(): ByteArray = "INFO:${gson.toJson(this)}".toByteArray(Charset.forName("utf-8"))
+fun StripInfo.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
+fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
 
-fun ByteArray?.jsonToStripInfo(size: Int): StripInfo {
+fun String?.jsonToStripInfo(): StripInfo {
     checkNotNull(this)
     return gson.fromJson(
-        this.toString(Charset.forName("utf-8")).take(size).removePrefix("INFO:"),
+        this.removePrefix("INFO:").removeSuffix(";"),
         StripInfo::class.java
     )
 }
+
