@@ -90,13 +90,15 @@ class UtilsTest {
 
         val testBytes = testAnimation.json()
 
-        val testAnimation2 = testBytes.jsonToAnimationData(testBytes.size)
+        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToAnimationData()
 
         assertTrue { testAnimation == testAnimation2 }
 
+        println(gson.toJson(testAnimation))
+
         assertFailsWith<IllegalStateException> {
-            val nullBytes: ByteArray? = null
-            nullBytes.jsonToAnimationData(0)
+            val nullBytes: String? = null
+            nullBytes.jsonToAnimationData()
         }
     }
 
@@ -105,28 +107,28 @@ class UtilsTest {
         val info1 = StripInfo()
         val infoBytes = info1.json()
 
-        val info2 = infoBytes.jsonToStripInfo(infoBytes.size)
+        val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
 
         assertTrue { info1 == info2 }
 
         assertFailsWith<IllegalStateException> {
-            val nullBytes: ByteArray? = null
-            nullBytes.jsonToStripInfo(0)
+            val nullBytes: String? = null
+            nullBytes.jsonToStripInfo()
         }
     }
 
     @Test
     fun testGetDataTypePrefix() {
         val info1 = StripInfo()
-        val infoBytes = info1.json()
+        val infoBytes = info1.jsonString()
         assertTrue { infoBytes.getDataTypePrefix() == "INFO" }
 
         val animTest = AnimationData()
-        val animBytes = animTest.json()
+        val animBytes = animTest.jsonString()
         assertTrue { animBytes.getDataTypePrefix() == "DATA" }
 
         assertFailsWith<IllegalStateException> {
-            val nullBytes: ByteArray? = null
+            val nullBytes: String? = null
             nullBytes.getDataTypePrefix()
         }
 
