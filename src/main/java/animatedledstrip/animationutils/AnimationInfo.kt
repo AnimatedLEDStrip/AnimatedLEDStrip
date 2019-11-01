@@ -57,5 +57,5 @@ data class AnimationInfo(
     val spacingDefault: Int = 0
 ) {
     val numColors = numReqColors + numOptColors
-    val repetitive: Boolean = animation.isNonRepetitive()
+    val repetitive: Boolean = !animation.isNonRepetitive()
 }
