@@ -34,6 +34,8 @@ import animatedledstrip.leds.AnimatedLEDStrip
  * @see AnimatedLEDStrip.alternate
  */
 val Alternate = AnimationInfo(
+    animation = Animation.ALTERNATE,
+    name = "Alternate",
     abbr = "ALT",
     numReqColors = 2,
     delay = ReqLevel.OPTIONAL,
@@ -48,6 +50,8 @@ val Alternate = AnimationInfo(
  * @see AnimatedLEDStrip.bounce
  */
 val Bounce = AnimationInfo(
+    animation = Animation.BOUNCE,
+    name = "Bounce",
     abbr = "BNC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -62,6 +66,8 @@ val Bounce = AnimationInfo(
  * @see AnimatedLEDStrip.bounceToColor
  */
 val BounceToColor = AnimationInfo(
+    animation = Animation.BOUNCETOCOLOR,
+    name = "Bounce to Color",
     abbr = "BTC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -70,6 +76,8 @@ val BounceToColor = AnimationInfo(
 
 
 val CatToy = AnimationInfo(
+    animation = Animation.CATTOY,
+    name = "Cat Toy",
     abbr = "CAT",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -77,12 +85,21 @@ val CatToy = AnimationInfo(
     repetitive = true
     )
 
+val Color = AnimationInfo(
+    animation = Animation.COLOR,
+    name = "Color",
+    abbr = "COL",
+    numReqColors = 1
+)
+
 /**
  * Info about the Meteor animation.
  *
  * @see AnimatedLEDStrip.meteor
  */
 val Meteor = AnimationInfo(
+    animation = Animation.METEOR,
+    name = "Meteor",
     abbr = "PXRT",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -98,6 +115,8 @@ val Meteor = AnimationInfo(
  * @see AnimatedLEDStrip.multiPixelRun
  */
 val MultiPixelRun = AnimationInfo(
+    animation = Animation.MULTIPIXELRUN,
+    name = "Multi-Pixel Run",
     abbr = "MPR",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -115,6 +134,8 @@ val MultiPixelRun = AnimationInfo(
  * @see AnimatedLEDStrip.multiPixelRunToColor
  */
 val MultiPixelRunToColor = AnimationInfo(
+    animation = Animation.MULTIPIXELRUNTOCOLOR,
+    name = "Multi-Pixel Run to Color",
     abbr = "MTC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -131,6 +152,8 @@ val MultiPixelRunToColor = AnimationInfo(
  *
  */
 val PixelMarathon = AnimationInfo(
+    animation = Animation.PIXELMARATHON,
+    name = "Pixel Marathon",
     abbr = "PXM",
     numReqColors = 5,
     delay = ReqLevel.OPTIONAL,
@@ -145,6 +168,8 @@ val PixelMarathon = AnimationInfo(
  * @see AnimatedLEDStrip.pixelRun
  */
 val PixelRun = AnimationInfo(
+    animation = Animation.PIXELRUN,
+    name = "Pixel Run",
     abbr = "PXR",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -160,6 +185,8 @@ val PixelRun = AnimationInfo(
  * @see AnimatedLEDStrip.ripple
  */
 val Ripple = AnimationInfo(
+    animation = Animation.RIPPLE,
+    name = "Ripple",
     abbr = "RPL",
     numReqColors = 1,
     center = ReqLevel.OPTIONAL,
@@ -175,6 +202,8 @@ val Ripple = AnimationInfo(
  * @see AnimatedLEDStrip.smoothChase
  */
 val SmoothChase = AnimationInfo(
+    animation = Animation.SMOOTHCHASE,
+    name = "Smooth Chase",
     abbr = "SCH",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -190,6 +219,8 @@ val SmoothChase = AnimationInfo(
  * @see AnimatedLEDStrip.smoothFade
  */
 val SmoothFade = AnimationInfo(
+    animation = Animation.SMOOTHFADE,
+    name = "Smooth Fade",
     abbr = "SMF",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -203,6 +234,8 @@ val SmoothFade = AnimationInfo(
  * @see AnimatedLEDStrip.sparkle
  */
 val Sparkle = AnimationInfo(
+    animation = Animation.SPARKLE,
+    name = "Sparkle",
     abbr = "SPK",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -217,6 +250,8 @@ val Sparkle = AnimationInfo(
  * @see AnimatedLEDStrip.sparkleFade
  */
 val SparkleFade = AnimationInfo(
+    animation = Animation.SPARKLEFADE,
+    name = "Sparkle Fade",
     abbr = "SPF",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -231,6 +266,8 @@ val SparkleFade = AnimationInfo(
  * @see AnimatedLEDStrip.sparkleToColor
  */
 val SparkleToColor = AnimationInfo(
+    animation = Animation.SPARKLETOCOLOR,
+    name = "Sparkle to Color",
     abbr = "STC",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -244,6 +281,8 @@ val SparkleToColor = AnimationInfo(
  * @see AnimatedLEDStrip.splat
  */
 val Splat = AnimationInfo(
+    animation = Animation.SPLAT,
+    name = "Splat",
     abbr = "SPT",
     numReqColors = 1,
     center = ReqLevel.OPTIONAL,
@@ -259,6 +298,8 @@ val Splat = AnimationInfo(
  * @see AnimatedLEDStrip.stack
  */
 val Stack = AnimationInfo(
+    animation = Animation.STACK,
+    name = "Stack",
     abbr = "STK",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -273,6 +314,8 @@ val Stack = AnimationInfo(
  *
  */
 val StackOverflow = AnimationInfo(
+    animation = Animation.STACKOVERFLOW,
+    name = "Stack Overflow",
     abbr = "STO",
     numReqColors = 2,
     delay = ReqLevel.OPTIONAL,
@@ -287,6 +330,8 @@ val StackOverflow = AnimationInfo(
  * @see AnimatedLEDStrip.wipe
  */
 val Wipe = AnimationInfo(
+    animation = Animation.WIPE,
+    name = "Wipe",
     abbr = "WIP",
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
@@ -295,28 +340,51 @@ val Wipe = AnimationInfo(
 )
 
 
-/**
- * Map of animations to their `AnimationInfo` instances.
- */
-@Suppress("EXPERIMENTAL_API_USAGE")
-val animationInfoMap = mapOf(
-    Animation.ALTERNATE to Alternate,
-    Animation.BOUNCE to Bounce,
-    Animation.BOUNCETOCOLOR to BounceToColor,
-    Animation.CATTOY to CatToy,
-    Animation.METEOR to Meteor,
-    Animation.MULTIPIXELRUN to MultiPixelRun,
-    Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
-    Animation.PIXELMARATHON to PixelMarathon,
-    Animation.PIXELRUN to PixelRun,
-    Animation.RIPPLE to Ripple,
-    Animation.SMOOTHCHASE to SmoothChase,
-    Animation.SMOOTHFADE to SmoothFade,
-    Animation.SPARKLE to Sparkle,
-    Animation.SPARKLEFADE to SparkleFade,
-    Animation.SPARKLETOCOLOR to SparkleToColor,
-    Animation.SPLAT to Splat,
-    Animation.STACK to Stack,
-    Animation.STACKOVERFLOW to StackOverflow,
-    Animation.WIPE to Wipe
+val animationInfoList = listOf(
+    Alternate,
+    Bounce,
+    BounceToColor,
+    CatToy,
+    Color,
+    Meteor,
+    MultiPixelRun,
+    MultiPixelRunToColor,
+    PixelMarathon,
+    PixelRun,
+    Ripple,
+    SmoothChase,
+    SmoothFade,
+    Sparkle,
+    SparkleFade,
+    SparkleToColor,
+    Splat,
+    Stack,
+    StackOverflow,
+    Wipe
 )
+
+///**
+// * Map of animations to their `AnimationInfo` instances.
+// */
+//@Suppress("EXPERIMENTAL_API_USAGE")
+//val animationInfoMap = mapOf(
+//    Animation.ALTERNATE to Alternate,
+//    Animation.BOUNCE to Bounce,
+//    Animation.BOUNCETOCOLOR to BounceToColor,
+//    Animation.CATTOY to CatToy,
+//    Animation.METEOR to Meteor,
+//    Animation.MULTIPIXELRUN to MultiPixelRun,
+//    Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
+//    Animation.PIXELMARATHON to PixelMarathon,
+//    Animation.PIXELRUN to PixelRun,
+//    Animation.RIPPLE to Ripple,
+//    Animation.SMOOTHCHASE to SmoothChase,
+//    Animation.SMOOTHFADE to SmoothFade,
+//    Animation.SPARKLE to Sparkle,
+//    Animation.SPARKLEFADE to SparkleFade,
+//    Animation.SPARKLETOCOLOR to SparkleToColor,
+//    Animation.SPLAT to Splat,
+//    Animation.STACK to Stack,
+//    Animation.STACKOVERFLOW to StackOverflow,
+//    Animation.WIPE to Wipe
+//)

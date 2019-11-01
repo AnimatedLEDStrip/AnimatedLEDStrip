@@ -23,6 +23,7 @@ package animatedledstrip.test
  */
 
 
+import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationInfo
 import animatedledstrip.animationutils.ReqLevel
 import org.junit.Test
@@ -33,9 +34,15 @@ class AnimationInfoTest {
     @Suppress("SimplifyBooleanWithConstants")
     @Test
     fun testDefaultConstruction() {
-        val ai = AnimationInfo()
+        val ai = AnimationInfo(
+            animation = Animation.COLOR,
+            name = "TEST",
+            abbr = "TEST"
+        )
 
-        assertTrue { ai.abbr == "" }
+        assertTrue { ai.animation == Animation.COLOR }
+        assertTrue { ai.name == "TEST" }
+        assertTrue { ai.abbr == "TEST" }
         assertTrue { ai.numReqColors == 0 }
         assertTrue { ai.numOptColors == 0 }
         assertTrue { ai.numColors == 0 }
