@@ -26,6 +26,7 @@ package animatedledstrip.test
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
+import org.junit.Ignore
 import org.junit.Test
 
 class AnimatedLEDStripNonConcurrentTest {
@@ -57,6 +58,7 @@ class AnimatedLEDStripNonConcurrentTest {
     }
 
     @Test
+    @Ignore
     fun testMeteor() {
         val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
@@ -72,6 +74,7 @@ class AnimatedLEDStripNonConcurrentTest {
     }
 
     @Test
+    @Ignore
     fun testMultiPixelRun() {
         val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
@@ -104,6 +107,7 @@ class AnimatedLEDStripNonConcurrentTest {
     }
 
     @Test
+    @Ignore
     fun testPixelRun() {
         val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
