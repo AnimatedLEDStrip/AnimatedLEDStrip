@@ -27,11 +27,11 @@ import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.Direction
 import animatedledstrip.animationutils.NonRepetitive
-import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.blend
 import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.infoOrNull
 import org.pmw.tinylog.Logger
 
 /**
@@ -74,7 +74,7 @@ abstract class AnimatedLEDStripNonConcurrent(numLEDs: Int) :
             )
         }
 
-        for (i in animation.colors.size..(animationInfoMap[animation.animation]?.numColors ?: 0)) {
+        for (i in animation.colors.size until (animation.animation.infoOrNull()?.numColors ?: 0)) {
             animation.pCols.add(
                 CCBlack.prepare(
                     animation.endPixel - animation.startPixel + 1,

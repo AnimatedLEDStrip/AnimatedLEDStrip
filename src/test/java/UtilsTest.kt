@@ -24,6 +24,7 @@ package animatedledstrip.test
 
 
 import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.animationinfo.Meteor
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
@@ -31,6 +32,7 @@ import animatedledstrip.leds.StripInfo
 import animatedledstrip.utils.*
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class UtilsTest {
@@ -131,6 +133,37 @@ class UtilsTest {
             val nullBytes: String? = null
             nullBytes.getDataTypePrefix()
         }
+    }
 
+    @Test
+    fun testGetAnimation() {
+        val testStr = "Sparkle"
+        assertTrue { testStr.getAnimation() == Animation.SPARKLE }
+        assertTrue { testStr.getAnimationOrNull() == Animation.SPARKLE }
+
+
+        val badTestStr = "Test"
+
+        assertFailsWith<KotlinNullPointerException> { badTestStr.getAnimation() }
+        assertNull(badTestStr.getAnimationOrNull())
+
+        val testSpacedStr = "sparkle TO color"
+
+        assertTrue { testSpacedStr.getAnimation() == Animation.SPARKLETOCOLOR }
+        assertTrue { testSpacedStr.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
+
+        val testSpacedStr2 = "s p a r k l e T O c o l o r"
+
+        assertTrue { testSpacedStr2.getAnimation() == Animation.SPARKLETOCOLOR }
+        assertTrue { testSpacedStr2.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
+    }
+
+    @Test
+    fun testAnimationInfo() {
+        assertTrue { Animation.METEOR.info() == Meteor }
+        assertTrue { Animation.METEOR.infoOrNull() == Meteor }
+
+        assertFailsWith<KotlinNullPointerException> { Animation.ENDANIMATION.info() }
+        assertNull(Animation.ENDANIMATION.infoOrNull())
     }
 }

@@ -28,6 +28,8 @@ package animatedledstrip.animationutils
  * not used for an animation along with default values for `delay` and `spacing`,
  * when applicable.
  *
+ * @property animation The value from the Animation enum that this info corresponds to
+ * @property name The name of this animation
  * @property abbr The abbreviation used to identify this animation
  * @property numReqColors The minimum number of colors required for the animation
  * @property numOptColors The number of additional colors beyond the required number
@@ -41,7 +43,9 @@ package animatedledstrip.animationutils
  * @property numColors The total number of colors in the animation
  */
 data class AnimationInfo(
-    val abbr: String = "",
+    val animation: Animation,
+    val name: String,
+    val abbr: String,
     val numReqColors: Int = 0,
     val numOptColors: Int = 0,
     val center: ReqLevel = ReqLevel.NOTUSED,

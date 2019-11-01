@@ -23,10 +23,10 @@ package animatedledstrip.animationutils
  */
 
 
-import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.utils.infoOrNull
 import java.io.Serializable
 
 /**
@@ -76,8 +76,8 @@ class AnimationData(
         get() {
             return (when (field) {
                 -1L, 0L -> {
-                    when (animationInfoMap[animation]?.delay) {
-                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.delayDefault ?: 50L
+                    when (animation.infoOrNull()?.delay) {
+                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.delayDefault ?: 50L
                         ReqLevel.NOTUSED -> 50L
                         else -> 50L
                     }
@@ -91,8 +91,8 @@ class AnimationData(
         get() {
             return (when (field) {
                 -1, 0 -> {
-                    when (animationInfoMap[animation]?.spacing) {
-                        ReqLevel.OPTIONAL -> animationInfoMap[animation]?.spacingDefault ?: 3
+                    when (animation.infoOrNull()?.spacing) {
+                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.spacingDefault ?: 3
                         ReqLevel.NOTUSED -> 3
                         else -> 3
                     }

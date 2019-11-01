@@ -24,10 +24,10 @@ package animatedledstrip.leds
 
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.animationutils.animationinfo.animationInfoMap
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
@@ -112,7 +112,7 @@ abstract class AnimatedLEDStrip(
             )
         }
 
-        for (i in animation.colors.size until (animationInfoMap[animation.animation]?.numColors ?: 0)) {
+        for (i in animation.colors.size until (animation.animation.infoOrNull()?.numColors ?: 0)) {
             animation.pCols.add(
                 CCBlack.prepare(
                     animation.endPixel - animation.startPixel + 1,

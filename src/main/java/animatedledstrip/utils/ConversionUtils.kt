@@ -23,7 +23,10 @@ package animatedledstrip.utils
  */
 
 
+import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.AnimationInfo
+import animatedledstrip.animationutils.animationinfo.animationInfoList
 import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.StripInfo
@@ -81,3 +84,25 @@ fun String?.jsonToStripInfo(): StripInfo {
     )
 }
 
+
+fun String.getAnimation(): Animation =
+    animationInfoList
+        .find {
+            this.toUpperCase().replace("\\s".toRegex(), "") ==
+                    it.name.toUpperCase().replace("\\s".toRegex(), "")
+        }!!
+        .animation
+
+fun String.getAnimationOrNull(): Animation? =
+    animationInfoList
+        .find {
+            this.toUpperCase().replace("\\s".toRegex(), "") ==
+                    it.name.toUpperCase().replace("\\s".toRegex(), "")
+        }
+        ?.animation
+
+fun Animation.info(): AnimationInfo =
+    animationInfoList.find { it.animation == this }!!
+
+fun Animation.infoOrNull(): AnimationInfo? =
+    animationInfoList.find { it.animation == this }
