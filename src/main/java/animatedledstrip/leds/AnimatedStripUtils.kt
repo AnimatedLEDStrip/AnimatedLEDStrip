@@ -24,8 +24,11 @@ package animatedledstrip.leds
 
 
 import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.color
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.delayBlocking
+import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
@@ -123,3 +126,41 @@ fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start
 
 fun randomPixelIn(animation: AnimationData): Int =
     ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).toInt()
+
+fun AnimationData.prepare(ledStrip: AnimatedLEDStrip) {
+    endPixel = when (endPixel) {
+        -1 -> ledStrip.numLEDs - 1
+        else -> endPixel
+    }
+
+    center = when (center) {
+        -1 -> ledStrip.numLEDs / 2
+        else -> center
+    }
+
+    distance = when (distance) {
+        -1 -> ledStrip.numLEDs
+        else -> distance
+    }
+
+    if (colors.isEmpty()) color(CCBlack)
+
+    pCols = mutableListOf()
+    colors.forEach {
+        pCols.add(
+            it.prepare(
+                endPixel - startPixel + 1,
+                leadingZeros = startPixel
+            )
+        )
+    }
+
+    for (i in colors.size until (animation.infoOrNull()?.numColors ?: 0)) {
+        pCols.add(
+            CCBlack.prepare(
+                endPixel - startPixel + 1,
+                leadingZeros = startPixel
+            )
+        )
+    }
+}
