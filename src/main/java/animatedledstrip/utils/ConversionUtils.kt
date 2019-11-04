@@ -30,6 +30,8 @@ import animatedledstrip.animationutils.animationinfo.animationInfoList
 import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.StripInfo
+import com.google.gson.JsonSyntaxException
+import org.pmw.tinylog.Logger
 import java.nio.charset.Charset
 
 /**
@@ -67,10 +69,15 @@ fun AnimationData.jsonString(): String = "DATA:${gson.toJson(this)};"
 
 fun String?.jsonToAnimationData(): AnimationData {
     checkNotNull(this)
-    return gson.fromJson(
-        this.removePrefix("DATA:").removeSuffix(";"),
-        AnimationData::class.java
-    )
+    try {
+        return gson.fromJson(
+            this.removePrefix("DATA:").removeSuffix(";"),
+            AnimationData::class.java
+        )
+    } catch (e: JsonSyntaxException) {
+        Logger.warn("Malformed JSON: $this")
+        throw e
+    }
 }
 
 fun StripInfo.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
@@ -78,10 +85,15 @@ fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
 
 fun String?.jsonToStripInfo(): StripInfo {
     checkNotNull(this)
-    return gson.fromJson(
-        this.removePrefix("INFO:").removeSuffix(";"),
-        StripInfo::class.java
-    )
+    try {
+        return gson.fromJson(
+            this.removePrefix("INFO:").removeSuffix(";"),
+            StripInfo::class.java
+        )
+    } catch (e: JsonSyntaxException) {
+        Logger.warn("Malformed JSON: $this")
+        throw e
+    }
 }
 
 
