@@ -24,10 +24,8 @@ package animatedledstrip.leds
 
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
@@ -77,6 +75,7 @@ abstract class AnimatedLEDStrip(
      */
     private val customAnimationMap = mutableMapOf<String, (AnimationData) -> Unit>()
 
+
     /**
      * Run an animation.
      *
@@ -84,42 +83,43 @@ abstract class AnimatedLEDStrip(
      * animation to run
      */
     override fun run(animation: AnimationData) {
+        animation.prepare(this)
         Logger.trace("Starting $animation")
-        animation.endPixel = when (animation.endPixel) {
-            -1 -> numLEDs - 1
-            else -> animation.endPixel
-        }
-
-        animation.center = when (animation.center) {
-            -1 -> numLEDs / 2
-            else -> animation.center
-        }
-
-        animation.distance = when (animation.distance) {
-            -1 -> numLEDs
-            else -> animation.distance
-        }
-
-        if (animation.colors.isEmpty()) animation.color(CCBlack)
-
-        animation.pCols = mutableListOf()
-        animation.colors.forEach {
-            animation.pCols.add(
-                it.prepare(
-                    animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel
-                )
-            )
-        }
-
-        for (i in animation.colors.size until (animation.animation.infoOrNull()?.numColors ?: 0)) {
-            animation.pCols.add(
-                CCBlack.prepare(
-                    animation.endPixel - animation.startPixel + 1,
-                    leadingZeros = animation.startPixel
-                )
-            )
-        }
+//        animation.endPixel = when (animation.endPixel) {
+//            -1 -> numLEDs - 1
+//            else -> animation.endPixel
+//        }
+//
+//        animation.center = when (animation.center) {
+//            -1 -> numLEDs / 2
+//            else -> animation.center
+//        }
+//
+//        animation.distance = when (animation.distance) {
+//            -1 -> numLEDs
+//            else -> animation.distance
+//        }
+//
+//        if (animation.colors.isEmpty()) animation.color(CCBlack)
+//
+//        animation.pCols = mutableListOf()
+//        animation.colors.forEach {
+//            animation.pCols.add(
+//                it.prepare(
+//                    animation.endPixel - animation.startPixel + 1,
+//                    leadingZeros = animation.startPixel
+//                )
+//            )
+//        }
+//
+//        for (i in animation.colors.size until (animation.animation.infoOrNull()?.numColors ?: 0)) {
+//            animation.pCols.add(
+//                CCBlack.prepare(
+//                    animation.endPixel - animation.startPixel + 1,
+//                    leadingZeros = animation.startPixel
+//                )
+//            )
+//        }
 
         @Suppress("EXPERIMENTAL_API_USAGE", "DEPRECATION")
         when (animation.animation) {
