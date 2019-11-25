@@ -127,7 +127,7 @@ fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start
 fun randomPixelIn(animation: AnimationData): Int =
     ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).toInt()
 
-fun AnimationData.prepare(ledStrip: AnimatedLEDStrip) {
+fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
     endPixel = when (endPixel) {
         -1 -> ledStrip.numLEDs - 1
         else -> endPixel
@@ -163,4 +163,6 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip) {
             )
         )
     }
+
+    return this
 }
