@@ -28,11 +28,24 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
+
+class AnimationDataExclusionStrategy : ExclusionStrategy {
+    override fun shouldSkipClass(p0: Class<*>?): Boolean {
+        return false
+    }
+
+    override fun shouldSkipField(field: FieldAttributes?): Boolean {
+        return field?.name?.equals("pCols") == true
+    }
+}
 
 /* JSON Parser */
 val gson = GsonBuilder()
     .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .addSerializationExclusionStrategy(AnimationDataExclusionStrategy())
     .create()
     ?: error("Could not create JSON parser")
 
