@@ -34,7 +34,7 @@ import org.junit.Test
 class AnimatedLEDStripTest {
 
     @Test
-    fun testColor() {
+    fun testColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData().animation(Animation.COLOR).color(0xFF))
@@ -42,7 +42,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testAlternate() {
+    fun testAlternate() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -54,7 +54,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testBounce() {
+    fun testBounce() = runBlocking {
         val job1 = GlobalScope.launch {
             val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -76,11 +76,12 @@ class AnimatedLEDStripTest {
             )
         }
 
-        runBlocking { job2.join(); job1.join() }
+        job2.join()
+        job1.join()
     }
 
     @Test
-    fun testBounceToColor() {
+    fun testBounceToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF))
@@ -95,7 +96,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testMeteor() {
+    fun testMeteor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -114,7 +115,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testMultiPixelRun() {
+    fun testMultiPixelRun() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -133,7 +134,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testMultiPixelRunToColor() {
+    fun testMultiPixelRunToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -154,7 +155,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testPixelMarathon() {
+    fun testPixelMarathon() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -169,7 +170,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testPixelRun() {
+    fun testPixelRun() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -189,7 +190,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testRipple() {
+    fun testRipple() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -208,7 +209,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSmoothChase() {
+    fun testSmoothChase() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -227,7 +228,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSmoothFade() {
+    fun testSmoothFade() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -246,7 +247,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSparkle() {
+    fun testSparkle() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -264,7 +265,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSparkleFade() {
+    fun testSparkleFade() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -282,7 +283,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSparkleToColor() {
+    fun testSparkleToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -294,7 +295,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testSplat() {
+    fun testSplat() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -317,7 +318,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testStack() {
+    fun testStack() = runBlocking {
         val job2 = GlobalScope.launch {
             val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -343,12 +344,13 @@ class AnimatedLEDStripTest {
             checkAllPixels(testLEDs, 0xFF00)
         }
 
-        runBlocking { job2.join(); job1.join() }
+        job2.join()
+        job1.join()
 
     }
 
     @Test
-    fun testStackOverflow() {
+    fun testStackOverflow() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -360,7 +362,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testWipe() {
+    fun testWipe() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(
@@ -381,7 +383,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testNonAnimation() {
+    fun testNonAnimation() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.run(AnimationData().animation(Animation.ENDANIMATION))
