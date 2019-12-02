@@ -61,7 +61,6 @@ enum class Animation {
      */
     @NonRepetitive
     BOUNCETOCOLOR,
-    @ExperimentalAnimation
     CATTOY,
     /**
      * See [AnimatedLEDStrip.meteor]
