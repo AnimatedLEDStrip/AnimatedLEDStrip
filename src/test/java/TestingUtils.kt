@@ -24,23 +24,20 @@ package animatedledstrip.test
 
 
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import kotlin.test.assertTrue
 
 fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
     testLEDs.pixelColorList.forEach {
-        assertTrue { it == color }
-    }
-}
-
-fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStripNonConcurrent, color: Long) {
-    testLEDs.pixelColorList.forEach {
-        assertTrue { it == color }
+        assertTrue(
+            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelColorList}"
+        ) { it == color }
     }
 }
 
 fun checkPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
     leds.forEach {
-        assertTrue { testLEDs.pixelColorList[it] == color }
+        assertTrue(
+            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelColorList}"
+        ) { testLEDs.pixelColorList[it] == color }
     }
 }

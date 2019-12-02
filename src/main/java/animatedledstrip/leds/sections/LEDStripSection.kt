@@ -26,7 +26,6 @@ package animatedledstrip.leds.sections
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.AnimatedLEDStripInterface
 
 /**
  * Class used for running animations on only part of an LED strip.
@@ -39,7 +38,7 @@ import animatedledstrip.leds.AnimatedLEDStripInterface
  * @property endPixel Last pixel in the section (inclusive)
  * @property ledStrip Strip that this section is a part of
  */
-class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStripInterface) {
+class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStrip) {
 
     /**
      * Create a LEDStripSection using a range of indices (inclusive)
@@ -52,16 +51,19 @@ class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: Anim
      * @param animation An `AnimationData` instance specifying the animation to
      * be run
      */
-    fun run(animation: AnimationData) {
-        when (animation.animation) {
-            Animation.COLOR -> ledStrip.setSectionColor(
-                startPixel, endPixel,
-                animation.colors[0].prepare(endPixel - startPixel + 1, startPixel)
-            )
+    fun addAnimation(animation: AnimationData): AnimatedLEDStrip.RunningAnimation? {
+        return when (animation.animation) {
+            Animation.COLOR -> {
+                ledStrip.setSectionColor(
+                    startPixel, endPixel,
+                    animation.colors[0].prepare(endPixel - startPixel + 1, startPixel)
+                )
+                null
+            }
             else -> {
                 animation.startPixel = startPixel
                 animation.endPixel = endPixel
-                ledStrip.run(animation)
+                ledStrip.addAnimation(animation)
             }
         }
     }
