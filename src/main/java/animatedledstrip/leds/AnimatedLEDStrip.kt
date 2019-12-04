@@ -153,10 +153,6 @@ abstract class AnimatedLEDStrip(
                 null
             }
             Animation.METEOR -> meteor
-            Animation.MULTICOLOR -> run {
-                Logger.warn("MultiColor is deprecated. Use Color")
-                null
-            }
             Animation.MULTIPIXELRUN -> multiPixelRun
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor
             Animation.PIXELMARATHON -> pixelMarathon
