@@ -95,7 +95,7 @@ class AnimatedLEDStripTest {
                 .animation(Animation.BOUNCETOCOLOR)
                 .color(0xFF)
         )
-
+        delay(100)
         anim?.endAnimation()
         anim?.join()
         checkAllPixels(testLEDs, 0xFF)
