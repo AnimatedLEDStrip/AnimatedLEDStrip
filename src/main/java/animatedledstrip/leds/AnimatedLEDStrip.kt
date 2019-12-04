@@ -126,6 +126,10 @@ abstract class AnimatedLEDStrip(
             }
     }
 
+    fun endAnimation(runningAnimation: RunningAnimation?) {
+        runningAnimation?.cancel("End of Animation")
+    }
+
     /**
      * Run an animation.
      *
