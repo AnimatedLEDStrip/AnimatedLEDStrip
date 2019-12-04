@@ -35,7 +35,7 @@ import org.junit.Test
 class AnimatedLEDStripTest {
 
     @Test
-    fun testColor() = runBlocking {
+    fun testColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
@@ -419,7 +419,7 @@ class AnimatedLEDStripTest {
                 .color(0xFF)
                 .direction(Direction.FORWARD)
         )
-        delay(1000)
+        delay(100)
         anim1?.endAnimation()
         anim1?.join()
         checkAllPixels(testLEDs, 0xFF)
@@ -430,17 +430,54 @@ class AnimatedLEDStripTest {
                 .color(0xFF00)
                 .direction(Direction.BACKWARD)
         )
-        delay(1000)
+        delay(100)
         anim2?.endAnimation()
         anim2?.join()
         checkAllPixels(testLEDs, 0xFF00)
     }
 
     @Test
-    fun testNonAnimation() = runBlocking {
+    fun testNonAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.addAnimation(AnimationData().animation(Animation.ENDANIMATION))
         Unit
+    }
+
+    @Test
+    fun testEndAnimation() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        val anim1 = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.ALTERNATE)
+                .delay(100)
+        )
+        delay(500)
+        anim1?.endAnimation()
+
+        val anim2 = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.ALTERNATE)
+                .delay(100)
+        )
+        delay(500)
+        testLEDs.endAnimation(anim2)
+
+        val anim3 = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.ALTERNATE)
+                .delay(100)
+        )
+        delay(500)
+        testLEDs.endAnimation(anim3?.animation)
+
+        val anim4 = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.ALTERNATE)
+                .delay(100)
+        )
+        delay(500)
+        testLEDs.endAnimation(anim4?.id ?: "")
     }
 }
