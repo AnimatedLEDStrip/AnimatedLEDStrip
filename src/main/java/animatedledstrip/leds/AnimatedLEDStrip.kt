@@ -81,7 +81,7 @@ abstract class AnimatedLEDStrip(
         val id: String,
         val job: Job
     ) {
-        fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
+        internal fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
     }
 
     /**
@@ -90,7 +90,7 @@ abstract class AnimatedLEDStrip(
     private val customAnimationMap =
         mutableMapOf<String, (AnimationData, CoroutineScope) -> Unit>()
 
-    private val runningAnimations = mutableMapOf<String, RunningAnimation>()
+    internal val runningAnimations = mutableMapOf<String, RunningAnimation>()
 
     fun addAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
         return if (animation.animation == Animation.ENDANIMATION) {
@@ -104,6 +104,7 @@ abstract class AnimatedLEDStrip(
             if (job != null) {
                 runningAnimations[id] = RunningAnimation(animation, id, job)
             }
+            // Will return null if job was null because runningAnimations[id] would not have been set
             return runningAnimations[id]
         }
     }
@@ -136,7 +137,7 @@ abstract class AnimatedLEDStrip(
      * @param animation An [AnimationData] instance with details about the
      * animation to run
      */
-    private fun run(
+    internal fun run(
         animation: AnimationData,
         threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
         scope: CoroutineScope = GlobalScope
