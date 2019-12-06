@@ -23,7 +23,6 @@ package animatedledstrip.leds
  */
 
 
-import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -32,7 +31,6 @@ import animatedledstrip.utils.tryWithLock
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.pmw.tinylog.Logger
-import java.nio.charset.Charset
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
@@ -42,7 +40,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  * @param pixels The pixels to set
  * @param color The color to use
  */
-operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainerInterface) {
+operator fun LEDStrip.set(vararg pixels: Int, color: ColorContainerInterface) {
     for (pixel in pixels) {
         setPixelColor(pixel, color)
     }
@@ -54,7 +52,7 @@ operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: ColorContainer
  * @param pixels The range of pixels to set
  * @param color The color to use
  */
-operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: ColorContainerInterface) {
+operator fun LEDStrip.set(pixels: IntRange, color: ColorContainerInterface) {
     for (pixel in pixels) {
         setPixelColor(pixel, color)
     }
@@ -66,7 +64,7 @@ operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: ColorContainerIn
  * @param pixels The pixels to set
  * @param color The color to use
  */
-operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: Long) {
+operator fun LEDStrip.set(vararg pixels: Int, color: Long) {
     for (pixel in pixels) {
         setPixelColor(pixel, ColorContainer(color))
     }
@@ -78,7 +76,7 @@ operator fun LEDStripNonConcurrent.set(vararg pixels: Int, color: Long) {
  * @param pixels The range of pixels to set
  * @param color The color to use
  */
-operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: Long) {
+operator fun LEDStrip.set(pixels: IntRange, color: Long) {
     for (pixel in pixels) {
         setPixelColor(pixel, ColorContainer(color))
     }
@@ -91,7 +89,7 @@ operator fun LEDStripNonConcurrent.set(pixels: IntRange, color: Long) {
  * @param offset The index of the pixel that will be set to the color at
  * index 0
  */
-fun LEDStripNonConcurrent.setStripColorWithOffset(colors: PreparedColorContainer, offset: Int = 0) {
+fun LEDStrip.setStripColorWithOffset(colors: PreparedColorContainer, offset: Int = 0) {
     setStripColor(colors.offsetBy(offset))
 }
 
@@ -101,7 +99,7 @@ fun LEDStripNonConcurrent.setStripColorWithOffset(colors: PreparedColorContainer
  * @param pixel The pixel to find the color of
  * @return A `String` containing the color of the pixel in hexadecimal
  */
-fun LEDStripNonConcurrent.getPixelHexString(pixel: Int): String {
+fun LEDStrip.getPixelHexString(pixel: Int): String {
     return getPixelColor(pixel).toString(16)
 }
 
@@ -111,7 +109,7 @@ fun LEDStripNonConcurrent.getPixelHexString(pixel: Int): String {
  * @param pixel The pixel to find the color of
  * @return The color of the pixel or null if the index is invalid
  */
-fun LEDStripNonConcurrent.getPixelColorOrNull(pixel: Int): Long? = try {
+fun LEDStrip.getPixelColorOrNull(pixel: Int): Long? = try {
     getPixelColor(pixel)
 } catch (e: IllegalArgumentException) {
     null
@@ -182,7 +180,7 @@ fun LEDStrip.setAndFadePixel(
  * @param pixels The pixels to set
  * @param color The color to use
  */
-fun LEDStripNonConcurrent.setPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+fun LEDStrip.setPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
     for (pixel in pixels) {
         setPixelColor(pixel, color)
     }
@@ -194,7 +192,7 @@ fun LEDStripNonConcurrent.setPixelColors(pixels: List<Int>, color: ColorContaine
  * @param pixels The pixels to set
  * @param color The color to use
  */
-fun LEDStripNonConcurrent.setPixelColors(pixels: List<Int>, color: Long) {
+fun LEDStrip.setPixelColors(pixels: List<Int>, color: Long) {
     for (pixel in pixels) {
         setPixelColor(pixel, color)
     }
