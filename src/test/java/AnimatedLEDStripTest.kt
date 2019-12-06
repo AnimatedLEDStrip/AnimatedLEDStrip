@@ -29,11 +29,13 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.leds.join
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
 
@@ -570,10 +572,11 @@ class AnimatedLEDStripTest {
                 .delay(100)
         )
         assertNotNull(anim1)
+        assertTrue(testLEDs.runningAnimations.containsKey(anim1.id))
         delay(500)
         anim1.endAnimation()
 
-        // End with RunningAnimation instance
+        // End with AnimationData instance
         val anim2 = testLEDs.addAnimation(
             AnimationData()
                 .animation(Animation.ALTERNATE)
@@ -581,9 +584,10 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim2)
         delay(500)
-        testLEDs.endAnimation(anim2)
+        assertTrue(testLEDs.runningAnimations.containsKey(anim2.id))
+        testLEDs.endAnimation(anim2.animation)
 
-        // End with AnimationData instance
+        // End with animation ID
         val anim3 = testLEDs.addAnimation(
             AnimationData()
                 .animation(Animation.ALTERNATE)
@@ -591,9 +595,10 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim3)
         delay(500)
-        testLEDs.endAnimation(anim3.animation)
+        assertTrue(testLEDs.runningAnimations.containsKey(anim3.id))
+        testLEDs.endAnimation(anim3.id)
 
-        // End with animation ID
+        // End with addAnimation and AnimationData instance with ENDANIMATION and ID
         val anim4 = testLEDs.addAnimation(
             AnimationData()
                 .animation(Animation.ALTERNATE)
@@ -601,29 +606,57 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim4)
         delay(500)
-        testLEDs.endAnimation(anim4.id)
-
-        // End with addAnimation and AnimationData instance with ENDANIMATION and ID
-        val anim5 = testLEDs.addAnimation(
-            AnimationData()
-                .animation(Animation.ALTERNATE)
-                .delay(100)
-        )
-        assertNotNull(anim5)
-        delay(500)
+        assertTrue(testLEDs.runningAnimations.containsKey(anim4.id))
         testLEDs.addAnimation(
             AnimationData()
                 .animation(Animation.ENDANIMATION)
-                .id(anim5.id)
+                .id(anim4.id)
         )
 
         delay(1000)
 
+        // Confirm that all animations have ended
         assertFalse(testLEDs.runningAnimations.containsKey(anim1.id))
         assertFalse(testLEDs.runningAnimations.containsKey(anim2.id))
         assertFalse(testLEDs.runningAnimations.containsKey(anim3.id))
         assertFalse(testLEDs.runningAnimations.containsKey(anim4.id))
-        assertFalse(testLEDs.runningAnimations.containsKey(anim5.id))
         Unit
+    }
+
+    @Test
+    fun testRunParallel() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        val anim = AnimationData().animation(Animation.COLOR)
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val pool = newSingleThreadContext("Test Pool")
+
+        // Default parameters
+        // join() not needed because animation is COLOR which doesn't spawn a coroutine
+        testLEDs.runParallel(anim, this)
+
+        // Set parameters
+        // join() not needed because animation is COLOR which doesn't spawn a coroutine
+        // continuous doesn't actually affect anything because animation is COLOR
+        testLEDs.runParallel(anim, this, pool = pool, continuous = true)
+
+        Unit
+    }
+
+    @Test
+    fun testRunSequential() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        val anim1 = AnimationData().animation(Animation.COLOR)
+        val anim2 = AnimationData().animation(Animation.ALTERNATE)
+
+        // Continuous false (default)
+        // Also tests animation that doesn't return a job
+        testLEDs.runSequential(anim1)
+
+        // Continuous true
+        // continuous doesn't actually affect anything because animation is COLOR
+        testLEDs.runSequential(anim1, continuous = true)
+
+        // Test with animation that spawns a coroutine
+        testLEDs.runSequential(anim2)
     }
 }
