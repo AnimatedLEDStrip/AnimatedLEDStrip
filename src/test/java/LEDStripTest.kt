@@ -230,7 +230,7 @@ class LEDStripTest {
         assertTrue { testLEDs[40] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))?.join()
+        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[14] == 0L }
@@ -250,7 +250,7 @@ class LEDStripTest {
         assertTrue { testLEDs[25] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection2.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))?.join()
+        testSection2.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -266,7 +266,7 @@ class LEDStripTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         val testSection = LEDStrip.SectionCreator.new(10..25, testLEDs)
 
-        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))?.join()
+        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -351,11 +351,18 @@ class LEDStripTest {
 
     @Test
     fun testImageDebugging() {
-        val leds = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test.csv")
+        val leds1 = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test1.csv")
         runBlocking { delay(5000) }
-        leds.toggleRender()
+        leds1.toggleRender()
         runBlocking { delay(1000) }
-        assertTrue { Files.exists(Paths.get("test.csv")) }
-        Files.delete(Paths.get("test.csv"))
+        assertTrue { Files.exists(Paths.get("test1.csv")) }
+        Files.delete(Paths.get("test1.csv"))
+
+        val leds2 = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test2")
+        runBlocking { delay(5000) }
+        leds2.toggleRender()
+        runBlocking { delay(1000) }
+        assertTrue { Files.exists(Paths.get("test2.csv")) }
+        Files.delete(Paths.get("test2.csv"))
     }
 }

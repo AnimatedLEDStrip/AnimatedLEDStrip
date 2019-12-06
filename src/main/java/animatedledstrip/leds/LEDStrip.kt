@@ -292,30 +292,9 @@ abstract class LEDStrip(
 
     /* Set strip color */
 
-//    /**
-//     * Override for setStripColor that calls the [LEDStrip] implementation
-//     * of `setStripColor`
-//     *
-//     * @param color The color to use
-//     */
-//    override fun setStripColor(color: ColorContainerInterface) {
-//        setStripColor(color, true)
-//    }
-//
-//    /**
-//     * Override for setStripColor that calls the [LEDStrip] implementation
-//     * of `setStripColor`
-//     *
-//     * @param color A `Long` representing the color to use
-//     */
-//    override fun setStripColor(color: Long) {
-//        setStripColor(color, true)
-//    }
-
     /**
      * Set the color of all pixels in the strip. If prolonged is true,
-     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
-     * `setStripColor`.
+     * set the prolonged color, otherwise set the actual color.
      *
      * @param color The color to use
      */
@@ -328,8 +307,7 @@ abstract class LEDStrip(
 
     /**
      * Set the color of all pixels in the strip. If prolonged is true,
-     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
-     * `setStripColor`.
+     * set the prolonged color, otherwise set the actual color.
      *
      * @param color A `Long` representing the color to use
      */
@@ -361,8 +339,7 @@ abstract class LEDStrip(
 
     /**
      * Set the color of all pixels in a section of the strip. If prolonged is true,
-     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
-     * `setSectionColor`.
+     * set the prolonged color, otherwise set the pixel's actual color.
      *
      * @param color A `Long` representing the color to use
      */
@@ -376,8 +353,7 @@ abstract class LEDStrip(
 
     /**
      * Set the color of all pixels in a section of the strip. If prolonged is true,
-     * set the prolonged color, otherwise use [LEDStripNonConcurrent]'s
-     * `setSectionColor`.
+     * set the prolonged color, otherwise set the pixel's actual color.
      *
      * @param color A `Long` representing the color to use
      */
@@ -476,12 +452,15 @@ abstract class LEDStrip(
                         pixel,
                         blend(
                             getActualPixelColorOrNull(pixel) ?: run { doDelay = false; return@withPixelLock Unit },
-                            prolongedColors[pixel], amountOfOverlay
+                            prolongedColors[pixel],
+                            amountOfOverlay
                         )
                     )
                 }
                 if (doDelay) delayBlocking(delay)
             }
+            // If loop was not broken due to another thread taking over the fading,
+            // reset the pixel and indicate that this pixel is no longer fading
             if (owner == myName) revertPixel(pixel)
             if (owner == myName) isFading = false
         }
