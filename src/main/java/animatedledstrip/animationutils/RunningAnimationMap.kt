@@ -1,4 +1,4 @@
-package animatedledstrip.leds.emulated
+package animatedledstrip.animationutils
 
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
@@ -24,19 +24,23 @@ package animatedledstrip.leds.emulated
 
 
 import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.NativeLEDStrip
-import animatedledstrip.leds.StripInfo
 
-/**
- * Class for emulating an `LEDStrip`.
- *
- * @param stripInfo Information about this strip, such as number of
- * LEDs, etc.
- */
-class EmulatedAnimatedLEDStrip(
-    stripInfo: StripInfo
-) : AnimatedLEDStrip(stripInfo) {
-    override var ledStrip: NativeLEDStrip = EmulatedWS281x(0, 255, numLEDs)
+class RunningAnimationMap {
+    internal val map =
+        mutableMapOf<String, AnimatedLEDStrip.RunningAnimation>()
 
-    constructor(numLEDs: Int) : this(StripInfo(numLEDs))
+    val entries: List<Pair<String, AnimatedLEDStrip.RunningAnimation>>
+        get() = map.entries.map { it.toPair() }
+
+    val ids: List<String>
+        get() = map.keys.toList()
+
+    val animations: List<AnimatedLEDStrip.RunningAnimation>
+        get() = map.values.toList()
+
+    internal operator fun get(key: String) = map[key]
+
+    internal operator fun set(key: String, value: AnimatedLEDStrip.RunningAnimation) = map.set(key, value)
+
+    internal fun remove(key: String) = map.remove(key)
 }

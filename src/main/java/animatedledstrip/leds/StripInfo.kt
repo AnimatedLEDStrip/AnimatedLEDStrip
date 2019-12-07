@@ -25,4 +25,10 @@ package animatedledstrip.leds
 
 import java.io.Serializable
 
-data class StripInfo(val numLEDs: Int = 0): Serializable
+data class StripInfo(
+    val numLEDs: Int = 0,
+    val pin: Int? = null,
+    val imageDebugging: Boolean = false,
+    val fileName: String? = null,
+    val rendersBeforeSave: Int? = null,
+    val threadCount: Int? = null): Serializable

@@ -33,24 +33,23 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * A subclass of [LEDStrip] adding concurrent animations.
- *
- * @param numLEDs Number of LEDs in the strip
- * @param imageDebugging Enable image debugging
- * @param fileName The file to write image debugging outputs to
- * @param rendersBeforeSave How many renders to perform between
- * image debugging saves
+ * A subclass of [LEDStrip] adding animations.
+ * @param stripInfo Information about this strip, such as number of
+ * LEDs, etc.
  */
 abstract class AnimatedLEDStrip(
-    numLEDs: Int,
-    imageDebugging: Boolean = false,
-    fileName: String? = null,
-    rendersBeforeSave: Int = 1000,
-    threadCount: Int = 100
-) : LEDStrip(numLEDs, imageDebugging, fileName, rendersBeforeSave), SectionableLEDStrip {
+    stripInfo: StripInfo
+) : LEDStrip(stripInfo), SectionableLEDStrip {
+
 
     /* Thread pools */
 
+    private val threadCount: Int = stripInfo.threadCount ?: 100
+
+    /**
+     * A pool of threads used to run animations.
+     * (Animations spawned by other animations use the [parallelAnimationThreadPool])
+     */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val animationThreadPool =
         newFixedThreadPoolContext(threadCount, "Animation Pool")
@@ -62,7 +61,7 @@ abstract class AnimatedLEDStrip(
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val parallelAnimationThreadPool =
-        newFixedThreadPoolContext(2 * numLEDs, "Parallel Animation Pool")
+        newFixedThreadPoolContext(3 * threadCount, "Parallel Animation Pool")
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
@@ -76,6 +75,10 @@ abstract class AnimatedLEDStrip(
 
     private val pixelSetLists = mutableMapOf<Triple<Int, Int, Int>, MutableList<MutableList<Int>>>()
 
+
+
+    /* Track running animations */
+
     data class RunningAnimation(
         val animation: AnimationData,
         val id: String,
@@ -84,13 +87,23 @@ abstract class AnimatedLEDStrip(
         internal fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
     }
 
+    val runningAnimations = RunningAnimationMap()
+
+
+
+    /* Define custom animations*/
+
     /**
      * Map containing custom animations.
      */
     private val customAnimationMap =
         mutableMapOf<String, (AnimationData, CoroutineScope) -> Unit>()
 
-    internal val runningAnimations = mutableMapOf<String, RunningAnimation>()
+    // TODO: Add addCustomAnimation function
+
+
+
+    /* Add and remove/end animations */
 
     fun addAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
         return if (animation.animation == Animation.ENDANIMATION) {
@@ -129,6 +142,10 @@ abstract class AnimatedLEDStrip(
     fun endAnimation(animation: AnimationData?) {
         endAnimation(animation?.id ?: return)
     }
+
+
+
+    /* Run animations */
 
     /**
      * Run an animation.
@@ -226,6 +243,10 @@ abstract class AnimatedLEDStrip(
         job?.join()
         Unit
     }
+
+
+
+    /* Animation definitions */
 
     /**
      * Runs an Alternate animation.

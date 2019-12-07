@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds
 
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.leds.sections.LEDStripSection
@@ -40,28 +39,29 @@ import java.util.*
 /**
  * Class that represents a LED strip that supports concurrency.
  *
- * @param numLEDs Number of LEDs in the strip
- * @param imageDebugging Should a csv file be created containing all renders of
- * the strip?
- * @param fileName Specify a name for the image debug file (only useful if imageDebugging
- * is enabled)
- * @param rendersBeforeSave How many renders to perform between
- * image debugging saves
+ * @param stripInfo Information about this strip, such as number of
+ * LEDs, etc.
  */
 abstract class LEDStrip(
-    val numLEDs: Int,
-    private val imageDebugging: Boolean = false,
-    fileName: String? = null,
-    private val rendersBeforeSave: Int = 1000
+    val stripInfo: StripInfo
 ) : SectionableLEDStrip {
+
+
+    val numLEDs: Int = stripInfo.numLEDs
+    private val imageDebugging: Boolean = stripInfo.imageDebugging
+    private val fileName: String = when (stripInfo.fileName) {
+        null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+        else -> {
+            if (stripInfo.fileName.endsWith(".csv")) stripInfo.fileName
+            else "${stripInfo.fileName}.csv"
+        }
+    }
+    private val rendersBeforeSave: Int = stripInfo.rendersBeforeSave ?: 1000
 
     /**
      * The LED Strip
      */
-    abstract var ledStrip: LEDStripInterface
-
-    val stripInfo = StripInfo(numLEDs)
-
+    abstract var ledStrip: NativeLEDStrip
 
     /**
      * `Map` containing `Mutex` instances for locking access to each
@@ -93,19 +93,6 @@ abstract class LEDStrip(
      */
     var rendering = false
         private set
-
-    /**
-     * The actual file name to use.
-     * Use `fileName` if it is set, otherwise default to `signature_date_time.csv`
-     */
-    private val _fileName =
-        when (fileName) {
-            null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
-            else -> {
-                if (fileName.endsWith(".csv")) fileName
-                else "$fileName.csv"
-            }
-        }
 
     /**
      * The file that the csv output will be saved to if image debugging is enabled.
@@ -140,7 +127,8 @@ abstract class LEDStrip(
     private val fadeMap = mutableMapOf<Int, FadePixel>()
 
     init {
-        if (fileName != null) require(imageDebugging) { "Cannot set output file name if imageDebugging is off" }
+        if (stripInfo.fileName != null && !stripInfo.imageDebugging)
+            Logger.warn("Output file name is specified but image debugging is disabled")
         for (i in 0 until numLEDs) {
             pixelLocks += Pair(i, Mutex())
             writeLocks += Pair(i, Mutex())
@@ -164,7 +152,7 @@ abstract class LEDStrip(
                 false
             }
             false -> {
-                if (imageDebugging) outFile = FileWriter(_fileName, true)   // Open debug file if appropriate
+                if (imageDebugging) outFile = FileWriter(fileName, true)   // Open debug file if appropriate
                 GlobalScope.launch(renderThread) {
                     delay(5000)
                     var renderNum = 0
@@ -234,10 +222,11 @@ abstract class LEDStrip(
      * @param color The color to set the pixel to
      */
     fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
+        require(pixel in 0 until numLEDs)
         val colors = color.prepare(numLEDs)
-        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+        writeLocks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
             ledStrip.setPixelColor(pixel, colors[pixel].toInt())
-        } ?: Logger.warn("Pixel $pixel does not exist")
+        }
     }
 
     /**
@@ -364,7 +353,7 @@ abstract class LEDStrip(
     }
 
 
-    /* Get methods */
+    /* Get pixel color */
 
     /**
      * Get the prolonged color of a pixel.
@@ -410,8 +399,6 @@ abstract class LEDStrip(
 
     /**
      * Helper class for fading a pixel from its current color to its prolonged color.
-     *
-     * @property pixel The pixel associated with this instance
      */
     inner class FadePixel(private val pixel: Int) {
         /**
@@ -434,9 +421,6 @@ abstract class LEDStrip(
          * iterations have passed, whichever comes first. The pixel's prolonged color
          * is reevaluated every iteration, allowing it to fade into a changing background
          * (i.e. a Smooth Chase animation).
-         *
-         * @param amountOfOverlay How much the pixel should fade in each iteration
-         * @param delay Time in milliseconds between iterations
          */
         fun fade(amountOfOverlay: Int = 25, delay: Int = 30) {
             val myName = Thread.currentThread().name

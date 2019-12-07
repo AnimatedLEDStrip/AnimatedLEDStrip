@@ -26,7 +26,7 @@ package animatedledstrip.leds
 /**
  * Interface defining what is needed from a native LED strip class.
  */
-interface LEDStripInterface {
+interface NativeLEDStrip {
 
     /**
      * Close the LED strip's communication channel and release memory associated

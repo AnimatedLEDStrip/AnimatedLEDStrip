@@ -57,7 +57,7 @@ package animatedledstrip.leds.emulated
  */
 
 
-import animatedledstrip.leds.LEDStripInterface
+import animatedledstrip.leds.NativeLEDStrip
 import java.nio.ByteBuffer
 
 /**
@@ -68,7 +68,7 @@ import java.nio.ByteBuffer
  * @property brightness Brightness of the strip
  * @property numLEDs Number of LEDs in the strip
  */
-open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override val numLEDs: Int) : LEDStripInterface {
+open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override val numLEDs: Int) : NativeLEDStrip {
 
     /** Empty override for `render()` */
     override fun render() {}

@@ -184,7 +184,7 @@ class ColorPresetsTest {
             0x9ACD32
         )
 
-        for (i in 0 until colorList.size) {
+        for (i in colorList.indices) {
             assertTrue { CCPresets[i].color == colorList[i] }
         }
 
