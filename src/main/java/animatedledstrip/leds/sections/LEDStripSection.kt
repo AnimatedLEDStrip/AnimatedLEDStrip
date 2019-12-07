@@ -1,5 +1,3 @@
-package animatedledstrip.leds.sections
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds.sections
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds.sections
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData

@@ -1,5 +1,3 @@
-package animatedledstrip.animationutils
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.animationutils
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.animationutils
 
 /**
  * Helper enum for specifying the requirement level of an animation parameter.

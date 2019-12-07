@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds
 
 import java.io.Serializable
 
