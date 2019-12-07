@@ -1,5 +1,3 @@
-package animatedledstrip.colors.ccpresets
-
 /*
  *  Copyright (c) 2018 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
@@ -23,6 +21,7 @@ package animatedledstrip.colors.ccpresets
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.colors.ccpresets
 
 import animatedledstrip.colors.ColorContainer
 

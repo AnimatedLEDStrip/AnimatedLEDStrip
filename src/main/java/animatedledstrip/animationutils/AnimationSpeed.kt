@@ -1,5 +1,3 @@
-package animatedledstrip.animationutils
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -21,6 +19,8 @@ package animatedledstrip.animationutils
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+
+package animatedledstrip.animationutils
 
 /**
  * Helper enum for easily setting the speed of an animation.

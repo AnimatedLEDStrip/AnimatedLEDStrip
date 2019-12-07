@@ -1,5 +1,3 @@
-package animatedledstrip.leds.emulated
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds.emulated
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds.emulated
 
 import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.NativeLEDStrip
