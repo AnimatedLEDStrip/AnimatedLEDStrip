@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
@@ -33,7 +32,6 @@ import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import java.nio.file.Files
@@ -49,34 +47,38 @@ class LEDStripTest {
     fun testSetPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
+        // Confirm pixels are off
         assertTrue { testLEDs.getActualPixelColor(10) == 0L }
         assertTrue { testLEDs.getActualPixelColor(11) == 0L }
         assertTrue { testLEDs.getActualPixelColor(12) == 0L }
 
+        // setPixelColor with ColorContainer
         testLEDs.setPixelColor(10, ColorContainer(0xFF))
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
 
+        // setPixelColor with Long
         testLEDs.setPixelColor(10, 0xFF0000)
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFF0000L }
 
-        testLEDs[10] = ColorContainer(0xFF)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
-
+        // vararg set with ColorContainer
         testLEDs[10, 11, 12] = ColorContainer(0xFFFF)
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFFFFL }
         assertTrue { testLEDs.getActualPixelColor(11) == 0xFFFFL }
         assertTrue { testLEDs.getActualPixelColor(12) == 0xFFFFL }
 
+        // IntRange set with ColorContainer
         testLEDs[10..12] = ColorContainer(0xFF00FF)
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFF00FFL }
         assertTrue { testLEDs.getActualPixelColor(11) == 0xFF00FFL }
         assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00FFL }
 
+        // vararg set with Long
         testLEDs[10, 11, 12] = 0xFF00
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFF00L }
         assertTrue { testLEDs.getActualPixelColor(11) == 0xFF00L }
         assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00L }
 
+        // IntRange set with Long
         testLEDs[10..12] = 0xFF0000
         assertTrue { testLEDs.getActualPixelColor(10) == 0xFF0000L }
         assertTrue { testLEDs.getActualPixelColor(11) == 0xFF0000L }
@@ -103,6 +105,21 @@ class LEDStripTest {
     }
 
     @Test
+    fun testSetProlongedPixelColor() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        assertTrue { testLEDs[10] == 0L }
+        assertTrue { testLEDs[11] == 0L }
+        assertTrue { testLEDs[12] == 0L }
+
+        testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF))
+        assertTrue { testLEDs[10] == 0xFFL }
+
+        testLEDs.setProlongedPixelColor(10, 0xFF0000)
+        assertTrue { testLEDs[10] == 0xFF0000L }
+    }
+
+    @Test
     fun testSetProlongedPixelColors() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
@@ -118,22 +135,6 @@ class LEDStripTest {
         assertTrue { testLEDs.getPixelColor(24) == 0xFF00L }
         assertTrue { testLEDs.getPixelColor(21) == 0L }
     }
-
-    @Test
-    fun testSetProlongedPixelColor() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        assertTrue { testLEDs[10] == 0L }
-        assertTrue { testLEDs[11] == 0L }
-        assertTrue { testLEDs[12] == 0L }
-
-        testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF))
-        assertTrue { testLEDs[10] == 0xFFL }
-
-        testLEDs.setProlongedPixelColor(10, 0xFF0000)
-        assertTrue { testLEDs[10] == 0xFF0000L }
-    }
-
 
     @Test
     fun testSetSectionColor() {
@@ -351,18 +352,30 @@ class LEDStripTest {
 
     @Test
     fun testImageDebugging() {
-        val leds1 = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test1.csv")
-        runBlocking { delay(5000) }
+        // Test file name
+        val info1 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test1.csv")
+        val leds1 = EmulatedAnimatedLEDStrip(info1)
+        delayBlocking(5000)
         leds1.toggleRender()
-        runBlocking { delay(1000) }
+        delayBlocking(1000)
         assertTrue { Files.exists(Paths.get("test1.csv")) }
         Files.delete(Paths.get("test1.csv"))
 
-        val leds2 = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test2")
-        runBlocking { delay(5000) }
+        // Test file name without .csv extension
+        val info2 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test2")
+        val leds2 = EmulatedAnimatedLEDStrip(info2)
+        delayBlocking(5000)
         leds2.toggleRender()
-        runBlocking { delay(1000) }
+        delayBlocking(1000)
         assertTrue { Files.exists(Paths.get("test2.csv")) }
         Files.delete(Paths.get("test2.csv"))
+
+        // Test saving renders to file
+        val info3 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test3.csv", rendersBeforeSave = 100)
+        val leds3 = EmulatedAnimatedLEDStrip(info3)
+        delayBlocking(10000)
+        leds3.toggleRender()
+        delayBlocking(1000)
+        Files.delete(Paths.get("test3.csv"))
     }
 }

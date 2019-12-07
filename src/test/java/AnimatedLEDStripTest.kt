@@ -572,7 +572,7 @@ class AnimatedLEDStripTest {
                 .delay(100)
         )
         assertNotNull(anim1)
-        assertTrue(testLEDs.runningAnimations.containsKey(anim1.id))
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim1.id))
         delay(500)
         anim1.endAnimation()
 
@@ -584,7 +584,7 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim2)
         delay(500)
-        assertTrue(testLEDs.runningAnimations.containsKey(anim2.id))
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
         testLEDs.endAnimation(anim2.animation)
 
         // End with animation ID
@@ -595,7 +595,7 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim3)
         delay(500)
-        assertTrue(testLEDs.runningAnimations.containsKey(anim3.id))
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim3.id))
         testLEDs.endAnimation(anim3.id)
 
         // End with addAnimation and AnimationData instance with ENDANIMATION and ID
@@ -606,7 +606,7 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim4)
         delay(500)
-        assertTrue(testLEDs.runningAnimations.containsKey(anim4.id))
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim4.id))
         testLEDs.addAnimation(
             AnimationData()
                 .animation(Animation.ENDANIMATION)
@@ -616,10 +616,10 @@ class AnimatedLEDStripTest {
         delay(1000)
 
         // Confirm that all animations have ended
-        assertFalse(testLEDs.runningAnimations.containsKey(anim1.id))
-        assertFalse(testLEDs.runningAnimations.containsKey(anim2.id))
-        assertFalse(testLEDs.runningAnimations.containsKey(anim3.id))
-        assertFalse(testLEDs.runningAnimations.containsKey(anim4.id))
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim1.id))
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim2.id))
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim3.id))
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim4.id))
         Unit
     }
 
