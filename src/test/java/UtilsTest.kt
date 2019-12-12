@@ -109,7 +109,14 @@ class UtilsTest {
 
     @Test
     fun testStripInfoJson() {
-        val info1 = StripInfo()
+        val info1 = StripInfo(
+            numLEDs = 10,
+            pin = 15,
+            imageDebugging = true,
+            fileName = "test.csv",
+            rendersBeforeSave = 100,
+            threadCount = 200
+        )
         val infoBytes = info1.json()
 
         val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
