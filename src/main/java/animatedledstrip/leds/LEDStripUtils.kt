@@ -185,28 +185,14 @@ fun LEDStrip.setPixelColors(pixels: List<Int>, color: Long, prolonged: Boolean =
     }
 }
 
-// TODO: setPixelColors with IntRange
+/**
+ * Alias for setSectionColor
+ */
+fun LEDStrip.setPixelColors(pixels: IntRange, color: ColorContainerInterface, prolonged: Boolean = false) =
+    setSectionColor(pixels, color, prolonged)
 
-///**
-// * Set pixel prolonged colors based on indices in a list
-// *
-// * @param pixels The pixels to set
-// * @param color The color to use
-// */
-//fun LEDStrip.setProlongedPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
-//    for (pixel in pixels) {
-//        setProlongedPixelColor(pixel, color)
-//    }
-//}
-//
-///**
-// * Set pixel prolonged colors based on indices in a list
-// *
-// * @param pixels The pixels to set
-// * @param color The color to use
-// */
-//fun LEDStrip.setProlongedPixelColors(pixels: List<Int>, color: Long) {
-//    for (pixel in pixels) {
-//        setProlongedPixelColor(pixel, color)
-//    }
-//}
+/**
+ * Alias for setSectionColor
+ */
+fun LEDStrip.setPixelColors(pixels: IntRange, color: Long, prolonged: Boolean = false) =
+    setSectionColor(pixels, color, prolonged)
