@@ -144,6 +144,14 @@ class LEDStripTest {
         assertTrue { testLEDs.getPixelColor(11, prolonged = true) == 0L }
         assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
 
+        // Test with empty IntRange
+        testLEDs[IntRange(22, 20)] = ColorContainer(0xFFFF)
+        checkPixels(20..22, testLEDs, 0)
+
+        testLEDs[IntRange(22, 20)] = 0xFFFF
+        checkPixels(20..22, testLEDs, 0)
+
+        // Test bad pixel index
         assertFailsWith<IllegalArgumentException> { testLEDs.setPixelColor(50, CCBlack) }
     }
 
@@ -490,7 +498,7 @@ class LEDStripTest {
         checkAllPixels(testLEDs, 0)
         checkAllProlongedPixels(testLEDs, 0)
 
-        // Test with "empty" ranges
+        // Test with empty IntRanges
         testLEDs.setSectionColor(IntRange(20, 15), ColorContainer(0xFF))
         checkAllPixels(testLEDs, 0)
         checkAllProlongedPixels(testLEDs, 0)
