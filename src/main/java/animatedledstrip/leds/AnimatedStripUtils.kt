@@ -92,7 +92,7 @@ inline fun iterateOver(
  */
 fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
-        setPixelColor(pixel, color)
+        setPixelColor(pixel, color, prolonged = false)
         delayBlocking(delay)
         revertPixel(pixel)
     }
