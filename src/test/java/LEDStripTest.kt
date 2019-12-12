@@ -498,7 +498,7 @@ class LEDStripTest {
         checkAllPixels(testLEDs, 0)
         checkAllProlongedPixels(testLEDs, 0)
 
-        // Test with empty IntRanges
+        // Test with empty IntRange
         testLEDs.setSectionColor(IntRange(20, 15), ColorContainer(0xFF))
         checkAllPixels(testLEDs, 0)
         checkAllProlongedPixels(testLEDs, 0)

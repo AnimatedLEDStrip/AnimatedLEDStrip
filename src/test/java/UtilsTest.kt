@@ -28,9 +28,13 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.StripInfo
+import animatedledstrip.leds.iterateOver
+import animatedledstrip.leds.iterateOverPixels
+import animatedledstrip.leds.iterateOverPixelsReverse
 import animatedledstrip.utils.*
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -164,5 +168,52 @@ class UtilsTest {
 
         assertFailsWith<KotlinNullPointerException> { Animation.ENDANIMATION.info() }
         assertNull(Animation.ENDANIMATION.infoOrNull())
+    }
+
+    @Test
+    fun testIterateOver() {
+        val testVals1 = mutableListOf(false, false, false, false)
+        iterateOver(0..3) {
+            testVals1[it] = true
+        }
+
+        assertTrue(testVals1[0])
+        assertTrue(testVals1[1])
+        assertTrue(testVals1[2])
+        assertTrue(testVals1[3])
+
+        val testVals2 = mutableListOf(false, false, false, false)
+        iterateOver(listOf(3, 1, 2)) {
+            testVals2[it] = true
+        }
+
+        assertFalse(testVals2[0])
+        assertTrue(testVals2[1])
+        assertTrue(testVals2[2])
+        assertTrue(testVals2[3])
+    }
+
+    @Test
+    fun testIterateOverPixels() {
+        val testVals1 = mutableListOf(false, false, false, false)
+        val anim = AnimationData().startPixel(0).endPixel(3)
+        iterateOverPixels(anim) {
+            testVals1[it] = true
+        }
+
+        assertTrue(testVals1[0])
+        assertTrue(testVals1[1])
+        assertTrue(testVals1[2])
+        assertTrue(testVals1[3])
+
+        val testVals2 = mutableListOf(false, false, false, false)
+        iterateOverPixelsReverse(anim) {
+            testVals2[it] = true
+        }
+
+        assertTrue(testVals2[0])
+        assertTrue(testVals2[1])
+        assertTrue(testVals2[2])
+        assertTrue(testVals2[3])
     }
 }

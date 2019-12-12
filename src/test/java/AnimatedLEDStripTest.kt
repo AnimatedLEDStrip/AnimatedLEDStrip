@@ -27,6 +27,7 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.leds.join
+import animatedledstrip.leds.runParallelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
@@ -637,6 +638,9 @@ class AnimatedLEDStripTest {
         // join() not needed because animation is COLOR which doesn't spawn a coroutine
         // continuous doesn't actually affect anything because animation is COLOR
         testLEDs.runParallel(anim, this, pool = pool, continuous = true)
+
+        // Test runParallelAndJoin with animation that does not return a job
+        testLEDs.runParallelAndJoin(this, anim)
 
         Unit
     }
