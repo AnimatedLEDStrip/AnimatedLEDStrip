@@ -652,7 +652,7 @@ class AnimatedLEDStripTest {
         val anim2 = AnimationData().animation(Animation.ALTERNATE)
 
         // Continuous false (default)
-        // Also tests animation that doesn't return a job
+        // Also tests animation that doesn't spawn a coroutine
         testLEDs.runSequential(anim1)
 
         // Continuous true
