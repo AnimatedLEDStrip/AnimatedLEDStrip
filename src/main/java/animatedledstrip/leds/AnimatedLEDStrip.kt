@@ -165,7 +165,7 @@ abstract class AnimatedLEDStrip(
             Animation.BOUNCETOCOLOR -> bounceToColor
             Animation.CATTOY -> catToy
             Animation.COLOR -> run {
-                setStripColor(animation.pCols[0])
+                setStripColor(animation.pCols[0], prolonged = true)
                 null
             }
             Animation.METEOR -> meteor
@@ -254,9 +254,9 @@ abstract class AnimatedLEDStrip(
      * (delay between changes in milliseconds).
      */
     private val alternate: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
-        setSectionColor(animation.startPixel, animation.endPixel, animation.pCols[0])
+        setSectionColor(animation.startPixel, animation.endPixel, animation.pCols[0], prolonged = true)
         delayBlocking(animation.delay)
-        setSectionColor(animation.startPixel, animation.endPixel, animation.pCols[1])
+        setSectionColor(animation.startPixel, animation.endPixel, animation.pCols[1], prolonged = true)
         delayBlocking(animation.delay)
     }
 
@@ -313,16 +313,17 @@ abstract class AnimatedLEDStrip(
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
             for (j in (animation.startPixel + i)..(animation.endPixel - i))
                 setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
-            setProlongedPixelColor(animation.endPixel - i, animation.pCols[0])
+            setPixelColor(animation.endPixel - i, animation.pCols[0], prolonged = true)
 
             for (j in animation.endPixel - i - 1 downTo (i + animation.startPixel))
                 setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
-            setProlongedPixelColor(animation.startPixel + i, animation.pCols[0])
+            setPixelColor(animation.startPixel + i, animation.pCols[0], prolonged = true)
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
-            setProlongedPixelColor(
+            setPixelColor(
                 (animation.endPixel - animation.startPixel) / 2 + animation.startPixel,
-                animation.pCols[0]
+                animation.pCols[0],
+                prolonged = true
             )
         }
     }
@@ -495,9 +496,10 @@ abstract class AnimatedLEDStrip(
             Direction.BACKWARD -> for (q in 0 until animation.spacing) {
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    setProlongedPixelColor(
+                    setPixelColor(
                         i + (-(q - (animation.spacing - 1))),
-                        animation.pCols[0]
+                        animation.pCols[0],
+                        prolonged = true
                     )
                 }
                 delayBlocking(animation.delay)
@@ -505,9 +507,10 @@ abstract class AnimatedLEDStrip(
             Direction.FORWARD -> for (q in animation.spacing - 1 downTo 0) {
                 for (i in animation.startPixel..animation.endPixel step animation.spacing) {
                     if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                    setProlongedPixelColor(
+                    setPixelColor(
                         i + (-(q - (animation.spacing - 1))),
-                        animation.pCols[0]
+                        animation.pCols[0],
+                        prolonged = true
                     )
                 }
                 delayBlocking(animation.delay)
@@ -715,7 +718,7 @@ abstract class AnimatedLEDStrip(
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
             scope.async(sparkleThreadPool) {
                 delayBlocking((random() * 5000).toLong() % 4950)
-                setProlongedPixelColor(n, animation.pCols[0])
+                setPixelColor(n, animation.pCols[0], prolonged = true)
                 delayBlocking(animation.delay)
             }
         }
@@ -765,12 +768,12 @@ abstract class AnimatedLEDStrip(
             Direction.FORWARD -> for (q in animation.endPixel downTo animation.startPixel) {
                 for (i in animation.startPixel until q)
                     setPixelAndRevertAfterDelay(i, animation.pCols[0], animation.delay)
-                setProlongedPixelColor(q, animation.pCols[0])
+                setPixelColor(q, animation.pCols[0], prolonged = true)
             }
             Direction.BACKWARD -> for (q in animation.startPixel..animation.endPixel) {
                 for (i in animation.endPixel downTo q)
                     setPixelAndRevertAfterDelay(i, animation.pCols[0], animation.delay)
-                setProlongedPixelColor(q, animation.pCols[0])
+                setPixelColor(q, animation.pCols[0], prolonged = true)
             }
         }
     }
@@ -807,11 +810,11 @@ abstract class AnimatedLEDStrip(
     private val wipe: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         when (animation.direction) {
             Direction.FORWARD -> iterateOverPixels(animation) {
-                setProlongedPixelColor(it, animation.pCols[0])
+                setPixelColor(it, animation.pCols[0], prolonged = true)
                 delayBlocking(animation.delay)
             }
             Direction.BACKWARD -> iterateOverPixelsReverse(animation) {
-                setProlongedPixelColor(it, animation.pCols[0])
+                setPixelColor(it, animation.pCols[0], prolonged = true)
                 delayBlocking(animation.delay)
             }
         }

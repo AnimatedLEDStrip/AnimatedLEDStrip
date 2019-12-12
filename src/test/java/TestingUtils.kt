@@ -33,10 +33,26 @@ fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
     }
 }
 
+fun checkAllProlongedPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+    testLEDs.pixelProlongedColorList.forEach {
+        assertTrue(
+            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelColorList}"
+        ) { it == color }
+    }
+}
+
 fun checkPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
     leds.forEach {
         assertTrue(
             "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelColorList}"
         ) { testLEDs.pixelColorList[it] == color }
+    }
+}
+
+fun checkProlongedPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+    leds.forEach {
+        assertTrue(
+            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelColorList}"
+        ) { testLEDs.pixelProlongedColorList[it] == color }
     }
 }

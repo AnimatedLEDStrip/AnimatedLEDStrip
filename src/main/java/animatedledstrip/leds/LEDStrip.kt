@@ -214,57 +214,22 @@ abstract class LEDStrip(
 
     /* Set pixel color */
 
-    /**
-     * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
-     * this skips setting the pixel's color and returns.
-     *
-     * @param pixel The pixel to change
-     * @param color The color to set the pixel to
-     */
-    fun setPixelColor(pixel: Int, color: ColorContainerInterface) {
+    fun setPixelColor(pixel: Int, color: ColorContainerInterface, prolonged: Boolean = false) =
+        setPixelColor(pixel, color.prepare(numLEDs)[pixel], prolonged)
+
+    fun setPixelColor(pixel: Int, color: Long, prolonged: Boolean = false) {
         require(pixel in 0 until numLEDs)
-        val colors = color.prepare(numLEDs)
-        writeLocks[pixel]!!.tryWithLock(owner = "Pixel $pixel") {
-            ledStrip.setPixelColor(pixel, colors[pixel].toInt())
+        when (prolonged) {
+            true -> {
+                prolongedColors[pixel] = color
+                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color)
+            }
+            false -> {
+                writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+                    ledStrip.setPixelColor(pixel, color.toInt())
+                } ?: Logger.warn("Pixel $pixel does not exist")
+            }
         }
-    }
-
-    /**
-     * Sets a pixel's color. If another thread has locked the pixel's `Mutex`,
-     * this skips setting the pixel's color and returns.
-     *
-     * @param pixel The pixel to change
-     * @param color A `Long` representing the color to set the pixel to
-     */
-    fun setPixelColor(pixel: Int, color: Long) {
-        writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
-            ledStrip.setPixelColor(pixel, color.toInt())
-        } ?: Logger.warn("Pixel $pixel does not exist")
-    }
-
-    /**
-     * Sets a pixel's prolonged color. If the pixel is not in the middle of a fade,
-     * also sets the pixel's actual color.
-     *
-     * @param pixel The pixel to change
-     * @param color The color to set the pixel to
-     */
-    fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) {
-        val pColor = color.prepare(numLEDs)
-        prolongedColors[pixel] = pColor[pixel]
-        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, pColor[pixel])
-    }
-
-    /**
-     * Sets a pixel's prolonged color. If the pixel is not in the middle of a fade,
-     * also sets the pixel's actual color.
-     *
-     * @param pixel The pixel to change
-     * @param color A `Long` representing the color to set the pixel to
-     */
-    fun setProlongedPixelColor(pixel: Int, color: Long) {
-        prolongedColors[pixel] = color
-        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color)
     }
 
     /**
@@ -287,10 +252,8 @@ abstract class LEDStrip(
      *
      * @param color The color to use
      */
-    fun setStripColor(color: ColorContainerInterface, prolonged: Boolean = true) {
-        val pColor = color.prepare(numLEDs)
-        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, pColor)
-        else for (i in 0 until numLEDs) setPixelColor(i, color)
+    fun setStripColor(color: ColorContainerInterface, prolonged: Boolean = false) {
+        for (i in 0 until numLEDs) setPixelColor(i, color, prolonged)
 
     }
 
@@ -300,9 +263,8 @@ abstract class LEDStrip(
      *
      * @param color A `Long` representing the color to use
      */
-    fun setStripColor(color: Long, prolonged: Boolean = true) {
-        if (prolonged) for (i in 0 until numLEDs) setProlongedPixelColor(i, color)
-        else for (i in 0 until numLEDs) setPixelColor(i, color)
+    fun setStripColor(color: Long, prolonged: Boolean = false) {
+        for (i in 0 until numLEDs) setPixelColor(i, color, prolonged)
     }
 
     /**
@@ -311,72 +273,72 @@ abstract class LEDStrip(
     var color: ColorContainerInterface
         get() = error("Cannot get color of whole strip")
         set(value) {
-            setStripColor(value)
+            setStripColor(value, prolonged = false)
         }
 
     /* Set section color */
 
     /**
-     * Override for setSectionColor that calls the [LEDStrip] implementation
-     * of `setSectionColor`
+     * Set the color of all pixels in a section of the strip. If prolonged is true,
+     * set the prolonged color, otherwise set the pixel's actual color.
      *
-     * @param color The color to use
+     * `start` and `end` are inclusive. `start` should be less than or equal to `end`.
      */
-    override fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface) {
-        setSectionColor(start, end, color, true)
+    override fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean) {
+        require(start <= end)
+        setSectionColor(start..end, color, prolonged)
     }
 
     /**
      * Set the color of all pixels in a section of the strip. If prolonged is true,
      * set the prolonged color, otherwise set the pixel's actual color.
      *
-     * @param color A `Long` representing the color to use
+     * `start` and `end` are inclusive. `start` should be less than or equal to `end`.
      */
-    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean) {
-        require(end >= start)
-        val pColor = color.prepare(end - start + 1)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i, pColor[i - start])
-        else for (i in start..end) setPixelColor(i, pColor[i - start])
-
+    override fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean) {
+        require(start <= end)
+        setSectionColor(start..end, color, prolonged)
     }
 
     /**
      * Set the color of all pixels in a section of the strip. If prolonged is true,
      * set the prolonged color, otherwise set the pixel's actual color.
      *
-     * @param color A `Long` representing the color to use
+     * `range` is inclusive.
      */
-    fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean = true) {
-        require(end >= start)
-        if (prolonged) for (i in start..end) setProlongedPixelColor(i, color)
-        else for (i in start..end) setPixelColor(i, color)
+    override fun setSectionColor(range: IntRange, color: ColorContainerInterface, prolonged: Boolean) {
+        require(range.first in 0 until numLEDs)
+        require(range.last in 0 until numLEDs)
+
+        val pColor = color.prepare(range.last - range.first + 1)
+        for (i in range) setPixelColor(i, pColor[i - range.first], prolonged)
     }
 
+    /**
+     * Set the color of all pixels in a section of the strip. If prolonged is true,
+     * set the prolonged color, otherwise set the pixel's actual color.
+     *
+     * `range` is inclusive.
+     */
+    override fun setSectionColor(range: IntRange, color: Long, prolonged: Boolean) {
+        require(range.first in 0 until numLEDs)
+        require(range.last in 0 until numLEDs)
+
+        for (i in range) setPixelColor(i, color, prolonged)
+    }
 
     /* Get pixel color */
 
-    /**
-     * Get the prolonged color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel
-     * @throws IllegalArgumentException If pixel is not a valid index
-     */
-    fun getPixelColor(pixel: Int): Long {
+    fun getPixelColor(pixel: Int, prolonged: Boolean = false): Long {
         require(pixel in prolongedColors.indices)
-        return prolongedColors[pixel]
-    }
-
-    /**
-     * Get the actual color of a pixel.
-     *
-     * @param pixel The pixel to find the color of
-     * @return The color of the pixel
-     * @throws IllegalArgumentException If pixel is not a valid index
-     */
-    fun getActualPixelColor(pixel: Int): Long {
-        require(pixel in 0 until numLEDs)
-        return ledStrip.getPixelColor(pixel).toLong()
+        return when (prolonged) {
+            true -> {
+                prolongedColors[pixel]
+            }
+            false -> {
+                ledStrip.getPixelColor(pixel).toLong()
+            }
+        }
     }
 
     /**
@@ -384,7 +346,7 @@ abstract class LEDStrip(
      *
      * @param pixel The pixel to find the color of
      */
-    operator fun get(pixel: Int) = getActualPixelColor(pixel)
+    operator fun get(pixel: Int) = getPixelColor(pixel, prolonged = false)
 
     /**
      * Get the colors of all pixels as a `List<Long>`
@@ -392,10 +354,16 @@ abstract class LEDStrip(
     val pixelColorList: List<Long>
         get() {
             val temp = mutableListOf<Long>()
-            for (i in 0 until numLEDs) temp.add(getActualPixelColor(i))
+            for (i in 0 until numLEDs) temp.add(getPixelColor(i, prolonged = false))
             return temp
         }
 
+    val pixelProlongedColorList: List<Long>
+        get() {
+            val temp = mutableListOf<Long>()
+            for (i in 0 until numLEDs) temp.add(getPixelColor(i, prolonged = true))
+            return temp
+        }
 
     /**
      * Helper class for fading a pixel from its current color to its prolonged color.
@@ -426,7 +394,7 @@ abstract class LEDStrip(
             val myName = Thread.currentThread().name
             owner = myName
             var i = 0
-            while (getActualPixelColor(pixel) != prolongedColors[pixel] && i <= 40) {
+            while (getPixelColor(pixel, prolonged = false) != prolongedColors[pixel] && i <= 40) {
                 if (owner != myName) break
                 isFading = true
                 i++
@@ -435,7 +403,8 @@ abstract class LEDStrip(
                     setPixelColor(
                         pixel,
                         blend(
-                            getActualPixelColorOrNull(pixel) ?: run { doDelay = false; return@withPixelLock Unit },
+                            getPixelColorOrNull(pixel, prolonged = false)
+                                ?: run { doDelay = false; return@withPixelLock Unit },
                             prolongedColors[pixel],
                             amountOfOverlay
                         )
