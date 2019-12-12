@@ -474,6 +474,32 @@ class LEDStripTest {
         assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFFFFL }
         assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
         assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // Test bad pixel ranges
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(20, 15, 0xFF) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(20, 15, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(-1..10, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(40, 50, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(-1..10, 0xFF) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(40, 50, 0xFF) }
+
+
+        testLEDs.setStripColor(0, prolonged = true)
+
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
+
+        // Test with "empty" ranges
+        testLEDs.setSectionColor(IntRange(20, 15), ColorContainer(0xFF))
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
+
+        testLEDs.setSectionColor(IntRange(20, 15), 0xFF)
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
+
+
     }
 
     @Test
