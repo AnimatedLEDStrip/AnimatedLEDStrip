@@ -130,6 +130,25 @@ class UtilsTest {
     }
 
     @Test
+    fun testStripInfo() {
+        val info = StripInfo(
+            numLEDs = 10,
+            pin = 15,
+            imageDebugging = true,
+            fileName = "test.csv",
+            rendersBeforeSave = 100,
+            threadCount = 200
+        )
+
+        assertTrue { info.numLEDs == 10 }
+        assertTrue { info.pin == 15 }
+        assertTrue { info.imageDebugging }
+        assertTrue { info.fileName == "test.csv" }
+        assertTrue { info.rendersBeforeSave == 100 }
+        assertTrue { info.threadCount == 200 }
+    }
+
+    @Test
     fun testGetDataTypePrefix() {
         val info1 = StripInfo()
         val infoBytes = info1.jsonString()
