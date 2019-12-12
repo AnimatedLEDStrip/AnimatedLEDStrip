@@ -750,6 +750,22 @@ class LEDStripTest {
     }
 
     @Test
+    fun testWithPixelLock() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        var testVal1 = false
+        var testVal2 = true
+
+        testLEDs.withPixelLock(10) { testVal1 = true; Unit }
+
+        // Test trying to get a lock on a non-existent pixel
+        testLEDs.withPixelLock(50) { testVal2 = false; Unit }
+
+        assertTrue(testVal1)
+        assertTrue(testVal2)
+    }
+
+    @Test
     fun testImageDebugging() {
         // Test file name
         val info1 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test1.csv")
