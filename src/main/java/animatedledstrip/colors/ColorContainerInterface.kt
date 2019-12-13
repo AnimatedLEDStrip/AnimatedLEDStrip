@@ -1,5 +1,3 @@
-package animatedledstrip.colors
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.colors
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.colors
 
 import java.io.Serializable
 

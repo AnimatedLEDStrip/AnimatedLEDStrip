@@ -1,5 +1,3 @@
-package animatedledstrip.leds.sections
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds.sections
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds.sections
 
 import animatedledstrip.colors.ColorContainerInterface
 
@@ -38,5 +37,8 @@ interface SectionableLEDStrip {
      * @param end The last pixel (inclusive) in the section
      * @param color The color(s) to set the section to
      */
-    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface)
+    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean = false)
+    fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean = false)
+    fun setSectionColor(range: IntRange, color: ColorContainerInterface, prolonged: Boolean = false)
+    fun setSectionColor(range: IntRange, color: Long, prolonged: Boolean = false)
 }

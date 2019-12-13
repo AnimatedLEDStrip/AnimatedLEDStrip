@@ -1,11 +1,4 @@
-package animatedledstrip.utils
-
 /*
- *  Small modification on a method with this copyright:
- *  Copyright 2016-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
- *
- *
- *
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,8 +18,13 @@ package animatedledstrip.utils
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
+ *
+ *
+ *  Small modification on a method with this copyright:
+ *  Copyright 2016-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
  */
 
+package animatedledstrip.utils
 
 import kotlinx.coroutines.sync.Mutex
 

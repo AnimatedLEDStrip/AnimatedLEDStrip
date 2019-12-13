@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.colors.ccpresets.CCPresets
 import org.junit.Test
@@ -184,7 +183,7 @@ class ColorPresetsTest {
             0x9ACD32
         )
 
-        for (i in 0 until colorList.size) {
+        for (i in colorList.indices) {
             assertTrue { CCPresets[i].color == colorList[i] }
         }
 

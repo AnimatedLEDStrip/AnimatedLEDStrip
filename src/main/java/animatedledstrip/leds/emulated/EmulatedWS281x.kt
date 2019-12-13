@@ -1,40 +1,4 @@
-package animatedledstrip.leds.emulated
-
 /*
- * Parts of this file were converted to Kotlin by IntelliJ from a file with this
- * copyright.
- *
- * #%L
- * Organisation: mattjlewis
- * Project:      Device I/O Zero - WS281x Java Wrapper
- * Filename:     WS281x.java
- *
- * This file is part of the diozero project. More information about this project
- * can be found at http://www.diozero.com/
- * %%
- * Copyright (C) 2016 - 2017 mattjlewis
- * %%
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * #L%
- *
- *
- *
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -54,10 +18,44 @@ package animatedledstrip.leds.emulated
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
+ *
+ *
+ *  Parts of this file were converted to Kotlin by IntelliJ from a file with this
+ *  copyright.
+ *
+ *  #%L
+ *  Organisation: mattjlewis
+ *  Project:      Device I/O Zero - WS281x Java Wrapper
+ *  Filename:     WS281x.java
+ *
+ *  This file is part of the diozero project. More information about this project
+ *  can be found at http://www.diozero.com/
+ *  %%
+ *  Copyright (C) 2016 - 2017 mattjlewis
+ *  %%
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ *  #L%
  */
 
+package animatedledstrip.leds.emulated
 
-import animatedledstrip.leds.LEDStripInterface
+import animatedledstrip.leds.NativeLEDStrip
 import java.nio.ByteBuffer
 
 /**
@@ -68,7 +66,7 @@ import java.nio.ByteBuffer
  * @property brightness Brightness of the strip
  * @property numLEDs Number of LEDs in the strip
  */
-open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override val numLEDs: Int) : LEDStripInterface {
+open class EmulatedWS281x(val pin: Int = 0, val brightness: Int, final override val numLEDs: Int) : NativeLEDStrip {
 
     /** Empty override for `render()` */
     override fun render() {}

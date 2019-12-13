@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.colors.*
 import org.junit.Test
@@ -84,6 +83,7 @@ class ColorContainerTest {
         assertTrue { testCC[0] == 0xFF7B50L }
         assertTrue { testCC[0, 2] == listOf<Long>(0xFF7B50, 0x3C538B) }
         assertTrue { testCC[0..2] == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+        assertTrue { testCC[IntRange(2, 0)] == listOf<Long>() }     // Test with empty IntRange
         assertTrue { testCC.color == 0xFF7B50L }
 
         assertTrue { testCC[5] == 0L }
@@ -116,6 +116,21 @@ class ColorContainerTest {
         assertTrue { testCC.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0xFF753C, 0xB39247, 0xB39247) }
 
         testCC[3..7] = 0x526BE2
+        assertTrue {
+            testCC.colors == listOf<Long>(
+                0xFF7B50,
+                0xF0AF29,
+                0xFF753C,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2,
+                0x526BE2
+            )
+        }
+
+        // Test empty IntRange
+        testCC[IntRange(5,3)] = 0xFF
         assertTrue {
             testCC.colors == listOf<Long>(
                 0xFF7B50,
@@ -165,6 +180,10 @@ class ColorContainerTest {
         val testCC4 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
         assertTrue { testCC4.invert(0..1, 5..5)[0, 1] == listOf<Long>(0x0084AF, 0x0F50D6) }
         assertTrue { testCC4.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0x3C538B) }
+
+        // Test with empty IntRange
+        val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC5.invert(IntRange(10, 5)).colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -190,6 +209,10 @@ class ColorContainerTest {
         assertTrue { invCC4.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
         assertTrue { invCC5.colors == listOf<Long>(0x0084AF, 0x0F50D6, 0xC3AC74) }
         assertTrue { testCC4.colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
+
+        // Test with empty IntRange
+        val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC5.inverse(IntRange(10, 5)).colors == listOf<Long>() }
     }
 
     @Test
@@ -208,6 +231,10 @@ class ColorContainerTest {
         val testCC4 = ColorContainer(0xFF7B51, 0x3C538B, 0xF0AF29)
         assertTrue { testCC4.grayscale(0..1, 5..5)[0, 1] == listOf<Long>(0x999999, 0x5E5E5E) }
         assertTrue { testCC4.colors == listOf<Long>(0x999999, 0x5E5E5E, 0xF0AF29) }
+
+        // Test with empty IntRange
+        val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC5.grayscale(IntRange(10, 5)).colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -232,6 +259,10 @@ class ColorContainerTest {
         val grayCC4 = testCC4.grayscaled(0..1, 5..5)
         assertTrue { grayCC4.colors == listOf<Long>(0x999999, 0x5E5E5E) }
         assertTrue { testCC4.colors == listOf<Long>(0xFF7B51, 0x3C538B, 0xF0AF29) }
+
+        // Test with empty IntRange
+        val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
+        assertTrue { testCC5.grayscaled(IntRange(10, 5)).colors == listOf<Long>() }
     }
 
     @Test
@@ -249,6 +280,10 @@ class ColorContainerTest {
         assertTrue { q[20] == testCC[0] }
         assertTrue { q.contains(testCC[1]) }
         assertTrue { q.contains(testCC[2]) }
+
+        val testCC2 = ColorContainer()
+        val r = testCC2.prepare(50)
+        assertTrue { r.size == 0 }
     }
 
     @Test

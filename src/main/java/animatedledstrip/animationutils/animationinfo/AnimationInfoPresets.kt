@@ -1,5 +1,3 @@
-package animatedledstrip.animationutils.animationinfo
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.animationutils.animationinfo
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.animationutils.animationinfo
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationInfo
