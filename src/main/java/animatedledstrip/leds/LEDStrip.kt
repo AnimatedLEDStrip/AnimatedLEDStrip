@@ -58,6 +58,8 @@ abstract class LEDStrip(
     }
     private val rendersBeforeSave: Int = stripInfo.rendersBeforeSave ?: 1000
 
+    val indices: List<Int> = (0 until numLEDs).toList()
+
     /**
      * The LED Strip
      */
@@ -118,7 +120,7 @@ abstract class LEDStrip(
      * The prolonged color is a color for it to revert or fade back to.
      */
     val prolongedColors = mutableListOf<Long>().apply {
-        for (i in 0 until numLEDs) add(0)
+        for (i in this@LEDStrip.indices) add(0)
     }
 
     /**
@@ -129,7 +131,7 @@ abstract class LEDStrip(
     init {
         if (stripInfo.fileName != null && !stripInfo.imageDebugging)
             Logger.warn("Output file name is specified but image debugging is disabled")
-        for (i in 0 until numLEDs) {
+        for (i in indices) {
             pixelLocks += Pair(i, Mutex())
             writeLocks += Pair(i, Mutex())
             fadeMap += Pair(i, FadePixel(i))
@@ -218,11 +220,12 @@ abstract class LEDStrip(
         setPixelColor(pixel, color.prepare(numLEDs)[pixel], prolonged)
 
     fun setPixelColor(pixel: Int, color: Long, prolonged: Boolean = false) {
-        require(pixel in 0 until numLEDs)
+        require(pixel in indices)
         when (prolonged) {
             true -> {
                 prolongedColors[pixel] = color
-                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color)
+                // Call this function again with prolonged = false to set the actual color
+                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color, prolonged = false)
             }
             false -> {
                 writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
@@ -253,8 +256,7 @@ abstract class LEDStrip(
      * @param color The color to use
      */
     fun setStripColor(color: ColorContainerInterface, prolonged: Boolean = false) {
-        for (i in 0 until numLEDs) setPixelColor(i, color, prolonged)
-
+        for (i in indices) setPixelColor(i, color, prolonged)
     }
 
     /**
@@ -264,7 +266,7 @@ abstract class LEDStrip(
      * @param color A `Long` representing the color to use
      */
     fun setStripColor(color: Long, prolonged: Boolean = false) {
-        for (i in 0 until numLEDs) setPixelColor(i, color, prolonged)
+        for (i in indices) setPixelColor(i, color, prolonged)
     }
 
     /**
@@ -307,8 +309,8 @@ abstract class LEDStrip(
      * `range` is inclusive.
      */
     override fun setSectionColor(range: IntRange, color: ColorContainerInterface, prolonged: Boolean) {
-        require(range.first in 0 until numLEDs)
-        require(range.last in 0 until numLEDs)
+        require(range.first in indices)
+        require(range.last in indices)
 
         val pColor = color.prepare(range.last - range.first + 1)
         for (i in range) setPixelColor(i, pColor[i - range.first], prolonged)
@@ -321,8 +323,8 @@ abstract class LEDStrip(
      * `range` is inclusive.
      */
     override fun setSectionColor(range: IntRange, color: Long, prolonged: Boolean) {
-        require(range.first in 0 until numLEDs)
-        require(range.last in 0 until numLEDs)
+        require(range.first in indices)
+        require(range.last in indices)
 
         for (i in range) setPixelColor(i, color, prolonged)
     }
@@ -330,7 +332,7 @@ abstract class LEDStrip(
     /* Get pixel color */
 
     fun getPixelColor(pixel: Int, prolonged: Boolean = false): Long {
-        require(pixel in prolongedColors.indices)
+        require(pixel in indices)
         return when (prolonged) {
             true -> {
                 prolongedColors[pixel]
@@ -354,14 +356,14 @@ abstract class LEDStrip(
     val pixelColorList: List<Long>
         get() {
             val temp = mutableListOf<Long>()
-            for (i in 0 until numLEDs) temp.add(getPixelColor(i, prolonged = false))
+            for (i in indices) temp.add(getPixelColor(i, prolonged = false))
             return temp
         }
 
     val pixelProlongedColorList: List<Long>
         get() {
             val temp = mutableListOf<Long>()
-            for (i in 0 until numLEDs) temp.add(getPixelColor(i, prolonged = true))
+            for (i in indices) temp.add(getPixelColor(i, prolonged = true))
             return temp
         }
 
