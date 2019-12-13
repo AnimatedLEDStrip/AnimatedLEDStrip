@@ -99,8 +99,6 @@ class UtilsTest {
 
         assertTrue { testAnimation == testAnimation2 }
 
-        println(gson.toJson(testAnimation))
-
         assertFailsWith<IllegalStateException> {
             val nullBytes: String? = null
             nullBytes.jsonToAnimationData()
