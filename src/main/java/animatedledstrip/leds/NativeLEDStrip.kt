@@ -57,18 +57,4 @@ interface NativeLEDStrip {
      * @param color The color to set the pixel to
      */
     fun setPixelColor(pixel: Int, color: Int)
-
-
-    /**
-     * Set a pixel's color with separate arguments for red, green and blue.
-     *
-     * @param pixel The pixel's index
-     * @param red The red component of the color
-     * @param green The green component of the color
-     * @param blue The blue component of the color
-     */
-    fun setPixelColorRGB(pixel: Int, red: Int, green: Int, blue: Int) {
-        setPixelColor(pixel, (red shl 16) or (green shl 8) or blue)
-    }
-
 }
