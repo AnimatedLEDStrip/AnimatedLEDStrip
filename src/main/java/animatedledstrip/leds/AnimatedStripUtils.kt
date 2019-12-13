@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.color
@@ -29,10 +28,7 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.infoOrNull
-import kotlinx.coroutines.ExecutorCoroutineDispatcher
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import java.lang.Math.random
 
 /**
@@ -96,7 +92,7 @@ inline fun iterateOver(
  */
 fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
-        setPixelColor(pixel, color)
+        setPixelColor(pixel, color, prolonged = false)
         delayBlocking(delay)
         revertPixel(pixel)
     }
@@ -110,12 +106,14 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
  * @param pool The pool of threads to start the animations in
  */
 fun AnimatedLEDStrip.runParallelAndJoin(
+    scope: CoroutineScope,
     vararg animations: AnimationData,
     pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
 ) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
-        jobs += runParallel(it, pool)
+        val job = runParallel(it, scope, pool)
+        if (job != null) jobs += job
     }
     runBlocking {
         jobs.joinAll()
@@ -166,3 +164,6 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
 
     return this
 }
+
+suspend fun AnimatedLEDStrip.RunningAnimation.join() = job.join()
+fun AnimatedLEDStrip.RunningAnimation.endAnimation() = cancel("End of Animation")

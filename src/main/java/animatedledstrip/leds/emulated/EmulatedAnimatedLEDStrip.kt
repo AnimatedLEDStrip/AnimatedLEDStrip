@@ -1,5 +1,3 @@
-package animatedledstrip.leds.emulated
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,24 +20,22 @@ package animatedledstrip.leds.emulated
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.leds.emulated
 
 import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.LEDStripInterface
+import animatedledstrip.leds.NativeLEDStrip
+import animatedledstrip.leds.StripInfo
 
 /**
  * Class for emulating an `LEDStrip`.
  *
- * @param numLEDs Number of LEDs in the strip
- * @param imageDebugging Should a csv file be created containing all renders of
- * the strip?
+ * @param stripInfo Information about this strip, such as number of
+ * LEDs, etc.
  */
 class EmulatedAnimatedLEDStrip(
-    numLEDs: Int,
-    pin: Int? = null,
-    imageDebugging: Boolean = false,
-    fileName: String? = null,
-    rendersBeforeSave: Int? = null
-) : AnimatedLEDStrip(numLEDs, imageDebugging, fileName) {
-    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
+    stripInfo: StripInfo
+) : AnimatedLEDStrip(stripInfo) {
+    override var ledStrip: NativeLEDStrip = EmulatedWS281x(0, 255, numLEDs)
 
+    constructor(numLEDs: Int) : this(StripInfo(numLEDs))
 }

@@ -1,5 +1,3 @@
-package animatedledstrip.leds.emulated
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,15 +20,26 @@ package animatedledstrip.leds.emulated
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.animationutils
 
-import animatedledstrip.leds.AnimatedLEDStripNonConcurrent
-import animatedledstrip.leds.LEDStripInterface
+import animatedledstrip.leds.AnimatedLEDStrip
 
-/**
- * Class for emulating an `LEDStripNonConcurrent`.
- *
- * @param numLEDs Number of LEDs in the strip
- */
-class EmulatedAnimatedLEDStripNonConcurrent(numLEDs: Int) : AnimatedLEDStripNonConcurrent(numLEDs) {
-    override var ledStrip: LEDStripInterface = EmulatedWS281x(0, 255, numLEDs)
+class RunningAnimationMap {
+    internal val map =
+        mutableMapOf<String, AnimatedLEDStrip.RunningAnimation>()
+
+    val entries: List<Pair<String, AnimatedLEDStrip.RunningAnimation>>
+        get() = map.entries.map { it.toPair() }
+
+    val ids: List<String>
+        get() = map.keys.toList()
+
+    val animations: List<AnimatedLEDStrip.RunningAnimation>
+        get() = map.values.toList()
+
+    internal operator fun get(key: String) = map[key]
+
+    internal operator fun set(key: String, value: AnimatedLEDStrip.RunningAnimation) = map.set(key, value)
+
+    internal fun remove(key: String) = map.remove(key)
 }

@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.animationutils.animationinfo.Meteor
@@ -29,9 +28,13 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.StripInfo
+import animatedledstrip.leds.iterateOver
+import animatedledstrip.leds.iterateOverPixels
+import animatedledstrip.leds.iterateOverPixelsReverse
 import animatedledstrip.utils.*
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -96,8 +99,6 @@ class UtilsTest {
 
         assertTrue { testAnimation == testAnimation2 }
 
-        println(gson.toJson(testAnimation))
-
         assertFailsWith<IllegalStateException> {
             val nullBytes: String? = null
             nullBytes.jsonToAnimationData()
@@ -106,7 +107,14 @@ class UtilsTest {
 
     @Test
     fun testStripInfoJson() {
-        val info1 = StripInfo()
+        val info1 = StripInfo(
+            numLEDs = 10,
+            pin = 15,
+            imageDebugging = true,
+            fileName = "test.csv",
+            rendersBeforeSave = 100,
+            threadCount = 200
+        )
         val infoBytes = info1.json()
 
         val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
@@ -117,6 +125,25 @@ class UtilsTest {
             val nullBytes: String? = null
             nullBytes.jsonToStripInfo()
         }
+    }
+
+    @Test
+    fun testStripInfo() {
+        val info = StripInfo(
+            numLEDs = 10,
+            pin = 15,
+            imageDebugging = true,
+            fileName = "test.csv",
+            rendersBeforeSave = 100,
+            threadCount = 200
+        )
+
+        assertTrue { info.numLEDs == 10 }
+        assertTrue { info.pin == 15 }
+        assertTrue { info.imageDebugging }
+        assertTrue { info.fileName == "test.csv" }
+        assertTrue { info.rendersBeforeSave == 100 }
+        assertTrue { info.threadCount == 200 }
     }
 
     @Test
@@ -165,5 +192,52 @@ class UtilsTest {
 
         assertFailsWith<KotlinNullPointerException> { Animation.ENDANIMATION.info() }
         assertNull(Animation.ENDANIMATION.infoOrNull())
+    }
+
+    @Test
+    fun testIterateOver() {
+        val testVals1 = mutableListOf(false, false, false, false)
+        iterateOver(0..3) {
+            testVals1[it] = true
+        }
+
+        assertTrue(testVals1[0])
+        assertTrue(testVals1[1])
+        assertTrue(testVals1[2])
+        assertTrue(testVals1[3])
+
+        val testVals2 = mutableListOf(false, false, false, false)
+        iterateOver(listOf(3, 1, 2)) {
+            testVals2[it] = true
+        }
+
+        assertFalse(testVals2[0])
+        assertTrue(testVals2[1])
+        assertTrue(testVals2[2])
+        assertTrue(testVals2[3])
+    }
+
+    @Test
+    fun testIterateOverPixels() {
+        val testVals1 = mutableListOf(false, false, false, false)
+        val anim = AnimationData().startPixel(0).endPixel(3)
+        iterateOverPixels(anim) {
+            testVals1[it] = true
+        }
+
+        assertTrue(testVals1[0])
+        assertTrue(testVals1[1])
+        assertTrue(testVals1[2])
+        assertTrue(testVals1[3])
+
+        val testVals2 = mutableListOf(false, false, false, false)
+        iterateOverPixelsReverse(anim) {
+            testVals2[it] = true
+        }
+
+        assertTrue(testVals2[0])
+        assertTrue(testVals2[1])
+        assertTrue(testVals2[2])
+        assertTrue(testVals2[3])
     }
 }

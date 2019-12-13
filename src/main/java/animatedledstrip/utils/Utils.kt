@@ -1,5 +1,3 @@
-package animatedledstrip.utils
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *  Copyright (c) 2013 FastLED
@@ -23,6 +21,7 @@ package animatedledstrip.utils
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.utils
 
 /**
  * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.

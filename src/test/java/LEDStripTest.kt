@@ -1,5 +1,3 @@
-package animatedledstrip.test
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,6 +20,7 @@ package animatedledstrip.test
  *  THE SOFTWARE.
  */
 
+package animatedledstrip.test
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
@@ -32,11 +31,7 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStripNonConcurrent
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.json
-import animatedledstrip.utils.jsonToStripInfo
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import java.nio.file.Files
@@ -52,140 +47,467 @@ class LEDStripTest {
     fun testSetPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-        assertTrue { testLEDs.getActualPixelColor(10) == 0L }
-        assertTrue { testLEDs.getActualPixelColor(11) == 0L }
-        assertTrue { testLEDs.getActualPixelColor(12) == 0L }
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
+        // prolonged default
+
+        // setPixelColor with ColorContainer
         testLEDs.setPixelColor(10, ColorContainer(0xFF))
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
 
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+
+        // setPixelColor with Long
         testLEDs.setPixelColor(10, 0xFF0000)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFF0000L }
 
-        testLEDs[10] = ColorContainer(0xFF)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
 
+
+        // prolonged = false
+
+        // setPixelColor with ColorContainer
+        testLEDs.setPixelColor(10, ColorContainer(0xFF), prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+
+        // setPixelColor with Long
+        testLEDs.setPixelColor(10, 0xFF0000, prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+
+
+        // prolonged = true
+
+        // setPixelColor with ColorContainer
+        testLEDs.setPixelColor(10, ColorContainer(0xFF), prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0xFFL }
+
+        // setPixelColor with Long
+        testLEDs.setPixelColor(10, 0xFF0000, prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0xFF0000L }
+
+
+        testLEDs.setPixelColors(listOf(10, 11, 12), 0L, prolonged = true)   // reset pixels
+
+        // Confirm successful reset
+        checkPixels(10..12, testLEDs, 0)
+        checkProlongedPixels(10..12, testLEDs, 0)
+
+
+        // Index operators
+
+        // vararg set with ColorContainer
         testLEDs[10, 11, 12] = ColorContainer(0xFFFF)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFFFL }
-        assertTrue { testLEDs.getActualPixelColor(11) == 0xFFFFL }
-        assertTrue { testLEDs.getActualPixelColor(12) == 0xFFFFL }
 
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+
+        // IntRange set with ColorContainer
         testLEDs[10..12] = ColorContainer(0xFF00FF)
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFF00FFL }
-        assertTrue { testLEDs.getActualPixelColor(11) == 0xFF00FFL }
-        assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00FFL }
 
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF00FFL }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = false) == 0xFF00FFL }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF00FFL }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+
+        // vararg set with Long
         testLEDs[10, 11, 12] = 0xFF00
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFF00L }
-        assertTrue { testLEDs.getActualPixelColor(11) == 0xFF00L }
-        assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00L }
 
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+
+        // IntRange set with Long
         testLEDs[10..12] = 0xFF0000
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFF0000L }
-        assertTrue { testLEDs.getActualPixelColor(11) == 0xFF0000L }
-        assertTrue { testLEDs.getActualPixelColor(12) == 0xFF0000L }
 
-        testLEDs.setPixelColor(50, CCBlack)
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF0000L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(11, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+
+        // Test with empty IntRange
+        testLEDs[IntRange(22, 20)] = ColorContainer(0xFFFF)
+        checkPixels(20..22, testLEDs, 0)
+
+        testLEDs[IntRange(22, 20)] = 0xFFFF
+        checkPixels(20..22, testLEDs, 0)
+
+        // Test bad pixel index
+        assertFailsWith<IllegalArgumentException> { testLEDs.setPixelColor(50, CCBlack) }
     }
 
     @Test
     fun testSetPixelColors() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
+
+        // prolonged default
+
+        // setPixelColors with List and ColorContainer
         testLEDs.setPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
-        assertTrue { testLEDs.getActualPixelColor(10) == 0xFFL }
-        assertTrue { testLEDs.getActualPixelColor(15) == 0xFFL }
-        assertTrue { testLEDs.getActualPixelColor(20) == 0xFFL }
-        assertTrue { testLEDs.getActualPixelColor(18) == 0L }
 
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = true) == 0L }
+
+        // setPixelColors with List and Long
         testLEDs.setPixelColors(listOf(12, 17, 24), 0xFF00)
-        assertTrue { testLEDs.getActualPixelColor(12) == 0xFF00L }
-        assertTrue { testLEDs.getActualPixelColor(17) == 0xFF00L }
-        assertTrue { testLEDs.getActualPixelColor(24) == 0xFF00L }
-        assertTrue { testLEDs.getActualPixelColor(21) == 0L }
+
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and ColorContainer
+        testLEDs.setPixelColors(30..40, ColorContainer(0xFF))
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and Long
+        testLEDs.setPixelColors(30..40, 0xFF00)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // prolonged = false
+
+        // setPixelColors with ColorContainer
+        testLEDs.setPixelColors(listOf(10, 15, 20), ColorContainer(0xFF), prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = true) == 0L }
+
+        // setPixelColors with Long
+        testLEDs.setPixelColors(listOf(12, 17, 24), 0xFF00, prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and ColorContainer
+        testLEDs.setPixelColors(30..40, ColorContainer(0xFF), prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and Long
+        testLEDs.setPixelColors(30..40, 0xFF00, prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // prolonged = true
+
+        // setPixelColors with ColorContainer
+        testLEDs.setPixelColors(listOf(10, 15, 20), ColorContainer(0xFF), prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(18, prolonged = true) == 0L }
+
+        // setPixelColors with Long
+        testLEDs.setPixelColors(listOf(12, 17, 24), 0xFF00, prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(12, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(12, prolonged = true) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(17, prolonged = true) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(24, prolonged = true) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(21, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and ColorContainer
+        testLEDs.setPixelColors(30..40, ColorContainer(0xFF), prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // setPixelColors with IntRange and Long
+        testLEDs.setPixelColors(30..40, 0xFF00, prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(29, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
     }
-
-    @Test
-    fun testSetProlongedPixelColors() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.setProlongedPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
-        assertTrue { testLEDs.getPixelColor(10) == 0xFFL }
-        assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
-        assertTrue { testLEDs.getPixelColor(20) == 0xFFL }
-        assertTrue { testLEDs.getPixelColor(18) == 0L }
-
-        testLEDs.setProlongedPixelColors(listOf(12, 17, 24), 0xFF00)
-        assertTrue { testLEDs.getPixelColor(12) == 0xFF00L }
-        assertTrue { testLEDs.getPixelColor(17) == 0xFF00L }
-        assertTrue { testLEDs.getPixelColor(24) == 0xFF00L }
-        assertTrue { testLEDs.getPixelColor(21) == 0L }
-    }
-
-    @Test
-    fun testSetProlongedPixelColor() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        assertTrue { testLEDs[10] == 0L }
-        assertTrue { testLEDs[11] == 0L }
-        assertTrue { testLEDs[12] == 0L }
-
-        testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF))
-        assertTrue { testLEDs[10] == 0xFFL }
-
-        testLEDs.setProlongedPixelColor(10, 0xFF0000)
-        assertTrue { testLEDs[10] == 0xFF0000L }
-    }
-
 
     @Test
     fun testSetSectionColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
+        // prolonged default
+
+        // setSectionColor with ColorContainer
         testLEDs.setSectionColor(15, 30, ColorContainer(0xFF))
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[14] == 0L }
-        assertTrue { testLEDs[15] == 0xFFL }
-        assertTrue { testLEDs[30] == 0xFFL }
-        assertTrue { testLEDs[31] == 0L }
-        assertTrue { testLEDs[45] == 0L }
 
-        testLEDs.setSectionColor(10, 20, 0xFFFF)
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[9] == 0L }
-        assertTrue { testLEDs[10] == 0xFFFFL }
-        assertTrue { testLEDs[20] == 0xFFFFL }
-        assertTrue { testLEDs[21] == 0xFFL }
-        assertTrue { testLEDs[30] == 0xFFL }
-        assertTrue { testLEDs[31] == 0L }
-        assertTrue { testLEDs[45] == 0L }
-    }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
 
-    @Test
-    fun testSetSectionColorNonConcurrent() {
-        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
+        // setSectionColor with Long
+        testLEDs.setSectionColor(15, 30, 0xFFFF)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // setSectionColor with ColorContainer
+        testLEDs.setSectionColor(15..30, ColorContainer(0xFF))
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // setSectionColor with Long
+        testLEDs.setSectionColor(15..30, 0xFFFF)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+        // prolonged = false
+
+        // setSectionColor with ColorContainer
+        testLEDs.setSectionColor(15, 30, ColorContainer(0xFF), prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // setSectionColor with Long
+        testLEDs.setSectionColor(15, 30, 0xFFFF, prolonged = false)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // prolonged = true
+
+        // setSectionColor with ColorContainer
+        testLEDs.setSectionColor(15, 30, ColorContainer(0xFF), prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // setSectionColor with Long
+        testLEDs.setSectionColor(15, 30, 0xFFFF, prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFFFFL }
+        assertTrue { testLEDs.getPixelColor(31, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
+
+
+        // Test bad pixel ranges
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(20, 15, 0xFF) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(20, 15, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(-1..10, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(40, 50, ColorContainer(0xFF)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(-1..10, 0xFF) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setSectionColor(40, 50, 0xFF) }
+
+
+        testLEDs.setStripColor(0, prolonged = true)
 
         checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testLEDs.setSectionColor(15, 30, ColorContainer(0xFF))
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[14] == 0L }
-        assertTrue { testLEDs[15] == 0xFFL }
-        assertTrue { testLEDs[30] == 0xFFL }
-        assertTrue { testLEDs[31] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        // Test with empty IntRange
+        testLEDs.setSectionColor(IntRange(20, 15), ColorContainer(0xFF))
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testLEDs.setSectionColor(10, 20, 0xFFFF)
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[9] == 0L }
-        assertTrue { testLEDs[10] == 0xFFFFL }
-        assertTrue { testLEDs[20] == 0xFFFFL }
-        assertTrue { testLEDs[21] == 0xFFL }
-        assertTrue { testLEDs[30] == 0xFFL }
-        assertTrue { testLEDs[31] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        testLEDs.setSectionColor(IntRange(20, 15), 0xFF)
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
+
+
     }
 
     @Test
@@ -193,138 +515,166 @@ class LEDStripTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
+        // prolonged default
+
+        // setStripColor with ColorContainer
         testLEDs.setStripColor(ColorContainer(0xFF))
+
         checkAllPixels(testLEDs, 0xFF)
+        checkAllProlongedPixels(testLEDs, 0)
 
+
+        // setStripColor with Long
         testLEDs.setStripColor(0xFFFF)
-        checkAllPixels(testLEDs, 0xFFFF)
 
+        checkAllPixels(testLEDs, 0xFFFF)
+        checkAllProlongedPixels(testLEDs, 0)
+
+
+        // color property set
         testLEDs.color = ColorContainer(0xFF0000)
         checkAllPixels(testLEDs, 0xFF0000)
+        checkAllProlongedPixels(testLEDs, 0)
 
+        // color property get
         assertFailsWith(IllegalStateException::class) {
             testLEDs.color
         }
-    }
 
-    @Test
-    fun testSetStripColorNonConcurrent() {
-        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
 
-        checkAllPixels(testLEDs, 0)
+        // prolonged false
 
-        testLEDs.setStripColor(ColorContainer(0xFF))
+        // setStripColor with ColorContainer
+        testLEDs.setStripColor(ColorContainer(0xFF), prolonged = false)
+
         checkAllPixels(testLEDs, 0xFF)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testLEDs.setStripColor(0xFFFF)
+
+        // setStripColor with Long
+        testLEDs.setStripColor(0xFFFF, prolonged = false)
+
         checkAllPixels(testLEDs, 0xFFFF)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testLEDs.color = ColorContainer(0xFF0000)
-        checkAllPixels(testLEDs, 0xFF0000)
 
-        assertFailsWith(IllegalStateException::class) {
-            testLEDs.color
-        }
+        // prolonged = true
+
+        // setStripColor with ColorContainer
+        testLEDs.setStripColor(ColorContainer(0xFF), prolonged = true)
+
+        checkAllPixels(testLEDs, 0xFF)
+        checkAllProlongedPixels(testLEDs, 0xFFL)
+
+
+        // setStripColor with Long
+        testLEDs.setStripColor(0xFFFF, prolonged = true)
+
+        checkAllPixels(testLEDs, 0xFFFF)
+        checkAllProlongedPixels(testLEDs, 0xFFFFL)
     }
-
 
     @Test
     fun testGetPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-        testLEDs.setProlongedPixelColor(15, 0xFF)
+
+        testLEDs.setPixelColor(15, 0xFF, prolonged = false)
 
         assertTrue { testLEDs.getPixelColor(15) == 0xFFL }
-        assertTrue { testLEDs.getPixelHexString(15) == "ff" }
-        assertTrue { testLEDs[15] == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0L }
+
+        testLEDs.setPixelColor(15, 0xFF00, prolonged = true)
+
+        assertTrue { testLEDs.getPixelColor(15) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFF00L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0xFF00L }
+
         assertFailsWith<IllegalArgumentException> { testLEDs.getPixelColor(50) }
     }
 
     @Test
     fun testGetPixelColorOrNull() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-        testLEDs.setProlongedPixelColor(15, 0xFF)
+
+        testLEDs.setPixelColor(15, 0xFF, prolonged = true)
 
         assertTrue { testLEDs.getPixelColorOrNull(15) == 0xFFL }
+        assertTrue { testLEDs.getPixelColorOrNull(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColorOrNull(15, prolonged = true) == 0xFFL }
+
         assertNull(testLEDs.getPixelColorOrNull(50))
     }
 
     @Test
-    fun testGetPixelColorOrNullNonConcurrent() {
-        val testLEDs = EmulatedAnimatedLEDStripNonConcurrent(50)
-        testLEDs.setPixelColor(15, 0xFF)
-
-        assertTrue { testLEDs.getPixelColorOrNull(15) == 0xFFL }
-        assertNull(testLEDs.getPixelColorOrNull(50))
-    }
-
-    @Test
-    fun testGetActualPixelColor() {
+    fun testGetPixelHexString() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-        testLEDs.setPixelColor(15, 0xFF)
+        testLEDs.setPixelColor(15, 0xFF, prolonged = true)
 
-        assertTrue { testLEDs.getActualPixelColor(15) == 0xFFL }
-        assertFailsWith<IllegalArgumentException> { testLEDs.getActualPixelColor(50) }
+        assertTrue { testLEDs.getPixelHexString(15) == "ff" }
+        assertTrue { testLEDs.getPixelHexString(15, prolonged = false) == "ff" }
+        assertTrue { testLEDs.getPixelHexString(15, prolonged = true) == "ff" }
     }
 
     @Test
-    fun testGetActualPixelColorOrNull() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-        testLEDs.setPixelColor(15, 0xFF)
-
-        assertTrue { testLEDs.getActualPixelColorOrNull(15) == 0xFFL }
-        assertNull(testLEDs.getActualPixelColorOrNull(50))
-    }
-
-    @Test
-    fun testSectionCreator() {
+    fun testSectionCreator() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         val testSection = LEDStrip.SectionCreator.new(15, 40, testLEDs)
 
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[15] == 0L }
-        assertTrue { testLEDs[30] == 0L }
-        assertTrue { testLEDs[40] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testSection.run(AnimationData().animation(Animation.COLOR).color(0xFF))
+        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[14] == 0L }
-        assertTrue { testLEDs[15] == 0xFFL }
-        assertTrue { testLEDs[30] == 0xFFL }
-        assertTrue { testLEDs[40] == 0xFFL }
-        assertTrue { testLEDs[41] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(14, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(15, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(30, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(40, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(41, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
 
-        testLEDs.setStripColor(0)
+        testLEDs.setStripColor(0, prolonged = true)
 
         val testSection2 = LEDStrip.SectionCreator.new(10..25, testLEDs)
 
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[10] == 0L }
-        assertTrue { testLEDs[20] == 0L }
-        assertTrue { testLEDs[25] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        checkAllPixels(testLEDs, 0)
+        checkAllProlongedPixels(testLEDs, 0)
 
-        testSection2.run(AnimationData().animation(Animation.COLOR).color(0xFF))
+        testSection2.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
-        assertTrue { testLEDs[0] == 0L }
-        assertTrue { testLEDs[9] == 0L }
-        assertTrue { testLEDs[10] == 0xFFL }
-        assertTrue { testLEDs[15] == 0xFFL }
-        assertTrue { testLEDs[25] == 0xFFL }
-        assertTrue { testLEDs[26] == 0L }
-        assertTrue { testLEDs[45] == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(9, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(25, prolonged = false) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(26, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = false) == 0L }
+        assertTrue { testLEDs.getPixelColor(0, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(9, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(10, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(20, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(25, prolonged = true) == 0xFFL }
+        assertTrue { testLEDs.getPixelColor(26, prolonged = true) == 0L }
+        assertTrue { testLEDs.getPixelColor(45, prolonged = true) == 0L }
     }
 
     @Test
-    fun testSectionRun() {
+    fun testSectionRun() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         val testSection = LEDStrip.SectionCreator.new(10..25, testLEDs)
 
-        testSection.run(AnimationData().animation(Animation.COLOR).color(0xFF))
+        testSection.addAnimation(AnimationData().animation(Animation.COLOR).color(0xFF))
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -334,7 +684,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.run(AnimationData().animation(Animation.STACK).color(0xFFFF))
+        testSection.addAnimation(AnimationData().animation(Animation.STACK).color(0xFFFF))?.join()
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -344,7 +694,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.run(AnimationData().animation(Animation.WIPE).color(0xFF00))
+        testSection.addAnimation(AnimationData().animation(Animation.WIPE).color(0xFF00))?.join()
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -354,7 +704,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.run(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))
+        testSection.addAnimation(AnimationData().animation(Animation.BOUNCETOCOLOR).color(0xFF00FF))?.join()
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -364,7 +714,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.run(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))
+        testSection.addAnimation(AnimationData().animation(Animation.MULTIPIXELRUNTOCOLOR).color(0xFF0000))?.join()
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -374,7 +724,7 @@ class LEDStripTest {
         assertTrue { testLEDs[26] == 0L }
         assertTrue { testLEDs[45] == 0L }
 
-        testSection.run(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))
+        testSection.addAnimation(AnimationData().animation(Animation.SPARKLETOCOLOR).color(0xFFFFFF))?.join()
 
         assertTrue { testLEDs[0] == 0L }
         assertTrue { testLEDs[9] == 0L }
@@ -408,12 +758,47 @@ class LEDStripTest {
     }
 
     @Test
+    fun testWithPixelLock() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        var testVal1 = false
+        var testVal2 = true
+
+        testLEDs.withPixelLock(10) { testVal1 = true; Unit }
+
+        // Test trying to get a lock on a non-existent pixel
+        testLEDs.withPixelLock(50) { testVal2 = false; Unit }
+
+        assertTrue(testVal1)
+        assertTrue(testVal2)
+    }
+
+    @Test
     fun testImageDebugging() {
-        val leds = EmulatedAnimatedLEDStrip(50, imageDebugging = true, fileName = "test.csv")
-        runBlocking { delay(5000) }
-        leds.toggleRender()
-        runBlocking { delay(1000) }
-        assertTrue { Files.exists(Paths.get("test.csv")) }
-        Files.delete(Paths.get("test.csv"))
+        // Test file name
+        val info1 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test1.csv")
+        val leds1 = EmulatedAnimatedLEDStrip(info1)
+        delayBlocking(5000)
+        leds1.toggleRender()
+        delayBlocking(1000)
+        assertTrue { Files.exists(Paths.get("test1.csv")) }
+        Files.delete(Paths.get("test1.csv"))
+
+        // Test file name without .csv extension
+        val info2 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test2")
+        val leds2 = EmulatedAnimatedLEDStrip(info2)
+        delayBlocking(5000)
+        leds2.toggleRender()
+        delayBlocking(1000)
+        assertTrue { Files.exists(Paths.get("test2.csv")) }
+        Files.delete(Paths.get("test2.csv"))
+
+        // Test saving renders to file
+        val info3 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test3.csv", rendersBeforeSave = 100)
+        val leds3 = EmulatedAnimatedLEDStrip(info3)
+        delayBlocking(10000)
+        leds3.toggleRender()
+        delayBlocking(1000)
+        Files.delete(Paths.get("test3.csv"))
     }
 }

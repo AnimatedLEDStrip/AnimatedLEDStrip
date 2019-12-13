@@ -1,5 +1,3 @@
-package animatedledstrip.leds
-
 /*
  *  Copyright (c) 2019 AnimatedLEDStrip
  *
@@ -22,22 +20,41 @@ package animatedledstrip.leds
  *  THE SOFTWARE.
  */
 
-
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.leds.sections.SectionableLEDStrip
+package animatedledstrip.leds
 
 /**
- * An interface used to connect the AnimatedLEDStrip and AnimatedLEDStripNonConcurrent
- * classes.
+ * Interface defining what is needed from a native LED strip class.
  */
-interface AnimatedLEDStripInterface : SectionableLEDStrip {
+interface NativeLEDStrip {
 
     /**
-     * Run an animation.
-     *
-     * @param animation An [AnimationData] instance with details about the
-     * animation to run
+     * Close the LED strip's communication channel and release memory associated
+     * with it.
      */
-    fun run(animation: AnimationData)
+    fun close()
 
+    /**
+     * The number of LEDs in the strip.
+     */
+    val numLEDs: Int
+
+    /**
+     * Send data to the LED strip.
+     */
+    fun render()
+
+    /**
+     * Get a pixel's color.
+     *
+     * @param pixel The pixel's index
+     */
+    fun getPixelColor(pixel: Int): Int
+
+    /**
+     * Set a pixel's color.
+     *
+     * @param pixel The pixel's index
+     * @param color The color to set the pixel to
+     */
+    fun setPixelColor(pixel: Int, color: Int)
 }
