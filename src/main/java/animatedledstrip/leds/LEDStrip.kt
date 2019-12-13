@@ -58,7 +58,7 @@ abstract class LEDStrip(
     }
     private val rendersBeforeSave: Int = stripInfo.rendersBeforeSave ?: 1000
 
-    val indices: List<Int> = (0 until numLEDs).toList()
+    val indices: List<Int> = IntRange(0, numLEDs - 1).toList()
 
     /**
      * The LED Strip
@@ -91,7 +91,7 @@ abstract class LEDStrip(
     private val outThread = newSingleThreadContext("Image Debug Save Thread")
 
     /**
-     * Tracks if the strip is rendering. Starts `false` and is set to `true` in init.
+     * Tracks if the strip is rendering. Starts `false` and is toggled to `true` in init.
      */
     var rendering = false
         private set
