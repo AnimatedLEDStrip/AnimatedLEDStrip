@@ -262,7 +262,6 @@ class ColorContainerTest {
 
         // Test with empty IntRange
         val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        println(testCC5.grayscaled(IntRange(10, 5)).colors)
         assertTrue { testCC5.grayscaled(IntRange(10, 5)).colors == listOf<Long>() }
     }
 
