@@ -183,7 +183,7 @@ class ColorContainerTest {
 
         // Test with empty IntRange
         val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        assertTrue { testCC5.invert(IntRange(10, 5)) == listOf<Long>() }
+        assertTrue { testCC5.invert(IntRange(10, 5)).colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -212,7 +212,7 @@ class ColorContainerTest {
 
         // Test with empty IntRange
         val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        assertTrue { testCC5.inverse(IntRange(10, 5)) == listOf<Long>() }
+        assertTrue { testCC5.inverse(IntRange(10, 5)).colors == listOf<Long>() }
     }
 
     @Test
@@ -234,7 +234,7 @@ class ColorContainerTest {
 
         // Test with empty IntRange
         val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        assertTrue { testCC5.grayscale(IntRange(10, 5)) == listOf<Long>() }
+        assertTrue { testCC5.grayscale(IntRange(10, 5)).colors == listOf<Long>(0xFF7B50, 0xF0AF29, 0x3C538B) }
     }
 
     @Test
@@ -262,7 +262,8 @@ class ColorContainerTest {
 
         // Test with empty IntRange
         val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-        assertTrue { testCC5.grayscaled(IntRange(10, 5)) == listOf<Long>() }
+        println(testCC5.grayscaled(IntRange(10, 5)).colors)
+        assertTrue { testCC5.grayscaled(IntRange(10, 5)).colors == listOf<Long>() }
     }
 
     @Test
