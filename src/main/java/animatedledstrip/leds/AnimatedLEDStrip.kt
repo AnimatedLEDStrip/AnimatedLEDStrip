@@ -144,6 +144,10 @@ abstract class AnimatedLEDStrip(
 
 
 
+    var startAnimationCallback: ((AnimationData) -> Any?)? = null
+    var endAnimationCallback: ((AnimationData) -> Any?)? = null
+
+
     /* Run animations */
 
     /**
@@ -195,11 +199,14 @@ abstract class AnimatedLEDStrip(
         } ?: return null
 
         return scope.launch(threadPool) {
+            startAnimationCallback?.invoke(animation)
+
             val isContinuous = animation.continuous ?: animation.isContinuous()
             do {
                 animationFunction.invoke(animation, this)
             } while (isActive && isContinuous)
 
+            endAnimationCallback?.invoke(animation)
             runningAnimations.remove(animation.id)
         }
     }
