@@ -53,7 +53,7 @@ fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
  */
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 
-fun ByteArray?.toUTF8(size: Int): String {
+fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
     checkNotNull(this)
     return this.toString(Charset.forName("utf-8")).take(size)
 }
