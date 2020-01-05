@@ -29,7 +29,7 @@ import animatedledstrip.utils.infoOrNull
 import java.io.Serializable
 
 /**
- * Class used when calling animations to specify colors, parameters, etc.
+ * Used when calling animations to specify colors, parameters, etc.
  * for the animation.
  *
  * @property animation The animation to be run

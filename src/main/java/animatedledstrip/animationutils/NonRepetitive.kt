@@ -28,7 +28,6 @@ package animatedledstrip.animationutils
  * Non-repetitive animations are ones which change the color of the strip
  * without reverting it, such as Wipe. The end result is as if you had
  * set the strip color with `setStripColor()`.
- *
  */
 @MustBeDocumented
 annotation class NonRepetitive

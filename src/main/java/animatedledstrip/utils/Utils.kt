@@ -23,6 +23,8 @@
 
 package animatedledstrip.utils
 
+/* Blend colors */
+
 /**
  * Blend two [animatedledstrip.colors.ColorContainer]s together and return a new `ColorContainer`.
  *
@@ -47,6 +49,8 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
 }
 
 
+/* Blocking delay helper functions */
+
 /**
  * Try to pause the thread for an amount of time in milliseconds.
  *
@@ -64,36 +68,39 @@ fun delayBlocking(wait: Long) {
  *
  * @param wait The time (in milliseconds) to wait for
  */
-fun delayBlocking(wait: Int) {
-    delayBlocking(wait.toLong())
-}
+fun delayBlocking(wait: Int) = delayBlocking(wait.toLong())
+
+
+/* Parse hex string */
 
 /**
  * Returns a `Long` from a hexadecimal `String`.
  *
  * @param string The hex `String` to decode
  */
-fun parseHex(string: String): Long {
-    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
-    return java.lang.Long.parseLong(s, 16)
-}
+fun parseHex(string: String): Long = java.lang.Long.parseLong(string.remove0xPrefix(), 16)
 
 /**
  * Returns a `Long` from a hexadecimal `String` or `default` on error.
  *
  * @param string The hex `String` to decode
  */
-fun parseHexOrDefault(string: String, default: Long = 0x0L): Long {
-    val s = string.removePrefix("0x").removePrefix("0X")     // remove leading 0x if present
-    return try {
-        java.lang.Long.parseLong(s, 16)
-    } catch (e: NumberFormatException) {
-        default
-    }
+fun parseHexOrDefault(string: String, default: Long = 0x0L): Long = try {
+    java.lang.Long.parseLong(string.remove0xPrefix(), 16)
+} catch (e: NumberFormatException) {
+    default
 }
 
 /**
- * Returns the 'grayscale' version of the color.
+ * Helper function for removing the 0x prefix from a hex string
+ */
+private fun String.remove0xPrefix(): String = this.toUpperCase().removePrefix("0X")
+
+
+/* 24-bit color utility functions */
+
+/**
+ * Returns the 'grayscale' version of a 24-bit color.
  */
 fun Long.grayscale(): Long {
     val avg = (((this shr 16 and 0xFF) + (this shr 8 and 0xFF) + (this and 0xFF)) / 3) base 16
@@ -101,19 +108,19 @@ fun Long.grayscale(): Long {
 }
 
 /**
- * Returns the 'red' part of a color.
+ * Returns the 'red' part of a 24-bit color.
  */
 val Long.r
     get() = (this shr 16 and 0xFF).toInt()
 
 /**
- * Returns the 'green' part of a color.
+ * Returns the 'green' part of a 24-bit color.
  */
 val Long.g
     get() = (this shr 8 and 0xFF).toInt()
 
 /**
- * Returns the 'blue' part of a color.
+ * Returns the 'blue' part of a 24-bit color.
  */
 val Long.b
     get() = (this and 0xFF).toInt()

@@ -25,20 +25,35 @@ package animatedledstrip.leds.sections
 import animatedledstrip.colors.ColorContainerInterface
 
 /**
- * An interface used to denote that a LED strip class supports running
- * animations on parts of the strip.
+ * Adds functions for setting a section of the strip to a color.
  */
 interface SectionableLEDStrip {
 
     /**
      * Set a section to a color.
      *
-     * @param start The first pixel in the section
-     * @param end The last pixel (inclusive) in the section
-     * @param color The color(s) to set the section to
+     * `start` and `end` are inclusive.
      */
     fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean = false)
+
+    /**
+     * Set a section to a color.
+     *
+     * `start` and `end` are inclusive.
+     */
     fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean = false)
+
+    /**
+     * Set a section to a color.
+     *
+     * `range` is inclusive.
+     */
     fun setSectionColor(range: IntRange, color: ColorContainerInterface, prolonged: Boolean = false)
+
+    /**
+     * Set a section to a color.
+     *
+     * `range` is inclusive.
+     */
     fun setSectionColor(range: IntRange, color: Long, prolonged: Boolean = false)
 }

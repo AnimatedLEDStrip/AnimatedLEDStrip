@@ -35,7 +35,7 @@ import animatedledstrip.leds.StripInfo
 class EmulatedAnimatedLEDStrip(
     stripInfo: StripInfo
 ) : AnimatedLEDStrip(stripInfo) {
-    override var ledStrip: NativeLEDStrip = EmulatedWS281x(0, 255, numLEDs)
+    override var ledStrip: NativeLEDStrip = EmulatedWS281x(numLEDs)
 
     constructor(numLEDs: Int) : this(StripInfo(numLEDs))
 }

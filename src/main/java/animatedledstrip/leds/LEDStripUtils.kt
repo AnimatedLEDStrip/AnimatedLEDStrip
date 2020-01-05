@@ -32,11 +32,10 @@ import org.pmw.tinylog.Logger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
+/* Set pixel colors */
+
 /**
- * Set the colors of pixels
- *
- * @param pixels The pixels to set
- * @param color The color to use
+ * Set the color of the specified pixels
  */
 operator fun LEDStrip.set(vararg pixels: Int, color: ColorContainerInterface) {
     for (pixel in pixels) {
@@ -45,22 +44,7 @@ operator fun LEDStrip.set(vararg pixels: Int, color: ColorContainerInterface) {
 }
 
 /**
- * Set the colors of pixels
- *
- * @param pixels The range of pixels to set
- * @param color The color to use
- */
-operator fun LEDStrip.set(pixels: IntRange, color: ColorContainerInterface) {
-    for (pixel in pixels) {
-        setPixelColor(pixel, color, prolonged = false)
-    }
-}
-
-/**
- * Set the colors of pixels
- *
- * @param pixels The pixels to set
- * @param color The color to use
+ * Set the color of the specified pixels
  */
 operator fun LEDStrip.set(vararg pixels: Int, color: Long) {
     for (pixel in pixels) {
@@ -69,10 +53,38 @@ operator fun LEDStrip.set(vararg pixels: Int, color: Long) {
 }
 
 /**
- * Set the colors of pixels
+ * Set the color of the specified pixels
  *
- * @param pixels The range of pixels to set
- * @param color The color to use
+ * @param pixels A list of pixel indices to set
+ */
+fun LEDStrip.setPixelColors(pixels: List<Int>, color: ColorContainerInterface, prolonged: Boolean = false) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, color, prolonged)
+    }
+}
+
+/**
+ * Set the color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun LEDStrip.setPixelColors(pixels: List<Int>, color: Long, prolonged: Boolean = false) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, color, prolonged)
+    }
+}
+
+/**
+ * Set the color of the specified range of pixels
+ */
+operator fun LEDStrip.set(pixels: IntRange, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setPixelColor(pixel, color, prolonged = false)
+    }
+}
+
+/**
+ * Set the color of the specified range of pixels
  */
 operator fun LEDStrip.set(pixels: IntRange, color: Long) {
     for (pixel in pixels) {
@@ -81,70 +93,29 @@ operator fun LEDStrip.set(pixels: IntRange, color: Long) {
 }
 
 /**
- * Set the color of a strip using a ColorContainer offset by `offset`
- *
- * @param colors The colors
- * @param offset The index of the pixel that will be set to the color at
- * index 0
+ * Set the color of the specified range of pixels
+ * (alias for setSectionColor)
  */
-fun LEDStrip.setStripColorWithOffset(colors: PreparedColorContainer, offset: Int = 0, prolonged: Boolean = false) {
-    setStripColor(colors.offsetBy(offset), prolonged)
-}
+fun LEDStrip.setPixelColors(pixels: IntRange, color: ColorContainerInterface, prolonged: Boolean = false) =
+    setSectionColor(pixels, color, prolonged)
 
 /**
- * Get the color of a pixel as a hexadecimal string.
- *
- * @param pixel The pixel to find the color of
- * @return A `String` containing the color of the pixel in hexadecimal
+ * Set the color of the specified range of pixels
+ * (alias for setSectionColor)
  */
-fun LEDStrip.getPixelHexString(pixel: Int, prolonged: Boolean = false): String {
-    return getPixelColor(pixel, prolonged).toString(16)
-}
+fun LEDStrip.setPixelColors(pixels: IntRange, color: Long, prolonged: Boolean = false) =
+    setSectionColor(pixels, color, prolonged)
 
-/**
- * Get the color of a pixel.
- *
- * @param pixel The pixel to find the color of
- * @return The color of the pixel or null if the index is invalid
- */
-fun LEDStrip.getPixelColorOrNull(pixel: Int, prolonged: Boolean = false): Long? = try {
-    getPixelColor(pixel, prolonged)
-} catch (e: IllegalArgumentException) {
-    null
-}
 
-/**
- * Try to lock a pixel's lock before performing the operation
- *
- * @param pixel
- * @param operation
- */
-fun LEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
-    pixelLocks[pixel]?.tryWithLock {
-        operation.invoke()
-    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
-}
-
-/**
- * Revert pixels based on indices in a list
- *
- * @param pixels The pixels to revert
- */
-fun LEDStrip.revertPixels(pixels: List<Int>) {
-    for (pixel in pixels) {
-        revertPixel(pixel)
-    }
-}
+/* Set and fade pixel */
 
 /**
  * Set a pixel to a color and then immediately fade it back to its
  * prolonged color. This will return before the fade is complete
  * because the fade is started in a separate coroutine.
  *
- * @param pixel The pixel to set and fade
- * @param color The color to set the pixel to
- * @param amountOfOverlay Amount of overlay in the fade
- * @param delay Amount of delay in the fade
+ * @param amountOfOverlay Amount of overlay in the fade (see [animatedledstrip.utils.blend])
+ * @param delay Amount of delay in the fade (see [animatedledstrip.utils.blend])
  * @param context The thread pool to create the fading thread in
  */
 fun LEDStrip.setAndFadePixel(
@@ -161,38 +132,59 @@ fun LEDStrip.setAndFadePixel(
     }
 }
 
+
+/* Revert pixels */
+
 /**
- * Set pixels based on indices in a list
+ * Revert pixels based on indices in a list
  *
- * @param pixels The pixels to set
- * @param color The color to use
+ * @param pixels The pixels to revert
  */
-fun LEDStrip.setPixelColors(pixels: List<Int>, color: ColorContainerInterface, prolonged: Boolean = false) {
+fun LEDStrip.revertPixels(pixels: List<Int>) {
     for (pixel in pixels) {
-        setPixelColor(pixel, color, prolonged)
+        revertPixel(pixel)
     }
 }
 
+
+/* Set strip color */
+
 /**
- * Set pixels based on indices in a list
+ * Set the color of a strip using a ColorContainer offset by `offset`
  *
- * @param pixels The pixels to set
- * @param color The color to use
+ * @param offset The index of the pixel that will be set to the color at
+ * index 0
  */
-fun LEDStrip.setPixelColors(pixels: List<Int>, color: Long, prolonged: Boolean = false) {
-    for (pixel in pixels) {
-        setPixelColor(pixel, color, prolonged)
-    }
+fun LEDStrip.setStripColorWithOffset(colors: PreparedColorContainer, offset: Int = 0, prolonged: Boolean = false) {
+    setStripColor(colors.offsetBy(offset), prolonged)
 }
 
-/**
- * Alias for setSectionColor
- */
-fun LEDStrip.setPixelColors(pixels: IntRange, color: ColorContainerInterface, prolonged: Boolean = false) =
-    setSectionColor(pixels, color, prolonged)
+
+/* Get pixel color */
 
 /**
- * Alias for setSectionColor
+ * Get the color of a pixel as a hexadecimal string.
  */
-fun LEDStrip.setPixelColors(pixels: IntRange, color: Long, prolonged: Boolean = false) =
-    setSectionColor(pixels, color, prolonged)
+fun LEDStrip.getPixelHexString(pixel: Int, prolonged: Boolean = false): String =
+    getPixelColor(pixel, prolonged).toString(16)
+
+/**
+ * Get the color of a pixel or null if the index is invalid.
+ */
+fun LEDStrip.getPixelColorOrNull(pixel: Int, prolonged: Boolean = false): Long? = try {
+    getPixelColor(pixel, prolonged)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
+
+/* Run with pixel lock */
+
+/**
+ * Try to lock a pixel's mutex before performing the specified operation
+ */
+fun LEDStrip.withPixelLock(pixel: Int, operation: () -> Any?) {
+    pixelLocks[pixel]?.tryWithLock {
+        operation.invoke()
+    } ?: Logger.warn { "Could not find Mutex for pixel $pixel" }
+}

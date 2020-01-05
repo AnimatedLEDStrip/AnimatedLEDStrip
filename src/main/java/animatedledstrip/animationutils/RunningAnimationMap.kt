@@ -24,22 +24,52 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.leds.AnimatedLEDStrip
 
+/**
+ * Custom implementation of a map in order to prevent third-party code from
+ * changing the map. In other words, we don't want to start an animation
+ * and then be unable to stop it because we lost the `Job` instance associated
+ * with it.
+ */
 class RunningAnimationMap {
+
+    /**
+     * The underlying map. Visibility is set to internal so that this library
+     * can run methods directly on the map if necessary, but others cannot.
+     */
     internal val map =
         mutableMapOf<String, AnimatedLEDStrip.RunningAnimation>()
 
+    /**
+     * Operator alias for getting a map entry
+     */
+    internal operator fun get(key: String) = map[key]
+
+    /**
+     * Operator alias for setting a map entry
+     */
+    internal operator fun set(key: String, value: AnimatedLEDStrip.RunningAnimation) = map.set(key, value)
+
+    /**
+     * Remove a map entry
+     */
+    internal fun remove(key: String) = map.remove(key)
+
+
+    /**
+     * A copy of the list of entries in the map
+     */
     val entries: List<Pair<String, AnimatedLEDStrip.RunningAnimation>>
         get() = map.entries.map { it.toPair() }
 
+    /**
+     * A copy of the list of IDs (keys) in the map
+     */
     val ids: List<String>
         get() = map.keys.toList()
 
+    /**
+     * A copy of the list of animations (values) in the map
+     */
     val animations: List<AnimatedLEDStrip.RunningAnimation>
         get() = map.values.toList()
-
-    internal operator fun get(key: String) = map[key]
-
-    internal operator fun set(key: String, value: AnimatedLEDStrip.RunningAnimation) = map.set(key, value)
-
-    internal fun remove(key: String) = map.remove(key)
 }

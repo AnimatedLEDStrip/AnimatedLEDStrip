@@ -23,7 +23,6 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
@@ -33,16 +32,20 @@ import kotlin.math.min
 
 /**
  * A subclass of [LEDStrip] adding animations.
+ *
  * @param stripInfo Information about this strip, such as number of
  * LEDs, etc.
  */
 abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
-) : LEDStrip(stripInfo), SectionableLEDStrip {
+) : LEDStrip(stripInfo) {
 
 
     /* Thread pools */
 
+    /**
+     * Multiplier used when calculating thread pool sizes
+     */
     private val threadCount: Int = stripInfo.threadCount ?: 100
 
     /**
@@ -72,28 +75,41 @@ abstract class AnimatedLEDStrip(
         newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
 
 
+    // TODO: Remove when multiPixelRun is refactored
     private val pixelSetLists = mutableMapOf<Triple<Int, Int, Int>, MutableList<MutableList<Int>>>()
-
 
 
     /* Track running animations */
 
+    /**
+     * Class for tracking a currently running animation
+     *
+     * @property animation An `AnimationData` instance with the properties of the animation
+     * @property id The string ID representing the animation
+     * @property job The `Job` that is running the animation
+     */
     data class RunningAnimation(
         val animation: AnimationData,
         val id: String,
         val job: Job
     ) {
+        /**
+         * Cancel the coroutine running the animation
+         * (in other words, end the animation after its current iteration is complete)
+         */
         internal fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
     }
 
+    /**
+     * Map containing all `RunningAnimation` instances
+     */
     val runningAnimations = RunningAnimationMap()
 
 
-
-    /* Define custom animations*/
+    /* Define custom animations */
 
     /**
-     * Map containing custom animations.
+     * Map containing defined custom animations.
      */
     private val customAnimationMap =
         mutableMapOf<String, (AnimationData, CoroutineScope) -> Unit>()
@@ -101,9 +117,14 @@ abstract class AnimatedLEDStrip(
     // TODO: Add addCustomAnimation function
 
 
-
     /* Add and remove/end animations */
 
+    /**
+     * Add a new animation
+     *
+     * @param animId Optional `String` parameter for setting the ID of the animation.
+     * If not set, ID will be set to a random number between 0 and 100000000.
+     */
     fun addAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
         return if (animation.animation == Animation.ENDANIMATION) {
             // Special "Animation" type that the client sends to end an animation
@@ -123,8 +144,6 @@ abstract class AnimatedLEDStrip(
 
     /**
      * End animation by ID
-     *
-     * @param id The String ID that identifies the animation
      */
     fun endAnimation(id: String) {
         runningAnimations[id]?.endAnimation()
@@ -136,25 +155,38 @@ abstract class AnimatedLEDStrip(
     }
 
     /**
-     * End animation by ID (by extracting ID from AnimationData instance)
+     * End animation by ID (by extracting ID from the `AnimationData` instance)
      */
     fun endAnimation(animation: AnimationData?) {
         endAnimation(animation?.id ?: return)
     }
 
 
+    /* Callbacks */
 
+    /**
+     * Callback run before the first iteration of the animation
+     */
     var startAnimationCallback: ((AnimationData) -> Any?)? = null
+
+    /**
+     * Callback run after the last iteration of the animation (but before the
+     * animation is remove from `runningAnimations`)
+     */
     var endAnimationCallback: ((AnimationData) -> Any?)? = null
 
 
     /* Run animations */
 
     /**
-     * Run an animation.
+     * Run an animation
      *
      * @param animation An [AnimationData] instance with details about the
      * animation to run
+     * @param threadPool Optionally specify the thread pool to run the new
+     * animation in
+     * @param scope Optionally specify the parent `CoroutineScope` for the
+     * coroutine that will run the animation
      */
     internal fun run(
         animation: AnimationData,
@@ -214,12 +246,12 @@ abstract class AnimatedLEDStrip(
     /**
      * Start an animation in a child coroutine.
      *
-     * Note: Animation is not run continuously unless if [continuous] is `true`.
+     * Note: Animation is not run continuously unless if [continuous] is `true`
+     * (even if the AnimationData instance has `continuous` as true).
      *
-     * @param animation The animation to run
-     * @param scope The `CoroutineScope` that is the parent of this animation
+     * @param scope The parent `CoroutineScope` for the coroutine that will
+     * run the animation
      * @param pool The pool of threads to start the animation in
-     * @param continuous Should the animation be run continuously
      * @return The `Job` associated with the new coroutine
      */
     fun runParallel(
@@ -238,11 +270,8 @@ abstract class AnimatedLEDStrip(
     /**
      * Start an animation and wait for it to complete.
      *
-     * Note: Animation is not run continuously unless if the [continuous] parameter
-     * is `true` (even if the AnimationData instance has `continuous` as true).
-     *
-     * @param animation The animation to run
-     * @param continuous Should the animation be run continuously
+     * Note: Animation is not run continuously unless if [continuous] is `true`
+     * (even if the AnimationData instance has `continuous` as true).
      */
     fun runSequential(animation: AnimationData, continuous: Boolean = false) = runBlocking {
         val job = run(animation.copy(continuous = continuous), threadPool = parallelAnimationThreadPool, scope = this)
@@ -251,14 +280,13 @@ abstract class AnimatedLEDStrip(
     }
 
 
-
     /* Animation definitions */
 
     /**
      * Runs an Alternate animation.
      *
-     * Strip alternates between `pCols[0]` and `pCols[1]` at the specified rate
-     * (delay between changes in milliseconds).
+     * Strip alternates between `pCols[0]` and `pCols[1]`, delaying `delay`
+     * milliseconds between changes.
      */
     private val alternate: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         setSectionColor(animation.startPixel, animation.endPixel, animation.pCols[0], prolonged = true)
@@ -271,8 +299,10 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Bounce animation.
      *
-     * Similar to Bounce to Color but the pixels at the end of each bounce fade back to
-     * their prolonged color after being set from `pCols[0]`.
+     * Similar to Bounce to Color but the pixels at the end of each bounce
+     * fade back to their prolonged color after being set from `pCols[0]`.
+     * Note that this animation has a quadratic time complexity, meaning it
+     * gets very long very quickly.
      */
     private val bounce: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         for (i in 0..((animation.endPixel - animation.startPixel) / 2)) {
@@ -312,8 +342,10 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Bounce to Color animation.
      *
-     * Pixel 'bounces' back and forth, leaving behind a pixel set from `pCols[0]`
-     * at each end like Stack, eventually ending in the middle.
+     * Pixel 'bounces' back and forth, leaving behind a pixel set from
+     * `pCols[0]` at each end like Stack, eventually ending in the middle.
+     * Note that this animation has a quadratic time complexity, meaning it
+     * gets very long very quickly.
      */
     @NonRepetitive
     private val bounceToColor: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
@@ -494,7 +526,7 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Multi-Pixel Run To Color animation.
      *
-     * Similar to Multi-Pixel Run but LEDs do not revert back to their original
+     * Similar to Multi-Pixel Run but LEDs do not revert back to their prolonged
      * color.
      */
     @NonRepetitive
@@ -529,8 +561,8 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Pixel Marathon animation.
      *
-     * Watch pixels (2 of each color per iteration) race each other along the strip
-     * (or strip section).
+     * Watch 10 pixels (2 of each color per iteration) race each other
+     * along the strip (or strip section).
      */
     private val pixelMarathon: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
         val baseAnimation = AnimationData().animation(Animation.PIXELRUN)
@@ -589,7 +621,7 @@ abstract class AnimatedLEDStrip(
      *
      * Starts two Meteor animations running in opposite directions
      * from `center`, stopping after travelling `distance` or at
-     * the end of the strip, whichever comes first. Does not wait
+     * the end of the strip/section, whichever comes first. Does not wait
      * for the Meteor animations to be complete before returning,
      * giving a ripple-like appearance when run continuously.
      */
@@ -623,21 +655,12 @@ abstract class AnimatedLEDStrip(
     /**
      * Runs a Smooth Chase animation.
      *
-     * PreparedColorContainer and setStripColorWithOffset are used to 'move' the
-     * colors down the strip.
-     *
-     * The prepare function from ColorContainer is used to create a collection
-     * of colors for the strip:
-     * *The palette colors are spread out along the strip at approximately equal
-     * intervals. All pixels between these 'pure' pixels are a blend of the
-     * colors of the two nearest pure pixels. The blend ratio is determined by the
-     * location of the pixel relative to the nearest pure pixels.*
-     *
-     * Each pixel is set to its respective color in the PreparedColorContainer.
-     * Then, if the direction is [Direction].`FORWARD`,
-     * each pixel is set to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc.
-     * to create the illusion that the animation is 'moving'. If the direction is
-     * [Direction].`BACKWARD`, the same happens but with indices `i`, `i-1`, `i-2`, etc.
+     * Each pixel is set to its respective color in `pCols[0]`. Then, if the
+     * direction is [Direction].`FORWARD`, each pixel is set to
+     * `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create the illusion
+     * that the animation is 'moving'. If the direction is
+     * [Direction].`BACKWARD`, the same happens but with indices `i`, `i-1`,
+     * `i-2`, etc.
      */
     private val smoothChase: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         when (animation.direction) {
@@ -657,7 +680,7 @@ abstract class AnimatedLEDStrip(
      * Runs a Smooth Fade animation.
      *
      * Like a Smooth Chase animation, but the whole strip is the same color
-     * while fading through the PreparedColorContainer.
+     * while fading through `pCols[0]`.
      */
     private val smoothFade: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         for (i in animation.startPixel..animation.endPixel) {
@@ -672,8 +695,7 @@ abstract class AnimatedLEDStrip(
      *
      * Each LED is changed to `pCols[0]` for delay milliseconds before reverting
      * to its prolonged color. A separate thread is created for each pixel. Each
-     * thread saves its pixel's original color, then waits up to 5 seconds
-     * before sparkling its pixel.
+     * thread waits up to 5 seconds before sparkling its pixel.
      */
     private val sparkle: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
         val deferred = (animation.startPixel..animation.endPixel).map { n ->
@@ -718,7 +740,7 @@ abstract class AnimatedLEDStrip(
      *
      * Very similar to the Sparkle animation, but the LEDs are not reverted to their
      * original color after the sparkle. A separate thread is created for each
-     * pixel. Each thread waits for 0-5 seconds before sparkling its pixel.
+     * pixel. Each thread waits up to 5 seconds before sparkling its pixel.
      */
     @NonRepetitive
     private val sparkleToColor: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
@@ -742,7 +764,7 @@ abstract class AnimatedLEDStrip(
      * Similar to a Ripple but the pixels don't fade back.
      * Runs two Wipe animations in opposite directions starting
      * from `center`, stopping after travelling `distance` or at
-     * the end of the strip, whichever comes first.
+     * the end of the strip/section, whichever comes first.
      */
     @NonRepetitive
     @Radial
@@ -768,7 +790,14 @@ abstract class AnimatedLEDStrip(
     }
 
 
-    // TODO: documentation
+    /**
+     * Runs a Stack animation.
+     *
+     * Pixels are run from one end of the strip/section to the other,
+     * 'stacking' up. Each pixel has to travel a shorter distance than
+     * the last. Note that this animation has a quadratic time complexity,
+     * meaning it gets very long very quickly.
+     */
     @NonRepetitive
     private val stack: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         when (animation.direction) {
@@ -786,8 +815,14 @@ abstract class AnimatedLEDStrip(
     }
 
 
-    // TODO: documentation
-    @NonRepetitive
+    /**
+     * Runs a StackOverflow animation.
+     *
+     * Two Stack animations are started from opposite ends of the strip/section.
+     * The stacks meet in the middle and 'overflow' their half. And yes, the pun
+     * was very much intended. Note that this animation has a quadratic time
+     * complexity, meaning it gets very long very quickly.
+     */
     private val stackOverflow: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
         val baseAnimation = AnimationData()
             .animation(Animation.STACK)

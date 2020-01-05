@@ -25,6 +25,9 @@ package animatedledstrip.colors
 import com.google.gson.*
 import java.lang.reflect.Type
 
+/**
+ * Tells GSON how to serialize a [ColorContainer] or [PreparedColorContainer]
+ */
 class ColorContainerSerializer : JsonSerializer<ColorContainerInterface>, JsonDeserializer<ColorContainerInterface> {
     override fun serialize(
         color: ColorContainerInterface,
