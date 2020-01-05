@@ -34,9 +34,6 @@ enum class Animation {
      */
     @NonRepetitive
     COLOR,
-    @NonRepetitive
-    @Deprecated("Use COLOR", ReplaceWith("COLOR"))
-    MULTICOLOR,
     /**
      * Used to represent a custom animation. Put the animation's abbreviation
      * in the AnimationData instance's ID parameter.
@@ -61,6 +58,9 @@ enum class Animation {
      */
     @NonRepetitive
     BOUNCETOCOLOR,
+    /**
+     * See [AnimatedLEDStrip.catToy]
+     */
     CATTOY,
     /**
      * See [AnimatedLEDStrip.meteor]
@@ -130,7 +130,7 @@ enum class Animation {
     @NonRepetitive
     WIPE,
     /**
-     * Special 'animation' sent by the GUI to stop a continuous animation
+     * Special 'animation' sent by a client to stop a continuous animation
      */
     ENDANIMATION
 }

@@ -27,7 +27,7 @@ import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.leds.AnimatedLEDStrip
 
 /**
- * Class used for running animations on only part of an LED strip.
+ * Used to run animations on only part of an LED strip.
  *
  * When this instance's run method is called, it modifies the `startPixel` and
  * `endPixel` parameters in the `AnimationData` instance before passing it on to
@@ -40,15 +40,12 @@ import animatedledstrip.leds.AnimatedLEDStrip
 class LEDStripSection(val startPixel: Int, val endPixel: Int, val ledStrip: AnimatedLEDStrip) {
 
     /**
-     * Create a LEDStripSection using a range of indices (inclusive)
+     * Create a `LEDStripSection` using a range of indices (inclusive)
      */
     constructor(pixels: IntRange, ledStrip: AnimatedLEDStrip) : this(pixels.first, pixels.last, ledStrip)
 
     /**
      * Run an animation on this section of the LED strip.
-     *
-     * @param animation An `AnimationData` instance specifying the animation to
-     * be run
      */
     fun addAnimation(animation: AnimationData): AnimatedLEDStrip.RunningAnimation? {
         return when (animation.animation) {

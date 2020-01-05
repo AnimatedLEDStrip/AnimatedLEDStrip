@@ -26,20 +26,19 @@ import animatedledstrip.utils.base
 
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
- * to the next. This is created by calling the `prepare()` function on a
- * [ColorContainer]. Used by methods that set the color of pixel(s) on a strip.
+ * to the next (see [ColorContainer.prepare]. This is created by calling
+ * [ColorContainer.prepare]. Used by methods that set the color of pixel(s) on
+ * a strip.
  *
- * @property colors The `List` of colors in this [PreparedColorContainer]
+ * @property colors The `List` of colors in this `PreparedColorContainer`
  * @property originalColors The colors that were used to prepare this
- * [PreparedColorContainer]
+ * `PreparedColorContainer`
  */
 class PreparedColorContainer(val colors: List<Long>, private val originalColors: List<Long> = colors) :
     ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
-     *
-     * @param index The index of the color to retrieve
      */
     operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0
 
@@ -51,7 +50,7 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
         get() = 0
 
     /**
-     * Create a string representation of this PreparedColorContainer.
+     * Create a string representation of this `PreparedColorContainer`.
      * The hexadecimal representation of each color in [colors] is
      * listed in comma delimited format, between brackets `[` & `]`
      */
@@ -68,14 +67,12 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
 
     /**
      * Checks if the specified value is in [colors].
-     *
-     * @param value The value to search for
      */
     operator fun contains(value: Long): Boolean = colors.contains(value)
 
     /**
-     * @return If this [PreparedColorContainer] is the correct size, then this instance,
-     * otherwise a new instance of the correct size
+     * If this `PreparedColorContainer` is the correct size, return this
+     * instance, otherwise a new instance of the correct size
      */
     override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer =
         if (numLEDs == size) this
@@ -88,10 +85,7 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
         get() = colors.size
 
     /**
-     * Creates a new ColorContainer instance with the colors in [colors].
-     *
-     * @return A new ColorContainer
+     * Returns a new [ColorContainer] instance with the colors in [colors].
      */
     override fun toColorContainer() = ColorContainer(colors)
-
 }

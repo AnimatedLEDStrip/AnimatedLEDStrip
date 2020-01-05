@@ -23,7 +23,7 @@
 package animatedledstrip.animationutils
 
 /**
- * Helper enum for easily setting the speed of an animation.
+ * Enum used for easily setting the speed of an animation
  */
 enum class AnimationSpeed {
     /**

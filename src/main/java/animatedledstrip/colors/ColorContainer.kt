@@ -29,13 +29,13 @@ import kotlin.math.roundToInt
 /**
  * A class for storing colors that can be used in animations. This can store a
  * variable number of colors (stored as 24-bit Longs).
- *
- * @param c The color(s) to store in the ColorContainer
  */
 open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
+    /* Colors */
+
     /**
-     * The List where the colors are stored.
+     * A `List` of `Long`s representing the colors
      */
     val colors = mutableListOf<Long>()
 
@@ -51,12 +51,13 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
 
     /**
-     * Helper property that tracks if there is only one color in [colors].
+     * Tracks if there is only one color in [colors].
      */
     private val singleColor: Boolean
         get() = colors.size == 1
 
-    /* Constructors */
+
+    /* Construction */
 
     init {
         for (i in c) colors += i
@@ -66,10 +67,11 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * Create a new ColorContainer with one color represented as a Triple
      * containing r, g, and b.
      */
-    constructor(rgb: Triple<Int, Int, Int>) : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
+    constructor(rgb: Triple<Int, Int, Int>)
+            : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
 
     /**
-     * Create a new ColorContainer from a List<Long>.
+     * Create a new ColorContainer from a `List<Long>`
      */
     constructor(colorList: List<Long>) : this() {
         colorList.forEach {
@@ -86,15 +88,14 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
     }
 
-    /* Get/set operations */
+
+    /* Get color */
 
     /**
      * Get one color from [colors]. If there is only one color ([singleColor]
      * returns true), this will return that color, regardless of what index
      * was sent. Otherwise, it checks if `index` is a valid index of `colors`
      * and if so, returns the color stored there, if not, returns 0 (black).
-     *
-     * @param index The index of the color to get
      */
     operator fun get(index: Int): Long =
         when {
@@ -104,16 +105,14 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
         }
 
     /**
-     * Get colors from [colors]. Accepts a variable number of arguments
-     * (except one, that is caught by the get() operator above). If 0
+     * Get colors from [colors]. Accepts a variable number of arguments(though
+     * a single argument will be caught by the get() operator above). If no
      * indices are provided, this will return an empty list.
      * If multiple indices are provided but there is only one color
      * in the list, this will return a list containing only that one
      * color. If an index is not a valid index in `colors`, 0 is added
      * to the list. The returned list contains the colors in the order
-     * that the indices were ordered when this was called.
-     *
-     * @param indices The indices of the colors to retrieve
+     * specified.
      */
     operator fun get(vararg indices: Int): List<Long> =
         if (singleColor) listOf(color)
@@ -130,8 +129,6 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * Get colors from [colors]. If there is only one color in `colors`,
      * this will return a list containing only that one color. If an index
      * in the range is not a valid index in `colors`, 0 is added to the list.
-     *
-     * @param indices A range of indices of the colors to retrieve
      */
     operator fun get(indices: IntRange): List<Long> =
         if (singleColor) listOf(color)
@@ -144,13 +141,13 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
             temp
         }
 
+
+    /* Set color */
+
     /**
      * Set some indices of [colors] to [c]. If an index is not a valid index
      * in `colors`, this will add it to the end of `colors`, though not
      * necessarily at the index specified.
-     *
-     * @param indices The indices to set to `c`
-     * @param c The color to store
      */
     operator fun set(vararg indices: Int, c: Long) {
         for (index in indices.sorted())
@@ -162,9 +159,6 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * Set a range of indices of [colors] to [c]. If an index is not a valid
      * in [colors], this will add the color to the end of `colors`, though not
      * necessarily at the index specified.
-     *
-     * @param indices The range of indices to set to `c`
-     * @param c The color to store
      */
     operator fun set(indices: IntRange, c: Long) {
         for (index in indices)
@@ -174,15 +168,13 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     /**
      * Adds a color at the end of [colors].
-     *
-     * @param c The color to add
      */
     operator fun plusAssign(c: Long) {
         colors.add(c)
     }
 
 
-    /* Utility functions */
+    /* Preparation */
 
     /**
      * Create a collection of colors that blend between multiple colors along a 'strip'.
@@ -234,7 +226,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     }
 
 
-    /* Conversion functions */
+    /* Conversion */
 
     /**
      * Create a string representation of this ColorContainer.
@@ -277,11 +269,17 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     fun toTriple() = toRGB()
 
     /**
+     * @return This ColorContainer instance
+     */
+    override fun toColorContainer(): ColorContainer = this
+
+
+    /* Operators/Other */
+
+    /**
      * Compares this ColorContainer against another ColorContainer or a Long.
      * If [other] is a ColorContainer, the [colors] parameters are compared.
      * If [other] is a Long, the [color] parameter is compared to the Long.
-     *
-     * @param other The value to compare
      */
     override fun equals(other: Any?): Boolean {
         return when (other) {
@@ -298,8 +296,6 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     /**
      * Checks if the specified color (Long) is in [colors].
-     *
-     * @param c The color to search for
      */
     operator fun contains(c: Long): Boolean = colors.contains(c)
 
@@ -309,11 +305,6 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     override fun hashCode(): Int {
         return colors.hashCode()
     }
-
-    /**
-     * @return This ColorContainer instance
-     */
-    override fun toColorContainer(): ColorContainer = this
 
     /**
      * Returns the size of [colors].

@@ -31,6 +31,8 @@ import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
 
+/* GSON */
+
 class AnimationDataExclusionStrategy : ExclusionStrategy {
     override fun shouldSkipClass(p0: Class<*>?): Boolean {
         return false
@@ -41,7 +43,9 @@ class AnimationDataExclusionStrategy : ExclusionStrategy {
     }
 }
 
-/* JSON Parser */
+/**
+ * JSON Parser
+ */
 val gson = GsonBuilder()
     .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
     .addSerializationExclusionStrategy(AnimationDataExclusionStrategy())
@@ -53,8 +57,6 @@ val gson = GsonBuilder()
 
 /**
  * Sets the `animation` parameter.
- *
- * @param animation The animation to run.
  */
 fun AnimationData.animation(animation: Animation): AnimationData {
     this.animation = animation
@@ -65,9 +67,6 @@ fun AnimationData.animation(animation: Animation): AnimationData {
 /**
  * Set the color using a ColorContainer, hex String, or Int or Long
  * in range(0..16777215)
- *
- * @param color
- * @param index The index of the color in the list of colors
  */
 fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
     if (colors.size <= index) for (i in colors.size..index) colors += CCBlack
@@ -84,8 +83,6 @@ fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
 
 /**
  * Append a color to the end of `colors`
- *
- * @param color The color to add
  */
 fun AnimationData.addColor(color: ColorContainerInterface): AnimationData {
     colors += color.toColorContainer()
@@ -94,8 +91,6 @@ fun AnimationData.addColor(color: ColorContainerInterface): AnimationData {
 
 /**
  * Append multiple colors to the end of `colors`
- *
- * @param colors The colors to add
  */
 fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationData {
     colors.forEach { addColor(it) }
@@ -104,8 +99,6 @@ fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationDa
 
 /**
  * Append a color to the end of `colors`
- *
- * @param color A `Long` representing the color to add
  */
 fun AnimationData.addColor(color: Long): AnimationData {
     colors += ColorContainer(color)
@@ -114,8 +107,6 @@ fun AnimationData.addColor(color: Long): AnimationData {
 
 /**
  * Append multiple colors to the end of `colors`
- *
- * @param colors `Long`s representing the colors to add
  */
 fun AnimationData.addColors(vararg colors: Long): AnimationData {
     colors.forEach { addColor(it) }
@@ -124,8 +115,6 @@ fun AnimationData.addColors(vararg colors: Long): AnimationData {
 
 /**
  * Append a color to the end of `colors`
- *
- * @param color An `Int` representing the color to add
  */
 fun AnimationData.addColor(color: Int): AnimationData {
     colors += ColorContainer(color.toLong())
@@ -134,8 +123,6 @@ fun AnimationData.addColor(color: Int): AnimationData {
 
 /**
  * Append multiple colors to the end of `colors`
- *
- * @param colors `Int`s representing the colors to add
  */
 fun AnimationData.addColors(vararg colors: Int): AnimationData {
     colors.forEach { addColor(it) }
@@ -145,7 +132,7 @@ fun AnimationData.addColors(vararg colors: Int): AnimationData {
 /**
  * Append a color to the end of `colors`
  *
- * @param color A hexadecimal `String` representing the color to add
+ * @param color A hexadecimal `String` representing the color
  */
 fun AnimationData.addColor(color: String): AnimationData {
     colors += ColorContainer(parseHex(color))
@@ -155,7 +142,7 @@ fun AnimationData.addColor(color: String): AnimationData {
 /**
  * Append multiple colors to the end of `colors`
  *
- * @param colors Hexadecimal `String`s representing the colors to add
+ * @param colors Hexadecimal `String`s representing the colors
  */
 fun AnimationData.addColors(vararg colors: String): AnimationData {
     colors.forEach { addColor(it) }
@@ -165,9 +152,6 @@ fun AnimationData.addColors(vararg colors: String): AnimationData {
 
 /**
  * Append multiple colors to the end of `colors`
- *
- * @param colors A list of `ColorContainer`s, `Long`s, `Int`s and/or
- * hexadecimal `String`s representing the colors to add
  */
 fun AnimationData.addColors(colors: List<*>): AnimationData {
     require(colors.isNotEmpty())
@@ -214,8 +198,6 @@ fun AnimationData.color4(color: Any) = color(color, 4)
 
 /**
  * Set the `continuous` parameter.
- *
- * @param continuous A `Boolean`
  */
 fun AnimationData.continuous(continuous: Boolean): AnimationData {
     this.continuous = continuous
@@ -235,8 +217,7 @@ fun AnimationData.center(pixel: Int): AnimationData {
 /**
  * Set the `delay` parameter.
  *
- * @param delay An `Int` representing the delay time in milliseconds the
- * animation will use
+ * @param delay An `Int` representing the delay time in milliseconds
  */
 fun AnimationData.delay(delay: Int): AnimationData {
     this.delay = delay.toLong()
@@ -246,8 +227,7 @@ fun AnimationData.delay(delay: Int): AnimationData {
 /**
  * Set the `delay` parameter.
  *
- * @param delay A `Long` representing the delay time in milliseconds the
- * animation will use
+ * @param delay A `Long` representing the delay time in milliseconds
  */
 fun AnimationData.delay(delay: Long): AnimationData {
     this.delay = delay
@@ -357,8 +337,18 @@ fun AnimationData.startPixel(startPixel: Int): AnimationData {
     return this
 }
 
-fun Animation.isNonRepetitive() =
+
+/* Non-repetitive/continuous check */
+
+/**
+ * Checks to see if a @NonRepetitive annotation is present in the `Animation` enum
+ */
+fun Animation.isNonRepetitive(): Boolean =
     this::class.java.fields[this.ordinal].annotations.find { it is NonRepetitive } is NonRepetitive
 
+/**
+ * Returns `continuous`, unless if it is null, in which case it checks if the
+ * animation is non-repetitive by default
+ */
 fun AnimationData.isContinuous(): Boolean = continuous
     ?: !animation.isNonRepetitive()

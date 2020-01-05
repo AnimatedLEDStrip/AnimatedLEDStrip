@@ -23,8 +23,8 @@
 package animatedledstrip.animationutils
 
 /**
- * Helper data class for specifying what parameters are required, optional and
- * not used for an animation along with default values for `delay` and `spacing`,
+ * Specifies what parameters are required, optional and not used for an
+ * animation along with default values for `delay` and `spacing`,
  * when applicable.
  *
  * @property animation The value from the Animation enum that this info corresponds to
@@ -34,12 +34,12 @@ package animatedledstrip.animationutils
  * @property numOptColors The number of additional colors beyond the required number
  * supported by the animation
  * @property delay Delay in animation
- * @property delayDefault Default if delay is missing
+ * @property delayDefault Default if delay is unset
  * @property direction Direction of animation
- * @property repetitive Whether the animation is a repetitive animation
  * @property spacing Spacing for animation
- * @property spacingDefault Default if spacing is missing
+ * @property spacingDefault Default if spacing is unset
  * @property numColors The total number of colors in the animation
+ * @property repetitive Whether the animation is a repetitive animation
  */
 data class AnimationInfo(
     val animation: Animation,

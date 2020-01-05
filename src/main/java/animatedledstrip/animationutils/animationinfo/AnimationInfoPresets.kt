@@ -72,6 +72,11 @@ val BounceToColor = AnimationInfo(
 )
 
 
+/**
+ * Info about the Cat Toy animation.
+ *
+ * @see AnimatedLEDStrip.catToy
+ */
 val CatToy = AnimationInfo(
     animation = Animation.CATTOY,
     name = "Cat Toy",
@@ -79,8 +84,12 @@ val CatToy = AnimationInfo(
     numReqColors = 1,
     delay = ReqLevel.OPTIONAL,
     delayDefault = 5
-    )
+)
 
+
+/**
+ * Info about the Color animation.
+ */
 val Color = AnimationInfo(
     animation = Animation.COLOR,
     name = "Color",
@@ -143,7 +152,7 @@ val MultiPixelRunToColor = AnimationInfo(
 /**
  * Info about the Pixel Marathon animation.
  *
- *
+ * @see AnimatedLEDStrip.pixelMarathon
  */
 val PixelMarathon = AnimationInfo(
     animation = Animation.PIXELMARATHON,
@@ -298,7 +307,7 @@ val Stack = AnimationInfo(
 /**
  * Info about the Stack Overflow animation.
  *
- *
+ * @see AnimatedLEDStrip.stackOverflow
  */
 val StackOverflow = AnimationInfo(
     animation = Animation.STACKOVERFLOW,
@@ -326,6 +335,9 @@ val Wipe = AnimationInfo(
 )
 
 
+/**
+ * A list of all `AnimationInfo` presets
+ */
 val animationInfoList = listOf(
     Alternate,
     Bounce,
@@ -348,29 +360,3 @@ val animationInfoList = listOf(
     StackOverflow,
     Wipe
 )
-
-///**
-// * Map of animations to their `AnimationInfo` instances.
-// */
-//@Suppress("EXPERIMENTAL_API_USAGE")
-//val animationInfoMap = mapOf(
-//    Animation.ALTERNATE to Alternate,
-//    Animation.BOUNCE to Bounce,
-//    Animation.BOUNCETOCOLOR to BounceToColor,
-//    Animation.CATTOY to CatToy,
-//    Animation.METEOR to Meteor,
-//    Animation.MULTIPIXELRUN to MultiPixelRun,
-//    Animation.MULTIPIXELRUNTOCOLOR to MultiPixelRunToColor,
-//    Animation.PIXELMARATHON to PixelMarathon,
-//    Animation.PIXELRUN to PixelRun,
-//    Animation.RIPPLE to Ripple,
-//    Animation.SMOOTHCHASE to SmoothChase,
-//    Animation.SMOOTHFADE to SmoothFade,
-//    Animation.SPARKLE to Sparkle,
-//    Animation.SPARKLEFADE to SparkleFade,
-//    Animation.SPARKLETOCOLOR to SparkleToColor,
-//    Animation.SPLAT to Splat,
-//    Animation.STACK to Stack,
-//    Animation.STACKOVERFLOW to StackOverflow,
-//    Animation.WIPE to Wipe
-//)

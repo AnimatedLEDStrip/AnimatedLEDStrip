@@ -25,9 +25,8 @@ package animatedledstrip.animationutils
 /**
  * An experimental animation is annotated with this tag.
  *
- * ExperimentalAnimation animations may change or be renamed or be removed
+ * ExperimentalAnimation animations may change, be renamed or be removed
  * entirely.
- *
  */
 @Suppress("unused")
 @MustBeDocumented

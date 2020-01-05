@@ -11,6 +11,7 @@ The libraries are designed so you have multiple options for how you integrate An
 - If you want to have a solution that works out of the box with minimal effort, then you can install the [AnimatedLEDStripPiServerExample](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip#raspberry-pi-server) on a Raspberry Pi and use one of the client examples to control it
 - If you want to make your program into a client, you can import the [AnimatedLEDStripClient](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/blob/master/README.md#client) library.
 Examples of this include the [Android app](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip#android-client) and the [Raspberry Pi Touchscreen Client](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip#raspberry-pi-touchscreen-client).
+Multiple languages are supported, see the library for details.
 - If you want to control the strip directly from a Kotlin/Java program, you can import the device library for your device
   - If your device isn't supported, you can [create a new device library](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer/wiki)
 
@@ -22,13 +23,12 @@ Contains all the animations and generic structure for communicating with LED str
 #### [Server](https://github.com/AnimatedLEDStrip/AnimatedLEDStripServer)
 A library for running a server that runs animations on a LED strip.
 The server communicates with clients to start and end animations.
-Also contains a command line interface that can be used locally to monitor and partially control the server.
+Also contains a command line interface that can be used to monitor and partially control the server.
 To create an executable server, this library is combined with a device library and a short main method (see the [Raspberry Pi Server](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip#raspberry-pi-server) for an example).
 
 #### [Client](https://github.com/AnimatedLEDStrip/AnimatedLEDStripClient) 
-A library for communicating with a server by sending `AnimationData` instances over socket connections.
-Can be used by any Kotlin or Java program.
-In the future we hope to support clients in other languages.
+A library for communicating with a server by sending JSON over socket connections.
+See library for a list of supported languages.
 
 ### Device Libraries
 Each device that can run LEDs has its own device library.
@@ -61,7 +61,7 @@ Use the following dependency to use this library in your project
 > <dependency>
 >   <groupId>io.github.animatedledstrip</groupId>
 >   <artifactId>animatedledstrip-core</artifactId>
->   <version>0.4</version>
+>   <version>0.5</version>
 > </dependency>
 > ```
 
@@ -84,7 +84,7 @@ Development versions of the AnimatedLEDStrip library are available from the Sona
 >   <dependency>
 >     <groupId>io.github.animatedledstrip</groupId>
 >     <artifactId>animatedledstrip-core</artifactId>
->     <version>0.5-SNAPSHOT</version>
+>     <version>0.6-SNAPSHOT</version>
 >   </dependency>
 > </dependencies>
 

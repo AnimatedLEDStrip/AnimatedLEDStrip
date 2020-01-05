@@ -24,6 +24,8 @@ package animatedledstrip.colors
 
 import animatedledstrip.utils.grayscale
 
+/* Grayscale */
+
 /**
  * Replaces all colors in [ColorContainer.colors] with a grayscaled version of themselves.
  *
@@ -40,7 +42,6 @@ fun ColorContainer.grayscale(): ColorContainer {
  * Replaces the colors at the specified indices with a grayscaled version
  * of themselves.
  *
- * @param indices The indices to grayscale
  * @return This [ColorContainer] instance
  */
 fun ColorContainer.grayscale(vararg indices: Int): ColorContainer {
@@ -53,7 +54,6 @@ fun ColorContainer.grayscale(vararg indices: Int): ColorContainer {
  * Replaces the colors at the indices in the specified ranges with a
  * grayscaled version of themselves.
  *
- * @param indices The ranges of indices to grayscale
  * @return This [ColorContainer] instance
  */
 fun ColorContainer.grayscale(vararg indices: IntRange): ColorContainer {
@@ -67,7 +67,7 @@ fun ColorContainer.grayscale(vararg indices: IntRange): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * but grayscaled.
  *
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.grayscaled(): ColorContainer {
     val temp = ColorContainer()
@@ -80,8 +80,7 @@ fun ColorContainer.grayscaled(): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * grayscaled, but only including the indices specified.
  *
- * @param indices The indices to include in the new [ColorContainer]
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.grayscaled(vararg indices: Int): ColorContainer {
     val temp = ColorContainer()
@@ -94,8 +93,7 @@ fun ColorContainer.grayscaled(vararg indices: Int): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * grayscaled, but only including the ranges of indices specified.
  *
- * @param indices The ranges of indices to include in the new [ColorContainer]
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.grayscaled(vararg indices: IntRange): ColorContainer {
     val temp = ColorContainer()
@@ -104,6 +102,9 @@ fun ColorContainer.grayscaled(vararg indices: IntRange): ColorContainer {
             if (colors.indices.contains(i)) temp += colors[i].grayscale()
     return temp
 }
+
+
+/* Invert */
 
 /**
  * Replaces all colors in [ColorContainer.colors] with their inverse.
@@ -120,7 +121,6 @@ fun ColorContainer.invert(): ColorContainer {
 /**
  * Replaces the colors at the specified indices with their inverse.
  *
- * @param indices The indices to invert
  * @return This [ColorContainer] instance
  */
 fun ColorContainer.invert(vararg indices: Int): ColorContainer {
@@ -133,7 +133,7 @@ fun ColorContainer.invert(vararg indices: Int): ColorContainer {
  * Replaces the colors at the indices in the specified ranges with
  * their inverse
  *
- * @param indices The ranges of indices to invert
+ * @return This [ColorContainer] instance
  */
 fun ColorContainer.invert(vararg indices: IntRange): ColorContainer {
     for (range in indices)
@@ -146,7 +146,7 @@ fun ColorContainer.invert(vararg indices: IntRange): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * but inverted.
  *
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.inverse(): ColorContainer {
     val temp = ColorContainer()
@@ -159,8 +159,7 @@ fun ColorContainer.inverse(): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * inverted, but only including the indices specified.
  *
- * @param indices The indices to include in the new [ColorContainer]
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.inverse(vararg indices: Int): ColorContainer {
     val temp = ColorContainer()
@@ -173,8 +172,7 @@ fun ColorContainer.inverse(vararg indices: Int): ColorContainer {
  * Returns a new [ColorContainer] with the same colors as this instance,
  * inverted, but only including the ranges of indices specified.
  *
- * @param indices The ranges of indices to include in the new [ColorContainer]
- * @return A new [ColorContainer]
+ * @return A new [ColorContainer] instance
  */
 fun ColorContainer.inverse(vararg indices: IntRange): ColorContainer {
     val temp = ColorContainer()
@@ -185,11 +183,21 @@ fun ColorContainer.inverse(vararg indices: IntRange): ColorContainer {
 }
 
 /**
+ * Operator overload that returns a new [ColorContainer] containing the
+ * inverse of the colors in this [ColorContainer].
+ *
+ * @return A new [ColorContainer] instance
+ */
+operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()
+
+
+/* Add offset */
+
+/**
  * Create a [PreparedColorContainer] with the same colors as this
  * [PreparedColorContainer], only offset by `offset`.
  *
- * @param offset The number of pixels to offset by
- * @return A new [PreparedColorContainer]
+ * @return A new [PreparedColorContainer] instance
  */
 internal fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
     val temp = mutableListOf<Long>()
@@ -198,11 +206,3 @@ internal fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContaine
     }
     return PreparedColorContainer(temp)
 }
-
-/**
- * Operator overload that returns a new [ColorContainer] containing the
- * inverse of the colors in this [ColorContainer].
- *
- * @return A new [ColorContainer]
- */
-operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()

@@ -33,11 +33,11 @@ package animatedledstrip.animationutils
  */
 enum class Direction {
     /**
-     * Animation appears to move from the start to the end of the strip.
+     * Animation appears to move from the start to the end of the strip/section.
      */
     FORWARD,
     /**
-     * Animation appears to move from the end to the start of the strip.
+     * Animation appears to move from the end to the start of the strip/section.
      */
     BACKWARD
 }

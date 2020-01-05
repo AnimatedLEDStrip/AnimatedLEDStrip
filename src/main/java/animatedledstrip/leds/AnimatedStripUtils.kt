@@ -30,13 +30,15 @@ import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
 import java.lang.Math.random
+import kotlin.math.roundToInt
+
+/* Iterate over indices and perform operation */
 
 /**
- * Iterate over the indices from startPixel to endPixel (inclusive)
+ * Iterate over the indices from `startPixel` to `endPixel` (inclusive)
  *
- * @param animation The animation data to use to determine startPixel
- * and endPixel
- * @param operation The operation to perform
+ * @param animation The `AnimationData` instance to use to determine `startPixel`
+ * and `endPixel`
  */
 inline fun iterateOverPixels(
     animation: AnimationData,
@@ -46,11 +48,10 @@ inline fun iterateOverPixels(
 }
 
 /**
- * Iterate over the indices from endPixel down to startPixel (inclusive)
+ * Iterate over the indices from `endPixel` down to `startPixel` (inclusive)
  *
- * @param animation The animation data to use to determine startPixel
- * and endPixel
- * @param operation The operation to perform
+ * @param animation The `AnimationData` instance to use to determine `startPixel`
+ * and `endPixel`
  */
 
 inline fun iterateOverPixelsReverse(
@@ -62,9 +63,6 @@ inline fun iterateOverPixelsReverse(
 
 /**
  * Iterate over a range of indices
- *
- * @param indices The indices to iterate over
- * @param operation The operation to perform
  */
 inline fun iterateOver(
     indices: IntProgression,
@@ -75,9 +73,6 @@ inline fun iterateOver(
 
 /**
  * Iterate over indices given in a list
- *
- * @param indices The indices to iterate over
- * @param operation The operation to perform
  */
 inline fun iterateOver(
     indices: List<Int>,
@@ -86,9 +81,11 @@ inline fun iterateOver(
     for (q in indices) operation.invoke(q)
 }
 
+
+/* Set and revert pixel */
+
 /**
- * Helper extension method that sets a pixel, waits a specified time in
- * milliseconds, then reverts the pixel.
+ * Set a pixel, wait the specified time in milliseconds, then revert the pixel
  */
 fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
@@ -98,11 +95,13 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
     }
 }
 
+
+/* Run parallel animations */
+
 /**
  * Start multiple animations in parallel and wait for all to complete
  * before returning
  *
- * @param animations The animations to run
  * @param pool The pool of threads to start the animations in
  */
 fun AnimatedLEDStrip.runParallelAndJoin(
@@ -120,11 +119,32 @@ fun AnimatedLEDStrip.runParallelAndJoin(
     }
 }
 
-fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).toInt()
 
+/* Random pixel index generators */
+
+/**
+ * Return a random index between `start` and `end` (inclusive)
+ */
+fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).roundToInt()
+
+/**
+ * Return a random index between `startPixel` and `endPixel` (inclusive)
+ *
+ * @param animation The `AnimationData` instance to use to determine `startPixel`
+ * and `endPixel`
+ */
 fun randomPixelIn(animation: AnimationData): Int =
-    ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).toInt()
+    ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).roundToInt()
 
+
+/* AnimationData preparation */
+
+/**
+ * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip`.
+ *
+ * Sets defaults for unset properties (`endPixel`, `center` and `distance`)
+ * and populates `pCols`.
+ */
 fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
     endPixel = when (endPixel) {
         -1 -> ledStrip.numLEDs - 1
@@ -165,5 +185,15 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
     return this
 }
 
+
+/* RunningAnimation extensions */
+
+/**
+ * Join the `RunningAnimation`'s job
+ */
 suspend fun AnimatedLEDStrip.RunningAnimation.join() = job.join()
+
+/**
+ * End the animation
+ */
 fun AnimatedLEDStrip.RunningAnimation.endAnimation() = cancel("End of Animation")

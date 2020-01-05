@@ -25,22 +25,22 @@ package animatedledstrip.colors
 import java.io.Serializable
 
 /**
- * An interface connecting ColorContainer and PreparedColorContainer.
+ * An interface connecting [ColorContainer] and [PreparedColorContainer]
  */
 interface ColorContainerInterface : Serializable {
 
     /**
-     * The first color in `colors`.
+     * The first color in `colors`
      */
     val color: Long
 
     /**
-     * Prepare the ColorContainer or return this PreparedColorContainer.
+     * Prepare the [ColorContainer] or return this [PreparedColorContainer].
      */
     fun prepare(numLEDs: Int, leadingZeros: Int = 0): PreparedColorContainer
 
     /**
-     * Create a ColorContainer or return this ColorContainer.
+     * Create a [ColorContainer] or return this [ColorContainer].
      */
     fun toColorContainer(): ColorContainer
 }
