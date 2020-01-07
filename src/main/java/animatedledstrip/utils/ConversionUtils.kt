@@ -88,6 +88,8 @@ fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
 /**
  * Create an `AnimationData` instance from a JSON string created by the
  * creation function above
+ *
+ * @throws JsonSyntaxException
  */
 fun String?.jsonToAnimationData(): AnimationData {
     checkNotNull(this)
@@ -105,6 +107,8 @@ fun String?.jsonToAnimationData(): AnimationData {
 /**
  * Create a `StripInfo` instance from a JSON string created by the
  * creation function above
+ *
+ * @throws JsonSyntaxException
  */
 fun String?.jsonToStripInfo(): StripInfo {
     checkNotNull(this)

@@ -627,7 +627,7 @@ abstract class AnimatedLEDStrip(
      * Runs a Ripple animation.
      *
      * Starts two Meteor animations running in opposite directions
-     * from `center`, stopping after travelling `distance` or at
+     * from `center`, stopping after traveling `distance` or at
      * the end of the strip/section, whichever comes first. Does not wait
      * for the Meteor animations to be complete before returning,
      * giving a ripple-like appearance when run continuously.
@@ -746,8 +746,9 @@ abstract class AnimatedLEDStrip(
      * Runs a Sparkle To Color animation.
      *
      * Very similar to the Sparkle animation, but the LEDs are not reverted to their
-     * original color after the sparkle. A separate thread is created for each
-     * pixel. Each thread waits up to 5 seconds before sparkling its pixel.
+     * prolonged color after the sparkle. (Their prolonged color is changed as well).
+     * A separate thread is created for each pixel. Each thread waits up to 5 seconds
+     * before sparkling its pixel.
      */
     @NonRepetitive
     private val sparkleToColor: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
@@ -770,7 +771,7 @@ abstract class AnimatedLEDStrip(
      *
      * Similar to a Ripple but the pixels don't fade back.
      * Runs two Wipe animations in opposite directions starting
-     * from `center`, stopping after travelling `distance` or at
+     * from `center`, stopping after traveling `distance` or at
      * the end of the strip/section, whichever comes first.
      */
     @NonRepetitive
@@ -853,7 +854,7 @@ abstract class AnimatedLEDStrip(
      * Runs a Wipe animation.
      *
      * Similar to a Pixel Run animation, but the pixels do not revert to their
-     * original color.
+     * prolonged color.
      */
     @NonRepetitive
     private val wipe: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
