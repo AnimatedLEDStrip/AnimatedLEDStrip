@@ -69,13 +69,16 @@ fun AnimationData.animation(animation: Animation): AnimationData {
  * in range(0..16777215)
  */
 fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
-    if (colors.size <= index) for (i in colors.size..index) colors += CCBlack
+    if (colors.size <= index)
+        for (i in colors.size..index)
+            colors += CCBlack
 
     when (color) {
         is ColorContainerInterface -> colors[index] = color.toColorContainer()
         is Long -> colors[index] = ColorContainer(color)
         is Int -> colors[index] = ColorContainer(color.toLong())
         is String -> colors[index] = ColorContainer(parseHex(color))
+        else -> throw IllegalArgumentException("Invalid data type: ${color::class}")
     }
 
     return this
@@ -155,13 +158,14 @@ fun AnimationData.addColors(vararg colors: String): AnimationData {
  */
 fun AnimationData.addColors(colors: List<*>): AnimationData {
     require(colors.isNotEmpty())
-    require(colors.all { it is ColorContainerInterface || it is Long || it is Int || it is String })
     colors.forEach {
         when (it) {
             is ColorContainerInterface -> addColor(it)
             is Long -> addColor(it)
             is Int -> addColor(it)
             is String -> addColor(it)
+            null -> throw IllegalArgumentException("Null color")
+            else -> throw IllegalArgumentException("Invalid data type: ${it::class}")
         }
     }
     return this
