@@ -191,7 +191,8 @@ abstract class AnimatedLEDStrip(
     internal fun run(
         animation: AnimationData,
         threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
-        scope: CoroutineScope = GlobalScope
+        scope: CoroutineScope = GlobalScope,
+        subAnimation: Boolean = false
     ): Job? {
         animation.prepare(this)
         Logger.trace("Starting $animation")
@@ -231,14 +232,14 @@ abstract class AnimatedLEDStrip(
         } ?: return null
 
         return scope.launch(threadPool) {
-            startAnimationCallback?.invoke(animation)
+            if (!subAnimation) startAnimationCallback?.invoke(animation)
 
             val isContinuous = animation.continuous ?: animation.isContinuous()
             do {
                 animationFunction.invoke(animation, this)
             } while (isActive && isContinuous)
 
-            endAnimationCallback?.invoke(animation)
+            if (!subAnimation) endAnimationCallback?.invoke(animation)
             runningAnimations.remove(animation.id)
         }
     }
@@ -263,7 +264,8 @@ abstract class AnimatedLEDStrip(
         return run(
             animation.copy(continuous = continuous),
             threadPool = pool,
-            scope = scope
+            scope = scope,
+            subAnimation = true
         )
     }
 
@@ -274,7 +276,12 @@ abstract class AnimatedLEDStrip(
      * (even if the AnimationData instance has `continuous` as true).
      */
     fun runSequential(animation: AnimationData, continuous: Boolean = false) = runBlocking {
-        val job = run(animation.copy(continuous = continuous), threadPool = parallelAnimationThreadPool, scope = this)
+        val job = run(
+            animation.copy(continuous = continuous),
+            threadPool = parallelAnimationThreadPool,
+            scope = this,
+            subAnimation = true
+        )
         job?.join()
         Unit
     }
