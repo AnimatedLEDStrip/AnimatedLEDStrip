@@ -98,7 +98,7 @@ fun String?.jsonToAnimationData(): AnimationData {
         )
     } catch (e: JsonSyntaxException) {
         Logger.warn("Malformed JSON: $this")
-        throw e
+        throw e                                         // Re-throw exception so it can be handled by calling code
     }
 }
 
@@ -115,7 +115,7 @@ fun String?.jsonToStripInfo(): StripInfo {
         )
     } catch (e: JsonSyntaxException) {
         Logger.warn("Malformed JSON: $this")
-        throw e
+        throw e                                         // Re-throw exception so it can be handled by calling code
     }
 }
 

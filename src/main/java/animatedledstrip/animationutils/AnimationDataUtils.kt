@@ -174,27 +174,27 @@ fun AnimationData.addColors(colors: List<*>): AnimationData {
 /**
  * Set `colors[0]`
  */
-fun AnimationData.color0(color: Any) = color(color, 0)
+fun AnimationData.color0(color: Any): AnimationData = color(color, 0)
 
 /**
  * Set `colors[1]`
  */
-fun AnimationData.color1(color: Any) = color(color, 1)
+fun AnimationData.color1(color: Any): AnimationData = color(color, 1)
 
 /**
  * Set `colors[2]`
  */
-fun AnimationData.color2(color: Any) = color(color, 2)
+fun AnimationData.color2(color: Any): AnimationData = color(color, 2)
 
 /**
  * Set `colors[3]`
  */
-fun AnimationData.color3(color: Any) = color(color, 3)
+fun AnimationData.color3(color: Any): AnimationData = color(color, 3)
 
 /**
  * Set `colors[4]`
  */
-fun AnimationData.color4(color: Any) = color(color, 4)
+fun AnimationData.color4(color: Any): AnimationData = color(color, 4)
 
 /**
  * Set the `continuous` parameter.

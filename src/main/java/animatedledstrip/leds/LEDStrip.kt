@@ -477,7 +477,7 @@ abstract class LEDStrip(
          * @param endPixel Last pixel in the section
          * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
          */
-        fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip) =
+        fun new(startPixel: Int, endPixel: Int, ledStrip: AnimatedLEDStrip): LEDStripSection =
             LEDStripSection(startPixel, endPixel, ledStrip)
 
         /**
@@ -486,7 +486,7 @@ abstract class LEDStrip(
          * @param pixels An IntRange denoting the pixels in the section
          * @param ledStrip [AnimatedLEDStrip] instance to bind the section to
          */
-        fun new(pixels: IntRange, ledStrip: AnimatedLEDStrip) =
+        fun new(pixels: IntRange, ledStrip: AnimatedLEDStrip): LEDStripSection =
             LEDStripSection(pixels, ledStrip)
     }
 }
