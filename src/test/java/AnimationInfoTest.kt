@@ -45,9 +45,11 @@ class AnimationInfoTest {
         assertTrue { ai.numReqColors == 0 }
         assertTrue { ai.numOptColors == 0 }
         assertTrue { ai.numColors == 0 }
+        assertTrue { ai.center == ReqLevel.NOTUSED }
         assertTrue { ai.delay == ReqLevel.NOTUSED }
         assertTrue { ai.delayDefault == 0L }
         assertTrue { ai.direction == ReqLevel.NOTUSED }
+        assertTrue { ai.distance == ReqLevel.NOTUSED }
         assertTrue { ai.repetitive == false }
         assertTrue { ai.spacing == ReqLevel.NOTUSED }
         assertTrue { ai.spacingDefault == 0 }
