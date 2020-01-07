@@ -40,7 +40,7 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
     /**
      * Get the color in [colors] at the specified index.
      */
-    operator fun get(index: Int) = if (colors.indices.contains(index)) colors[index] else 0
+    operator fun get(index: Int): Long = if (colors.indices.contains(index)) colors[index] else 0
 
     /**
      * Override for `color` that only returns 0

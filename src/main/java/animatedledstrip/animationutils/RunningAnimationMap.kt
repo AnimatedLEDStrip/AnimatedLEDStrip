@@ -42,7 +42,7 @@ class RunningAnimationMap {
     /**
      * Operator alias for getting a map entry
      */
-    internal operator fun get(key: String) = map[key]
+    internal operator fun get(key: String): AnimatedLEDStrip.RunningAnimation? = map[key]
 
     /**
      * Operator alias for setting a map entry
@@ -52,7 +52,7 @@ class RunningAnimationMap {
     /**
      * Remove a map entry
      */
-    internal fun remove(key: String) = map.remove(key)
+    internal fun remove(key: String): AnimatedLEDStrip.RunningAnimation? = map.remove(key)
 
 
     /**

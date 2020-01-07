@@ -55,6 +55,6 @@ data class AnimationInfo(
     val spacing: ReqLevel = ReqLevel.NOTUSED,
     val spacingDefault: Int = 0
 ) {
-    val numColors = numReqColors + numOptColors
+    val numColors: Int = numReqColors + numOptColors
     val repetitive: Boolean = !animation.isNonRepetitive()
 }
