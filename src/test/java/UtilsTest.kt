@@ -32,6 +32,7 @@ import animatedledstrip.leds.iterateOver
 import animatedledstrip.leds.iterateOverPixels
 import animatedledstrip.leds.iterateOverPixelsReverse
 import animatedledstrip.utils.*
+import com.google.gson.JsonSyntaxException
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -103,6 +104,11 @@ class UtilsTest {
             val nullBytes: String? = null
             nullBytes.jsonToAnimationData()
         }
+
+        assertFailsWith<JsonSyntaxException> {
+            val incompleteJson = "DATA:{test:5"
+            incompleteJson.jsonToAnimationData()
+        }
     }
 
     @Test
@@ -124,6 +130,11 @@ class UtilsTest {
         assertFailsWith<IllegalStateException> {
             val nullBytes: String? = null
             nullBytes.jsonToStripInfo()
+        }
+
+        assertFailsWith<JsonSyntaxException> {
+            val incompleteJson = "INFO:{test:5"
+            incompleteJson.jsonToStripInfo()
         }
     }
 
