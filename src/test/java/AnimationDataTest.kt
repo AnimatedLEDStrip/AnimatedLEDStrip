@@ -69,6 +69,8 @@ class AnimationDataTest {
         assertTrue { testAnimation.colors[3] == ColorContainer(0xFF) }
         assertTrue { testAnimation.colors[2] == ColorContainer(0x0) }
 
+        assertFailsWith<IllegalArgumentException> { testAnimation.color(0.0) }
+
         testAnimation.color0(0xFFFF)
         assertTrue { testAnimation.colors[0] == ColorContainer(0xFFFF) }
 
@@ -110,6 +112,7 @@ class AnimationDataTest {
         assertTrue { testAnimation.colors[17] == ColorContainer(0x8888) }
 
         assertFailsWith<IllegalArgumentException> { testAnimation.addColors(listOf<Int>()) }
+        assertFailsWith<IllegalArgumentException> { testAnimation.addColors(listOf<Int?>(null)) }
         assertFailsWith<IllegalArgumentException> { testAnimation.addColors(listOf(0.0)) }
         assertFailsWith<NumberFormatException> { testAnimation.addColors(listOf("0XG")) }
 
