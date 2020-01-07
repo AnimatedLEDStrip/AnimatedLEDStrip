@@ -103,6 +103,7 @@ class ColorContainerTest {
         val testPCC = testCC.prepare(50)
         assertTrue { testPCC[0] == 0xFF7B50L }
         assertTrue { testPCC[50] == 0L }
+        assertTrue { testPCC.color == 0L }
     }
 
     @Test
