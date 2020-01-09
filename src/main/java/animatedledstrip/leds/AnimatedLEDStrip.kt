@@ -23,6 +23,7 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
+import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
@@ -469,32 +470,46 @@ abstract class AnimatedLEDStrip(
         var oldPixel = 0
         for (newPixel in pixels) {
             runSequential(
-                    animation.copy(
-                            animation = Animation.PIXELRUN,
-                            endPixel = max(oldPixel, newPixel),
-                            startPixel = min(oldPixel, newPixel),
-                            direction = if (oldPixel > newPixel) {Direction.BACKWARD}
-                            else {Direction.FORWARD}
-                    )
+                animation.copy(
+                    animation = Animation.PIXELRUN,
+                    endPixel = max(oldPixel, newPixel),
+                    startPixel = min(oldPixel, newPixel),
+                    direction = if (oldPixel > newPixel) {
+                        Direction.BACKWARD
+                    } else {
+                        Direction.FORWARD
+                    }
+                )
             )
             setPixelColor(newPixel, animation.colors[0], prolonged = true)
             delayBlocking((random() * 2500).toLong())
-            oldPixel=newPixel
+            oldPixel = newPixel
         }
     }
 
-    private val fireworks: (AnimationData, CoroutineScope) -> Unit = {animation, _ ->
-        val centerPix = indices.shuffled()
-
-        for (newCenter in centerPix) {
-            runSequential(
-                animation.copy(
-                    animation = Animation.RIPPLE,
-                    center = newCenter
+    private val fireworks: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
+        runParallel(
+            animation.copy(
+                colors = listOf(animation.colors[0]),
+                animation = Animation.RIPPLE,
+                center = randomPixelIn(animation)
+            ),
+            scope = scope
+        )
+        for (i in 1..4) {
+            if (animation.colors[i] != CCBlack) {
+                delayBlocking(animation.delay * 20)
+                runParallel(
+                    animation.copy(
+                        colors = listOf(animation.colors[i]),
+                        animation = Animation.RIPPLE,
+                        center = randomPixelIn(animation)
+                    ),
+                    scope = scope
                 )
-            )
-            delayBlocking(animation.delay * 40)
+            }
         }
+        delayBlocking(animation.delay * 20)
     }
 
     /**
