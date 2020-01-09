@@ -494,7 +494,6 @@ abstract class AnimatedLEDStrip(
                 )
             )
             delayBlocking(animation.delay * 40)
-
         }
     }
 
@@ -752,14 +751,14 @@ abstract class AnimatedLEDStrip(
      * thread waits up to 5 seconds before sparkling its pixel.
      */
     private val sparkle: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
-        val deferred = (animation.startPixel..animation.endPixel).map { n ->
-            scope.async(sparkleThreadPool) {
+        val jobs = (animation.startPixel..animation.endPixel).map { n ->
+            scope.launch(sparkleThreadPool) {
                 delayBlocking((random() * 5000).toLong() % 4950)
                 setPixelAndRevertAfterDelay(n, animation.pCols[0], animation.delay)
             }
         }
-        runBlocking {
-            deferred.awaitAll()
+        runBlockingNonCancellable {
+            jobs.joinAll()
         }
         Unit        // Ensure sparkle returns Unit
     }
@@ -771,8 +770,8 @@ abstract class AnimatedLEDStrip(
      * Similar to Sparkle but pixels fade back to their prolonged color.
      */
     private val sparkleFade: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
-        val deferred = (animation.startPixel..animation.endPixel).map { n ->
-            scope.async(sparkleThreadPool) {
+        val jobs = (animation.startPixel..animation.endPixel).map { n ->
+            scope.launch(sparkleThreadPool) {
                 delayBlocking((random() * 5000).toLong())
                 setAndFadePixel(
                     pixel = n,
@@ -783,8 +782,8 @@ abstract class AnimatedLEDStrip(
                 delayBlocking(animation.delay)
             }
         }
-        runBlocking {
-            deferred.awaitAll()
+        runBlockingNonCancellable {
+            jobs.joinAll()
         }
         Unit        // Ensure sparkleFade returns Unit
     }
@@ -799,15 +798,15 @@ abstract class AnimatedLEDStrip(
      */
     @NonRepetitive
     private val sparkleToColor: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
-        val deferred = (animation.startPixel..animation.endPixel).map { n ->
-            scope.async(sparkleThreadPool) {
+        val jobs = (animation.startPixel..animation.endPixel).map { n ->
+            scope.launch(sparkleThreadPool) {
                 delayBlocking((random() * 5000).toLong() % 4950)
                 setPixelColor(n, animation.pCols[0], prolonged = true)
                 delayBlocking(animation.delay)
             }
         }
-        runBlocking {
-            deferred.awaitAll()
+        runBlockingNonCancellable {
+            jobs.joinAll()
         }
         Unit        // Ensure sparkleToColor returns Unit
     }

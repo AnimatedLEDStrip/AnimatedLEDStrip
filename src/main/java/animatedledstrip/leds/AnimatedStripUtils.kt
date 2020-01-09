@@ -30,6 +30,8 @@ import animatedledstrip.utils.delayBlocking
 import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
 import java.lang.Math.random
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.math.roundToInt
 
 /* Iterate over indices and perform operation */
@@ -116,6 +118,14 @@ fun AnimatedLEDStrip.runParallelAndJoin(
     }
     runBlocking {
         jobs.joinAll()
+    }
+}
+
+fun <T> runBlockingNonCancellable(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> T): T {
+    return runBlocking(context) {
+        withContext(NonCancellable) {
+            block.invoke(this@runBlocking)
+        }
     }
 }
 
