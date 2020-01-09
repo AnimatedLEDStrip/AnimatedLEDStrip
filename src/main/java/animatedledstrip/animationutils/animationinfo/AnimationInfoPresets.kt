@@ -86,6 +86,18 @@ val CatToy = AnimationInfo(
     delayDefault = 5
 )
 
+/**
+ * Info about the Cat Toy to Color animation.
+ */
+val CatToyToColor = AnimationInfo(
+        animation = Animation.CATTOYTOCOLOR,
+        name = "Cat Toy to Color",
+        abbr = "CTC",
+        numReqColors = 1,
+        delay = ReqLevel.OPTIONAL,
+        delayDefault = 5
+)
+
 
 /**
  * Info about the Color animation.
@@ -343,6 +355,7 @@ val animationInfoList = listOf(
     Bounce,
     BounceToColor,
     CatToy,
+    CatToyToColor,
     Color,
     Meteor,
     MultiPixelRun,

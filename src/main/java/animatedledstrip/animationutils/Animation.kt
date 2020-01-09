@@ -63,6 +63,11 @@ enum class Animation {
      */
     CATTOY,
     /**
+     *  See [AnimatedLEDStrip.catToyToColor]
+     */
+    @NonRepetitive
+    CATTOYTOCOLOR,
+    /**
      * See [AnimatedLEDStrip.meteor]
      */
     METEOR,
