@@ -34,7 +34,7 @@ import animatedledstrip.utils.base
  * @property originalColors The colors that were used to prepare this
  * `PreparedColorContainer`
  */
-class PreparedColorContainer(val colors: List<Long>, private val originalColors: List<Long> = colors) :
+class PreparedColorContainer(val colors: List<Long>, val originalColors: List<Long> = colors) :
     ColorContainerInterface {
 
     /**
@@ -88,4 +88,18 @@ class PreparedColorContainer(val colors: List<Long>, private val originalColors:
      * Returns a new [ColorContainer] instance with the colors in [colors].
      */
     override fun toColorContainer() = ColorContainer(colors)
+
+    override fun equals(other: Any?): Boolean {
+        return when (other) {
+            is ColorContainer -> other.colors == originalColors
+            is PreparedColorContainer -> other.originalColors == originalColors
+            else -> super.equals(other)
+        }
+    }
+
+    override fun hashCode(): Int {
+        var result = colors.hashCode()
+        result = 31 * result + originalColors.hashCode()
+        return result
+    }
 }

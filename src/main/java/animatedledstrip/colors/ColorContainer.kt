@@ -284,6 +284,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     override fun equals(other: Any?): Boolean {
         return when (other) {
             is ColorContainer -> other.colors == this.colors
+            is PreparedColorContainer -> other.originalColors == this.colors
             is Long -> singleColor && other == this.color
             else -> super.equals(other)
         }
