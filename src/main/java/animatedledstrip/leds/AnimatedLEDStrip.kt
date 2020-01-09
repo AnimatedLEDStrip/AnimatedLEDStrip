@@ -203,6 +203,7 @@ abstract class AnimatedLEDStrip(
             Animation.BOUNCE -> bounce
             Animation.BOUNCETOCOLOR -> bounceToColor
             Animation.CATTOY -> catToy
+            Animation.CATTOYTOCOLOR -> catToyToColor
             Animation.COLOR -> run {
                 setStripColor(animation.pCols[0], prolonged = true)
                 null
@@ -455,6 +456,47 @@ abstract class AnimatedLEDStrip(
         )
     }
 
+    /**
+     * Runs a Cat Toy animation that fills in.
+     *
+     * Entertain your cat or kids with a pixel running back and forth to random locations and filling the entire strip with color,
+     * waiting for up to 5 seconds between movements.
+     */
+    @NonRepetitive
+    private val catToyToColor: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
+        val pixels = indices.shuffled()
+        var oldPixel = 0
+        for (newPixel in pixels) {
+            runSequential(
+                    animation.copy(
+                            animation = Animation.PIXELRUN,
+                            endPixel = max(oldPixel, newPixel),
+                            startPixel = min(oldPixel, newPixel),
+                            direction = if (oldPixel > newPixel) {Direction.BACKWARD}
+                            else {Direction.FORWARD}
+                    )
+            )
+            setPixelColor(newPixel, animation.colors[0], prolonged = true)
+            delayBlocking((random() * 2500).toLong())
+            oldPixel=newPixel
+        }
+    }
+
+    private val fireworks: (AnimationData, CoroutineScope) -> Unit = {animation, _ ->
+        val centerPix = indices.shuffled()
+
+        for (newCenter in centerPix) {
+            runSequential(
+                animation.copy(
+                    animation = Animation.RIPPLE,
+                    distance = d,
+                    center = newCenter
+                )
+            )
+            delayBlocking(animation.delay * 40)
+
+        }
+    }
 
     /**
      * Runs a Meteor animation.
