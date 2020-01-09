@@ -52,6 +52,7 @@ data class AnimationInfo(
     val delayDefault: Long = 0,
     val direction: ReqLevel = ReqLevel.NOTUSED,
     val distance: ReqLevel = ReqLevel.NOTUSED,
+    val distanceDefault: Int = 0,
     val spacing: ReqLevel = ReqLevel.NOTUSED,
     val spacingDefault: Int = 0
 ) {
