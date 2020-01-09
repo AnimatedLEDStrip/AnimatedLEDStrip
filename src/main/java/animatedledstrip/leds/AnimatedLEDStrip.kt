@@ -134,6 +134,7 @@ abstract class AnimatedLEDStrip(
             val id = animId ?: (random() * 100000000).toInt().toString()
             animation.id = id
             val job = run(animation)
+            Logger.trace(job)
             if (job != null) {
                 runningAnimations[id] = RunningAnimation(animation, id, job)
             }
@@ -234,13 +235,16 @@ abstract class AnimatedLEDStrip(
         return scope.launch(threadPool) {
             if (!subAnimation) startAnimationCallback?.invoke(animation)
 
-            val isContinuous = animation.continuous ?: animation.isContinuous()
+            val isContinuous = animation.isContinuous()
             do {
+                Logger.trace("Run ${animation.id}: $isActive $isContinuous")
                 animationFunction.invoke(animation, this)
             } while (isActive && isContinuous)
 
-            if (!subAnimation) endAnimationCallback?.invoke(animation)
-            runningAnimations.remove(animation.id)
+            if (!subAnimation) {
+                endAnimationCallback?.invoke(animation)
+                runningAnimations.remove(animation.id)
+            }
         }
     }
 
