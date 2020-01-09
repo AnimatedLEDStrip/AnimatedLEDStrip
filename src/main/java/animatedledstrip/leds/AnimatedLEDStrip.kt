@@ -197,6 +197,7 @@ abstract class AnimatedLEDStrip(
     ): Job? {
         animation.prepare(this)
         Logger.trace("Starting $animation")
+
         val animationFunction: (AnimationData, CoroutineScope) -> Unit = when (animation.animation) {
             Animation.ALTERNATE -> alternate
             Animation.BOUNCE -> bounce
