@@ -110,6 +110,20 @@ val Color = AnimationInfo(
 )
 
 /**
+ * Info about the Fireworks animation
+ */
+val Fireworks = AnimationInfo(
+    animation = Animation.FIREWORKS,
+    name = "Fireworks",
+    abbr = "FWS",
+    numReqColors = 5,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 30,
+    distance = ReqLevel.OPTIONAL,
+    distanceDefault = 20
+)
+
+/**
  * Info about the Meteor animation.
  *
  * @see AnimatedLEDStrip.meteor
