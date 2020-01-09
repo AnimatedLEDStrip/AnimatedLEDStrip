@@ -208,6 +208,7 @@ abstract class AnimatedLEDStrip(
                 setStripColor(animation.pCols[0], prolonged = true)
                 null
             }
+            Animation.FIREWORKS -> fireworks
             Animation.METEOR -> meteor
             Animation.MULTIPIXELRUN -> multiPixelRun
             Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor
@@ -489,7 +490,6 @@ abstract class AnimatedLEDStrip(
             runSequential(
                 animation.copy(
                     animation = Animation.RIPPLE,
-                    distance = d,
                     center = newCenter
                 )
             )
