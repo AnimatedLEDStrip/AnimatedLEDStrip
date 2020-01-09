@@ -157,7 +157,7 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
     }
 
     distance = when (distance) {
-        -1 -> if (animation.infoOrNull()?.distanceDefault != 0) animation.infoOrNull()!!.distanceDefault else ledStrip.numLEDs
+        -1 -> if (animation.infoOrNull()?.distanceDefault ?: 0 != 0) animation.infoOrNull()!!.distanceDefault else ledStrip.numLEDs
         else -> distance
     }
 
