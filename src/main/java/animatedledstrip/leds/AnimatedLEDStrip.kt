@@ -23,7 +23,8 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.ccpresets.EmptyColorContainer
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
@@ -209,6 +210,7 @@ abstract class AnimatedLEDStrip(
                 setStripColor(animation.pCols[0], prolonged = true)
                 null
             }
+            Animation.FADETOCOLOR -> fadeToColor
             Animation.FIREWORKS -> fireworks
             Animation.METEOR -> meteor
             Animation.MULTIPIXELRUN -> multiPixelRun
@@ -484,6 +486,17 @@ abstract class AnimatedLEDStrip(
             setPixelColor(newPixel, animation.colors[0], prolonged = true)
             delayBlocking((random() * 2500).toLong())
             oldPixel = newPixel
+        }
+    }
+
+    @NonRepetitive
+    @ExperimentalAnimation
+    private val fadeToColor: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
+        iterateOverPixels(animation) {
+            prolongedColors[it] = (animation.colors[0] as PreparedColorContainer)[it]
+            scope.launch(parallelAnimationThreadPool) {
+                fadePixel(it)
+            }
         }
     }
 
