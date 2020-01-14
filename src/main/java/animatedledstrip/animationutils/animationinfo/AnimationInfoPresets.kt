@@ -90,12 +90,12 @@ val CatToy = AnimationInfo(
  * Info about the Cat Toy to Color animation.
  */
 val CatToyToColor = AnimationInfo(
-        animation = Animation.CATTOYTOCOLOR,
-        name = "Cat Toy to Color",
-        abbr = "CTC",
-        numReqColors = 1,
-        delay = ReqLevel.OPTIONAL,
-        delayDefault = 5
+    animation = Animation.CATTOYTOCOLOR,
+    name = "Cat Toy to Color",
+    abbr = "CTC",
+    numReqColors = 1,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 5
 )
 
 
@@ -106,6 +106,13 @@ val Color = AnimationInfo(
     animation = Animation.COLOR,
     name = "Color",
     abbr = "COL",
+    numReqColors = 1
+)
+
+val FadeToColor = AnimationInfo(
+    animation = Animation.FADETOCOLOR,
+    name = "Fade to Color",
+    abbr = "FTC",
     numReqColors = 1
 )
 
@@ -372,6 +379,7 @@ val animationInfoList = listOf(
     CatToy,
     CatToyToColor,
     Color,
+    FadeToColor,
     Fireworks,
     Meteor,
     MultiPixelRun,
