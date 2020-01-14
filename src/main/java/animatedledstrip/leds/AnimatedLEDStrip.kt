@@ -488,28 +488,18 @@ abstract class AnimatedLEDStrip(
     }
 
     private val fireworks: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
-        runParallel(
-            animation.copy(
-                colors = listOf(animation.colors[0]),
-                animation = Animation.RIPPLE,
-                center = randomPixelIn(animation)
-            ),
-            scope = scope
-        )
-        for (i in 1..4) {
-            if (animation.colors[i] != CCBlack) {
-                delayBlocking(animation.delay * 20)
-                runParallel(
-                    animation.copy(
-                        colors = listOf(animation.colors[i]),
-                        animation = Animation.RIPPLE,
-                        center = randomPixelIn(animation)
-                    ),
-                    scope = scope
-                )
-            }
+        val color = animation.colors.random()
+        if (color != EmptyColorContainer) {
+            runParallel(
+                animation.copy(
+                    colors = listOf(color),
+                    animation = Animation.RIPPLE,
+                    center = randomPixelIn(animation)
+                ),
+                scope = scope
+            )
+            delayBlocking(animation.delay * 20)
         }
-        delayBlocking(animation.delay * 20)
     }
 
     /**
