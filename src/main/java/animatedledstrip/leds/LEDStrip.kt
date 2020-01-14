@@ -22,7 +22,9 @@
 
 package animatedledstrip.leds
 
+import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.sections.LEDStripSection
 import animatedledstrip.leds.sections.SectionableLEDStrip
 import animatedledstrip.utils.blend
@@ -231,8 +233,12 @@ abstract class LEDStrip(
      * Set the pixel's color. If `prolonged` is true, set the prolonged color,
      * otherwise set the actual color.
      */
-    fun setPixelColor(pixel: Int, color: ColorContainerInterface, prolonged: Boolean = false) =
-        setPixelColor(pixel, color.prepare(numLEDs)[pixel], prolonged)
+    fun setPixelColor(pixel: Int, color: ColorContainerInterface, prolonged: Boolean = false) {
+        when (color) {
+            is ColorContainer -> setPixelColor(pixel, color.prepare(numLEDs)[pixel], prolonged)
+            is PreparedColorContainer -> setPixelColor(pixel, color[pixel], prolonged)
+        }
+    }
 
     /**
      * Set the pixel's color. If `prolonged` is true, set the prolonged color,
