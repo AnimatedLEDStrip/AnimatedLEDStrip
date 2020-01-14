@@ -775,6 +775,7 @@ object CCYellow : ColorContainer(0xFFFF00)
  */
 object CCYellowGreen : ColorContainer(0x9ACD32)
 
+object EmptyColorContainer : ColorContainer()
 
 /**
  * A list of all default ColorContainers
