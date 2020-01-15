@@ -58,15 +58,28 @@ class ColorContainerTest {
         assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B) }
     }
 
+    @Suppress("ReplaceCallWithBinaryOperator")
     @Test
     fun testEquals() {
         val testCC = ColorContainer(0xFF7B50)
 
         assertTrue { testCC == ColorContainer(0xFF7B50) }
+        assertTrue { testCC.equals(0xFF7B50L) }
         assertFalse { testCC == ColorContainer(0xFF7B51) }
         assertFalse { testCC.equals(10) }
 
         testCC.hashCode()
+
+        val testPCC = testCC.prepare(50)
+
+        assertTrue { testPCC.equals(ColorContainer(0xFF7B50)) }
+        assertTrue { testPCC == ColorContainer(0xFF7B50).prepare(50) }
+        assertTrue { testCC.equals(testPCC) }
+        assertFalse { testPCC.equals(ColorContainer(0xFF7B51)) }
+        assertFalse { testPCC == ColorContainer(0xFF7B51).prepare(50) }
+        assertFalse { ColorContainer(0xFF7B51).equals(testPCC) }
+
+        testPCC.hashCode()
     }
 
     @Test
