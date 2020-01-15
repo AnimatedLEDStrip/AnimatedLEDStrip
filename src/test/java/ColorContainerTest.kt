@@ -68,6 +68,7 @@ class ColorContainerTest {
         assertFalse { testCC == ColorContainer(0xFF7B51) }
         assertFalse { testCC.equals(10) }
         assertFalse { ColorContainer(0xFF, 0xFFFF).equals(10) }
+        assertFalse { testCC.equals("X") }
 
         testCC.hashCode()
 
