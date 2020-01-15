@@ -23,7 +23,6 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.EmptyColorContainer
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
@@ -75,10 +74,6 @@ abstract class AnimatedLEDStrip(
     @Suppress("EXPERIMENTAL_API_USAGE")
     val sparkleThreadPool =
         newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
-
-
-    // TODO: Remove when multiPixelRun is refactored
-    private val pixelSetLists = mutableMapOf<Triple<Int, Int, Int>, MutableList<MutableList<Int>>>()
 
 
     /* Track running animations */
@@ -184,8 +179,6 @@ abstract class AnimatedLEDStrip(
     /**
      * Run an animation
      *
-     * @param animation An [AnimationData] instance with details about the
-     * animation to run
      * @param threadPool Optionally specify the thread pool to run the new
      * animation in
      * @param scope Optionally specify the parent `CoroutineScope` for the
@@ -404,7 +397,7 @@ abstract class AnimatedLEDStrip(
                 direction = Direction.FORWARD
             )
         )
-        setPixelColor(pixel1, animation.colors[0])
+        setPixelColor(pixel1, animation.pCols[0])
         delayBlocking((random() * 2500).toLong())
         revertPixel(pixel1)
         runSequential(
@@ -415,7 +408,7 @@ abstract class AnimatedLEDStrip(
                 direction = Direction.BACKWARD
             )
         )
-        setPixelColor(pixel2, animation.colors[0])
+        setPixelColor(pixel2, animation.pCols[0])
         delayBlocking((random() * 2500).toLong())
         revertPixel(pixel2)
         runSequential(
@@ -426,7 +419,7 @@ abstract class AnimatedLEDStrip(
                 direction = Direction.FORWARD
             )
         )
-        setPixelColor(pixel3, animation.colors[0])
+        setPixelColor(pixel3, animation.pCols[0])
         delayBlocking((random() * 2500).toLong())
         revertPixel(pixel3)
         runSequential(
@@ -437,7 +430,7 @@ abstract class AnimatedLEDStrip(
                 direction = Direction.BACKWARD
             )
         )
-        setPixelColor(pixel4, animation.colors[0])
+        setPixelColor(pixel4, animation.pCols[0])
         delayBlocking((random() * 2500).toLong())
         revertPixel(pixel4)
         runSequential(
@@ -448,7 +441,7 @@ abstract class AnimatedLEDStrip(
                 direction = Direction.FORWARD
             )
         )
-        setPixelColor(pixel5, animation.colors[0])
+        setPixelColor(pixel5, animation.pCols[0])
         delayBlocking((random() * 2500).toLong())
         revertPixel(pixel5)
         runSequential(
@@ -469,32 +462,27 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val catToyToColor: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         val pixels = indices.shuffled()
-        var oldPixel = 0
+        var oldPixel = animation.startPixel
         for (newPixel in pixels) {
             runSequential(
                 animation.copy(
                     animation = Animation.PIXELRUN,
                     endPixel = max(oldPixel, newPixel),
                     startPixel = min(oldPixel, newPixel),
-                    direction = if (oldPixel > newPixel) {
-                        Direction.BACKWARD
-                    } else {
-                        Direction.FORWARD
-                    }
+                    direction = if (oldPixel > newPixel) Direction.BACKWARD else Direction.FORWARD
                 )
             )
-            setPixelColor(newPixel, animation.colors[0], prolonged = true)
+            setPixelColor(newPixel, animation.pCols[0], prolonged = true)
             delayBlocking((random() * 2500).toLong())
             oldPixel = newPixel
         }
     }
 
     @NonRepetitive
-    @ExperimentalAnimation
     private val fadeToColor: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
         iterateOverPixels(animation) {
-            prolongedColors[it] = (animation.colors[0] as PreparedColorContainer)[it]
-            scope.launch(parallelAnimationThreadPool) {
+            prolongedColors[it] = animation.pCols[0][it]
+            scope.launch(sparkleThreadPool) {
                 fadePixel(it)
             }
         }
@@ -548,49 +536,79 @@ abstract class AnimatedLEDStrip(
 
     /**
      * Runs a Multi-Pixel Run animation.
-     * TODO: Fix flickering
+     *
      * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
-    private val multiPixelRun: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
-        val pixelSets: MutableList<MutableList<Int>> =
-            pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] ?: run {
-                val temp = mutableListOf<MutableList<Int>>()
-                for (q in 0 until animation.spacing) {
-                    val list = mutableListOf<Int>()
-                    for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-                        if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-                        else list += i + (-(q - (animation.spacing - 1)))
-                    }
-                    temp += list
-                }
-                pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] = temp
-                temp
-            }
+    private val multiPixelRun: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
         when (animation.direction) {
-            Direction.BACKWARD -> {
-                revertPixels(pixelSets[animation.spacing - 1])
-                for (q in 0..animation.spacing - 2) {
-                    setPixelColors(pixelSets[q], animation.pCols[0])
-                    delayBlocking(animation.delay)
-                    revertPixels(pixelSets[q])
+            Direction.FORWARD -> for (s in 0 until animation.spacing) {
+                val s2 = s - 1 % animation.spacing
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + s2 <= animation.endPixel) revertPixel(i + s2)
+                    if (i + s > animation.endPixel) continue
+                    setPixelColor(
+                        i + s,
+                        animation.pCols[0],
+                        prolonged = false
+                    )
                 }
-                setPixelColors(pixelSets[animation.spacing - 1], animation.pCols[0])
                 delayBlocking(animation.delay)
             }
-            Direction.FORWARD -> {
-                revertPixels(pixelSets[0])
-                for (q in animation.spacing - 1 downTo 1) {
-                    setPixelColors(pixelSets[q], animation.pCols[0])
-                    delayBlocking(animation.delay)
-                    revertPixels(pixelSets[q])
-//                    setPixelColors(pixelSets[q % animation.spacing], animation.pCols[0])
-//                    revertPixels(pixelSets[q - 1])
-//                    delayBlocking(animation.delay)
+            Direction.BACKWARD -> for (s in animation.spacing - 1 downTo 0) {
+                val s2 = if (s + 1 == animation.spacing) 0 else s + 1
+                for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+                    if (i + s2 <= animation.endPixel) revertPixel(i + s2)
+                    if (i + s > animation.endPixel) continue
+                    setPixelColor(
+                        i + s,
+                        animation.pCols[0],
+                        prolonged = false
+                    )
                 }
-                setPixelColors(pixelSets[0], animation.pCols[0])
                 delayBlocking(animation.delay)
             }
         }
+
+
+//        val pixelSets: MutableList<MutableList<Int>> =
+//            pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] ?: run {
+//                val temp = mutableListOf<MutableList<Int>>()
+//                for (q in 0 until animation.spacing) {
+//                    val list = mutableListOf<Int>()
+//                    for (i in animation.startPixel..animation.endPixel step animation.spacing) {
+//                        if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
+//                        else list += i + (-(q - (animation.spacing - 1)))
+//                    }
+//                    temp += list
+//                }
+//                pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] = temp
+//                temp
+//            }
+//        when (animation.direction) {
+//            Direction.BACKWARD -> {
+//                revertPixels(pixelSets[animation.spacing - 1])
+//                for (q in 0..animation.spacing - 2) {
+//                    setPixelColors(pixelSets[q], animation.pCols[0])
+//                    delayBlocking(animation.delay)
+//                    revertPixels(pixelSets[q])
+//                }
+//                setPixelColors(pixelSets[animation.spacing - 1], animation.pCols[0])
+//                delayBlocking(animation.delay)
+//            }
+//            Direction.FORWARD -> {
+//                revertPixels(pixelSets[0])
+//                for (q in animation.spacing - 1 downTo 1) {
+//                    setPixelColors(pixelSets[q], animation.pCols[0])
+//                    delayBlocking(animation.delay)
+//                    revertPixels(pixelSets[q])
+////                    setPixelColors(pixelSets[q % animation.spacing], animation.pCols[0])
+////                    revertPixels(pixelSets[q - 1])
+////                    delayBlocking(animation.delay)
+//                }
+//                setPixelColors(pixelSets[0], animation.pCols[0])
+//                delayBlocking(animation.delay)
+//            }
+//        }
     }
 
 

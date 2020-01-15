@@ -132,6 +132,23 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    fun testFadeToColor() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        val anim = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.FADETOCOLOR)
+                .addColor(0xFF)
+        )
+
+        assertNotNull(anim)
+        delay(100)
+        anim.endAnimation()
+        anim.join()
+        Unit
+    }
+
+    @Test
     fun testFireworks() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
