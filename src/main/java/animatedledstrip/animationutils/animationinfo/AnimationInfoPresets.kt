@@ -113,7 +113,9 @@ val FadeToColor = AnimationInfo(
     animation = Animation.FADETOCOLOR,
     name = "Fade to Color",
     abbr = "FTC",
-    numReqColors = 1
+    numReqColors = 1,
+    delay = ReqLevel.OPTIONAL,
+    delayDefault = 30
 )
 
 /**

@@ -68,7 +68,6 @@ enum class Animation {
     @NonRepetitive
     CATTOYTOCOLOR,
     @NonRepetitive
-    @ExperimentalAnimation
     FADETOCOLOR,
     /**
      * See [AnimatedLEDStrip.fireworks]
