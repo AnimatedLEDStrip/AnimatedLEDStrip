@@ -37,6 +37,15 @@ import kotlin.test.assertTrue
 class AnimatedLEDStripTest {
 
     @Test
+    fun testAddAnimation() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.addAnimation(AnimationData().animation(Animation.ALTERNATE), "TEST")
+        assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
+        testLEDs.endAnimation("TEST")
+    }
+
+    @Test
     fun testEndAnimation() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
