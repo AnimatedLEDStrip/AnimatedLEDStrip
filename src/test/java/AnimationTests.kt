@@ -128,6 +128,23 @@ class AnimationTests{
     }
 
     @Test
+    fun testCatToyToColor() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(10)
+
+        val anim = testLEDs.addAnimation(
+            AnimationData()
+                .animation(Animation.CATTOYTOCOLOR)
+                .color(0xFF)
+        )
+
+        assertNotNull(anim)
+        delay(100)
+        anim.endAnimation()
+        anim.join()
+        checkAllPixels(testLEDs, 0xFF)
+    }
+
+    @Test
     fun testFadeToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
