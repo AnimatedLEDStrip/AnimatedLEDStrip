@@ -569,47 +569,6 @@ abstract class AnimatedLEDStrip(
                 delayBlocking(animation.delay)
             }
         }
-
-
-//        val pixelSets: MutableList<MutableList<Int>> =
-//            pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] ?: run {
-//                val temp = mutableListOf<MutableList<Int>>()
-//                for (q in 0 until animation.spacing) {
-//                    val list = mutableListOf<Int>()
-//                    for (i in animation.startPixel..animation.endPixel step animation.spacing) {
-//                        if (i + (-(q - (animation.spacing - 1))) > animation.endPixel) continue
-//                        else list += i + (-(q - (animation.spacing - 1)))
-//                    }
-//                    temp += list
-//                }
-//                pixelSetLists[Triple(animation.startPixel, animation.endPixel, animation.spacing)] = temp
-//                temp
-//            }
-//        when (animation.direction) {
-//            Direction.BACKWARD -> {
-//                revertPixels(pixelSets[animation.spacing - 1])
-//                for (q in 0..animation.spacing - 2) {
-//                    setPixelColors(pixelSets[q], animation.pCols[0])
-//                    delayBlocking(animation.delay)
-//                    revertPixels(pixelSets[q])
-//                }
-//                setPixelColors(pixelSets[animation.spacing - 1], animation.pCols[0])
-//                delayBlocking(animation.delay)
-//            }
-//            Direction.FORWARD -> {
-//                revertPixels(pixelSets[0])
-//                for (q in animation.spacing - 1 downTo 1) {
-//                    setPixelColors(pixelSets[q], animation.pCols[0])
-//                    delayBlocking(animation.delay)
-//                    revertPixels(pixelSets[q])
-////                    setPixelColors(pixelSets[q % animation.spacing], animation.pCols[0])
-////                    revertPixels(pixelSets[q - 1])
-////                    delayBlocking(animation.delay)
-//                }
-//                setPixelColors(pixelSets[0], animation.pCols[0])
-//                delayBlocking(animation.delay)
-//            }
-//        }
     }
 
 
