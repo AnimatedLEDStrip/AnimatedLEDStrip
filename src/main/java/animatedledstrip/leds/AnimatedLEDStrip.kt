@@ -546,7 +546,7 @@ abstract class AnimatedLEDStrip(
      *
      * Similar to Pixel Run but with multiple LEDs at a specified spacing.
      */
-    private val multiPixelRun: (AnimationData, CoroutineScope) -> Unit = { animation, scope ->
+    private val multiPixelRun: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         when (animation.direction) {
             Direction.FORWARD ->
                 iterateOver(0 until animation.spacing) { s ->
