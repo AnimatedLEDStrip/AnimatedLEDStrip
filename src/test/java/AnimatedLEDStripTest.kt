@@ -592,6 +592,14 @@ class AnimatedLEDStripTest {
     }
 
     @Test
+    fun testCustomAnimation() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.addAnimation(AnimationData().animation(Animation.CUSTOMANIMATION))
+        testLEDs.addAnimation(AnimationData().animation(Animation.CUSTOMREPETITIVEANIMATION))
+    }
+
+    @Test
     fun testNonAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
