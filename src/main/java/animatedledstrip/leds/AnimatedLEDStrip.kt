@@ -317,9 +317,13 @@ abstract class AnimatedLEDStrip(
      */
     private val bounce: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         iterateOver(0..((animation.endPixel - animation.startPixel) / 2)) { i ->
-            iterateOver(animation.startPixel + i..animation.endPixel - i) {
-                setPixelAndRevertAfterDelay(it, animation.pCols[0], animation.delay)
-            }
+            val baseAnimation = animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = animation.startPixel + i,
+                endPixel = animation.endPixel - i
+            )
+
+            runSequential(baseAnimation.copy(direction = Direction.FORWARD))
             setAndFadePixel(
                 pixel = animation.endPixel - i,
                 color = animation.pCols[0],
@@ -327,9 +331,8 @@ abstract class AnimatedLEDStrip(
                 delay = 50,
                 context = parallelAnimationThreadPool
             )
-            iterateOver(animation.endPixel - i downTo animation.startPixel + i) {
-                setPixelAndRevertAfterDelay(it, animation.pCols[0], animation.delay)
-            }
+
+            runSequential(baseAnimation.copy(direction = Direction.BACKWARD))
             setAndFadePixel(
                 pixel = animation.startPixel + i,
                 color = animation.pCols[0],
@@ -361,14 +364,15 @@ abstract class AnimatedLEDStrip(
     @NonRepetitive
     private val bounceToColor: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
         iterateOver(0..(animation.endPixel - animation.startPixel) / 2) { i ->
-            iterateOver(animation.startPixel + i..animation.endPixel - i) { j ->
-                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
-            }
+            val baseAnimation = animation.copy(
+                animation = Animation.PIXELRUN,
+                startPixel = animation.startPixel + i,
+                endPixel = animation.endPixel - i
+            )
+            runSequential(baseAnimation.copy(direction = Direction.FORWARD))
             setPixelColor(animation.endPixel - i, animation.pCols[0], prolonged = true)
 
-            iterateOver(animation.endPixel - i - 1 downTo i + animation.startPixel) { j ->
-                setPixelAndRevertAfterDelay(j, animation.pCols[0], animation.delay)
-            }
+            runSequential(baseAnimation.copy(direction = Direction.BACKWARD))
             setPixelColor(animation.startPixel + i, animation.pCols[0], prolonged = true)
         }
         if ((animation.endPixel - animation.startPixel) % 2 == 1) {
@@ -846,12 +850,7 @@ abstract class AnimatedLEDStrip(
      */
     @NonRepetitive
     private val stack: (AnimationData, CoroutineScope) -> Unit = { animation, _ ->
-        val baseAnimation = AnimationData()
-            .animation(Animation.PIXELRUN)
-            .color(animation.pCols[0])
-            .delay(animation.delay)
-            .startPixel(animation.startPixel)
-            .endPixel(animation.endPixel)
+        val baseAnimation = animation.copy(animation = Animation.PIXELRUN)
 
         when (animation.direction) {
             Direction.FORWARD ->
