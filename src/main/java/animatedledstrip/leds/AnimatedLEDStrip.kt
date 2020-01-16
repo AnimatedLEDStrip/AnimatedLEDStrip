@@ -156,7 +156,8 @@ abstract class AnimatedLEDStrip(
      * End animation by ID (by extracting ID from the `AnimationData` instance)
      */
     fun endAnimation(animation: AnimationData?) {
-        endAnimation(animation?.id ?: return)
+        if (animation == null) return
+        endAnimation(animation.id)
     }
 
 
