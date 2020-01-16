@@ -614,6 +614,7 @@ class AnimatedLEDStripTest {
         delay(500)
         anim1.endAnimation()
 
+
         // End with AnimationData instance
         val anim2 = testLEDs.addAnimation(
             AnimationData()
@@ -625,6 +626,10 @@ class AnimatedLEDStripTest {
         assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
         testLEDs.endAnimation(anim2.animation)
 
+        val nullAnim: AnimationData? = null
+        testLEDs.endAnimation(nullAnim)
+
+
         // End with animation ID
         val anim3 = testLEDs.addAnimation(
             AnimationData()
@@ -635,6 +640,11 @@ class AnimatedLEDStripTest {
         delay(500)
         assertTrue(testLEDs.runningAnimations.map.containsKey(anim3.id))
         testLEDs.endAnimation(anim3.id)
+
+        assertFalse(testLEDs.runningAnimations.map.containsKey("TEST"))
+        testLEDs.endAnimation("TEST")
+        assertFalse(testLEDs.runningAnimations.map.containsKey("TEST"))
+
 
         // End with addAnimation and AnimationData instance with ENDANIMATION and ID
         val anim4 = testLEDs.addAnimation(
@@ -650,6 +660,7 @@ class AnimatedLEDStripTest {
                 .animation(Animation.ENDANIMATION)
                 .id(anim4.id)
         )
+
 
         delay(1000)
 
