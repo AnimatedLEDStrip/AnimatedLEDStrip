@@ -81,6 +81,16 @@ class UtilsTest {
     }
 
     @Test
+    fun testToUTF8() {
+        assertFailsWith<IllegalStateException> {
+            val arr: ByteArray? = null
+            arr.toUTF8()
+        }
+
+        assertTrue { ByteArray(5).toUTF8().length == 5 }
+    }
+
+    @Test
     fun testAnimationDataJson() {
         val testAnimation = AnimationData().animation(Animation.STACK)
             .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)

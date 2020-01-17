@@ -107,7 +107,7 @@ class AnimationData(
      */
     fun copy(
         animation: Animation = this.animation,
-        colors: List<ColorContainerInterface> = this.colors,
+        colors: List<ColorContainerInterface> = this.colors.toList(),
         center: Int = this.center,
         continuous: Boolean? = this.continuous,
         delay: Long = this.delay,
