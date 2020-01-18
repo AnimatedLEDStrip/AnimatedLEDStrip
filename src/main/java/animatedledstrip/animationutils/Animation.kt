@@ -22,7 +22,6 @@
 
 package animatedledstrip.animationutils
 
-import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.LEDStrip
 
 /**
@@ -46,97 +45,100 @@ enum class Animation {
      */
     CUSTOMREPETITIVEANIMATION,
     /**
-     * See [AnimatedLEDStrip.alternate]
+     * See [animatedledstrip.leds.alternate]
      */
     ALTERNATE,
     /**
-     * See [AnimatedLEDStrip.bounce]
+     * See [animatedledstrip.leds.bounce]
      */
     BOUNCE,
     /**
-     * See [AnimatedLEDStrip.bounceToColor]
+     * See [animatedledstrip.leds.bounceToColor]
      */
     @NonRepetitive
     BOUNCETOCOLOR,
     /**
-     * See [AnimatedLEDStrip.catToy]
+     * See [animatedledstrip.leds.catToy]
      */
     CATTOY,
     /**
-     *  See [AnimatedLEDStrip.catToyToColor]
+     *  See [animatedledstrip.leds.catToyToColor]
      */
     @NonRepetitive
     CATTOYTOCOLOR,
+    /**
+     * See [animatedledstrip.leds.fadeToColor]
+     */
     @NonRepetitive
     FADETOCOLOR,
     /**
-     * See [AnimatedLEDStrip.fireworks]
+     * See [animatedledstrip.leds.fireworks]
      */
     FIREWORKS,
     /**
-     * See [AnimatedLEDStrip.meteor]
+     * See [animatedledstrip.leds.meteor]
      */
     METEOR,
     /**
-     * See [AnimatedLEDStrip.multiPixelRun]
+     * See [animatedledstrip.leds.multiPixelRun]
      */
     MULTIPIXELRUN,
     /**
-     * See [AnimatedLEDStrip.multiPixelRunToColor]
+     * See [animatedledstrip.leds.multiPixelRunToColor]
      */
     @NonRepetitive
     MULTIPIXELRUNTOCOLOR,
     /**
-     * See [AnimatedLEDStrip.ripple]
+     * See [animatedledstrip.leds.ripple]
      */
     @Radial
     RIPPLE,
     /**
-     * See [AnimatedLEDStrip.pixelMarathon]
+     * See [animatedledstrip.leds.pixelMarathon]
      */
     PIXELMARATHON,
     /**
-     * See [AnimatedLEDStrip.pixelRun]
+     * See [animatedledstrip.leds.pixelRun]
      */
     PIXELRUN,
     /**
-     * See [AnimatedLEDStrip.smoothChase]
+     * See [animatedledstrip.leds.smoothChase]
      */
     SMOOTHCHASE,
     /**
-     * See [AnimatedLEDStrip.smoothFade]
+     * See [animatedledstrip.leds.smoothFade]
      */
     SMOOTHFADE,
     /**
-     * See [AnimatedLEDStrip.sparkle]
+     * See [animatedledstrip.leds.sparkle]
      */
     SPARKLE,
     /**
-     * See [AnimatedLEDStrip.sparkleFade]
+     * See [animatedledstrip.leds.sparkleFade]
      */
     SPARKLEFADE,
     /**
-     * See [AnimatedLEDStrip.sparkleToColor]
+     * See [animatedledstrip.leds.sparkleToColor]
      */
     @NonRepetitive
     SPARKLETOCOLOR,
     /**
-     * See [AnimatedLEDStrip.splat]
+     * See [animatedledstrip.leds.splat]
      */
     @NonRepetitive
     @Radial
     SPLAT,
     /**
-     * See [AnimatedLEDStrip.stack]
+     * See [animatedledstrip.leds.stack]
      */
     @NonRepetitive
     STACK,
     /**
-     * See [AnimatedLEDStrip.stackOverflow]
+     * See [animatedledstrip.leds.stackOverflow]
      */
     STACKOVERFLOW,
     /**
-     * See [AnimatedLEDStrip.wipe]
+     * See [animatedledstrip.leds.wipe]
      */
     @NonRepetitive
     WIPE,
