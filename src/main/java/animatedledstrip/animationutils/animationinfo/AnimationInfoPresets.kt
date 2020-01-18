@@ -25,12 +25,11 @@ package animatedledstrip.animationutils.animationinfo
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationInfo
 import animatedledstrip.animationutils.ReqLevel
-import animatedledstrip.leds.AnimatedLEDStrip
 
 /**
  * Info about the Alternate animation.
  *
- * @see AnimatedLEDStrip.alternate
+ * @see animatedledstrip.animationutils.alternate
  */
 val Alternate = AnimationInfo(
     animation = Animation.ALTERNATE,
@@ -45,7 +44,7 @@ val Alternate = AnimationInfo(
 /**
  * Info about the Bounce animation.
  *
- * @see AnimatedLEDStrip.bounce
+ * @see animatedledstrip.animationutils.bounce
  */
 val Bounce = AnimationInfo(
     animation = Animation.BOUNCE,
@@ -60,7 +59,7 @@ val Bounce = AnimationInfo(
 /**
  * Info about the Bounce to Color animation.
  *
- * @see AnimatedLEDStrip.bounceToColor
+ * @see animatedledstrip.animationutils.bounceToColor
  */
 val BounceToColor = AnimationInfo(
     animation = Animation.BOUNCETOCOLOR,
@@ -75,7 +74,7 @@ val BounceToColor = AnimationInfo(
 /**
  * Info about the Cat Toy animation.
  *
- * @see AnimatedLEDStrip.catToy
+ * @see animatedledstrip.animationutils.catToy
  */
 val CatToy = AnimationInfo(
     animation = Animation.CATTOY,
@@ -88,6 +87,8 @@ val CatToy = AnimationInfo(
 
 /**
  * Info about the Cat Toy to Color animation.
+ *
+ * @see animatedledstrip.animationutils.catToyToColor
  */
 val CatToyToColor = AnimationInfo(
     animation = Animation.CATTOYTOCOLOR,
@@ -109,6 +110,11 @@ val Color = AnimationInfo(
     numReqColors = 1
 )
 
+/**
+ * Info about the Fade to Color animation.
+ *
+ * @see animatedledstrip.animationutils.fadeToColor
+ */
 val FadeToColor = AnimationInfo(
     animation = Animation.FADETOCOLOR,
     name = "Fade to Color",
@@ -120,6 +126,8 @@ val FadeToColor = AnimationInfo(
 
 /**
  * Info about the Fireworks animation
+ *
+ * @see animatedledstrip.animationutils.fireworks
  */
 val Fireworks = AnimationInfo(
     animation = Animation.FIREWORKS,
@@ -136,7 +144,7 @@ val Fireworks = AnimationInfo(
 /**
  * Info about the Meteor animation.
  *
- * @see AnimatedLEDStrip.meteor
+ * @see animatedledstrip.animationutils.meteor
  */
 val Meteor = AnimationInfo(
     animation = Animation.METEOR,
@@ -152,7 +160,7 @@ val Meteor = AnimationInfo(
 /**
  * Info about the Multi-Pixel Run animation.
  *
- * @see AnimatedLEDStrip.multiPixelRun
+ * @see animatedledstrip.animationutils.multiPixelRun
  */
 val MultiPixelRun = AnimationInfo(
     animation = Animation.MULTIPIXELRUN,
@@ -170,7 +178,7 @@ val MultiPixelRun = AnimationInfo(
 /**
  * Info about the Multi-Pixel Run to Color animation.
  *
- * @see AnimatedLEDStrip.multiPixelRunToColor
+ * @see animatedledstrip.animationutils.multiPixelRunToColor
  */
 val MultiPixelRunToColor = AnimationInfo(
     animation = Animation.MULTIPIXELRUNTOCOLOR,
@@ -188,7 +196,7 @@ val MultiPixelRunToColor = AnimationInfo(
 /**
  * Info about the Pixel Marathon animation.
  *
- * @see AnimatedLEDStrip.pixelMarathon
+ * @see animatedledstrip.animationutils.pixelMarathon
  */
 val PixelMarathon = AnimationInfo(
     animation = Animation.PIXELMARATHON,
@@ -203,7 +211,7 @@ val PixelMarathon = AnimationInfo(
 /**
  * Info about the Pixel Run animation.
  *
- * @see AnimatedLEDStrip.pixelRun
+ * @see animatedledstrip.animationutils.pixelRun
  */
 val PixelRun = AnimationInfo(
     animation = Animation.PIXELRUN,
@@ -219,7 +227,7 @@ val PixelRun = AnimationInfo(
 /**
  * Info about the Ripple animation.
  *
- * @see AnimatedLEDStrip.ripple
+ * @see animatedledstrip.animationutils.ripple
  */
 val Ripple = AnimationInfo(
     animation = Animation.RIPPLE,
@@ -235,7 +243,7 @@ val Ripple = AnimationInfo(
 /**
  * Info about the Smooth Chase animation.
  *
- * @see AnimatedLEDStrip.smoothChase
+ * @see animatedledstrip.animationutils.smoothChase
  */
 val SmoothChase = AnimationInfo(
     animation = Animation.SMOOTHCHASE,
@@ -251,7 +259,7 @@ val SmoothChase = AnimationInfo(
 /**
  * Info about the Smooth Fade animation.
  *
- * @see AnimatedLEDStrip.smoothFade
+ * @see animatedledstrip.animationutils.smoothFade
  */
 val SmoothFade = AnimationInfo(
     animation = Animation.SMOOTHFADE,
@@ -265,7 +273,7 @@ val SmoothFade = AnimationInfo(
 /**
  * Info about the Sparkle animation.
  *
- * @see AnimatedLEDStrip.sparkle
+ * @see animatedledstrip.animationutils.sparkle
  */
 val Sparkle = AnimationInfo(
     animation = Animation.SPARKLE,
@@ -280,7 +288,7 @@ val Sparkle = AnimationInfo(
 /**
  * Info about the Sparkle Fade animation.
  *
- * @see AnimatedLEDStrip.sparkleFade
+ * @see animatedledstrip.animationutils.sparkleFade
  */
 val SparkleFade = AnimationInfo(
     animation = Animation.SPARKLEFADE,
@@ -295,7 +303,7 @@ val SparkleFade = AnimationInfo(
 /**
  * Info about the Sparkle to Color animation.
  *
- * @see AnimatedLEDStrip.sparkleToColor
+ * @see animatedledstrip.animationutils.sparkleToColor
  */
 val SparkleToColor = AnimationInfo(
     animation = Animation.SPARKLETOCOLOR,
@@ -310,7 +318,7 @@ val SparkleToColor = AnimationInfo(
 /**
  * Info about the Splat animation.
  *
- * @see AnimatedLEDStrip.splat
+ * @see animatedledstrip.animationutils.splat
  */
 val Splat = AnimationInfo(
     animation = Animation.SPLAT,
@@ -327,7 +335,7 @@ val Splat = AnimationInfo(
 /**
  * Info about the Stack animation.
  *
- * @see AnimatedLEDStrip.stack
+ * @see animatedledstrip.animationutils.stack
  */
 val Stack = AnimationInfo(
     animation = Animation.STACK,
@@ -343,7 +351,7 @@ val Stack = AnimationInfo(
 /**
  * Info about the Stack Overflow animation.
  *
- * @see AnimatedLEDStrip.stackOverflow
+ * @see animatedledstrip.animationutils.stackOverflow
  */
 val StackOverflow = AnimationInfo(
     animation = Animation.STACKOVERFLOW,
@@ -358,7 +366,7 @@ val StackOverflow = AnimationInfo(
 /**
  * Info about the Wipe animation.
  *
- * @see AnimatedLEDStrip.wipe
+ * @see animatedledstrip.animationutils.wipe
  */
 val Wipe = AnimationInfo(
     animation = Animation.WIPE,

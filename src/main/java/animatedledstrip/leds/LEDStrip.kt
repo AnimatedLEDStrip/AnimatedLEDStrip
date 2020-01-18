@@ -432,7 +432,7 @@ abstract class LEDStrip(
             val myName = Thread.currentThread().name
             owner = myName
             var i = 0
-            while (getPixelColor(pixel, prolonged = false) != prolongedColors[pixel] && i <= 40) {
+            while (getPixelColor(pixel, prolonged = false) != prolongedColors[pixel] && i <= 400) {
                 if (owner != myName) break
                 isFading = true
                 i++
