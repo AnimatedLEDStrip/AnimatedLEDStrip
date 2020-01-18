@@ -108,9 +108,11 @@ abstract class AnimatedLEDStrip(
      * Map containing defined custom animations.
      */
     private val customAnimationMap =
-        mutableMapOf<String, (AnimationData, CoroutineScope) -> Unit>()
+        mutableMapOf<String, AnimatedLEDStrip.(AnimationData, CoroutineScope) -> Unit>()
 
-    // TODO: Add addCustomAnimation function
+    fun addCustomAnimation(id: String, animation: AnimatedLEDStrip.(AnimationData, CoroutineScope) -> Unit) {
+        customAnimationMap[id] = animation
+    }
 
 
     /* Add and remove/end animations */
