@@ -22,10 +22,7 @@
 
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.RunningAnimationMap
-import animatedledstrip.animationutils.isContinuous
+import animatedledstrip.animationutils.*
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random

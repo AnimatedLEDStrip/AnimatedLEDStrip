@@ -20,10 +20,10 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.leds
+package animatedledstrip.animationutils
 
-import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ccpresets.EmptyColorContainer
+import animatedledstrip.leds.*
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.joinAll
