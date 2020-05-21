@@ -39,7 +39,7 @@ abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
 ) : LEDStrip(stripInfo) {
 
-    val wholeStrip = Section(0, stripInfo.numLEDs - 1, stripInfo.numLEDs - 1)
+    val wholeStrip = Section(SectionInfo(0, stripInfo.numLEDs - 1, stripInfo.numLEDs))
 
     /* Load predefined animations if they haven't been already */
     init {
@@ -144,29 +144,51 @@ abstract class AnimatedLEDStrip(
     var endAnimationCallback: ((AnimationData) -> Any?)? = null
 
 
+    /* Strip Sections */
+
+    data class SectionInfo(
+        val startPixel: Int,
+        val endPixel: Int,
+        val parentSectionNumLEDs: Int
+    )
+
+    /**
+     * A map containing all the sections associated with this LED strip.
+     */
     private val stripSections =
-        mutableMapOf(Triple(0, stripInfo.numLEDs - 1, stripInfo.numLEDs - 1) to wholeStrip)
+        mutableMapOf(
+            SectionInfo(
+                0,
+                stripInfo.numLEDs - 1,
+                stripInfo.numLEDs
+            ) to wholeStrip
+        )
 
     fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
-        getSection(startPixel, endPixel, numLEDs)
+        getSection(SectionInfo(startPixel, endPixel, numLEDs))
 
     private fun getSection(
-        startPixel: Int,
-        endPixel: Int,
-        parentSectionNumLEDs: Int
+        sectionInfo: SectionInfo
     ): AnimatedLEDStrip.Section =
-        stripSections.getOrPut(Triple(startPixel, endPixel, parentSectionNumLEDs)) {
-            Section(startPixel, endPixel, parentSectionNumLEDs)
+        stripSections.getOrPut(sectionInfo) {
+            Section(sectionInfo)
         }
 
     fun clear() = wholeStrip.clear()
 
 
-    /* Strip Sections */
-
-    inner class Section(val startPixel: Int, val endPixel: Int, val parentSectionNumLEDs: Int) {
+    inner class Section(private val sectionInfo: SectionInfo) {
         val ledStrip: AnimatedLEDStrip
             get() = this@AnimatedLEDStrip
+
+        val startPixel: Int
+            get() = sectionInfo.startPixel
+
+        val endPixel: Int
+            get() = sectionInfo.endPixel
+
+        val parentSectionNumLEDs: Int
+            get() = sectionInfo.parentSectionNumLEDs
 
         val prolongedColors: MutableList<Long>
             get() = ledStrip.prolongedColors
@@ -182,7 +204,7 @@ abstract class AnimatedLEDStrip(
             get() = ledStrip.sparkleThreadPool
 
         fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
-            ledStrip.getSection(startPixel, endPixel, this.numLEDs)
+            ledStrip.getSection(SectionInfo(startPixel, endPixel, this.numLEDs))
 
         /**
          * Start a new animation
