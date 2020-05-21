@@ -287,22 +287,22 @@ abstract class LEDStrip(
     }
 
     /**
-     * Get the actual colors of all pixels as a `List<Long>`
-     */
-    val pixelTemporaryColorList: List<Long>
-        get() {
-            val temp = mutableListOf<Long>()
-            for (i in physicalIndices) temp.add(getPixelColor(i, prolonged = false))
-            return temp
-        }
-
-    /**
      * Get the prolonged colors of all pixels as a `List<Long>`
      */
     val pixelProlongedColorList: List<Long>
         get() {
             val temp = mutableListOf<Long>()
             for (i in physicalIndices) temp.add(getPixelColor(i, prolonged = true))
+            return temp
+        }
+
+    /**
+     * Get the temporary colors of all pixels as a `List<Long>`
+     */
+    val pixelTemporaryColorList: List<Long>
+        get() {
+            val temp = mutableListOf<Long>()
+            for (i in physicalIndices) temp.add(getPixelColor(i, prolonged = false))
             return temp
         }
 

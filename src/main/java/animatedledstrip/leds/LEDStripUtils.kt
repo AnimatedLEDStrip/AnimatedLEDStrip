@@ -170,12 +170,6 @@ fun AnimatedLEDStrip.Section.setProlongedStripColorWithOffset(colors: PreparedCo
 
 /* Get pixel color */
 
-///**
-// * Get the color of a pixel as a hexadecimal string.
-// */
-//fun LEDStrip.getPixelHexString(pixel: Int, prolonged: Boolean = false): String =
-//    getPixelColor(pixel, prolonged).toString(16)
-
 /**
  * Get the temporary color of a pixel or null if the index is invalid.
  */
