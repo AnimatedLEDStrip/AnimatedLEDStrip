@@ -45,11 +45,11 @@ leds.apply {
         scope,
         Pair(
             baseAnimation.copy(direction = Direction.FORWARD),
-            getSection(center, min(center + distance, numLEDs - 1), this.numLEDs)
+            getSection(center, min(center + distance, numLEDs - 1))
         ),
         Pair(
             baseAnimation.copy(direction = Direction.BACKWARD),
-            getSection(max(center - distance, 0), center, this.numLEDs)
+            getSection(max(center - distance, 0), center)
         )
     )
 }

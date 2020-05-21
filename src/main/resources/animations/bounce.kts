@@ -34,7 +34,7 @@ leds.apply {
 
         runSequential(
             animation = baseAnimation.copy(direction = Direction.FORWARD),
-            section = getSection(i, numLEDs - i - 1, this.numLEDs)
+            section = getSection(i, numLEDs - i - 1)
         )
         setAndFadePixel(
             pixel = numLEDs - i - 1,
@@ -46,7 +46,7 @@ leds.apply {
 
         runSequential(
             animation = baseAnimation.copy(direction = Direction.BACKWARD),
-            section = getSection(i, numLEDs - i - 2, this.numLEDs)
+            section = getSection(i, numLEDs - i - 2)
         )
         setAndFadePixel(
             pixel = i,

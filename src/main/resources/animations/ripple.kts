@@ -45,14 +45,14 @@ leds.apply {
         baseAnimation.copy(
             direction = Direction.FORWARD
         ),
-        section = getSection(center, min(center + distance, numLEDs - 1), this.numLEDs),
+        section = getSection(center, min(center + distance, numLEDs - 1)),
         scope = scope
     )
     runParallel(
         baseAnimation.copy(
             direction = Direction.BACKWARD
         ),
-        section = getSection(max(center - distance, 0), center, this.numLEDs),
+        section = getSection(max(center - distance, 0), center),
         scope = scope
     )
     delayBlocking(delay * 20)

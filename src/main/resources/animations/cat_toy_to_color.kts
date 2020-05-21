@@ -39,7 +39,7 @@ leds.apply {
                 animation = "Pixel Run",
                 direction = if (oldPixel > newPixel) Direction.BACKWARD else Direction.FORWARD
             ),
-            section = getSection(min(oldPixel, newPixel), max(oldPixel, newPixel), this.numLEDs)
+            section = getSection(min(oldPixel, newPixel), max(oldPixel, newPixel))
         )
         setProlongedPixelColor(newPixel, color0)
         delayBlocking((Math.random() * 2500).toLong())

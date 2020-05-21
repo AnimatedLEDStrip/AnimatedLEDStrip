@@ -35,7 +35,7 @@ leds.apply {
             iterateOverPixelsReverse {
                 runSequential(
                     animation = baseAnimation.copy(),
-                    section = getSection(0, it, this.numLEDs)
+                    section = getSection(0, it)
                 )
                 setProlongedPixelColor(it, color0)
             }
@@ -43,7 +43,7 @@ leds.apply {
             iterateOverPixels {
                 runSequential(
                     animation = baseAnimation.copy(),
-                    section = getSection(it, numLEDs - 1, this.numLEDs)
+                    section = getSection(it, numLEDs - 1)
                 )
                 setProlongedPixelColor(it, color0)
             }

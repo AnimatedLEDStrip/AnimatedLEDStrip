@@ -32,13 +32,13 @@ leds.apply {
 
         runSequential(
             animation = baseAnimation.copy(direction = Direction.FORWARD),
-            section = getSection(i, numLEDs - i - 1, this.numLEDs)
+            section = getSection(i, numLEDs - i - 1)
         )
         setProlongedPixelColor(numLEDs - i - 1, color0)
 
         runSequential(
             animation = baseAnimation.copy(direction = Direction.BACKWARD),
-            section = getSection(i, numLEDs - i - 2, this.numLEDs)
+            section = getSection(i, numLEDs - i - 2)
         )
         setProlongedPixelColor(i, color0)
     }
