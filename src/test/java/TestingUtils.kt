@@ -22,37 +22,44 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.AnimatedLEDStrip
 import kotlin.test.assertTrue
 
-fun checkAllPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
-    testLEDs.pixelColorList.forEach {
+fun checkAllPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
+//    println(testLEDs.pixelTemporaryColorList.size)
+//    println(testLEDs.indices.size)
+//    testLEDs.setProlongedPixelColor(49, 0xF)
+//    println(testLEDs.getProlongedPixelColor(49))
+    testLEDs.pixelTemporaryColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelTemporaryColorList}"
         ) { it == color }
     }
 }
 
-fun checkAllProlongedPixels(testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+fun checkAllProlongedPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
+//    println(testLEDs.pixelProlongedColorList.size)
+//    println(testLEDs.indices.size)
+//    println(testLEDs.getProlongedPixelColor(49))
     testLEDs.pixelProlongedColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelProlongedColorList}"
         ) { it == color }
     }
 }
 
-fun checkPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+fun checkPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
     leds.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelColorList}"
-        ) { testLEDs.pixelColorList[it] == color }
+            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelTemporaryColorList}"
+        ) { testLEDs.pixelTemporaryColorList[it] == color }
     }
 }
 
-fun checkProlongedPixels(leds: IntRange, testLEDs: EmulatedAnimatedLEDStrip, color: Long) {
+fun checkProlongedPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
     leds.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelColorList}"
+            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelProlongedColorList}"
         ) { testLEDs.pixelProlongedColorList[it] == color }
     }
 }

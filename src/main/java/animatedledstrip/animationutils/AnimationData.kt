@@ -25,7 +25,6 @@ package animatedledstrip.animationutils
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.utils.infoOrNull
 import java.io.Serializable
 
 /**
@@ -51,7 +50,7 @@ import java.io.Serializable
  * @property startPixel First pixel on the strip will show the animation
  */
 class AnimationData(
-    var animation: Animation = Animation.COLOR,
+    var animation: String = "Color",
     colors: List<ColorContainerInterface> = listOf(),
     var center: Int = -1,
     var continuous: Boolean? = null,
@@ -59,10 +58,8 @@ class AnimationData(
     var delayMod: Double = 1.0,
     var direction: Direction = Direction.FORWARD,
     var distance: Int = -1,
-    var endPixel: Int = -1,
     var id: String = "",
-    spacing: Int = -1,
-    var startPixel: Int = 0
+    spacing: Int = -1
 ) : Serializable {
 
     val colors = mutableListOf<ColorContainerInterface>().apply {
@@ -74,13 +71,7 @@ class AnimationData(
     var delay: Long = delay
         get() {
             return (when (field) {
-                -1L, 0L -> {
-                    when (animation.infoOrNull()?.delay) {
-                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.delayDefault ?: 50L
-                        ReqLevel.NOTUSED -> 50L
-                        else -> 50L
-                    }
-                }
+                -1L, 0L -> findAnimation(animName = animation)?.info?.delayDefault ?: DEFAULT_DELAY
                 else -> field
             } * delayMod).toLong()
         }
@@ -89,13 +80,7 @@ class AnimationData(
     var spacing: Int = spacing
         get() {
             return (when (field) {
-                -1, 0 -> {
-                    when (animation.infoOrNull()?.spacing) {
-                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.spacingDefault ?: 3
-                        ReqLevel.NOTUSED -> 3
-                        else -> 3
-                    }
-                }
+                -1, 0 -> findAnimation(animName = animation)?.info?.spacingDefault ?: DEFAULT_SPACING
                 else -> field
             })
         }
@@ -106,7 +91,7 @@ class AnimationData(
      * Create a copy of this [AnimationData] instance
      */
     fun copy(
-        animation: Animation = this.animation,
+        animation: String = this.animation,
         colors: List<ColorContainerInterface> = this.colors.toList(),
         center: Int = this.center,
         continuous: Boolean? = this.continuous,
@@ -114,10 +99,8 @@ class AnimationData(
         delayMod: Double = this.delayMod,
         direction: Direction = this.direction,
         distance: Int = this.distance,
-        endPixel: Int = this.endPixel,
         id: String = this.id,
-        spacing: Int = this.spacing,
-        startPixel: Int = this.startPixel
+        spacing: Int = this.spacing
     ) = AnimationData(
         animation,
         colors,
@@ -127,10 +110,8 @@ class AnimationData(
         delayMod,
         direction,
         distance,
-        endPixel,
         id,
-        spacing,
-        startPixel
+        spacing
     )
 
     /**
@@ -139,7 +120,7 @@ class AnimationData(
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
                 "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
-                "endPixel=$endPixel, id=$id, spacing=$spacing, startPixel=$startPixel)"
+                "id=$id, spacing=$spacing)"
 
 
     /**
@@ -148,7 +129,7 @@ class AnimationData(
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
                 (other is AnimationData &&
-                        animation == other.animation &&
+                        prepareAnimName(animation) == prepareAnimName(other.animation) &&
                         colors == other.colors &&
                         center == other.center &&
                         continuous == other.continuous &&
@@ -156,10 +137,8 @@ class AnimationData(
                         delayMod == other.delayMod &&
                         direction == other.direction &&
                         distance == other.distance &&
-                        endPixel == other.endPixel &&
                         id == other.id &&
-                        spacing == other.spacing &&
-                        startPixel == other.startPixel)
+                        spacing == other.spacing)
     }
 
     /**
@@ -172,9 +151,7 @@ class AnimationData(
         result = 31 * result + delayMod.hashCode()
         result = 31 * result + direction.hashCode()
         result = 31 * result + distance
-        result = 31 * result + endPixel
         result = 31 * result + id.hashCode()
-        result = 31 * result + startPixel
         result = 31 * result + colors.hashCode()
         return result
     }

@@ -22,10 +22,8 @@
 
 package animatedledstrip.utils
 
-import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.AnimationInfo
-import animatedledstrip.animationutils.animationinfo.animationInfoList
+import animatedledstrip.animationutils.EndAnimation
 import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.StripInfo
@@ -59,18 +57,12 @@ fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 
 
+/* AnimationData to EndAnimation */
+
+fun AnimationData.endAnimation(): EndAnimation = EndAnimation(this.id)
+
+
 /* JSON creation */
-
-/**
- * Create a representation of an `AnimationData` instance ready to be sent over a socket
- */
-fun AnimationData.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-/**
- * Create a representation of a `StripInfo` instance ready to be sent over a socket
- */
-fun StripInfo.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
-
 
 /**
  * Create a string representation of an `AnimationData` instance
@@ -82,6 +74,22 @@ fun AnimationData.jsonString(): String = "DATA:${gson.toJson(this)};"
  */
 fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
 
+fun EndAnimation.jsonString(): String = "END :${gson.toJson(this)}"
+
+/**
+ * Create a representation of an `AnimationData` instance ready to be sent over a socket
+ */
+fun AnimationData.json(): ByteArray =
+    this.jsonString().toByteArray(Charset.forName("utf-8"))
+
+/**
+ * Create a representation of a `StripInfo` instance ready to be sent over a socket
+ */
+fun StripInfo.json(): ByteArray =
+    this.jsonString().toByteArray(Charset.forName("utf-8"))
+
+fun EndAnimation.json(): ByteArray =
+    this.jsonString().toByteArray(Charset.forName("utf-8"))
 
 /* JSON parsing */
 
@@ -100,7 +108,7 @@ fun String?.jsonToAnimationData(): AnimationData {
         )
     } catch (e: JsonSyntaxException) {
         Logger.warn("Malformed JSON: $this")
-        throw e                                         // Re-throw exception so it can be handled by calling code
+        throw e     // Re-throw exception so it can be handled by calling code
     }
 }
 
@@ -119,7 +127,20 @@ fun String?.jsonToStripInfo(): StripInfo {
         )
     } catch (e: JsonSyntaxException) {
         Logger.warn("Malformed JSON: $this")
-        throw e                                         // Re-throw exception so it can be handled by calling code
+        throw e     // Re-throw exception so it can be handled by calling code
+    }
+}
+
+fun String?.jsonToEndAnimation(): EndAnimation {
+    checkNotNull(this)
+    try {
+        return gson.fromJson(
+            this.removePrefix("END :").removeSuffix(";"),
+            EndAnimation::class.java
+        )
+    } catch (e: JsonSyntaxException) {
+        Logger.warn("Malformed JSON: $this")
+        throw e     // Re-throw exception so it can be handled by calling code
     }
 }
 
@@ -146,48 +167,7 @@ fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
     return this.toString(Charset.forName("utf-8")).take(size)
 }
 
-
-/* `String` to `Animation` */
-
-/**
- * Get an `Animation` by name
- */
-fun String.getAnimation(): Animation =
-    animationInfoList
-        .find {
-            this.toUpperCase().removeSpaces() ==
-                    it.name.toUpperCase().removeSpaces()
-        }!!
-        .animation
-
-/**
- * Get an `Animation` by name or null if no animation with that name is found
- */
-fun String.getAnimationOrNull(): Animation? =
-    animationInfoList
-        .find {
-            this.toUpperCase().removeSpaces() ==
-                    it.name.toUpperCase().removeSpaces()
-        }
-        ?.animation
-
 /**
  * Remove spaces from a `String`
  */
-private fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
-
-
-/* `Animation` to `AnimationInfo` */
-
-/**
- * Get the `AnimationInfo` instance associated with this animation
- */
-fun Animation.info(): AnimationInfo =
-    animationInfoList.find { it.animation == this }!!
-
-/**
- * Get the `AnimationInfo` instance associated with this animation or null
- * if no associated `AnimationInfo` exists
- */
-fun Animation.infoOrNull(): AnimationInfo? =
-    animationInfoList.find { it.animation == this }
+fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")

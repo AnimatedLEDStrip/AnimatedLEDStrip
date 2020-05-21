@@ -22,128 +22,42 @@
 
 package animatedledstrip.animationutils
 
-import animatedledstrip.leds.LEDStrip
+import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
+import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
+import javax.script.CompiledScript
+import javax.script.ScriptEngineManager
 
-/**
- * A list of animations used when communicating between clients and servers.
- */
-enum class Animation {
-    /**
-     * See [LEDStrip.setStripColor]
-     */
-    @NonRepetitive
-    COLOR,
-    /**
-     * Used to represent a custom animation. Put the animation's abbreviation
-     * in the AnimationData instance's ID parameter.
-     */
-    @NonRepetitive
-    CUSTOMANIMATION,
-    /**
-     * Used to represent a repetitive custom animation. Put the animation's
-     * abbreviation in the AnimationData instance's ID parameter.
-     */
-    CUSTOMREPETITIVEANIMATION,
-    /**
-     * See [alternate]
-     */
-    ALTERNATE,
-    /**
-     * See [bounce]
-     */
-    BOUNCE,
-    /**
-     * See [bounceToColor]
-     */
-    @NonRepetitive
-    BOUNCETOCOLOR,
-    /**
-     * See [catToy]
-     */
-    CATTOY,
-    /**
-     *  See [catToyToColor]
-     */
-    @NonRepetitive
-    CATTOYTOCOLOR,
-    /**
-     * See [fadeToColor]
-     */
-    @NonRepetitive
-    FADETOCOLOR,
-    /**
-     * See [fireworks]
-     */
-    FIREWORKS,
-    /**
-     * See [meteor]
-     */
-    METEOR,
-    /**
-     * See [multiPixelRun]
-     */
-    MULTIPIXELRUN,
-    /**
-     * See [multiPixelRunToColor]
-     */
-    @NonRepetitive
-    MULTIPIXELRUNTOCOLOR,
-    /**
-     * See [ripple]
-     */
-    @Radial
-    RIPPLE,
-    /**
-     * See [pixelMarathon]
-     */
-    PIXELMARATHON,
-    /**
-     * See [pixelRun]
-     */
-    PIXELRUN,
-    /**
-     * See [smoothChase]
-     */
-    SMOOTHCHASE,
-    /**
-     * See [smoothFade]
-     */
-    SMOOTHFADE,
-    /**
-     * See [sparkle]
-     */
-    SPARKLE,
-    /**
-     * See [sparkleFade]
-     */
-    SPARKLEFADE,
-    /**
-     * See [sparkleToColor]
-     */
-    @NonRepetitive
-    SPARKLETOCOLOR,
-    /**
-     * See [splat]
-     */
-    @NonRepetitive
-    @Radial
-    SPLAT,
-    /**
-     * See [stack]
-     */
-    @NonRepetitive
-    STACK,
-    /**
-     * See [stackOverflow]
-     */
-    STACKOVERFLOW,
-    /**
-     * See [wipe]
-     */
-    @NonRepetitive
-    WIPE,
-    /**
-     * Special 'animation' sent by a client to stop a continuous animation
-     */
-    ENDANIMATION
+data class Animation(
+    val info: AnimationInfo,
+    val rawCode: String
+) {
+
+    val animationScriptingEngine: KotlinJsr223JvmLocalScriptEngine = run {
+        setIdeaIoUseFallback()
+        ScriptEngineManager().getEngineByExtension("kts")!! as KotlinJsr223JvmLocalScriptEngine
+    }
+
+    val code: CompiledScript = animationScriptingEngine.compile(rawCode)
+
+    data class AnimationInfo(
+        val name: String,
+        val abbr: String,
+        val numReqColors: Int = 0,
+        val numOptColors: Int = 0,
+        val repetitive: Boolean = false,
+        val center: ParamUsage = ParamUsage.NOTUSED,
+        val delay: ParamUsage = ParamUsage.NOTUSED,
+        val delayDefault: Long = 0,
+        val direction: ParamUsage = ParamUsage.NOTUSED,
+        val distance: ParamUsage = ParamUsage.NOTUSED,
+        val distanceDefault: Int = 0,
+        val spacing: ParamUsage = ParamUsage.NOTUSED,
+        val spacingDefault: Int = 0
+    ) {
+        val numColors: Int = numReqColors + numOptColors
+    }
+
+    override fun toString(): String {
+        return "Animation(info=$info)"
+    }
 }

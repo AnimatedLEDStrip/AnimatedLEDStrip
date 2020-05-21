@@ -23,9 +23,11 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
+import animatedledstrip.colors.ColorContainerInterface
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
+import javax.script.ScriptException
 
 /**
  * A subclass of [LEDStrip] adding animations.
@@ -37,6 +39,12 @@ abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
 ) : LEDStrip(stripInfo) {
 
+    val wholeStrip = Section(0, stripInfo.numLEDs - 1, stripInfo.numLEDs - 1)
+
+    /* Load predefined animations if they haven't been already */
+    init {
+        loadPredefinedAnimations(this::class.java.classLoader)
+    }
 
     /* Thread pools */
 
@@ -64,12 +72,11 @@ abstract class AnimatedLEDStrip(
 
     /**
      * A pool of threads to be used for sparkle-type animations due to the
-     * number of threads a concurrent sparkle animation uses. This prevents
-     * memory leaks caused by the overhead associated with creating new threads.
+     * number of threads a concurrent sparkle animation uses.
      */
     @Suppress("EXPERIMENTAL_API_USAGE")
     val sparkleThreadPool =
-        newFixedThreadPoolContext(numLEDs + 1, "Sparkle Pool")
+        newFixedThreadPoolContext(stripInfo.numLEDs + 1, "Sparkle Pool")
 
 
     /* Track running animations */
@@ -77,12 +84,12 @@ abstract class AnimatedLEDStrip(
     /**
      * Class for tracking a currently running animation
      *
-     * @property animation An `AnimationData` instance with the properties of the animation
+     * @property data An `AnimationData` instance with the properties of the animation
      * @property id The string ID representing the animation
      * @property job The `Job` that is running the animation
      */
     data class RunningAnimation(
-        val animation: AnimationData,
+        val data: AnimationData,
         val id: String,
         val job: Job
     ) {
@@ -98,45 +105,10 @@ abstract class AnimatedLEDStrip(
      */
     val runningAnimations = RunningAnimationMap()
 
+    /* Add and end animations */
 
-    /* Define custom animations */
-
-    /**
-     * Map containing defined custom animations.
-     */
-    private val customAnimationMap =
-        mutableMapOf<String, AnimatedLEDStrip.(AnimationData, CoroutineScope) -> Unit>()
-
-    fun addCustomAnimation(id: String, animation: AnimatedLEDStrip.(AnimationData, CoroutineScope) -> Unit) {
-        customAnimationMap[id] = animation
-    }
-
-
-    /* Add and remove/end animations */
-
-    /**
-     * Add a new animation
-     *
-     * @param animId Optional `String` parameter for setting the ID of the animation.
-     * If not set, ID will be set to a random number between 0 and 100000000.
-     */
-    fun addAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
-        return if (animation.animation == Animation.ENDANIMATION) {
-            // Special "Animation" type that the client sends to end an animation
-            endAnimation(animation)
-            null
-        } else {
-            val id = animId ?: (random() * 100000000).toInt().toString()
-            animation.id = id
-            val job = run(animation)
-            Logger.trace(job)
-            if (job != null) {
-                runningAnimations[id] = RunningAnimation(animation, id, job)
-            }
-            // Will return null if job was null because runningAnimations[id] would not have been set
-            return runningAnimations[id]
-        }
-    }
+    fun startAnimation(animation: AnimationData, animId: String? = null) =
+        wholeStrip.startAnimation(animation, animId)
 
     /**
      * End animation by ID
@@ -151,11 +123,10 @@ abstract class AnimatedLEDStrip(
     }
 
     /**
-     * End animation by ID (by extracting ID from the `AnimationData` instance)
+     * End animation using `EndAnimation` instance
      */
-    fun endAnimation(animation: AnimationData?) {
-        if (animation == null) return
-        endAnimation(animation.id)
+    fun endAnimation(animation: EndAnimation?) {
+        endAnimation(animation?.id ?: return)
     }
 
 
@@ -173,118 +144,226 @@ abstract class AnimatedLEDStrip(
     var endAnimationCallback: ((AnimationData) -> Any?)? = null
 
 
-    /* Run animations */
+    private val stripSections =
+        mutableMapOf(Triple(0, stripInfo.numLEDs - 1, stripInfo.numLEDs - 1) to wholeStrip)
 
-    /**
-     * Run an animation
-     *
-     * @param threadPool Optionally specify the thread pool to run the new
-     * animation in
-     * @param scope Optionally specify the parent `CoroutineScope` for the
-     * coroutine that will run the animation
-     */
-    internal fun run(
-        animation: AnimationData,
-        threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
-        scope: CoroutineScope = GlobalScope,
-        subAnimation: Boolean = false
-    ): Job? {
-        animation.prepare(this)
-        Logger.trace("Starting $animation")
+    fun getSection(startPixel: Int, endPixel: Int, parentSectionNumLEDs: Int): AnimatedLEDStrip.Section =
+        stripSections.getOrPut(Triple(startPixel, endPixel, parentSectionNumLEDs)) {
+            Section(startPixel, endPixel, parentSectionNumLEDs)
+        }
 
-        val animationFunction: AnimatedLEDStrip.(AnimationData, CoroutineScope) -> Unit = when (animation.animation) {
-            Animation.ALTERNATE -> alternate
-            Animation.BOUNCE -> bounce
-            Animation.BOUNCETOCOLOR -> bounceToColor
-            Animation.CATTOY -> catToy
-            Animation.CATTOYTOCOLOR -> catToyToColor
-            Animation.COLOR -> run {
-                setStripColor(animation.pCols[0], prolonged = true)
-                null
+    fun clear() = wholeStrip.clear()
+
+
+    /* Strip Sections */
+
+    inner class Section(val startPixel: Int, val endPixel: Int, val parentSectionNumLEDs: Int) {
+        val ledStrip: AnimatedLEDStrip
+            get() = this@AnimatedLEDStrip
+
+        val prolongedColors: MutableList<Long>
+            get() = ledStrip.prolongedColors
+
+        val indices = IntRange(0, endPixel - startPixel).toList()
+
+        val numLEDs = endPixel - startPixel + 1
+
+        val parallelAnimationThreadPool: ExecutorCoroutineDispatcher
+            get() = ledStrip.parallelAnimationThreadPool
+
+        val sparkleThreadPool: ExecutorCoroutineDispatcher
+            get() = ledStrip.sparkleThreadPool
+
+        fun getSection(startPixel: Int, endPixel: Int, parentSectionNumLEDs: Int): AnimatedLEDStrip.Section =
+            ledStrip.getSection(startPixel, endPixel, parentSectionNumLEDs)
+
+        /**
+         * Start a new animation
+         *
+         * @param animId Optional `String` parameter for setting the ID of the animation.
+         * If not set, ID will be set to a random number between 0 and 100000000.
+         */
+        fun startAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
+            val id = animId ?: (random() * 100000000).toInt().toString()
+            animation.id = id
+            val job = run(animation)
+            Logger.trace(job)
+            if (job != null) {
+                runningAnimations[id] = RunningAnimation(animation, id, job)
             }
-            Animation.FADETOCOLOR -> fadeToColor
-            Animation.FIREWORKS -> fireworks
-            Animation.METEOR -> meteor
-            Animation.MULTIPIXELRUN -> multiPixelRun
-            Animation.MULTIPIXELRUNTOCOLOR -> multiPixelRunToColor
-            Animation.PIXELMARATHON -> pixelMarathon
-            Animation.PIXELRUN -> pixelRun
-            Animation.RIPPLE -> ripple
-            Animation.SMOOTHCHASE -> smoothChase
-            Animation.SMOOTHFADE -> smoothFade
-            Animation.SPARKLE -> sparkle
-            Animation.SPARKLEFADE -> sparkleFade
-            Animation.SPARKLETOCOLOR -> sparkleToColor
-            Animation.SPLAT -> splat
-            Animation.STACK -> stack
-            Animation.STACKOVERFLOW -> stackOverflow
-            Animation.WIPE -> wipe
-            Animation.CUSTOMANIMATION, Animation.CUSTOMREPETITIVEANIMATION ->
-                customAnimationMap[animation.id] ?: run {
-                    Logger.warn("Custom animation ${animation.id} not found")
-                    null
+            // Will return null if job was null because runningAnimations[id] would not have been set
+            return runningAnimations[id]
+        }
+
+        /* Run animations */
+
+        /**
+         * Run an animation
+         *
+         * @param threadPool Optionally specify the thread pool to run the new
+         * animation in
+         * @param scope Optionally specify the parent `CoroutineScope` for the
+         * coroutine that will run the animation
+         */
+        internal fun run(
+            data: AnimationData,
+            threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
+            scope: CoroutineScope = GlobalScope,
+            subAnimation: Boolean = false
+        ): Job? {
+            val definedAnimation = findAnimation(data.animation) ?: run {
+                Logger.warn("Animation ${data.animation} not found")
+                Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
+                return null
+            }
+
+            data.prepare(this)
+            Logger.trace("Starting $data")
+
+            return scope.launch(threadPool) {
+                if (!subAnimation) startAnimationCallback?.invoke(data)
+
+                val isContinuous = data.continuous ?: definedAnimation.info.repetitive
+                try {
+                    do {
+                        Logger.trace("Run ${data.id}: $isActive $isContinuous")
+                        definedAnimation.code.eval(
+                            definedAnimation.animationScriptingEngine.createBindings().apply {
+                                put("data", data)
+                                put("leds", this@Section)
+                                put("scope", this@launch)
+                            })
+                    } while (isActive && isContinuous)
+                } catch (e: ScriptException) {
+                    println("Error when running ${definedAnimation.info.name}:")
+                    println(e)
+                    e.printStackTrace()
                 }
-            else -> run {
-                Logger.warn("Animation ${animation.animation} not supported by AnimatedLEDStrip")
-                null
-            }
-        } ?: return null
-
-        return scope.launch(threadPool) {
-            if (!subAnimation) startAnimationCallback?.invoke(animation)
-
-            val isContinuous = animation.isContinuous()
-            do {
-                Logger.trace("Run ${animation.id}: $isActive $isContinuous")
-                animationFunction.invoke(this@AnimatedLEDStrip, animation, this)
-            } while (isActive && isContinuous)
-
-            if (!subAnimation) {
-                endAnimationCallback?.invoke(animation)
-                runningAnimations.remove(animation.id)
+                if (!subAnimation) {
+                    endAnimationCallback?.invoke(data)
+                    runningAnimations.remove(data.id)
+                }
             }
         }
-    }
 
-    /**
-     * Start an animation in a child coroutine.
-     *
-     * Note: Animation is not run continuously unless if [continuous] is `true`
-     * (even if the AnimationData instance has `continuous` as true).
-     *
-     * @param scope The parent `CoroutineScope` for the coroutine that will
-     * run the animation
-     * @param pool The pool of threads to start the animation in
-     * @return The `Job` associated with the new coroutine
-     */
-    fun runParallel(
-        animation: AnimationData,
-        scope: CoroutineScope,
-        pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
-        continuous: Boolean = false
-    ): Job? {
-        return run(
-            animation.copy(continuous = continuous),
-            threadPool = pool,
-            scope = scope,
-            subAnimation = true
-        )
-    }
 
-    /**
-     * Start an animation and wait for it to complete.
-     *
-     * Note: Animation is not run continuously unless if [continuous] is `true`
-     * (even if the AnimationData instance has `continuous` as true).
-     */
-    fun runSequential(animation: AnimationData, continuous: Boolean = false) = runBlocking {
-        val job = run(
-            animation.copy(continuous = continuous),
-            threadPool = parallelAnimationThreadPool,
-            scope = this,
-            subAnimation = true
-        )
-        job?.join()
-        Unit
+        /**
+         * Start an animation in a child coroutine.
+         *
+         * Note: Animation is not run continuously unless if [continuous] is `true`
+         * (even if the AnimationData instance has `continuous` as true).
+         *
+         * @param scope The parent `CoroutineScope` for the coroutine that will
+         * run the animation
+         * @param pool The pool of threads to start the animation in
+         * @return The `Job` associated with the new coroutine
+         */
+        fun runParallel(
+            animation: AnimationData,
+            scope: CoroutineScope,
+            section: Section = this,
+            pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
+            continuous: Boolean = false
+        ): Job? {
+            return section.run(
+                animation.copy(continuous = continuous),
+                threadPool = pool,
+                scope = scope,
+                subAnimation = true
+            )
+        }
+
+        /**
+         * Start an animation and wait for it to complete.
+         *
+         * Note: Animation is not run continuously unless if [continuous] is `true`
+         * (even if the AnimationData instance has `continuous` as true).
+         */
+        fun runSequential(
+            animation: AnimationData,
+            section: Section = this,
+            continuous: Boolean = false
+        ) = runBlocking {
+            val job = section.run(
+                animation.copy(continuous = continuous),
+                threadPool = parallelAnimationThreadPool,
+                scope = this,
+                subAnimation = true
+            )
+            job?.join()
+            Unit
+        }
+
+        fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) =
+            setPixelColor(pixel + startPixel, color, prolonged = true)
+
+        fun setProlongedPixelColor(pixel: Int, color: Long) =
+            setPixelColor(pixel + startPixel, color, prolonged = true)
+
+        fun setTemporaryPixelColor(pixel: Int, color: ColorContainerInterface) =
+            setPixelColor(pixel + startPixel, color, prolonged = false)
+
+        fun setTemporaryPixelColor(pixel: Int, color: Long) =
+            setPixelColor(pixel + startPixel, color, prolonged = false)
+
+        /* Revert pixel */
+
+        /**
+         * Revert a pixel to its prolonged color. If it is in the middle
+         * of a fade, don't revert.
+         */
+        fun revertPixel(pixel: Int) = ledStrip.revertPixel(pixel + startPixel)
+
+
+        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) =
+            ledStrip.fadePixel(pixel, amountOfOverlay, delay)
+
+        /* Set strip color */
+
+        /**
+         * Set the color of all pixels in the strip. If `prolonged` is true,
+         * set the prolonged color, otherwise set the actual color.
+         */
+        private fun setStripColor(color: ColorContainerInterface, prolonged: Boolean) {
+            for (i in indices) ledStrip.setPixelColor(i + startPixel, color, prolonged)
+        }
+
+        /**
+         * Set the color of all pixels in the strip. If `prolonged` is true,
+         * set the prolonged color, otherwise set the actual color.
+         */
+        private fun setStripColor(color: Long, prolonged: Boolean) {
+            for (i in indices) ledStrip.setPixelColor(i + startPixel, color, prolonged)
+        }
+
+        fun setProlongedStripColor(color: ColorContainerInterface) =
+            setStripColor(color, prolonged = true)
+
+        fun setProlongedStripColor(color: Long) =
+            setStripColor(color, prolonged = true)
+
+        fun setTemporaryStripColor(color: ColorContainerInterface) =
+            setStripColor(color, prolonged = false)
+
+        fun setTemporaryStripColor(color: Long) =
+            setStripColor(color, prolonged = false)
+
+        fun clear() = setProlongedStripColor(0)
+
+        fun getTemporaryPixelColor(pixel: Int) = getPixelColor(pixel + startPixel, prolonged = false)
+
+        fun getProlongedPixelColor(pixel: Int) = getPixelColor(pixel + startPixel, prolonged = true)
+
+        /**
+         * Get the actual colors of all pixels as a `List<Long>`
+         */
+        val pixelTemporaryColorList: List<Long>
+            get() = ledStrip.pixelTemporaryColorList.subList(startPixel, endPixel)
+
+        /**
+         * Get the prolonged colors of all pixels as a `List<Long>`
+         */
+        val pixelProlongedColorList: List<Long>
+            get() = ledStrip.pixelProlongedColorList.subList(startPixel, endPixel)
     }
 }

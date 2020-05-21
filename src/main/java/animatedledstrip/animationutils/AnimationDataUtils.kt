@@ -58,7 +58,7 @@ val gson = GsonBuilder()
 /**
  * Sets the `animation` parameter.
  */
-fun AnimationData.animation(animation: Animation): AnimationData {
+fun AnimationData.animation(animation: String): AnimationData {
     this.animation = animation
     return this
 }
@@ -285,17 +285,6 @@ fun AnimationData.distance(pixels: Int): AnimationData {
 }
 
 /**
- * Set the `endPixel` parameter.
- *
- * @param endPixel An `Int` that is the index of the last pixel showing the
- * animation (inclusive)
- */
-fun AnimationData.endPixel(endPixel: Int): AnimationData {
-    this.endPixel = endPixel
-    return this
-}
-
-/**
  * Set the `id` parameter.
  *
  * @param id A `String` used to identify a continuous animation instance
@@ -329,30 +318,3 @@ fun AnimationData.speed(speed: AnimationSpeed): AnimationData {
     }
     return this
 }
-
-/**
- * Set the `startPixel` parameter.
- *
- * @param startPixel An `Int` that is the index of the first pixel showing the
- * animation (inclusive)
- */
-fun AnimationData.startPixel(startPixel: Int): AnimationData {
-    this.startPixel = startPixel
-    return this
-}
-
-
-/* Non-repetitive/continuous check */
-
-/**
- * Checks to see if a @NonRepetitive annotation is present in the `Animation` enum
- */
-fun Animation.isNonRepetitive(): Boolean =
-    this::class.java.fields[this.ordinal].annotations.find { it is NonRepetitive } is NonRepetitive
-
-/**
- * Returns `continuous`, unless if it is null, in which case it checks if the
- * animation is non-repetitive by default
- */
-fun AnimationData.isContinuous(): Boolean = continuous
-    ?: !animation.isNonRepetitive()

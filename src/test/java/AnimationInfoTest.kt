@@ -23,8 +23,7 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationInfo
-import animatedledstrip.animationutils.ReqLevel
+import animatedledstrip.animationutils.ParamUsage
 import org.junit.Test
 import kotlin.test.assertTrue
 
@@ -33,25 +32,23 @@ class AnimationInfoTest {
     @Suppress("SimplifyBooleanWithConstants")
     @Test
     fun testDefaultConstruction() {
-        val ai = AnimationInfo(
-            animation = Animation.COLOR,
+        val ai = Animation.AnimationInfo(
             name = "TEST",
-            abbr = "TEST"
+            abbr = "TST"
         )
 
-        assertTrue { ai.animation == Animation.COLOR }
         assertTrue { ai.name == "TEST" }
-        assertTrue { ai.abbr == "TEST" }
+        assertTrue { ai.abbr == "TST" }
         assertTrue { ai.numReqColors == 0 }
         assertTrue { ai.numOptColors == 0 }
         assertTrue { ai.numColors == 0 }
-        assertTrue { ai.center == ReqLevel.NOTUSED }
-        assertTrue { ai.delay == ReqLevel.NOTUSED }
+        assertTrue { ai.center == ParamUsage.NOTUSED }
+        assertTrue { ai.delay == ParamUsage.NOTUSED }
         assertTrue { ai.delayDefault == 0L }
-        assertTrue { ai.direction == ReqLevel.NOTUSED }
-        assertTrue { ai.distance == ReqLevel.NOTUSED }
+        assertTrue { ai.direction == ParamUsage.NOTUSED }
+        assertTrue { ai.distance == ParamUsage.NOTUSED }
         assertTrue { ai.repetitive == false }
-        assertTrue { ai.spacing == ReqLevel.NOTUSED }
+        assertTrue { ai.spacing == ParamUsage.NOTUSED }
         assertTrue { ai.spacingDefault == 0 }
     }
 

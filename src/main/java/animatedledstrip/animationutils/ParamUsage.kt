@@ -23,9 +23,16 @@
 package animatedledstrip.animationutils
 
 /**
- * A radial animation is annotated with this tag.
- *
- * Radial animations start from a center and "radiate" outwards.
+ * Enum for specifying the requirement level of an animation parameter
  */
-@MustBeDocumented
-annotation class Radial
+enum class ParamUsage {
+    /**
+     * Animation parameter may be set by the user, otherwise will be set to a
+     * default as specified
+     */
+    USED,
+    /**
+     * Animation does not use parameter
+     */
+    NOTUSED
+}

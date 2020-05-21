@@ -24,10 +24,10 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.color
+import animatedledstrip.animationutils.findAnimation
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
 import java.lang.Math.random
 import kotlin.coroutines.CoroutineContext
@@ -42,11 +42,10 @@ import kotlin.math.roundToInt
  * @param animation The `AnimationData` instance to use to determine `startPixel`
  * and `endPixel`
  */
-inline fun iterateOverPixels(
-    animation: AnimationData,
+inline fun AnimatedLEDStrip.Section.iterateOverPixels(
     operation: (Int) -> Unit
 ) {
-    for (q in animation.startPixel..animation.endPixel) operation.invoke(q)
+    for (q in indices) operation.invoke(q)
 }
 
 /**
@@ -56,11 +55,10 @@ inline fun iterateOverPixels(
  * and `endPixel`
  */
 
-inline fun iterateOverPixelsReverse(
-    animation: AnimationData,
+inline fun AnimatedLEDStrip.Section.iterateOverPixelsReverse(
     operation: (Int) -> Unit
 ) {
-    for (q in animation.endPixel downTo animation.startPixel) operation.invoke(q)
+    for (q in indices.reversed()) operation.invoke(q)
 }
 
 /**
@@ -89,9 +87,9 @@ inline fun iterateOver(
 /**
  * Set a pixel, wait the specified time in milliseconds, then revert the pixel
  */
-fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
-        setPixelColor(pixel, color, prolonged = false)
+        setTemporaryPixelColor(pixel, color)
         delayBlocking(delay)
         revertPixel(pixel)
     }
@@ -106,14 +104,14 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
  *
  * @param pool The pool of threads to start the animations in
  */
-fun AnimatedLEDStrip.runParallelAndJoin(
+fun AnimatedLEDStrip.Section.runParallelAndJoin(
     scope: CoroutineScope,
-    vararg animations: AnimationData,
+    vararg animations: Pair<AnimationData, AnimatedLEDStrip.Section>,
     pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
 ) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
-        val job = runParallel(it, scope, pool)
+        val job = runParallel(it.first, scope, it.second, pool)
         if (job != null) jobs += job
     }
     runBlocking {
@@ -121,7 +119,10 @@ fun AnimatedLEDStrip.runParallelAndJoin(
     }
 }
 
-fun <T> runBlockingNonCancellable(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> T): T {
+fun <T> runBlockingNonCancellable(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend CoroutineScope.() -> T
+): T {
     return runBlocking(context) {
         withContext(NonCancellable) {
             block.invoke(this@runBlocking)
@@ -138,13 +139,9 @@ fun <T> runBlockingNonCancellable(context: CoroutineContext = EmptyCoroutineCont
 fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).roundToInt()
 
 /**
- * Return a random index between `startPixel` and `endPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
+ * Return a random index from indices
  */
-fun randomPixelIn(animation: AnimationData): Int =
-    ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).roundToInt()
+fun randomPixelIn(indices: List<Int>): Int = indices.random()
 
 
 /* AnimationData preparation */
@@ -155,11 +152,8 @@ fun randomPixelIn(animation: AnimationData): Int =
  * Sets defaults for unset properties (`endPixel`, `center` and `distance`)
  * and populates `pCols`.
  */
-fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
-    endPixel = when (endPixel) {
-        -1 -> ledStrip.numLEDs - 1
-        else -> endPixel
-    }
+fun AnimationData.prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
+    val definedAnimation = findAnimation(animation)!!
 
     center = when (center) {
         -1 -> ledStrip.numLEDs / 2
@@ -167,28 +161,23 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
     }
 
     distance = when (distance) {
-        -1 -> if (animation.infoOrNull()?.distanceDefault ?: 0 != 0) animation.infoOrNull()!!.distanceDefault else ledStrip.numLEDs
+        -1 -> if (definedAnimation.info.distanceDefault != -1) definedAnimation.info.distanceDefault else ledStrip.numLEDs
         else -> distance
     }
 
     if (colors.isEmpty()) color(CCBlack)
-
+//    println(this)
+//    println("$endPixel $startPixel ${endPixel - startPixel + 1}")
     pCols = mutableListOf()
     colors.forEach {
         pCols.add(
-            it.prepare(
-                endPixel - startPixel + 1,
-                leadingZeros = startPixel
-            )
+            it.prepare(numLEDs = ledStrip.ledStrip.numLEDs)
         )
     }
 
-    for (i in colors.size until (animation.infoOrNull()?.numColors ?: 0)) {
+    for (i in colors.size until definedAnimation.info.numColors) {
         pCols.add(
-            CCBlack.prepare(
-                endPixel - startPixel + 1,
-                leadingZeros = startPixel
-            )
+            CCBlack.prepare(numLEDs = ledStrip.ledStrip.numLEDs)
         )
     }
 
