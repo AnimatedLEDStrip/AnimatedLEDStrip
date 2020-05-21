@@ -294,19 +294,23 @@ abstract class AnimatedLEDStrip(
             Unit
         }
 
-        fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) =
-            setPixelColor(pixel + startPixel, color, prolonged = true)
 
-        fun setProlongedPixelColor(pixel: Int, color: Long) =
-            setPixelColor(pixel + startPixel, color, prolonged = true)
+        /* Set pixel */
 
         fun setTemporaryPixelColor(pixel: Int, color: ColorContainerInterface) =
             setPixelColor(pixel + startPixel, color, prolonged = false)
 
+        fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) =
+            setPixelColor(pixel + startPixel, color, prolonged = true)
+
         fun setTemporaryPixelColor(pixel: Int, color: Long) =
             setPixelColor(pixel + startPixel, color, prolonged = false)
 
-        /* Revert pixel */
+        fun setProlongedPixelColor(pixel: Int, color: Long) =
+            setPixelColor(pixel + startPixel, color, prolonged = true)
+
+
+        /* Revert/fade pixel */
 
         /**
          * Revert a pixel to its prolonged color. If it is in the middle
@@ -314,9 +318,9 @@ abstract class AnimatedLEDStrip(
          */
         fun revertPixel(pixel: Int) = ledStrip.revertPixel(pixel + startPixel)
 
-
         fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) =
             ledStrip.fadePixel(pixel, amountOfOverlay, delay)
+
 
         /* Set strip color */
 
@@ -336,19 +340,22 @@ abstract class AnimatedLEDStrip(
             for (i in indices) ledStrip.setPixelColor(i + startPixel, color, prolonged)
         }
 
-        fun setProlongedStripColor(color: ColorContainerInterface) =
-            setStripColor(color, prolonged = true)
-
-        fun setProlongedStripColor(color: Long) =
-            setStripColor(color, prolonged = true)
-
         fun setTemporaryStripColor(color: ColorContainerInterface) =
             setStripColor(color, prolonged = false)
+
+        fun setProlongedStripColor(color: ColorContainerInterface) =
+            setStripColor(color, prolonged = true)
 
         fun setTemporaryStripColor(color: Long) =
             setStripColor(color, prolonged = false)
 
+        fun setProlongedStripColor(color: Long) =
+            setStripColor(color, prolonged = true)
+
         fun clear() = setProlongedStripColor(0)
+
+
+        /* Get pixel */
 
         fun getTemporaryPixelColor(pixel: Int) = getPixelColor(pixel + startPixel, prolonged = false)
 

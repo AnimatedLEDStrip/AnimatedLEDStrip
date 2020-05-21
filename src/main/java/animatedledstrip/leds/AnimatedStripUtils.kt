@@ -166,18 +166,23 @@ fun AnimationData.prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
     }
 
     if (colors.isEmpty()) color(CCBlack)
-//    println(this)
-//    println("$endPixel $startPixel ${endPixel - startPixel + 1}")
+
     pCols = mutableListOf()
     colors.forEach {
         pCols.add(
-            it.prepare(numLEDs = ledStrip.ledStrip.numLEDs)
+            it.prepare(
+                numLEDs = ledStrip.parentSectionNumLEDs,
+                leadingZeros = ledStrip.startPixel
+            )
         )
     }
 
     for (i in colors.size until definedAnimation.info.numColors) {
         pCols.add(
-            CCBlack.prepare(numLEDs = ledStrip.ledStrip.numLEDs)
+            CCBlack.prepare(
+                numLEDs = ledStrip.ledStrip.numLEDs,
+                leadingZeros = ledStrip.startPixel
+            )
         )
     }
 
