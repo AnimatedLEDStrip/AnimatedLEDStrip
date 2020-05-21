@@ -22,6 +22,7 @@
 
 package animatedledstrip.leds
 
+import animatedledstrip.animationutils.definedAnimations
 import java.io.Serializable
 
 /**
@@ -42,4 +43,6 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int? = null,
-    val threadCount: Int? = null): Serializable
+    val threadCount: Int? = null): Serializable {
+    val supportedAnimations = definedAnimations.map { it.value.info.name }
+}

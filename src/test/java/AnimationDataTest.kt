@@ -40,13 +40,13 @@ class AnimationDataTest {
     fun testAnimation() {
         val testAnimation = AnimationData()
 
-        assertTrue { testAnimation.animation == Animation.COLOR }
+        assertTrue { testAnimation.animation == "Color" }
 
-        testAnimation.animation = Animation.BOUNCE
-        assertTrue { testAnimation.animation == Animation.BOUNCE }
+        testAnimation.animation = "Bounce"
+        assertTrue { testAnimation.animation == "Bounce" }
 
-        testAnimation.animation(Animation.SPLAT)
-        assertTrue { testAnimation.animation == Animation.SPLAT }
+        testAnimation.animation("Splat")
+        assertTrue { testAnimation.animation == "Splat" }
     }
 
     @Test
@@ -131,23 +131,14 @@ class AnimationDataTest {
 
     @Test
     fun testContinuous() {
-        val testAnimation = AnimationData().animation(Animation.PIXELRUN)
+        val testAnimation = AnimationData()
         assertNull(testAnimation.continuous)
-        assertTrue { testAnimation.isContinuous() }
-
-        testAnimation.animation(Animation.WIPE)
-        assertNull(testAnimation.continuous)
-        assertFalse { testAnimation.isContinuous() }
 
         testAnimation.continuous(true)
-        assertNotNull(testAnimation.continuous)
         assertTrue { testAnimation.continuous == true }
-        assertTrue { testAnimation.isContinuous() }
 
         testAnimation.continuous(false)
-        assertNotNull(testAnimation.continuous)
         assertFalse { testAnimation.continuous == true }
-        assertFalse { testAnimation.isContinuous() }
     }
 
     @Test
@@ -224,20 +215,6 @@ class AnimationDataTest {
         testAnimation.distance(35)
         assertTrue { testAnimation.distance == 35 }
     }
-
-    @Test
-    fun testEndPixel() {
-        val testAnimation = AnimationData()
-
-        assertTrue { testAnimation.endPixel == -1 }
-
-        testAnimation.endPixel = 50
-        assertTrue { testAnimation.endPixel == 50 }
-
-        testAnimation.endPixel(100)
-        assertTrue { testAnimation.endPixel == 100 }
-    }
-
     @Test
     fun testID() {
         val testAnimation = AnimationData()
@@ -266,22 +243,9 @@ class AnimationDataTest {
     }
 
     @Test
-    fun testStartPixel() {
-        val testAnimation = AnimationData()
-
-        assertTrue { testAnimation.startPixel == 0 }
-
-        testAnimation.startPixel = 50
-        assertTrue { testAnimation.startPixel == 50 }
-
-        testAnimation.startPixel(100)
-        assertTrue { testAnimation.startPixel == 100 }
-    }
-
-    @Test
     fun testEquals() {
         val testAnimation1 = AnimationData()
-            .animation(Animation.STACK)
+            .animation("Stack")
             .color0(0xFFFF)
             .color1(0xFFFFFF)
             .delay(10)
@@ -289,7 +253,7 @@ class AnimationDataTest {
             .spacing(4)
 
         val testAnimation2 = AnimationData().apply {
-            animation = Animation.STACK
+            animation = "sta ck"
             addColor(0xFFFF)
             addColor(0xFFFFFF)
             delay = 10
@@ -305,7 +269,7 @@ class AnimationDataTest {
     @Test
     fun testCopy() {
         val testAnimation1 = AnimationData()
-            .animation(Animation.STACK)
+            .animation("Stack")
             .color0(0xFFFF)
             .color1(0xFFFFFF)
             .delay(10)
@@ -315,7 +279,7 @@ class AnimationDataTest {
         testAnimation1.copy()
 
         testAnimation1.copy(
-            animation = Animation.COLOR,
+            animation = "Color",
             colors = listOf(0xFF.toColorContainer()),
             center = 30,
             continuous = false,
@@ -323,10 +287,8 @@ class AnimationDataTest {
             delayMod = 2.0,
             direction = Direction.FORWARD,
             distance = 50,
-            endPixel = 50,
             id= "test",
-            spacing = 4,
-            startPixel = 10
+            spacing = 4
         )
     }
 
@@ -338,7 +300,7 @@ class AnimationDataTest {
 
     @Test
     fun testIsSerializable() {
-        val testAnimation = AnimationData().animation(Animation.STACK)
+        val testAnimation = AnimationData().animation("Stack")
             .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
             .color(0xFF, index = 1)
             .color(0xFF, index = 2)

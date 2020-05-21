@@ -23,20 +23,16 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.animationutils.animationinfo.Meteor
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.iterateOver
-import animatedledstrip.leds.iterateOverPixels
-import animatedledstrip.leds.iterateOverPixelsReverse
 import animatedledstrip.utils.*
 import com.google.gson.JsonSyntaxException
 import org.junit.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
-import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class UtilsTest {
@@ -92,7 +88,7 @@ class UtilsTest {
 
     @Test
     fun testAnimationDataJson() {
-        val testAnimation = AnimationData().animation(Animation.STACK)
+        val testAnimation = AnimationData().animation("Stack")
             .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
             .color(0xFF, index = 1)
             .color(0xFF, index = 2)
@@ -183,37 +179,28 @@ class UtilsTest {
         }
     }
 
-    @Test
-    fun testGetAnimation() {
-        val testStr = "Sparkle"
-        assertTrue { testStr.getAnimation() == Animation.SPARKLE }
-        assertTrue { testStr.getAnimationOrNull() == Animation.SPARKLE }
-
-
-        val badTestStr = "Test"
-
-        assertFailsWith<KotlinNullPointerException> { badTestStr.getAnimation() }
-        assertNull(badTestStr.getAnimationOrNull())
-
-        val testSpacedStr = "sparkle TO color"
-
-        assertTrue { testSpacedStr.getAnimation() == Animation.SPARKLETOCOLOR }
-        assertTrue { testSpacedStr.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
-
-        val testSpacedStr2 = "s p a r k l e T O c o l o r"
-
-        assertTrue { testSpacedStr2.getAnimation() == Animation.SPARKLETOCOLOR }
-        assertTrue { testSpacedStr2.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
-    }
-
-    @Test
-    fun testAnimationInfo() {
-        assertTrue { Animation.METEOR.info() == Meteor }
-        assertTrue { Animation.METEOR.infoOrNull() == Meteor }
-
-        assertFailsWith<KotlinNullPointerException> { Animation.ENDANIMATION.info() }
-        assertNull(Animation.ENDANIMATION.infoOrNull())
-    }
+//    @Test
+//    fun testGetAnimation() {
+//        val testStr = "Sparkle"
+//        assertTrue { testStr.getAnimation() == Animation.SPARKLE }
+//        assertTrue { testStr.getAnimationOrNull() == Animation.SPARKLE }
+//
+//
+//        val badTestStr = "Test"
+//
+//        assertFailsWith<KotlinNullPointerException> { badTestStr.getAnimation() }
+//        assertNull(badTestStr.getAnimationOrNull())
+//
+//        val testSpacedStr = "sparkle TO color"
+//
+//        assertTrue { testSpacedStr.getAnimation() == Animation.SPARKLETOCOLOR }
+//        assertTrue { testSpacedStr.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
+//
+//        val testSpacedStr2 = "s p a r k l e T O c o l o r"
+//
+//        assertTrue { testSpacedStr2.getAnimation() == Animation.SPARKLETOCOLOR }
+//        assertTrue { testSpacedStr2.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
+//    }
 
     @Test
     fun testIterateOver() {
@@ -238,27 +225,27 @@ class UtilsTest {
         assertTrue(testVals2[3])
     }
 
-    @Test
-    fun testIterateOverPixels() {
-        val testVals1 = mutableListOf(false, false, false, false)
-        val anim = AnimationData().startPixel(0).endPixel(3)
-        iterateOverPixels(anim) {
-            testVals1[it] = true
-        }
-
-        assertTrue(testVals1[0])
-        assertTrue(testVals1[1])
-        assertTrue(testVals1[2])
-        assertTrue(testVals1[3])
-
-        val testVals2 = mutableListOf(false, false, false, false)
-        iterateOverPixelsReverse(anim) {
-            testVals2[it] = true
-        }
-
-        assertTrue(testVals2[0])
-        assertTrue(testVals2[1])
-        assertTrue(testVals2[2])
-        assertTrue(testVals2[3])
-    }
+//    @Test
+//    fun testIterateOverPixels() {
+//        val testVals1 = mutableListOf(false, false, false, false)
+//        val anim = AnimationData().startPixel(0).endPixel(3)
+//        iterateOverPixels(anim) {
+//            testVals1[it] = true
+//        }
+//
+//        assertTrue(testVals1[0])
+//        assertTrue(testVals1[1])
+//        assertTrue(testVals1[2])
+//        assertTrue(testVals1[3])
+//
+//        val testVals2 = mutableListOf(false, false, false, false)
+//        iterateOverPixelsReverse(anim) {
+//            testVals2[it] = true
+//        }
+//
+//        assertTrue(testVals2[0])
+//        assertTrue(testVals2[1])
+//        assertTrue(testVals2[2])
+//        assertTrue(testVals2[3])
+//    }
 }
