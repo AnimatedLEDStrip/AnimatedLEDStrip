@@ -147,7 +147,14 @@ abstract class AnimatedLEDStrip(
     private val stripSections =
         mutableMapOf(Triple(0, stripInfo.numLEDs - 1, stripInfo.numLEDs - 1) to wholeStrip)
 
-    fun getSection(startPixel: Int, endPixel: Int, parentSectionNumLEDs: Int): AnimatedLEDStrip.Section =
+    fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
+        getSection(startPixel, endPixel, numLEDs)
+
+    private fun getSection(
+        startPixel: Int,
+        endPixel: Int,
+        parentSectionNumLEDs: Int
+    ): AnimatedLEDStrip.Section =
         stripSections.getOrPut(Triple(startPixel, endPixel, parentSectionNumLEDs)) {
             Section(startPixel, endPixel, parentSectionNumLEDs)
         }
@@ -174,8 +181,8 @@ abstract class AnimatedLEDStrip(
         val sparkleThreadPool: ExecutorCoroutineDispatcher
             get() = ledStrip.sparkleThreadPool
 
-        fun getSection(startPixel: Int, endPixel: Int, parentSectionNumLEDs: Int): AnimatedLEDStrip.Section =
-            ledStrip.getSection(startPixel, endPixel, parentSectionNumLEDs)
+        fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
+            ledStrip.getSection(startPixel, endPixel, this.numLEDs)
 
         /**
          * Start a new animation
