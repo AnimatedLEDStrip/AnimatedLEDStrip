@@ -13,10 +13,7 @@
 // ## end info ##
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.*
-import animatedledstrip.colors.ccpresets.*
 import animatedledstrip.leds.*
-import animatedledstrip.utils.*
 
 @Suppress("UNRESOLVED_REFERENCE")
 val leds = bindings["leds"] as AnimatedLEDStrip.Section
@@ -35,7 +32,7 @@ leds.apply {
             iterateOverPixelsReverse {
                 runSequential(
                     animation = baseAnimation.copy(),
-                    section = getSection(0, it)
+                    section = getSubSection(0, it)
                 )
                 setProlongedPixelColor(it, color0)
             }
@@ -43,7 +40,7 @@ leds.apply {
             iterateOverPixels {
                 runSequential(
                     animation = baseAnimation.copy(),
-                    section = getSection(it, numLEDs - 1)
+                    section = getSubSection(it, numLEDs - 1)
                 )
                 setProlongedPixelColor(it, color0)
             }

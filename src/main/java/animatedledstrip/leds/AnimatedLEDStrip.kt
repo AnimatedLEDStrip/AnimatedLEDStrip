@@ -24,24 +24,23 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.leds.AnimatedLEDStrip.Section
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
 import javax.script.ScriptException
 
 /**
- * A subclass of [LEDStrip] adding animations.
+ * A subclass of [LEDStrip] that manages the running of animations.
  *
  * @param stripInfo Information about this strip, such as number of
- * LEDs, etc.
+ * LEDs, etc. See [StripInfo].
  */
 abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
 ) : LEDStrip(stripInfo) {
 
-    val wholeStrip = Section(SectionInfo(0, stripInfo.numLEDs - 1, stripInfo.numLEDs))
-
-    /* Load predefined animations if they haven't been already */
+    /* Load predefined animations if they haven't been loaded already */
     init {
         loadPredefinedAnimations(this::class.java.classLoader)
     }
@@ -82,7 +81,7 @@ abstract class AnimatedLEDStrip(
     /* Track running animations */
 
     /**
-     * Class for tracking a currently running animation
+     * Class for tracking a currently running animation.
      *
      * @property data An `AnimationData` instance with the properties of the animation
      * @property id The string ID representing the animation
@@ -95,23 +94,28 @@ abstract class AnimatedLEDStrip(
     ) {
         /**
          * Cancel the coroutine running the animation
-         * (in other words, end the animation after its current iteration is complete)
+         * (in other words, end the animation after its current iteration is complete).
          */
         internal fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
     }
 
     /**
-     * Map containing all `RunningAnimation` instances
+     * Map containing all `RunningAnimation` instances.
      */
     val runningAnimations = RunningAnimationMap()
 
-    /* Add and end animations */
 
+    /* Start and end animations */
+
+    /**
+     * Start an animation that runs on the whole strip.
+     * See [Section.startAnimation].
+     */
     fun startAnimation(animation: AnimationData, animId: String? = null) =
         wholeStrip.startAnimation(animation, animId)
 
     /**
-     * End animation by ID
+     * End animation by ID.
      */
     fun endAnimation(id: String) {
         runningAnimations[id]?.endAnimation()
@@ -123,7 +127,7 @@ abstract class AnimatedLEDStrip(
     }
 
     /**
-     * End animation using `EndAnimation` instance
+     * End animation using `EndAnimation` instance.
      */
     fun endAnimation(animation: EndAnimation?) {
         endAnimation(animation?.id ?: return)
@@ -133,81 +137,133 @@ abstract class AnimatedLEDStrip(
     /* Callbacks */
 
     /**
-     * Callback run before the first iteration of the animation
+     * Callback run before the first iteration of the animation.
      */
     var startAnimationCallback: ((AnimationData) -> Any?)? = null
 
     /**
      * Callback run after the last iteration of the animation (but before the
-     * animation is remove from `runningAnimations`)
+     * animation is removed from `runningAnimations`).
      */
     var endAnimationCallback: ((AnimationData) -> Any?)? = null
 
 
     /* Strip Sections */
 
-    data class SectionInfo(
-        val startPixel: Int,
-        val endPixel: Int,
-        val parentSectionNumLEDs: Int
-    )
-
     /**
      * A map containing all the sections associated with this LED strip.
      */
-    private val stripSections =
-        mutableMapOf(
-            SectionInfo(
-                0,
-                stripInfo.numLEDs - 1,
-                stripInfo.numLEDs
-            ) to wholeStrip
-        )
+    private val sections = mutableMapOf<String, Section>()
 
-    fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
-        getSection(SectionInfo(startPixel, endPixel, numLEDs))
+    /**
+     * The section that represents the full strip.
+     */
+    val wholeStrip = createSection("", 0, stripInfo.numLEDs - 1)
 
-    private fun getSection(
-        sectionInfo: SectionInfo
-    ): AnimatedLEDStrip.Section =
-        stripSections.getOrPut(sectionInfo) {
-            Section(sectionInfo)
+    /**
+     * Create a new named section.
+     */
+    fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
+        val newSection = Section(startPixel, endPixel)
+        sections[name] = newSection
+        return newSection
+    }
+
+    /**
+     * Get a section by it's name.
+     *
+     * Defaults to the whole strip if the section cannot be found.
+     */
+    fun getSection(sectionName: String): Section =
+        sections.getOrElse(sectionName) {
+            Logger.warn("Could not find section $sectionName, defaulting to whole strip")
+            wholeStrip
         }
 
+
+    /**
+     * Clears all pixels in the strip.
+     * See [Section.clear].
+     */
     fun clear() = wholeStrip.clear()
 
 
-    inner class Section(private val sectionInfo: SectionInfo) {
+    /**
+     * Represents a section of the strip.
+     *
+     * @property startPixel The first pixel in the section (relative to the parent section)
+     * @property endPixel The last pixel in the section, inclusive (relative to the parent section).
+     * @param parentSection The parent section of this section. A null parentSection implies that the parent
+     *   is the whole strip.
+     */
+    inner class Section(val startPixel: Int, val endPixel: Int, parentSection: Section? = null) {
+
+        /* Utility values */
+
+        /**
+         * Allow external functions to access the strip associated with this instance directly.
+         */
         val ledStrip: AnimatedLEDStrip
             get() = this@AnimatedLEDStrip
 
-        val startPixel: Int
-            get() = sectionInfo.startPixel
+        /**
+         * The start of this section on the physical LED strip.
+         */
+        val physicalStart: Int = startPixel + (parentSection?.startPixel ?: 0)
 
-        val endPixel: Int
-            get() = sectionInfo.endPixel
+        /**
+         * Get the actual index for a pixel on the physical strip.
+         */
+        private fun getPhysicalIndex(pixel: Int): Int = pixel + physicalStart
 
-        val parentSectionNumLEDs: Int
-            get() = sectionInfo.parentSectionNumLEDs
-
+        /**
+         * See [LEDStrip.prolongedColors].
+         */
         val prolongedColors: MutableList<Long>
             get() = ledStrip.prolongedColors
 
-        val indices = IntRange(0, endPixel - startPixel).toList()
-
-        val numLEDs = endPixel - startPixel + 1
-
+        /**
+         * See [AnimatedLEDStrip.parallelAnimationThreadPool].
+         */
         val parallelAnimationThreadPool: ExecutorCoroutineDispatcher
             get() = ledStrip.parallelAnimationThreadPool
 
+        /**
+         * See [AnimatedLEDStrip.sparkleThreadPool].
+         */
         val sparkleThreadPool: ExecutorCoroutineDispatcher
             get() = ledStrip.sparkleThreadPool
 
-        fun getSection(startPixel: Int, endPixel: Int): AnimatedLEDStrip.Section =
-            ledStrip.getSection(SectionInfo(startPixel, endPixel, this.numLEDs))
+        /**
+         * Valid indices for this section.
+         */
+        val indices = IntRange(0, endPixel - startPixel).toList()
 
         /**
-         * Start a new animation
+         * The number of LEDs in this section.
+         */
+        val numLEDs = endPixel - startPixel + 1
+
+
+        /**
+         * A map of all subsections of this section.
+         */
+        private val subSections = mutableMapOf<Pair<Int, Int>, Section>()
+
+        /**
+         * Get a subsection of this section from the `subSections` map.
+         * Creates the subsection if it doesn't exist.
+         */
+        fun getSubSection(startPixel: Int, endPixel: Int): Section =
+            subSections.getOrPut(Pair(startPixel, endPixel)) { Section(startPixel, endPixel, this) }
+
+        /**
+         * See [AnimatedLEDStrip.getSection].
+         */
+        fun getSection(sectionName: String): Section = this@AnimatedLEDStrip.getSection(sectionName)
+
+        /**
+         * Start a new animation.
          *
          * @param animId Optional `String` parameter for setting the ID of the animation.
          * If not set, ID will be set to a random number between 0 and 100000000.
@@ -227,7 +283,7 @@ abstract class AnimatedLEDStrip(
         /* Run animations */
 
         /**
-         * Run an animation
+         * Run an animation.
          *
          * @param threadPool Optionally specify the thread pool to run the new
          * animation in
@@ -326,80 +382,123 @@ abstract class AnimatedLEDStrip(
 
         /* Set pixel */
 
+        /**
+         * Set the temporary color of a pixel.
+         */
         fun setTemporaryPixelColor(pixel: Int, color: ColorContainerInterface) =
-            setPixelColor(pixel + startPixel, color, prolonged = false)
+            setPixelColor(getPhysicalIndex(pixel), color, prolonged = false)
 
+        /**
+         * Set the prolonged color of a pixel.
+         */
         fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) =
-            setPixelColor(pixel + startPixel, color, prolonged = true)
+            setPixelColor(getPhysicalIndex(pixel), color, prolonged = true)
 
+        /**
+         * Set the temporary color of a pixel.
+         */
         fun setTemporaryPixelColor(pixel: Int, color: Long) =
-            setPixelColor(pixel + startPixel, color, prolonged = false)
+            setPixelColor(getPhysicalIndex(pixel), color, prolonged = false)
 
+        /**
+         * Set the prolonged color of a pixel.
+         */
         fun setProlongedPixelColor(pixel: Int, color: Long) =
-            setPixelColor(pixel + startPixel, color, prolonged = true)
+            setPixelColor(getPhysicalIndex(pixel), color, prolonged = true)
 
 
         /* Revert/fade pixel */
 
         /**
-         * Revert a pixel to its prolonged color. If it is in the middle
-         * of a fade, don't revert.
+         * Revert a pixel to its prolonged color.
+         *
+         * See [LEDStrip.revertPixel]
          */
-        fun revertPixel(pixel: Int) = ledStrip.revertPixel(pixel + startPixel)
+        fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
 
+        /**
+         * Fade a pixel to it's prolonged color.
+         *
+         * See [LEDStrip.fadePixel]
+         */
         fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) =
-            ledStrip.fadePixel(pixel, amountOfOverlay, delay)
+            ledStrip.fadePixel(getPhysicalIndex(pixel), amountOfOverlay, delay)
 
 
         /* Set strip color */
 
         /**
          * Set the color of all pixels in the strip. If `prolonged` is true,
-         * set the prolonged color, otherwise set the actual color.
+         * set the prolonged color, otherwise set the temporary color.
          */
         private fun setStripColor(color: ColorContainerInterface, prolonged: Boolean) {
-            for (i in indices) ledStrip.setPixelColor(i + startPixel, color, prolonged)
+            for (i in indices) ledStrip.setPixelColor(getPhysicalIndex(i), color, prolonged)
         }
 
         /**
          * Set the color of all pixels in the strip. If `prolonged` is true,
-         * set the prolonged color, otherwise set the actual color.
+         * set the prolonged color, otherwise set the temporary color.
          */
         private fun setStripColor(color: Long, prolonged: Boolean) {
-            for (i in indices) ledStrip.setPixelColor(i + startPixel, color, prolonged)
+            for (i in indices) ledStrip.setPixelColor(getPhysicalIndex(i), color, prolonged)
         }
 
+        /**
+         * Set the temporary color of all pixels in the strip (or section).
+         */
         fun setTemporaryStripColor(color: ColorContainerInterface) =
             setStripColor(color, prolonged = false)
 
+        /**
+         * Set the prolonged color of all pixels in the strip (or section).
+         */
         fun setProlongedStripColor(color: ColorContainerInterface) =
             setStripColor(color, prolonged = true)
 
+        /**
+         * Set the temporary color of all pixels in the strip (or section).
+         */
         fun setTemporaryStripColor(color: Long) =
             setStripColor(color, prolonged = false)
 
+        /**
+         * Set the prolonged color of all pixels in the strip (or section).
+         */
         fun setProlongedStripColor(color: Long) =
             setStripColor(color, prolonged = true)
 
-        fun clear() = setProlongedStripColor(0)
+        /**
+         * Clear the section (set all pixels to black).
+         */
+        fun clear() {
+            setProlongedStripColor(0)
+            setTemporaryStripColor(0)
+        }
 
 
         /* Get pixel */
 
-        fun getTemporaryPixelColor(pixel: Int) = getPixelColor(pixel + startPixel, prolonged = false)
-
-        fun getProlongedPixelColor(pixel: Int) = getPixelColor(pixel + startPixel, prolonged = true)
+        /**
+         * Get the temporary color of a pixel.
+         */
+        fun getTemporaryPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = false)
 
         /**
-         * Get the actual colors of all pixels as a `List<Long>`
+         * Get the prolonged color of a pixel.
+         */
+        fun getProlongedPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = true)
+
+        /**
+         * Get the temporary colors of all pixels as a `List<Long>`.
          */
         val pixelTemporaryColorList: List<Long>
-            get() = ledStrip.pixelTemporaryColorList.subList(startPixel, endPixel)
+            get() = ledStrip.pixelTemporaryColorList.subList(getPhysicalIndex(startPixel), getPhysicalIndex(endPixel))
 
         /**
-         * Get the prolonged colors of all pixels as a `List<Long>`
+         * Get the prolonged colors of all pixels as a `List<Long>`.
          */
         val pixelProlongedColorList: List<Long>
-            get() = ledStrip.pixelProlongedColorList.subList(startPixel, endPixel)
+            get() = ledStrip.pixelProlongedColorList.subList(getPhysicalIndex(startPixel), getPhysicalIndex(endPixel))
+
     }
 }

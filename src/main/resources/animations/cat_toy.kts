@@ -37,7 +37,7 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.FORWARD
         ),
-        section = getSection(0, pixel1)
+        section = getSubSection(0, pixel1)
     )
     setTemporaryPixelColor(pixel1, color0)
     delayBlocking((Math.random() * 2500).toLong())
@@ -48,7 +48,7 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.BACKWARD
         ),
-        section = getSection(pixel2, pixel1)
+        section = getSubSection(pixel2, pixel1)
     )
     setTemporaryPixelColor(pixel2, color0)
     delayBlocking((Math.random() * 2500).toLong())
@@ -59,7 +59,7 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.FORWARD
         ),
-        section = getSection(pixel2, pixel3)
+        section = getSubSection(pixel2, pixel3)
     )
     setTemporaryPixelColor(pixel3, color0)
     delayBlocking((Math.random() * 2500).toLong())
@@ -70,7 +70,7 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.BACKWARD
         ),
-        section = getSection(pixel4, pixel3)
+        section = getSubSection(pixel4, pixel3)
     )
     setTemporaryPixelColor(pixel4, color0)
     delayBlocking((Math.random() * 2500).toLong())
@@ -81,7 +81,7 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.FORWARD
         ),
-        section = getSection(pixel4, pixel5)
+        section = getSubSection(pixel4, pixel5)
     )
     setTemporaryPixelColor(pixel5, color0)
     delayBlocking((Math.random() * 2500).toLong())
@@ -92,6 +92,6 @@ leds.apply {
             animation = "Pixel Run",
             direction = Direction.BACKWARD
         ),
-        section = getSection(0, pixel5)
+        section = getSubSection(0, pixel5)
     )
 }

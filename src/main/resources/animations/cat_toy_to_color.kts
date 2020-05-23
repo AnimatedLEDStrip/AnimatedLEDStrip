@@ -13,8 +13,6 @@
 // ## end info ##
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.*
-import animatedledstrip.colors.ccpresets.*
 import animatedledstrip.leds.*
 import animatedledstrip.utils.*
 import kotlin.math.max
@@ -39,7 +37,7 @@ leds.apply {
                 animation = "Pixel Run",
                 direction = if (oldPixel > newPixel) Direction.BACKWARD else Direction.FORWARD
             ),
-            section = getSection(min(oldPixel, newPixel), max(oldPixel, newPixel))
+            section = getSubSection(min(oldPixel, newPixel), max(oldPixel, newPixel))
         )
         setProlongedPixelColor(newPixel, color0)
         delayBlocking((Math.random() * 2500).toLong())

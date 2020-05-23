@@ -13,8 +13,6 @@
 // ## end info ##
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.*
-import animatedledstrip.colors.ccpresets.*
 import animatedledstrip.leds.*
 import animatedledstrip.utils.*
 import kotlinx.coroutines.CoroutineScope
@@ -45,14 +43,14 @@ leds.apply {
         baseAnimation.copy(
             direction = Direction.FORWARD
         ),
-        section = getSection(center, min(center + distance, numLEDs - 1)),
+        section = getSubSection(center, min(center + distance, numLEDs - 1)),
         scope = scope
     )
     runParallel(
         baseAnimation.copy(
             direction = Direction.BACKWARD
         ),
-        section = getSection(max(center - distance, 0), center),
+        section = getSubSection(max(center - distance, 0), center),
         scope = scope
     )
     delayBlocking(delay * 20)

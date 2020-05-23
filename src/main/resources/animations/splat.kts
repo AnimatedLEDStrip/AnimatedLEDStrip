@@ -13,10 +13,7 @@
 // ## end info ##
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.*
-import animatedledstrip.colors.ccpresets.*
 import animatedledstrip.leds.*
-import animatedledstrip.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlin.math.max
 import kotlin.math.min
@@ -45,11 +42,11 @@ leds.apply {
         scope,
         Pair(
             baseAnimation.copy(direction = Direction.FORWARD),
-            getSection(center, min(center + distance, numLEDs - 1))
+            getSubSection(center, min(center + distance, numLEDs - 1))
         ),
         Pair(
             baseAnimation.copy(direction = Direction.BACKWARD),
-            getSection(max(center - distance, 0), center)
+            getSubSection(max(center - distance, 0), center)
         )
     )
 }
