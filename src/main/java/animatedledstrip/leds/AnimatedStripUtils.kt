@@ -23,10 +23,7 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.color
-import animatedledstrip.animationutils.findAnimation
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
 import java.lang.Math.random
@@ -38,9 +35,6 @@ import kotlin.math.roundToInt
 
 /**
  * Iterate over the indices from `startPixel` to `endPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
  */
 inline fun AnimatedLEDStrip.Section.iterateOverPixels(
     operation: (Int) -> Unit
@@ -50,9 +44,6 @@ inline fun AnimatedLEDStrip.Section.iterateOverPixels(
 
 /**
  * Iterate over the indices from `endPixel` down to `startPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
  */
 
 inline fun AnimatedLEDStrip.Section.iterateOverPixelsReverse(
@@ -142,52 +133,6 @@ fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start
  * Return a random index from indices
  */
 fun randomPixelIn(indices: List<Int>): Int = indices.random()
-
-
-/* AnimationData preparation */
-
-/**
- * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip`.
- *
- * Sets defaults for unset properties (`endPixel`, `center` and `distance`)
- * and populates `pCols`.
- */
-fun AnimationData.prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
-    val definedAnimation = findAnimation(animation)!!
-
-    center = when (center) {
-        -1 -> ledStrip.numLEDs / 2
-        else -> center
-    }
-
-    distance = when (distance) {
-        -1 -> if (definedAnimation.info.distanceDefault != -1) definedAnimation.info.distanceDefault else ledStrip.numLEDs
-        else -> distance
-    }
-
-    if (colors.isEmpty()) color(CCBlack)
-
-    pCols = mutableListOf()
-    colors.forEach {
-        pCols.add(
-            it.prepare(
-                numLEDs = ledStrip.parentSectionNumLEDs,
-                leadingZeros = ledStrip.startPixel
-            )
-        )
-    }
-
-    for (i in colors.size until definedAnimation.info.numColors) {
-        pCols.add(
-            CCBlack.prepare(
-                numLEDs = ledStrip.ledStrip.numLEDs,
-                leadingZeros = ledStrip.startPixel
-            )
-        )
-    }
-
-    return this
-}
 
 
 /* RunningAnimation extensions */
