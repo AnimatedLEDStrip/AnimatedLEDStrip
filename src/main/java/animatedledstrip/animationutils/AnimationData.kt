@@ -25,6 +25,8 @@ package animatedledstrip.animationutils
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.leds.AnimatedLEDStrip
 import java.io.Serializable
 
 /**
@@ -41,13 +43,15 @@ import java.io.Serializable
  * @property direction The direction the animation will run
  * @property distance The distance a radial animation will travel from its center.
  * Defaults to running until the ends of the strip.
- * @property endPixel Last pixel on the strip that will show the
- * animation (inclusive)
  * @property id ID for the animation. Used by server and client for
  * stopping continuous animations.
- * @property pCols The list of [PreparedColorContainer]s after preparation of [colors]
+ * @property pCols The list of [PreparedColorContainer]s after preparation of [colors].
+ *   Will be populated when [prepare] is called.
+ * @property section The id of the section of the strip that will be running the whole animation
+ *   (not necessarily the section running this animation, such as if this is a subanimation).
+ *   This is the section that ColorContainer blend preparation will be based upon.
+ *   An empty string means the whole strip.
  * @property spacing Spacing used in the animation
- * @property startPixel First pixel on the strip will show the animation
  */
 class AnimationData(
     var animation: String = "Color",
@@ -59,6 +63,7 @@ class AnimationData(
     var direction: Direction = Direction.FORWARD,
     var distance: Int = -1,
     var id: String = "",
+    var section: String = "",
     spacing: Int = -1
 ) : Serializable {
 
@@ -85,10 +90,58 @@ class AnimationData(
             })
         }
 
-    /* Note: If any other properties are added, they must be added to the four methods below */
 
     /**
-     * Create a copy of this [AnimationData] instance
+     * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip.Section`.
+     *
+     * Sets defaults for properties with length-dependent defaults (`center` and `distance`)
+     * and populates `pCols`.
+     */
+    fun prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
+        val definedAnimation = findAnimation(animation)!!
+
+        val sectionRunningFullAnimation = ledStrip.getSection(sectionName = section)
+
+        center = when (center) {
+            -1 -> ledStrip.numLEDs / 2
+            else -> center
+        }
+
+        distance = when (distance) {
+            -1 -> if (definedAnimation.info.distanceDefault != -1) definedAnimation.info.distanceDefault else ledStrip.numLEDs
+            else -> distance
+        }
+
+        if (colors.isEmpty()) color(CCBlack)
+
+        pCols = mutableListOf()
+        colors.forEach {
+            pCols.add(
+                it.prepare(
+                    numLEDs = sectionRunningFullAnimation.numLEDs,
+                    leadingZeros = ledStrip.physicalStart
+                )
+            )
+        }
+
+        for (i in colors.size until definedAnimation.info.numColors) {
+            pCols.add(
+                CCBlack.prepare(
+                    numLEDs = sectionRunningFullAnimation.numLEDs,
+                    leadingZeros = ledStrip.physicalStart
+                )
+            )
+        }
+
+        return this
+    }
+
+
+
+    /* Note: If any other properties are added, they must be added to the five methods below */
+
+    /**
+     * Create a copy.
      */
     fun copy(
         animation: String = this.animation,
@@ -100,6 +153,7 @@ class AnimationData(
         direction: Direction = this.direction,
         distance: Int = this.distance,
         id: String = this.id,
+        section: String = this.section,
         spacing: Int = this.spacing
     ) = AnimationData(
         animation,
@@ -111,20 +165,40 @@ class AnimationData(
         direction,
         distance,
         id,
+        section,
         spacing
     )
 
     /**
-     * Create a string representation of this [AnimationData] instance
+     * Create a string representation.
      */
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
                 "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
-                "id=$id, spacing=$spacing)"
+                "id=$id, section=$section, spacing=$spacing)"
+
+    /**
+     * Create a nicely formatted string representation.
+     */
+    fun toHumanReadableString() =
+        """
+            AnimationData $id:
+              animation: $animation
+              colors: $colors
+              center: $center
+              continuous: $continuous
+              delay: $delay
+              delayMod: $delayMod
+              direction: $direction
+              distance: $distance
+              section: $section
+              spacing: $spacing
+            End AnimationData
+        """.trimIndent()
 
 
     /**
-     * Override `equals()`
+     * Override `equals()`.
      */
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
@@ -138,20 +212,23 @@ class AnimationData(
                         direction == other.direction &&
                         distance == other.distance &&
                         id == other.id &&
+                        section == other.section &&
                         spacing == other.spacing)
     }
 
     /**
-     * Override `hashCode()`
+     * Override `hashCode()`.
      */
     override fun hashCode(): Int {
         var result = animation.hashCode()
-        result = 31 * result + center
+        result = 31 * result + center.hashCode()
         result = 31 * result + continuous.hashCode()
         result = 31 * result + delayMod.hashCode()
         result = 31 * result + direction.hashCode()
-        result = 31 * result + distance
+        result = 31 * result + distance.hashCode()
         result = 31 * result + id.hashCode()
+        result = 31 * result + section.hashCode()
+        result = 31 * result + spacing.hashCode()
         result = 31 * result + colors.hashCode()
         return result
     }
