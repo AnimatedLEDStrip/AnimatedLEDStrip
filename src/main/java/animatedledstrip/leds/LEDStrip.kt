@@ -22,6 +22,7 @@
 
 package animatedledstrip.leds
 
+import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -189,14 +190,23 @@ abstract class LEDStrip(
             false -> {
                 if (imageDebugging) outFile = FileWriter(fileName, true)   // Open debug file if appropriate
                 GlobalScope.launch(renderThread) {
-                    delay(5000)
+                    // Delay so the rest of the class has some time to initialize
+                    while (!predefinedAnimLoadComplete) delay(3000)
+                    Logger.info("Rendering of LEDStrip starting")
                     var renderNum = 0
+                    var numLEDNullPointerExceptions = 0
                     while (rendering) {
                         try {
                             ledStrip.render()
                         } catch (e: NullPointerException) {
-                            Logger.error("LEDStrip NullPointerException when rendering")
+                            numLEDNullPointerExceptions++
+                            Logger.debug("LEDStrip has not finished initialization yet, NullPointerException when rendering")
+                            if (numLEDNullPointerExceptions >= 20) {
+                                Logger.error("LEDStrip has had 20 NullPointerExceptions when rendering")
+                                numLEDNullPointerExceptions = 0
+                            }
                             delay(1000)
+                            continue
                         }
                         if (imageDebugging) {
                             checkNotNull(buffer)

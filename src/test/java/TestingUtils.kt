@@ -22,14 +22,12 @@
 
 package animatedledstrip.test
 
+import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.utils.delayBlocking
 import kotlin.test.assertTrue
 
 fun checkAllPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-//    println(testLEDs.pixelTemporaryColorList.size)
-//    println(testLEDs.indices.size)
-//    testLEDs.setProlongedPixelColor(49, 0xF)
-//    println(testLEDs.getProlongedPixelColor(49))
     testLEDs.pixelTemporaryColorList.forEach {
         assertTrue(
             "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelTemporaryColorList}"
@@ -38,9 +36,6 @@ fun checkAllPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
 }
 
 fun checkAllProlongedPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-//    println(testLEDs.pixelProlongedColorList.size)
-//    println(testLEDs.indices.size)
-//    println(testLEDs.getProlongedPixelColor(49))
     testLEDs.pixelProlongedColorList.forEach {
         assertTrue(
             "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelProlongedColorList}"
@@ -62,4 +57,8 @@ fun checkProlongedPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, col
             "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelProlongedColorList}"
         ) { testLEDs.pixelProlongedColorList[it] == color }
     }
+}
+
+fun awaitPredefinedAnimationsLoaded() {
+    while (!predefinedAnimLoadComplete) delayBlocking(250)
 }

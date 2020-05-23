@@ -35,16 +35,10 @@ import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
 
-//    @Test
-//    fun testCompiler() {
-//        val testLEDs = EmulatedAnimatedLEDStrip(50)
-//        testLEDs.animationScriptingEngine.eval("1")
-//    }
-
     @Test
     fun testStartAnimation() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-
+        awaitPredefinedAnimationsLoaded()
         testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
         assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
         testLEDs.endAnimation(EndAnimation("TEST"))
@@ -53,7 +47,7 @@ class AnimatedLEDStripTest {
     @Test
     fun testEndAnimation() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-
+        awaitPredefinedAnimationsLoaded()
         // RunningAnimation extension function
         val anim1 = testLEDs.startAnimation(
             AnimationData()
@@ -94,6 +88,7 @@ class AnimatedLEDStripTest {
     @Test
     fun testRunParallel() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+        awaitPredefinedAnimationsLoaded()
         val anim = AnimationData().animation("Color")
         @Suppress("EXPERIMENTAL_API_USAGE")
         val pool = newSingleThreadContext("Test Pool")
@@ -116,6 +111,7 @@ class AnimatedLEDStripTest {
     @Test
     fun testRunSequential() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+        awaitPredefinedAnimationsLoaded()
         val anim1 = AnimationData().animation("Color")
         val anim2 = AnimationData().animation("Alternate")
 

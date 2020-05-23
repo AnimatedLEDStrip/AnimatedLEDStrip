@@ -1,11 +1,19 @@
 package animatedledstrip.animationutils
 
 import animatedledstrip.utils.removeSpaces
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newFixedThreadPoolContext
 import org.pmw.tinylog.Logger
 import javax.script.ScriptException
 
 const val DEFAULT_DELAY = 50L
 const val DEFAULT_SPACING = 3
+
+@Suppress("EXPERIMENTAL_API_USAGE")
+val animationLoadingTreadPool =
+    newFixedThreadPoolContext(10, "Animation Loading Pool")
 
 val predefinedAnimations = listOf(
     "alternate",
@@ -33,13 +41,18 @@ val predefinedAnimations = listOf(
     "wipe"
 )
 
+var predefinedAnimLoadComplete: Boolean = false
+    private set
+
 val definedAnimations = mutableMapOf<String, Animation>()
+
+fun definedAnimationNames(): List<String> = definedAnimations.map { it.value.info.name }
 
 fun prepareAnimName(name: String): String = name.removeSpaces().replace("-", "").toLowerCase()
 
 fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
 
-fun defineNewAnimation(code: String) {
+fun defineNewAnimation(code: String, name: String) {
 
     fun String.toReqLevelOrNull(): ParamUsage? =
         when (this.toUpperCase()) {
@@ -120,7 +133,7 @@ fun defineNewAnimation(code: String) {
                         animDistanceDefault = identifiers[2].toIntOrNull()
                             ?: throw BadParamException("distance (bad default)", BadParamReason.INVALID_TYPE)
                     else
-                        Logger.warn("Param distance does not have a default, using full length of strip")
+                        Logger.warn("$name: Param distance does not have a default, using full length of strip")
             }
             "spacing" -> {
                 animSpacing = (identifiers.getOrNull(1)
@@ -131,7 +144,7 @@ fun defineNewAnimation(code: String) {
                         animSpacingDefault = identifiers[2].toIntOrNull()
                             ?: throw BadParamException("spacing (bad default)", BadParamReason.INVALID_TYPE)
                     else
-                        Logger.warn("Param spacing does not have a default, using $DEFAULT_SPACING")
+                        Logger.warn("$name: Param spacing does not have a default, using $DEFAULT_SPACING")
             }
         }
     }
@@ -161,6 +174,7 @@ fun defineNewAnimation(code: String) {
         )
 
         definedAnimations[prepareAnimName(anim.info.name)] = anim
+        Logger.info("Successfully loaded new animation ${anim.info.name}")
     } catch (e: ScriptException) {
         println("Error when compiling ${animInfo.name}:")
         println(e)
@@ -170,12 +184,25 @@ fun defineNewAnimation(code: String) {
 
 fun loadPredefinedAnimations(classLoader: ClassLoader) {
     if (definedAnimations.isNotEmpty()) return
-    for (animation in predefinedAnimations) {
-        val animCode = classLoader.getResource("animations/$animation.kts")?.readText() ?: run {
-            Logger.warn("Animation $animation resource file could not be found")
-            null
-        } ?: continue
+    Logger.info("Loading predefined animations")
 
-        defineNewAnimation(animCode)
+    GlobalScope.launch {
+        val jobs = predefinedAnimations.map { anim ->
+            launch(animationLoadingTreadPool) load@{
+                Logger.debug("Loading animation $anim")
+                val animCode = classLoader
+                    .getResource("animations/$anim.kts")
+                    ?.readText()
+                    ?: run {
+                        Logger.warn("Animation $anim resource file could not be found")
+                        null
+                    } ?: return@load
+
+                defineNewAnimation(animCode, anim)
+            }
+        }
+        jobs.joinAll()
+        Logger.info("Finished loading predefined animations")
+        predefinedAnimLoadComplete = true
     }
 }

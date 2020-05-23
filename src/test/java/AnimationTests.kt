@@ -32,12 +32,12 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import kotlin.test.assertNotNull
 
-class AnimationTests{
+class AnimationTests {
 
     @Test
     fun testColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(AnimationData().animation("Color").color(0xFF))
         assertNotNull(anim)
         delay(500)
@@ -49,7 +49,7 @@ class AnimationTests{
     @Test
     fun testAlternate() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Alternate")
@@ -68,7 +68,7 @@ class AnimationTests{
     @Test
     fun testBounce() = runBlocking {
         val testLEDs1 = EmulatedAnimatedLEDStrip(10).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs1.startAnimation(
             AnimationData()
                 .animation("Bounce")
@@ -98,7 +98,7 @@ class AnimationTests{
     @Test
     fun testBounceToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(10).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Bounce to Color")
@@ -115,7 +115,7 @@ class AnimationTests{
     @Test
     fun testCatToy() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Cat Toy")
@@ -132,7 +132,7 @@ class AnimationTests{
     @Test
     fun testCatToyToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(10).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Cat Toy to Color")
@@ -149,7 +149,7 @@ class AnimationTests{
     @Test
     fun testFadeToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Fade to Color")
@@ -166,7 +166,7 @@ class AnimationTests{
     @Test
     fun testFireworks() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Fireworks")
@@ -187,7 +187,7 @@ class AnimationTests{
     @Test
     fun testMeteor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Meteor")
@@ -217,7 +217,7 @@ class AnimationTests{
     @Test
     fun testMultiPixelRun() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Multi Pixel Run")
@@ -247,7 +247,7 @@ class AnimationTests{
     @Test
     fun testMultiPixelRunToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Multi Pixel Run to Color")
@@ -278,7 +278,7 @@ class AnimationTests{
     @Test
     fun testPixelMarathon() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Pixel Marathon")
@@ -299,7 +299,7 @@ class AnimationTests{
     @Test
     fun testPixelRun() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Pixel Run")
@@ -330,7 +330,7 @@ class AnimationTests{
     @Test
     fun testRipple() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Ripple")
@@ -360,7 +360,7 @@ class AnimationTests{
     @Test
     fun testSmoothChase() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Smooth Chase")
@@ -390,7 +390,7 @@ class AnimationTests{
     @Test
     fun testSmoothFade() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Smooth Fade")
@@ -420,7 +420,7 @@ class AnimationTests{
     @Test
     fun testSparkle() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Sparkle")
@@ -449,7 +449,7 @@ class AnimationTests{
     @Test
     fun testSparkleFade() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Sparkle Fade")
@@ -478,7 +478,7 @@ class AnimationTests{
     @Test
     fun testSparkleToColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Sparkle to Color")
@@ -494,7 +494,7 @@ class AnimationTests{
     @Test
     fun testSplat() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Splat")
@@ -525,7 +525,7 @@ class AnimationTests{
     @Test
     fun testStack() = runBlocking {
         val testLEDs1 = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs1.startAnimation(
             AnimationData()
                 .animation("Stack")
@@ -560,7 +560,7 @@ class AnimationTests{
     @Test
     fun testStackOverflow() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim = testLEDs.startAnimation(
             AnimationData()
                 .animation("Stack Overflow")
@@ -578,7 +578,7 @@ class AnimationTests{
     @Test
     fun testWipe() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+        awaitPredefinedAnimationsLoaded()
         val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Wipe")
