@@ -28,7 +28,6 @@ import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.StripInfo
 import com.google.gson.JsonSyntaxException
-import org.pmw.tinylog.Logger
 import java.nio.charset.Charset
 
 /* 24-bit to 32-bit conversion */
@@ -44,7 +43,7 @@ fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
 fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
 
 
-/* `Int`/`Long` to `ColorContainer` conversion */
+/* Int/Long to ColorContainer conversion */
 
 /**
  * Create a [ColorContainer] from this `Int`
@@ -91,6 +90,7 @@ fun StripInfo.json(): ByteArray =
 fun EndAnimation.json(): ByteArray =
     this.jsonString().toByteArray(Charset.forName("utf-8"))
 
+
 /* JSON parsing */
 
 /**
@@ -107,8 +107,7 @@ fun String?.jsonToAnimationData(): AnimationData {
             AnimationData::class.java
         )
     } catch (e: JsonSyntaxException) {
-        Logger.warn("Malformed JSON: $this")
-        throw e     // Re-throw exception so it can be handled by calling code
+        throw JsonSyntaxException("Malformed JSON: $this", e)
     }
 }
 
@@ -126,8 +125,7 @@ fun String?.jsonToStripInfo(): StripInfo {
             StripInfo::class.java
         )
     } catch (e: JsonSyntaxException) {
-        Logger.warn("Malformed JSON: $this")
-        throw e     // Re-throw exception so it can be handled by calling code
+        throw JsonSyntaxException("Malformed JSON: $this", e)
     }
 }
 
@@ -139,14 +137,13 @@ fun String?.jsonToEndAnimation(): EndAnimation {
             EndAnimation::class.java
         )
     } catch (e: JsonSyntaxException) {
-        Logger.warn("Malformed JSON: $this")
-        throw e     // Re-throw exception so it can be handled by calling code
+        throw JsonSyntaxException("Malformed JSON: $this", e)
     }
 }
 
 /**
  * Get the first four characters in the string (used to indicate the type of data,
- * i.e. `DATA`, `INFO`, `CMD ` (note extra space), etc.)
+ * i.e. `DATA`, `INFO`, `SECT`, `ANIM`, `END `, `CMD ` (note extra space), etc.)
  */
 fun String?.getDataTypePrefix(): String {
     checkNotNull(this)
