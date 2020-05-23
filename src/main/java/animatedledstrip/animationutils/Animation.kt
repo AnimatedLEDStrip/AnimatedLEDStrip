@@ -27,18 +27,49 @@ import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
 import javax.script.CompiledScript
 import javax.script.ScriptEngineManager
 
+/**
+ * Stores information about a defined animation, including information about it
+ * and the compiled script. Code is compiled when the class is initialized.
+ *
+ * @property rawCode A string with the code to compile for this animation
+ */
 data class Animation(
     val info: AnimationInfo,
     val rawCode: String
 ) {
 
+    /**
+     * The JSR223 scripting engine used to compile this animation and create
+     * bindings for it.
+     */
     val animationScriptingEngine: KotlinJsr223JvmLocalScriptEngine = run {
         setIdeaIoUseFallback()
         ScriptEngineManager().getEngineByExtension("kts")!! as KotlinJsr223JvmLocalScriptEngine
     }
 
+    /**
+     * The compiled animation script.
+     */
     val code: CompiledScript = animationScriptingEngine.compile(rawCode)
 
+    /**
+     * Stores information about an animation.
+     *
+     * @property name The name used to identify this animation
+     * @property abbr
+     * @property numReqColors The number of required colors for this animation
+     * @property numOptColors The number of optional colors for this animation
+     * @property repetitive Can this animation be repeated
+     *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive-vs-Radial)
+     * @property center Does this animation use the `center` parameter
+     * @property delay Does this animation use the `delay` parameter
+     * @property delayDefault Default value for the `delay` parameter
+     * @property direction Does this animation use the `direction` parameter
+     * @property distance Does this animation use the `distance` parameter
+     * @property distanceDefault Default value for the `distance` parameter
+     * @property spacing Does this animation use the `spacing` parameter
+     * @property spacingDefault Default value for the `spacing` parameter
+     */
     data class AnimationInfo(
         val name: String,
         val abbr: String,
@@ -57,6 +88,9 @@ data class Animation(
         val numColors: Int = numReqColors + numOptColors
     }
 
+    /**
+     * Only show the animation info but not the raw code when converted to a string.
+     */
     override fun toString(): String {
         return "Animation(info=$info)"
     }
