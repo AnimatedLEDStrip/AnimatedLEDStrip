@@ -294,6 +294,17 @@ fun AnimationData.id(id: String): AnimationData {
     return this
 }
 
+
+/**
+ * Set the `section` parameter.
+ *
+ * @param sectionId A `String` used to identify a section of the strip
+ */
+fun AnimationData.section(sectionId: String): AnimationData {
+    this.section = sectionId
+    return this
+}
+
 /**
  * Set the `spacing` parameter.
  *
