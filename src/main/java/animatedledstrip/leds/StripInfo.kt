@@ -43,6 +43,21 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int? = null,
-    val threadCount: Int? = null): Serializable {
-    val supportedAnimations = definedAnimations.map { it.value.info.name }
+    val threadCount: Int? = null
+) : Serializable {
+    val supportedAnimations
+        get() = definedAnimations.map { it.value.info.name }
+
+    fun toHumanReadableString() =
+        """
+            Strip Info:
+              numLEDS: $numLEDs
+              pin: $pin
+              imageDebugging: $imageDebugging
+              fileName: $fileName
+              rendersBeforeSave: $rendersBeforeSave
+              threadCount: $threadCount
+              supportedAnimations: $supportedAnimations
+            End Strip Info
+        """.trimIndent()
 }
