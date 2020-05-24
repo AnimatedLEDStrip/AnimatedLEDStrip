@@ -151,7 +151,7 @@ class AnimatedLEDStripTest {
 
         testLEDs.startAnimation(AnimationData().animation("Alternate").continuous(false).delay(10))
 
-        delayBlocking(100)
+        delayBlocking(500)
 
         assertTrue(indicator1)
         assertTrue(indicator2)
