@@ -135,8 +135,8 @@ class AnimatedLEDStripTest {
     fun testCallbacks() = runBlocking {
         var indicator1 = false
         var indicator2 = false
-        awaitPredefinedAnimationsLoaded()
         val testLEDs = EmulatedAnimatedLEDStrip(50)
+        awaitPredefinedAnimationsLoaded()
 
         testLEDs.startAnimationCallback = {
             indicator1 = true
