@@ -73,12 +73,18 @@ class AnimationData(
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
-    var delay: Long = delay
+    private var baseDelay: Long = delay
         get() {
-            return (when (field) {
+            return when (field) {
                 -1L, 0L -> findAnimation(animName = animation)?.info?.delayDefault ?: DEFAULT_DELAY
                 else -> field
-            } * delayMod).toLong()
+            }
+        }
+
+    var delay: Long
+        get() = (baseDelay * delayMod).toLong()
+        set(value) {
+            baseDelay = value
         }
 
 
@@ -148,7 +154,7 @@ class AnimationData(
         colors: List<ColorContainerInterface> = this.colors.toList(),
         center: Int = this.center,
         continuous: Boolean? = this.continuous,
-        delay: Long = this.delay,
+        delay: Long = this.baseDelay,
         delayMod: Double = this.delayMod,
         direction: Direction = this.direction,
         distance: Int = this.distance,
@@ -174,7 +180,7 @@ class AnimationData(
      */
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
-                "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
+                "delay=$baseDelay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
                 "id=$id, section=$section, spacing=$spacing)"
 
     /**
@@ -187,7 +193,7 @@ class AnimationData(
               colors: $colors
               center: $center
               continuous: $continuous
-              delay: $delay
+              delay: $baseDelay
               delayMod: $delayMod
               direction: $direction
               distance: $distance
