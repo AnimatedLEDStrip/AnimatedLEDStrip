@@ -25,6 +25,7 @@ package animatedledstrip.test
 import animatedledstrip.animationutils.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
+import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
@@ -128,7 +129,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testCallbacks() = runBlocking {
+    fun testCallbacks()  {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
@@ -146,7 +147,7 @@ class AnimatedLEDStripTest {
 
         testLEDs.startAnimation(AnimationData().animation("Alternate").continuous(false).delay(10))
 
-        delay(100)
+        delayBlocking(100)
 
         assertTrue(indicator1)
         assertTrue(indicator2)
