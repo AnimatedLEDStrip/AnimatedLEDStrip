@@ -164,6 +164,33 @@ class UtilsTest {
     }
 
     @Test
+    fun testAnimationDataToEndAnimation() {
+        val data = AnimationData(id = "Test")
+        val end = data.endAnimation()
+        assertTrue { data.id == end.id }
+    }
+
+    @Test
+    fun testEndAnimationJson() {
+        val end1 = EndAnimation(id = "test")
+        val endBytes = end1.json()
+
+        val end2 = endBytes.toUTF8(endBytes.size).jsonToEndAnimation()
+
+        assertTrue { end1 == end2 }
+
+        assertFailsWith<IllegalStateException> {
+            val nullBytes: String? = null
+            nullBytes.jsonToEndAnimation()
+        }
+
+        assertFailsWith<JsonSyntaxException> {
+            val incompleteJson = "END :{id:5"
+            incompleteJson.jsonToEndAnimation()
+        }
+    }
+
+    @Test
     fun testGetDataTypePrefix() {
         val info1 = StripInfo()
         val infoBytes = info1.jsonString()
@@ -178,29 +205,6 @@ class UtilsTest {
             nullBytes.getDataTypePrefix()
         }
     }
-
-//    @Test
-//    fun testGetAnimation() {
-//        val testStr = "Sparkle"
-//        assertTrue { testStr.getAnimation() == Animation.SPARKLE }
-//        assertTrue { testStr.getAnimationOrNull() == Animation.SPARKLE }
-//
-//
-//        val badTestStr = "Test"
-//
-//        assertFailsWith<KotlinNullPointerException> { badTestStr.getAnimation() }
-//        assertNull(badTestStr.getAnimationOrNull())
-//
-//        val testSpacedStr = "sparkle TO color"
-//
-//        assertTrue { testSpacedStr.getAnimation() == Animation.SPARKLETOCOLOR }
-//        assertTrue { testSpacedStr.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
-//
-//        val testSpacedStr2 = "s p a r k l e T O c o l o r"
-//
-//        assertTrue { testSpacedStr2.getAnimation() == Animation.SPARKLETOCOLOR }
-//        assertTrue { testSpacedStr2.getAnimationOrNull() == Animation.SPARKLETOCOLOR }
-//    }
 
     @Test
     fun testIterateOver() {
@@ -224,28 +228,4 @@ class UtilsTest {
         assertTrue(testVals2[2])
         assertTrue(testVals2[3])
     }
-
-//    @Test
-//    fun testIterateOverPixels() {
-//        val testVals1 = mutableListOf(false, false, false, false)
-//        val anim = AnimationData().startPixel(0).endPixel(3)
-//        iterateOverPixels(anim) {
-//            testVals1[it] = true
-//        }
-//
-//        assertTrue(testVals1[0])
-//        assertTrue(testVals1[1])
-//        assertTrue(testVals1[2])
-//        assertTrue(testVals1[3])
-//
-//        val testVals2 = mutableListOf(false, false, false, false)
-//        iterateOverPixelsReverse(anim) {
-//            testVals2[it] = true
-//        }
-//
-//        assertTrue(testVals2[0])
-//        assertTrue(testVals2[1])
-//        assertTrue(testVals2[2])
-//        assertTrue(testVals2[3])
-//    }
 }
