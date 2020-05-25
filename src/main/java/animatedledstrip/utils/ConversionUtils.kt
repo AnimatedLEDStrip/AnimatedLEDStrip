@@ -24,6 +24,7 @@ package animatedledstrip.utils
 
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.EndAnimation
+import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.gson
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.StripInfo
@@ -168,3 +169,11 @@ fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
  * Remove spaces from a `String`
  */
 fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
+
+
+fun String.toReqLevelOrNull(): ParamUsage? =
+    when (this.toUpperCase()) {
+        "USED" -> ParamUsage.USED
+        "NOTUSED" -> ParamUsage.NOTUSED
+        else -> null
+    }

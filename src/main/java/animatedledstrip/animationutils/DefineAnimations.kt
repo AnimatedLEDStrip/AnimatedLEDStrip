@@ -1,10 +1,8 @@
 package animatedledstrip.animationutils
 
 import animatedledstrip.utils.removeSpaces
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newFixedThreadPoolContext
+import animatedledstrip.utils.toReqLevelOrNull
+import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import javax.script.ScriptException
 
@@ -53,14 +51,31 @@ fun prepareAnimName(name: String): String = name.removeSpaces().replace("-", "")
 fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
 
 fun defineNewAnimation(code: String, name: String) {
+    val info = (Regex("// ## animation info ##[\\s\\S]*// ## end info ##")
+        .find(code)
+        ?: run { Logger.error("Could not find info for animation $name in $code"); return })
+        .groupValues[0]
 
-    fun String.toReqLevelOrNull(): ParamUsage? =
-        when (this.toUpperCase()) {
-            "USED" -> ParamUsage.USED
-            "NOTUSED" -> ParamUsage.NOTUSED
-            else -> null
-        }
+    try {
+        val animInfo = parseAnimationInfo(info, name)
 
+        val anim = Animation(
+            animInfo,
+            code
+        )
+
+        definedAnimations[prepareAnimName(anim.info.name)] = anim
+        Logger.info("Successfully loaded new animation ${anim.info.name}")
+    } catch (e: BadParamException) {
+        Logger.error(e.toString())
+    } catch (e: ScriptException) {
+        Logger.error("Error when compiling ${name}:")
+        Logger.error(e.toString())
+        Logger.error(e.stackTrace)
+    }
+}
+
+fun parseAnimationInfo(info: String, name: String): Animation.AnimationInfo {
     var animName: String? = null
     var animAbbr: String? = null
     var animReqColors = 0
@@ -75,74 +90,70 @@ fun defineNewAnimation(code: String, name: String) {
     var animSpacing = ParamUsage.NOTUSED
     var animSpacingDefault = DEFAULT_SPACING
 
-    val info = (Regex("// ## animation info ##[\\s\\S]*// ## end info ##").find(code)
-        ?: throw Exception("Could not find info in $code")).groupValues[0]
-
     parse@ for (line in info.split(Regex("[\\r\\n]"))) {
         val identifiers = line.removePrefix("// ").split(" ")
-        when (identifiers[0]) {
+        when (identifiers.getOrNull(0)) {
+            null -> continue@parse
             "name" -> animName =
-                if (identifiers.size > 1)
-                    line.removePrefix("// name ")
-                else
-                    throw BadParamException("name", BadParamReason.NOT_ENOUGH_ARGS)
+                if (identifiers.size > 1) line.removePrefix("// name ")
+                else throw BadParamNotEnoughArgsException("name")
             "abbr" -> animAbbr = identifiers.getOrNull(1)
-                ?: throw BadParamException("abbr", BadParamReason.NOT_ENOUGH_ARGS)
+                ?: throw BadParamNotEnoughArgsException("abbr")
             "colors" -> animReqColors =
                 (identifiers.getOrNull(1)
-                    ?: throw BadParamException("colors", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("colors"))
                     .toIntOrNull()
-                    ?: throw BadParamException("colors", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamInvalidTypeException("colors")
             "optColors" -> animOptColors =
                 (identifiers.getOrNull(1)
-                    ?: throw BadParamException("optColors", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("optColors"))
                     .toIntOrNull()
-                    ?: throw BadParamException("optColors", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamInvalidTypeException("optColors")
             "repetitive" -> animRepetitive =
                 (identifiers.getOrNull(1)
-                    ?: throw BadParamException("repetitive", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("repetitive"))
                     .toBoolean()
             "center" -> animCenter =
                 (identifiers.getOrNull(1)
-                    ?: throw BadParamException("center", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("center"))
                     .toReqLevelOrNull()
-                    ?: throw BadParamException("center", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamInvalidTypeException("center")
             "delay" -> {
                 animDelay = (identifiers.getOrNull(1)
-                    ?: throw BadParamException("delay", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("delay"))
                     .toReqLevelOrNull()
-                    ?: throw BadParamException("delay", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamInvalidTypeException("delay")
                 if (animDelay == ParamUsage.USED)
                     if (identifiers.size > 2)
                         animDelayDefault = identifiers[2].toLongOrNull()
-                            ?: throw BadParamException("delay (bad default)", BadParamReason.INVALID_TYPE)
+                            ?: throw BadParamInvalidTypeException("delay (bad default)")
                     else
-                        Logger.warn("Param delay does not have a default, using $DEFAULT_DELAY")
+                        Logger.warn("$name: Param delay does not have a default, using $DEFAULT_DELAY")
             }
             "direction" -> animDirection =
                 (identifiers.getOrNull(1)
-                    ?: throw BadParamException("direction", BadParamReason.NOT_ENOUGH_ARGS))
+                    ?: throw BadParamNotEnoughArgsException("direction"))
                     .toReqLevelOrNull()
-                    ?: throw BadParamException("direction", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamInvalidTypeException("direction")
             "distance" -> {
                 animDistance = (identifiers.getOrNull(1)
-                    ?: throw BadParamException("distance", BadParamReason.NOT_ENOUGH_ARGS))
-                    .toReqLevelOrNull() ?: throw BadParamException("distance", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamNotEnoughArgsException("distance"))
+                    .toReqLevelOrNull() ?: throw BadParamInvalidTypeException("distance")
                 if (animDistance == ParamUsage.USED)
                     if (identifiers.size > 2)
                         animDistanceDefault = identifiers[2].toIntOrNull()
-                            ?: throw BadParamException("distance (bad default)", BadParamReason.INVALID_TYPE)
+                            ?: throw BadParamInvalidTypeException("distance (bad default)")
                     else
                         Logger.warn("$name: Param distance does not have a default, using full length of strip")
             }
             "spacing" -> {
                 animSpacing = (identifiers.getOrNull(1)
-                    ?: throw BadParamException("spacing", BadParamReason.NOT_ENOUGH_ARGS))
-                    .toReqLevelOrNull() ?: throw BadParamException("spacing", BadParamReason.INVALID_TYPE)
+                    ?: throw BadParamNotEnoughArgsException("spacing"))
+                    .toReqLevelOrNull() ?: throw BadParamInvalidTypeException("spacing")
                 if (animSpacing == ParamUsage.USED)
                     if (identifiers.size > 2)
                         animSpacingDefault = identifiers[2].toIntOrNull()
-                            ?: throw BadParamException("spacing (bad default)", BadParamReason.INVALID_TYPE)
+                            ?: throw BadParamInvalidTypeException("spacing (bad default)")
                     else
                         Logger.warn("$name: Param spacing does not have a default, using $DEFAULT_SPACING")
             }
@@ -151,9 +162,9 @@ fun defineNewAnimation(code: String, name: String) {
 
     /* Create Animation */
 
-    val animInfo = Animation.AnimationInfo(
-        animName ?: throw BadParamException("name", BadParamReason.MISSING),
-        animAbbr ?: throw BadParamException("abbr", BadParamReason.MISSING),
+    return Animation.AnimationInfo(
+        animName ?: throw MissingParamException("name"),
+        animAbbr ?: throw MissingParamException("abbr"),
         animReqColors,
         animOptColors,
         animRepetitive,
@@ -166,20 +177,6 @@ fun defineNewAnimation(code: String, name: String) {
         animSpacing,
         animSpacingDefault
     )
-
-    try {
-        val anim = Animation(
-            animInfo,
-            code
-        )
-
-        definedAnimations[prepareAnimName(anim.info.name)] = anim
-        Logger.info("Successfully loaded new animation ${anim.info.name}")
-    } catch (e: ScriptException) {
-        println("Error when compiling ${animInfo.name}:")
-        println(e)
-        e.printStackTrace()
-    }
 }
 
 fun loadPredefinedAnimations(classLoader: ClassLoader) {
@@ -187,22 +184,25 @@ fun loadPredefinedAnimations(classLoader: ClassLoader) {
     Logger.info("Loading predefined animations")
 
     GlobalScope.launch {
-        val jobs = predefinedAnimations.map { anim ->
-            launch(animationLoadingTreadPool) load@{
-                Logger.debug("Loading animation $anim")
-                val animCode = classLoader
-                    .getResource("animations/$anim.kts")
-                    ?.readText()
-                    ?: run {
-                        Logger.warn("Animation $anim resource file could not be found")
-                        null
-                    } ?: return@load
-
-                defineNewAnimation(animCode, anim)
-            }
-        }
-        jobs.joinAll()
+        predefinedAnimations.map { anim ->
+            loadPredefinedAnimation(classLoader, anim)
+        }.joinAll()
         Logger.info("Finished loading predefined animations")
         predefinedAnimLoadComplete = true
     }
 }
+
+fun CoroutineScope.loadPredefinedAnimation(classLoader: ClassLoader, anim: String): Job =
+    launch(animationLoadingTreadPool) load@{
+        Logger.debug("Loading animation $anim")
+        val animCode = classLoader
+            .getResource("animations/$anim.kts")
+            ?.readText()
+            ?: run {
+                Logger.warn("Animation $anim resource file could not be found")
+                null
+            } ?: return@load
+
+        defineNewAnimation(animCode, anim)
+    }
+

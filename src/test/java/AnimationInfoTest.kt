@@ -22,34 +22,29 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.ParamUsage
-import org.junit.Test
-import kotlin.test.assertTrue
-
 class AnimationInfoTest {
 
-    @Suppress("SimplifyBooleanWithConstants")
-    @Test
-    fun testDefaultConstruction() {
-        val ai = Animation.AnimationInfo(
-            name = "TEST",
-            abbr = "TST"
-        )
-
-        assertTrue { ai.name == "TEST" }
-        assertTrue { ai.abbr == "TST" }
-        assertTrue { ai.numReqColors == 0 }
-        assertTrue { ai.numOptColors == 0 }
-        assertTrue { ai.numColors == 0 }
-        assertTrue { ai.center == ParamUsage.NOTUSED }
-        assertTrue { ai.delay == ParamUsage.NOTUSED }
-        assertTrue { ai.delayDefault == 0L }
-        assertTrue { ai.direction == ParamUsage.NOTUSED }
-        assertTrue { ai.distance == ParamUsage.NOTUSED }
-        assertTrue { ai.repetitive == false }
-        assertTrue { ai.spacing == ParamUsage.NOTUSED }
-        assertTrue { ai.spacingDefault == 0 }
-    }
+//    @Suppress("SimplifyBooleanWithConstants")
+//    @Test
+//    fun testDefaultConstruction() {
+//        val ai = Animation.AnimationInfo(
+//            name = "TEST",
+//            abbr = "TST"
+//        )
+//
+//        assertTrue { ai.name == "TEST" }
+//        assertTrue { ai.abbr == "TST" }
+//        assertTrue { ai.numReqColors == 0 }
+//        assertTrue { ai.numOptColors == 0 }
+//        assertTrue { ai.numColors == 0 }
+//        assertTrue { ai.center == ParamUsage.NOTUSED }
+//        assertTrue { ai.delay == ParamUsage.NOTUSED }
+//        assertTrue { ai.delayDefault == 0L }
+//        assertTrue { ai.direction == ParamUsage.NOTUSED }
+//        assertTrue { ai.distance == ParamUsage.NOTUSED }
+//        assertTrue { ai.repetitive == false }
+//        assertTrue { ai.spacing == ParamUsage.NOTUSED }
+//        assertTrue { ai.spacingDefault == 0 }
+//    }
 
 }

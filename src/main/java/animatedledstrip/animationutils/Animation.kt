@@ -73,17 +73,17 @@ data class Animation(
     data class AnimationInfo(
         val name: String,
         val abbr: String,
-        val numReqColors: Int = 0,
-        val numOptColors: Int = 0,
-        val repetitive: Boolean = false,
-        val center: ParamUsage = ParamUsage.NOTUSED,
-        val delay: ParamUsage = ParamUsage.NOTUSED,
-        val delayDefault: Long = 0,
-        val direction: ParamUsage = ParamUsage.NOTUSED,
-        val distance: ParamUsage = ParamUsage.NOTUSED,
-        val distanceDefault: Int = 0,
-        val spacing: ParamUsage = ParamUsage.NOTUSED,
-        val spacingDefault: Int = 0
+        val numReqColors: Int,
+        val numOptColors: Int,
+        val repetitive: Boolean,
+        val center: ParamUsage,
+        val delay: ParamUsage,
+        val delayDefault: Long,
+        val direction: ParamUsage,
+        val distance: ParamUsage,
+        val distanceDefault: Int,
+        val spacing: ParamUsage,
+        val spacingDefault: Int
     ) {
         val numColors: Int = numReqColors + numOptColors
     }
