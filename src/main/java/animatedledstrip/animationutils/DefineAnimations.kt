@@ -105,8 +105,7 @@ fun parseAnimationInfo(info: String, name: String): Animation.AnimationInfo {
 
     parse@ for (line in info.split(Regex("[\\r\\n]"))) {
         val identifiers = line.removePrefix("// ").split(" ")
-        when (identifiers.getOrNull(0)) {
-            null -> continue@parse
+        when (identifiers[0]) {
             "name" -> animName =
                 if (identifiers.size > 1) line.removePrefix("// name ")
                 else throw BadParamNotEnoughArgsException("name")

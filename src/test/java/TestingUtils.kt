@@ -33,35 +33,46 @@ import org.pmw.tinylog.writers.LogEntryValue
 import org.pmw.tinylog.writers.Writer
 import kotlin.test.assertTrue
 
-fun checkAllPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    testLEDs.pixelTemporaryColorList.forEach {
+
+fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
+    assertAllTemporaryPixels(color)
+    assertAllProlongedPixels(color)
+}
+
+fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
+    pixelTemporaryColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelTemporaryColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelTemporaryColorList"
         ) { it == color }
     }
 }
 
-fun checkAllProlongedPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    testLEDs.pixelProlongedColorList.forEach {
+fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
+    pixelProlongedColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelProlongedColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelProlongedColorList"
         ) { it == color }
     }
 }
 
-fun checkPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    leds.forEach {
+fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, color: Long) {
+    assertTemporaryPixels(indices, color)
+    assertProlongedPixels(indices, color)
+}
+
+fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Long) {
+    indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelTemporaryColorList}"
-        ) { testLEDs.pixelTemporaryColorList[it] == color }
+            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelTemporaryColorList"
+        ) { pixelTemporaryColorList[it] == color }
     }
 }
 
-fun checkProlongedPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    leds.forEach {
+fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Long) {
+    indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelProlongedColorList}"
-        ) { testLEDs.pixelProlongedColorList[it] == color }
+            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelProlongedColorList"
+        ) { pixelProlongedColorList[it] == color }
     }
 }
 
@@ -92,12 +103,16 @@ object TestLogWriter : Writer {
     fun assertLogs(expectedLogs: Set<Pair<Level, String>>) {
         val actualLogs = logs.map { Pair(it.level, it.message) }.toSet()
 
-        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-                "extra values in expected: ${expectedLogs.minus(actualLogs)}") {
+        assertTrue(
+            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                    "extra values in expected: ${expectedLogs.minus(actualLogs)}"
+        ) {
             actualLogs.containsAll(expectedLogs)
         }
-        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-                "extra values in actual: ${actualLogs.minus(expectedLogs)}") {
+        assertTrue(
+            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                    "extra values in actual: ${actualLogs.minus(expectedLogs)}"
+        ) {
             expectedLogs.containsAll(actualLogs)
         }
     }

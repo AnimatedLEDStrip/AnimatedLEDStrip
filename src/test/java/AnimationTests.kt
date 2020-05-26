@@ -43,7 +43,7 @@ class AnimationTests {
         delay(500)
         anim.endAnimation()
         anim.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
     }
 
     @Test
@@ -109,7 +109,7 @@ class AnimationTests {
         delay(100)
         anim.endAnimation()
         anim.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
     }
 
     @Test
@@ -143,7 +143,7 @@ class AnimationTests {
         delay(100)
         anim.endAnimation()
         anim.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
     }
 
     @Test
@@ -259,7 +259,7 @@ class AnimationTests {
         delay(100)
         anim1.endAnimation()
         anim1.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
 
         val anim2 = testLEDs.startAnimation(
             AnimationData()
@@ -272,7 +272,7 @@ class AnimationTests {
         delay(100)
         anim2.endAnimation()
         anim2.join()
-        checkAllPixels(testLEDs, 0xFF00)
+        testLEDs.assertAllPixels(0xFF00)
     }
 
     @Test
@@ -488,7 +488,7 @@ class AnimationTests {
         delay(100)
         anim?.endAnimation()
         anim?.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
     }
 
     @Test
@@ -507,7 +507,7 @@ class AnimationTests {
         delay(500)
         anim1.endAnimation()
         anim1.join()
-        checkPixels(6..25, testLEDs, 0xFFFF)
+        testLEDs.assertPixels(6..25, 0xFFFF)
 
         val anim2 = testLEDs.startAnimation(
             AnimationData()
@@ -519,7 +519,7 @@ class AnimationTests {
         delay(500)
         anim2.endAnimation()
         anim2.join()
-        checkAllPixels(testLEDs, 0xFF00)
+        testLEDs.assertAllPixels(0xFF00)
     }
 
     @Test
@@ -553,8 +553,8 @@ class AnimationTests {
         anim1.join()
         anim2.join()
 
-        checkAllPixels(testLEDs1, 0xFF)
-        checkAllPixels(testLEDs2, 0xFF00)
+        testLEDs1.assertAllPixels(0xFF)
+        testLEDs2.assertAllPixels(0xFF00)
     }
 
     @Test
@@ -590,7 +590,7 @@ class AnimationTests {
         delay(100)
         anim1.endAnimation()
         anim1.join()
-        checkAllPixels(testLEDs, 0xFF)
+        testLEDs.assertAllPixels(0xFF)
 
         val anim2 = testLEDs.startAnimation(
             AnimationData()
@@ -603,7 +603,7 @@ class AnimationTests {
         delay(100)
         anim2.endAnimation()
         anim2.join()
-        checkAllPixels(testLEDs, 0xFF00)
+        testLEDs.assertAllPixels(0xFF00)
     }
 
     @Test
