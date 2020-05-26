@@ -44,20 +44,34 @@ var predefinedAnimLoadComplete: Boolean = false
 
 val definedAnimations = mutableMapOf<String, Animation>()
 
+internal fun removeAllAnimations() {
+    definedAnimations.clear()
+    predefinedAnimLoadComplete = false
+}
+
 fun definedAnimationNames(): List<String> = definedAnimations.map { it.value.info.name }
 
-fun prepareAnimName(name: String): String = name.removeSpaces().replace("-", "").toLowerCase()
+fun prepareAnimName(name: String): String =
+    name.removeSpaces()
+        .replace("-", "")
+        .replace("_", "")
+        .toLowerCase()
 
 fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
 
 fun defineNewAnimation(code: String, name: String) {
     val info = (Regex("// ## animation info ##[\\s\\S]*// ## end info ##")
         .find(code)
-        ?: run { Logger.error("Could not find info for animation $name in $code"); return })
+        ?: run { Logger.error("Could not find info for animation $name in provided code"); return })
         .groupValues[0]
 
     try {
         val animInfo = parseAnimationInfo(info, name)
+
+        if (definedAnimations.keys.contains(prepareAnimName(animInfo.name))) {
+            Logger.error("Animation ${animInfo.name} already exists")
+            return
+        }
 
         val anim = Animation(
             animInfo,
@@ -71,7 +85,6 @@ fun defineNewAnimation(code: String, name: String) {
     } catch (e: ScriptException) {
         Logger.error("Error when compiling ${name}:")
         Logger.error(e.toString())
-        Logger.error(e.stackTrace)
     }
 }
 
@@ -200,8 +213,8 @@ fun CoroutineScope.loadPredefinedAnimation(classLoader: ClassLoader, anim: Strin
             ?.readText()
             ?: run {
                 Logger.warn("Animation $anim resource file could not be found")
-                null
-            } ?: return@load
+                return@load
+            }
 
         defineNewAnimation(animCode, anim)
     }

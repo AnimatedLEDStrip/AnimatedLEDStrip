@@ -26,6 +26,7 @@ import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
 import org.pmw.tinylog.Configuration
+import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
 import org.pmw.tinylog.LogEntry
 import org.pmw.tinylog.writers.LogEntryValue
@@ -68,7 +69,9 @@ fun awaitPredefinedAnimationsLoaded() {
     while (!predefinedAnimLoadComplete) delayBlocking(250)
 }
 
-class TestLogWriter : Writer {
+/* Log Testing */
+
+object TestLogWriter : Writer {
     private val logs = mutableSetOf<LogEntry>()
 
     fun clearLogs() = logs.clear()
@@ -86,15 +89,29 @@ class TestLogWriter : Writer {
 
     override fun close() {}
 
-    fun checkLogs(expectedLogs: Set<Pair<Level, String>>) {
+    fun assertLogs(expectedLogs: Set<Pair<Level, String>>) {
         val actualLogs = logs.map { Pair(it.level, it.message) }.toSet()
 
-        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs") {
+        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                "extra values in expected: ${expectedLogs.minus(actualLogs)}") {
             actualLogs.containsAll(expectedLogs)
         }
-        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs") {
+        assertTrue("logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                "extra values in actual: ${actualLogs.minus(expectedLogs)}") {
             expectedLogs.containsAll(actualLogs)
         }
     }
-
 }
+
+fun startLogCapture() {
+    Configurator.currentConfig().addWriter(TestLogWriter, Level.DEBUG).activate()
+    TestLogWriter.clearLogs()
+}
+
+fun stopLogCapture() {
+    Configurator.currentConfig().removeWriter(TestLogWriter).activate()
+}
+
+fun assertLogs(expectedLogs: Set<Pair<Level, String>>) = TestLogWriter.assertLogs(expectedLogs)
+
+fun clearLogs() = TestLogWriter.clearLogs()

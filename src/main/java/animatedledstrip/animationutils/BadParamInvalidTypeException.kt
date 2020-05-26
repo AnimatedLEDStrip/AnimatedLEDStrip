@@ -1,4 +1,4 @@
 package animatedledstrip.animationutils
 
 class BadParamInvalidTypeException(param: String) :
-    BadParamException("Invalid parameter $param")
+    BadParamException("Invalid type for parameter $param")

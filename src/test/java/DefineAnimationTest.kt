@@ -1,31 +1,180 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class DefineAnimationTest {
 
-    private val testLogs = TestLogWriter()
     private val baseStr = "// name Test\n// abbr T\n"
+    private val extendedBaseStr = "// ## animation info ##\n${baseStr}\n// ## end info ##"
+
+    @Test
+    fun testDefinedAnimationNames() {
+        loadPredefinedAnimations(this::class.java.classLoader)
+        awaitPredefinedAnimationsLoaded()
+
+        assertTrue {
+            definedAnimationNames().containsAll(
+                listOf(
+                    "Alternate",
+                    "Bounce",
+                    "Bounce To Color",
+                    "Cat Toy",
+                    "Cat Toy To Color",
+                    "Color",
+                    "Fade To Color",
+                    "Fireworks",
+                    "Meteor",
+                    "Multi Pixel Run",
+                    "Multi Pixel Run To Color",
+                    "Pixel Marathon",
+                    "Pixel Run",
+                    "Ripple",
+                    "Smooth Chase",
+                    "Smooth Fade",
+                    "Sparkle",
+                    "Sparkle Fade",
+                    "Sparkle To Color",
+                    "Splat",
+                    "Stack",
+                    "Stack Overflow",
+                    "Wipe"
+                )
+            )
+        }
+    }
+
+    @Test
+    fun testPrepareAnimName() {
+        assertTrue { prepareAnimName("T-e-S_T") == "test" }
+        assertTrue { prepareAnimName("test") == "test" }
+    }
+
+    @Test
+    fun testFindAnimation() {
+        assertNull(findAnimation("TEST"))
+        defineNewAnimation("${extendedBaseStr}\nval x = 4 + 4", "Test")
+        assertNotNull(findAnimation("TEST"))
+        definedAnimations.remove("test")
+    }
+
+
+    /* defineAnimation() */
 
     @Test
     fun testDefineNewAnimationMissingInfo() {
+        startLogCapture()
 
+        defineNewAnimation("", "Test")
+        assertLogs(setOf(Pair(Level.ERROR, "Could not find info for animation Test in provided code")))
 
+        stopLogCapture()
     }
 
+    @Test
+    fun testDefineNewAnimationBadInfo() {
+        startLogCapture()
+
+        defineNewAnimation("// ## animation info ##\n${baseStr}// center\n// ## end info ##", "Test")
+        assertLogs(
+            setOf(
+                Pair(
+                    Level.ERROR,
+                    "animatedledstrip.animationutils.BadParamNotEnoughArgsException: Not enough arguments for center"
+                )
+            )
+        )
+
+        clearLogs()
+
+        defineNewAnimation("// ## animation info ##\n// ## end info ##", "Test")
+        assertLogs(
+            setOf(
+                Pair(
+                    Level.ERROR,
+                    "animatedledstrip.animationutils.MissingParamException: Missing required parameter name"
+                )
+            )
+        )
+
+        clearLogs()
+
+        defineNewAnimation("// ## animation info ##\n${baseStr}// colors x\n// ## end info ##", "Test")
+        assertLogs(
+            setOf(
+                Pair(
+                    Level.ERROR,
+                    "animatedledstrip.animationutils.BadParamInvalidTypeException: Invalid type for parameter colors"
+                )
+            )
+        )
+
+        stopLogCapture()
+    }
+
+    @Test
+    fun testDefineNewAnimationBadCode() {
+        startLogCapture()
+
+        defineNewAnimation("${extendedBaseStr}\nval x = 4 + ", "Test")
+        assertLogs(
+            setOf(
+                Pair(Level.ERROR, "Error when compiling Test:"),
+                Pair(Level.ERROR, "javax.script.ScriptException: error: incomplete code")
+            )
+        )
+
+        stopLogCapture()
+    }
+
+    @Test
+    fun testDefineNewAnimationExists() {
+        startLogCapture()
+
+        defineNewAnimation("${extendedBaseStr}\nval x = 4 + 4", "Test")
+        defineNewAnimation("${extendedBaseStr}\nval x = 4 + 4", "Test")
+        assertLogs(
+            setOf(
+                Pair(Level.INFO, "Successfully loaded new animation Test"),
+                Pair(Level.ERROR, "Animation Test already exists")
+            )
+        )
+        assertTrue { definedAnimations.containsKey("test") }
+        definedAnimations.remove("test")
+        assertFalse { definedAnimations.containsKey("test") }
+
+        stopLogCapture()
+    }
+
+    @Test
+    fun testDefineNewAnimationSuccess() {
+        startLogCapture()
+
+        defineNewAnimation("${extendedBaseStr}\nval x = 4 + 4", "Test")
+        assertLogs(
+            setOf(
+                Pair(Level.INFO, "Successfully loaded new animation Test")
+            )
+        )
+        assertTrue { definedAnimations.containsKey("test") }
+        definedAnimations.remove("test")
+        assertFalse { definedAnimations.containsKey("test") }
+
+        stopLogCapture()
+    }
+
+
+    /* parseAnimationInfo() */
 
     @Test
     fun testParseAnimationInfoName() {
         val info1 = parseAnimationInfo("// name Test\n// abbr T\n", "Test")
         assertTrue { info1.name == "Test" }
 
-        val info2 = parseAnimationInfo("// name Test TEST\n// abbr T\n", "Test")
+        val info2 = parseAnimationInfo("// \n// name Test TEST\n// abbr T\n", "Test")
         assertTrue { info2.name == "Test TEST" }
 
         assertFailsWith<BadParamNotEnoughArgsException> {
@@ -117,8 +266,7 @@ class DefineAnimationTest {
 
     @Test
     fun testParseAnimationInfoDelay() {
-        Configurator.currentConfig().addWriter(testLogs, Level.DEBUG).activate()
-        testLogs.clearLogs()
+        startLogCapture()
 
         val info1 = parseAnimationInfo(baseStr, "Test")
         assertTrue { info1.delay == ParamUsage.NOTUSED }
@@ -129,7 +277,7 @@ class DefineAnimationTest {
         val info3 = parseAnimationInfo("${baseStr}// delay used", "Test")
         assertTrue { info3.delay == ParamUsage.USED }
         assertTrue { info3.delayDefault == DEFAULT_DELAY }
-        testLogs.checkLogs(setOf(Pair(Level.WARNING, "Test: Param delay does not have a default, using 50")))
+        assertLogs(setOf(Pair(Level.WARNING, "Test: Param delay does not have a default, using 50")))
 
         val info4 = parseAnimationInfo("${baseStr}// delay used 5", "Test")
         assertTrue { info4.delay == ParamUsage.USED }
@@ -147,7 +295,7 @@ class DefineAnimationTest {
             parseAnimationInfo("${baseStr}// delay used x", "Test")
         }
 
-        Configurator.currentConfig().removeWriter(testLogs).activate()
+        stopLogCapture()
     }
 
     @Test
@@ -173,8 +321,7 @@ class DefineAnimationTest {
 
     @Test
     fun testParseAnimationInfoDistance() {
-        Configurator.currentConfig().addWriter(testLogs, Level.DEBUG).activate()
-        testLogs.clearLogs()
+        startLogCapture()
 
         val info1 = parseAnimationInfo(baseStr, "Test")
         assertTrue { info1.distance == ParamUsage.NOTUSED }
@@ -185,7 +332,7 @@ class DefineAnimationTest {
         val info3 = parseAnimationInfo("${baseStr}// distance used", "Test")
         assertTrue { info3.distance == ParamUsage.USED }
         assertTrue { info3.distanceDefault == -1 }
-        testLogs.checkLogs(
+        assertLogs(
             setOf(Pair(Level.WARNING, "Test: Param distance does not have a default, using full length of strip"))
         )
 
@@ -205,13 +352,12 @@ class DefineAnimationTest {
             parseAnimationInfo("${baseStr}// distance used x", "Test")
         }
 
-        Configurator.currentConfig().removeWriter(testLogs).activate()
+        stopLogCapture()
     }
 
     @Test
     fun testParseAnimationInfoSpacing() {
-        Configurator.currentConfig().addWriter(testLogs, Level.DEBUG).activate()
-        testLogs.clearLogs()
+        startLogCapture()
 
         val info1 = parseAnimationInfo(baseStr, "Test")
         assertTrue { info1.spacing == ParamUsage.NOTUSED }
@@ -222,7 +368,7 @@ class DefineAnimationTest {
         val info3 = parseAnimationInfo("${baseStr}// spacing used", "Test")
         assertTrue { info3.spacing == ParamUsage.USED }
         assertTrue { info3.spacingDefault == DEFAULT_SPACING }
-        testLogs.checkLogs(
+        assertLogs(
             setOf(Pair(Level.WARNING, "Test: Param spacing does not have a default, using 3"))
         )
 
@@ -242,6 +388,95 @@ class DefineAnimationTest {
             parseAnimationInfo("${baseStr}// spacing used x", "Test")
         }
 
-        Configurator.currentConfig().removeWriter(testLogs).activate()
+        stopLogCapture()
     }
+
+
+    /* Load Predefined Animations */
+
+    @Test
+    fun testLoadPredefinedAnimations() {
+        removeAllAnimations()
+        startLogCapture()
+
+        assertFalse { predefinedAnimLoadComplete }
+        loadPredefinedAnimations(this::class.java.classLoader)
+        awaitPredefinedAnimationsLoaded()
+        assertTrue { predefinedAnimLoadComplete }
+
+        assertLogs(
+            setOf(
+                Pair(Level.INFO, "Loading predefined animations"),
+                Pair(Level.DEBUG, "Loading animation alternate"),
+                Pair(Level.INFO, "Successfully loaded new animation Alternate"),
+                Pair(Level.DEBUG, "Loading animation bounce"),
+                Pair(Level.INFO, "Successfully loaded new animation Bounce"),
+                Pair(Level.DEBUG, "Loading animation bounce_to_color"),
+                Pair(Level.INFO, "Successfully loaded new animation Bounce To Color"),
+                Pair(Level.DEBUG, "Loading animation cat_toy"),
+                Pair(Level.INFO, "Successfully loaded new animation Cat Toy"),
+                Pair(Level.DEBUG, "Loading animation cat_toy_to_color"),
+                Pair(Level.INFO, "Successfully loaded new animation Cat Toy To Color"),
+                Pair(Level.DEBUG, "Loading animation color"),
+                Pair(Level.INFO, "Successfully loaded new animation Color"),
+                Pair(Level.DEBUG, "Loading animation fade_to_color"),
+                Pair(Level.INFO, "Successfully loaded new animation Fade To Color"),
+                Pair(Level.DEBUG, "Loading animation fireworks"),
+                Pair(Level.INFO, "Successfully loaded new animation Fireworks"),
+                Pair(Level.DEBUG, "Loading animation meteor"),
+                Pair(Level.INFO, "Successfully loaded new animation Meteor"),
+                Pair(Level.DEBUG, "Loading animation multi_pixel_run"),
+                Pair(Level.INFO, "Successfully loaded new animation Multi Pixel Run"),
+                Pair(Level.DEBUG, "Loading animation multi_pixel_run_to_color"),
+                Pair(Level.INFO, "Successfully loaded new animation Multi Pixel Run To Color"),
+                Pair(Level.DEBUG, "Loading animation pixel_marathon"),
+                Pair(Level.INFO, "Successfully loaded new animation Pixel Marathon"),
+                Pair(Level.DEBUG, "Loading animation pixel_run"),
+                Pair(Level.INFO, "Successfully loaded new animation Pixel Run"),
+                Pair(Level.DEBUG, "Loading animation ripple"),
+                Pair(Level.WARNING, "ripple: Param distance does not have a default, using full length of strip"),
+                Pair(Level.INFO, "Successfully loaded new animation Ripple"),
+                Pair(Level.DEBUG, "Loading animation smooth_chase"),
+                Pair(Level.INFO, "Successfully loaded new animation Smooth Chase"),
+                Pair(Level.DEBUG, "Loading animation smooth_fade"),
+                Pair(Level.INFO, "Successfully loaded new animation Smooth Fade"),
+                Pair(Level.DEBUG, "Loading animation sparkle"),
+                Pair(Level.INFO, "Successfully loaded new animation Sparkle"),
+                Pair(Level.DEBUG, "Loading animation sparkle_fade"),
+                Pair(Level.INFO, "Successfully loaded new animation Sparkle Fade"),
+                Pair(Level.DEBUG, "Loading animation sparkle_to_color"),
+                Pair(Level.INFO, "Successfully loaded new animation Sparkle To Color"),
+                Pair(Level.DEBUG, "Loading animation splat"),
+                Pair(Level.WARNING, "splat: Param distance does not have a default, using full length of strip"),
+                Pair(Level.INFO, "Successfully loaded new animation Splat"),
+                Pair(Level.DEBUG, "Loading animation stack"),
+                Pair(Level.INFO, "Successfully loaded new animation Stack"),
+                Pair(Level.DEBUG, "Loading animation stack_overflow"),
+                Pair(Level.INFO, "Successfully loaded new animation Stack Overflow"),
+                Pair(Level.DEBUG, "Loading animation wipe"),
+                Pair(Level.INFO, "Successfully loaded new animation Wipe"),
+                Pair(Level.INFO, "Finished loading predefined animations")
+            )
+        )
+
+        stopLogCapture()
+    }
+
+    @Test
+    fun testLoadPredefinedAnimationFileNotFound() {
+        startLogCapture()
+        runBlocking {
+            loadPredefinedAnimation(this@DefineAnimationTest::class.java.classLoader, "Test")
+        }
+
+        assertLogs(
+            setOf(
+                Pair(Level.DEBUG, "Loading animation Test"),
+                Pair(Level.WARNING, "Animation Test resource file could not be found")
+            )
+        )
+
+        stopLogCapture()
+    }
+
 }
