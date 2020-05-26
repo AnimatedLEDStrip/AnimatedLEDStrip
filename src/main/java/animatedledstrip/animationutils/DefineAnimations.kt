@@ -192,21 +192,28 @@ fun parseAnimationInfo(info: String, name: String): Animation.AnimationInfo {
     )
 }
 
-fun loadPredefinedAnimations(classLoader: ClassLoader) {
+fun loadPredefinedAnimations(
+    classLoader: ClassLoader,
+    threadPool: ExecutorCoroutineDispatcher = animationLoadingTreadPool
+) {
     if (definedAnimations.isNotEmpty()) return
     Logger.info("Loading predefined animations")
 
     GlobalScope.launch {
         predefinedAnimations.map { anim ->
-            loadPredefinedAnimation(classLoader, anim)
+            loadPredefinedAnimation(classLoader, anim, threadPool)
         }.joinAll()
         Logger.info("Finished loading predefined animations")
         predefinedAnimLoadComplete = true
     }
 }
 
-fun CoroutineScope.loadPredefinedAnimation(classLoader: ClassLoader, anim: String): Job =
-    launch(animationLoadingTreadPool) load@{
+fun CoroutineScope.loadPredefinedAnimation(
+    classLoader: ClassLoader,
+    anim: String,
+    threadPool: ExecutorCoroutineDispatcher
+): Job =
+    launch(threadPool) load@{
         Logger.debug("Loading animation $anim")
         val animCode = classLoader
             .getResource("animations/$anim.kts")

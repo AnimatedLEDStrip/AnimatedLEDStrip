@@ -1,6 +1,7 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.pmw.tinylog.Level
@@ -400,7 +401,8 @@ class DefineAnimationTest {
         startLogCapture()
 
         assertFalse { predefinedAnimLoadComplete }
-        loadPredefinedAnimations(this::class.java.classLoader)
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        loadPredefinedAnimations(this::class.java.classLoader, newSingleThreadContext("Test Loader"))
         awaitPredefinedAnimationsLoaded()
         assertTrue { predefinedAnimLoadComplete }
 
@@ -466,7 +468,7 @@ class DefineAnimationTest {
     fun testLoadPredefinedAnimationFileNotFound() {
         startLogCapture()
         runBlocking {
-            loadPredefinedAnimation(this@DefineAnimationTest::class.java.classLoader, "Test")
+            loadPredefinedAnimation(this@DefineAnimationTest::class.java.classLoader, "Test", animationLoadingTreadPool)
         }
 
         assertLogs(
