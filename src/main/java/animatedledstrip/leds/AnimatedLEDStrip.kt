@@ -153,7 +153,7 @@ abstract class AnimatedLEDStrip(
     /**
      * A map containing all the sections associated with this LED strip.
      */
-    private val sections = mutableMapOf<String, Section>()
+    internal val sections = mutableMapOf<String, Section>()
 
     /**
      * The section that represents the full strip.
@@ -170,7 +170,7 @@ abstract class AnimatedLEDStrip(
     }
 
     /**
-     * Get a section by it's name.
+     * Get a section by its name.
      *
      * Defaults to the whole strip if the section cannot be found.
      */
@@ -320,9 +320,8 @@ abstract class AnimatedLEDStrip(
                             })
                     } while (isActive && isContinuous)
                 } catch (e: ScriptException) {
-                    println("Error when running ${definedAnimation.info.name}:")
-                    println(e)
-                    e.printStackTrace()
+                    Logger.error("Error when running ${definedAnimation.info.name}:")
+                    Logger.error(e)
                 }
                 if (!subAnimation) {
                     endAnimationCallback?.invoke(data)

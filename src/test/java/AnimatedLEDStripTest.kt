@@ -36,102 +36,6 @@ import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
 
-//    @Test
-//    fun testCompiler() {
-//        val testLEDs = EmulatedAnimatedLEDStrip(50)
-//        testLEDs.animationScriptingEngine.eval("1")
-//    }
-
-    @Test
-    fun testStartAnimation() = runBlocking {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
-        assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
-        testLEDs.endAnimation(EndAnimation("TEST"))
-    }
-
-    @Test
-    fun testEndAnimation() = runBlocking {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        // RunningAnimation extension function
-        val anim1 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
-        )
-        assertNotNull(anim1)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        delay(500)
-        anim1.endAnimation()
-
-
-        // End with EndAnimation instance
-        val anim2 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
-        )
-        assertNotNull(anim2)
-        delay(500)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
-        testLEDs.endAnimation(EndAnimation(anim2.id))
-
-
-        // Null EndAnimation instance
-        val nullAnim: EndAnimation? = null
-        testLEDs.endAnimation(nullAnim)
-
-
-        delay(1000)
-
-        // Confirm that all animations have ended
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim2.id))
-        Unit
-    }
-
-    @Test
-    fun testRunParallel() = runBlocking {
-        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-        val anim = AnimationData().animation("Color")
-        @Suppress("EXPERIMENTAL_API_USAGE")
-        val pool = newSingleThreadContext("Test Pool")
-
-        // Default parameters
-        // join() not needed because animation is COLOR which doesn't spawn a coroutine
-        testLEDs.runParallel(anim, this)
-
-        // Set parameters
-        // join() not needed because animation is COLOR which doesn't spawn a coroutine
-        // continuous doesn't actually affect anything because animation is COLOR
-//        testLEDs.runParallel(anim, this, pool = pool, continuous = true)
-
-        // Test runParallelAndJoin with animation that does not return a job
-//        testLEDs.runParallelAndJoin(this, anim)
-
-        Unit
-    }
-
-    @Test
-    fun testRunSequential() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-        val anim1 = AnimationData().animation("Color")
-        val anim2 = AnimationData().animation("Alternate")
-
-        // Continuous false (default)
-        // Also tests animation that doesn't spawn a coroutine
-        testLEDs.runSequential(anim1)
-
-        // Continuous true
-        // continuous doesn't actually affect anything because animation is COLOR
-//        testLEDs.runSequential(anim1, continuous = true)
-
-        // Test with animation that spawns a coroutine
-        testLEDs.runSequential(anim2)
-    }
-
     @Test
     fun testCallbacks()  {
         var indicator1 = false
@@ -155,5 +59,36 @@ class AnimatedLEDStripTest {
 
         assertTrue(indicator1)
         assertTrue(indicator2)
+    }
+
+    @Test
+    fun testCreateSection() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        testLEDs.createSection("Test", 5, 20)
+
+        assertTrue { testLEDs.sections.size == 2 }
+        assertTrue { testLEDs.sections.containsKey("Test") }
+    }
+
+    @Test
+    fun testGetSection() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        testLEDs.createSection("Test", 5, 20)
+
+        assertTrue { testLEDs.getSection("Test") != testLEDs.wholeStrip }
+        assertTrue { testLEDs.getSection("Test").startPixel == 5 }
+        assertTrue { testLEDs.getSection("Test").endPixel == 20 }
+        assertTrue { testLEDs.wholeStrip.getSection("Test") != testLEDs.wholeStrip }
+        assertTrue { testLEDs.wholeStrip.getSection("Test").startPixel == 5 }
+        assertTrue { testLEDs.wholeStrip.getSection("Test").endPixel == 20 }
+
+        startLogCapture()
+
+        assertTrue { testLEDs.getSection("Other") === testLEDs.wholeStrip }
+        assertLogs(setOf(Pair(Level.WARNING, "Could not find section Other, defaulting to whole strip")))
+
+        assertTrue { testLEDs.wholeStrip.getSection("Other") === testLEDs.wholeStrip }
+
+        stopLogCapture()
     }
 }
