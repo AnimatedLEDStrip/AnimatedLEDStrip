@@ -1,17 +1,19 @@
 package animatedledstrip.test
 
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.EndAnimation
+import animatedledstrip.animationutils.animation
+import animatedledstrip.animationutils.delay
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
+import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.getProlongedPixelColorOrNull
-import animatedledstrip.leds.getTemporaryPixelColorOrNull
-import animatedledstrip.leds.setProlongedPixelColors
-import animatedledstrip.leds.setTemporaryPixelColors
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class SectionTest {
 
@@ -19,8 +21,7 @@ class SectionTest {
     fun testSetPixelColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-        checkAllPixels(testLEDs, 0)
-        checkAllProlongedPixels(testLEDs, 0)
+        testLEDs.assertAllPixels(0)
 
         // Temporary
 
@@ -55,8 +56,7 @@ class SectionTest {
         testLEDs.setProlongedPixelColors(listOf(10, 11, 12), 0L)   // reset pixels
 
         // Confirm successful reset
-        checkPixels(10..12, testLEDs, 0)
-        checkProlongedPixels(10..12, testLEDs, 0)
+        testLEDs.assertPixels(10..12, 0)
 
         // Test bad pixel index
         assertFailsWith<IllegalArgumentException> { testLEDs.setTemporaryPixelColor(50, CCBlack) }
@@ -67,8 +67,7 @@ class SectionTest {
     fun testSetPixelColors() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-        checkAllPixels(testLEDs, 0)
-        checkAllProlongedPixels(testLEDs, 0)
+        testLEDs.assertAllPixels(0)
 
         // Temporary
 
@@ -192,23 +191,22 @@ class SectionTest {
     fun testSetStripColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-        checkAllPixels(testLEDs, 0)
-        checkAllProlongedPixels(testLEDs, 0)
+        testLEDs.assertAllPixels(0)
 
         // Temporary
 
         // setTemporaryStripColor with ColorContainer
         testLEDs.setTemporaryStripColor(ColorContainer(0xFF))
 
-        checkAllPixels(testLEDs, 0xFF)
-        checkAllProlongedPixels(testLEDs, 0)
+        testLEDs.assertAllTemporaryPixels(0xFF)
+        testLEDs.assertAllProlongedPixels(0)
 
 
         // setTemporaryStripColor with Long
         testLEDs.setTemporaryStripColor(0xFFFF)
 
-        checkAllPixels(testLEDs, 0xFFFF)
-        checkAllProlongedPixels(testLEDs, 0)
+        testLEDs.assertAllTemporaryPixels(0xFFFF)
+        testLEDs.assertAllProlongedPixels(0)
 
 
         // Prolonged
@@ -216,15 +214,30 @@ class SectionTest {
         // setProlongedStripColor with ColorContainer
         testLEDs.setProlongedStripColor(ColorContainer(0xFF))
 
-        checkAllPixels(testLEDs, 0xFF)
-        checkAllProlongedPixels(testLEDs, 0xFFL)
+        testLEDs.assertAllPixels(0xFF)
 
 
         // setProlongedStripColor with Long
         testLEDs.setProlongedStripColor(0xFFFF)
 
-        checkAllPixels(testLEDs, 0xFFFF)
-        checkAllProlongedPixels(testLEDs, 0xFFFFL)
+        testLEDs.assertAllPixels(0xFFFF)
+    }
+
+    @Test
+    fun testClear() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.wholeStrip.setProlongedStripColor(0xFF)
+        testLEDs.wholeStrip.assertAllPixels(0xFF)
+
+        testLEDs.clear()
+        testLEDs.wholeStrip.assertAllPixels(0)
+
+        testLEDs.wholeStrip.setProlongedStripColor(0xFF)
+        testLEDs.wholeStrip.assertAllPixels(0xFF)
+
+        testLEDs.wholeStrip.clear()
+        testLEDs.wholeStrip.assertAllPixels(0)
     }
 
     @Test
@@ -269,6 +282,100 @@ class SectionTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
         testLEDs.fadePixel(50, CCBlue.color.toInt())
+    }
+
+    @Test
+    fun testGetSubSection() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+
+        val section1 = testLEDs.getSubSection(5, 10)
+        val section2 = testLEDs.getSubSection(5, 10)
+
+        assertTrue { section1 === section2 }
+    }
+
+    @Test
+    fun testStartAnimation() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        awaitPredefinedAnimationsLoaded()
+        testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
+        assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
+        testLEDs.endAnimation(EndAnimation("TEST"))
+    }
+
+    @Test
+    fun testEndAnimation() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        awaitPredefinedAnimationsLoaded()
+
+        // RunningAnimation extension function
+        val anim1 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Alternate")
+                .delay(100)
+        )
+        assertNotNull(anim1)
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim1.id))
+        delay(500)
+        anim1.endAnimation()
+
+
+        // End with EndAnimation instance
+        val anim2 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Alternate")
+                .delay(100)
+        )
+        assertNotNull(anim2)
+        delay(500)
+        assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
+        testLEDs.endAnimation(EndAnimation(anim2.id))
+
+
+        // Null EndAnimation instance
+        val nullAnim: EndAnimation? = null
+        testLEDs.endAnimation(nullAnim)
+
+
+        delay(1000)
+
+        // Confirm that all animations have ended
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim1.id))
+        assertFalse(testLEDs.runningAnimations.map.containsKey(anim2.id))
+        Unit
+    }
+
+    @Test
+    fun testRunParallel() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+        awaitPredefinedAnimationsLoaded()
+        val anim = AnimationData().animation("Color")
+        @Suppress("EXPERIMENTAL_API_USAGE")
+        val pool = newSingleThreadContext("Test Pool")
+
+        // Default parameters
+        testLEDs.runParallel(anim, this)
+
+        // Set parameters
+        val runningAnim = testLEDs.runParallel(anim, this, pool = pool, continuous = true)
+        runningAnim?.cancel()
+
+        // Test runParallelAndJoin with animation that does not return a job
+        testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs))
+
+        Unit
+    }
+
+    @Test
+    fun testRunSequential() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+        awaitPredefinedAnimationsLoaded()
+        val anim1 = AnimationData().animation("Color")
+
+        // Continuous false (default)
+        testLEDs.runSequential(anim1)
+
+        // TODO: Find way to test continuous true
     }
 
 }

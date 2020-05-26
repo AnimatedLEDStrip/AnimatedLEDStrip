@@ -22,44 +22,111 @@
 
 package animatedledstrip.test
 
+import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.utils.delayBlocking
+import org.pmw.tinylog.Configuration
+import org.pmw.tinylog.Configurator
+import org.pmw.tinylog.Level
+import org.pmw.tinylog.LogEntry
+import org.pmw.tinylog.writers.LogEntryValue
+import org.pmw.tinylog.writers.Writer
 import kotlin.test.assertTrue
 
-fun checkAllPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-//    println(testLEDs.pixelTemporaryColorList.size)
-//    println(testLEDs.indices.size)
-//    testLEDs.setProlongedPixelColor(49, 0xF)
-//    println(testLEDs.getProlongedPixelColor(49))
-    testLEDs.pixelTemporaryColorList.forEach {
+
+fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
+    assertAllTemporaryPixels(color)
+    assertAllProlongedPixels(color)
+}
+
+fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
+    pixelTemporaryColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelTemporaryColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelTemporaryColorList"
         ) { it == color }
     }
 }
 
-fun checkAllProlongedPixels(testLEDs: AnimatedLEDStrip.Section, color: Long) {
-//    println(testLEDs.pixelProlongedColorList.size)
-//    println(testLEDs.indices.size)
-//    println(testLEDs.getProlongedPixelColor(49))
-    testLEDs.pixelProlongedColorList.forEach {
+fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
+    pixelProlongedColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: ${testLEDs.pixelProlongedColorList}"
+            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelProlongedColorList"
         ) { it == color }
     }
 }
 
-fun checkPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    leds.forEach {
+fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, color: Long) {
+    assertTemporaryPixels(indices, color)
+    assertProlongedPixels(indices, color)
+}
+
+fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Long) {
+    indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelTemporaryColorList}"
-        ) { testLEDs.pixelTemporaryColorList[it] == color }
+            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelTemporaryColorList"
+        ) { pixelTemporaryColorList[it] == color }
     }
 }
 
-fun checkProlongedPixels(leds: IntRange, testLEDs: AnimatedLEDStrip.Section, color: Long) {
-    leds.forEach {
+fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Long) {
+    indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${leds.first}..${leds.last}. Actual: ${testLEDs.pixelProlongedColorList}"
-        ) { testLEDs.pixelProlongedColorList[it] == color }
+            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelProlongedColorList"
+        ) { pixelProlongedColorList[it] == color }
     }
 }
+
+fun awaitPredefinedAnimationsLoaded() {
+    while (!predefinedAnimLoadComplete) delayBlocking(250)
+}
+
+/* Log Testing */
+
+object TestLogWriter : Writer {
+    private val logs = mutableSetOf<LogEntry>()
+
+    fun clearLogs() = logs.clear()
+
+    override fun getRequiredLogEntryValues(): MutableSet<LogEntryValue> =
+        mutableSetOf(LogEntryValue.LEVEL, LogEntryValue.MESSAGE)
+
+    override fun write(log: LogEntry) {
+        logs.add(log)
+    }
+
+    override fun init(p0: Configuration?) {}
+
+    override fun flush() {}
+
+    override fun close() {}
+
+    fun assertLogs(expectedLogs: Set<Pair<Level, String>>) {
+        val actualLogs = logs.map { Pair(it.level, it.message) }.toSet()
+
+        assertTrue(
+            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                    "extra values in expected: ${expectedLogs.minus(actualLogs)}"
+        ) {
+            actualLogs.containsAll(expectedLogs)
+        }
+        assertTrue(
+            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
+                    "extra values in actual: ${actualLogs.minus(expectedLogs)}"
+        ) {
+            expectedLogs.containsAll(actualLogs)
+        }
+    }
+}
+
+fun startLogCapture() {
+    Configurator.currentConfig().addWriter(TestLogWriter, Level.DEBUG).activate()
+    TestLogWriter.clearLogs()
+}
+
+fun stopLogCapture() {
+    Configurator.currentConfig().removeWriter(TestLogWriter).activate()
+}
+
+fun assertLogs(expectedLogs: Set<Pair<Level, String>>) = TestLogWriter.assertLogs(expectedLogs)
+
+fun clearLogs() = TestLogWriter.clearLogs()
