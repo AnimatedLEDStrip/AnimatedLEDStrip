@@ -161,6 +161,7 @@ class DefineAnimationTest {
             )
         )
         assertTrue { definedAnimations.containsKey("test") }
+        assertTrue { findAnimation("test")?.rawCode == "${extendedBaseStr}\nval x = 4 + 4" }
         definedAnimations.remove("test")
         assertFalse { definedAnimations.containsKey("test") }
 

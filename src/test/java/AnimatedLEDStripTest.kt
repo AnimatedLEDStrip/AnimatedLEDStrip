@@ -27,8 +27,6 @@ import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.utils.delayBlocking
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.pmw.tinylog.Level
 import kotlin.test.assertFalse
@@ -76,7 +74,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testEndAnimation() = runBlocking {
+    fun testEndAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         awaitPredefinedAnimationsLoaded()
 
@@ -88,7 +86,7 @@ class AnimatedLEDStripTest {
         )
         assertNotNull(anim1)
         assertTrue { testLEDs.runningAnimations.map.containsKey(anim1.id) }
-        delay(500)
+        delayBlocking(500)
         anim1.endAnimation()
 
 
@@ -99,7 +97,7 @@ class AnimatedLEDStripTest {
                 .delay(100)
         )
         assertNotNull(anim2)
-        delay(500)
+        delayBlocking(500)
         assertTrue { testLEDs.runningAnimations.map.containsKey(anim2.id) }
         testLEDs.endAnimation(EndAnimation(anim2.id))
 
@@ -116,7 +114,7 @@ class AnimatedLEDStripTest {
                 .delay(100)
         )
         assertNotNull(anim3)
-        delay(500)
+        delayBlocking(500)
         assertTrue { testLEDs.runningAnimations.map.containsKey(anim3.id) }
         testLEDs.endAnimation(anim3.id)
 
@@ -126,13 +124,12 @@ class AnimatedLEDStripTest {
         assertLogs(setOf(Pair(Level.WARNING, "Animation animation_that_is_not_running is not running")))
         stopLogCapture()
 
-        delay(1000)
+        delayBlocking(1000)
 
         // Confirm that all animations have ended
         assertFalse { testLEDs.runningAnimations.map.containsKey(anim1.id) }
         assertFalse { testLEDs.runningAnimations.map.containsKey(anim2.id) }
         assertFalse { testLEDs.runningAnimations.map.containsKey(anim3.id) }
-        Unit
     }
 
     @Test

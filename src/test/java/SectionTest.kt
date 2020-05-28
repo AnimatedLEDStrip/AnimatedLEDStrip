@@ -6,6 +6,7 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
@@ -298,6 +299,7 @@ class SectionTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         awaitPredefinedAnimationsLoaded()
         testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
+        delayBlocking(100)
         assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
         testLEDs.endAnimation(EndAnimation("TEST"))
     }
