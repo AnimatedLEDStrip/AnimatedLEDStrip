@@ -321,7 +321,7 @@ abstract class AnimatedLEDStrip(
                     } while (isActive && isContinuous)
                 } catch (e: ScriptException) {
                     Logger.error("Error when running ${definedAnimation.info.name}:")
-                    Logger.error(e)
+                    Logger.error(e.toString())
                 }
                 if (!subAnimation) {
                     endAnimationCallback?.invoke(data)

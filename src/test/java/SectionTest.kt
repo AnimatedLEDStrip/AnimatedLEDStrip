@@ -1,9 +1,6 @@
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.animation
-import animatedledstrip.animationutils.delay
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
@@ -13,6 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import org.pmw.tinylog.Level
 import kotlin.test.*
 
 class SectionTest {
@@ -295,12 +293,42 @@ class SectionTest {
     }
 
     @Test
-    fun testStartAnimation() = runBlocking {
+    fun testStartAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         awaitPredefinedAnimationsLoaded()
         testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
         assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
         testLEDs.endAnimation(EndAnimation("TEST"))
+    }
+
+    @Test
+    fun testStartAnimationBadAnimation() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        assertNull(testLEDs.startAnimation(AnimationData().animation("Im not an animation"), "TEST"))
+    }
+
+    @Test
+    fun testStartAnimationScriptException() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        awaitPredefinedAnimationsLoaded()
+        defineNewAnimation(
+            "// ## animation info ##\n// name Bad Animation\n// abbr BAD\n// ## end info ##\nthrow Exception()",
+            "BadAnimation"
+        )
+
+        startLogCapture()
+        testLEDs.startAnimation(AnimationData().animation("BadAnimation"))?.join()
+
+        assertLogs(
+            setOf(
+                Pair(Level.ERROR, "Error when running Bad Animation:"),
+                Pair(Level.ERROR, "javax.script.ScriptException: java.lang.Exception")
+            )
+        )
+
+        stopLogCapture()
+        definedAnimations.remove("badanimation")
+        Unit
     }
 
     @Test
@@ -350,6 +378,7 @@ class SectionTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
         awaitPredefinedAnimationsLoaded()
         val anim = AnimationData().animation("Color")
+
         @Suppress("EXPERIMENTAL_API_USAGE")
         val pool = newSingleThreadContext("Test Pool")
 
@@ -370,12 +399,12 @@ class SectionTest {
     fun testRunSequential() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
         awaitPredefinedAnimationsLoaded()
-        val anim1 = AnimationData().animation("Color")
 
         // Continuous false (default)
-        testLEDs.runSequential(anim1)
+        testLEDs.runSequential(AnimationData().animation("Color"))
 
-        // TODO: Find way to test continuous true
+        // Bad Animation
+        testLEDs.runSequential(AnimationData().animation("Im not an animation"))
     }
 
 }
