@@ -51,7 +51,7 @@ class AnimatedLEDStripTest {
     }
 
     @Test
-    fun testCallbacks()  {
+    fun testCallbacks() {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
@@ -164,5 +164,15 @@ class AnimatedLEDStripTest {
         assertTrue { testLEDs.wholeStrip.getSection("Other") === testLEDs.wholeStrip }
 
         stopLogCapture()
+    }
+
+    @Test
+    fun testStripInfoHumanReadableString() {
+        val infoStr = StripInfo().toHumanReadableString()
+        val infoReg =
+            Regex("Strip Info:\n {2}numLEDs: 0\n {2}pin: null\n {2}imageDebugging: false\n" +
+                    " {2}fileName: null\n {2}rendersBeforeSave: null\n {2}threadCount: 100\n" +
+                    " {2}supportedAnimations: \\[.*]\nEnd Strip Info")
+        assertTrue { infoReg.matches(infoStr) }
     }
 }

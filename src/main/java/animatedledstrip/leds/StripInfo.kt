@@ -51,7 +51,7 @@ data class StripInfo(
     fun toHumanReadableString() =
         """
             Strip Info:
-              numLEDS: $numLEDs
+              numLEDs: $numLEDs
               pin: $pin
               imageDebugging: $imageDebugging
               fileName: $fileName
