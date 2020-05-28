@@ -348,8 +348,9 @@ class SectionTest {
         val runningAnim = testLEDs.runParallel(anim, this, pool = pool, continuous = true)
         runningAnim?.cancel()
 
-        // Test runParallelAndJoin with animation that does not return a job
-        testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs))
+        // Test runParallelAndJoin
+        val badAnim = AnimationData().animation("NonexistentAnimation")
+        testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs), Pair(badAnim, testLEDs))
 
         Unit
     }

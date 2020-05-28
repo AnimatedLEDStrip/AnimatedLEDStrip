@@ -24,7 +24,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.leds.AnimatedLEDStrip.Section
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
@@ -298,7 +297,7 @@ abstract class AnimatedLEDStrip(
         ): Job? {
             val definedAnimation = findAnimation(data.animation) ?: run {
                 Logger.warn("Animation ${data.animation} not found")
-                Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
+                Logger.warn("Possible animations: ${stripInfo.supportedAnimations}")
                 return null
             }
 
