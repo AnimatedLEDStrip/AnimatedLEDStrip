@@ -43,7 +43,7 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int? = null,
-    val threadCount: Int? = null
+    val threadCount: Int = 100
 ) : Serializable {
     val supportedAnimations
         get() = definedAnimations.map { it.value.info.name }

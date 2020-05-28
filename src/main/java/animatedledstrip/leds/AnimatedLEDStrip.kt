@@ -50,7 +50,7 @@ abstract class AnimatedLEDStrip(
     /**
      * Multiplier used when calculating thread pool sizes
      */
-    private val threadCount: Int = stripInfo.threadCount ?: 100
+    val threadCount: Int = stripInfo.threadCount
 
     /**
      * A pool of threads used to run animations.
@@ -120,7 +120,7 @@ abstract class AnimatedLEDStrip(
     fun endAnimation(id: String) {
         runningAnimations[id]?.endAnimation()
             ?: run {
-                Logger.warn { "Animation $id not running" }
+                Logger.warn("Animation $id is not running")
                 runningAnimations.remove(id)
                 return
             }

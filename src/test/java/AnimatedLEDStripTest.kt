@@ -23,11 +23,11 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
+import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.pmw.tinylog.Level
@@ -36,6 +36,19 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
+
+    @Test
+    fun testThreadCount() {
+        val info1 = StripInfo(numLEDs = 50)
+        assertTrue { info1.threadCount == 100 }
+        val testLEDs1 = EmulatedAnimatedLEDStrip(info1)
+        assertTrue { testLEDs1.threadCount == 100 }
+
+        val info2 = StripInfo(numLEDs = 50, threadCount = 10)
+        assertTrue { info2.threadCount == 10 }
+        val testLEDs2 = EmulatedAnimatedLEDStrip(info2)
+        assertTrue { testLEDs2.threadCount == 10 }
+    }
 
     @Test
     fun testCallbacks()  {
@@ -60,6 +73,66 @@ class AnimatedLEDStripTest {
 
         assertTrue(indicator1)
         assertTrue(indicator2)
+    }
+
+    @Test
+    fun testEndAnimation() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        awaitPredefinedAnimationsLoaded()
+
+        // RunningAnimation extension function
+        val anim1 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Alternate")
+                .delay(100)
+        )
+        assertNotNull(anim1)
+        assertTrue { testLEDs.runningAnimations.map.containsKey(anim1.id) }
+        delay(500)
+        anim1.endAnimation()
+
+
+        // End with EndAnimation instance
+        val anim2 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Alternate")
+                .delay(100)
+        )
+        assertNotNull(anim2)
+        delay(500)
+        assertTrue { testLEDs.runningAnimations.map.containsKey(anim2.id) }
+        testLEDs.endAnimation(EndAnimation(anim2.id))
+
+
+        // Null EndAnimation instance
+        val nullAnim: EndAnimation? = null
+        testLEDs.endAnimation(nullAnim)
+
+
+        // End with ID
+        val anim3 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Alternate")
+                .delay(100)
+        )
+        assertNotNull(anim3)
+        delay(500)
+        assertTrue { testLEDs.runningAnimations.map.containsKey(anim3.id) }
+        testLEDs.endAnimation(anim3.id)
+
+        // End nonexistent animation
+        startLogCapture()
+        testLEDs.endAnimation("animation_that_is_not_running")
+        assertLogs(setOf(Pair(Level.WARNING, "Animation animation_that_is_not_running is not running")))
+        stopLogCapture()
+
+        delay(1000)
+
+        // Confirm that all animations have ended
+        assertFalse { testLEDs.runningAnimations.map.containsKey(anim1.id) }
+        assertFalse { testLEDs.runningAnimations.map.containsKey(anim2.id) }
+        assertFalse { testLEDs.runningAnimations.map.containsKey(anim3.id) }
+        Unit
     }
 
     @Test

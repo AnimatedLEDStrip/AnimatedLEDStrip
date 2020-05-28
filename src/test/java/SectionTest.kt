@@ -6,12 +6,13 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.pmw.tinylog.Level
-import kotlin.test.*
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class SectionTest {
 
@@ -328,48 +329,6 @@ class SectionTest {
 
         stopLogCapture()
         definedAnimations.remove("badanimation")
-        Unit
-    }
-
-    @Test
-    fun testEndAnimation() = runBlocking {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-        awaitPredefinedAnimationsLoaded()
-
-        // RunningAnimation extension function
-        val anim1 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
-        )
-        assertNotNull(anim1)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        delay(500)
-        anim1.endAnimation()
-
-
-        // End with EndAnimation instance
-        val anim2 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
-        )
-        assertNotNull(anim2)
-        delay(500)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
-        testLEDs.endAnimation(EndAnimation(anim2.id))
-
-
-        // Null EndAnimation instance
-        val nullAnim: EndAnimation? = null
-        testLEDs.endAnimation(nullAnim)
-
-
-        delay(1000)
-
-        // Confirm that all animations have ended
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim2.id))
         Unit
     }
 
