@@ -48,6 +48,22 @@ fun defineNewAnimation(code: String) {
             else -> null
         }
 
+        val anim = Animation(
+            animInfo,
+            code
+        )
+
+        definedAnimations[prepareAnimName(anim.info.name)] = anim
+        Logger.info("Successfully loaded new animation ${anim.info.name}")
+    } catch (e: BadParamException) {
+        Logger.error(e.toString())
+    } catch (e: ScriptException) {
+        Logger.error("Error when compiling ${name}:")
+        Logger.error(e.toString())
+    }
+}
+
+fun parseAnimationInfo(info: String, name: String): Animation.AnimationInfo {
     var animName: String? = null
     var animAbbr: String? = null
     var animReqColors = 0
@@ -61,9 +77,6 @@ fun defineNewAnimation(code: String) {
     var animDistanceDefault = -1
     var animSpacing = ParamUsage.NOTUSED
     var animSpacingDefault = DEFAULT_SPACING
-
-    val info = (Regex("// ## animation info ##[\\s\\S]*// ## end info ##").find(code)
-        ?: throw Exception("Could not find info in $code")).groupValues[0]
 
     parse@ for (line in info.split(Regex("[\\r\\n]"))) {
         val identifiers = line.removePrefix("// ").split(" ")

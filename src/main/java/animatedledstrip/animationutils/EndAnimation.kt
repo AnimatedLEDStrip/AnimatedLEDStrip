@@ -1,7 +1,16 @@
 package animatedledstrip.animationutils
 
-import java.io.Serializable
+import animatedledstrip.utils.SendableData
 
 data class EndAnimation(
     val id: String
-) : Serializable
+) : SendableData {
+
+    companion object {
+        const val prefix = "END "
+    }
+
+    override val prefix = EndAnimation.prefix
+
+    override fun toHumanReadableString(): String = "End of animation $id"
+}
