@@ -27,7 +27,9 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.AnimatedLEDStrip
-import java.io.Serializable
+import animatedledstrip.utils.SendableData
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 
 /**
  * Used when calling animations to specify colors, parameters, etc.
@@ -65,7 +67,21 @@ class AnimationData(
     var id: String = "",
     var section: String = "",
     spacing: Int = -1
-) : Serializable {
+) : SendableData {
+
+    companion object {
+        const val prefix = "DATA"
+
+        object ExStrategy : ExclusionStrategy {
+            override fun shouldSkipClass(p0: Class<*>?) = false
+
+            override fun shouldSkipField(field: FieldAttributes?): Boolean {
+                return field?.name?.equals("pCols") == true
+            }
+        }
+    }
+
+    override val prefix = AnimationData.prefix
 
     val colors = mutableListOf<ColorContainerInterface>().apply {
         addAll(colors)
@@ -186,7 +202,7 @@ class AnimationData(
     /**
      * Create a nicely formatted string representation.
      */
-    fun toHumanReadableString() =
+    override fun toHumanReadableString() =
         """
             AnimationData $id:
               animation: $animation

@@ -22,13 +22,31 @@
 
 package animatedledstrip.utils
 
+import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.gson
+import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.leds.StripInfo
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import java.nio.charset.Charset
+
+/* GSON */
+
+/**
+ * JSON Parser
+ */
+val gson = GsonBuilder()
+    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(Animation.Companion.ExStrategy)
+    .create()
+    ?: error("Could not create JSON parser")
+
 
 /* 24-bit to 32-bit conversion */
 
@@ -60,86 +78,31 @@ fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 
 fun AnimationData.endAnimation(): EndAnimation = EndAnimation(this.id)
 
-
-/* JSON creation */
-
-/**
- * Create a string representation of an `AnimationData` instance
- */
-fun AnimationData.jsonString(): String = "DATA:${gson.toJson(this)};"
-
-/**
- * Create a string representation of a `StripInfo` instance
- */
-fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
-
-fun EndAnimation.jsonString(): String = "END :${gson.toJson(this)}"
-
-/**
- * Create a representation of an `AnimationData` instance ready to be sent over a socket
- */
-fun AnimationData.json(): ByteArray =
-    this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-/**
- * Create a representation of a `StripInfo` instance ready to be sent over a socket
- */
-fun StripInfo.json(): ByteArray =
-    this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-fun EndAnimation.json(): ByteArray =
-    this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-
 /* JSON parsing */
 
-/**
- * Create an `AnimationData` instance from a JSON string created by the
- * creation function above
- *
- * @throws JsonSyntaxException
- */
-fun String?.jsonToAnimationData(): AnimationData {
+const val DELIMITER = ";;;"
+
+inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
     checkNotNull(this)
     try {
         return gson.fromJson(
-            this.removePrefix("DATA:").removeSuffix(";"),
-            AnimationData::class.java
+            this.drop(5).removeSuffix(DELIMITER),
+            T::class.java
         )
     } catch (e: JsonSyntaxException) {
         throw JsonSyntaxException("Malformed JSON: $this", e)
     }
 }
 
-/**
- * Create a `StripInfo` instance from a JSON string created by the
- * creation function above
- *
- * @throws JsonSyntaxException
- */
-fun String?.jsonToStripInfo(): StripInfo {
-    checkNotNull(this)
-    try {
-        return gson.fromJson(
-            this.removePrefix("INFO:").removeSuffix(";"),
-            StripInfo::class.java
-        )
-    } catch (e: JsonSyntaxException) {
-        throw JsonSyntaxException("Malformed JSON: $this", e)
-    }
-}
+fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
 
-fun String?.jsonToEndAnimation(): EndAnimation {
-    checkNotNull(this)
-    try {
-        return gson.fromJson(
-            this.removePrefix("END :").removeSuffix(";"),
-            EndAnimation::class.java
-        )
-    } catch (e: JsonSyntaxException) {
-        throw JsonSyntaxException("Malformed JSON: $this", e)
-    }
-}
+fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
+
+fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
+
+fun String?.jsonToAnimation(): Animation = jsonToSendableData()
+
+fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
 
 /**
  * Get the first four characters in the string (used to indicate the type of data,
@@ -168,3 +131,11 @@ fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
  * Remove spaces from a `String`
  */
 fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
+
+
+fun String.toReqLevelOrNull(): ParamUsage? =
+    when (this.toUpperCase()) {
+        "USED" -> ParamUsage.USED
+        "NOTUSED" -> ParamUsage.NOTUSED
+        else -> null
+    }

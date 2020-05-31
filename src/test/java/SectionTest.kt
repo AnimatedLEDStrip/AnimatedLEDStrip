@@ -1,19 +1,19 @@
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.animation
-import animatedledstrip.animationutils.delay
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import kotlinx.coroutines.delay
+import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import kotlin.test.*
+import org.pmw.tinylog.Level
+import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class SectionTest {
 
@@ -295,53 +295,44 @@ class SectionTest {
     }
 
     @Test
-    fun testStartAnimation() = runBlocking {
+    fun testStartAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         awaitPredefinedAnimationsLoaded()
-        testLEDs.startAnimation(AnimationData().animation("Alternate"), "TEST")
-        assertTrue(testLEDs.runningAnimations.map.containsKey("TEST"))
+        val anim = AnimationData().animation("Alternate")
+        testLEDs.startAnimation(anim, "TEST")
+        delayBlocking(100)
+        assertTrue { testLEDs.runningAnimations.map.containsKey("TEST") }
+        assertTrue { testLEDs.runningAnimations["TEST"]?.data == anim }
         testLEDs.endAnimation(EndAnimation("TEST"))
     }
 
     @Test
-    fun testEndAnimation() = runBlocking {
+    fun testStartAnimationBadAnimation() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+        assertNull(testLEDs.startAnimation(AnimationData().animation("Im not an animation"), "TEST"))
+    }
+
+    @Test
+    fun testStartAnimationScriptException() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         awaitPredefinedAnimationsLoaded()
-
-        // RunningAnimation extension function
-        val anim1 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
+        defineNewAnimation(
+            "// ## animation info ##\n// name Bad Animation\n// abbr BAD\n// ## end info ##\nthrow Exception()",
+            "BadAnimation"
         )
-        assertNotNull(anim1)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        delay(500)
-        anim1.endAnimation()
 
+        startLogCapture()
+        testLEDs.startAnimation(AnimationData().animation("BadAnimation"))?.join()
 
-        // End with EndAnimation instance
-        val anim2 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Alternate")
-                .delay(100)
+        assertLogs(
+            setOf(
+                Pair(Level.ERROR, "Error when running Bad Animation:"),
+                Pair(Level.ERROR, "javax.script.ScriptException: java.lang.Exception")
+            )
         )
-        assertNotNull(anim2)
-        delay(500)
-        assertTrue(testLEDs.runningAnimations.map.containsKey(anim2.id))
-        testLEDs.endAnimation(EndAnimation(anim2.id))
 
-
-        // Null EndAnimation instance
-        val nullAnim: EndAnimation? = null
-        testLEDs.endAnimation(nullAnim)
-
-
-        delay(1000)
-
-        // Confirm that all animations have ended
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim1.id))
-        assertFalse(testLEDs.runningAnimations.map.containsKey(anim2.id))
+        stopLogCapture()
+        definedAnimations.remove("badanimation")
         Unit
     }
 
@@ -350,6 +341,7 @@ class SectionTest {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
         awaitPredefinedAnimationsLoaded()
         val anim = AnimationData().animation("Color")
+
         @Suppress("EXPERIMENTAL_API_USAGE")
         val pool = newSingleThreadContext("Test Pool")
 
@@ -360,8 +352,9 @@ class SectionTest {
         val runningAnim = testLEDs.runParallel(anim, this, pool = pool, continuous = true)
         runningAnim?.cancel()
 
-        // Test runParallelAndJoin with animation that does not return a job
-        testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs))
+        // Test runParallelAndJoin
+        val badAnim = AnimationData().animation("NonexistentAnimation")
+        testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs), Pair(badAnim, testLEDs))
 
         Unit
     }
@@ -370,12 +363,12 @@ class SectionTest {
     fun testRunSequential() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
         awaitPredefinedAnimationsLoaded()
-        val anim1 = AnimationData().animation("Color")
 
         // Continuous false (default)
-        testLEDs.runSequential(anim1)
+        testLEDs.runSequential(AnimationData().animation("Color"))
 
-        // TODO: Find way to test continuous true
+        // Bad Animation
+        testLEDs.runSequential(AnimationData().animation("Im not an animation"))
     }
 
 }

@@ -31,28 +31,6 @@ import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.GsonBuilder
 
-/* GSON */
-
-class AnimationDataExclusionStrategy : ExclusionStrategy {
-    override fun shouldSkipClass(p0: Class<*>?): Boolean {
-        return false
-    }
-
-    override fun shouldSkipField(field: FieldAttributes?): Boolean {
-        return field?.name?.equals("pCols") == true
-    }
-}
-
-/**
- * JSON Parser
- */
-val gson = GsonBuilder()
-    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
-    .addSerializationExclusionStrategy(AnimationDataExclusionStrategy())
-    .create()
-    ?: error("Could not create JSON parser")
-
-
 /* Helper functions for setting values */
 
 /**

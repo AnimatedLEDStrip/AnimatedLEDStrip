@@ -102,7 +102,7 @@ class UtilsTest {
 
         val testBytes = testAnimation.json()
 
-        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToAnimationData()
+        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToSendableData<AnimationData>()
 
         assertTrue { testAnimation == testAnimation2 }
 
