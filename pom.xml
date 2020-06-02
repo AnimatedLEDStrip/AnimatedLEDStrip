@@ -43,7 +43,7 @@
 
     <properties>
         <jdk.version>1.8</jdk.version>
-        <kotlin.version>1.3.61</kotlin.version>
+        <kotlin.version>1.3.72</kotlin.version>
         <coroutines.version>1.3.3</coroutines.version>
         <dokka.version>0.10.1</dokka.version>
         <github.global.server>github</github.global.server>
