@@ -1,56 +1,20 @@
-/*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
- *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
- *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
- */
-
 package animatedledstrip.animationutils
 
-import org.jetbrains.kotlin.cli.common.environment.setIdeaIoUseFallback
-import org.jetbrains.kotlin.script.jsr223.KotlinJsr223JvmLocalScriptEngine
-import javax.script.CompiledScript
-import javax.script.ScriptEngineManager
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.utils.SendableData
+import kotlinx.coroutines.CoroutineScope
 
-/**
- * Stores information about a defined animation, including information about it
- * and the compiled script. Code is compiled when the class is initialized.
- *
- * @property rawCode A string with the code to compile for this animation
- */
-data class Animation(
-    val info: AnimationInfo,
-    val rawCode: String
-) {
+abstract class Animation(open val info: AnimationInfo): SendableData {
 
-    /**
-     * The JSR223 scripting engine used to compile this animation and create
-     * bindings for it.
-     */
-    val animationScriptingEngine: KotlinJsr223JvmLocalScriptEngine = run {
-        setIdeaIoUseFallback()
-        ScriptEngineManager().getEngineByExtension("kts")!! as KotlinJsr223JvmLocalScriptEngine
-    }
+    abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
 
-    /**
-     * The compiled animation script.
-     */
-    val code: CompiledScript = animationScriptingEngine.compile(rawCode)
+    override fun toHumanReadableString(): String =
+        """
+            Animation Definition
+              info: 
+              ${info.toHumanReadableString()}
+            End Definition
+        """.trimMargin()
 
     /**
      * Stores information about an animation.
@@ -73,25 +37,42 @@ data class Animation(
     data class AnimationInfo(
         val name: String,
         val abbr: String,
-        val numReqColors: Int = 0,
-        val numOptColors: Int = 0,
-        val repetitive: Boolean = false,
-        val center: ParamUsage = ParamUsage.NOTUSED,
-        val delay: ParamUsage = ParamUsage.NOTUSED,
-        val delayDefault: Long = 0,
-        val direction: ParamUsage = ParamUsage.NOTUSED,
-        val distance: ParamUsage = ParamUsage.NOTUSED,
-        val distanceDefault: Int = 0,
-        val spacing: ParamUsage = ParamUsage.NOTUSED,
-        val spacingDefault: Int = 0
-    ) {
+        val numReqColors: Int,
+        val numOptColors: Int,
+        val repetitive: Boolean,
+        val center: ParamUsage,
+        val delay: ParamUsage,
+        val delayDefault: Long,
+        val direction: ParamUsage,
+        val distance: ParamUsage,
+        val distanceDefault: Int,
+        val spacing: ParamUsage,
+        val spacingDefault: Int
+    ) : SendableData {
+
+        companion object {
+            const val prefix = "AINF"
+        }
+
+        override val prefix = AnimationInfo.prefix
+
         val numColors: Int = numReqColors + numOptColors
+
+        override fun toHumanReadableString(): String =
+            """
+                Animation Info
+                  name: $name
+                  abbr: $abbr
+                  required colors: $numReqColors
+                  optional colors: $numOptColors
+                  repetitive: $repetitive
+                  center: $center
+                  delay: $delay ($delayDefault)
+                  direction: $direction
+                  distance: $distance (${if (distanceDefault == -1) "whole strip" else distanceDefault})
+                  spacing: $spacing ($spacingDefault)
+                End Info 
+            """.trimIndent()
     }
 
-    /**
-     * Only show the animation info but not the raw code when converted to a string.
-     */
-    override fun toString(): String {
-        return "Animation(info=$info)"
-    }
 }
