@@ -22,16 +22,14 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.animation
+import animatedledstrip.animationutils.continuous
+import animatedledstrip.animationutils.delay
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.endAnimation
 import animatedledstrip.utils.delayBlocking
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
+import org.pmw.tinylog.Level
 import kotlin.test.assertTrue
 
 class AnimatedLEDStripTest {
