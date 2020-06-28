@@ -42,6 +42,7 @@ val gson = GsonBuilder()
     .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
     .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
     .addSerializationExclusionStrategy(PredefinedAnimation.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
     .create()
     ?: error("Could not create JSON parser")
 

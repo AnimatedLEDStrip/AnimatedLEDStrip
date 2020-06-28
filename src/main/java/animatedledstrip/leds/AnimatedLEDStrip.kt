@@ -201,7 +201,7 @@ abstract class AnimatedLEDStrip(
      */
     inner class Section(val startPixel: Int, val endPixel: Int, parentSection: Section? = null) : SendableData {
 
-        override val prefix = AnimatedLEDStrip.sectionPrefix
+        override val prefix = sectionPrefix
 
         override fun toHumanReadableString() =
             """
