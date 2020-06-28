@@ -39,7 +39,7 @@ class AnimatedLEDStripTest {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-        awaitPredefinedAnimationsLoaded()
+//        awaitPredefinedAnimationsLoaded()
 
         testLEDs.startAnimationCallback = {
             indicator1 = true

@@ -40,7 +40,12 @@ interface SendableData: Serializable {
             override fun shouldSkipClass(p0: Class<*>?) = false
 
             override fun shouldSkipField(field: FieldAttributes?): Boolean {
-                return field?.name?.equals("prefix$1") == true
+                if (field?.declaringClass != SendableData::class.java)
+                    return false
+                return when (field.name) {
+                    "prefix$1" -> true
+                    else -> false
+                }
             }
         }
     }
