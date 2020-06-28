@@ -1,10 +1,37 @@
+/*
+ *  Copyright (c) 2020 AnimatedLEDStrip
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
 package animatedledstrip.animationutils
 
 import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.CoroutineScope
 
-abstract class Animation(open val info: AnimationInfo): SendableData {
+abstract class Animation(open val info: AnimationInfo) : SendableData {
+
+    companion object {
+        const val DEFAULT_DELAY = 50L
+        const val DEFAULT_SPACING = 3
+    }
 
     abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
 
@@ -37,17 +64,17 @@ abstract class Animation(open val info: AnimationInfo): SendableData {
     data class AnimationInfo(
         val name: String,
         val abbr: String,
-        val numReqColors: Int,
-        val numOptColors: Int,
         val repetitive: Boolean,
-        val center: ParamUsage,
-        val delay: ParamUsage,
-        val delayDefault: Long,
-        val direction: ParamUsage,
-        val distance: ParamUsage,
-        val distanceDefault: Int,
-        val spacing: ParamUsage,
-        val spacingDefault: Int
+        val numReqColors: Int = 0,
+        val numOptColors: Int = 0,
+        val center: ParamUsage = ParamUsage.NOTUSED,
+        val delay: ParamUsage = ParamUsage.NOTUSED,
+        val direction: ParamUsage = ParamUsage.NOTUSED,
+        val distance: ParamUsage = ParamUsage.NOTUSED,
+        val spacing: ParamUsage = ParamUsage.NOTUSED,
+        val delayDefault: Long = DEFAULT_DELAY,
+        val distanceDefault: Int = -1,
+        val spacingDefault: Int = DEFAULT_SPACING
     ) : SendableData {
 
         companion object {
@@ -74,5 +101,4 @@ abstract class Animation(open val info: AnimationInfo): SendableData {
                 End Info 
             """.trimIndent()
     }
-
 }

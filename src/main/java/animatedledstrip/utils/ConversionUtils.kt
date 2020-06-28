@@ -22,13 +22,11 @@
 
 package animatedledstrip.utils
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.ParamUsage
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ColorContainerSerializer
+import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.StripInfo
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
