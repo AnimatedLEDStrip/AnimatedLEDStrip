@@ -22,9 +22,8 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.predefinedAnimLoadComplete
+//import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.utils.delayBlocking
 import org.pmw.tinylog.Configuration
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -76,9 +75,9 @@ fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Lon
     }
 }
 
-fun awaitPredefinedAnimationsLoaded() {
-    while (!predefinedAnimLoadComplete) delayBlocking(250)
-}
+//fun awaitPredefinedAnimationsLoaded() {
+//    while (!predefinedAnimLoadComplete) delayBlocking(250)
+//}
 
 /* Log Testing */
 

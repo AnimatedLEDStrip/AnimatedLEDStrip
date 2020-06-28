@@ -20,19 +20,36 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animationutils
+package animatedledstrip.animationutils.predefined
 
-import animatedledstrip.utils.SendableData
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.ParamUsage
+import animatedledstrip.animationutils.PredefinedAnimation
+import animatedledstrip.utils.delayBlocking
 
-data class EndAnimation(
-    val id: String
-) : SendableData {
+val alternate = PredefinedAnimation(
+    Animation.AnimationInfo(
+        name = "Alternate",
+        abbr = "ALT",
+        repetitive = true,
+        numReqColors = 2,
+        center = ParamUsage.NOTUSED,
+        delay = ParamUsage.USED,
+        delayDefault = 1000,
+        direction = ParamUsage.NOTUSED,
+        distance = ParamUsage.NOTUSED,
+        spacing = ParamUsage.NOTUSED
+    )
+) { leds, data, _ ->
+    val color0 = data.pCols[0]
+    val color1 = data.pCols[1]
 
-    companion object {
-        const val prefix = "END "
+    val delay = data.delay
+
+    leds.apply {
+        setProlongedStripColor(color0)
+        delayBlocking(delay)
+        setProlongedStripColor(color1)
+        delayBlocking(delay)
     }
-
-    override val prefix = EndAnimation.prefix
-
-    override fun toHumanReadableString(): String = "End of animation $id"
 }

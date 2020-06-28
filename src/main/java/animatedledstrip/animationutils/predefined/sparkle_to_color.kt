@@ -20,38 +20,42 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animationutils
+package animatedledstrip.animationutils.predefined
 
-import animatedledstrip.leds.AnimatedLEDStrip
-import com.google.gson.ExclusionStrategy
-import com.google.gson.FieldAttributes
-import kotlinx.coroutines.CoroutineScope
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.ParamUsage
+import animatedledstrip.animationutils.PredefinedAnimation
+import animatedledstrip.leds.runBlockingNonCancellable
+import animatedledstrip.utils.delayBlocking
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 
-class PredefinedAnimation(
-    info: AnimationInfo,
-    val animation: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit
-) : Animation(info) {
+val sparkleToColor = PredefinedAnimation(
+    Animation.AnimationInfo(
+        name = "Sparkle To Color",
+        abbr = "STC",
+        repetitive = false,
+        numReqColors = 1,
+        center = ParamUsage.NOTUSED,
+        delay = ParamUsage.USED,
+        direction = ParamUsage.NOTUSED,
+        distance = ParamUsage.NOTUSED,
+        spacing = ParamUsage.NOTUSED
+    )
+) { leds, data, scope ->
+    val color0 = data.pCols[0]
+    val delay = data.delay
 
-    companion object {
-        const val prefix = "PANM"
-
-        object ExStrategy : ExclusionStrategy {
-            override fun shouldSkipClass(p0: Class<*>?) = false
-
-            override fun shouldSkipField(field: FieldAttributes?): Boolean {
-                if (field?.declaringClass != PredefinedAnimation::class.java)
-                    return false
-                return when (field.name) {
-                    "animation" -> true
-                    else -> false
-                }
+    leds.apply {
+        val jobs = indices.map { n ->
+            scope.launch(sparkleThreadPool) {
+                delayBlocking((Math.random() * 5000).toLong() % 4950)
+                setProlongedPixelColor(n, color0)
+                delayBlocking(delay)
             }
         }
+        runBlockingNonCancellable {
+            jobs.joinAll()
+        }
     }
-
-    override val prefix = PredefinedAnimation.prefix
-
-    override fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope) =
-        animation(leds, data, scope)
-
 }

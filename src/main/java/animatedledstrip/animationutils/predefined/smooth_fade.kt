@@ -20,19 +20,35 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animationutils
+package animatedledstrip.animationutils.predefined
 
-import animatedledstrip.utils.SendableData
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.ParamUsage
+import animatedledstrip.animationutils.PredefinedAnimation
+import animatedledstrip.leds.iterateOverPixels
+import animatedledstrip.utils.delayBlocking
 
-data class EndAnimation(
-    val id: String
-) : SendableData {
+val smoothFade = PredefinedAnimation(
+    Animation.AnimationInfo(
+        name = "Smooth Fade",
+        abbr = "SMF",
+        repetitive = true,
+        numReqColors = 1,
+        center = ParamUsage.NOTUSED,
+        delay = ParamUsage.USED,
+        delayDefault = 50,
+        direction = ParamUsage.NOTUSED,
+        distance = ParamUsage.NOTUSED,
+        spacing = ParamUsage.NOTUSED
+    )
+) { leds, data, _ ->
+    val color0 = data.pCols[0]
+    val delay = data.delay
 
-    companion object {
-        const val prefix = "END "
+    leds.apply {
+        iterateOverPixels {
+            setProlongedStripColor(color0[it])
+            delayBlocking(delay)
+        }
     }
-
-    override val prefix = EndAnimation.prefix
-
-    override fun toHumanReadableString(): String = "End of animation $id"
 }

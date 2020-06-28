@@ -101,9 +101,7 @@ class UtilsTest {
             .spacing(5)
 
         val testBytes = testAnimation.json()
-
-        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToSendableData<AnimationData>()
-
+        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToAnimationData()
         assertTrue { testAnimation == testAnimation2 }
 
         assertFailsWith<IllegalStateException> {
@@ -194,7 +192,7 @@ class UtilsTest {
     fun testGetDataTypePrefix() {
         val info1 = StripInfo()
         val infoBytes = info1.jsonString()
-        assertTrue { infoBytes.getDataTypePrefix() == "INFO" }
+        assertTrue { infoBytes.getDataTypePrefix() == "SINF" }
 
         val animTest = AnimationData()
         val animBytes = animTest.jsonString()

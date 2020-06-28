@@ -34,7 +34,8 @@ class AnimationInfoTest {
     fun testDefaultConstruction() {
         val ai = Animation.AnimationInfo(
             name = "TEST",
-            abbr = "TST"
+            abbr = "TST",
+            repetitive = false
         )
 
         assertTrue { ai.name == "TEST" }
@@ -44,12 +45,12 @@ class AnimationInfoTest {
         assertTrue { ai.numColors == 0 }
         assertTrue { ai.center == ParamUsage.NOTUSED }
         assertTrue { ai.delay == ParamUsage.NOTUSED }
-        assertTrue { ai.delayDefault == 0L }
+        assertTrue { ai.delayDefault == 50L }
         assertTrue { ai.direction == ParamUsage.NOTUSED }
         assertTrue { ai.distance == ParamUsage.NOTUSED }
         assertTrue { ai.repetitive == false }
         assertTrue { ai.spacing == ParamUsage.NOTUSED }
-        assertTrue { ai.spacingDefault == 0 }
+        assertTrue { ai.spacingDefault == 3 }
     }
 
 }
