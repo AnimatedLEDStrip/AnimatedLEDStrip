@@ -25,6 +25,9 @@ package animatedledstrip.leds
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.leds.AnimatedLEDStrip.Section
+import animatedledstrip.utils.SendableData
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
@@ -40,10 +43,10 @@ abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
 ) : LEDStrip(stripInfo) {
 
-    /* Load predefined animations if they haven't been loaded already */
-    init {
-        loadPredefinedAnimations(this::class.java.classLoader)
-    }
+//    /* Load predefined animations if they haven't been loaded already */
+//    init {
+//        loadPredefinedAnimations(this::class.java.classLoader)
+//    }
 
     /* Thread pools */
 
@@ -196,7 +199,19 @@ abstract class AnimatedLEDStrip(
      * @param parentSection The parent section of this section. A null parentSection implies that the parent
      *   is the whole strip.
      */
-    inner class Section(val startPixel: Int, val endPixel: Int, parentSection: Section? = null) {
+    inner class Section(val startPixel: Int, val endPixel: Int, parentSection: Section? = null) : SendableData {
+
+        override val prefix = AnimatedLEDStrip.sectionPrefix
+
+        override fun toHumanReadableString() =
+            """
+                Section Info
+                  numLEDs: $numLEDs
+                  startPixel: $startPixel
+                  endPixel: $endPixel
+                  physicalStart: $physicalStart
+                End Info
+            """.trimIndent()
 
         /* Utility values */
 
@@ -312,12 +327,7 @@ abstract class AnimatedLEDStrip(
                 try {
                     do {
                         Logger.trace("Run ${data.id}: $isActive $isContinuous")
-                        definedAnimation.code.eval(
-                            definedAnimation.animationScriptingEngine.createBindings().apply {
-                                put("data", data)
-                                put("leds", this@Section)
-                                put("scope", this@launch)
-                            })
+                        definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
                     } while (isActive && isContinuous)
                 } catch (e: ScriptException) {
                     Logger.error("Error when running ${definedAnimation.info.name}:")
@@ -500,4 +510,22 @@ abstract class AnimatedLEDStrip(
             get() = ledStrip.pixelProlongedColorList.subList(getPhysicalIndex(startPixel), getPhysicalIndex(endPixel))
 
     }
+
+    companion object {
+        const val sectionPrefix = "SECT"
+
+        object SectionExStrategy : ExclusionStrategy {
+            override fun shouldSkipClass(p0: Class<*>?) = false
+
+            override fun shouldSkipField(field: FieldAttributes?): Boolean {
+                if (field?.declaringClass != Section::class.java)
+                    return false
+                return when (field.name) {
+                    "startPixel", "endPixel", "physicalStart", "numLEDs" -> false
+                    else -> true
+                }
+            }
+        }
+    }
+
 }

@@ -41,7 +41,7 @@ val gson = GsonBuilder()
     .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
     .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
     .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
-    .addSerializationExclusionStrategy(Animation.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(PredefinedAnimation.Companion.ExStrategy)
     .create()
     ?: error("Could not create JSON parser")
 
@@ -101,6 +101,8 @@ fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
 fun String?.jsonToAnimation(): Animation = jsonToSendableData()
 
 fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
+
+fun String?.jsonToSection(): AnimatedLEDStrip.Section = jsonToSendableData()
 
 /**
  * Get the first four characters in the string (used to indicate the type of data,

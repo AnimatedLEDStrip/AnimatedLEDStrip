@@ -76,7 +76,12 @@ class AnimationData(
             override fun shouldSkipClass(p0: Class<*>?) = false
 
             override fun shouldSkipField(field: FieldAttributes?): Boolean {
-                return field?.name?.equals("pCols") == true
+                if (field?.declaringClass != AnimationData::class.java)
+                    return false
+                return when (field.name) {
+                    "pCols" -> true
+                    else -> false
+                }
             }
         }
     }
