@@ -25,6 +25,10 @@ package animatedledstrip.colors.ccpresets
 
 import animatedledstrip.colors.ColorContainer
 
+/*
+ * Presets for HTML named colors
+ */
+
 /**
  * A default ColorContainer for HTML Named Color AliceBlue (0xF0F8FF)
  */

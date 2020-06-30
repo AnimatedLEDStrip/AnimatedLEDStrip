@@ -96,7 +96,7 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
                   center: $center
                   delay: $delay ($delayDefault)
                   direction: $direction
-                  distance: $distance (${if (distanceDefault == -1) "whole strip" else distanceDefault})
+                  distance: $distance (${if (distanceDefault == -1) "whole strip" else distanceDefault.toString()})
                   spacing: $spacing ($spacingDefault)
                 End Info 
             """.trimIndent()
