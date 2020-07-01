@@ -22,7 +22,7 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
@@ -87,62 +87,6 @@ class UtilsTest {
     }
 
     @Test
-    fun testAnimationDataJson() {
-        val testAnimation = AnimationData().animation("Stack")
-            .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
-            .color(0xFF, index = 1)
-            .color(0xFF, index = 2)
-            .color(0xFF, index = 3)
-            .color(0xFF, index = 4)
-            .continuous(true)
-            .delay(50)
-            .direction(Direction.FORWARD)
-            .id("TEST")
-            .spacing(5)
-
-        val testBytes = testAnimation.json()
-        val testAnimation2 = testBytes.toUTF8(testBytes.size).jsonToAnimationData()
-        assertTrue { testAnimation == testAnimation2 }
-
-        assertFailsWith<IllegalStateException> {
-            val nullBytes: String? = null
-            nullBytes.jsonToAnimationData()
-        }
-
-        assertFailsWith<JsonSyntaxException> {
-            val incompleteJson = "DATA:{test:5"
-            incompleteJson.jsonToAnimationData()
-        }
-    }
-
-    @Test
-    fun testStripInfoJson() {
-        val info1 = StripInfo(
-            numLEDs = 10,
-            pin = 15,
-            imageDebugging = true,
-            fileName = "test.csv",
-            rendersBeforeSave = 100,
-            threadCount = 200
-        )
-        val infoBytes = info1.json()
-
-        val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
-
-        assertTrue { info1 == info2 }
-
-        assertFailsWith<IllegalStateException> {
-            val nullBytes: String? = null
-            nullBytes.jsonToStripInfo()
-        }
-
-        assertFailsWith<JsonSyntaxException> {
-            val incompleteJson = "INFO:{test:5"
-            incompleteJson.jsonToStripInfo()
-        }
-    }
-
-    @Test
     fun testStripInfo() {
         val info = StripInfo(
             numLEDs = 10,
@@ -169,26 +113,6 @@ class UtilsTest {
     }
 
     @Test
-    fun testEndAnimationJson() {
-        val end1 = EndAnimation(id = "test")
-        val endBytes = end1.json()
-
-        val end2 = endBytes.toUTF8(endBytes.size).jsonToEndAnimation()
-
-        assertTrue { end1 == end2 }
-
-        assertFailsWith<IllegalStateException> {
-            val nullBytes: String? = null
-            nullBytes.jsonToEndAnimation()
-        }
-
-        assertFailsWith<JsonSyntaxException> {
-            val incompleteJson = "END :{id:5"
-            incompleteJson.jsonToEndAnimation()
-        }
-    }
-
-    @Test
     fun testGetDataTypePrefix() {
         val info1 = StripInfo()
         val infoBytes = info1.jsonString()
@@ -201,6 +125,19 @@ class UtilsTest {
         assertFailsWith<IllegalStateException> {
             val nullBytes: String? = null
             nullBytes.getDataTypePrefix()
+        }
+    }
+
+    @Test
+    fun testBadJson() {
+        assertFailsWith<IllegalStateException> {
+            val nullBytes: String? = null
+            nullBytes.jsonToAnimationData()
+        }
+
+        assertFailsWith<JsonSyntaxException> {
+            val incompleteJson = "DATA:{test:5"
+            incompleteJson.jsonToAnimationData()
         }
     }
 

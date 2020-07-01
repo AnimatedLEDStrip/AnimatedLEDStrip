@@ -209,7 +209,7 @@ class AnimationData(
      */
     override fun toHumanReadableString() =
         """
-            AnimationData $id:
+            AnimationData for $id
               animation: $animation
               colors: $colors
               center: $center
