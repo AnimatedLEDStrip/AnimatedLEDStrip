@@ -75,7 +75,7 @@ class AnimationTests{
                 .color(0xFF)
         )
 
-        val testLEDs2 = EmulatedAnimatedLEDStrip(10).wholeStrip
+        val testLEDs2 = EmulatedAnimatedLEDStrip(11).wholeStrip
 
         val anim2 = testLEDs2.startAnimation(
             AnimationData()
@@ -110,6 +110,20 @@ class AnimationTests{
         anim.endAnimation()
         anim.join()
         testLEDs.assertAllPixels(0xFF)
+
+        val testLEDs2 = EmulatedAnimatedLEDStrip(11).wholeStrip
+
+        val anim2 = testLEDs2.startAnimation(
+            AnimationData()
+                .animation("Bounce to Color")
+                .color(0xFF)
+        )
+
+        assertNotNull(anim2)
+        delay(100)
+        anim2.endAnimation()
+        anim2.join()
+        testLEDs2.assertAllPixels(0xFF)
     }
 
     @Test
