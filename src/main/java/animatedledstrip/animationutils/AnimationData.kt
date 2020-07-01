@@ -151,7 +151,7 @@ class AnimationData(
             )
         }
 
-        for (i in colors.size until definedAnimation.info.numColors) {
+        for (i in colors.size until definedAnimation.info.minimumColors) {
             pCols.add(
                 CCBlack.prepare(
                     numLEDs = sectionRunningFullAnimation.numLEDs,
