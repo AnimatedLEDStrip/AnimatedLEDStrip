@@ -33,7 +33,7 @@ val fireworks = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",
-        repetitive = false,
+        repetitive = true,
         minimumColors = 1,
         unlimitedColors = true,
         center = ParamUsage.NOTUSED,
