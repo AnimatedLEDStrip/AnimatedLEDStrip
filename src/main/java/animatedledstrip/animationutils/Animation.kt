@@ -49,7 +49,7 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
      * @property name The name used to identify this animation
      * @property abbr
      * @property numReqColors The number of required colors for this animation
-     * @property numOptColors The number of optional colors for this animation
+     * @property numOptColors The number of optional colors for this animation. -1 means unlimited
      * @property repetitive Can this animation be repeated
      *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive-vs-Radial)
      * @property center Does this animation use the `center` parameter
