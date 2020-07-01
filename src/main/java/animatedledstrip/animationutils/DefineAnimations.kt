@@ -58,7 +58,11 @@ val definedAnimations = mutableMapOf<String, Animation>().apply {
     predefinedAnimations.forEach { this[prepareAnimName(it.info.name)] = it }
 }
 
-fun prepareAnimName(name: String): String = name.removeSpaces().replace("-", "").toLowerCase()
+fun prepareAnimName(name: String): String =
+    name.removeSpaces()
+        .replace("-", "")
+        .replace("_", "")
+        .toLowerCase()
 
 fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
 
