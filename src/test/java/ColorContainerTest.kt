@@ -322,4 +322,22 @@ class ColorContainerTest {
         assertTrue { testPCC.prepare(2) === testPCC }
         assertTrue { testPCC.toString() == "[ff, ffff]" }
     }
+
+    @Test
+    fun testIsEmpty() {
+        val testCC1 = ColorContainer()
+        assertTrue { testCC1.isEmpty() }
+        assertFalse { testCC1.isNotEmpty() }
+
+        val testCC2 = ColorContainer(0xFF)
+        assertFalse { testCC2.isEmpty() }
+        assertTrue { testCC2.isNotEmpty() }
+
+        val testCC3 = ColorContainer(0xFF, 0xFFFF)
+        assertFalse { testCC3.isEmpty() }
+        assertTrue { testCC3.isNotEmpty() }
+
+        val testPCC1 = testCC1.prepare(50)
+
+    }
 }

@@ -206,3 +206,23 @@ internal fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContaine
     }
     return PreparedColorContainer(temp)
 }
+
+/**
+ * Report whether `colors` is empty
+ */
+fun ColorContainer.isEmpty() = colors.isEmpty()
+
+/**
+ * Report whether `colors` is empty
+ */
+fun PreparedColorContainer.isEmpty() = colors.isEmpty()
+
+/**
+ * Report whether `colors` is not empty
+ */
+fun ColorContainer.isNotEmpty() = !isEmpty()
+
+/**
+ * Report whether `colors` is not empty
+ */
+fun PreparedColorContainer.isNotEmpty() = !isEmpty()

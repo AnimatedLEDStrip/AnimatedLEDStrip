@@ -208,9 +208,10 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
                         returnMap[i] = blend(
                             colors[purePixels.indexOf(j)],
                             colors[(purePixels.indexOf(j) + 1) % purePixels.size],
-                            if (purePixels.indexOf(j) < purePixels.size - 1) (((i - j) / ((purePixels[purePixels.indexOf(
-                                j
-                            ) + 1]) - j).toDouble()) * 255).toInt() else (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                            if (purePixels.indexOf(j) < purePixels.size - 1)
+                                (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt()
+                            else
+                                (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
                         )
                     }
                     break
