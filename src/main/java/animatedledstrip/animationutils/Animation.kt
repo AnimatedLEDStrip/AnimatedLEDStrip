@@ -89,7 +89,7 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
                   name: $name
                   abbr: $abbr
                   required colors: $minimumColors
-                  optional colors: $unlimitedColors
+                  unlimited colors: $unlimitedColors
                   repetitive: $repetitive
                   center: $center
                   delay: $delay ($delayDefault)
