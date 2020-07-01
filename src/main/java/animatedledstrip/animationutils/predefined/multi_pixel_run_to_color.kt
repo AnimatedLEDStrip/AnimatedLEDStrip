@@ -31,9 +31,9 @@ import animatedledstrip.utils.delayBlocking
 
 val multiPixelRunToColor = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "Multi Pixel Run To Color",
+        name = "Multi Pixel Run to Color",
         abbr = "MTC",
-        repetitive = true,
+        repetitive = false,
         minimumColors = 1,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,

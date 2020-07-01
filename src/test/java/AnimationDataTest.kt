@@ -143,8 +143,6 @@ class AnimationDataTest {
 
     @Test
     fun testDelay() {
-//        loadPredefinedAnimations(this::class.java.classLoader)
-//        awaitPredefinedAnimationsLoaded()
         val testAnimation = AnimationData()
 
         assertTrue { DEFAULT_DELAY == 50L }
@@ -265,8 +263,6 @@ class AnimationDataTest {
     @Test
     @Ignore
     fun testSpacing() {
-//        loadPredefinedAnimations(this::class.java.classLoader)
-//        awaitPredefinedAnimationsLoaded()
         val testAnimation = AnimationData()
 
         assertTrue { DEFAULT_SPACING == 3 }
@@ -395,57 +391,6 @@ class AnimationDataTest {
             ).toString() ==
                     "AnimationData(animation=Bounce, colors=[ff], center=30, continuous=false, delay=10, " +
                     "delayMod=2.0, direction=BACKWARD, distance=50, id=test, section=section, spacing=4)"
-        }
-    }
-
-    @Test
-    fun testToHumanReadableString() {
-        assertTrue {
-            AnimationData().toHumanReadableString() ==
-                    """
-                        AnimationData :
-                          animation: Color
-                          colors: []
-                          center: -1
-                          continuous: null
-                          delay: 50
-                          delayMod: 1.0
-                          direction: FORWARD
-                          distance: -1
-                          section: 
-                          spacing: 3
-                        End AnimationData
-                    """.trimIndent()
-        }
-
-        assertTrue {
-            AnimationData(
-                animation = "Bounce",
-                colors = listOf(0xFF.toColorContainer()),
-                center = 30,
-                continuous = false,
-                delay = 10,
-                delayMod = 2.0,
-                direction = Direction.BACKWARD,
-                distance = 50,
-                id = "test",
-                section = "section",
-                spacing = 4
-            ).toHumanReadableString() ==
-                    """
-                        AnimationData test:
-                          animation: Bounce
-                          colors: [ff]
-                          center: 30
-                          continuous: false
-                          delay: 10
-                          delayMod: 2.0
-                          direction: BACKWARD
-                          distance: 50
-                          section: section
-                          spacing: 4
-                        End AnimationData
-                    """.trimIndent()
         }
     }
 

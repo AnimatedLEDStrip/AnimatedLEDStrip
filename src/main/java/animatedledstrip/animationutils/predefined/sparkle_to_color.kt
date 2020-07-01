@@ -32,12 +32,13 @@ import kotlinx.coroutines.launch
 
 val sparkleToColor = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "Sparkle To Color",
+        name = "Sparkle to Color",
         abbr = "STC",
         repetitive = false,
         minimumColors = 1,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
+        delayDefault = 50,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED

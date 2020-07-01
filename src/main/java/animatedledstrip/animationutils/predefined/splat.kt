@@ -29,7 +29,7 @@ import kotlin.math.min
 
 val splat = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "SPLAT",
+        name = "Splat",
         abbr = "SPT",
         repetitive = false,
         minimumColors = 1,
