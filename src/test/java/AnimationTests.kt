@@ -191,10 +191,19 @@ class AnimationTests{
                 .addColor(ColorContainer())
         )
 
+        val anim2 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Fireworks")
+                .addColor(ColorContainer())
+        )
+
         assertNotNull(anim)
+        assertNotNull(anim2)
         delay(100)
         anim.endAnimation()
+        anim2.endAnimation()
         anim.join()
+        anim2.join()
         Unit
     }
 
