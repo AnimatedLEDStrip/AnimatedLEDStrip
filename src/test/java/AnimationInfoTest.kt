@@ -25,6 +25,7 @@ package animatedledstrip.test
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AnimationInfoTest {
@@ -40,9 +41,8 @@ class AnimationInfoTest {
 
         assertTrue { ai.name == "TEST" }
         assertTrue { ai.abbr == "TST" }
-        assertTrue { ai.numReqColors == 0 }
-        assertTrue { ai.numOptColors == 0 }
-        assertTrue { ai.numColors == 0 }
+        assertTrue { ai.minimumColors == 0 }
+        assertFalse { ai.unlimitedColors }
         assertTrue { ai.center == ParamUsage.NOTUSED }
         assertTrue { ai.delay == ParamUsage.NOTUSED }
         assertTrue { ai.delayDefault == 50L }

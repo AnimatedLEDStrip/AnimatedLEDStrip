@@ -48,8 +48,8 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
      *
      * @property name The name used to identify this animation
      * @property abbr
-     * @property numReqColors The number of required colors for this animation
-     * @property numOptColors The number of optional colors for this animation. -1 means unlimited
+     * @property minimumColors The number of required colors for this animation
+     * @property unlimitedColors Can this animation take an unlimited number of colors
      * @property repetitive Can this animation be repeated
      *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive-vs-Radial)
      * @property center Does this animation use the `center` parameter
@@ -65,8 +65,8 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
         val name: String,
         val abbr: String,
         val repetitive: Boolean,
-        val numReqColors: Int = 0,
-        val numOptColors: Int = 0,
+        val minimumColors: Int = 0,
+        val unlimitedColors: Boolean = false,
         val center: ParamUsage = ParamUsage.NOTUSED,
         val delay: ParamUsage = ParamUsage.NOTUSED,
         val direction: ParamUsage = ParamUsage.NOTUSED,
@@ -83,21 +83,13 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
 
         override val prefix = AnimationInfo.prefix
 
-        val numColors: Int =
-            if (numOptColors == -1) numReqColors
-            else numReqColors + numOptColors
-
-        val unlimitedColors: Boolean = numOptColors == -1
-
-
-
         override fun toHumanReadableString(): String =
             """
                 Animation Info
                   name: $name
                   abbr: $abbr
-                  required colors: $numReqColors
-                  optional colors: $numOptColors
+                  required colors: $minimumColors
+                  optional colors: $unlimitedColors
                   repetitive: $repetitive
                   center: $center
                   delay: $delay ($delayDefault)
