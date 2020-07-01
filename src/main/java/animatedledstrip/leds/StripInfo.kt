@@ -22,7 +22,7 @@
 
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.definedAnimations
+import animatedledstrip.animationutils.definedAnimationNames
 import animatedledstrip.utils.SendableData
 
 /**
@@ -53,11 +53,11 @@ data class StripInfo(
     override val prefix = StripInfo.prefix
 
     val supportedAnimations
-        get() = definedAnimations.map { it.value.info.name }
+        get() = definedAnimationNames
 
     override fun toHumanReadableString() =
         """
-            Strip Info:
+            Strip Info
               numLEDs: $numLEDs
               pin: $pin
               imageDebugging: $imageDebugging
