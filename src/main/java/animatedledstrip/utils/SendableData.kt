@@ -39,9 +39,7 @@ interface SendableData: Serializable {
         object ExStrategy : ExclusionStrategy {
             override fun shouldSkipClass(p0: Class<*>?) = false
 
-            override fun shouldSkipField(field: FieldAttributes?): Boolean {
-                if (field?.declaringClass != SendableData::class.java)
-                    return false
+            override fun shouldSkipField(field: FieldAttributes): Boolean {
                 return when (field.name) {
                     "prefix$1" -> true
                     else -> false
