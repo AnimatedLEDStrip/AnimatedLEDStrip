@@ -83,7 +83,13 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
 
         override val prefix = AnimationInfo.prefix
 
-        val numColors: Int = numReqColors + numOptColors
+        val numColors: Int =
+            if (numOptColors == -1) numReqColors
+            else numReqColors + numOptColors
+
+        val unlimitedColors: Boolean = numOptColors == -1
+
+
 
         override fun toHumanReadableString(): String =
             """
