@@ -22,7 +22,7 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.colors.ccpresets.CCPresets
+import animatedledstrip.colors.ccpresets.*
 import org.junit.Test
 import kotlin.test.assertTrue
 
@@ -187,5 +187,20 @@ class ColorPresetsTest {
             assertTrue { CCPresets[i].color == colorList[i] }
         }
 
+    }
+
+    @Test
+    fun testColorGroups() {
+        assertTrue {
+            CCGroupPresets == listOf(
+                CCRainbowColors,
+                CCCloudColors,
+                CCLavaColors,
+                CCOceanColors,
+                CCForestColors,
+                CCRainbowStripesColors,
+                CCPartyColors
+            )
+        }
     }
 }
