@@ -22,7 +22,10 @@
 
 package animatedledstrip.utils
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.EndAnimation
+import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ColorContainerSerializer
@@ -41,7 +44,6 @@ val gson = GsonBuilder()
     .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
     .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
     .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
-    .addSerializationExclusionStrategy(PredefinedAnimation.Companion.ExStrategy)
     .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
     .create()
     ?: error("Could not create JSON parser")
@@ -98,8 +100,6 @@ fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
 fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
 
 fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
-
-fun String?.jsonToAnimation(): Animation = jsonToSendableData()
 
 fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
 

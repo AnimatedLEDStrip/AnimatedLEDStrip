@@ -26,7 +26,7 @@ import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.CoroutineScope
 
-abstract class Animation(open val info: AnimationInfo) : SendableData {
+abstract class Animation(open val info: AnimationInfo) {
 
     companion object {
         const val DEFAULT_DELAY = 50L
@@ -34,14 +34,6 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
     }
 
     abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
-
-    override fun toHumanReadableString(): String =
-        """
-            Animation Definition
-              info: 
-              ${info.toHumanReadableString()}
-            End Definition
-        """.trimMargin()
 
     /**
      * Stores information about an animation.
@@ -88,15 +80,15 @@ abstract class Animation(open val info: AnimationInfo) : SendableData {
                 Animation Info
                   name: $name
                   abbr: $abbr
-                  required colors: $minimumColors
-                  unlimited colors: $unlimitedColors
                   repetitive: $repetitive
+                  minimum colors: $minimumColors
+                  unlimited colors: $unlimitedColors
                   center: $center
-                  delay: $delay ($delayDefault)
+                  delay: $delay${if (delay == ParamUsage.USED) " ($delayDefault)" else ""}
                   direction: $direction
-                  distance: $distance (${if (distanceDefault == -1) "whole strip" else distanceDefault.toString()})
-                  spacing: $spacing ($spacingDefault)
-                End Info 
+                  distance: $distance${if (distance == ParamUsage.USED) " (${if (distanceDefault == -1) "whole strip" else distanceDefault.toString()})" else ""}
+                  spacing: $spacing${if (spacing == ParamUsage.USED) " ($spacingDefault)" else ""}
+                End Info
             """.trimIndent()
     }
 }
