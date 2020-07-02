@@ -338,6 +338,15 @@ class ColorContainerTest {
         assertTrue { testCC3.isNotEmpty() }
 
         val testPCC1 = testCC1.prepare(50)
+        assertTrue { testPCC1.isEmpty() }
+        assertFalse { testPCC1.isNotEmpty() }
 
+        val testPCC2 = testCC2.prepare(50)
+        assertFalse { testPCC2.isEmpty() }
+        assertTrue { testPCC2.isNotEmpty() }
+
+        val testPCC3 = testCC3.prepare(50)
+        assertFalse { testPCC3.isEmpty() }
+        assertTrue { testPCC3.isNotEmpty() }
     }
 }
