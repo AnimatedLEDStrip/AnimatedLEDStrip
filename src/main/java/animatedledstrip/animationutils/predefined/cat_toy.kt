@@ -44,75 +44,44 @@ val catToy = PredefinedAnimation(
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
+    val delay = data.delay
+    var doRevert = true
+    var doDelay = true
+    val lastPixel = data.extraData.getOrPut("lastPixel") {
+        doRevert = false
+        0
+    } as Int
 
     leds.apply {
-        val pixel1 = randomPixelIn(indices)
-        val pixel2 = randomPixelIn(indices.first(), pixel1)
-        val pixel3 = randomPixelIn(pixel2, indices.last())
-        val pixel4 = randomPixelIn(indices.first(), pixel3)
-        val pixel5 = randomPixelIn(pixel4, indices.last())
+        val pixel = randomPixelIn(indices)
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.FORWARD
-            ),
-            section = getSubSection(0, pixel1)
-        )
-        setTemporaryPixelColor(pixel1, color0)
-        delayBlocking((Math.random() * 2500).toLong())
-        revertPixel(pixel1)
+        if (doRevert) revertPixel(lastPixel)
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.BACKWARD
-            ),
-            section = getSubSection(pixel2, pixel1)
-        )
-        setTemporaryPixelColor(pixel2, color0)
-        delayBlocking((Math.random() * 2500).toLong())
-        revertPixel(pixel2)
+        when {
+            pixel > lastPixel ->
+                runSequential(
+                    animation = data.copy(
+                        animation = "Pixel Run",
+                        direction = Direction.FORWARD
+                    ),
+                    section = getSubSection(lastPixel, pixel)
+                )
+            pixel < lastPixel ->
+                runSequential(
+                    animation = data.copy(
+                        animation = "Pixel Run",
+                        direction = Direction.BACKWARD
+                    ),
+                    section = getSubSection(pixel, lastPixel)
+                )
+            pixel == lastPixel -> doDelay = false
+        }
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.FORWARD
-            ),
-            section = getSubSection(pixel2, pixel3)
-        )
-        setTemporaryPixelColor(pixel3, color0)
-        delayBlocking((Math.random() * 2500).toLong())
-        revertPixel(pixel3)
+        setTemporaryPixelColor(pixel, color0)
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.BACKWARD
-            ),
-            section = getSubSection(pixel4, pixel3)
-        )
-        setTemporaryPixelColor(pixel4, color0)
-        delayBlocking((Math.random() * 2500).toLong())
-        revertPixel(pixel4)
+        if (doDelay) delayBlocking((Math.random() * delay * 500).toLong())
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.FORWARD
-            ),
-            section = getSubSection(pixel4, pixel5)
-        )
-        setTemporaryPixelColor(pixel5, color0)
-        delayBlocking((Math.random() * 2500).toLong())
-        revertPixel(pixel5)
+        data.extraData["lastPixel"] = pixel
 
-        runSequential(
-            animation = data.copy(
-                animation = "Pixel Run",
-                direction = Direction.BACKWARD
-            ),
-            section = getSubSection(0, pixel5)
-        )
     }
 }
