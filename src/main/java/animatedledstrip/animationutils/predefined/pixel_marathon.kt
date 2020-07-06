@@ -23,6 +23,7 @@
 package animatedledstrip.animationutils.predefined
 
 import animatedledstrip.animationutils.*
+import animatedledstrip.colors.ccpresets.EmptyColorContainer
 import animatedledstrip.utils.delayBlocking
 
 val pixelMarathon = PredefinedAnimation(
@@ -30,7 +31,8 @@ val pixelMarathon = PredefinedAnimation(
         name = "Pixel Marathon",
         abbr = "PXM",
         repetitive = true,
-        minimumColors = 5,
+        minimumColors = 1,
+        unlimitedColors = true,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 8,
@@ -39,46 +41,21 @@ val pixelMarathon = PredefinedAnimation(
         spacing = ParamUsage.NOTUSED
     )
 ) { leds, data, scope ->
-    val color0 = data.pCols[0]
-    val color1 = data.pCols[1]
-    val color2 = data.pCols[2]
-    val color3 = data.pCols[3]
-    val color4 = data.pCols[4]
+    val color = data.colors.random()
     val delay = data.delay
     val direction = data.direction
 
     leds.apply {
-        val baseAnimation = AnimationData().animation("Pixel Run")
-            .direction(direction).delay(delay)
-
-        runParallel(baseAnimation.copy().color(color4), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color3), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color1), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color2), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color0), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color1), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color4), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color2), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color3), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
-
-        runParallel(baseAnimation.copy().color(color0), scope = scope)
-        delayBlocking((Math.random() * 500).toLong())
+        if (color != EmptyColorContainer) {
+            runParallel(
+                AnimationData()
+                    .animation("Pixel Run")
+                    .color(color)
+                    .direction(direction)
+                    .delay(delay),
+                scope = scope
+            )
+            delayBlocking((Math.random() * delay * 100).toLong())
+        }
     }
 }
