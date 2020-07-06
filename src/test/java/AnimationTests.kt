@@ -127,6 +127,23 @@ class AnimationTests{
     }
 
     @Test
+    fun testBubbleSort() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(10).wholeStrip
+
+        val anim = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Bubble Sort")
+                .color(ColorContainer(0xFF, 0xFFFF))
+        )
+
+        assertNotNull(anim)
+        delay(100)
+        anim.endAnimation()
+        anim.join()
+        Unit
+    }
+
+    @Test
     fun testCatToy() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
@@ -181,7 +198,7 @@ class AnimationTests{
     fun testFireworks() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-        val anim = testLEDs.startAnimation(
+        val anim1 = testLEDs.startAnimation(
             AnimationData()
                 .animation("Fireworks")
                 .addColor(0xFF)
@@ -197,14 +214,39 @@ class AnimationTests{
                 .addColor(ColorContainer())
         )
 
-        assertNotNull(anim)
+        assertNotNull(anim1)
         assertNotNull(anim2)
         delay(100)
-        anim.endAnimation()
+        anim1.endAnimation()
         anim2.endAnimation()
-        anim.join()
+        anim1.join()
         anim2.join()
         Unit
+    }
+
+    @Test
+    fun testMergeSort() = runBlocking {
+        val testLEDs = EmulatedAnimatedLEDStrip(25).wholeStrip
+
+        val anim1 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Merge Sort Parallel")
+                .color(ColorContainer(0xFF, 0xFF00))
+        )
+
+        val anim2 = testLEDs.startAnimation(
+            AnimationData()
+                .animation("Merge Sort Sequential")
+                .color(ColorContainer(0xFF, 0xFF00))
+        )
+
+        assertNotNull(anim1)
+        assertNotNull(anim2)
+        delay(100)
+        anim1.endAnimation()
+        anim2.endAnimation()
+        anim1.join()
+        anim2.join()
     }
 
     @Test
