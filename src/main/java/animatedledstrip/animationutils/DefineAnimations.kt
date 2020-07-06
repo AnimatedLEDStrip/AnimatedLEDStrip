@@ -32,11 +32,14 @@ val predefinedAnimations = listOf(
     alternate,
     bounce,
     bounceToColor,
+    bubbleSort,
     catToy,
     catToyToColor,
     color,
     fadeToColor,
     fireworks,
+    mergeSortParallel,
+    mergeSortSequential,
     meteor,
     multiPixelRun,
     multiPixelRunToColor,
@@ -62,6 +65,8 @@ fun prepareAnimName(name: String): String =
     name.removeSpaces()
         .replace("-", "")
         .replace("_", "")
+        .replace("(", "")
+        .replace(")", "")
         .toLowerCase()
 
 fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
