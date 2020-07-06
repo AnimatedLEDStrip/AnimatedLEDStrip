@@ -88,7 +88,7 @@ abstract class LEDStrip(
     /**
      * A list that tracks the prolonged color of each pixel.
      *
-     * Each pixel has two colors, its actual color and then its prolonged color.
+     * Each pixel has two colors, its temporary color and then its prolonged color.
      * The prolonged color is a color for it to revert or fade back to.
      */
     protected val prolongedColors = mutableListOf<Long>().apply {
@@ -341,20 +341,18 @@ abstract class LEDStrip(
                 if (owner != myName) break
                 isFading = true
                 i++
-                var doDelay = true
                 withPixelLock(pixel) {
                     setPixelColor(
                         pixel,
                         blend(
-                            prolongedColors.getOrNull(pixel)
-                                ?: run { doDelay = false; return@withPixelLock Unit },
-                            prolongedColors[pixel],
-                            amountOfOverlay
+                            existing = getPixelColor(pixel, false),
+                            overlay = getPixelColor(pixel, true),
+                            amountOfOverlay = amountOfOverlay
                         ),
                         prolonged = false
                     )
                 }
-                if (doDelay) delayBlocking(delay)
+                delayBlocking(delay)
             }
             // If loop was not broken due to another thread taking over the fading,
             // reset the pixel and indicate that this pixel is no longer fading
