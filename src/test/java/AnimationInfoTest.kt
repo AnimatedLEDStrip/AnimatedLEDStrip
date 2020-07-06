@@ -108,6 +108,23 @@ class AnimationInfoTest {
                     """.trimIndent()
         }
         assertTrue {
+            bubbleSort.info.toHumanReadableString() ==
+                    """
+                        Animation Info
+                          name: Bubble Sort
+                          abbr: BST
+                          repetitive: false
+                          minimum colors: 1
+                          unlimited colors: false
+                          center: NOTUSED
+                          delay: USED (5)
+                          direction: NOTUSED
+                          distance: NOTUSED
+                          spacing: NOTUSED
+                        End Info
+                    """.trimIndent()
+        }
+        assertTrue {
             catToy.info.toHumanReadableString() ==
                     """
                         Animation Info
@@ -193,6 +210,40 @@ class AnimationInfoTest {
                     """.trimIndent()
         }
         assertTrue {
+            mergeSortParallel.info.toHumanReadableString() ==
+                    """
+                        Animation Info
+                          name: Merge Sort (Parallel)
+                          abbr: MSP
+                          repetitive: false
+                          minimum colors: 1
+                          unlimited colors: false
+                          center: NOTUSED
+                          delay: USED (50)
+                          direction: NOTUSED
+                          distance: NOTUSED
+                          spacing: NOTUSED
+                        End Info
+                    """.trimIndent()
+        }
+        assertTrue {
+            mergeSortSequential.info.toHumanReadableString() ==
+                    """
+                        Animation Info
+                          name: Merge Sort (Sequential)
+                          abbr: MSS
+                          repetitive: false
+                          minimum colors: 1
+                          unlimited colors: false
+                          center: NOTUSED
+                          delay: USED (25)
+                          direction: NOTUSED
+                          distance: NOTUSED
+                          spacing: NOTUSED
+                        End Info
+                    """.trimIndent()
+        }
+        assertTrue {
             meteor.info.toHumanReadableString() ==
                     """
                         Animation Info
@@ -250,8 +301,8 @@ class AnimationInfoTest {
                           name: Pixel Marathon
                           abbr: PXM
                           repetitive: true
-                          minimum colors: 5
-                          unlimited colors: false
+                          minimum colors: 1
+                          unlimited colors: true
                           center: NOTUSED
                           delay: USED (8)
                           direction: USED
