@@ -163,7 +163,7 @@ class AnimationData(
         return this
     }
 
-
+    val extraData = mutableMapOf<String, Any?>()
 
     /* Note: If any other properties are added, they must be added to the five methods below */
 
