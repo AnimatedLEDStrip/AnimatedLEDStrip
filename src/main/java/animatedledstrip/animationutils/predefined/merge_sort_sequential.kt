@@ -10,7 +10,7 @@ import animatedledstrip.utils.delayBlocking
 val mergeSortSequential = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Sequential)",
-        abbr = "MSP",
+        abbr = "MSS",
         repetitive = false,
         minimumColors = 1,
         center = ParamUsage.NOTUSED,
