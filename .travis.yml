@@ -13,6 +13,7 @@ before_install:
 branches:
   only:
     - master
+    - sections
     - /^travis.*/
     - /^v.*/
 
@@ -52,6 +53,8 @@ jobs:
       deploy:
         - provider: script
           script: ./create_docs.bash
+          on:
+            all_branches: true
         - provider: pages
           repo: AnimatedLEDStrip/AnimatedLEDStrip.wiki
           target_branch: test
