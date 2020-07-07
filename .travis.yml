@@ -13,7 +13,6 @@ before_install:
 branches:
   only:
     - master
-    - sections
     - /^travis.*/
     - /^v.*/
 
@@ -35,7 +34,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn site --settings .maven.xml -DskipTests=true -B && git add dokka
+          script: mvn site --settings .maven.xml -DskipTests=true -DdoDokka=true -B && git add dokka
           on:
             all_branches: true
         - provider: pages
@@ -47,7 +46,7 @@ jobs:
           on:
             all_branches: true
 
-    - stage: test
+    - stage: deploy snapshot
       install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
       script: skip
       before_deploy:
@@ -56,7 +55,7 @@ jobs:
         - sdk install kotlin
         - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
         - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
-        - kotlinc-jvm -script create_docs.kts -cp target/animatedledstrip-core-${VERSION}.jar
+        - kotlinc-jvm -script create_docs.kts -cp target/animatedledstrip-core-${VERSION}.jar -- ${VERSION}
         - cd wiki
         - git add .
         - git commit -m "Update animation documentation"
