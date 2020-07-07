@@ -24,12 +24,8 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
-import com.google.gson.ExclusionStrategy
-import com.google.gson.FieldAttributes
-import com.google.gson.GsonBuilder
 
 /* Helper functions for setting values */
 

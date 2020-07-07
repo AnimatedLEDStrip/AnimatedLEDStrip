@@ -24,7 +24,6 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.leds.AnimatedLEDStrip.Section
 import animatedledstrip.utils.SendableData
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
@@ -43,17 +42,12 @@ abstract class AnimatedLEDStrip(
     stripInfo: StripInfo
 ) : LEDStrip(stripInfo) {
 
-//    /* Load predefined animations if they haven't been loaded already */
-//    init {
-//        loadPredefinedAnimations(this::class.java.classLoader)
-//    }
-
     /* Thread pools */
 
     /**
      * Multiplier used when calculating thread pool sizes
      */
-    private val threadCount: Int = stripInfo.threadCount ?: 100
+    private val threadCount: Int = stripInfo.threadCount
 
     /**
      * A pool of threads used to run animations.
@@ -311,7 +305,7 @@ abstract class AnimatedLEDStrip(
             scope: CoroutineScope = GlobalScope,
             subAnimation: Boolean = false
         ): Job? {
-            val definedAnimation = findAnimation(data.animation) ?: run {
+            val definedAnimation = findAnimationOrNull(data.animation) ?: run {
                 Logger.warn("Animation ${data.animation} not found")
                 Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
                 return null
