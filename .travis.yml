@@ -57,6 +57,7 @@ jobs:
       deploy:
         - provider: script
           script: ./create_docs.bash
+          skip_cleanup: true
           on:
             all_branches: true
 
