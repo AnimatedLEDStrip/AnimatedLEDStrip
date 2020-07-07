@@ -52,6 +52,7 @@ jobs:
       script: skip
       before_deploy:
         - curl -s https://get.sdkman.io | bash
+        - source "/home/travis/.sdkman/bin/sdkman-init.sh"
         - sdk install kotlin
       deploy:
         - provider: script
