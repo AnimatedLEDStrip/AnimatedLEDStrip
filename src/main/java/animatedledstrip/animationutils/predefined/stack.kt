@@ -33,8 +33,15 @@ val stack = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",
+        description = "Pixels are run from one end of the strip/section to the" +
+                "other, 'stacking' up.\n" +
+                "Each pixel has to travel a shorter distance than the last.\n" +
+                "Note that this animation has a quadratic time complexity," +
+                "meaning it gets very long very quickly.",
+        signatureFile = "stack.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 10,

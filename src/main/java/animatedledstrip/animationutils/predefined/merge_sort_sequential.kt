@@ -11,8 +11,12 @@ val mergeSortSequential = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Sequential)",
         abbr = "MSS",
+        description = "Visualization of merge sort. `pCols[0]` is randomized," +
+                "then merge sort is used to resort it.",
+        signatureFile = "merge_sort_sequential.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 25,

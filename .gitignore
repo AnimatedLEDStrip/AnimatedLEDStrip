@@ -1,5 +1,6 @@
 /out
 /target
+/wiki
 /.idea
 *.xml
 *.iml

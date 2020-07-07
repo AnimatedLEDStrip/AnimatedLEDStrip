@@ -30,6 +30,8 @@ val pixelMarathon = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
+        description = "Watch pixels race each other along the strip.",
+        signatureFile = "pixel_marathon.png",
         repetitive = true,
         minimumColors = 1,
         unlimitedColors = true,

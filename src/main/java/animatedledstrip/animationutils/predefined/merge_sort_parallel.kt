@@ -14,8 +14,12 @@ val mergeSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Parallel)",
         abbr = "MSP",
+        description = "Visualization of merge sort. `pCols[0]` is randomized," +
+                "then a parallelized merge sort is used to resort it.",
+        signatureFile = "merge_sort_parallel.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 50,

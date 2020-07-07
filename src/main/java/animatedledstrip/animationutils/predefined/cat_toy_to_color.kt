@@ -34,8 +34,11 @@ val catToyToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy to Color",
         abbr = "CTC",
+        description = "A",
+        signatureFile = "merge_sort_sequential.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 5,

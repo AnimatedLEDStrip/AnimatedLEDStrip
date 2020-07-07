@@ -10,8 +10,12 @@ val bubbleSort = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bubble Sort",
         abbr = "BST",
+        description = "Visualization of bubble sort. `pCols[0]` is randomized," +
+                "then bubble sort is used to resort it.",
+        signatureFile = "bubble_sort.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 5,

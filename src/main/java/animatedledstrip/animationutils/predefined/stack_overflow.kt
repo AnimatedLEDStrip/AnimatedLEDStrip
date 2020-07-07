@@ -29,8 +29,16 @@ val stackOverflow = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack Overflow",
         abbr = "STO",
+        description = "Two [Stack](Stack) animations are started from opposite" +
+                "ends of the strip/section.\n" +
+                "The stacks meet in the middle and 'overflow' their half.\n" +
+                "And yes, the pun was very much intended.\n" +
+                "Note that this animation has a quadratic time complexity," +
+                "meaning it gets very long very quickly.",
+        signatureFile = "stack_overflow.png",
         repetitive = true,
         minimumColors = 2,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 2,
