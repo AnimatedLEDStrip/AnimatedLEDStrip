@@ -55,16 +55,6 @@ jobs:
           script: ./create_docs.bash
           on:
             all_branches: true
-#        - provider: pages
-#          repo: AnimatedLEDStrip/AnimatedLEDStrip.wiki
-#          target_branch: test
-#          skip_cleanup: true
-#          github_token: $GITHUB_TOKEN
-#          keep_history: true
-#          verbose: true
-#          local_dir: ./wiki
-#          on:
-#            all_branches: true
 
     - stage: deploy release
       install: skip
