@@ -29,6 +29,22 @@ import org.pmw.tinylog.Logger
 const val DEFAULT_DELAY = 50L
 const val DEFAULT_SPACING = 3
 
+val definedAnimations = mutableMapOf<String, Animation>()
+
+fun addNewAnimation(anim: Animation) {
+    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
+        Logger.error("Animation ${anim.info.name} already defined")
+        return
+    }
+    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
+        Logger.error("Animation with abbreviation ${anim.info.abbr} already defined")
+        return
+    }
+
+    definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
+    definedAnimations[prepareAnimIdentifier(anim.info.abbr)] = anim
+}
+
 val predefinedAnimations = listOf(
     alternate,
     bounce,
@@ -56,24 +72,8 @@ val predefinedAnimations = listOf(
     stack,
     stackOverflow,
     wipe
-)
-
-fun addNewAnimation(anim: Animation) {
-    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-        Logger.error("Animation ${anim.info.name} already defined")
-        return
-    }
-    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-        Logger.error("Animation with abbreviation ${anim.info.abbr} already defined")
-        return
-    }
-
-    definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
-    definedAnimations[prepareAnimIdentifier(anim.info.abbr)] = anim
-}
-
-val definedAnimations = mutableMapOf<String, Animation>().apply {
-    predefinedAnimations.forEach { addNewAnimation(it) }
+).apply {
+    forEach { addNewAnimation(it) }
 }
 
 fun prepareAnimIdentifier(name: String): String =
