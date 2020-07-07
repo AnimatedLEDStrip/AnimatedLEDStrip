@@ -61,7 +61,7 @@ jobs:
         - git commit -a -m "Update animation documentation"
       deploy:
         - provider: script
-          script: git push https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git test
+          script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git test
           skip_cleanup: true
           on:
             all_branches: true
