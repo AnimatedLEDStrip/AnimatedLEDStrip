@@ -34,7 +34,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+          script: mvn site --settings .maven.xml -DskipTests=true -B && git add dokka
           on:
             tags: true
         - provider: pages
@@ -43,6 +43,23 @@ jobs:
           keep-history: true
           verbose: true
           local_dir: ./dokka
+          on:
+            all_branches: true
+
+    - stage: deploy snapshot
+      install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
+      script: skip
+      deploy:
+        - provider: script
+          script: ./create_docs.bash
+        - provider: pages
+          repo: AnimatedLEDStrip/AnimatedLEDStrip.wiki
+          target_branch: master
+          skip-cleanup: true
+          github-token: $GITHUB_TOKEN
+          keep-history: true
+          verbose: true
+          local_dir: ./wiki
           on:
             all_branches: true
 
