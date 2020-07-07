@@ -24,6 +24,7 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.animationutils.predefined.*
 import animatedledstrip.utils.removeSpaces
+import org.pmw.tinylog.Logger
 
 const val DEFAULT_DELAY = 50L
 const val DEFAULT_SPACING = 3
@@ -57,11 +58,25 @@ val predefinedAnimations = listOf(
     wipe
 )
 
-val definedAnimations = mutableMapOf<String, Animation>().apply {
-    predefinedAnimations.forEach { this[prepareAnimName(it.info.name)] = it }
+fun addNewAnimation(anim: Animation) {
+    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
+        Logger.error("Animation ${anim.info.name} already defined")
+        return
+    }
+    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
+        Logger.error("Animation with abbreviation ${anim.info.abbr} already defined")
+        return
+    }
+
+    definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
+    definedAnimations[prepareAnimIdentifier(anim.info.abbr)] = anim
 }
 
-fun prepareAnimName(name: String): String =
+val definedAnimations = mutableMapOf<String, Animation>().apply {
+    predefinedAnimations.forEach { this[prepareAnimIdentifier(it.info.name)] = it }
+}
+
+fun prepareAnimIdentifier(name: String): String =
     name.removeSpaces()
         .replace("-", "")
         .replace("_", "")
@@ -69,7 +84,9 @@ fun prepareAnimName(name: String): String =
         .replace(")", "")
         .toLowerCase()
 
-fun findAnimation(animName: String): Animation? = definedAnimations[prepareAnimName(animName)]
+fun findAnimation(animId: String): Animation = definedAnimations[prepareAnimIdentifier(animId)]!!
+
+fun findAnimationOrNull(animId: String): Animation? = definedAnimations[prepareAnimIdentifier(animId)]
 
 val definedAnimationNames: List<String>
     get() = definedAnimations.keys.toList()
