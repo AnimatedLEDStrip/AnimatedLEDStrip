@@ -46,7 +46,7 @@ jobs:
           on:
             all_branches: true
 
-    - stage: deploy snapshot
+    - stage: test
       install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
       script: skip
       deploy:
@@ -54,7 +54,7 @@ jobs:
           script: ./create_docs.bash
         - provider: pages
           repo: AnimatedLEDStrip/AnimatedLEDStrip.wiki
-          target_branch: master
+          target_branch: test
           skip-cleanup: true
           github-token: $GITHUB_TOKEN
           keep-history: true
