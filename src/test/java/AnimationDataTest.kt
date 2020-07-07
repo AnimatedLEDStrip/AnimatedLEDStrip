@@ -156,7 +156,7 @@ class AnimationDataTest {
         testAnimation.delay(40L)
         assertTrue { testAnimation.delay == 40L }
 
-        assertTrue { findAnimation("Bounce")?.info?.delayDefault == 10L }
+        assertTrue { findAnimation("Bounce").info.delayDefault == 10L }
         testAnimation.animation = "Bounce"
 
         testAnimation.delay = -1
@@ -274,7 +274,7 @@ class AnimationDataTest {
         testAnimation.spacing(10)
         assertTrue { testAnimation.spacing == 10 }
 
-        assertTrue { findAnimation("MultiPixelRun")!!.info.spacingDefault == 3 }
+        assertTrue { findAnimation("MultiPixelRun").info.spacingDefault == 3 }
         testAnimation.animation = "MultiPixelRun"
 
         testAnimation.spacing = -1

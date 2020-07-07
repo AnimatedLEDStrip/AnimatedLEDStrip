@@ -73,7 +73,7 @@ fun addNewAnimation(anim: Animation) {
 }
 
 val definedAnimations = mutableMapOf<String, Animation>().apply {
-    predefinedAnimations.forEach { this[prepareAnimIdentifier(it.info.name)] = it }
+    predefinedAnimations.forEach { addNewAnimation(it) }
 }
 
 fun prepareAnimIdentifier(name: String): String =
