@@ -50,6 +50,9 @@ jobs:
     - stage: test
       install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
       script: skip
+      before_deploy:
+        - curl -s https://get.sdkman.io | bash
+        - sdk install kotlin
       deploy:
         - provider: script
           script: ./create_docs.bash
