@@ -97,7 +97,7 @@ class AnimationData(
     private var baseDelay: Long = delay
         get() {
             return when (field) {
-                -1L, 0L -> findAnimation(animName = animation)?.info?.delayDefault ?: DEFAULT_DELAY
+                -1L, 0L -> findAnimationOrNull(animId = animation)?.info?.delayDefault ?: DEFAULT_DELAY
                 else -> field
             }
         }
@@ -112,7 +112,7 @@ class AnimationData(
     var spacing: Int = spacing
         get() {
             return (when (field) {
-                -1, 0 -> findAnimation(animName = animation)?.info?.spacingDefault ?: DEFAULT_SPACING
+                -1, 0 -> findAnimationOrNull(animId = animation)?.info?.spacingDefault ?: DEFAULT_SPACING
                 else -> field
             })
         }
@@ -125,7 +125,7 @@ class AnimationData(
      * and populates `pCols`.
      */
     fun prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
-        val definedAnimation = findAnimation(animation)!!
+        val definedAnimation = findAnimation(animation)
 
         val sectionRunningFullAnimation = ledStrip.getSection(sectionName = section)
 
@@ -230,7 +230,7 @@ class AnimationData(
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
                 (other is AnimationData &&
-                        prepareAnimName(animation) == prepareAnimName(other.animation) &&
+                        prepareAnimIdentifier(animation) == prepareAnimIdentifier(other.animation) &&
                         colors == other.colors &&
                         center == other.center &&
                         continuous == other.continuous &&
