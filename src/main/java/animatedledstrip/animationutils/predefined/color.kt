@@ -30,8 +30,11 @@ val color = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Color",
         abbr = "COL",
+        description = "Sets the strip to a color.",
+        signatureFile = "color.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.NOTUSED,
         direction = ParamUsage.NOTUSED,

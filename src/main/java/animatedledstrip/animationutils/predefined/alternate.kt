@@ -31,8 +31,11 @@ val alternate = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",
+        description = "Strip alternates between `pCols[0]` and `pCols[1]`, delaying delay milliseconds between changes.",
+        signatureFile = "alternate.png",
         repetitive = true,
         minimumColors = 2,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 1000,

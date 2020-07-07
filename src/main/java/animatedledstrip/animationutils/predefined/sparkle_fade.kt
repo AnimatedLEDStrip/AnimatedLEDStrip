@@ -35,8 +35,12 @@ val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle Fade",
         abbr = "SPF",
+        description = "Similar to [Sparkle](Sparkle) but pixels fade back to" +
+                "their prolonged color.",
+        signatureFile = "sparkle_fade.png",
         repetitive = true,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 50,
@@ -51,7 +55,7 @@ val sparkleFade = PredefinedAnimation(
     leds.apply {
         val jobs = indices.map { n ->
             scope.launch(sparkleThreadPool) {
-                delayBlocking((Math.random() * 5000).toLong())
+                delayBlocking((Math.random() * delay * 100).toLong())
                 setAndFadePixel(
                     pixel = n,
                     color = color0,

@@ -32,8 +32,11 @@ val fadeToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fade to Color",
         abbr = "FTC",
+        description = "Fade the strip to a color.\n",
+        signatureFile = "fade_to_color.png",
         repetitive = false,
         minimumColors = 1,
+        unlimitedColors = false,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 30,
