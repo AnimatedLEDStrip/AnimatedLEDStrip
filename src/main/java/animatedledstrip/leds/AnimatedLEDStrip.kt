@@ -81,12 +81,10 @@ abstract class AnimatedLEDStrip(
      * Class for tracking a currently running animation.
      *
      * @property data An `AnimationData` instance with the properties of the animation
-     * @property id The string ID representing the animation
      * @property job The `Job` that is running the animation
      */
     data class RunningAnimation(
         val data: AnimationData,
-        val id: String,
         val job: Job
     ) {
         /**
@@ -117,7 +115,7 @@ abstract class AnimatedLEDStrip(
     fun endAnimation(id: String) {
         runningAnimations[id]?.endAnimation()
             ?: run {
-                Logger.warn { "Animation $id not running" }
+                Logger.warn("Animation $id is not running")
                 runningAnimations.remove(id)
                 return
             }
@@ -283,7 +281,7 @@ abstract class AnimatedLEDStrip(
             val job = run(animation)
             Logger.trace(job)
             if (job != null) {
-                runningAnimations[id] = RunningAnimation(animation, id, job)
+                runningAnimations[id] = RunningAnimation(animation, job)
             }
             // Will return null if job was null because runningAnimations[id] would not have been set
             return runningAnimations[id]
