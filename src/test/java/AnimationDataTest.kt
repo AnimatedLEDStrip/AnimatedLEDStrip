@@ -261,7 +261,6 @@ class AnimationDataTest {
     }
 
     @Test
-    @Ignore
     fun testSpacing() {
         val testAnimation = AnimationData()
 
