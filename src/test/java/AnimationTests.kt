@@ -32,6 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import org.pmw.tinylog.Level
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -686,7 +687,7 @@ class AnimationTests {
     @Test
     fun testCreatePredefinedAnimation() {
         val info = Animation.AnimationInfo(
-            "",
+            "multipixelruntocolor",
             "",
             "",
             "",
@@ -706,5 +707,58 @@ class AnimationTests {
 
         assertTrue { pAnim.info === info }
         assertTrue { pAnim.animation === anim }
+    }
+
+    @Test
+    fun testAttemptToAddAlreadyDefinedAnimation() {
+        val anim1 = PredefinedAnimation(
+            Animation.AnimationInfo(
+                "multipixelruntocolor",
+                "",
+                "",
+                "",
+                false,
+                0,
+                false,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED
+            )
+        ) { _, _, _ -> }
+
+        startLogCapture()
+
+        addNewAnimation(anim1)
+
+        assertLogs(setOf(Pair(Level.ERROR, "Animation multipixelruntocolor already defined")))
+
+        stopLogCapture()
+
+        val anim2 = PredefinedAnimation(
+            Animation.AnimationInfo(
+                "",
+                "ALT",
+                "",
+                "",
+                false,
+                0,
+                false,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED,
+                ParamUsage.NOTUSED
+            )
+        ) { _, _, _ -> }
+
+        startLogCapture()
+
+        addNewAnimation(anim2)
+
+        assertLogs(setOf(Pair(Level.ERROR, "Animation with abbreviation ALT already defined")))
+
+        stopLogCapture()
     }
 }
