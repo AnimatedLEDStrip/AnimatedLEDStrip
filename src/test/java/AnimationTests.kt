@@ -149,7 +149,7 @@ class AnimationTests {
 
     @Test
     fun testCatToy() = runBlocking {
-        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+        val testLEDs = EmulatedAnimatedLEDStrip(3).wholeStrip
 
         val anim = testLEDs.startAnimation(
             AnimationData()
