@@ -24,15 +24,18 @@ package animatedledstrip.test
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.leds.join
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
-class AnimationTests{
+class AnimationTests {
 
     @Test
     fun testColor() = runBlocking {
@@ -678,5 +681,30 @@ class AnimationTests{
 
         testLEDs.run(AnimationData().animation("Im Not an Animation"))
         Unit
+    }
+
+    @Test
+    fun testCreatePredefinedAnimation() {
+        val info = Animation.AnimationInfo(
+            "",
+            "",
+            "",
+            "",
+            false,
+            0,
+            false,
+            ParamUsage.NOTUSED,
+            ParamUsage.NOTUSED,
+            ParamUsage.NOTUSED,
+            ParamUsage.NOTUSED,
+            ParamUsage.NOTUSED
+        )
+
+        val anim: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit = { _, _, _ -> }
+
+        val pAnim = PredefinedAnimation(info, anim)
+
+        assertTrue { pAnim.info === info }
+        assertTrue { pAnim.animation === anim }
     }
 }

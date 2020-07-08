@@ -26,7 +26,6 @@ import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
 import animatedledstrip.colors.ccpresets.EmptyColorContainer
-import animatedledstrip.leds.randomPixelIn
 import animatedledstrip.utils.delayBlocking
 
 val fireworks = PredefinedAnimation(
@@ -58,7 +57,7 @@ val fireworks = PredefinedAnimation(
                 data.copy(
                     colors = listOf(color),
                     animation = "Ripple",
-                    center = randomPixelIn(indices)
+                    center = indices.random()
                 ),
                 scope = scope
             )
