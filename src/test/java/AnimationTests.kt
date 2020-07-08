@@ -151,10 +151,11 @@ class AnimationTests{
             AnimationData()
                 .animation("Cat Toy")
                 .color(0xFF)
+                .delay(1)
         )
 
         assertNotNull(anim)
-        delay(100)
+        delay(10000)
         anim.endAnimation()
         anim.join()
         Unit
