@@ -33,7 +33,7 @@ val multiPixelRunToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Multi Pixel Run to Color",
         abbr = "MTC",
-        description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs" +
+        description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs " +
                 "do not revert back to their prolonged color.",
         signatureFile = "multi_pixel_run_to_color.png",
         repetitive = false,

@@ -33,7 +33,7 @@ val fireworks = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",
-        description = "Runs [Ripple](Ripple) animations from random centers in" +
+        description = "Runs [Ripple](Ripple) animations from random centers in " +
                 "the section, with a predefined distance.\n" +
                 "Color is chosen randomly from `pCols`.",
         signatureFile = "fireworks.png",

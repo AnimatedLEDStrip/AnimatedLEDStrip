@@ -34,12 +34,12 @@ val sparkleToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle to Color",
         abbr = "STC",
-        description = "Similar to the [Sparkle](Sparkle) animation, but the" +
-                "LEDs are not reverted to their prolonged color after" +
+        description = "Similar to the [Sparkle](Sparkle) animation, but the " +
+                "LEDs are not reverted to their prolonged color after " +
                 "the sparkle.\n" +
                 "(Their prolonged color is changed as well.)\n" +
                 "A separate thread is created for each pixel.\n" +
-                "Each thread waits up to `delay * 100` seconds before sparkling" +
+                "Each thread waits up to `delay * 100` seconds before sparkling " +
                 "its pixel.",
         signatureFile = "sparkle_to_color.png",
         repetitive = false,

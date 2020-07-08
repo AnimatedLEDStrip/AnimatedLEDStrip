@@ -32,7 +32,7 @@ val smoothFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Fade",
         abbr = "SMF",
-        description = "Like a [Smooth Chase](Smooth-Chase) animation, but the" +
+        description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
                 "whole strip is the same color while fading through `pCols[0]`.",
         signatureFile = "smooth_fade.png",
         repetitive = true,

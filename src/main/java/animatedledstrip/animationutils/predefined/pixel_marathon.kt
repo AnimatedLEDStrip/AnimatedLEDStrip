@@ -30,7 +30,16 @@ val pixelMarathon = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
-        description = "Watch pixels race each other along the strip.",
+        description = "Watch pixels race each other along the strip.\n\n" +
+                "Note that in the animation signature that there are a couple " +
+                "points where the slope of the line gets shallower (meaning the " +
+                "pixel is 'moving' faster).\n" +
+                "If you look closely, you'll see that there are actually two " +
+                "[Pixel Run](Pixel-Run) subanimations at the same spot engaged " +
+                "in a race condition - quite fitting for this animation.\n" +
+                "This happens because when an animation such as Pixel Run changes " +
+                "a pixel's temporary color, it puts a lock on that pixel so the " +
+                "pixel's color doesn't change until it's done with that pixel.",
         signatureFile = "pixel_marathon.png",
         repetitive = true,
         minimumColors = 1,

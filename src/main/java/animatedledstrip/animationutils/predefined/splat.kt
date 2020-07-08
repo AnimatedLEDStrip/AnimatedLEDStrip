@@ -31,10 +31,10 @@ val splat = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Splat",
         abbr = "SPT",
-        description = "Similar to a [Ripple](Ripple) but the pixels don't" +
+        description = "Similar to a [Ripple](Ripple) but the pixels don't " +
                 "fade back.\n" +
-                "Runs two Wipe animations in opposite directions starting" +
-                "from `center`, stopping after traveling `distance` or at" +
+                "Runs two Wipe animations in opposite directions starting " +
+                "from `center`, stopping after traveling `distance` or at " +
                 "the end of the section, whichever comes first.",
         signatureFile = "splat.png",
         repetitive = false,
