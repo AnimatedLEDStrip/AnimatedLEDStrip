@@ -30,19 +30,20 @@ const val DEFAULT_DELAY = 50L
 const val DEFAULT_SPACING = 3
 
 val definedAnimations = mutableMapOf<String, Animation>()
+val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
 
 fun addNewAnimation(anim: Animation) {
     if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
         Logger.error("Animation ${anim.info.name} already defined")
         return
     }
-    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
+    if (definedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
         Logger.error("Animation with abbreviation ${anim.info.abbr} already defined")
         return
     }
 
     definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
-    definedAnimations[prepareAnimIdentifier(anim.info.abbr)] = anim
+    definedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
 }
 
 val predefinedAnimations = listOf(
@@ -84,9 +85,10 @@ fun prepareAnimIdentifier(name: String): String =
         .replace(")", "")
         .toLowerCase()
 
-fun findAnimation(animId: String): Animation = definedAnimations[prepareAnimIdentifier(animId)]!!
+fun findAnimation(animId: String): Animation = findAnimationOrNull(animId)!!
 
-fun findAnimationOrNull(animId: String): Animation? = definedAnimations[prepareAnimIdentifier(animId)]
+fun findAnimationOrNull(animId: String): Animation? =
+    definedAnimations[prepareAnimIdentifier(animId)] ?: definedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
 val definedAnimationNames: List<String>
     get() = definedAnimations.keys.toList()
