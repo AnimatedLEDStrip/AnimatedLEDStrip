@@ -43,8 +43,6 @@ definedAnimations.forEach {
     file.append("\n\n")
     file.append("## [Animation Signature](Animation-Signatures)\n")
     file.append("![${info.name} Signature](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/blob/master/animation-signatures/${info.signatureFile})\n")
-    file.append("\n")
-    file.append("###### Last updated: `v${args[0]}`\n")
     file.close()
 }
 
