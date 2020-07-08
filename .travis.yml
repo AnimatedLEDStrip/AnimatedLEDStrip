@@ -23,7 +23,7 @@ stages:
   - name: deploy release
     if: branch =~ ^v.*$
   - name: deploy docs
-    if: (branch = master AND type != pull_request) OR branch =~ ^.*-doc$
+    if: branch =~ ^v.*$ OR branch =~ ^.*-doc$
 
 jobs:
   include:
