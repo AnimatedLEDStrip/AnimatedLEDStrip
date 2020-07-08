@@ -39,7 +39,6 @@ class AnimatedLEDStripTest {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-//        awaitPredefinedAnimationsLoaded()
 
         testLEDs.startAnimationCallback = {
             indicator1 = true
@@ -86,6 +85,21 @@ class AnimatedLEDStripTest {
         assertLogs(setOf(Pair(Level.WARNING, "Could not find section Other, defaulting to whole strip")))
 
         assertTrue { testLEDs.wholeStrip.getSection("Other") === testLEDs.wholeStrip }
+
+        stopLogCapture()
+    }
+
+    @Test
+    fun testEndAnimationsThatAreNotRunning() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+        testLEDs.endAnimation(null)
+
+        startLogCapture()
+
+        testLEDs.endAnimation("not_running")
+
+        assertLogs(setOf(Pair(Level.WARNING, "Animation not_running is not running")))
 
         stopLogCapture()
     }
