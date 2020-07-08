@@ -196,8 +196,9 @@ operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()
 /**
  * Create a [PreparedColorContainer] with the same colors as this
  * [PreparedColorContainer], only offset by `offset`.
- *
- * @return A new [PreparedColorContainer] instance
+ * The color at index `0` will be moved to index `offset`.
+ * Negative offsets and offsets that are larger than the size of
+ * `colors` are supported.
  */
 fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
     val n = when {
