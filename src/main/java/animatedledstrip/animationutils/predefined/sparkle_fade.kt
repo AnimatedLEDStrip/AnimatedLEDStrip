@@ -35,7 +35,7 @@ val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle Fade",
         abbr = "SPF",
-        description = "Similar to [Sparkle](Sparkle) but pixels fade back to" +
+        description = "Similar to [Sparkle](Sparkle) but pixels fade back to " +
                 "their prolonged color.",
         signatureFile = "sparkle_fade.png",
         repetitive = true,

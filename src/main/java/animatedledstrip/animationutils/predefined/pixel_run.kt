@@ -35,7 +35,7 @@ val pixelRun = PredefinedAnimation(
         name = "Pixel Run",
         abbr = "PXR",
         description = "A pixel colored from `pCols[0]` runs along the strip.\n" +
-                "Similar to [Multi Pixel Run](Multi-Pixel-Run) but with only" +
+                "Similar to [Multi Pixel Run](Multi-Pixel-Run) but with only " +
                 "one pixel.",
         signatureFile = "pixel_run.png",
         repetitive = true,

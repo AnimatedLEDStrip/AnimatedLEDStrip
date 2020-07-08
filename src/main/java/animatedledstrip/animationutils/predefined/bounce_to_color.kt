@@ -32,10 +32,10 @@ val bounceToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce to Color",
         abbr = "BTC",
-        description = "Pixel 'bounces' back and forth, leaving behind a pixel" +
-                "set from `pCols[0]` at each end like [Stack](Stack), eventually" +
-                "ending in the middle.\n" +
-                "Note that this animation has a quadratic time complexity," +
+        description = "Pixel 'bounces' back and forth, leaving behind a pixel " +
+                "set from `pCols[0]` at each end like [Stack](Stack), eventually " +
+                "ending in the middle.\n\n" +
+                "Note that this animation has a quadratic time complexity, " +
                 "meaning it gets very long very quickly.",
         signatureFile = "bounce_to_color.png",
         repetitive = false,

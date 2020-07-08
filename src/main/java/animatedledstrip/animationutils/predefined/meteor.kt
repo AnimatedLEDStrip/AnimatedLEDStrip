@@ -35,8 +35,8 @@ val meteor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Meteor",
         abbr = "MET",
-        description = "Like a [Pixel Run](Pixel-Run) animation, but the" +
-                "'running' pixel has a trail behind it where the pixels" +
+        description = "Like a [Pixel Run](Pixel-Run) animation, but the " +
+                "'running' pixel has a trail behind it where the pixels " +
                 "fade back from `pCols[0]`.",
         signatureFile = "meteor.png",
         repetitive = true,

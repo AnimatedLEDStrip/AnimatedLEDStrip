@@ -36,10 +36,10 @@ val smoothChase = PredefinedAnimation(
         name = "Smooth Chase",
         abbr = "SCH",
         description = "Each pixel is set to its respective color in `pCols[0]`.\n" +
-                "Then, if the direction is `Direction.FORWARD`, each pixel is set" +
-                "to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create" +
+                "Then, if the direction is `Direction.FORWARD`, each pixel is set " +
+                "to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create " +
                 "the illusion that the animation is 'moving'.\n" +
-                "If the direction is `Direction.BACKWARD`, the same happens but" +
+                "If the direction is `Direction.BACKWARD`, the same happens but " +
                 "with indices `i`, `i-1`, `i-2`, etc.\n" +
                 "Works best with a ColorContainer with multiple colors.",
         signatureFile = "smooth_chase.png",

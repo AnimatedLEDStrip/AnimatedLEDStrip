@@ -33,9 +33,9 @@ val bounce = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce",
         abbr = "BNC",
-        description = "Similar to Bounce to Color but the pixels at the end of " +
-                "each bounce fade back to their prolonged color after being set " +
-                "from `pCols[0]`.\n" +
+        description = "Similar to [Bounce to Color](Bounce-to-Color) but the " +
+                "pixels at the end of each bounce fade back to their prolonged " +
+                "color after being set from `pCols[0]`.\n\n" +
                 "Note that this animation has a quadratic time " +
                 "complexity, meaning it gets very long very quickly.",
         signatureFile = "bounce.png",

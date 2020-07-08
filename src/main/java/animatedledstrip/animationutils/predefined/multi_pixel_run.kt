@@ -33,7 +33,7 @@ val multiPixelRun = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Multi Pixel Run",
         abbr = "MPR",
-        description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs" +
+        description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
                 "at a specified spacing.",
         signatureFile = "multi_pixel_run.png",
         repetitive = true,
