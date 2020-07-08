@@ -24,12 +24,179 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
 import java.lang.Math.random
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.math.roundToInt
+
+/* Set pixel colors */
+
+/**
+ * Set the temporary color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setTemporaryPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the temporary color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: Long) {
+    for (pixel in pixels) {
+        setTemporaryPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the temporary color of the specified range of pixels
+ * (alias for setTemporarySectionColor)
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+    setTemporaryPixelColors(pixels.toList(), color)
+
+/**
+ * Set the temporary color of the specified range of pixels
+ * (alias for setTemporarySectionColor)
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: Long) =
+    setTemporaryPixelColors(pixels.toList(), color)
+
+/**
+ * Set the prolonged color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setProlongedPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the prolonged color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: Long) {
+    for (pixel in pixels) {
+        setProlongedPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the prolonged color of the specified range of pixels
+ * (alias for setProlongedSectionColor)
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+    setProlongedPixelColors(pixels.toList(), color)
+
+/**
+ * Set the prolonged color of the specified range of pixels
+ * (alias for setProlongedSectionColor)
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: Long) =
+    setProlongedPixelColors(pixels.toList(), color)
+
+
+/* Set and fade pixel */
+
+/**
+ * Set a pixel to a color and then immediately fade it back to its
+ * prolonged color. This will return before the fade is complete
+ * because the fade is started in a separate coroutine.
+ *
+ * @param amountOfOverlay Amount of overlay in the fade (see [animatedledstrip.utils.blend])
+ * @param delay Amount of delay in the fade (see [animatedledstrip.utils.blend])
+ * @param context The thread pool to create the fading thread in
+ */
+fun AnimatedLEDStrip.Section.setAndFadePixel(
+    pixel: Int,
+    color: ColorContainerInterface,
+    amountOfOverlay: Int = 25,
+    delay: Int = 30,
+    context: CoroutineContext = EmptyCoroutineContext
+) {
+    setTemporaryPixelColor(pixel, color)
+    GlobalScope.launch(context) {
+        fadePixel(pixel, amountOfOverlay, delay)
+    }
+}
+
+
+/* Revert pixels */
+
+/**
+ * Revert pixels based on indices in a list
+ */
+fun AnimatedLEDStrip.Section.revertPixels(pixels: List<Int>) {
+    for (pixel in pixels) {
+        revertPixel(pixel)
+    }
+}
+
+/**
+ * Revert pixels based on indices in a range
+ */
+fun AnimatedLEDStrip.Section.revertPixels(pixels: IntRange) {
+    for (pixel in pixels) {
+        revertPixel(pixel)
+    }
+}
+
+
+/* Set strip color */
+
+/**
+ * Set the temporary color of a strip using a ColorContainer offset by `offset`
+ *
+ * @param offset The index of the pixel that will be set to the color at
+ * index 0
+ */
+fun AnimatedLEDStrip.Section.setTemporaryStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
+    setTemporaryStripColor(colors.offsetBy(offset))
+}
+
+/**
+ * Set the prolonged color of a strip using a ColorContainer offset by `offset`
+ *
+ * @param offset The index of the pixel that will be set to the color at
+ * index 0
+ */
+fun AnimatedLEDStrip.Section.setProlongedStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
+    setProlongedStripColor(colors.offsetBy(offset))
+}
+
+
+/* Get pixel color */
+
+/**
+ * Get the temporary color of a pixel or null if the index is invalid.
+ */
+fun AnimatedLEDStrip.Section.getTemporaryPixelColorOrNull(pixel: Int): Long? = try {
+    getTemporaryPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
+/**
+ * Get the prolonged color of a pixel or null if the index is invalid.
+ */
+fun AnimatedLEDStrip.Section.getProlongedPixelColorOrNull(pixel: Int): Long? = try {
+    getProlongedPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
 
 /* Iterate over indices and perform operation */
 
@@ -146,3 +313,9 @@ suspend fun AnimatedLEDStrip.RunningAnimation.join() = job.join()
  * End the animation
  */
 fun AnimatedLEDStrip.RunningAnimation.endAnimation() = cancel("End of Animation")
+
+
+/* Run with pixel lock */
+
+fun AnimatedLEDStrip.Section.withPixelLock(pixel: Int, operation: () -> Any?) =
+    ledStrip.withPixelLock(pixel, operation)
