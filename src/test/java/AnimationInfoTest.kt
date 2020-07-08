@@ -22,11 +22,51 @@
 
 package animatedledstrip.test
 
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.predefined.*
 import org.junit.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AnimationInfoTest {
+
+    @Test
+    fun testAnimationInfoConstruction() {
+        val info = Animation.AnimationInfo(
+            name = "Test",
+            abbr = "TST",
+            description = "A test animation",
+            signatureFile = "sig.png",
+            repetitive = false,
+            minimumColors = 4,
+            unlimitedColors = true,
+            center = ParamUsage.USED,
+            delay = ParamUsage.NOTUSED,
+            direction = ParamUsage.NOTUSED,
+            distance = ParamUsage.USED,
+            spacing = ParamUsage.USED,
+            delayDefault = 5,
+            distanceDefault = 40,
+            spacingDefault = 4
+        )
+
+        assertTrue { info.name == "Test" }
+        assertTrue { info.abbr == "TST" }
+        assertTrue { info.description == "A test animation" }
+        assertTrue { info.signatureFile == "sig.png" }
+        assertFalse { info.repetitive }
+        assertTrue { info.minimumColors == 4 }
+        assertTrue { info.unlimitedColors }
+        assertTrue { info.center == ParamUsage.USED }
+        assertTrue { info.delay == ParamUsage.NOTUSED }
+        assertTrue { info.direction == ParamUsage.NOTUSED }
+        assertTrue { info.distance == ParamUsage.USED }
+        assertTrue { info.spacing == ParamUsage.USED }
+        assertTrue { info.delayDefault == 5L }
+        assertTrue { info.distanceDefault == 40 }
+        assertTrue { info.spacingDefault == 4 }
+    }
 
     @Test
     fun testAnimationInfoToHumanReadableString() {
