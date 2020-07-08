@@ -28,7 +28,6 @@ import animatedledstrip.animationutils.animation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
-import animatedledstrip.colors.offsetBy
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
@@ -319,16 +318,8 @@ class SectionTest {
     fun testSetStripColorWithOffset() {
         val testLEDs = EmulatedAnimatedLEDStrip(5).wholeStrip
 
-        val c1 = ColorContainer(0xFF, 0x0, 0xFF00, 0xFF00FF, 0xFFFFFF).prepare(5)
-
-        println(c1)
-        println(c1.offsetBy(2))
-
-
         testLEDs.setTemporaryStripColorWithOffset(ColorContainer(0xFF, 0x0, 0xFF00, 0xFF00FF, 0xFFFFFF).prepare(5), 2)
 
-        println(testLEDs.pixelTemporaryColorList)
-        println(testLEDs.numLEDs)
         assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFF00FFL }
         assertTrue { testLEDs.getTemporaryPixelColor(1) == 0xFFFFFFL }
         assertTrue { testLEDs.getTemporaryPixelColor(2) == 0xFFL }
@@ -336,7 +327,17 @@ class SectionTest {
         assertTrue { testLEDs.getTemporaryPixelColor(4) == 0xFF00L }
         testLEDs.assertAllProlongedPixels(0)
 
-
+        testLEDs.setProlongedStripColorWithOffset(ColorContainer(0xFF, 0x0, 0xFF00, 0xFF00FF, 0xFFFFFF).prepare(5), 3)
+        assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFF00L }
+        assertTrue { testLEDs.getTemporaryPixelColor(1) == 0xFF00FFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(2) == 0xFFFFFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(3) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(4) == 0L }
+        assertTrue { testLEDs.getProlongedPixelColor(0) == 0xFF00L }
+        assertTrue { testLEDs.getProlongedPixelColor(1) == 0xFF00FFL }
+        assertTrue { testLEDs.getProlongedPixelColor(2) == 0xFFFFFFL }
+        assertTrue { testLEDs.getProlongedPixelColor(3) == 0xFFL }
+        assertTrue { testLEDs.getProlongedPixelColor(4) == 0L }
     }
 
     @Test

@@ -158,19 +158,15 @@ fun AnimatedLEDStrip.Section.revertPixels(pixels: IntRange) {
 
 /**
  * Set the temporary color of a strip using a ColorContainer offset by `offset`
- *
- * @param offset The index of the pixel that will be set to the color at
- * index 0
+ * `offset` is the index where the color at index `0` will be located.
  */
 fun AnimatedLEDStrip.Section.setTemporaryStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
     setTemporaryStripColor(colors.offsetBy(offset))
 }
 
 /**
- * Set the prolonged color of a strip using a ColorContainer offset by `offset`
- *
- * @param offset The index of the pixel that will be set to the color at
- * index 0
+ * Set the prolonged color of a strip using a ColorContainer offset by `offset`.
+ * `offset` is the index where the color at index `0` will be located.
  */
 fun AnimatedLEDStrip.Section.setProlongedStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
     setProlongedStripColor(colors.offsetBy(offset))
