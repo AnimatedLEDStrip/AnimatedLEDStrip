@@ -147,7 +147,7 @@ class ColorContainerTest {
         }
 
         // Test empty IntRange
-        testCC[IntRange(5,3)] = 0xFF
+        testCC[IntRange(5, 3)] = 0xFF
         assertTrue {
             testCC.colors == listOf<Long>(
                 0xFF7B50,
@@ -348,5 +348,50 @@ class ColorContainerTest {
         val testPCC3 = testCC3.prepare(50)
         assertFalse { testPCC3.isEmpty() }
         assertTrue { testPCC3.isNotEmpty() }
+    }
+
+    @Test
+    fun testOffsetBy() {
+        val c = ColorContainer(
+            0x0000FF, 0x00FFFF, 0xFF00FF,
+            0x00FF00, 0xFF0000, 0xFFFFFF
+        ).prepare(6)
+
+        assertTrue {
+            c.colors ==
+                    listOf<Long>(
+                        0x0000FF, 0x00FFFF, 0xFF00FF,
+                        0x00FF00, 0xFF0000, 0xFFFFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(0).colors ==
+                    listOf<Long>(
+                        0x0000FF, 0x00FFFF, 0xFF00FF,
+                        0x00FF00, 0xFF0000, 0xFFFFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(4).colors ==
+                    listOf<Long>(
+                        0xFF00FF, 0x00FF00, 0xFF0000,
+                        0xFFFFFF, 0x0000FF, 0x00FFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(-4).colors ==
+                    listOf<Long>(
+                        0xFF0000, 0xFFFFFF, 0x0000FF,
+                        0x00FFFF, 0xFF00FF, 0x00FF00
+                    )
+        }
+        assertTrue {
+            c.offsetBy(10).colors ==
+                    c.offsetBy(4).colors
+        }
+        assertTrue {
+            c.offsetBy(-10).colors ==
+                    c.offsetBy(-4).colors
+        }
     }
 }

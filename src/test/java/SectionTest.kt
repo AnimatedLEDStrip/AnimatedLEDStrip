@@ -28,6 +28,7 @@ import animatedledstrip.animationutils.animation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
+import animatedledstrip.colors.offsetBy
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
@@ -211,6 +212,73 @@ class SectionTest {
     }
 
     @Test
+    fun testRevertPixel() {
+        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+
+        testLEDs.assertAllPixels(0)
+
+        testLEDs.setTemporaryStripColor(0xFF)
+
+        testLEDs.assertAllProlongedPixels(0)
+        testLEDs.assertAllTemporaryPixels(0xFF)
+
+
+        testLEDs.revertPixel(40)
+
+        assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(30) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(39) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(40) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(41) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(45) == 0xFFL }
+        testLEDs.assertAllProlongedPixels(0)
+
+
+        testLEDs.revertPixels(listOf(10, 15, 30))
+
+        assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(9) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(10) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(11) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(14) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(15) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(16) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(29) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(30) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(31) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(39) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(40) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(41) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(45) == 0xFFL }
+        testLEDs.assertAllProlongedPixels(0)
+
+
+        testLEDs.revertPixels(5..7)
+
+        assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(4) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(5) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(6) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(7) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(8) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(9) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(10) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(11) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(14) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(15) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(16) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(29) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(30) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(31) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(39) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(40) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(41) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(45) == 0xFFL }
+        testLEDs.assertAllProlongedPixels(0)
+
+    }
+
+    @Test
     fun testSetStripColor() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
@@ -244,6 +312,31 @@ class SectionTest {
         testLEDs.setProlongedStripColor(0xFFFF)
 
         testLEDs.assertAllPixels(0xFFFF)
+
+    }
+
+    @Test
+    fun testSetStripColorWithOffset() {
+        val testLEDs = EmulatedAnimatedLEDStrip(5).wholeStrip
+
+        val c1 = ColorContainer(0xFF, 0x0, 0xFF00, 0xFF00FF, 0xFFFFFF).prepare(5)
+
+        println(c1)
+        println(c1.offsetBy(2))
+
+
+        testLEDs.setTemporaryStripColorWithOffset(ColorContainer(0xFF, 0x0, 0xFF00, 0xFF00FF, 0xFFFFFF).prepare(5), 2)
+
+        println(testLEDs.pixelTemporaryColorList)
+        println(testLEDs.numLEDs)
+        assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFF00FFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(1) == 0xFFFFFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(2) == 0xFFL }
+        assertTrue { testLEDs.getTemporaryPixelColor(3) == 0L }
+        assertTrue { testLEDs.getTemporaryPixelColor(4) == 0xFF00L }
+        testLEDs.assertAllProlongedPixels(0)
+
+
     }
 
     @Test
@@ -320,7 +413,6 @@ class SectionTest {
     @Test
     fun testStartAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-//        awaitPredefinedAnimationsLoaded()
         val anim = AnimationData().animation("Alternate")
         testLEDs.startAnimation(anim, "TEST")
         delayBlocking(100)
@@ -335,34 +427,9 @@ class SectionTest {
         assertNull(testLEDs.startAnimation(AnimationData().animation("Im not an animation"), "TEST"))
     }
 
-//    @Test
-//    fun testStartAnimationScriptException() = runBlocking {
-//        val testLEDs = EmulatedAnimatedLEDStrip(50)
-//        awaitPredefinedAnimationsLoaded()
-//        defineNewAnimation(
-//            "// ## animation info ##\n// name Bad Animation\n// abbr BAD\n// ## end info ##\nthrow Exception()",
-//            "BadAnimation"
-//        )
-//
-//        startLogCapture()
-//        testLEDs.startAnimation(AnimationData().animation("BadAnimation"))?.join()
-//
-//        assertLogs(
-//            setOf(
-//                Pair(Level.ERROR, "Error when running Bad Animation:"),
-//                Pair(Level.ERROR, "javax.script.ScriptException: java.lang.Exception")
-//            )
-//        )
-//
-//        stopLogCapture()
-//        definedAnimations.remove("badanimation")
-//        Unit
-//    }
-
     @Test
     fun testRunParallel() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-//        awaitPredefinedAnimationsLoaded()
         val anim = AnimationData().animation("Color")
 
         @Suppress("EXPERIMENTAL_API_USAGE")
@@ -385,7 +452,6 @@ class SectionTest {
     @Test
     fun testRunSequential() {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-//        awaitPredefinedAnimationsLoaded()
 
         // Continuous false (default)
         testLEDs.runSequential(AnimationData().animation("Color"))
