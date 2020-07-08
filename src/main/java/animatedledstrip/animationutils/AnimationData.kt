@@ -75,8 +75,8 @@ class AnimationData(
         object ExStrategy : ExclusionStrategy {
             override fun shouldSkipClass(p0: Class<*>?) = false
 
-            override fun shouldSkipField(field: FieldAttributes?): Boolean {
-                if (field?.declaringClass != AnimationData::class.java)
+            override fun shouldSkipField(field: FieldAttributes): Boolean {
+                if (field.declaringClass != AnimationData::class.java)
                     return false
                 return when (field.name) {
                     "pCols" -> true
