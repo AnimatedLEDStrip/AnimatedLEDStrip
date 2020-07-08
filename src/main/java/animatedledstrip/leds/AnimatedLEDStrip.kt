@@ -30,7 +30,6 @@ import com.google.gson.FieldAttributes
 import kotlinx.coroutines.*
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
-import javax.script.ScriptException
 
 /**
  * A subclass of [LEDStrip] that manages the running of animations.
@@ -125,7 +124,8 @@ abstract class AnimatedLEDStrip(
      * End animation using `EndAnimation` instance.
      */
     fun endAnimation(animation: EndAnimation?) {
-        endAnimation(animation?.id ?: return)
+        if (animation == null) return
+        endAnimation(animation.id)
     }
 
 
