@@ -15,6 +15,7 @@ branches:
     - master
     - /^travis.*/
     - /^v.*/
+    - /.*-doc$/
 
 stages:
   - name: test
@@ -53,7 +54,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
           on:
             all_branches: true
 
@@ -62,7 +63,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
           on:
             branch: master
 
