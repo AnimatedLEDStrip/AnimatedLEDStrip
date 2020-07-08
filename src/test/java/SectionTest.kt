@@ -222,6 +222,13 @@ class SectionTest {
         testLEDs.assertAllTemporaryPixels(0xFF)
 
 
+        @Suppress("EmptyRange")
+        testLEDs.revertPixels(5..2)
+
+        testLEDs.assertAllProlongedPixels(0)
+        testLEDs.assertAllTemporaryPixels(0xFF)
+
+
         testLEDs.revertPixel(40)
 
         assertTrue { testLEDs.getTemporaryPixelColor(0) == 0xFFL }
