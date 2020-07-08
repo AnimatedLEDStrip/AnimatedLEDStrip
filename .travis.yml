@@ -22,6 +22,8 @@ stages:
     if: branch = master AND type != pull_request
   - name: deploy release
     if: branch =~ ^v.*$
+  - name: deploy docs
+    if: (branch = master AND type != pull_request) OR branch =~ ^.*-doc$
 
 jobs:
   include:
@@ -47,6 +49,24 @@ jobs:
             all_branches: true
 
     - stage: deploy release
+      install: skip
+      script: skip
+      deploy:
+        - provider: script
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          on:
+            all_branches: true
+
+    - stage: deploy snapshot
+      install: skip
+      script: skip
+      deploy:
+        - provider: script
+          script: mvn deploy --settings .maven.xml -DskipTests=true -B
+          on:
+            branch: master
+
+    - stage: deploy docs
       install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
       script: skip
       before_deploy:
@@ -65,21 +85,3 @@ jobs:
           skip_cleanup: true
           on:
             all_branches: true
-
-    - stage: deploy release
-      install: skip
-      script: skip
-      deploy:
-        - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B
-          on:
-            all_branches: true
-
-    - stage: deploy snapshot
-      install: skip
-      script: skip
-      deploy:
-        - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -B
-          on:
-            branch: master
