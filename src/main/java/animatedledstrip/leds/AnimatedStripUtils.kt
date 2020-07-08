@@ -23,44 +23,194 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.color
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.delayBlocking
-import animatedledstrip.utils.infoOrNull
 import kotlinx.coroutines.*
-import java.lang.Math.random
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.math.roundToInt
+
+/* Set pixel colors */
+
+/**
+ * Set the temporary color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setTemporaryPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the temporary color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: Long) {
+    for (pixel in pixels) {
+        setTemporaryPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the temporary color of the specified range of pixels
+ * (alias for setTemporarySectionColor)
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+    setTemporaryPixelColors(pixels.toList(), color)
+
+/**
+ * Set the temporary color of the specified range of pixels
+ * (alias for setTemporarySectionColor)
+ */
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: Long) =
+    setTemporaryPixelColors(pixels.toList(), color)
+
+/**
+ * Set the prolonged color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+    for (pixel in pixels) {
+        setProlongedPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the prolonged color of the specified pixels
+ *
+ * @param pixels A list of pixel indices to set
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: Long) {
+    for (pixel in pixels) {
+        setProlongedPixelColor(pixel, color)
+    }
+}
+
+/**
+ * Set the prolonged color of the specified range of pixels
+ * (alias for setProlongedSectionColor)
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+    setProlongedPixelColors(pixels.toList(), color)
+
+/**
+ * Set the prolonged color of the specified range of pixels
+ * (alias for setProlongedSectionColor)
+ */
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: Long) =
+    setProlongedPixelColors(pixels.toList(), color)
+
+
+/* Set and fade pixel */
+
+/**
+ * Set a pixel to a color and then immediately fade it back to its
+ * prolonged color. This will return before the fade is complete
+ * because the fade is started in a separate coroutine.
+ *
+ * @param amountOfOverlay Amount of overlay in the fade (see [animatedledstrip.utils.blend])
+ * @param delay Amount of delay in the fade (see [animatedledstrip.utils.blend])
+ * @param context The thread pool to create the fading thread in
+ */
+fun AnimatedLEDStrip.Section.setAndFadePixel(
+    pixel: Int,
+    color: ColorContainerInterface,
+    amountOfOverlay: Int = 25,
+    delay: Int = 30,
+    context: CoroutineContext = EmptyCoroutineContext
+) {
+    setTemporaryPixelColor(pixel, color)
+    GlobalScope.launch(context) {
+        fadePixel(pixel, amountOfOverlay, delay)
+    }
+}
+
+
+/* Revert pixels */
+
+/**
+ * Revert pixels based on indices in a list
+ */
+fun AnimatedLEDStrip.Section.revertPixels(pixels: List<Int>) {
+    for (pixel in pixels) {
+        revertPixel(pixel)
+    }
+}
+
+/**
+ * Revert pixels based on indices in a range
+ */
+fun AnimatedLEDStrip.Section.revertPixels(pixels: IntRange) {
+    for (pixel in pixels) {
+        revertPixel(pixel)
+    }
+}
+
+
+/* Set strip color */
+
+/**
+ * Set the temporary color of a strip using a ColorContainer offset by `offset`
+ * `offset` is the index where the color at index `0` will be located.
+ */
+fun AnimatedLEDStrip.Section.setTemporaryStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
+    setTemporaryStripColor(colors.offsetBy(offset))
+}
+
+/**
+ * Set the prolonged color of a strip using a ColorContainer offset by `offset`.
+ * `offset` is the index where the color at index `0` will be located.
+ */
+fun AnimatedLEDStrip.Section.setProlongedStripColorWithOffset(colors: PreparedColorContainer, offset: Int) {
+    setProlongedStripColor(colors.offsetBy(offset))
+}
+
+
+/* Get pixel color */
+
+/**
+ * Get the temporary color of a pixel or null if the index is invalid.
+ */
+fun AnimatedLEDStrip.Section.getTemporaryPixelColorOrNull(pixel: Int): Long? = try {
+    getTemporaryPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
+/**
+ * Get the prolonged color of a pixel or null if the index is invalid.
+ */
+fun AnimatedLEDStrip.Section.getProlongedPixelColorOrNull(pixel: Int): Long? = try {
+    getProlongedPixelColor(pixel)
+} catch (e: IllegalArgumentException) {
+    null
+}
+
 
 /* Iterate over indices and perform operation */
 
 /**
  * Iterate over the indices from `startPixel` to `endPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
  */
-inline fun iterateOverPixels(
-    animation: AnimationData,
+inline fun AnimatedLEDStrip.Section.iterateOverPixels(
     operation: (Int) -> Unit
 ) {
-    for (q in animation.startPixel..animation.endPixel) operation.invoke(q)
+    for (q in indices) operation.invoke(q)
 }
 
 /**
  * Iterate over the indices from `endPixel` down to `startPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
  */
 
-inline fun iterateOverPixelsReverse(
-    animation: AnimationData,
+inline fun AnimatedLEDStrip.Section.iterateOverPixelsReverse(
     operation: (Int) -> Unit
 ) {
-    for (q in animation.endPixel downTo animation.startPixel) operation.invoke(q)
+    for (q in indices.reversed()) operation.invoke(q)
 }
 
 /**
@@ -89,9 +239,9 @@ inline fun iterateOver(
 /**
  * Set a pixel, wait the specified time in milliseconds, then revert the pixel
  */
-fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
     withPixelLock(pixel) {
-        setPixelColor(pixel, color, prolonged = false)
+        setTemporaryPixelColor(pixel, color)
         delayBlocking(delay)
         revertPixel(pixel)
     }
@@ -106,14 +256,14 @@ fun AnimatedLEDStrip.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContain
  *
  * @param pool The pool of threads to start the animations in
  */
-fun AnimatedLEDStrip.runParallelAndJoin(
+fun AnimatedLEDStrip.Section.runParallelAndJoin(
     scope: CoroutineScope,
-    vararg animations: AnimationData,
+    vararg animations: Pair<AnimationData, AnimatedLEDStrip.Section>,
     pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
 ) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
-        val job = runParallel(it, scope, pool)
+        val job = runParallel(it.first, scope, it.second, pool)
         if (job != null) jobs += job
     }
     runBlocking {
@@ -121,78 +271,15 @@ fun AnimatedLEDStrip.runParallelAndJoin(
     }
 }
 
-fun <T> runBlockingNonCancellable(context: CoroutineContext = EmptyCoroutineContext, block: suspend CoroutineScope.() -> T): T {
+fun <T> runBlockingNonCancellable(
+    context: CoroutineContext = EmptyCoroutineContext,
+    block: suspend CoroutineScope.() -> T
+): T {
     return runBlocking(context) {
         withContext(NonCancellable) {
             block.invoke(this@runBlocking)
         }
     }
-}
-
-
-/* Random pixel index generators */
-
-/**
- * Return a random index between `start` and `end` (inclusive)
- */
-fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).roundToInt()
-
-/**
- * Return a random index between `startPixel` and `endPixel` (inclusive)
- *
- * @param animation The `AnimationData` instance to use to determine `startPixel`
- * and `endPixel`
- */
-fun randomPixelIn(animation: AnimationData): Int =
-    ((animation.endPixel - animation.startPixel) * random() + animation.startPixel).roundToInt()
-
-
-/* AnimationData preparation */
-
-/**
- * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip`.
- *
- * Sets defaults for unset properties (`endPixel`, `center` and `distance`)
- * and populates `pCols`.
- */
-fun AnimationData.prepare(ledStrip: AnimatedLEDStrip): AnimationData {
-    endPixel = when (endPixel) {
-        -1 -> ledStrip.numLEDs - 1
-        else -> endPixel
-    }
-
-    center = when (center) {
-        -1 -> ledStrip.numLEDs / 2
-        else -> center
-    }
-
-    distance = when (distance) {
-        -1 -> if (animation.infoOrNull()?.distanceDefault ?: 0 != 0) animation.infoOrNull()!!.distanceDefault else ledStrip.numLEDs
-        else -> distance
-    }
-
-    if (colors.isEmpty()) color(CCBlack)
-
-    pCols = mutableListOf()
-    colors.forEach {
-        pCols.add(
-            it.prepare(
-                endPixel - startPixel + 1,
-                leadingZeros = startPixel
-            )
-        )
-    }
-
-    for (i in colors.size until (animation.infoOrNull()?.numColors ?: 0)) {
-        pCols.add(
-            CCBlack.prepare(
-                endPixel - startPixel + 1,
-                leadingZeros = startPixel
-            )
-        )
-    }
-
-    return this
 }
 
 
@@ -207,3 +294,9 @@ suspend fun AnimatedLEDStrip.RunningAnimation.join() = job.join()
  * End the animation
  */
 fun AnimatedLEDStrip.RunningAnimation.endAnimation() = cancel("End of Animation")
+
+
+/* Run with pixel lock */
+
+fun AnimatedLEDStrip.Section.withPixelLock(pixel: Int, operation: () -> Any?) =
+    ledStrip.withPixelLock(pixel, operation)

@@ -23,12 +23,16 @@
 package animatedledstrip.animationutils
 
 /**
- * An experimental animation is annotated with this tag.
- *
- * ExperimentalAnimation animations may change, be renamed or be removed
- * entirely.
+ * Enum for specifying the requirement level of an animation parameter
  */
-@Suppress("unused")
-@MustBeDocumented
-@Experimental(level = Experimental.Level.WARNING)
-internal annotation class ExperimentalAnimation
+enum class ParamUsage {
+    /**
+     * Animation parameter may be set by the user, otherwise will be set to a
+     * default as specified
+     */
+    USED,
+    /**
+     * Animation does not use parameter
+     */
+    NOTUSED
+}

@@ -147,7 +147,7 @@ class ColorContainerTest {
         }
 
         // Test empty IntRange
-        testCC[IntRange(5,3)] = 0xFF
+        testCC[IntRange(5, 3)] = 0xFF
         assertTrue {
             testCC.colors == listOf<Long>(
                 0xFF7B50,
@@ -321,5 +321,77 @@ class ColorContainerTest {
         val testPCC = PreparedColorContainer(listOf(0xFF, 0xFFFF))
         assertTrue { testPCC.prepare(2) === testPCC }
         assertTrue { testPCC.toString() == "[ff, ffff]" }
+    }
+
+    @Test
+    fun testIsEmpty() {
+        val testCC1 = ColorContainer()
+        assertTrue { testCC1.isEmpty() }
+        assertFalse { testCC1.isNotEmpty() }
+
+        val testCC2 = ColorContainer(0xFF)
+        assertFalse { testCC2.isEmpty() }
+        assertTrue { testCC2.isNotEmpty() }
+
+        val testCC3 = ColorContainer(0xFF, 0xFFFF)
+        assertFalse { testCC3.isEmpty() }
+        assertTrue { testCC3.isNotEmpty() }
+
+        val testPCC1 = testCC1.prepare(50)
+        assertTrue { testPCC1.isEmpty() }
+        assertFalse { testPCC1.isNotEmpty() }
+
+        val testPCC2 = testCC2.prepare(50)
+        assertFalse { testPCC2.isEmpty() }
+        assertTrue { testPCC2.isNotEmpty() }
+
+        val testPCC3 = testCC3.prepare(50)
+        assertFalse { testPCC3.isEmpty() }
+        assertTrue { testPCC3.isNotEmpty() }
+    }
+
+    @Test
+    fun testOffsetBy() {
+        val c = ColorContainer(
+            0x0000FF, 0x00FFFF, 0xFF00FF,
+            0x00FF00, 0xFF0000, 0xFFFFFF
+        ).prepare(6)
+
+        assertTrue {
+            c.colors ==
+                    listOf<Long>(
+                        0x0000FF, 0x00FFFF, 0xFF00FF,
+                        0x00FF00, 0xFF0000, 0xFFFFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(0).colors ==
+                    listOf<Long>(
+                        0x0000FF, 0x00FFFF, 0xFF00FF,
+                        0x00FF00, 0xFF0000, 0xFFFFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(4).colors ==
+                    listOf<Long>(
+                        0xFF00FF, 0x00FF00, 0xFF0000,
+                        0xFFFFFF, 0x0000FF, 0x00FFFF
+                    )
+        }
+        assertTrue {
+            c.offsetBy(-4).colors ==
+                    listOf<Long>(
+                        0xFF0000, 0xFFFFFF, 0x0000FF,
+                        0x00FFFF, 0xFF00FF, 0x00FF00
+                    )
+        }
+        assertTrue {
+            c.offsetBy(10).colors ==
+                    c.offsetBy(4).colors
+        }
+        assertTrue {
+            c.offsetBy(-10).colors ==
+                    c.offsetBy(-4).colors
+        }
     }
 }

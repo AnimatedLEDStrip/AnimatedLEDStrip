@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -20,40 +20,31 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.leds.sections
+package animatedledstrip.utils
 
-import animatedledstrip.colors.ColorContainerInterface
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
+import java.io.Serializable
 
-/**
- * Adds functions for setting a section of the strip to a color.
- */
-interface SectionableLEDStrip {
+interface SendableData: Serializable {
+    val prefix: String
 
-    /**
-     * Set a section to a color.
-     *
-     * `start` and `end` are inclusive.
-     */
-    fun setSectionColor(start: Int, end: Int, color: ColorContainerInterface, prolonged: Boolean = false)
+    fun toHumanReadableString(): String
 
-    /**
-     * Set a section to a color.
-     *
-     * `start` and `end` are inclusive.
-     */
-    fun setSectionColor(start: Int, end: Int, color: Long, prolonged: Boolean = false)
+    fun jsonString(): String = "$prefix:${gson.toJson(this)}$DELIMITER"
 
-    /**
-     * Set a section to a color.
-     *
-     * `range` is inclusive.
-     */
-    fun setSectionColor(range: IntRange, color: ColorContainerInterface, prolonged: Boolean = false)
+    fun json(): ByteArray = this.jsonString().toByteArray(Charsets.UTF_8)
 
-    /**
-     * Set a section to a color.
-     *
-     * `range` is inclusive.
-     */
-    fun setSectionColor(range: IntRange, color: Long, prolonged: Boolean = false)
+    companion object {
+        object ExStrategy : ExclusionStrategy {
+            override fun shouldSkipClass(p0: Class<*>?) = false
+
+            override fun shouldSkipField(field: FieldAttributes): Boolean {
+                return when (field.name) {
+                    "prefix$1" -> true
+                    else -> false
+                }
+            }
+        }
+    }
 }

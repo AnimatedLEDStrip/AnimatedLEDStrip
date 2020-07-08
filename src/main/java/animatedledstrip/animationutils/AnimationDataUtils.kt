@@ -24,41 +24,15 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.utils.parseHex
-import com.google.gson.ExclusionStrategy
-import com.google.gson.FieldAttributes
-import com.google.gson.GsonBuilder
-
-/* GSON */
-
-class AnimationDataExclusionStrategy : ExclusionStrategy {
-    override fun shouldSkipClass(p0: Class<*>?): Boolean {
-        return false
-    }
-
-    override fun shouldSkipField(field: FieldAttributes?): Boolean {
-        return field?.name?.equals("pCols") == true
-    }
-}
-
-/**
- * JSON Parser
- */
-val gson = GsonBuilder()
-    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
-    .addSerializationExclusionStrategy(AnimationDataExclusionStrategy())
-    .create()
-    ?: error("Could not create JSON parser")
-
 
 /* Helper functions for setting values */
 
 /**
  * Sets the `animation` parameter.
  */
-fun AnimationData.animation(animation: Animation): AnimationData {
+fun AnimationData.animation(animation: String): AnimationData {
     this.animation = animation
     return this
 }
@@ -285,23 +259,23 @@ fun AnimationData.distance(pixels: Int): AnimationData {
 }
 
 /**
- * Set the `endPixel` parameter.
- *
- * @param endPixel An `Int` that is the index of the last pixel showing the
- * animation (inclusive)
- */
-fun AnimationData.endPixel(endPixel: Int): AnimationData {
-    this.endPixel = endPixel
-    return this
-}
-
-/**
  * Set the `id` parameter.
  *
  * @param id A `String` used to identify a continuous animation instance
  */
 fun AnimationData.id(id: String): AnimationData {
     this.id = id
+    return this
+}
+
+
+/**
+ * Set the `section` parameter.
+ *
+ * @param sectionId A `String` used to identify a section of the strip
+ */
+fun AnimationData.section(sectionId: String): AnimationData {
+    this.section = sectionId
     return this
 }
 
@@ -329,30 +303,3 @@ fun AnimationData.speed(speed: AnimationSpeed): AnimationData {
     }
     return this
 }
-
-/**
- * Set the `startPixel` parameter.
- *
- * @param startPixel An `Int` that is the index of the first pixel showing the
- * animation (inclusive)
- */
-fun AnimationData.startPixel(startPixel: Int): AnimationData {
-    this.startPixel = startPixel
-    return this
-}
-
-
-/* Non-repetitive/continuous check */
-
-/**
- * Checks to see if a @NonRepetitive annotation is present in the `Animation` enum
- */
-fun Animation.isNonRepetitive(): Boolean =
-    this::class.java.fields[this.ordinal].annotations.find { it is NonRepetitive } is NonRepetitive
-
-/**
- * Returns `continuous`, unless if it is null, in which case it checks if the
- * animation is non-repetitive by default
- */
-fun AnimationData.isContinuous(): Boolean = continuous
-    ?: !animation.isNonRepetitive()

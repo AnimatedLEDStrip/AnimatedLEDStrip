@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,31 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animationutils
+package animatedledstrip.animationutils.predefined
 
-/**
- * A non-repetitive animation is annotated with this tag.
- *
- * Non-repetitive animations are ones which change the color of the strip
- * without reverting it, such as Wipe. The end result is as if you had
- * set the strip color with `setStripColor()`.
- */
-@MustBeDocumented
-annotation class NonRepetitive
+import animatedledstrip.animationutils.Animation
+import animatedledstrip.animationutils.ParamUsage
+import animatedledstrip.animationutils.PredefinedAnimation
+
+val color = PredefinedAnimation(
+    Animation.AnimationInfo(
+        name = "Color",
+        abbr = "COL",
+        description = "Sets the strip to a color.",
+        signatureFile = "color.png",
+        repetitive = false,
+        minimumColors = 1,
+        unlimitedColors = false,
+        center = ParamUsage.NOTUSED,
+        delay = ParamUsage.NOTUSED,
+        direction = ParamUsage.NOTUSED,
+        distance = ParamUsage.NOTUSED,
+        spacing = ParamUsage.NOTUSED
+    )
+) { leds, data, _ ->
+    val color0 = data.pCols[0]
+
+    leds.apply {
+        setProlongedStripColor(color0)
+    }
+}

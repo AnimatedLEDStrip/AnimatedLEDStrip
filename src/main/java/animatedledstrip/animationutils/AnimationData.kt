@@ -25,8 +25,11 @@ package animatedledstrip.animationutils
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.utils.infoOrNull
-import java.io.Serializable
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.utils.SendableData
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 
 /**
  * Used when calling animations to specify colors, parameters, etc.
@@ -42,16 +45,18 @@ import java.io.Serializable
  * @property direction The direction the animation will run
  * @property distance The distance a radial animation will travel from its center.
  * Defaults to running until the ends of the strip.
- * @property endPixel Last pixel on the strip that will show the
- * animation (inclusive)
  * @property id ID for the animation. Used by server and client for
  * stopping continuous animations.
- * @property pCols The list of [PreparedColorContainer]s after preparation of [colors]
+ * @property pCols The list of [PreparedColorContainer]s after preparation of [colors].
+ *   Will be populated when [prepare] is called.
+ * @property section The id of the section of the strip that will be running the whole animation
+ *   (not necessarily the section running this animation, such as if this is a subanimation).
+ *   This is the section that ColorContainer blend preparation will be based upon.
+ *   An empty string means the whole strip.
  * @property spacing Spacing used in the animation
- * @property startPixel First pixel on the strip will show the animation
  */
 class AnimationData(
-    var animation: Animation = Animation.COLOR,
+    var animation: String = "Color",
     colors: List<ColorContainerInterface> = listOf(),
     var center: Int = -1,
     var continuous: Boolean? = null,
@@ -59,11 +64,29 @@ class AnimationData(
     var delayMod: Double = 1.0,
     var direction: Direction = Direction.FORWARD,
     var distance: Int = -1,
-    var endPixel: Int = -1,
     var id: String = "",
-    spacing: Int = -1,
-    var startPixel: Int = 0
-) : Serializable {
+    var section: String = "",
+    spacing: Int = -1
+) : SendableData {
+
+    companion object {
+        const val prefix = "DATA"
+
+        object ExStrategy : ExclusionStrategy {
+            override fun shouldSkipClass(p0: Class<*>?) = false
+
+            override fun shouldSkipField(field: FieldAttributes): Boolean {
+                if (field.declaringClass != AnimationData::class.java)
+                    return false
+                return when (field.name) {
+                    "pCols" -> true
+                    else -> false
+                }
+            }
+        }
+    }
+
+    override val prefix = AnimationData.prefix
 
     val colors = mutableListOf<ColorContainerInterface>().apply {
         addAll(colors)
@@ -71,53 +94,94 @@ class AnimationData(
 
     lateinit var pCols: MutableList<PreparedColorContainer>
 
-    var delay: Long = delay
+    private var baseDelay: Long = delay
         get() {
-            return (when (field) {
-                -1L, 0L -> {
-                    when (animation.infoOrNull()?.delay) {
-                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.delayDefault ?: 50L
-                        ReqLevel.NOTUSED -> 50L
-                        else -> 50L
-                    }
-                }
+            return when (field) {
+                -1L, 0L -> findAnimationOrNull(animId = animation)?.info?.delayDefault ?: DEFAULT_DELAY
                 else -> field
-            } * delayMod).toLong()
+            }
+        }
+
+    var delay: Long
+        get() = (baseDelay * delayMod).toLong()
+        set(value) {
+            baseDelay = value
         }
 
 
     var spacing: Int = spacing
         get() {
             return (when (field) {
-                -1, 0 -> {
-                    when (animation.infoOrNull()?.spacing) {
-                        ReqLevel.OPTIONAL -> animation.infoOrNull()?.spacingDefault ?: 3
-                        ReqLevel.NOTUSED -> 3
-                        else -> 3
-                    }
-                }
+                -1, 0 -> findAnimationOrNull(animId = animation)?.info?.spacingDefault ?: DEFAULT_SPACING
                 else -> field
             })
         }
 
-    /* Note: If any other properties are added, they must be added to the four methods below */
 
     /**
-     * Create a copy of this [AnimationData] instance
+     * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip.Section`.
+     *
+     * Sets defaults for properties with length-dependent defaults (`center` and `distance`)
+     * and populates `pCols`.
+     */
+    fun prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
+        val definedAnimation = findAnimation(animation)
+
+        val sectionRunningFullAnimation = ledStrip.getSection(sectionName = section)
+
+        center = when (center) {
+            -1 -> ledStrip.numLEDs / 2
+            else -> center
+        }
+
+        distance = when (distance) {
+            -1 -> if (definedAnimation.info.distanceDefault != -1) definedAnimation.info.distanceDefault else ledStrip.numLEDs
+            else -> distance
+        }
+
+        if (colors.isEmpty()) color(CCBlack)
+
+        pCols = mutableListOf()
+        colors.forEach {
+            pCols.add(
+                it.prepare(
+                    numLEDs = sectionRunningFullAnimation.numLEDs,
+                    leadingZeros = ledStrip.physicalStart
+                )
+            )
+        }
+
+        for (i in colors.size until definedAnimation.info.minimumColors) {
+            pCols.add(
+                CCBlack.prepare(
+                    numLEDs = sectionRunningFullAnimation.numLEDs,
+                    leadingZeros = ledStrip.physicalStart
+                )
+            )
+        }
+
+        return this
+    }
+
+    val extraData = mutableMapOf<String, Any?>()
+
+    /* Note: If any other properties are added, they must be added to the five methods below */
+
+    /**
+     * Create a copy.
      */
     fun copy(
-        animation: Animation = this.animation,
+        animation: String = this.animation,
         colors: List<ColorContainerInterface> = this.colors.toList(),
         center: Int = this.center,
         continuous: Boolean? = this.continuous,
-        delay: Long = this.delay,
+        delay: Long = this.baseDelay,
         delayMod: Double = this.delayMod,
         direction: Direction = this.direction,
         distance: Int = this.distance,
-        endPixel: Int = this.endPixel,
         id: String = this.id,
-        spacing: Int = this.spacing,
-        startPixel: Int = this.startPixel
+        section: String = this.section,
+        spacing: Int = this.spacing
     ) = AnimationData(
         animation,
         colors,
@@ -127,28 +191,46 @@ class AnimationData(
         delayMod,
         direction,
         distance,
-        endPixel,
         id,
-        spacing,
-        startPixel
+        section,
+        spacing
     )
 
     /**
-     * Create a string representation of this [AnimationData] instance
+     * Create a string representation.
      */
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
-                "delay=$delay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
-                "endPixel=$endPixel, id=$id, spacing=$spacing, startPixel=$startPixel)"
+                "delay=$baseDelay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
+                "id=$id, section=$section, spacing=$spacing)"
+
+    /**
+     * Create a nicely formatted string representation.
+     */
+    override fun toHumanReadableString() =
+        """
+            AnimationData for $id
+              animation: $animation
+              colors: $colors
+              center: $center
+              continuous: $continuous
+              delay: $baseDelay
+              delayMod: $delayMod
+              direction: $direction
+              distance: $distance
+              section: $section
+              spacing: $spacing
+            End AnimationData
+        """.trimIndent()
 
 
     /**
-     * Override `equals()`
+     * Override `equals()`.
      */
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
                 (other is AnimationData &&
-                        animation == other.animation &&
+                        prepareAnimIdentifier(animation) == prepareAnimIdentifier(other.animation) &&
                         colors == other.colors &&
                         center == other.center &&
                         continuous == other.continuous &&
@@ -156,25 +238,24 @@ class AnimationData(
                         delayMod == other.delayMod &&
                         direction == other.direction &&
                         distance == other.distance &&
-                        endPixel == other.endPixel &&
                         id == other.id &&
-                        spacing == other.spacing &&
-                        startPixel == other.startPixel)
+                        section == other.section &&
+                        spacing == other.spacing)
     }
 
     /**
-     * Override `hashCode()`
+     * Override `hashCode()`.
      */
     override fun hashCode(): Int {
         var result = animation.hashCode()
-        result = 31 * result + center
+        result = 31 * result + center.hashCode()
         result = 31 * result + continuous.hashCode()
         result = 31 * result + delayMod.hashCode()
         result = 31 * result + direction.hashCode()
-        result = 31 * result + distance
-        result = 31 * result + endPixel
+        result = 31 * result + distance.hashCode()
         result = 31 * result + id.hashCode()
-        result = 31 * result + startPixel
+        result = 31 * result + section.hashCode()
+        result = 31 * result + spacing.hashCode()
         result = 31 * result + colors.hashCode()
         return result
     }

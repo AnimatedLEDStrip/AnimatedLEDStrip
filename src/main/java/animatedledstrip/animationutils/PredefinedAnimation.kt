@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,15 @@
 
 package animatedledstrip.animationutils
 
-/**
- * Enum for specifying the requirement level of an animation parameter
- */
-enum class ReqLevel {
-    /**
-     * Animation parameter must be set by the user
-     */
-    REQUIRED,
-    /**
-     * Animation parameter may be set by the user, otherwise will be set to a
-     * default as specified
-     */
-    OPTIONAL,
-    /**
-     * Animation does not use parameter
-     */
-    NOTUSED
+import animatedledstrip.leds.AnimatedLEDStrip
+import kotlinx.coroutines.CoroutineScope
+
+class PredefinedAnimation(
+    info: AnimationInfo,
+    val animation: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit
+) : Animation(info) {
+
+    override fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope) =
+        animation(leds, data, scope)
+
 }

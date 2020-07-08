@@ -196,13 +196,45 @@ operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()
 /**
  * Create a [PreparedColorContainer] with the same colors as this
  * [PreparedColorContainer], only offset by `offset`.
- *
- * @return A new [PreparedColorContainer] instance
+ * The color at index `0` will be moved to index `offset`.
+ * Negative offsets and offsets that are larger than the size of
+ * `colors` are supported.
  */
-internal fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
+fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
+    val n = when {
+        offset > colors.lastIndex -> size - (offset % size)
+        -offset > colors.lastIndex -> -offset % size
+        offset < 0 -> -offset
+        offset > 0 -> size - offset
+        else -> 0
+    }
+
     val temp = mutableListOf<Long>()
     for (i in colors.indices) {
-        temp += colors[(i + offset) % colors.size]
+        temp += colors[(i + n) % size]
     }
     return PreparedColorContainer(temp)
 }
+
+
+/* Check if empty */
+
+/**
+ * Report whether `colors` is empty
+ */
+fun ColorContainer.isEmpty() = colors.isEmpty()
+
+/**
+ * Report whether `colors` is empty
+ */
+fun PreparedColorContainer.isEmpty() = colors.isEmpty()
+
+/**
+ * Report whether `colors` is not empty
+ */
+fun ColorContainer.isNotEmpty() = !isEmpty()
+
+/**
+ * Report whether `colors` is not empty
+ */
+fun PreparedColorContainer.isNotEmpty() = !isEmpty()

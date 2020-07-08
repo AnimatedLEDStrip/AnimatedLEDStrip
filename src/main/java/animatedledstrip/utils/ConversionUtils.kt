@@ -24,14 +24,30 @@ package animatedledstrip.utils
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.AnimationInfo
-import animatedledstrip.animationutils.animationinfo.animationInfoList
-import animatedledstrip.animationutils.gson
+import animatedledstrip.animationutils.EndAnimation
+import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ColorContainerSerializer
+import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.StripInfo
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
-import org.pmw.tinylog.Logger
 import java.nio.charset.Charset
+
+/* GSON */
+
+/**
+ * JSON Parser
+ */
+val gson = GsonBuilder()
+    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
+    .create()
+    ?: error("Could not create JSON parser")
+
 
 /* 24-bit to 32-bit conversion */
 
@@ -46,7 +62,7 @@ fun Long.toARGB(): Int = (this or 0xFF000000).toInt()
 fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
 
 
-/* `Int`/`Long` to `ColorContainer` conversion */
+/* Int/Long to ColorContainer conversion */
 
 /**
  * Create a [ColorContainer] from this `Int`
@@ -59,73 +75,39 @@ fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
 fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 
 
-/* JSON creation */
+/* AnimationData to EndAnimation */
 
-/**
- * Create a representation of an `AnimationData` instance ready to be sent over a socket
- */
-fun AnimationData.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-/**
- * Create a representation of a `StripInfo` instance ready to be sent over a socket
- */
-fun StripInfo.json(): ByteArray = this.jsonString().toByteArray(Charset.forName("utf-8"))
-
-
-/**
- * Create a string representation of an `AnimationData` instance
- */
-fun AnimationData.jsonString(): String = "DATA:${gson.toJson(this)};"
-
-/**
- * Create a string representation of a `StripInfo` instance
- */
-fun StripInfo.jsonString(): String = "INFO:${gson.toJson(this)};"
-
+fun AnimationData.endAnimation(): EndAnimation = EndAnimation(this.id)
 
 /* JSON parsing */
 
-/**
- * Create an `AnimationData` instance from a JSON string created by the
- * creation function above
- *
- * @throws JsonSyntaxException
- */
-fun String?.jsonToAnimationData(): AnimationData {
+const val DELIMITER = ";;;"
+
+inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
     checkNotNull(this)
     try {
         return gson.fromJson(
-            this.removePrefix("DATA:").removeSuffix(";"),
-            AnimationData::class.java
+            this.drop(5).removeSuffix(DELIMITER),
+            T::class.java
         )
     } catch (e: JsonSyntaxException) {
-        Logger.warn("Malformed JSON: $this")
-        throw e                                         // Re-throw exception so it can be handled by calling code
+        throw JsonSyntaxException("Malformed JSON: $this", e)
     }
 }
 
-/**
- * Create a `StripInfo` instance from a JSON string created by the
- * creation function above
- *
- * @throws JsonSyntaxException
- */
-fun String?.jsonToStripInfo(): StripInfo {
-    checkNotNull(this)
-    try {
-        return gson.fromJson(
-            this.removePrefix("INFO:").removeSuffix(";"),
-            StripInfo::class.java
-        )
-    } catch (e: JsonSyntaxException) {
-        Logger.warn("Malformed JSON: $this")
-        throw e                                         // Re-throw exception so it can be handled by calling code
-    }
-}
+fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
+
+fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
+
+fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
+
+fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
+
+fun String?.jsonToSection(): AnimatedLEDStrip.Section = jsonToSendableData()
 
 /**
  * Get the first four characters in the string (used to indicate the type of data,
- * i.e. `DATA`, `INFO`, `CMD ` (note extra space), etc.)
+ * i.e. `DATA`, `INFO`, `SECT`, `ANIM`, `END `, `CMD ` (note extra space), etc.)
  */
 fun String?.getDataTypePrefix(): String {
     checkNotNull(this)
@@ -146,48 +128,7 @@ fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
     return this.toString(Charset.forName("utf-8")).take(size)
 }
 
-
-/* `String` to `Animation` */
-
-/**
- * Get an `Animation` by name
- */
-fun String.getAnimation(): Animation =
-    animationInfoList
-        .find {
-            this.toUpperCase().removeSpaces() ==
-                    it.name.toUpperCase().removeSpaces()
-        }!!
-        .animation
-
-/**
- * Get an `Animation` by name or null if no animation with that name is found
- */
-fun String.getAnimationOrNull(): Animation? =
-    animationInfoList
-        .find {
-            this.toUpperCase().removeSpaces() ==
-                    it.name.toUpperCase().removeSpaces()
-        }
-        ?.animation
-
 /**
  * Remove spaces from a `String`
  */
-private fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
-
-
-/* `Animation` to `AnimationInfo` */
-
-/**
- * Get the `AnimationInfo` instance associated with this animation
- */
-fun Animation.info(): AnimationInfo =
-    animationInfoList.find { it.animation == this }!!
-
-/**
- * Get the `AnimationInfo` instance associated with this animation or null
- * if no associated `AnimationInfo` exists
- */
-fun Animation.infoOrNull(): AnimationInfo? =
-    animationInfoList.find { it.animation == this }
+fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
