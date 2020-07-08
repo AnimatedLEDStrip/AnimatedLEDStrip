@@ -26,7 +26,6 @@ import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.Direction
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
-import animatedledstrip.leds.randomPixelIn
 import animatedledstrip.utils.delayBlocking
 
 val catToy = PredefinedAnimation(
@@ -58,7 +57,7 @@ val catToy = PredefinedAnimation(
     } as Int
 
     leds.apply {
-        val pixel = randomPixelIn(indices)
+        val pixel = indices.random()
 
         if (doRevert) revertPixel(lastPixel)
 

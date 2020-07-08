@@ -28,10 +28,8 @@ import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.delayBlocking
 import kotlinx.coroutines.*
-import java.lang.Math.random
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import kotlin.math.roundToInt
 
 /* Set pixel colors */
 
@@ -283,19 +281,6 @@ fun <T> runBlockingNonCancellable(
         }
     }
 }
-
-
-/* Random pixel index generators */
-
-/**
- * Return a random index between `start` and `end` (inclusive)
- */
-fun randomPixelIn(start: Int, end: Int): Int = ((end - start) * random() + start).roundToInt()
-
-/**
- * Return a random index from indices
- */
-fun randomPixelIn(indices: List<Int>): Int = indices.random()
 
 
 /* RunningAnimation extensions */
