@@ -61,12 +61,12 @@ val smoothChase = PredefinedAnimation(
     leds.apply {
         when (direction) {
             Direction.FORWARD ->
-                iterateOverPixelsReverse { m ->
+                iterateOverPixels { m ->
                     setProlongedStripColorWithOffset(color0, m)
                     delayBlocking(delay)
                 }
             Direction.BACKWARD ->
-                iterateOverPixels { m ->
+                iterateOverPixelsReverse { m ->
                     setProlongedStripColorWithOffset(color0, m)
                     delayBlocking(delay)
                 }
