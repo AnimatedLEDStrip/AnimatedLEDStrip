@@ -316,15 +316,10 @@ abstract class AnimatedLEDStrip(
                 if (!subAnimation) startAnimationCallback?.invoke(data)
 
                 val isContinuous = data.continuous ?: definedAnimation.info.repetitive
-                try {
-                    do {
-                        Logger.trace("Run ${data.id}: $isActive $isContinuous")
-                        definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
-                    } while (isActive && isContinuous)
-                } catch (e: ScriptException) {
-                    Logger.error("Error when running ${definedAnimation.info.name}:")
-                    Logger.error(e)
-                }
+                do {
+                    Logger.trace("Run ${data.id}: $isActive $isContinuous")
+                    definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
+                } while (isActive && isContinuous)
                 if (!subAnimation) {
                     endAnimationCallback?.invoke(data)
                     runningAnimations.remove(data.id)
