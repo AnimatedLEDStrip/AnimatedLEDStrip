@@ -493,13 +493,13 @@ abstract class AnimatedLEDStrip(
          * Get the temporary colors of all pixels as a `List<Long>`.
          */
         val pixelTemporaryColorList: List<Long>
-            get() = ledStrip.pixelTemporaryColorList.subList(getPhysicalIndex(startPixel), getPhysicalIndex(endPixel))
+            get() = ledStrip.pixelTemporaryColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
         /**
          * Get the prolonged colors of all pixels as a `List<Long>`.
          */
         val pixelProlongedColorList: List<Long>
-            get() = ledStrip.pixelProlongedColorList.subList(getPhysicalIndex(startPixel), getPhysicalIndex(endPixel))
+            get() = ledStrip.pixelProlongedColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
     }
 
