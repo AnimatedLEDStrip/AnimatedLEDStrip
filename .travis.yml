@@ -22,6 +22,8 @@ stages:
     if: branch = master AND type != pull_request
   - name: deploy release
     if: branch =~ ^v.*$
+  - name: deploy docs
+    if: (branch = master AND type != pull_request) OR branch =~ ^.*-doc$
 
 jobs:
   include:
@@ -34,13 +36,13 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn --settings .maven.xml site -DskipTests=true -B && git add dokka
+          script: mvn site --settings .maven.xml -DskipTests=true -DdoDokka=true -B && git add dokka
           on:
-            tags: true
+            all_branches: true
         - provider: pages
-          skip-cleanup: true
-          github-token: $GITHUB_TOKEN
-          keep-history: true
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          keep_history: true
           verbose: true
           local_dir: ./dokka
           on:
@@ -63,3 +65,23 @@ jobs:
           script: mvn deploy --settings .maven.xml -DskipTests=true -B
           on:
             branch: master
+
+    - stage: deploy docs
+      install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
+      script: skip
+      before_deploy:
+        - curl -s https://get.sdkman.io | bash
+        - source "/home/travis/.sdkman/bin/sdkman-init.sh"
+        - sdk install kotlin
+        - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
+        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
+        - kotlinc-jvm -script create_docs.kts -cp target/animatedledstrip-core-${VERSION}.jar
+        - cd wiki
+        - git add .
+        - git commit -m "Update animation documentation"
+      deploy:
+        - provider: script
+          script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
+          skip_cleanup: true
+          on:
+            all_branches: true

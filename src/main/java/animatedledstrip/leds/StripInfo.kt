@@ -22,7 +22,8 @@
 
 package animatedledstrip.leds
 
-import java.io.Serializable
+import animatedledstrip.animationutils.definedAnimationNames
+import animatedledstrip.utils.SendableData
 
 /**
  * Data class for setting properties of a LED strip.
@@ -42,4 +43,28 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int? = null,
-    val threadCount: Int? = null): Serializable
+    val threadCount: Int = 100
+) : SendableData {
+
+    companion object {
+        const val prefix = "SINF"
+    }
+
+    override val prefix = StripInfo.prefix
+
+    val supportedAnimations
+        get() = definedAnimationNames
+
+    override fun toHumanReadableString() =
+        """
+            Strip Info
+              numLEDs: $numLEDs
+              pin: $pin
+              imageDebugging: $imageDebugging
+              fileName: $fileName
+              rendersBeforeSave: $rendersBeforeSave
+              threadCount: $threadCount
+              supportedAnimations: $supportedAnimations
+            End Strip Info
+        """.trimIndent()
+}

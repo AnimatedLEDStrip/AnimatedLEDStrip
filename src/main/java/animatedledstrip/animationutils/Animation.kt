@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,128 +22,75 @@
 
 package animatedledstrip.animationutils
 
-import animatedledstrip.leds.LEDStrip
+import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.utils.SendableData
+import kotlinx.coroutines.CoroutineScope
 
-/**
- * A list of animations used when communicating between clients and servers.
- */
-enum class Animation {
+abstract class Animation(open val info: AnimationInfo) {
+
+    companion object {
+        const val DEFAULT_DELAY = 50L
+        const val DEFAULT_SPACING = 3
+    }
+
+    abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
+
     /**
-     * See [LEDStrip.setStripColor]
+     * Stores information about an animation.
+     *
+     * @property name The name used to identify this animation
+     * @property abbr
+     * @property minimumColors The number of required colors for this animation
+     * @property unlimitedColors Can this animation take an unlimited number of colors
+     * @property repetitive Can this animation be repeated
+     *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive-vs-Radial)
+     * @property center Does this animation use the `center` parameter
+     * @property delay Does this animation use the `delay` parameter
+     * @property delayDefault Default value for the `delay` parameter
+     * @property direction Does this animation use the `direction` parameter
+     * @property distance Does this animation use the `distance` parameter
+     * @property distanceDefault Default value for the `distance` parameter
+     * @property spacing Does this animation use the `spacing` parameter
+     * @property spacingDefault Default value for the `spacing` parameter
      */
-    @NonRepetitive
-    COLOR,
-    /**
-     * Used to represent a custom animation. Put the animation's abbreviation
-     * in the AnimationData instance's ID parameter.
-     */
-    @NonRepetitive
-    CUSTOMANIMATION,
-    /**
-     * Used to represent a repetitive custom animation. Put the animation's
-     * abbreviation in the AnimationData instance's ID parameter.
-     */
-    CUSTOMREPETITIVEANIMATION,
-    /**
-     * See [alternate]
-     */
-    ALTERNATE,
-    /**
-     * See [bounce]
-     */
-    BOUNCE,
-    /**
-     * See [bounceToColor]
-     */
-    @NonRepetitive
-    BOUNCETOCOLOR,
-    /**
-     * See [catToy]
-     */
-    CATTOY,
-    /**
-     *  See [catToyToColor]
-     */
-    @NonRepetitive
-    CATTOYTOCOLOR,
-    /**
-     * See [fadeToColor]
-     */
-    @NonRepetitive
-    FADETOCOLOR,
-    /**
-     * See [fireworks]
-     */
-    FIREWORKS,
-    /**
-     * See [meteor]
-     */
-    METEOR,
-    /**
-     * See [multiPixelRun]
-     */
-    MULTIPIXELRUN,
-    /**
-     * See [multiPixelRunToColor]
-     */
-    @NonRepetitive
-    MULTIPIXELRUNTOCOLOR,
-    /**
-     * See [ripple]
-     */
-    @Radial
-    RIPPLE,
-    /**
-     * See [pixelMarathon]
-     */
-    PIXELMARATHON,
-    /**
-     * See [pixelRun]
-     */
-    PIXELRUN,
-    /**
-     * See [smoothChase]
-     */
-    SMOOTHCHASE,
-    /**
-     * See [smoothFade]
-     */
-    SMOOTHFADE,
-    /**
-     * See [sparkle]
-     */
-    SPARKLE,
-    /**
-     * See [sparkleFade]
-     */
-    SPARKLEFADE,
-    /**
-     * See [sparkleToColor]
-     */
-    @NonRepetitive
-    SPARKLETOCOLOR,
-    /**
-     * See [splat]
-     */
-    @NonRepetitive
-    @Radial
-    SPLAT,
-    /**
-     * See [stack]
-     */
-    @NonRepetitive
-    STACK,
-    /**
-     * See [stackOverflow]
-     */
-    STACKOVERFLOW,
-    /**
-     * See [wipe]
-     */
-    @NonRepetitive
-    WIPE,
-    /**
-     * Special 'animation' sent by a client to stop a continuous animation
-     */
-    ENDANIMATION
+    data class AnimationInfo(
+        val name: String,
+        val abbr: String,
+        val description: String,
+        val signatureFile: String,
+        val repetitive: Boolean,
+        val minimumColors: Int,
+        val unlimitedColors: Boolean,
+        val center: ParamUsage,
+        val delay: ParamUsage,
+        val direction: ParamUsage,
+        val distance: ParamUsage,
+        val spacing: ParamUsage,
+        val delayDefault: Long = DEFAULT_DELAY,
+        val distanceDefault: Int = -1,
+        val spacingDefault: Int = DEFAULT_SPACING
+    ) : SendableData {
+
+        companion object {
+            const val prefix = "AINF"
+        }
+
+        override val prefix = AnimationInfo.prefix
+
+        override fun toHumanReadableString(): String =
+            """
+                Animation Info
+                  name: $name
+                  abbr: $abbr
+                  repetitive: $repetitive
+                  minimum colors: $minimumColors
+                  unlimited colors: $unlimitedColors
+                  center: $center
+                  delay: $delay${if (delay == ParamUsage.USED) " ($delayDefault)" else ""}
+                  direction: $direction
+                  distance: $distance${if (distance == ParamUsage.USED) " (${if (distanceDefault == -1) "whole strip" else distanceDefault.toString()})" else ""}
+                  spacing: $spacing${if (spacing == ParamUsage.USED) " ($spacingDefault)" else ""}
+                End Info
+            """.trimIndent()
+    }
 }

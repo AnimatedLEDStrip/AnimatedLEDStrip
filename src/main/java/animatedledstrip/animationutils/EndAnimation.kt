@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,17 @@
 
 package animatedledstrip.animationutils
 
-/**
- * A radial animation is annotated with this tag.
- *
- * Radial animations start from a center and "radiate" outwards.
- */
-@MustBeDocumented
-annotation class Radial
+import animatedledstrip.utils.SendableData
+
+data class EndAnimation(
+    val id: String
+) : SendableData {
+
+    companion object {
+        const val prefix = "END "
+    }
+
+    override val prefix = EndAnimation.prefix
+
+    override fun toHumanReadableString(): String = "End of animation $id"
+}
