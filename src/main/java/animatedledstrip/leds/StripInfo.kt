@@ -31,10 +31,10 @@ import animatedledstrip.utils.SendableData
  * more properties are added)
  *
  * @property numLEDs Number of LEDs in the strip
- * @property pin Pin the strip is connected to
+ * @property pin Physical pin the strip is connected to
  * @property imageDebugging If image debugging should be enabled
  * @property fileName File to write image debugging output to
- * @property rendersBeforeSave Renders before image debugging writes
+ * @property rendersBeforeSave Renders between image debugging writes
  * @property threadCount Number of threads used by animations
  */
 data class StripInfo(

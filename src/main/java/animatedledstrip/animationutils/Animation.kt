@@ -39,18 +39,20 @@ abstract class Animation(open val info: AnimationInfo) {
      * Stores information about an animation.
      *
      * @property name The name used to identify this animation
-     * @property abbr
+     * @property abbr The abbreviation that can be used to identify the animation
+     * @property description A description of the animation
+     * @property signatureFile The name of the file that holds the signature of an example run of the animation
+     * @property repetitive Can this animation be repeated
+     *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive)
      * @property minimumColors The number of required colors for this animation
      * @property unlimitedColors Can this animation take an unlimited number of colors
-     * @property repetitive Can this animation be repeated
-     *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive-vs-Radial)
      * @property center Does this animation use the `center` parameter
      * @property delay Does this animation use the `delay` parameter
-     * @property delayDefault Default value for the `delay` parameter
      * @property direction Does this animation use the `direction` parameter
      * @property distance Does this animation use the `distance` parameter
-     * @property distanceDefault Default value for the `distance` parameter
      * @property spacing Does this animation use the `spacing` parameter
+     * @property delayDefault Default value for the `delay` parameter
+     * @property distanceDefault Default value for the `distance` parameter
      * @property spacingDefault Default value for the `spacing` parameter
      */
     data class AnimationInfo(
