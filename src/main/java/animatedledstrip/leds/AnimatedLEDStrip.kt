@@ -148,7 +148,7 @@ abstract class AnimatedLEDStrip(
     /**
      * A map containing all the sections associated with this LED strip.
      */
-    internal val sections = mutableMapOf<String, Section>()
+    val sections = mutableMapOf<String, Section>()
 
     /**
      * The section that represents the full strip.
@@ -159,7 +159,7 @@ abstract class AnimatedLEDStrip(
      * Create a new named section.
      */
     fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
-        val newSection = Section(startPixel, endPixel)
+        val newSection = Section(name, startPixel, endPixel)
         sections[name] = newSection
         return newSection
     }
@@ -191,13 +191,15 @@ abstract class AnimatedLEDStrip(
      * @param parentSection The parent section of this section. A null parentSection implies that the parent
      *   is the whole strip.
      */
-    inner class Section(val startPixel: Int, val endPixel: Int, parentSection: Section? = null) : SendableData {
+    inner class Section(val name: String, val startPixel: Int, val endPixel: Int, parentSection: Section? = null) :
+        SendableData {
 
         override val prefix = sectionPrefix
 
         override fun toHumanReadableString() =
             """
                 Section Info
+                  name: $name
                   numLEDs: $numLEDs
                   startPixel: $startPixel
                   endPixel: $endPixel
@@ -262,7 +264,14 @@ abstract class AnimatedLEDStrip(
          * Creates the subsection if it doesn't exist.
          */
         fun getSubSection(startPixel: Int, endPixel: Int): Section =
-            subSections.getOrPut(Pair(startPixel, endPixel)) { Section(startPixel, endPixel, this) }
+            subSections.getOrPut(Pair(startPixel, endPixel)) {
+                Section(
+                    "$name:$startPixel:$endPixel",
+                    startPixel,
+                    endPixel,
+                    this
+                )
+            }
 
         /**
          * See [AnimatedLEDStrip.getSection].
@@ -508,7 +517,7 @@ abstract class AnimatedLEDStrip(
                 if (field.declaringClass != Section::class.java)
                     return false
                 return when (field.name) {
-                    "startPixel", "endPixel", "physicalStart", "numLEDs" -> false
+                    "startPixel", "endPixel", "physicalStart", "numLEDs", "name" -> false
                     else -> true
                 }
             }
