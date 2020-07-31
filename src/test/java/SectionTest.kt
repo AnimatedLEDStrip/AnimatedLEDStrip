@@ -22,9 +22,7 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.animation
+import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
@@ -421,12 +419,34 @@ class SectionTest {
     @Test
     fun testStartAnimation() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
-        val anim = AnimationData().animation("Alternate")
-        testLEDs.startAnimation(anim, "TEST")
+        val anim1 = AnimationData().animation("Alternate")
+        testLEDs.startAnimation(anim1, "TEST1")
         delayBlocking(100)
-        assertTrue { testLEDs.runningAnimations.map.containsKey("TEST") }
-        assertTrue { testLEDs.runningAnimations["TEST"]?.data == anim }
-        testLEDs.endAnimation(EndAnimation("TEST"))
+        assertTrue { testLEDs.runningAnimations.map.containsKey("TEST1") }
+        assertTrue { testLEDs.runningAnimations["TEST1"]?.data == anim1 }
+        testLEDs.endAnimation(EndAnimation("TEST1"))
+        runBlocking {
+            testLEDs.runningAnimations["TEST1"]?.job?.join()
+        }
+
+        val anim2 = AnimationData().animation("Wipe").addColor(0xFF)
+        testLEDs.startAnimation(anim2, "TEST2")
+        delayBlocking(100)
+        runBlocking {
+            testLEDs.runningAnimations["TEST2"]?.job?.join()
+        }
+        testLEDs.wholeStrip.assertAllPixels(0xFF)
+
+        testLEDs.createSection("Sect", 15, 40)
+        val anim3 = AnimationData().animation("Wipe").addColor(0xFFFF).section("Sect")
+        testLEDs.startAnimation(anim3, "TEST3")
+        delayBlocking(100)
+        runBlocking {
+            testLEDs.runningAnimations["TEST3"]?.job?.join()
+        }
+        testLEDs.wholeStrip.assertPixels(0..14, 0xFF)
+        testLEDs.wholeStrip.assertPixels(15..40, 0xFFFF)
+        testLEDs.wholeStrip.assertPixels(41..49, 0xFF)
     }
 
     @Test

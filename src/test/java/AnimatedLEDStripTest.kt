@@ -65,6 +65,13 @@ class AnimatedLEDStripTest {
 
         assertTrue { testLEDs.sections.size == 2 }
         assertTrue { testLEDs.sections.containsKey("Test") }
+
+        val newSection = testLEDs.Section("Sect", 5, 20)
+        testLEDs.createSection(newSection)
+
+        assertTrue { testLEDs.sections.size == 3 }
+        assertTrue { testLEDs.sections.containsKey("Sect") }
+        assertTrue { testLEDs.sections["Sect"] !== newSection }
     }
 
     @Test
