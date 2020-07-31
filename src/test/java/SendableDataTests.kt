@@ -152,6 +152,7 @@ class SendableDataTests {
             section1.toHumanReadableString() ==
                     """
                         Section Info
+                          name: Test
                           numLEDs: 6
                           startPixel: 5
                           endPixel: 10
