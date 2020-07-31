@@ -106,7 +106,7 @@ abstract class AnimatedLEDStrip(
      * See [Section.startAnimation].
      */
     fun startAnimation(animation: AnimationData, animId: String? = null) =
-        wholeStrip.startAnimation(animation, animId)
+        getSection(animation.section).startAnimation(animation, animId)
 
     /**
      * End animation by ID.
@@ -142,6 +142,10 @@ abstract class AnimatedLEDStrip(
      */
     var endAnimationCallback: ((AnimationData) -> Any?)? = null
 
+    /**
+     * Callback to run when a new section is created.
+     */
+    var newSectionCallback: ((Section) -> Any?)? = null
 
     /* Strip Sections */
 
@@ -161,8 +165,11 @@ abstract class AnimatedLEDStrip(
     fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
         val newSection = Section(name, startPixel, endPixel)
         sections[name] = newSection
+        newSectionCallback?.invoke(newSection)
         return newSection
     }
+
+    fun createSection(section: Section): Section = createSection(section.name, section.startPixel, section.endPixel)
 
     /**
      * Get a section by its name.
