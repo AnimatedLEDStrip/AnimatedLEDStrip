@@ -35,18 +35,18 @@ import com.google.gson.FieldAttributes
  * Used when calling animations to specify colors, parameters, etc.
  * for the animation.
  *
- * @property animation The animation to be run
+ * @property animation Name of the animation to run
  * @property colors The list of [ColorContainer]s to use
- * @property center The pixel at the center of a radial animation.
- * Defaults to the center of the strip.
+ * @property center The pixel at the center of an animation.
+ *   Defaults to the center of the strip.
  * @property continuous If the animation will run endlessly until stopped
  * @property delay Delay time (in milliseconds) used in the animation
  * @property delayMod Multiplier for `delay`
- * @property direction The direction the animation will run
- * @property distance The distance a radial animation will travel from its center.
- * Defaults to running until the ends of the strip.
- * @property id ID for the animation. Used by server and client for
- * stopping continuous animations.
+ * @property direction The direction the animation will appear to move
+ * @property distance The distance an animation will travel from its center.
+ *   Defaults to the length of the strip, meaning it will run until the ends of the strip.
+ * @property id ID for the animation.
+ *   Used by server and clients to identify a specific animation.
  * @property pCols The list of [PreparedColorContainer]s after preparation of [colors].
  *   Will be populated when [prepare] is called.
  * @property section The id of the section of the strip that will be running the whole animation

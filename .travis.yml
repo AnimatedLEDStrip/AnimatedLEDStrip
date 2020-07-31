@@ -79,7 +79,7 @@ jobs:
         - kotlinc-jvm -script create_docs.kts -cp target/animatedledstrip-core-${VERSION}.jar
         - cd wiki
         - git add .
-        - git commit -m "Update animation documentation"
+        - git commit --allow-empty -m "Update animation documentation"
       deploy:
         - provider: script
           script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master

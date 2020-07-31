@@ -22,7 +22,6 @@
 
 package animatedledstrip.test
 
-//import animatedledstrip.animationutils.predefinedAnimLoadComplete
 import animatedledstrip.leds.AnimatedLEDStrip
 import org.pmw.tinylog.Configuration
 import org.pmw.tinylog.Configurator
@@ -75,10 +74,6 @@ fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Lon
     }
 }
 
-//fun awaitPredefinedAnimationsLoaded() {
-//    while (!predefinedAnimLoadComplete) delayBlocking(250)
-//}
-
 /* Log Testing */
 
 object TestLogWriter : Writer {
@@ -119,7 +114,7 @@ object TestLogWriter : Writer {
 
 fun startLogCapture() {
     Configurator.currentConfig().addWriter(TestLogWriter, Level.DEBUG).activate()
-    TestLogWriter.clearLogs()
+    clearLogs()
 }
 
 fun stopLogCapture() {
