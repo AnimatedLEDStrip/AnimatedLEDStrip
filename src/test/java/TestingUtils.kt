@@ -40,7 +40,7 @@ fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
 fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
     pixelTemporaryColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelTemporaryColorList"
+            "Pixel $it check failed (temporary). Expected: $color on all pixels. Actual: $pixelTemporaryColorList"
         ) { it == color }
     }
 }
@@ -48,7 +48,7 @@ fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
 fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
     pixelProlongedColorList.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on all pixels. Actual: $pixelProlongedColorList"
+            "Pixel $it check failed (prolonged). Expected: $color on all pixels. Actual: $pixelProlongedColorList"
         ) { it == color }
     }
 }
@@ -61,7 +61,7 @@ fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, color: Long) {
 fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Long) {
     indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelTemporaryColorList"
+            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelTemporaryColorList"
         ) { pixelTemporaryColorList[it] == color }
     }
 }
@@ -69,7 +69,7 @@ fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Lon
 fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Long) {
     indices.forEach {
         assertTrue(
-            "Pixel check failed. Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelProlongedColorList"
+            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelProlongedColorList"
         ) { pixelProlongedColorList[it] == color }
     }
 }
