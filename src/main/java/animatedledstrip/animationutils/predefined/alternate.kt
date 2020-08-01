@@ -36,7 +36,7 @@ val alternate = PredefinedAnimation(
         signatureFile = "alternate.png",
         repetitive = true,
         minimumColors = 2,
-        unlimitedColors = false,
+        unlimitedColors = true,
         center = ParamUsage.NOTUSED,
         delay = ParamUsage.USED,
         delayDefault = 1000,
@@ -45,15 +45,15 @@ val alternate = PredefinedAnimation(
         spacing = ParamUsage.NOTUSED
     )
 ) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val color1 = data.pCols[1]
-
+    var lastColorIndex = data.extraData.getOrPut("lastColorIndex") { 0 } as Int
+    val color = data.pCols[lastColorIndex]
+    if (lastColorIndex == data.pCols.lastIndex) lastColorIndex = 0
     val delay = data.delay
 
     leds.apply {
-        setProlongedStripColor(color0)
-        delayBlocking(delay)
-        setProlongedStripColor(color1)
+        setProlongedStripColor(color)
         delayBlocking(delay)
     }
+
+    data
 }

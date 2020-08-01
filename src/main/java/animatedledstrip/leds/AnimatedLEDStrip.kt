@@ -102,7 +102,7 @@ abstract class AnimatedLEDStrip(
     /* Start and end animations */
 
     /**
-     * Start an animation that runs on the whole strip.
+     * Start an animation. Determines the section based on the `section` parameter in `animation`.
      * See [Section.startAnimation].
      */
     fun startAnimation(animation: AnimationData, animId: String? = null) =

@@ -32,10 +32,9 @@ import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 
 /**
- * Used when calling animations to specify colors, parameters, etc.
- * for the animation.
+ * Used to describe the properties of animations to run or that are running.
  *
- * @property animation Name of the animation to run
+ * @property animation Name of the animation
  * @property colors The list of [ColorContainer]s to use
  * @property center The pixel at the center of an animation.
  *   Defaults to the center of the strip.
@@ -163,6 +162,10 @@ class AnimationData(
         return this
     }
 
+    /**
+     * A map used internally by animations to communicate between
+     * runs of the animation (see Alternate or Cat Toy)
+     */
     val extraData = mutableMapOf<String, Any?>()
 
     /* Note: If any other properties are added, they must be added to the five methods below */
