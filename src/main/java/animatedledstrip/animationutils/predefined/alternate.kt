@@ -31,8 +31,10 @@ val alternate = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",
-        description = "Strip alternates between `pCols[0]` and `pCols[1]`, " +
-                "delaying delay milliseconds between changes.",
+        description = "Strip alternates* between each color in pCols, " +
+                "delaying delay milliseconds between changes.\n\n" +
+                "* alternate may not be the best word because this animation " +
+                "supports more than two colors",
         signatureFile = "alternate.png",
         repetitive = true,
         minimumColors = 2,
@@ -45,9 +47,8 @@ val alternate = PredefinedAnimation(
         spacing = ParamUsage.NOTUSED
     )
 ) { leds, data, _ ->
-    var lastColorIndex = data.extraData.getOrPut("lastColorIndex") { 0 } as Int
-    val color = data.pCols[lastColorIndex]
-    if (lastColorIndex == data.pCols.lastIndex) lastColorIndex = 0
+    val nextColorIndex = data.extraData.getOrPut("nextColorIndex") { 0 } as Int
+    val color = data.pCols[nextColorIndex]
     val delay = data.delay
 
     leds.apply {
@@ -55,5 +56,5 @@ val alternate = PredefinedAnimation(
         delayBlocking(delay)
     }
 
-    data
+    data.extraData["nextColorIndex"] = if (nextColorIndex == data.pCols.lastIndex) 0 else nextColorIndex + 1
 }
