@@ -26,6 +26,13 @@ import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import java.io.Serializable
 
+/**
+ * Represents a class that can be sent over sockets between server and clients.
+ * Handles conversion of class to json.
+ *
+ * Each implementing class must override `prefix` and `toHumanReadableString`.
+ *
+ */
 interface SendableData: Serializable {
     val prefix: String
 

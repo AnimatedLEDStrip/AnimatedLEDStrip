@@ -23,7 +23,7 @@
 package animatedledstrip.animationutils
 
 /**
- * Helper enum that determines if an animation should appear to move 'Forward'
+ * Enum that indicates if an animation should appear to move 'Forward'
  * or 'Backward'.
  *
  * The start of the LED strip is the end where the signal is connected (small

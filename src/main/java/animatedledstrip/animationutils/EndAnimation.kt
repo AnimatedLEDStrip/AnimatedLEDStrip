@@ -24,6 +24,11 @@ package animatedledstrip.animationutils
 
 import animatedledstrip.utils.SendableData
 
+/**
+ * Communicates that an animation should end or is ending
+ *
+ * @property id The ID of the animation
+ */
 data class EndAnimation(
     val id: String
 ) : SendableData {

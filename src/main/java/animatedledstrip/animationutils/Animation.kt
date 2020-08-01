@@ -26,6 +26,11 @@ import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * Represents an animation
+ *
+ * @property info Information about the animation
+ */
 abstract class Animation(open val info: AnimationInfo) {
 
     companion object {
@@ -33,6 +38,10 @@ abstract class Animation(open val info: AnimationInfo) {
         const val DEFAULT_SPACING = 3
     }
 
+    /**
+     * Run the animation, passing it the strip section, information about how to run the animation,
+     * and the scope of the animation
+     */
     abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
 
     /**

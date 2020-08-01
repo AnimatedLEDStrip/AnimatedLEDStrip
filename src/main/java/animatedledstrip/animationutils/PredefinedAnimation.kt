@@ -25,6 +25,9 @@ package animatedledstrip.animationutils
 import animatedledstrip.leds.AnimatedLEDStrip
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * An animation that is defined in the library and compiled into the jar
+ */
 class PredefinedAnimation(
     info: AnimationInfo,
     val animation: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit

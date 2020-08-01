@@ -35,7 +35,7 @@ import kotlin.test.assertTrue
 class AnimatedLEDStripTest {
 
     @Test
-    fun testCallbacks()  {
+    fun testAnimationCallbacks()  {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
@@ -61,14 +61,21 @@ class AnimatedLEDStripTest {
     @Test
     fun testCreateSection() {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
+        var indicator = false
         testLEDs.createSection("Test", 5, 20)
 
         assertTrue { testLEDs.sections.size == 2 }
         assertTrue { testLEDs.sections.containsKey("Test") }
 
+        testLEDs.newSectionCallback = {
+            indicator = true
+            Unit
+        }
+
         val newSection = testLEDs.Section("Sect", 5, 20)
         testLEDs.createSection(newSection)
 
+        assertTrue { indicator }
         assertTrue { testLEDs.sections.size == 3 }
         assertTrue { testLEDs.sections.containsKey("Sect") }
         assertTrue { testLEDs.sections["Sect"] !== newSection }

@@ -25,7 +25,6 @@ package animatedledstrip.utils
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ColorContainerSerializer
@@ -83,6 +82,11 @@ fun AnimationData.endAnimation(): EndAnimation = EndAnimation(this.id)
 
 const val DELIMITER = ";;;"
 
+/**
+ * Convert a json string into a class
+ *
+ * @param T The type of sendable data to create
+ */
 inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
     checkNotNull(this)
     try {
@@ -95,15 +99,31 @@ inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
     }
 }
 
+/**
+ * Create an [AnimationData] from json
+ */
 fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
 
-fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
-
-fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
-
+/**
+ * Create an [Animation.AnimationInfo] from json
+ */
 fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
 
+/**
+ * Create an [EndAnimation] from json
+ */
+fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
+
+/**
+ * Create an [AnimatedLEDStrip.Section] from json
+ */
 fun String?.jsonToSection(): AnimatedLEDStrip.Section = jsonToSendableData()
+
+/**
+ * Create a [StripInfo] from json
+ */
+fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
+
 
 /**
  * Get the first four characters in the string (used to indicate the type of data,
