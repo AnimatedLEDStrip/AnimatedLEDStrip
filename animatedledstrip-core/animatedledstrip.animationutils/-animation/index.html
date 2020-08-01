@@ -8,202 +8,90 @@
 <a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.animationutils</a>&nbsp;/&nbsp;<a href="./index.html">Animation</a><br/>
 <br/>
 <h1>Animation</h1>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Animation</span></code>
-<p>A list of animations used when communicating between clients and servers.</p>
-<h3>Enum Values</h3>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">Animation</span></code>
+<p>Represents an animation</p>
+<h3>Types</h3>
 <table>
 <tbody>
 <tr>
 <td>
-<p><a href="-c-o-l-o-r.html">COLOR</a></p>
+<h4><a href="-animation-info/index.html">AnimationInfo</a></h4>
 </td>
 <td>
-<p>See <a href="../../animatedledstrip.leds/-l-e-d-strip/set-strip-color.html">LEDStrip.setStripColor</a></p>
+<p>Stores information about an animation.</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">AnimationInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../animatedledstrip.utils/-sendable-data/index.html"><span class="identifier">SendableData</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
 </td>
+<td>
+<p>Represents an animation</p>
+<code><span class="identifier">Animation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.Animation$<init>(animatedledstrip.animationutils.Animation.AnimationInfo)/info">info</span><span class="symbol">:</span>&nbsp;<span class="identifier">AnimationInfo</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="info.html">info</a></h4>
+</td>
+<td>
+<p>Information about the animation</p>
+<code><span class="keyword">open</span> <span class="keyword">val </span><span class="identifier">info</span><span class="symbol">: </span><span class="identifier">AnimationInfo</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="run-animation.html">runAnimation</a></h4>
+</td>
+<td>
+<p>Run the animation, passing it the strip section, information about how to run the animation,
+and the scope of the animation</p>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">runAnimation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.animationutils.Animation$runAnimation(animatedledstrip.leds.AnimatedLEDStrip.Section, animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope)/leds">leds</span><span class="symbol">:</span>&nbsp;<span class="identifier">Section</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.Animation$runAnimation(animatedledstrip.leds.AnimatedLEDStrip.Section, animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope)/data">data</span><span class="symbol">:</span>&nbsp;<a href="../-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.animationutils.Animation$runAnimation(animatedledstrip.leds.AnimatedLEDStrip.Section, animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope)/scope">scope</span><span class="symbol">:</span>&nbsp;<span class="identifier">CoroutineScope</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-d-e-f-a-u-l-t_-d-e-l-a-y.html">DEFAULT_DELAY</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_DELAY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="-m-u-l-t-i-c-o-l-o-r.html">MULTICOLOR</a></p>
+<h4><a href="-d-e-f-a-u-l-t_-s-p-a-c-i-n-g.html">DEFAULT_SPACING</a></h4>
 </td>
 <td>
-</td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DEFAULT_SPACING</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
 <tr>
 <td>
-<p><a href="-c-u-s-t-o-m-a-n-i-m-a-t-i-o-n.html">CUSTOMANIMATION</a></p>
+<h4><a href="../-predefined-animation/index.html">PredefinedAnimation</a></h4>
 </td>
 <td>
-<p>Used to represent a custom animation. Put the animation's abbreviation
-in the AnimationData instance's ID parameter.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-c-u-s-t-o-m-r-e-p-e-t-i-t-i-v-e-a-n-i-m-a-t-i-o-n.html">CUSTOMREPETITIVEANIMATION</a></p>
-</td>
-<td>
-<p>Used to represent a repetitive custom animation. Put the animation's
-abbreviation in the AnimationData instance's ID parameter.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-a-l-t-e-r-n-a-t-e.html">ALTERNATE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/alternate.html">AnimatedLEDStrip.alternate</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-b-o-u-n-c-e.html">BOUNCE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/bounce.html">AnimatedLEDStrip.bounce</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-b-o-u-n-c-e-t-o-c-o-l-o-r.html">BOUNCETOCOLOR</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/bounce-to-color.html">AnimatedLEDStrip.bounceToColor</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-m-e-t-e-o-r.html">METEOR</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/meteor.html">AnimatedLEDStrip.meteor</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-m-u-l-t-i-p-i-x-e-l-r-u-n.html">MULTIPIXELRUN</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/multi-pixel-run.html">AnimatedLEDStrip.multiPixelRun</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-m-u-l-t-i-p-i-x-e-l-r-u-n-t-o-c-o-l-o-r.html">MULTIPIXELRUNTOCOLOR</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/multi-pixel-run-to-color.html">AnimatedLEDStrip.multiPixelRunToColor</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-r-i-p-p-l-e.html">RIPPLE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/ripple.html">AnimatedLEDStrip.ripple</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-p-i-x-e-l-m-a-r-a-t-h-o-n.html">PIXELMARATHON</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/pixel-marathon.html">AnimatedLEDStrip.pixelMarathon</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-p-i-x-e-l-r-u-n.html">PIXELRUN</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/pixel-run.html">AnimatedLEDStrip.pixelRun</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-p-i-x-e-l-r-u-n-w-i-t-h-t-r-a-i-l.html">PIXELRUNWITHTRAIL</a></p>
-</td>
-<td>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-m-o-o-t-h-c-h-a-s-e.html">SMOOTHCHASE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/smooth-chase.html">AnimatedLEDStrip.smoothChase</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-m-o-o-t-h-f-a-d-e.html">SMOOTHFADE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/smooth-fade.html">AnimatedLEDStrip.smoothFade</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-p-a-r-k-l-e.html">SPARKLE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/sparkle.html">AnimatedLEDStrip.sparkle</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-p-a-r-k-l-e-f-a-d-e.html">SPARKLEFADE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/sparkle-fade.html">AnimatedLEDStrip.sparkleFade</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-p-a-r-k-l-e-t-o-c-o-l-o-r.html">SPARKLETOCOLOR</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/sparkle-to-color.html">AnimatedLEDStrip.sparkleToColor</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-p-l-a-t.html">SPLAT</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/splat.html">AnimatedLEDStrip.splat</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-t-a-c-k.html">STACK</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/stack.html">AnimatedLEDStrip.stack</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-s-t-a-c-k-o-v-e-r-f-l-o-w.html">STACKOVERFLOW</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/stack-overflow.html">AnimatedLEDStrip.stackOverflow</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-w-i-p-e.html">WIPE</a></p>
-</td>
-<td>
-<p>See <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/wipe.html">AnimatedLEDStrip.wipe</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-e-n-d-a-n-i-m-a-t-i-o-n.html">ENDANIMATION</a></p>
-</td>
-<td>
-<p>Special 'animation' sent by the GUI to stop a continuous animation</p>
-</td>
+<p>An animation that is defined in the library and compiled into the jar</p>
+<code><span class="keyword">class </span><span class="identifier">PredefinedAnimation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Animation</span></a></code></td>
 </tr>
 </tbody>
 </table>

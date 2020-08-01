@@ -8,29 +8,77 @@
 <a href="../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="./index.html">animatedledstrip.utils</a><br/>
 <br/>
 <h2>Package animatedledstrip.utils</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-sendable-data/index.html">SendableData</a></h4>
+</td>
+<td>
+<p>Represents a class that can be sent over sockets between server and clients.
+Handles conversion of class to json.</p>
+<code><span class="keyword">interface </span><span class="identifier">SendableData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
+</tr>
+</tbody>
+</table>
 <h3>Extensions for External Classes</h3>
 <table>
 <tbody>
 <tr>
 <td>
-<p><a href="kotlin.-int/index.html">kotlin.Int</a></p>
+<h4><a href="kotlin.-byte-array/index.html">kotlin.ByteArray</a></h4>
 </td>
 <td>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="kotlin.-long/index.html">kotlin.Long</a></p>
+<h4><a href="kotlin.-int/index.html">kotlin.Int</a></h4>
 </td>
 <td>
 </td>
 </tr>
 <tr>
 <td>
-<p><a href="kotlinx.coroutines.sync.-mutex/index.html">kotlinx.coroutines.sync.Mutex</a></p>
+<h4><a href="kotlin.-long/index.html">kotlin.Long</a></h4>
 </td>
 <td>
 </td>
+</tr>
+<tr>
+<td>
+<h4><a href="kotlin.-string/index.html">kotlin.String</a></h4>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<h4><a href="kotlinx.coroutines.sync.-mutex/index.html">kotlinx.coroutines.sync.Mutex</a></h4>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-d-e-l-i-m-i-t-e-r.html">DELIMITER</a></h4>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">DELIMITER</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="gson.html">gson</a></h4>
+</td>
+<td>
+<p>JSON Parser</p>
+<code><span class="keyword">val </span><span class="identifier">gson</span><span class="symbol">: </span><span class="identifier">Gson</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -39,47 +87,51 @@
 <tbody>
 <tr>
 <td>
-<p><a href="blend.html">blend</a></p>
+<h4><a href="blend.html">blend</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
 <p>Blend two <a href="../animatedledstrip.colors/-color-container/index.html">animatedledstrip.colors.ColorContainer</a>s together and return a new <code>ColorContainer</code>.</p>
-</td>
+<code><span class="keyword">fun </span><span class="identifier">blend</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/existing">existing</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend(kotlin.Long, kotlin.Long, kotlin.Int)/amountOfOverlay">amountOfOverlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="blend8.html">blend8</a></p>
+<h4><a href="blend8.html">blend8</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">blend8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/a">a</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfB">amountOfB</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
 <p>Blend a variable proportion (0-255) of one byte to another.</p>
-</td>
+<code><span class="keyword">fun </span><span class="identifier">blend8</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/a">a</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$blend8(kotlin.Int, kotlin.Int, kotlin.Int)/amountOfB">amountOfB</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="delay-blocking.html">delayBlocking</a></p>
+<h4><a href="delay-blocking.html">delayBlocking</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">delayBlocking</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$delayBlocking(kotlin.Long)/wait">wait</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
 <p>Try to pause the thread for an amount of time in milliseconds.</p>
-<code><span class="keyword">fun </span><span class="identifier">delayBlocking</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$delayBlocking(kotlin.Int)/wait">wait</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Overload for delayBlocking for when an Int is sent.</p>
-</td>
+<code><span class="keyword">fun </span><span class="identifier">delayBlocking</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$delayBlocking(kotlin.Long)/wait">wait</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Overload for delayBlocking for when an <code>Int</code> is sent.</p>
+<code><span class="keyword">fun </span><span class="identifier">delayBlocking</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$delayBlocking(kotlin.Int)/wait">wait</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="parse-hex.html">parseHex</a></p>
+<h4><a href="end-animation.html">endAnimation</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">parseHex</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$parseHex(kotlin.String)/string">string</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
-<p>Returns a <code>Long</code> from a hexadecimal String.</p>
-</td>
+<code><span class="keyword">fun </span><a href="../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">.</span><span class="identifier">endAnimation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../animatedledstrip.animationutils/-end-animation/index.html"><span class="identifier">EndAnimation</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="parse-hex-or-default.html">parseHexOrDefault</a></p>
+<h4><a href="parse-hex.html">parseHex</a></h4>
 </td>
 <td>
+<p>Returns a <code>Long</code> from a hexadecimal <code>String</code>.</p>
+<code><span class="keyword">fun </span><span class="identifier">parseHex</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$parseHex(kotlin.String)/string">string</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="parse-hex-or-default.html">parseHexOrDefault</a></h4>
+</td>
+<td>
+<p>Returns a <code>Long</code> from a hexadecimal <code>String</code> or <code>default</code> on error.</p>
 <code><span class="keyword">fun </span><span class="identifier">parseHexOrDefault</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.utils$parseHexOrDefault(kotlin.String, kotlin.Long)/string">string</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.utils$parseHexOrDefault(kotlin.String, kotlin.Long)/default">default</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0x0L<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 </tbody>

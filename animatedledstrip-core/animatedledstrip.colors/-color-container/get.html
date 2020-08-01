@@ -14,29 +14,20 @@
 returns true), this will return that color, regardless of what index
 was sent. Otherwise, it checks if <code>index</code> is a valid index of <code>colors</code>
 and if so, returns the color stored there, if not, returns 0 (black).</p>
-<h3>Parameters</h3>
-<p><a name="index"></a>
-<code>index</code> - The index of the color to get</p>
 <a name="animatedledstrip.colors.ColorContainer$get(kotlin.IntArray)"></a>
 <code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors.ColorContainer$get(kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
-<p>Get colors from <a href="colors.html">colors</a>. Accepts a variable number of arguments
-(except one, that is caught by the get() operator above). If 0
+<p>Get colors from <a href="colors.html">colors</a>. Accepts a variable number of arguments(though
+a single argument will be caught by the get() operator above). If no
 indices are provided, this will return an empty list.
 If multiple indices are provided but there is only one color
 in the list, this will return a list containing only that one
 color. If an index is not a valid index in <code>colors</code>, 0 is added
 to the list. The returned list contains the colors in the order
-that the indices were ordered when this was called.</p>
-<h3>Parameters</h3>
-<p><a name="indices"></a>
-<code>indices</code> - The indices of the colors to retrieve</p>
+specified.</p>
 <a name="animatedledstrip.colors.ColorContainer$get(kotlin.ranges.IntRange)"></a>
 <code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.ColorContainer$get(kotlin.ranges.IntRange)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
 <p>Get colors from <a href="colors.html">colors</a>. If there is only one color in <code>colors</code>,
 this will return a list containing only that one color. If an index
 in the range is not a valid index in <code>colors</code>, 0 is added to the list.</p>
-<h3>Parameters</h3>
-<p><a name="indices"></a>
-<code>indices</code> - A range of indices of the colors to retrieve</p>
 </BODY>
 </HTML>

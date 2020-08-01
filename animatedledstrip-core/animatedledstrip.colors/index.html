@@ -13,33 +13,39 @@
 <tbody>
 <tr>
 <td>
-<p><a href="-color-container/index.html">ColorContainer</a></p>
+<h4><a href="-color-container/index.html">ColorContainer</a></h4>
 </td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
 <p>A class for storing colors that can be used in animations. This can store a
 variable number of colors (stored as 24-bit Longs).</p>
-</td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">ColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="-color-container-interface/index.html">ColorContainerInterface</a></p>
+<h4><a href="-color-container-interface/index.html">ColorContainerInterface</a></h4>
 </td>
 <td>
-<code><span class="keyword">interface </span><span class="identifier">ColorContainerInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
-<p>An interface connecting ColorContainer and PreparedColorContainer.</p>
-</td>
+<p>An interface connecting <a href="-color-container/index.html">ColorContainer</a> and <a href="-prepared-color-container/index.html">PreparedColorContainer</a></p>
+<code><span class="keyword">interface </span><span class="identifier">ColorContainerInterface</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="-prepared-color-container/index.html">PreparedColorContainer</a></p>
+<h4><a href="-color-container-serializer/index.html">ColorContainerSerializer</a></h4>
 </td>
 <td>
-<code><span class="keyword">class </span><span class="identifier">PreparedColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
+<p>Tells GSON how to serialize a <a href="-color-container/index.html">ColorContainer</a> or <a href="-prepared-color-container/index.html">PreparedColorContainer</a></p>
+<code><span class="keyword">class </span><span class="identifier">ColorContainerSerializer</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">JsonSerializer</span><span class="symbol">&lt;</span><a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier">JsonDeserializer</span><span class="symbol">&lt;</span><a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="-prepared-color-container/index.html">PreparedColorContainer</a></h4>
+</td>
+<td>
 <p>A prepared <a href="-color-container/index.html">ColorContainer</a> that holds a set of colors that blend from one
-to the next. This is created by calling the prepare() function on a
-ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
-</td>
+to the next (see <a href="-color-container/prepare.html">ColorContainer.prepare</a>. This is created by calling
+<a href="-color-container/prepare.html">ColorContainer.prepare</a>. Used by methods that set the color of pixel(s) on
+a strip.</p>
+<code><span class="keyword">class </span><span class="identifier">PreparedColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -48,81 +54,99 @@ ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
 <tbody>
 <tr>
 <td>
-<p><a href="grayscale.html">grayscale</a></p>
+<h4><a href="grayscale.html">grayscale</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces all colors in <a href="-color-container/colors.html">ColorContainer.colors</a> with a grayscaled version of themselves.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscale(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces the colors at the specified indices with a grayscaled version
 of themselves.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscale(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscale(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces the colors at the indices in the specified ranges with a
 grayscaled version of themselves.</p>
-</td>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscale</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscale(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="grayscaled.html">grayscaled</a></p>
+<h4><a href="grayscaled.html">grayscaled</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 but grayscaled.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscaled(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 grayscaled, but only including the indices specified.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscaled(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscaled(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 grayscaled, but only including the ranges of indices specified.</p>
-</td>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">grayscaled</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$grayscaled(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="inverse.html">inverse</a></p>
+<h4><a href="inverse.html">inverse</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 but inverted.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$inverse(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 inverted, but only including the indices specified.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$inverse(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Returns a new ColorContainer with the same colors as this instance,
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$inverse(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<p>Returns a new <a href="-color-container/index.html">ColorContainer</a> with the same colors as this instance,
 inverted, but only including the ranges of indices specified.</p>
-</td>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">inverse</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$inverse(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="invert.html">invert</a></p>
+<h4><a href="invert.html">invert</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces all colors in <a href="-color-container/colors.html">ColorContainer.colors</a> with their inverse.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$invert(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces the colors at the specified indices with their inverse.</p>
-<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$invert(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$invert(animatedledstrip.colors.ColorContainer, kotlin.IntArray)/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
 <p>Replaces the colors at the indices in the specified ranges with
 their inverse</p>
-</td>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">invert</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="animatedledstrip.colors$invert(animatedledstrip.colors.ColorContainer, kotlin.Array((kotlin.ranges.IntRange)))/indices">indices</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html"><span class="identifier">IntRange</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="offset-by.html">offsetBy</a></p>
+<h4><a href="is-empty.html">isEmpty</a></h4>
 </td>
 <td>
+<p>Report whether <code>colors</code> is empty</p>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">isEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code><br/>
+<code><span class="keyword">fun </span><a href="-prepared-color-container/index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">isEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="is-not-empty.html">isNotEmpty</a></h4>
+</td>
+<td>
+<p>Report whether <code>colors</code> is not empty</p>
+<code><span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">isNotEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code><br/>
+<code><span class="keyword">fun </span><a href="-prepared-color-container/index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">isNotEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="offset-by.html">offsetBy</a></h4>
+</td>
+<td>
+<p>Create a <a href="-prepared-color-container/index.html">PreparedColorContainer</a> with the same colors as this
+<a href="-prepared-color-container/index.html">PreparedColorContainer</a>, only offset by <code>offset</code>.
+The color at index <code>0</code> will be moved to index <code>offset</code>.
+Negative offsets and offsets that are larger than the size of
+<code>colors</code> are supported.</p>
 <code><span class="keyword">fun </span><a href="-prepared-color-container/index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">offsetBy</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors$offsetBy(animatedledstrip.colors.PreparedColorContainer, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-prepared-color-container/index.html"><span class="identifier">PreparedColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="unary-minus.html">unaryMinus</a></p>
+<h4><a href="unary-minus.html">unaryMinus</a></h4>
 </td>
 <td>
-<code><span class="keyword">operator</span> <span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">unaryMinus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Operator overload that returns a new ColorContainer containing the
-inverse of the colors in this ColorContainer.</p>
-</td>
+<p>Operator overload that returns a new <a href="-color-container/index.html">ColorContainer</a> containing the
+inverse of the colors in this <a href="-color-container/index.html">ColorContainer</a>.</p>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a><span class="symbol">.</span><span class="identifier">unaryMinus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 </tbody>
 </table>

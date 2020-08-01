@@ -10,21 +10,22 @@
 <h1>PreparedColorContainer</h1>
 <code><span class="keyword">class </span><span class="identifier">PreparedColorContainer</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-color-container-interface/index.html"><span class="identifier">ColorContainerInterface</span></a></code>
 <p>A prepared <a href="../-color-container/index.html">ColorContainer</a> that holds a set of colors that blend from one
-to the next. This is created by calling the prepare() function on a
-ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
+to the next (see <a href="../-color-container/prepare.html">ColorContainer.prepare</a>. This is created by calling
+<a href="../-color-container/prepare.html">ColorContainer.prepare</a>. Used by methods that set the color of pixel(s) on
+a strip.</p>
 <h3>Constructors</h3>
 <table>
 <tbody>
 <tr>
 <td>
-<p><a href="-init-.html">&lt;init&gt;</a></p>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
 </td>
 <td>
-<code><span class="identifier">PreparedColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$<init>(kotlin.collections.List((kotlin.Long)), kotlin.collections.List((kotlin.Long)))/colors">colors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$<init>(kotlin.collections.List((kotlin.Long)), kotlin.collections.List((kotlin.Long)))/originalColors">originalColors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;colors<span class="symbol">)</span></code>
 <p>A prepared <a href="../-color-container/index.html">ColorContainer</a> that holds a set of colors that blend from one
-to the next. This is created by calling the prepare() function on a
-ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
-</td>
+to the next (see <a href="../-color-container/prepare.html">ColorContainer.prepare</a>. This is created by calling
+<a href="../-color-container/prepare.html">ColorContainer.prepare</a>. Used by methods that set the color of pixel(s) on
+a strip.</p>
+<code><span class="identifier">PreparedColorContainer</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$<init>(kotlin.collections.List((kotlin.Long)), kotlin.collections.List((kotlin.Long)))/colors">colors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$<init>(kotlin.collections.List((kotlin.Long)), kotlin.collections.List((kotlin.Long)))/originalColors">originalColors</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;colors<span class="symbol">)</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -33,36 +34,36 @@ ColorContainer. Used by methods that set the color of pixel(s) on a strip.</p>
 <tbody>
 <tr>
 <td>
-<p><a href="color.html">color</a></p>
+<h4><a href="color.html">color</a></h4>
 </td>
 <td>
+<p>Override for <code>color</code> that only returns 0</p>
 <code><span class="keyword">val </span><span class="identifier">color</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="colors.html">colors</a></p>
+<h4><a href="colors.html">colors</a></h4>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">colors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code>
-<p>The List of colors that will be used to create this
-PreparedColorContainer</p>
-</td>
+<p>The <code>List</code> of colors in this <code>PreparedColorContainer</code></p>
+<code><span class="keyword">val </span><span class="identifier">colors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="original-colors.html">originalColors</a></p>
+<h4><a href="original-colors.html">originalColors</a></h4>
 </td>
 <td>
+<p>The colors that were used to prepare this
+<code>PreparedColorContainer</code></p>
 <code><span class="keyword">val </span><span class="identifier">originalColors</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="size.html">size</a></p>
+<h4><a href="size.html">size</a></h4>
 </td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">size</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
 <p>Returns the size of <a href="colors.html">colors</a>.</p>
-</td>
+<code><span class="keyword">val </span><span class="identifier">size</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -71,48 +72,60 @@ PreparedColorContainer</p>
 <tbody>
 <tr>
 <td>
-<p><a href="contains.html">contains</a></p>
+<h4><a href="contains.html">contains</a></h4>
 </td>
 <td>
-<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">contains</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$contains(kotlin.Long)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
 <p>Checks if the specified value is in <a href="colors.html">colors</a>.</p>
-</td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">contains</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$contains(kotlin.Long)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="get.html">get</a></p>
+<h4><a href="equals.html">equals</a></h4>
 </td>
 <td>
-<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$get(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<code><span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="get.html">get</a></h4>
+</td>
+<td>
 <p>Get the color in <a href="colors.html">colors</a> at the specified index.</p>
-</td>
+<code><span class="keyword">operator</span> <span class="keyword">fun </span><span class="identifier">get</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$get(kotlin.Int)/index">index</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="prepare.html">prepare</a></p>
+<h4><a href="hash-code.html">hashCode</a></h4>
 </td>
 <td>
+<code><span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="prepare.html">prepare</a></h4>
+</td>
+<td>
+<p>If this <code>PreparedColorContainer</code> is the correct size, return this
+instance, otherwise a new instance of the correct size</p>
 <code><span class="keyword">fun </span><span class="identifier">prepare</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$prepare(kotlin.Int, kotlin.Int)/numLEDs">numLEDs</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.colors.PreparedColorContainer$prepare(kotlin.Int, kotlin.Int)/leadingZeros">leadingZeros</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">PreparedColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="to-color-container.html">toColorContainer</a></p>
+<h4><a href="to-color-container.html">toColorContainer</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">toColorContainer</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code>
-<p>Creates a new ColorContainer instance with the colors in <a href="colors.html">colors</a>.</p>
-</td>
+<p>Returns a new <a href="../-color-container/index.html">ColorContainer</a> instance with the colors in <a href="colors.html">colors</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">toColorContainer</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-color-container/index.html"><span class="identifier">ColorContainer</span></a></code></td>
 </tr>
 <tr>
 <td>
-<p><a href="to-string.html">toString</a></p>
+<h4><a href="to-string.html">toString</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
-<p>Create a string representation of this PreparedColorContainer.
+<p>Create a string representation of this <code>PreparedColorContainer</code>.
 The hexadecimal representation of each color in <a href="colors.html">colors</a> is
 listed in comma delimited format, between brackets <code>[</code> &amp; <code>]</code></p>
-</td>
+<code><span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -121,9 +134,30 @@ listed in comma delimited format, between brackets <code>[</code> &amp; <code>]<
 <tbody>
 <tr>
 <td>
-<p><a href="../offset-by.html">offsetBy</a></p>
+<h4><a href="../is-empty.html">isEmpty</a></h4>
 </td>
 <td>
+<p>Report whether <code>colors</code> is empty</p>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">isEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../is-not-empty.html">isNotEmpty</a></h4>
+</td>
+<td>
+<p>Report whether <code>colors</code> is not empty</p>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">isNotEmpty</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../offset-by.html">offsetBy</a></h4>
+</td>
+<td>
+<p>Create a <a href="./index.html">PreparedColorContainer</a> with the same colors as this
+<a href="./index.html">PreparedColorContainer</a>, only offset by <code>offset</code>.
+The color at index <code>0</code> will be moved to index <code>offset</code>.
+Negative offsets and offsets that are larger than the size of
+<code>colors</code> are supported.</p>
 <code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">PreparedColorContainer</span></a><span class="symbol">.</span><span class="identifier">offsetBy</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.colors$offsetBy(animatedledstrip.colors.PreparedColorContainer, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">PreparedColorContainer</span></a></code></td>
 </tr>
 </tbody>

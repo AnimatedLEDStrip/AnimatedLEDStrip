@@ -1,0 +1,25 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AnimatedLEDStrip.Section.runParallel - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="../index.html">AnimatedLEDStrip</a>&nbsp;/&nbsp;<a href="index.html">Section</a>&nbsp;/&nbsp;<a href="./run-parallel.html">runParallel</a><br/>
+<br/>
+<h1>runParallel</h1>
+<a name="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)"></a>
+<code><span class="keyword">fun </span><span class="identifier">runParallel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/animation">animation</span><span class="symbol">:</span>&nbsp;<a href="../../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/scope">scope</span><span class="symbol">:</span>&nbsp;<span class="identifier">CoroutineScope</span><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/section">section</span><span class="symbol">:</span>&nbsp;<span class="identifier">Section</span>&nbsp;<span class="symbol">=</span>&nbsp;this<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/pool">pool</span><span class="symbol">:</span>&nbsp;<span class="identifier">ExecutorCoroutineDispatcher</span>&nbsp;<span class="symbol">=</span>&nbsp;parallelAnimationThreadPool<span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/continuous">continuous</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Job</span><span class="symbol">?</span></code>
+<p>Start an animation in a child coroutine.</p>
+<p>Note: Animation is not run continuously unless if <a href="run-parallel.html#animatedledstrip.leds.AnimatedLEDStrip.Section$runParallel(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.CoroutineScope, animatedledstrip.leds.AnimatedLEDStrip.Section, kotlinx.coroutines.ExecutorCoroutineDispatcher, kotlin.Boolean)/continuous">continuous</a> is <code>true</code>
+(even if the AnimationData instance has <code>continuous</code> as true).</p>
+<h3>Parameters</h3>
+<p><a name="scope"></a>
+<code>scope</code> - The parent <code>CoroutineScope</code> for the coroutine that will
+run the animation</p>
+<p><a name="pool"></a>
+<code>pool</code> - The pool of threads to start the animation in</p>
+<p><strong>Return</strong><br/>
+The <code>Job</code> associated with the new coroutine</p>
+</BODY>
+</HTML>

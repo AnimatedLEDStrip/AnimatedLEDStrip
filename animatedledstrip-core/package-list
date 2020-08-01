@@ -3,18 +3,27 @@ $dokka.linkExtension:html
 $dokka.location:animatedledstrip.utils$b#kotlin.Longanimatedledstrip.utils/kotlin.-long/b.html
 $dokka.location:animatedledstrip.utils$base(kotlin.Long, kotlin.Int)animatedledstrip.utils/kotlin.-long/base.html
 $dokka.location:animatedledstrip.utils$g#kotlin.Longanimatedledstrip.utils/kotlin.-long/g.html
+$dokka.location:animatedledstrip.utils$getDataTypePrefix(kotlin.String)animatedledstrip.utils/kotlin.-string/get-data-type-prefix.html
 $dokka.location:animatedledstrip.utils$grayscale(kotlin.Long)animatedledstrip.utils/kotlin.-long/grayscale.html
+$dokka.location:animatedledstrip.utils$jsonToAnimationData(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-animation-data.html
+$dokka.location:animatedledstrip.utils$jsonToAnimationInfo(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-animation-info.html
+$dokka.location:animatedledstrip.utils$jsonToEndAnimation(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-end-animation.html
+$dokka.location:animatedledstrip.utils$jsonToSection(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-section.html
+$dokka.location:animatedledstrip.utils$jsonToSendableData(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-sendable-data.html
+$dokka.location:animatedledstrip.utils$jsonToStripInfo(kotlin.String)animatedledstrip.utils/kotlin.-string/json-to-strip-info.html
 $dokka.location:animatedledstrip.utils$r#kotlin.Longanimatedledstrip.utils/kotlin.-long/r.html
+$dokka.location:animatedledstrip.utils$remove0xPrefix(kotlin.String)animatedledstrip.utils/kotlin.-string/remove0x-prefix.html
+$dokka.location:animatedledstrip.utils$removeSpaces(kotlin.String)animatedledstrip.utils/kotlin.-string/remove-spaces.html
 $dokka.location:animatedledstrip.utils$toARGB(kotlin.Int)animatedledstrip.utils/kotlin.-int/to-a-r-g-b.html
 $dokka.location:animatedledstrip.utils$toARGB(kotlin.Long)animatedledstrip.utils/kotlin.-long/to-a-r-g-b.html
 $dokka.location:animatedledstrip.utils$toColorContainer(kotlin.Int)animatedledstrip.utils/kotlin.-int/to-color-container.html
 $dokka.location:animatedledstrip.utils$toColorContainer(kotlin.Long)animatedledstrip.utils/kotlin.-long/to-color-container.html
+$dokka.location:animatedledstrip.utils$toUTF8(kotlin.ByteArray, kotlin.Int)animatedledstrip.utils/kotlin.-byte-array/to-u-t-f8.html
 $dokka.location:animatedledstrip.utils$tryWithLock(kotlinx.coroutines.sync.Mutex, kotlin.Any, kotlin.Function0((animatedledstrip.utils.tryWithLock.T)))animatedledstrip.utils/kotlinx.coroutines.sync.-mutex/try-with-lock.html
 animatedledstrip.animationutils
-animatedledstrip.animationutils.animationinfo
+animatedledstrip.animationutils.predefined
 animatedledstrip.colors
 animatedledstrip.colors.ccpresets
 animatedledstrip.leds
 animatedledstrip.leds.emulated
-animatedledstrip.leds.sections
 animatedledstrip.utils

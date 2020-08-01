@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AnimatedLEDStrip.RunningAnimation - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../../index.html">animatedledstrip.leds</a>&nbsp;/&nbsp;<a href="../index.html">AnimatedLEDStrip</a>&nbsp;/&nbsp;<a href="./index.html">RunningAnimation</a><br/>
+<br/>
+<h1>RunningAnimation</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">RunningAnimation</span></code>
+<p>Class for tracking a currently running animation.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<p>Class for tracking a currently running animation.</p>
+<code><span class="identifier">RunningAnimation</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.RunningAnimation$<init>(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.Job)/data">data</span><span class="symbol">:</span>&nbsp;<a href="../../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.RunningAnimation$<init>(animatedledstrip.animationutils.AnimationData, kotlinx.coroutines.Job)/job">job</span><span class="symbol">:</span>&nbsp;<span class="identifier">Job</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="data.html">data</a></h4>
+</td>
+<td>
+<p>An <code>AnimationData</code> instance with the properties of the animation</p>
+<code><span class="keyword">val </span><span class="identifier">data</span><span class="symbol">: </span><a href="../../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="job.html">job</a></h4>
+</td>
+<td>
+<p>The <code>Job</code> that is running the animation</p>
+<code><span class="keyword">val </span><span class="identifier">job</span><span class="symbol">: </span><span class="identifier">Job</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="cancel.html">cancel</a></h4>
+</td>
+<td>
+<p>Cancel the coroutine running the animation
+(in other words, end the animation after its current iteration is complete).</p>
+<code><span class="keyword">fun </span><span class="identifier">cancel</span><span class="symbol">(</span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.RunningAnimation$cancel(kotlin.String, kotlin.Throwable)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="animatedledstrip.leds.AnimatedLEDStrip.RunningAnimation$cancel(kotlin.String, kotlin.Throwable)/cause">cause</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html"><span class="identifier">Throwable</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

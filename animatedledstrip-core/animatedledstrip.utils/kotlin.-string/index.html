@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>animatedledstrip.utils.kotlin.String - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.utils</a>&nbsp;/&nbsp;<a href="./index.html">kotlin.String</a><br/>
+<br/>
+<h3>Extensions for kotlin.String</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="get-data-type-prefix.html">getDataTypePrefix</a></h4>
+</td>
+<td>
+<p>Get the first four characters in the string (used to indicate the type of data,
+i.e. <code>DATA</code>, <code>INFO</code>, <code>SECT</code>, <code>ANIM</code>, <code>END </code>, <code>CMD </code> (note extra space), etc.)</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">getDataTypePrefix</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-animation-data.html">jsonToAnimationData</a></h4>
+</td>
+<td>
+<p>Create an <a href="../../animatedledstrip.animationutils/-animation-data/index.html">AnimationData</a> from json</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToAnimationData</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../animatedledstrip.animationutils/-animation-data/index.html"><span class="identifier">AnimationData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-animation-info.html">jsonToAnimationInfo</a></h4>
+</td>
+<td>
+<p>Create an <a href="../../animatedledstrip.animationutils/-animation/-animation-info/index.html">Animation.AnimationInfo</a> from json</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToAnimationInfo</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">AnimationInfo</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-end-animation.html">jsonToEndAnimation</a></h4>
+</td>
+<td>
+<p>Create an <a href="../../animatedledstrip.animationutils/-end-animation/index.html">EndAnimation</a> from json</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToEndAnimation</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../animatedledstrip.animationutils/-end-animation/index.html"><span class="identifier">EndAnimation</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-section.html">jsonToSection</a></h4>
+</td>
+<td>
+<p>Create an <a href="../../animatedledstrip.leds/-animated-l-e-d-strip/-section/index.html">AnimatedLEDStrip.Section</a> from json</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToSection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Section</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-sendable-data.html">jsonToSendableData</a></h4>
+</td>
+<td>
+<p>Convert a json string into a class</p>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-sendable-data/index.html"><span class="identifier">SendableData</span></a><span class="symbol">&gt;</span> <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToSendableData</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-to-strip-info.html">jsonToStripInfo</a></h4>
+</td>
+<td>
+<p>Create a <a href="../../animatedledstrip.leds/-strip-info/index.html">StripInfo</a> from json</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">.</span><span class="identifier">jsonToStripInfo</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../animatedledstrip.leds/-strip-info/index.html"><span class="identifier">StripInfo</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove0x-prefix.html">remove0xPrefix</a></h4>
+</td>
+<td>
+<p>Helper function for removing the 0x prefix from a hex string</p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">.</span><span class="identifier">remove0xPrefix</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="remove-spaces.html">removeSpaces</a></h4>
+</td>
+<td>
+<p>Remove spaces from a <code>String</code></p>
+<code><span class="keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">.</span><span class="identifier">removeSpaces</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

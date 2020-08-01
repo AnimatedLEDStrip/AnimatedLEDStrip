@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SendableData - animatedledstrip-core</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">animatedledstrip-core</a>&nbsp;/&nbsp;<a href="../index.html">animatedledstrip.utils</a>&nbsp;/&nbsp;<a href="./index.html">SendableData</a><br/>
+<br/>
+<h1>SendableData</h1>
+<code><span class="keyword">interface </span><span class="identifier">SendableData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/io/Serializable.html"><span class="identifier">Serializable</span></a></code>
+<p>Represents a class that can be sent over sockets between server and clients.
+Handles conversion of class to json.</p>
+<p>Each implementing class must override <code>prefix</code> and <code>toHumanReadableString</code>.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-ex-strategy/index.html">ExStrategy</a></h4>
+</td>
+<td>
+<code><span class="keyword">object </span><span class="identifier">ExStrategy</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ExclusionStrategy</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="prefix.html">prefix</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">val </span><span class="identifier">prefix</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="json.html">json</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">json</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="json-string.html">jsonString</a></h4>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">jsonString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="to-human-readable-string.html">toHumanReadableString</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">toHumanReadableString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="../../animatedledstrip.animationutils/-animation-data/index.html">AnimationData</a></h4>
+</td>
+<td>
+<p>Used to describe the properties of animations to run or that are running.</p>
+<code><span class="keyword">class </span><span class="identifier">AnimationData</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SendableData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../animatedledstrip.animationutils/-end-animation/index.html">EndAnimation</a></h4>
+</td>
+<td>
+<p>Communicates that an animation should end or is ending</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">EndAnimation</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SendableData</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../../animatedledstrip.leds/-strip-info/index.html">StripInfo</a></h4>
+</td>
+<td>
+<p>Data class for setting properties of a LED strip.
+(Done this way to simplify device libraries so they don't break if
+more properties are added)</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">StripInfo</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">SendableData</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
