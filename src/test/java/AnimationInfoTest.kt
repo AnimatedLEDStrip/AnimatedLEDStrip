@@ -78,7 +78,7 @@ class AnimationInfoTest {
                           abbr: ALT
                           repetitive: true
                           minimum colors: 2
-                          unlimited colors: false
+                          unlimited colors: true
                           center: NOTUSED
                           delay: USED (1000)
                           direction: NOTUSED
