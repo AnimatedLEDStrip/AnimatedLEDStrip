@@ -6,10 +6,10 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-core</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <packaging>jar</packaging>
 
-    <name>${project.groupId}:${project.artifactId}</name>
+    <name>io.github.animatedledstrip:animatedledstrip-core</name>
     <description>A library designed to simplify running animations on WS281x strips.</description>
     <url>https://github.com/AnimatedLEDStrip/AnimatedLEDStrip</url>
 
@@ -25,13 +25,13 @@
             <name>Max Narvaez</name>
             <email>mnmax.narvaez3@gmail.com</email>
             <organization>AnimatedLEDStrip</organization>
-            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+            <organizationUrl>https://animatedledstrip.github.io</organizationUrl>
         </developer>
         <developer>
             <name>Katie Richter</name>
             <email>katierichter98@gmail.com</email>
             <organization>AnimatedLEDStrip</organization>
-            <organizationUrl>https://github.com/AnimatedLEDStrip</organizationUrl>
+            <organizationUrl>https://animatedledstrip.github.io</organizationUrl>
         </developer>
     </developers>
 
