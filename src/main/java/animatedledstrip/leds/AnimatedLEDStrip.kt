@@ -333,7 +333,6 @@ abstract class AnimatedLEDStrip(
 
                 val isContinuous = data.continuous ?: definedAnimation.info.repetitive
                 do {
-                    Logger.trace("Run ${data.id}: $isActive $isContinuous")
                     definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
                 } while (isActive && isContinuous)
                 if (!subAnimation) {
