@@ -33,7 +33,7 @@ val alternate = PredefinedAnimation(
         abbr = "ALT",
         description = "Strip alternates* between each color in pCols, " +
                 "delaying delay milliseconds between changes.\n\n" +
-                "* alternate may not be the best word because this animation " +
+                "\\* alternate may not be the best word because this animation " +
                 "supports more than two colors",
         signatureFile = "alternate.png",
         repetitive = true,
