@@ -19,12 +19,8 @@ branches:
 
 stages:
   - name: test
-  - name: deploy snapshot
-    if: branch = master AND type != pull_request
-  - name: deploy release
-    if: branch =~ ^v.*$
-  - name: deploy docs
-    if: branch =~ ^v.*$ OR branch =~ ^.*-doc$
+  - name: deploy
+    if: (branch = master OR branch =~ ^.*-doc$) AND type != pull_request
 
 jobs:
   include:
@@ -32,14 +28,24 @@ jobs:
       install: skip
       after_success: bash <(curl -s https://codecov.io/bash)
 
-    - stage: deploy release
+    - stage: deploy
       install: skip
       script: skip
       deploy:
         - provider: script
+          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
+
+    - stage: deploy
+      install: skip
+      script: skip
+      before_script:
+        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
+      deploy:
+        - provider: script
           script: mvn site --settings .maven.xml -DskipTests=true -DdoDokka=true -B && git add dokka
           on:
-            all_branches: true
+            tags: false
+            condition: $DEPLOY_DOCS
         - provider: pages
           skip_cleanup: true
           github_token: $GITHUB_TOKEN
@@ -47,29 +53,14 @@ jobs:
           verbose: true
           local_dir: ./dokka
           on:
-            all_branches: true
-
-    - stage: deploy release
-      install: skip
-      script: skip
-      deploy:
-        - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
-          on:
-            all_branches: true
-
-    - stage: deploy snapshot
-      install: skip
-      script: skip
-      deploy:
-        - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
-          on:
-            branch: master
+            tags: false
+            condition: $DEPLOY_DOCS
 
     - stage: deploy docs
       install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
       script: skip
+      before_script:
+        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
       before_deploy:
         - curl -s https://get.sdkman.io | bash
         - source "/home/travis/.sdkman/bin/sdkman-init.sh"
@@ -86,3 +77,5 @@ jobs:
           skip_cleanup: true
           on:
             all_branches: true
+            tags: false
+            condition: $DEPLOY_DOCS
