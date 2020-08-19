@@ -14,7 +14,6 @@ branches:
   only:
     - master
     - /^travis.*/
-    - /^v.*/
     - /.*-doc$/
 
 stages:
@@ -33,7 +32,9 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn deploy --settings .maven.xml -DskipTests=true -DdoDokka=true -B
+          script: mvn deploy -f parent-pom.xml --settings .maven.xml -DskipBuild=true -B
+        - provider: script
+          script: mvn deploy -f pom.xml --settings .maven.xml -DskipTests=true -Ddokka=true -B
 
     - stage: deploy
       install: skip
@@ -42,7 +43,7 @@ jobs:
         - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
       deploy:
         - provider: script
-          script: mvn site --settings .maven.xml -DskipTests=true -DdoDokka=true -B && git add dokka
+          script: mvn site --settings .maven.xml -DskipTests=true -Ddokka=true -B && git add dokka
           on:
             tags: false
             condition: $DEPLOY_DOCS

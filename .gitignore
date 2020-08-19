@@ -4,6 +4,7 @@
 /.idea
 *.xml
 *.iml
+!parent-pom.xml
 !pom.xml
 !.maven.xml
 signature*.csv
