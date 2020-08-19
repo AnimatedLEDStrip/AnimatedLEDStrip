@@ -9,6 +9,7 @@ cache:
 before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
+  - mvn install -f parent-pom.xml -DskipBuild=true -B
 
 branches:
   only:
