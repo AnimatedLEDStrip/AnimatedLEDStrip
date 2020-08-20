@@ -33,8 +33,8 @@ val catToy = PredefinedAnimation(
         name = "Cat Toy",
         abbr = "CAT",
         description = "Entertain your cat with a pixel running back and forth to " +
-                "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
-                "Works better on a shorter strip (~100 pixels).",
+                      "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
+                      "Works better on a shorter strip (~100 pixels).",
         signatureFile = "cat_toy.png",
         repetitive = true,
         minimumColors = 1,
@@ -44,7 +44,7 @@ val catToy = PredefinedAnimation(
         delayDefault = 5,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -66,17 +66,17 @@ val catToy = PredefinedAnimation(
                 runSequential(
                     animation = data.copy(
                         animation = "Pixel Run",
-                        direction = Direction.FORWARD
+                        direction = Direction.FORWARD,
                     ),
-                    section = getSubSection(lastPixel, pixel)
+                    section = getSubSection(lastPixel, pixel),
                 )
             pixel < lastPixel ->
                 runSequential(
                     animation = data.copy(
                         animation = "Pixel Run",
-                        direction = Direction.BACKWARD
+                        direction = Direction.BACKWARD,
                     ),
-                    section = getSubSection(pixel, lastPixel)
+                    section = getSubSection(pixel, lastPixel),
                 )
             pixel == lastPixel -> doDelay = false
         }

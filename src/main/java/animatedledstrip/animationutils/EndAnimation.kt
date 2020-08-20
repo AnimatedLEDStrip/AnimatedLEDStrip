@@ -30,7 +30,7 @@ import animatedledstrip.utils.SendableData
  * @property id The ID of the animation
  */
 data class EndAnimation(
-    val id: String
+    val id: String,
 ) : SendableData {
 
     companion object {

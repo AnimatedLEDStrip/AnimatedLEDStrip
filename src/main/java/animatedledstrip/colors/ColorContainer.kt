@@ -211,7 +211,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
                             if (purePixels.indexOf(j) < purePixels.size - 1)
                                 (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt()
                             else
-                                (((i - j) / (numLEDs - j).toDouble()) * 255).toInt()
+                                (((i - j) / (numLEDs - j).toDouble()) * 255).toInt(),
                         )
                     }
                     break

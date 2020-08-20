@@ -39,7 +39,7 @@ val color = PredefinedAnimation(
         delay = ParamUsage.NOTUSED,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]

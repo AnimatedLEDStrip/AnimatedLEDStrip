@@ -934,5 +934,5 @@ val CCPresets = listOf(
     CCWhite,
     CCWhiteSmoke,
     CCYellow,
-    CCYellowGreen
+    CCYellowGreen,
 )

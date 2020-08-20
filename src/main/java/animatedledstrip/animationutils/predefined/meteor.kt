@@ -36,8 +36,8 @@ val meteor = PredefinedAnimation(
         name = "Meteor",
         abbr = "MET",
         description = "Like a [Pixel Run](Pixel-Run) animation, but the " +
-                "'running' pixel has a trail behind it where the pixels " +
-                "fade back from `pCols[0]`.",
+                      "'running' pixel has a trail behind it where the pixels " +
+                      "fade back from `pCols[0]`.",
         signatureFile = "meteor.png",
         repetitive = true,
         minimumColors = 1,
@@ -47,7 +47,7 @@ val meteor = PredefinedAnimation(
         delayDefault = 10,
         direction = ParamUsage.USED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -62,7 +62,7 @@ val meteor = PredefinedAnimation(
                     color = color0,
                     amountOfOverlay = 60,
                     delay = 25,
-                    context = parallelAnimationThreadPool
+                    context = parallelAnimationThreadPool,
                 )
                 delayBlocking(delay)
             }
@@ -72,7 +72,7 @@ val meteor = PredefinedAnimation(
                     color = color0,
                     amountOfOverlay = 60,
                     delay = 25,
-                    context = parallelAnimationThreadPool
+                    context = parallelAnimationThreadPool,
                 )
                 delayBlocking(delay)
             }

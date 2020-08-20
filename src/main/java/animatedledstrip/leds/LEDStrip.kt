@@ -43,7 +43,7 @@ import java.util.*
  * LEDs, etc.
  */
 abstract class LEDStrip(
-    val stripInfo: StripInfo
+    val stripInfo: StripInfo,
 ) {
 
     /**
@@ -277,12 +277,8 @@ abstract class LEDStrip(
     protected fun getPixelColor(pixel: Int, prolonged: Boolean): Long {
         require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
         return when (prolonged) {
-            true -> {
-                prolongedColors[pixel]
-            }
-            false -> {
-                ledStrip.getPixelColor(pixel).toLong()
-            }
+            true -> prolongedColors[pixel]
+            false -> ledStrip.getPixelColor(pixel).toLong()
         }
     }
 
@@ -347,9 +343,9 @@ abstract class LEDStrip(
                         blend(
                             existing = getPixelColor(pixel, false),
                             overlay = getPixelColor(pixel, true),
-                            amountOfOverlay = amountOfOverlay
+                            amountOfOverlay = amountOfOverlay,
                         ),
-                        prolonged = false
+                        prolonged = false,
                     )
                 }
                 delayBlocking(delay)

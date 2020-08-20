@@ -43,7 +43,7 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int? = null,
-    val threadCount: Int = 100
+    val threadCount: Int = 100,
 ) : SendableData {
 
     companion object {

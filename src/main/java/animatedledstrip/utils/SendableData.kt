@@ -33,7 +33,7 @@ import java.io.Serializable
  * Each implementing class must override `prefix` and `toHumanReadableString`.
  *
  */
-interface SendableData: Serializable {
+interface SendableData : Serializable {
     val prefix: String
 
     fun toHumanReadableString(): String

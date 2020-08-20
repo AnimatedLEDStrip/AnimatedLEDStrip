@@ -31,8 +31,9 @@ enum class ParamUsage {
      * default as specified
      */
     USED,
+
     /**
      * Animation does not use parameter
      */
-    NOTUSED
+    NOTUSED,
 }

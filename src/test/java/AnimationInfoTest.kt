@@ -48,7 +48,7 @@ class AnimationInfoTest {
             spacing = ParamUsage.USED,
             delayDefault = 5,
             distanceDefault = 40,
-            spacingDefault = 4
+            spacingDefault = 4,
         )
 
         assertTrue { info.name == "Test" }
@@ -513,6 +513,4 @@ class AnimationInfoTest {
                     """.trimIndent()
         }
     }
-
-
 }

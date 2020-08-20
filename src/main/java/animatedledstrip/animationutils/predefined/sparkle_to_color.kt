@@ -35,12 +35,12 @@ val sparkleToColor = PredefinedAnimation(
         name = "Sparkle to Color",
         abbr = "STC",
         description = "Similar to the [Sparkle](Sparkle) animation, but the " +
-                "LEDs are not reverted to their prolonged color after " +
-                "the sparkle.\n" +
-                "(Their prolonged color is changed as well.)\n" +
-                "A separate thread is created for each pixel.\n" +
-                "Each thread waits up to `delay * 100` seconds before sparkling " +
-                "its pixel.",
+                      "LEDs are not reverted to their prolonged color after " +
+                      "the sparkle.\n" +
+                      "(Their prolonged color is changed as well.)\n" +
+                      "A separate thread is created for each pixel.\n" +
+                      "Each thread waits up to `delay * 100` seconds before sparkling " +
+                      "its pixel.",
         signatureFile = "sparkle_to_color.png",
         repetitive = false,
         minimumColors = 1,
@@ -50,7 +50,7 @@ val sparkleToColor = PredefinedAnimation(
         delayDefault = 50,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, scope ->
     val color0 = data.pCols[0]

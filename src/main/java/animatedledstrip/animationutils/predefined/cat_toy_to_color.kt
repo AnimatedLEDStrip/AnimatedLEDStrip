@@ -35,10 +35,10 @@ val catToyToColor = PredefinedAnimation(
         name = "Cat Toy to Color",
         abbr = "CTC",
         description = "Using a process similar to the [Cat Toy](Cat-Toy) " +
-                "animation, set a strip's color.\n" +
-                "When the moving pixel goes past a pixel it has already set, " +
-                "it temporarily sets it to the inverse of that color before " +
-                "reverting it and moving on.",
+                      "animation, set a strip's color.\n" +
+                      "When the moving pixel goes past a pixel it has already set, " +
+                      "it temporarily sets it to the inverse of that color before " +
+                      "reverting it and moving on.",
         signatureFile = "cat_toy_to_color.png",
         repetitive = false,
         minimumColors = 1,
@@ -48,7 +48,7 @@ val catToyToColor = PredefinedAnimation(
         delayDefault = 5,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -66,7 +66,7 @@ val catToyToColor = PredefinedAnimation(
                         setPixelAndRevertAfterDelay(
                             it,
                             if (getProlongedPixelColor(it) == color0[it]) inverseColor else color0,
-                            delay
+                            delay,
                         )
                     }
                 else ->
@@ -74,7 +74,7 @@ val catToyToColor = PredefinedAnimation(
                         setPixelAndRevertAfterDelay(
                             it,
                             if (getProlongedPixelColor(it) == color0[it]) inverseColor else color0,
-                            delay
+                            delay,
                         )
                     }
             }

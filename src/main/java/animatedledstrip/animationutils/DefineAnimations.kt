@@ -72,7 +72,7 @@ val predefinedAnimations = listOf(
     splat,
     stack,
     stackOverflow,
-    wipe
+    wipe,
 ).apply {
     forEach { addNewAnimation(it) }
 }

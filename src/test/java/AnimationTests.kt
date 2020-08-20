@@ -698,7 +698,7 @@ class AnimationTests {
             ParamUsage.NOTUSED,
             ParamUsage.NOTUSED,
             ParamUsage.NOTUSED,
-            ParamUsage.NOTUSED
+            ParamUsage.NOTUSED,
         )
 
         val anim: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit = { _, _, _ -> }
@@ -724,7 +724,7 @@ class AnimationTests {
                 ParamUsage.NOTUSED,
                 ParamUsage.NOTUSED,
                 ParamUsage.NOTUSED,
-                ParamUsage.NOTUSED
+                ParamUsage.NOTUSED,
             )
         ) { _, _, _ -> }
 
@@ -749,7 +749,7 @@ class AnimationTests {
                 ParamUsage.NOTUSED,
                 ParamUsage.NOTUSED,
                 ParamUsage.NOTUSED,
-                ParamUsage.NOTUSED
+                ParamUsage.NOTUSED,
             )
         ) { _, _, _ -> }
 

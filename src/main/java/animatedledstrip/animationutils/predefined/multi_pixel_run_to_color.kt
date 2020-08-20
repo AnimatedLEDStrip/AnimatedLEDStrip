@@ -34,7 +34,7 @@ val multiPixelRunToColor = PredefinedAnimation(
         name = "Multi Pixel Run to Color",
         abbr = "MTC",
         description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs " +
-                "do not revert back to their prolonged color.",
+                      "do not revert back to their prolonged color.",
         signatureFile = "multi_pixel_run_to_color.png",
         repetitive = false,
         minimumColors = 1,
@@ -45,7 +45,7 @@ val multiPixelRunToColor = PredefinedAnimation(
         direction = ParamUsage.USED,
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.USED,
-        spacingDefault = 3
+        spacingDefault = 3,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -57,7 +57,7 @@ val multiPixelRunToColor = PredefinedAnimation(
         when (direction) {
             Direction.FORWARD ->
                 iterateOver(spacing - 1 downTo 0) { s ->
-                    iterateOver( 0 until numLEDs step spacing) { i ->
+                    iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s < numLEDs)
                             setProlongedPixelColor(i + s, color0)
                     }

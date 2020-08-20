@@ -38,7 +38,7 @@ import java.lang.Math.random
  * LEDs, etc. See [StripInfo].
  */
 abstract class AnimatedLEDStrip(
-    stripInfo: StripInfo
+    stripInfo: StripInfo,
 ) : LEDStrip(stripInfo) {
 
     /* Thread pools */
@@ -84,7 +84,7 @@ abstract class AnimatedLEDStrip(
      */
     data class RunningAnimation(
         val data: AnimationData,
-        val job: Job
+        val job: Job,
     ) {
         /**
          * Cancel the coroutine running the animation
@@ -112,12 +112,13 @@ abstract class AnimatedLEDStrip(
      * End animation by ID.
      */
     fun endAnimation(id: String) {
-        runningAnimations[id]?.endAnimation()
-            ?: run {
-                Logger.warn("Animation $id is not running")
-                runningAnimations.remove(id)
-                return
-            }
+        runningAnimations[id]
+            ?.endAnimation()
+        ?: run {
+            Logger.warn("Animation $id is not running")
+            runningAnimations.remove(id)
+            return
+        }
     }
 
     /**
@@ -198,8 +199,12 @@ abstract class AnimatedLEDStrip(
      * @param parentSection The parent section of this section. A null parentSection implies that the parent
      *   is the whole strip.
      */
-    inner class Section(val name: String, val startPixel: Int, val endPixel: Int, parentSection: Section? = null) :
-        SendableData {
+    inner class Section(
+        val name: String,
+        val startPixel: Int,
+        val endPixel: Int,
+        parentSection: Section? = null,
+    ) : SendableData {
 
         override val prefix = sectionPrefix
 
@@ -276,7 +281,7 @@ abstract class AnimatedLEDStrip(
                     "$name:$startPixel:$endPixel",
                     startPixel,
                     endPixel,
-                    this
+                    this,
                 )
             }
 
@@ -317,7 +322,7 @@ abstract class AnimatedLEDStrip(
             data: AnimationData,
             threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
             scope: CoroutineScope = GlobalScope,
-            subAnimation: Boolean = false
+            subAnimation: Boolean = false,
         ): Job? {
             val definedAnimation = findAnimationOrNull(data.animation) ?: run {
                 Logger.warn("Animation ${data.animation} not found")
@@ -359,13 +364,13 @@ abstract class AnimatedLEDStrip(
             scope: CoroutineScope,
             section: Section = this,
             pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
-            continuous: Boolean = false
+            continuous: Boolean = false,
         ): Job? {
             return section.run(
                 animation.copy(continuous = continuous),
                 threadPool = pool,
                 scope = scope,
-                subAnimation = true
+                subAnimation = true,
             )
         }
 
@@ -378,13 +383,13 @@ abstract class AnimatedLEDStrip(
         fun runSequential(
             animation: AnimationData,
             section: Section = this,
-            continuous: Boolean = false
+            continuous: Boolean = false,
         ) = runBlocking {
             val job = section.run(
                 animation.copy(continuous = continuous),
                 threadPool = parallelAnimationThreadPool,
                 scope = this,
-                subAnimation = true
+                subAnimation = true,
             )
             job?.join()
             Unit

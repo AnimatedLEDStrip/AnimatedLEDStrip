@@ -65,7 +65,7 @@ class AnimationData(
     var distance: Int = -1,
     var id: String = "",
     var section: String = "",
-    spacing: Int = -1
+    spacing: Int = -1,
 ) : SendableData {
 
     companion object {
@@ -145,7 +145,7 @@ class AnimationData(
             pCols.add(
                 it.prepare(
                     numLEDs = sectionRunningFullAnimation.numLEDs,
-                    leadingZeros = ledStrip.physicalStart
+                    leadingZeros = ledStrip.physicalStart,
                 )
             )
         }
@@ -154,7 +154,7 @@ class AnimationData(
             pCols.add(
                 CCBlack.prepare(
                     numLEDs = sectionRunningFullAnimation.numLEDs,
-                    leadingZeros = ledStrip.physicalStart
+                    leadingZeros = ledStrip.physicalStart,
                 )
             )
         }
@@ -184,7 +184,7 @@ class AnimationData(
         distance: Int = this.distance,
         id: String = this.id,
         section: String = this.section,
-        spacing: Int = this.spacing
+        spacing: Int = this.spacing,
     ) = AnimationData(
         animation,
         colors,
@@ -204,8 +204,8 @@ class AnimationData(
      */
     override fun toString() =
         "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
-                "delay=$baseDelay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
-                "id=$id, section=$section, spacing=$spacing)"
+        "delay=$baseDelay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
+        "id=$id, section=$section, spacing=$spacing)"
 
     /**
      * Create a nicely formatted string representation.
@@ -232,18 +232,18 @@ class AnimationData(
      */
     override fun equals(other: Any?): Boolean {
         return super.equals(other) ||
-                (other is AnimationData &&
-                        prepareAnimIdentifier(animation) == prepareAnimIdentifier(other.animation) &&
-                        colors == other.colors &&
-                        center == other.center &&
-                        continuous == other.continuous &&
-                        delay == other.delay &&
-                        delayMod == other.delayMod &&
-                        direction == other.direction &&
-                        distance == other.distance &&
-                        id == other.id &&
-                        section == other.section &&
-                        spacing == other.spacing)
+               (other is AnimationData &&
+                prepareAnimIdentifier(animation) == prepareAnimIdentifier(other.animation) &&
+                colors == other.colors &&
+                center == other.center &&
+                continuous == other.continuous &&
+                delay == other.delay &&
+                delayMod == other.delayMod &&
+                direction == other.direction &&
+                distance == other.distance &&
+                id == other.id &&
+                section == other.section &&
+                spacing == other.spacing)
     }
 
     /**

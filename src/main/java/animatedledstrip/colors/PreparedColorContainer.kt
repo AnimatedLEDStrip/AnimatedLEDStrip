@@ -74,7 +74,8 @@ class PreparedColorContainer(val colors: List<Long>, val originalColors: List<Lo
      * If this `PreparedColorContainer` is the correct size, return this
      * instance, otherwise a new instance of the correct size
      */
-    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer = // TODO: Fix to work with changing lengths of strips
+    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer =
+        // TODO: Fix to work with changing lengths of strips
         if (numLEDs == size) this
         else ColorContainer(originalColors).prepare(numLEDs, leadingZeros)
 

@@ -34,10 +34,10 @@ val bounce = PredefinedAnimation(
         name = "Bounce",
         abbr = "BNC",
         description = "Similar to [Bounce to Color](Bounce-to-Color) but the " +
-                "pixels at the end of each bounce fade back to their prolonged " +
-                "color after being set from `pCols[0]`.\n\n" +
-                "Note that this animation has a quadratic time " +
-                "complexity, meaning it gets very long very quickly.",
+                      "pixels at the end of each bounce fade back to their prolonged " +
+                      "color after being set from `pCols[0]`.\n\n" +
+                      "Note that this animation has a quadratic time " +
+                      "complexity, meaning it gets very long very quickly.",
         signatureFile = "bounce.png",
         repetitive = true,
         minimumColors = 1,
@@ -47,7 +47,7 @@ val bounce = PredefinedAnimation(
         delayDefault = 10,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -55,31 +55,31 @@ val bounce = PredefinedAnimation(
     leds.apply {
         iterateOver(0..((endPixel - startPixel) / 2)) { i ->
             val baseAnimation = data.copy(
-                animation = "Pixel Run"
+                animation = "Pixel Run",
             )
 
             runSequential(
                 animation = baseAnimation.copy(direction = Direction.FORWARD),
-                section = getSubSection(i, numLEDs - i - 1)
+                section = getSubSection(i, numLEDs - i - 1),
             )
             setAndFadePixel(
                 pixel = numLEDs - i - 1,
                 color = color0,
                 amountOfOverlay = 25,
                 delay = 50,
-                context = parallelAnimationThreadPool
+                context = parallelAnimationThreadPool,
             )
 
             runSequential(
                 animation = baseAnimation.copy(direction = Direction.BACKWARD),
-                section = getSubSection(i, numLEDs - i - 2)
+                section = getSubSection(i, numLEDs - i - 2),
             )
             setAndFadePixel(
                 pixel = i,
                 color = color0,
                 amountOfOverlay = 25,
                 delay = 50,
-                context = parallelAnimationThreadPool
+                context = parallelAnimationThreadPool,
             )
         }
         if (numLEDs % 2 == 1) {
@@ -88,7 +88,7 @@ val bounce = PredefinedAnimation(
                 color = color0,
                 amountOfOverlay = 25,
                 delay = 50,
-                context = parallelAnimationThreadPool
+                context = parallelAnimationThreadPool,
             )
         }
     }

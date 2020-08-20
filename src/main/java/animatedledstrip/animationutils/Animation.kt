@@ -79,7 +79,7 @@ abstract class Animation(open val info: AnimationInfo) {
         val spacing: ParamUsage,
         val delayDefault: Long = DEFAULT_DELAY,
         val distanceDefault: Int = -1,
-        val spacingDefault: Int = DEFAULT_SPACING
+        val spacingDefault: Int = DEFAULT_SPACING,
     ) : SendableData {
 
         companion object {

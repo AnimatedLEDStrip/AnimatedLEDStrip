@@ -34,7 +34,7 @@ val multiPixelRun = PredefinedAnimation(
         name = "Multi Pixel Run",
         abbr = "MPR",
         description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
-                "at a specified spacing.",
+                      "at a specified spacing.",
         signatureFile = "multi_pixel_run.png",
         repetitive = true,
         minimumColors = 1,
@@ -45,9 +45,9 @@ val multiPixelRun = PredefinedAnimation(
         direction = ParamUsage.USED,
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.USED,
-        spacingDefault = 3
+        spacingDefault = 3,
     )
-) { leds, data, scope ->
+) { leds, data, _ ->
     val color0 = data.pCols[0]
     val delay = data.delay
     val direction = data.direction

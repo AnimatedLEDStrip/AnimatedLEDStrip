@@ -35,7 +35,7 @@ val wipe = PredefinedAnimation(
         name = "Wipe",
         abbr = "WIP",
         description = "Similar to a [Pixel Run](Pixel-Run) animation, but the " +
-                "pixels do not revert to their prolonged color.",
+                      "pixels do not revert to their prolonged color.",
         signatureFile = "wipe.png",
         repetitive = false,
         minimumColors = 1,
@@ -45,7 +45,7 @@ val wipe = PredefinedAnimation(
         delayDefault = 10,
         direction = ParamUsage.USED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]

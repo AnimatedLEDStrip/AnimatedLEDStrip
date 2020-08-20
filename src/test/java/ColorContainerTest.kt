@@ -142,7 +142,7 @@ class ColorContainerTest {
                 0x526BE2,
                 0x526BE2,
                 0x526BE2,
-                0x526BE2
+                0x526BE2,
             )
         }
 
@@ -157,7 +157,7 @@ class ColorContainerTest {
                 0x526BE2,
                 0x526BE2,
                 0x526BE2,
-                0x526BE2
+                0x526BE2,
             )
         }
     }
@@ -354,35 +354,35 @@ class ColorContainerTest {
     fun testOffsetBy() {
         val c = ColorContainer(
             0x0000FF, 0x00FFFF, 0xFF00FF,
-            0x00FF00, 0xFF0000, 0xFFFFFF
+            0x00FF00, 0xFF0000, 0xFFFFFF,
         ).prepare(6)
 
         assertTrue {
             c.colors ==
                     listOf<Long>(
                         0x0000FF, 0x00FFFF, 0xFF00FF,
-                        0x00FF00, 0xFF0000, 0xFFFFFF
+                        0x00FF00, 0xFF0000, 0xFFFFFF,
                     )
         }
         assertTrue {
             c.offsetBy(0).colors ==
                     listOf<Long>(
                         0x0000FF, 0x00FFFF, 0xFF00FF,
-                        0x00FF00, 0xFF0000, 0xFFFFFF
+                        0x00FF00, 0xFF0000, 0xFFFFFF,
                     )
         }
         assertTrue {
             c.offsetBy(4).colors ==
                     listOf<Long>(
                         0xFF00FF, 0x00FF00, 0xFF0000,
-                        0xFFFFFF, 0x0000FF, 0x00FFFF
+                        0xFFFFFF, 0x0000FF, 0x00FFFF,
                     )
         }
         assertTrue {
             c.offsetBy(-4).colors ==
                     listOf<Long>(
                         0xFF0000, 0xFFFFFF, 0x0000FF,
-                        0x00FFFF, 0xFF00FF, 0x00FF00
+                        0x00FFFF, 0xFF00FF, 0x00FF00,
                     )
         }
         assertTrue {

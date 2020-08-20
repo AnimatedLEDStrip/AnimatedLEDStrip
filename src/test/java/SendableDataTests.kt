@@ -87,7 +87,7 @@ class SendableDataTests {
                 distance = 50,
                 id = "test",
                 section = "section",
-                spacing = 4
+                spacing = 4,
             ).toHumanReadableString() ==
                     """
                         AnimationData for test
@@ -170,7 +170,7 @@ class SendableDataTests {
             imageDebugging = true,
             fileName = "test.csv",
             rendersBeforeSave = 100,
-            threadCount = 200
+            threadCount = 200,
         )
         val infoBytes = info1.json()
 
@@ -187,7 +187,7 @@ class SendableDataTests {
             imageDebugging = true,
             fileName = "test.csv",
             rendersBeforeSave = 100,
-            threadCount = 200
+            threadCount = 200,
         )
         assertTrue {
             info1.toHumanReadableString() ==
