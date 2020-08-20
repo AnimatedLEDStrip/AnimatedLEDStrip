@@ -9,7 +9,7 @@ cache:
 before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-  - mvn install -f parent-pom.xml -DskipBuild=true -B
+  - mvn install -f parent-pom/pom.xml -DskipBuild=true -B
 
 branches:
   only:
@@ -33,7 +33,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: mvn deploy -f parent-pom.xml --settings .maven.xml -DskipBuild=true -B
+          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
         - provider: script
           script: mvn deploy -f pom.xml --settings .maven.xml -DskipTests=true -Ddokka=true -B
 
