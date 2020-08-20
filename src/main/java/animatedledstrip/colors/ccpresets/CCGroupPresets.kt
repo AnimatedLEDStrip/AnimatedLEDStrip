@@ -46,7 +46,7 @@ object CCRainbowColors : ColorContainer(
     0x5500AB,
     0x7F0081,
     0xAB0055,
-    0xD5002B
+    0xD5002B,
 )
 
 object CCCloudColors : ColorContainer(
@@ -65,7 +65,7 @@ object CCCloudColors : ColorContainer(
     CCLightBlue.color,
     CCWhite.color,
     CCLightBlue.color,
-    CCSkyBlue.color
+    CCSkyBlue.color,
 )
 
 object CCLavaColors : ColorContainer(
@@ -83,7 +83,7 @@ object CCLavaColors : ColorContainer(
     CCWhite.color,
     CCOrange.color,
     CCRed.color,
-    CCDarkRed.color
+    CCDarkRed.color,
 )
 
 object CCOceanColors : ColorContainer(
@@ -102,7 +102,7 @@ object CCOceanColors : ColorContainer(
     CCAquamarine.color,
     CCSeaGreen.color,
     CCAqua.color,
-    CCLightSkyBlue.color
+    CCLightSkyBlue.color,
 )
 
 object CCForestColors : ColorContainer(
@@ -119,7 +119,7 @@ object CCForestColors : ColorContainer(
     CCLimeGreen.color,
     CCLawnGreen.color,
     CCMediumAquamarine.color,
-    CCForestGreen.color
+    CCForestGreen.color,
 )
 
 object CCRainbowStripesColors : ColorContainer(
@@ -138,7 +138,7 @@ object CCRainbowStripesColors : ColorContainer(
     0x5500AB,
     0x000000,
     0xAB0055,
-    0x000000
+    0x000000,
 )
 
 object CCPartyColors : ColorContainer(
@@ -157,7 +157,7 @@ object CCPartyColors : ColorContainer(
     0x8F0071,
     0x5F00A1,
     0x2F00D0,
-    0x0007F9
+    0x0007F9,
 )
 
 val CCGroupPresets = listOf(
@@ -167,6 +167,6 @@ val CCGroupPresets = listOf(
     CCOceanColors,
     CCForestColors,
     CCRainbowStripesColors,
-    CCPartyColors
+    CCPartyColors,
 )
 

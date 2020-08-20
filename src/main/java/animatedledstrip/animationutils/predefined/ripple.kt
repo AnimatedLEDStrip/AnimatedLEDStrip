@@ -32,10 +32,10 @@ val ripple = PredefinedAnimation(
         name = "Ripple",
         abbr = "RPL",
         description = "Starts two [Meteor](Meteor) animations running in opposite " +
-                "directions from `center`, stopping after traveling `distance` " +
-                "or at the end of the strip/section, whichever comes first.\n" +
-                "Does not wait for the Meteor animations to be complete before " +
-                "returning, giving a ripple-like appearance when run continuously.",
+                      "directions from `center`, stopping after traveling `distance` " +
+                      "or at the end of the strip/section, whichever comes first.\n" +
+                      "Does not wait for the Meteor animations to be complete before " +
+                      "returning, giving a ripple-like appearance when run continuously.",
         signatureFile = "ripple.png",
         repetitive = true,
         minimumColors = 1,
@@ -45,7 +45,7 @@ val ripple = PredefinedAnimation(
         delayDefault = 30,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.USED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, scope ->
     val color0 = data.pCols[0]
@@ -61,17 +61,17 @@ val ripple = PredefinedAnimation(
 
         runParallel(
             baseAnimation.copy(
-                direction = Direction.FORWARD
+                direction = Direction.FORWARD,
             ),
             section = getSubSection(center, min(center + distance, numLEDs - 1)),
-            scope = scope
+            scope = scope,
         )
         runParallel(
             baseAnimation.copy(
-                direction = Direction.BACKWARD
+                direction = Direction.BACKWARD,
             ),
             section = getSubSection(max(center - distance, 0), center),
-            scope = scope
+            scope = scope,
         )
         delayBlocking(delay * 20)
     }

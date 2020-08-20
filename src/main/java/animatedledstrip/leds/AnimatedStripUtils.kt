@@ -122,7 +122,7 @@ fun AnimatedLEDStrip.Section.setAndFadePixel(
     color: ColorContainerInterface,
     amountOfOverlay: Int = 25,
     delay: Int = 30,
-    context: CoroutineContext = EmptyCoroutineContext
+    context: CoroutineContext = EmptyCoroutineContext,
 ) {
     setTemporaryPixelColor(pixel, color)
     GlobalScope.launch(context) {
@@ -198,7 +198,7 @@ fun AnimatedLEDStrip.Section.getProlongedPixelColorOrNull(pixel: Int): Long? = t
  * Iterate over the indices from `startPixel` to `endPixel` (inclusive)
  */
 inline fun AnimatedLEDStrip.Section.iterateOverPixels(
-    operation: (Int) -> Unit
+    operation: (Int) -> Unit,
 ) {
     for (q in indices) operation.invoke(q)
 }
@@ -208,7 +208,7 @@ inline fun AnimatedLEDStrip.Section.iterateOverPixels(
  */
 
 inline fun AnimatedLEDStrip.Section.iterateOverPixelsReverse(
-    operation: (Int) -> Unit
+    operation: (Int) -> Unit,
 ) {
     for (q in indices.reversed()) operation.invoke(q)
 }
@@ -218,7 +218,7 @@ inline fun AnimatedLEDStrip.Section.iterateOverPixelsReverse(
  */
 inline fun iterateOver(
     indices: IntProgression,
-    operation: (Int) -> Unit
+    operation: (Int) -> Unit,
 ) {
     for (q in indices) operation.invoke(q)
 }
@@ -228,7 +228,7 @@ inline fun iterateOver(
  */
 inline fun iterateOver(
     indices: List<Int>,
-    operation: (Int) -> Unit
+    operation: (Int) -> Unit,
 ) {
     for (q in indices) operation.invoke(q)
 }
@@ -259,7 +259,7 @@ fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: Colo
 fun AnimatedLEDStrip.Section.runParallelAndJoin(
     scope: CoroutineScope,
     vararg animations: Pair<AnimationData, AnimatedLEDStrip.Section>,
-    pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool
+    pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
 ) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
@@ -273,7 +273,7 @@ fun AnimatedLEDStrip.Section.runParallelAndJoin(
 
 fun <T> runBlockingNonCancellable(
     context: CoroutineContext = EmptyCoroutineContext,
-    block: suspend CoroutineScope.() -> T
+    block: suspend CoroutineScope.() -> T,
 ): T {
     return runBlocking(context) {
         withContext(NonCancellable) {

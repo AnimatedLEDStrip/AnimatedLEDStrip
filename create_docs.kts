@@ -56,7 +56,7 @@ sidebar = sidebar.replace(
             "<!-- THIS SECTION IS AUTOMATICALLY GENERATED - ANY MODIFICATIONS WILL BE OVERWRITTEN -->\n" +
             "- **Animations**\n" +
             animList.joinToString("\n") +
-            "\n<!-- END ANIM LIST -->"
+            "\n<!-- END ANIM LIST -->",
 )
 
 val fileWriter = FileWriter("wiki/_Sidebar.md")

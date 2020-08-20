@@ -40,12 +40,12 @@ import java.nio.charset.Charset
  * JSON Parser
  */
 val gson = GsonBuilder()
-    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
-    .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
-    .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
-    .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
-    .create()
-    ?: error("Could not create JSON parser")
+               .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+               .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
+               .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
+               .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
+               .create()
+           ?: error("Could not create JSON parser")
 
 
 /* 24-bit to 32-bit conversion */
@@ -109,10 +109,14 @@ fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
  */
 fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
 
+fun String?.jsonToCommand(): Command = jsonToSendableData()
+
 /**
  * Create an [EndAnimation] from json
  */
 fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
+
+fun String?.jsonToMessage(): Message = jsonToSendableData()
 
 /**
  * Create an [AnimatedLEDStrip.Section] from json

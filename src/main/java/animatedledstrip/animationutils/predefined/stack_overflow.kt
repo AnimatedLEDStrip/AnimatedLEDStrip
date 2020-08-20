@@ -30,11 +30,11 @@ val stackOverflow = PredefinedAnimation(
         name = "Stack Overflow",
         abbr = "STO",
         description = "Two [Stack](Stack) animations are started from opposite " +
-                "ends of the strip/section.\n" +
-                "The stacks meet in the middle and 'overflow' their half.\n" +
-                "And yes, the pun was very much intended.\n\n" +
-                "Note that this animation has a quadratic time complexity, " +
-                "meaning it gets very long very quickly.",
+                      "ends of the strip/section.\n" +
+                      "The stacks meet in the middle and 'overflow' their half.\n" +
+                      "And yes, the pun was very much intended.\n\n" +
+                      "Note that this animation has a quadratic time complexity, " +
+                      "meaning it gets very long very quickly.",
         signatureFile = "stack_overflow.png",
         repetitive = true,
         minimumColors = 2,
@@ -44,7 +44,7 @@ val stackOverflow = PredefinedAnimation(
         delayDefault = 2,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, scope ->
     val color0 = data.pCols[0]
@@ -61,16 +61,16 @@ val stackOverflow = PredefinedAnimation(
             Pair(
                 baseAnimation.copy(
                     colors = listOf(color0),
-                    direction = Direction.FORWARD
+                    direction = Direction.FORWARD,
                 ),
-                this
+                this,
             ),
             Pair(
                 baseAnimation.copy(
                     colors = listOf(color1),
-                    direction = Direction.BACKWARD
+                    direction = Direction.BACKWARD,
                 ),
-                this
+                this,
             )
         )
     }

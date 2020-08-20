@@ -33,7 +33,7 @@ import animatedledstrip.leds.StripInfo
  * LEDs, etc.
  */
 class EmulatedAnimatedLEDStrip(
-    stripInfo: StripInfo
+    stripInfo: StripInfo,
 ) : AnimatedLEDStrip(stripInfo) {
     override val ledStrip: NativeLEDStrip = EmulatedWS281x(numLEDs)
 

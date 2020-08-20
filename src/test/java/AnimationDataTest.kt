@@ -353,7 +353,7 @@ class AnimationDataTest {
             distance = 50,
             id = "test",
             section = "section",
-            spacing = 4
+            spacing = 4,
         )
 
         assertFalse { testAnimation1 === testAnimation3 }
@@ -386,7 +386,7 @@ class AnimationDataTest {
                 distance = 50,
                 id = "test",
                 section = "section",
-                spacing = 4
+                spacing = 4,
             ).toString() ==
                     "AnimationData(animation=Bounce, colors=[ff], center=30, continuous=false, delay=10, " +
                     "delayMod=2.0, direction=BACKWARD, distance=50, id=test, section=section, spacing=4)"

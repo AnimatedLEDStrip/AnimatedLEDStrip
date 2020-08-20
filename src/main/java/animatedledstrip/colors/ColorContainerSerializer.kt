@@ -32,13 +32,13 @@ class ColorContainerSerializer : JsonSerializer<ColorContainerInterface>, JsonDe
     override fun serialize(
         color: ColorContainerInterface,
         p1: Type?,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement = context.serialize(color as ColorContainer)
 
     override fun deserialize(
         json: JsonElement,
         p1: Type?,
-        context: JsonDeserializationContext
+        context: JsonDeserializationContext,
     ): ColorContainerInterface = context.deserialize(json, ColorContainer::class.java)
 
 }

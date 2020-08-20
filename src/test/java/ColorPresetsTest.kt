@@ -180,7 +180,7 @@ class ColorPresetsTest {
             0xFFFFFF,
             0xF5F5F5,
             0xFFFF00,
-            0x9ACD32
+            0x9ACD32,
         )
 
         for (i in colorList.indices) {
@@ -199,7 +199,7 @@ class ColorPresetsTest {
                 CCOceanColors,
                 CCForestColors,
                 CCRainbowStripesColors,
-                CCPartyColors
+                CCPartyColors,
             )
         }
     }

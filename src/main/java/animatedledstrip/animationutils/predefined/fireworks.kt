@@ -33,8 +33,8 @@ val fireworks = PredefinedAnimation(
         name = "Fireworks",
         abbr = "FWK",
         description = "Runs [Ripple](Ripple) animations from random centers in " +
-                "the section, with a predefined distance.\n" +
-                "Color is chosen randomly from `pCols`.",
+                      "the section, with a predefined distance.\n" +
+                      "Color is chosen randomly from `pCols`.",
         signatureFile = "fireworks.png",
         repetitive = true,
         minimumColors = 1,
@@ -45,7 +45,7 @@ val fireworks = PredefinedAnimation(
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.USED,
         distanceDefault = 20,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, scope ->
     val delay = data.delay
@@ -57,7 +57,7 @@ val fireworks = PredefinedAnimation(
                 data.copy(
                     colors = listOf(color),
                     animation = "Ripple",
-                    center = indices.random()
+                    center = indices.random(),
                 ),
                 scope = scope
             )

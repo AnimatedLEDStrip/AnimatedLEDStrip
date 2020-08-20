@@ -30,7 +30,7 @@ import kotlinx.coroutines.CoroutineScope
  */
 class PredefinedAnimation(
     info: AnimationInfo,
-    val animation: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit
+    val animation: (AnimatedLEDStrip.Section, AnimationData, CoroutineScope) -> Unit,
 ) : Animation(info) {
 
     override fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope) =

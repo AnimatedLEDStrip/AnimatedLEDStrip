@@ -33,7 +33,7 @@ val smoothFade = PredefinedAnimation(
         name = "Smooth Fade",
         abbr = "SMF",
         description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
-                "whole strip is the same color while fading through `pCols[0]`.",
+                      "whole strip is the same color while fading through `pCols[0]`.",
         signatureFile = "smooth_fade.png",
         repetitive = true,
         minimumColors = 1,
@@ -43,7 +43,7 @@ val smoothFade = PredefinedAnimation(
         delayDefault = 50,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]

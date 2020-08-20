@@ -32,10 +32,10 @@ val splat = PredefinedAnimation(
         name = "Splat",
         abbr = "SPT",
         description = "Similar to a [Ripple](Ripple) but the pixels don't " +
-                "fade back.\n" +
-                "Runs two Wipe animations in opposite directions starting " +
-                "from `center`, stopping after traveling `distance` or at " +
-                "the end of the section, whichever comes first.",
+                      "fade back.\n" +
+                      "Runs two Wipe animations in opposite directions starting " +
+                      "from `center`, stopping after traveling `distance` or at " +
+                      "the end of the section, whichever comes first.",
         signatureFile = "splat.png",
         repetitive = false,
         minimumColors = 1,
@@ -45,7 +45,7 @@ val splat = PredefinedAnimation(
         delayDefault = 5,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.USED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, scope ->
     val color0 = data.pCols[0]
@@ -63,11 +63,11 @@ val splat = PredefinedAnimation(
             scope,
             Pair(
                 baseAnimation.copy(direction = Direction.FORWARD),
-                getSubSection(center, min(center + distance, numLEDs - 1))
+                getSubSection(center, min(center + distance, numLEDs - 1)),
             ),
             Pair(
                 baseAnimation.copy(direction = Direction.BACKWARD),
-                getSubSection(max(center - distance, 0), center)
+                getSubSection(max(center - distance, 0), center),
             )
         )
     }

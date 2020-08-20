@@ -33,7 +33,7 @@ val bubbleSort = PredefinedAnimation(
         name = "Bubble Sort",
         abbr = "BST",
         description = "Visualization of bubble sort.\n" +
-                "`pCols[0]` is randomized, then bubble sort is used to resort it.",
+                      "`pCols[0]` is randomized, then bubble sort is used to resort it.",
         signatureFile = "bubble_sort.png",
         repetitive = false,
         minimumColors = 1,
@@ -43,7 +43,7 @@ val bubbleSort = PredefinedAnimation(
         delayDefault = 5,
         direction = ParamUsage.NOTUSED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val colorMap = data.pCols[0].colors.mapIndexed { index, it -> Pair(index, it) }.shuffled().toMutableList()

@@ -34,10 +34,10 @@ val stack = PredefinedAnimation(
         name = "Stack",
         abbr = "STK",
         description = "Pixels are run from one end of the strip/section to the " +
-                "other, 'stacking' up.\n" +
-                "Each pixel has to travel a shorter distance than the last.\n\n" +
-                "Note that this animation has a quadratic time complexity, " +
-                "meaning it gets very long very quickly.",
+                      "other, 'stacking' up.\n" +
+                      "Each pixel has to travel a shorter distance than the last.\n\n" +
+                      "Note that this animation has a quadratic time complexity, " +
+                      "meaning it gets very long very quickly.",
         signatureFile = "stack.png",
         repetitive = false,
         minimumColors = 1,
@@ -47,7 +47,7 @@ val stack = PredefinedAnimation(
         delayDefault = 10,
         direction = ParamUsage.USED,
         distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED
+        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
@@ -61,7 +61,7 @@ val stack = PredefinedAnimation(
                 iterateOverPixelsReverse {
                     runSequential(
                         animation = baseAnimation.copy(),
-                        section = getSubSection(0, it)
+                        section = getSubSection(0, it),
                     )
                     setProlongedPixelColor(it, color0)
                 }
@@ -69,7 +69,7 @@ val stack = PredefinedAnimation(
                 iterateOverPixels {
                     runSequential(
                         animation = baseAnimation.copy(),
-                        section = getSubSection(it, numLEDs - 1)
+                        section = getSubSection(it, numLEDs - 1),
                     )
                     setProlongedPixelColor(it, color0)
                 }

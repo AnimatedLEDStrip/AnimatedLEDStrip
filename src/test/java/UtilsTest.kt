@@ -94,7 +94,7 @@ class UtilsTest {
             imageDebugging = true,
             fileName = "test.csv",
             rendersBeforeSave = 100,
-            threadCount = 200
+            threadCount = 200,
         )
 
         assertTrue { info.numLEDs == 10 }
