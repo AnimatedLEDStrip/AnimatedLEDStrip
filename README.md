@@ -5,8 +5,11 @@
 
 # AnimatedLEDStrip
 This is the core of the AnimatedLEDStrip libraries.
-Contains how to communicate with the LED strip and the predefined animations. 
 
-## Note About Building
-Because we use the dokka plugin to generate our documentation, we must build using Java <=9
-> https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
+Functionality:
+- Abstract the communication with a generic LED strip (`LEDStrip`, `NativeLEDStrip`)
+- Define animations (`PredefinedAnimation`)
+- Handle the running of animations (`AnimatedLEDStrip`)
+- Specify how to handle colors (`ColorContainer`)
+- Provide an option for emulating an LED strip (`EmulatedAnimatedLEDStrip`)
+- Specify what can be sent between servers and clients and how it should be formatted (`SendableData`) 

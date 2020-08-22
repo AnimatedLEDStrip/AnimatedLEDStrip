@@ -1,7 +1,8 @@
-/out
-/target
-/wiki
-/.idea
+dokka/
+out/
+target/
+wiki/
+.idea/
 *.xml
 *.iml
 !pom.xml
