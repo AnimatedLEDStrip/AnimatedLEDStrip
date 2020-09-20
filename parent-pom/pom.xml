@@ -6,7 +6,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-parent-pom</artifactId>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>io.github.animatedledstrip:animatedledstrip-parent-pom</name>

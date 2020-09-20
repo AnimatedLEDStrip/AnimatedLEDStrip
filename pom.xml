@@ -7,11 +7,11 @@
     <parent>
         <groupId>io.github.animatedledstrip</groupId>
         <artifactId>animatedledstrip-parent-pom</artifactId>
-        <version>0.8</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>animatedledstrip-core</artifactId>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>io.github.animatedledstrip:animatedledstrip-core</name>
