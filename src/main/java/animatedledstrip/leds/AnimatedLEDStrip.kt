@@ -196,14 +196,14 @@ abstract class AnimatedLEDStrip(
      *
      * @property startPixel The first pixel in the section (relative to the parent section)
      * @property endPixel The last pixel in the section, inclusive (relative to the parent section).
-     * @param parentSection The parent section of this section. A null parentSection implies that the parent
+     * @param parent The parent section of this section. A null parentSection implies that the parent
      *   is the whole strip.
      */
     inner class Section(
         val name: String,
         val startPixel: Int,
         val endPixel: Int,
-        parentSection: Section? = null,
+        parent: Section? = null,
     ) : SendableData {
 
         override val prefix = sectionPrefix
@@ -230,7 +230,7 @@ abstract class AnimatedLEDStrip(
         /**
          * The start of this section on the physical LED strip.
          */
-        val physicalStart: Int = startPixel + (parentSection?.startPixel ?: 0)
+        val physicalStart: Int = startPixel + (parent?.startPixel ?: 0)
 
         /**
          * Get the actual index for a pixel on the physical strip.
