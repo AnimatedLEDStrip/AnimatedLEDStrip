@@ -32,7 +32,7 @@ package animatedledstrip.utils
  *
  * @param existing The starting `ColorContainer`
  * @param overlay The `ColorContainer` to blend toward
- * @param amountOfOverlay The proportion (0-255) of `b` to blend
+ * @param amountOfOverlay The proportion (0-255) of `overlay` to blend into `existing`
  */
 fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     if (amountOfOverlay == 0) return existing
@@ -94,7 +94,7 @@ fun parseHexOrDefault(string: String, default: Long = 0x0L): Long = try {
 /**
  * Helper function for removing the 0x prefix from a hex string
  */
-private fun String.remove0xPrefix(): String = this.toUpperCase().removePrefix("0X")
+fun String.remove0xPrefix(): String = this.toUpperCase().removePrefix("0X")
 
 
 /* 24-bit color utility functions */
