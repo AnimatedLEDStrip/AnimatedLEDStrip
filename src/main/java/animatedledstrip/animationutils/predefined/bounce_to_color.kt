@@ -52,7 +52,7 @@ val bounceToColor = PredefinedAnimation(
     val color0 = data.pCols[0]
 
     leds.apply {
-        iterateOver(0..numLEDs / 2) { i ->
+        iterateOver(0 until numLEDs / 2) { i ->
             val baseAnimation = data.copy(animation = "Pixel Run")
 
             runSequential(
