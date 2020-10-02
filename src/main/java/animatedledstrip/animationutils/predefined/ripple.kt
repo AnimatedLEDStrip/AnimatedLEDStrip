@@ -37,7 +37,7 @@ val ripple = PredefinedAnimation(
                       "Does not wait for the Meteor animations to be complete before " +
                       "returning, giving a ripple-like appearance when run continuously.",
         signatureFile = "ripple.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.USED,

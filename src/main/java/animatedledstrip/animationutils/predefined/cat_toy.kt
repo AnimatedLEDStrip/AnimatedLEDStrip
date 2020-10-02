@@ -36,7 +36,7 @@ val catToy = PredefinedAnimation(
                       "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
                       "Works better on a shorter strip (~100 pixels).",
         signatureFile = "cat_toy.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

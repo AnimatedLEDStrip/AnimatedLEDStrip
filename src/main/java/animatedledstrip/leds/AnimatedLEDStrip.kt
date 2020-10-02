@@ -337,9 +337,11 @@ abstract class AnimatedLEDStrip(
                 if (!subAnimation) startAnimationCallback?.invoke(data)
 
                 val isContinuous = data.continuous ?: definedAnimation.info.repetitive
-                do {
+                var runs = 0
+                while (isActive && (data.runCount == -1 || runs < data.runCount)) {
                     definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
-                } while (isActive && isContinuous)
+                    runs++
+                }
                 if (!subAnimation) {
                     endAnimationCallback?.invoke(data)
                     runningAnimations.remove(data.id)
@@ -515,6 +517,27 @@ abstract class AnimatedLEDStrip(
          */
         val pixelProlongedColorList: List<Long>
             get() = ledStrip.pixelProlongedColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
+
+        override fun equals(other: Any?): Boolean {
+            return super.equals(other) ||
+                   (other is AnimatedLEDStrip.Section &&
+                    name == other.name &&
+                    startPixel == other.startPixel &&
+                    endPixel == other.endPixel &&
+                    physicalStart == other.physicalStart)
+        }
+
+        override fun hashCode(): Int {
+            var result = name.hashCode()
+            result = 31 * result + startPixel
+            result = 31 * result + endPixel
+            result = 31 * result + physicalStart
+            return result
+        }
+
+        override fun toString(): String {
+            return toHumanReadableString()
+        }
 
     }
 

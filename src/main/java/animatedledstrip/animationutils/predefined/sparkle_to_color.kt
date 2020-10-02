@@ -42,7 +42,7 @@ val sparkleToColor = PredefinedAnimation(
                       "Each thread waits up to `delay * 100` seconds before sparkling " +
                       "its pixel.",
         signatureFile = "sparkle_to_color.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

@@ -41,7 +41,7 @@ val sparkle = PredefinedAnimation(
                       "Each thread waits up to `delay * 100` milliseconds before " +
                       "sparkling its pixel.",
         signatureFile = "merge_sort_sequential.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

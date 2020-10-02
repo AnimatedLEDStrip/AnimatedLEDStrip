@@ -51,8 +51,7 @@ abstract class Animation(open val info: AnimationInfo) {
      * @property abbr The abbreviation that can be used to identify the animation
      * @property description A description of the animation
      * @property signatureFile The name of the file that holds the signature of an example run of the animation
-     * @property repetitive Can this animation be repeated
-     *   (see https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/wiki/Repetitive-vs-NonRepetitive)
+     * @property runCountDefault Default value for the `runCount` parameter
      * @property minimumColors The number of required colors for this animation
      * @property unlimitedColors Can this animation take an unlimited number of colors
      * @property center Does this animation use the `center` parameter
@@ -69,7 +68,7 @@ abstract class Animation(open val info: AnimationInfo) {
         val abbr: String,
         val description: String,
         val signatureFile: String,
-        val repetitive: Boolean,
+        val runCountDefault: Int,
         val minimumColors: Int,
         val unlimitedColors: Boolean,
         val center: ParamUsage,
@@ -93,7 +92,7 @@ abstract class Animation(open val info: AnimationInfo) {
                 Animation Info
                   name: $name
                   abbr: $abbr
-                  repetitive: $repetitive
+                  runCountDefault: $runCountDefault
                   minimum colors: $minimumColors
                   unlimited colors: $unlimitedColors
                   center: $center

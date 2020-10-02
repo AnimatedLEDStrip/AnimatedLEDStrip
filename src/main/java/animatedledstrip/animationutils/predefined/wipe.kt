@@ -37,7 +37,7 @@ val wipe = PredefinedAnimation(
         description = "Similar to a [Pixel Run](Pixel-Run) animation, but the " +
                       "pixels do not revert to their prolonged color.",
         signatureFile = "wipe.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

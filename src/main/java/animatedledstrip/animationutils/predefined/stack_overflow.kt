@@ -36,7 +36,7 @@ val stackOverflow = PredefinedAnimation(
                       "Note that this animation has a quadratic time complexity, " +
                       "meaning it gets very long very quickly.",
         signatureFile = "stack_overflow.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

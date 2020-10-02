@@ -40,7 +40,7 @@ val mergeSortParallel = PredefinedAnimation(
                       "`pCols[0]` is randomized, then a parallelized merge sort is " +
                       "used to re-sort it.",
         signatureFile = "merge_sort_parallel.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

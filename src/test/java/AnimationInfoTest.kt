@@ -26,7 +26,6 @@ import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.predefined.*
 import org.junit.Test
-import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AnimationInfoTest {
@@ -38,7 +37,7 @@ class AnimationInfoTest {
             abbr = "TST",
             description = "A test animation",
             signatureFile = "sig.png",
-            repetitive = false,
+            runCountDefault = 1,
             minimumColors = 4,
             unlimitedColors = true,
             center = ParamUsage.USED,
@@ -55,7 +54,6 @@ class AnimationInfoTest {
         assertTrue { info.abbr == "TST" }
         assertTrue { info.description == "A test animation" }
         assertTrue { info.signatureFile == "sig.png" }
-        assertFalse { info.repetitive }
         assertTrue { info.minimumColors == 4 }
         assertTrue { info.unlimitedColors }
         assertTrue { info.center == ParamUsage.USED }
@@ -76,7 +74,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Alternate
                           abbr: ALT
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 2
                           unlimited colors: true
                           center: NOTUSED
@@ -93,7 +91,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Bounce
                           abbr: BNC
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -110,7 +108,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Bounce to Color
                           abbr: BTC
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -127,7 +125,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Bubble Sort
                           abbr: BST
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -144,7 +142,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Cat Toy
                           abbr: CAT
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -161,7 +159,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Cat Toy to Color
                           abbr: CTC
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -178,7 +176,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Color
                           abbr: COL
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -195,7 +193,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Fade to Color
                           abbr: FTC
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -212,7 +210,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Fireworks
                           abbr: FWK
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: true
                           center: NOTUSED
@@ -229,7 +227,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Merge Sort (Parallel)
                           abbr: MSP
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -246,7 +244,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Merge Sort (Sequential)
                           abbr: MSS
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -263,7 +261,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Meteor
                           abbr: MET
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -280,7 +278,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Multi Pixel Run
                           abbr: MPR
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -297,7 +295,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Multi Pixel Run to Color
                           abbr: MTC
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -314,7 +312,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Pixel Marathon
                           abbr: PXM
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: true
                           center: NOTUSED
@@ -331,7 +329,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Pixel Run
                           abbr: PXR
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -348,7 +346,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Ripple
                           abbr: RPL
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: USED
@@ -365,7 +363,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Smooth Chase
                           abbr: SCH
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -382,7 +380,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Smooth Fade
                           abbr: SMF
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -399,7 +397,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Sparkle
                           abbr: SPK
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -416,7 +414,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Sparkle Fade
                           abbr: SPF
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -433,7 +431,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Sparkle to Color
                           abbr: STC
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -450,7 +448,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Splat
                           abbr: SPT
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: USED
@@ -467,7 +465,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Stack
                           abbr: STK
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED
@@ -484,7 +482,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Stack Overflow
                           abbr: STO
-                          repetitive: true
+                          runCountDefault: -1
                           minimum colors: 2
                           unlimited colors: false
                           center: NOTUSED
@@ -501,7 +499,7 @@ class AnimationInfoTest {
                         Animation Info
                           name: Wipe
                           abbr: WIP
-                          repetitive: false
+                          runCountDefault: 1
                           minimum colors: 1
                           unlimited colors: false
                           center: NOTUSED

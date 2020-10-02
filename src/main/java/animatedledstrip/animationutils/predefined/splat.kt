@@ -37,7 +37,7 @@ val splat = PredefinedAnimation(
                       "from `center`, stopping after traveling `distance` or at " +
                       "the end of the section, whichever comes first.",
         signatureFile = "splat.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.USED,

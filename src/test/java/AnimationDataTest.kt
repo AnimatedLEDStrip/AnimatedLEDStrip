@@ -32,7 +32,10 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.test.*
+import kotlin.test.assertFails
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class AnimationDataTest {
 
@@ -127,18 +130,6 @@ class AnimationDataTest {
 
         testAnimation.center(15)
         assertTrue { testAnimation.center == 15 }
-    }
-
-    @Test
-    fun testContinuous() {
-        val testAnimation = AnimationData()
-        assertNull(testAnimation.continuous)
-
-        testAnimation.continuous(true)
-        assertTrue { testAnimation.continuous == true }
-
-        testAnimation.continuous(false)
-        assertFalse { testAnimation.continuous == true }
     }
 
     @Test
@@ -346,7 +337,6 @@ class AnimationDataTest {
             animation = "Color",
             colors = listOf(0xFF.toColorContainer()),
             center = 30,
-            continuous = false,
             delay = 10,
             delayMod = 2.0,
             direction = Direction.FORWARD,
@@ -363,15 +353,14 @@ class AnimationDataTest {
     @Test
     fun testHashCode() {
         AnimationData().hashCode()
-        AnimationData(continuous = true).hashCode()
     }
 
     @Test
     fun testToString() {
         assertTrue {
             AnimationData().toString() ==
-                    "AnimationData(animation=Color, colors=[], center=-1, continuous=null, delay=50, " +
-                    "delayMod=1.0, direction=FORWARD, distance=-1, id=, section=, spacing=3)"
+                    "AnimationData(animation=Color, colors=[], center=-1, delay=50, " +
+                    "delayMod=1.0, direction=FORWARD, distance=-1, id=, runCount=1, section=, spacing=3)"
         }
 
         assertTrue {
@@ -379,7 +368,6 @@ class AnimationDataTest {
                 animation = "Bounce",
                 colors = listOf(0xFF.toColorContainer()),
                 center = 30,
-                continuous = false,
                 delay = 10,
                 delayMod = 2.0,
                 direction = Direction.BACKWARD,
@@ -388,8 +376,8 @@ class AnimationDataTest {
                 section = "section",
                 spacing = 4,
             ).toString() ==
-                    "AnimationData(animation=Bounce, colors=[ff], center=30, continuous=false, delay=10, " +
-                    "delayMod=2.0, direction=BACKWARD, distance=50, id=test, section=section, spacing=4)"
+                    "AnimationData(animation=Bounce, colors=[ff], center=30, delay=10, delayMod=2.0, " +
+                    "direction=Direction.BACKWARD, distance=50, id=test, runCount=-1, section=section, spacing=4)"
         }
     }
 
@@ -401,7 +389,6 @@ class AnimationDataTest {
             .color(0xFF, index = 2)
             .color(0xFF, index = 3)
             .color(0xFF, index = 4)
-            .continuous(true)
             .delay(50)
             .direction(Direction.FORWARD)
             .id("TEST")
