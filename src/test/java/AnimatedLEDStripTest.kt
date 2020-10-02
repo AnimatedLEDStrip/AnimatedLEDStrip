@@ -24,8 +24,8 @@ package animatedledstrip.test
 
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.animation
-import animatedledstrip.animationutils.continuous
 import animatedledstrip.animationutils.delay
+import animatedledstrip.animationutils.runCount
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
 import org.junit.Test
@@ -50,7 +50,7 @@ class AnimatedLEDStripTest {
             Unit
         }
 
-        testLEDs.startAnimation(AnimationData().animation("Alternate").continuous(false).delay(10))
+        testLEDs.startAnimation(AnimationData().animation("Alternate").delay(10).runCount(1))
 
         delayBlocking(500)
 

@@ -41,7 +41,7 @@ val pixelMarathon = PredefinedAnimation(
                       "a pixel's temporary color, it puts a lock on that pixel so the " +
                       "pixel's color doesn't change until it's done with that pixel.",
         signatureFile = "pixel_marathon.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
         center = ParamUsage.NOTUSED,

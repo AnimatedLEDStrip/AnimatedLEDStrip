@@ -78,18 +78,18 @@ class ConversionUtilsTest {
             @Test
             fun `good JSON`() {
                 val json =
-                    """DATA:{"animation":"Meteor","center":50,"colors":[{"colors":[255,65280]},{"colors":[16711680]}],"continuous":false,"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","section":"SECT","spacing":5};;;"""
+                    """DATA:{"animation":"Meteor","center":50,"colors":[{"colors":[255,65280]},{"colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
 
                 val correctData = AnimationData(animation = "Meteor",
                                                 colors = listOf(ColorContainer(0xFF, 0xFF00),
                                                                 ColorContainer(0xFF0000)),
                                                 center = 50,
-                                                continuous = false,
                                                 delay = 10,
                                                 delayMod = 1.5,
                                                 direction = Direction.BACKWARD,
                                                 distance = 45,
                                                 id = "TEST",
+                                                runCount = 2,
                                                 section = "SECT",
                                                 spacing = 5)
 
@@ -124,13 +124,12 @@ class ConversionUtilsTest {
             @Test
             fun `good JSON`() {
                 val json =
-                    """AINF:{"name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","repetitive":true,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
+                    """AINF:{"name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
 
                 val correctData = Animation.AnimationInfo(name = "Alternate",
                                                           abbr = "ALT",
                                                           description = "A description",
                                                           signatureFile = "alternate.png",
-                                                          repetitive = true,
                                                           runCountDefault = 1,
                                                           minimumColors = 2,
                                                           unlimitedColors = true,

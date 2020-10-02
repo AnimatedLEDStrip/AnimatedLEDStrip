@@ -36,7 +36,7 @@ val multiPixelRun = PredefinedAnimation(
         description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
                       "at a specified spacing.",
         signatureFile = "multi_pixel_run.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

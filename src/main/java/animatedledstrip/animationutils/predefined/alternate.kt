@@ -36,7 +36,7 @@ val alternate = PredefinedAnimation(
                       "\\* alternate may not be the best word because this animation " +
                       "supports more than two colors",
         signatureFile = "alternate.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = true,
         center = ParamUsage.NOTUSED,

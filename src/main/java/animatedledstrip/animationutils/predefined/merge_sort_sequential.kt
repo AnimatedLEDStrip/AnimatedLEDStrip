@@ -36,7 +36,7 @@ val mergeSortSequential = PredefinedAnimation(
         description = "Visualization of merge sort.\n" +
                       "`pCols[0]` is randomized, then merge sort is used to re-sort it.",
         signatureFile = "merge_sort_sequential.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

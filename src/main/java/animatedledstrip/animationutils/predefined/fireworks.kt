@@ -36,7 +36,7 @@ val fireworks = PredefinedAnimation(
                       "the section, with a predefined distance.\n" +
                       "Color is chosen randomly from `pCols`.",
         signatureFile = "fireworks.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
         center = ParamUsage.NOTUSED,

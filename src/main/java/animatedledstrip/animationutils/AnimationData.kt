@@ -38,7 +38,6 @@ import com.google.gson.FieldAttributes
  * @property colors The list of [ColorContainer]s to use
  * @property center The pixel at the center of an animation.
  *   Defaults to the center of the strip.
- * @property continuous If the animation will run endlessly until stopped
  * @property delay Delay time (in milliseconds) used in the animation
  * @property delayMod Multiplier for `delay`
  * @property direction The direction the animation will appear to move
@@ -48,6 +47,7 @@ import com.google.gson.FieldAttributes
  *   Used by server and clients to identify a specific animation.
  * @property pCols The list of [PreparedColorContainer]s after preparation of [colors].
  *   Will be populated when [prepare] is called.
+ * @property runCount The number of times the animation should be run. `-1` means until stopped.
  * @property section The id of the section of the strip that will be running the whole animation
  *   (not necessarily the section running this animation, such as if this is a subanimation).
  *   This is the section that ColorContainer blend preparation will be based upon.
@@ -58,12 +58,12 @@ class AnimationData(
     var animation: String = "Color",
     colors: List<ColorContainerInterface> = listOf(),
     var center: Int = -1,
-    var continuous: Boolean? = null,
     delay: Long = -1L,
     var delayMod: Double = 1.0,
     var direction: Direction = Direction.FORWARD,
     var distance: Int = -1,
     var id: String = "",
+    runCount: Int = 0,
     var section: String = "",
     spacing: Int = -1,
 ) : SendableData {
@@ -107,6 +107,13 @@ class AnimationData(
             baseDelay = value
         }
 
+    var runCount: Int = runCount
+        get() {
+            return (when (field) {
+                0 -> findAnimationOrNull(animId = animation)?.info?.runCountDefault ?: -1
+                else -> field
+            })
+        }
 
     var spacing: Int = spacing
         get() {
@@ -177,12 +184,12 @@ class AnimationData(
         animation: String = this.animation,
         colors: List<ColorContainerInterface> = this.colors.toList(),
         center: Int = this.center,
-        continuous: Boolean? = this.continuous,
         delay: Long = this.baseDelay,
         delayMod: Double = this.delayMod,
         direction: Direction = this.direction,
         distance: Int = this.distance,
         id: String = this.id,
+        runCount: Int = this.runCount,
         section: String = this.section,
         spacing: Int = this.spacing,
     ) = AnimationData(
@@ -195,6 +202,7 @@ class AnimationData(
         direction,
         distance,
         id,
+        runCount,
         section,
         spacing
     )
@@ -203,9 +211,9 @@ class AnimationData(
      * Create a string representation.
      */
     override fun toString() =
-        "AnimationData(animation=$animation, colors=$colors, center=$center, continuous=$continuous, " +
+        "AnimationData(animation=$animation, colors=$colors, center=$center, " +
         "delay=$baseDelay, delayMod=$delayMod, direction=$direction, distance=$distance, " +
-        "id=$id, section=$section, spacing=$spacing)"
+        "id=$id, runCount=$runCount, section=$section, spacing=$spacing)"
 
     /**
      * Create a nicely formatted string representation.
@@ -216,11 +224,11 @@ class AnimationData(
               animation: $animation
               colors: $colors
               center: $center
-              continuous: $continuous
               delay: $baseDelay
               delayMod: $delayMod
               direction: $direction
               distance: $distance
+              runCount: $runCount
               section: $section
               spacing: $spacing
             End AnimationData
@@ -236,12 +244,12 @@ class AnimationData(
                 prepareAnimIdentifier(animation) == prepareAnimIdentifier(other.animation) &&
                 colors == other.colors &&
                 center == other.center &&
-                continuous == other.continuous &&
                 delay == other.delay &&
                 delayMod == other.delayMod &&
                 direction == other.direction &&
                 distance == other.distance &&
                 id == other.id &&
+                runCount == other.runCount &&
                 section == other.section &&
                 spacing == other.spacing)
     }
@@ -252,11 +260,11 @@ class AnimationData(
     override fun hashCode(): Int {
         var result = animation.hashCode()
         result = 31 * result + center.hashCode()
-        result = 31 * result + continuous.hashCode()
         result = 31 * result + delayMod.hashCode()
         result = 31 * result + direction.hashCode()
         result = 31 * result + distance.hashCode()
         result = 31 * result + id.hashCode()
+        result = 31 * result + runCount.hashCode()
         result = 31 * result + section.hashCode()
         result = 31 * result + spacing.hashCode()
         result = 31 * result + colors.hashCode()

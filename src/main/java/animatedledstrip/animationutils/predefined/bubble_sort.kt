@@ -35,7 +35,7 @@ val bubbleSort = PredefinedAnimation(
         description = "Visualization of bubble sort.\n" +
                       "`pCols[0]` is randomized, then bubble sort is used to resort it.",
         signatureFile = "bubble_sort.png",
-        repetitive = false,
+        runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

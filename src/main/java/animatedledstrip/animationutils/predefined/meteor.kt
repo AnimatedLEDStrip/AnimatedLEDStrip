@@ -39,7 +39,7 @@ val meteor = PredefinedAnimation(
                       "'running' pixel has a trail behind it where the pixels " +
                       "fade back from `pCols[0]`.",
         signatureFile = "meteor.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,

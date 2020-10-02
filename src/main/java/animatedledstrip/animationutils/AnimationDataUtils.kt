@@ -175,14 +175,6 @@ fun AnimationData.color3(color: Any): AnimationData = color(color, 3)
 fun AnimationData.color4(color: Any): AnimationData = color(color, 4)
 
 /**
- * Set the `continuous` parameter.
- */
-fun AnimationData.continuous(continuous: Boolean): AnimationData {
-    this.continuous = continuous
-    return this
-}
-
-/**
  * Set the `center` parameter.
  *
  * @param pixel The index of the pixel at the center of a radial animation
@@ -265,6 +257,12 @@ fun AnimationData.distance(pixels: Int): AnimationData {
  */
 fun AnimationData.id(id: String): AnimationData {
     this.id = id
+    return this
+}
+
+
+fun AnimationData.runCount(runs: Int): AnimationData {
+    this.runCount = runs
     return this
 }
 

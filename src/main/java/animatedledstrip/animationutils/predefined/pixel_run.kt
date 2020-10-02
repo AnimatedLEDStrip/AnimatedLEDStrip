@@ -38,7 +38,7 @@ val pixelRun = PredefinedAnimation(
                       "Similar to [Multi Pixel Run](Multi-Pixel-Run) but with only " +
                       "one pixel.",
         signatureFile = "pixel_run.png",
-        repetitive = true,
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         center = ParamUsage.NOTUSED,
