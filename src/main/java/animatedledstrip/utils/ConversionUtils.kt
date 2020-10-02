@@ -34,6 +34,8 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import java.nio.charset.Charset
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty
 
 /* GSON */
 
@@ -99,6 +101,9 @@ inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
     }
 }
 
+fun jsonMissingPropertyMessage(property: KProperty<*>, kClass: KClass<*>) =
+    "${property.name} property of ${kClass.qualifiedName} must be specified"
+
 /**
  * Create an [AnimationData] from json
  */
@@ -127,7 +132,35 @@ fun String?.jsonToMessage(): Message = jsonToSendableData()
 /**
  * Create an [AnimatedLEDStrip.Section] from json
  */
-fun String?.jsonToSection(): AnimatedLEDStrip.Section = jsonToSendableData()
+fun String?.jsonToSection(ledStrip: AnimatedLEDStrip): AnimatedLEDStrip.Section {
+    requireNotNull(this)
+    val map: Map<*, *> = try {
+        gson.fromJson(this.drop(5).removeSuffix(DELIMITER), Map::class.java)
+    } catch (e: JsonSyntaxException) {
+        throw JsonSyntaxException("Malformed JSON: $this", e)
+    }
+
+    require(map["name"] != null || map["parent"] != null) {
+        "name or parent property of animatedledstrip.leds.AnimatedLEDStrip.Section must be specified"
+    }
+    requireNotNull(map["startPixel"]) {
+        jsonMissingPropertyMessage(AnimatedLEDStrip.Section::startPixel, AnimatedLEDStrip.Section::class)
+    }
+    requireNotNull(map["endPixel"]) {
+        jsonMissingPropertyMessage(AnimatedLEDStrip.Section::endPixel, AnimatedLEDStrip.Section::class)
+    }
+
+    val name = map["name"] as String?
+    val startPixel = (map["startPixel"] as Double).toInt()
+    val endPixel = (map["endPixel"] as Double).toInt()
+    val parent = map["parent"] as String?
+
+    return if (parent != null) {
+        ledStrip.getSection(parent).getSubSection(startPixel, endPixel)
+    } else {
+        ledStrip.createSection(name!!, startPixel, endPixel)
+    }
+}
 
 /**
  * Create a [StripInfo] from json
