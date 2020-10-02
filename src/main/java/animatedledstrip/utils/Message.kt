@@ -22,7 +22,7 @@
 
 package animatedledstrip.utils
 
-data class Message(val message: String) : SendableData {
+data class Message(val message: String = "") : SendableData {
 
     companion object {
         const val prefix = "MSG "
