@@ -30,6 +30,7 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ColorContainerSerializer
 import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.leds.StripInfo
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
 import java.nio.charset.Charset
@@ -39,13 +40,12 @@ import java.nio.charset.Charset
 /**
  * JSON Parser
  */
-val gson = GsonBuilder()
-               .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
-               .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
-               .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
-               .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
-               .create()
-           ?: error("Could not create JSON parser")
+val gson: Gson = GsonBuilder()
+    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
+    .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
+    .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
+    .create()
 
 
 /* 24-bit to 32-bit conversion */
@@ -88,7 +88,7 @@ const val DELIMITER = ";;;"
  * @param T The type of sendable data to create
  */
 inline fun <reified T : SendableData> String?.jsonToSendableData(): T {
-    checkNotNull(this)
+    requireNotNull(this)
     try {
         return gson.fromJson(
             this.drop(5).removeSuffix(DELIMITER),
@@ -109,6 +109,9 @@ fun String?.jsonToAnimationData(): AnimationData = jsonToSendableData()
  */
 fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = jsonToSendableData()
 
+/**
+ * Create a [Command] from json
+ */
 fun String?.jsonToCommand(): Command = jsonToSendableData()
 
 /**
@@ -116,6 +119,9 @@ fun String?.jsonToCommand(): Command = jsonToSendableData()
  */
 fun String?.jsonToEndAnimation(): EndAnimation = jsonToSendableData()
 
+/**
+ * Create a [Message] from json
+ */
 fun String?.jsonToMessage(): Message = jsonToSendableData()
 
 /**
@@ -130,11 +136,13 @@ fun String?.jsonToStripInfo(): StripInfo = jsonToSendableData()
 
 
 /**
- * Get the first four characters in the string (used to indicate the type of data,
- * i.e. `DATA`, `INFO`, `SECT`, `ANIM`, `END `, `CMD ` (note extra space), etc.)
+ * Get the four characters at the beginning of the string that are used to
+ * indicate the type of data, i.e. `DATA`, `AINF`, `CMD `, `END `, `MSG `,
+ * `SECT`, `SINF`, etc.
+ * Note the extra space at the end of `CMD `, `END ` and `MSG `.
  */
 fun String?.getDataTypePrefix(): String {
-    checkNotNull(this)
+    requireNotNull(this)
     return this.take(4)
 }
 
@@ -148,7 +156,7 @@ fun String?.getDataTypePrefix(): String {
  * (used to remove excess null bytes)
  */
 fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
-    checkNotNull(this)
+    requireNotNull(this)
     return this.toString(Charset.forName("utf-8")).take(size)
 }
 
