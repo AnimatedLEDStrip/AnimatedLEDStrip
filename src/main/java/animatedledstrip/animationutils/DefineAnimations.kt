@@ -23,7 +23,7 @@
 package animatedledstrip.animationutils
 
 import animatedledstrip.animationutils.predefined.*
-import animatedledstrip.utils.removeSpaces
+import animatedledstrip.utils.removeWhitespace
 import org.pmw.tinylog.Logger
 
 const val DEFAULT_DELAY = 50L
@@ -78,7 +78,7 @@ val predefinedAnimations = listOf(
 }
 
 fun prepareAnimIdentifier(name: String): String =
-    name.removeSpaces()
+    name.removeWhitespace()
         .replace("-", "")
         .replace("_", "")
         .replace("(", "")

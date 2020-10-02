@@ -194,6 +194,6 @@ fun ByteArray?.toUTF8(size: Int = this?.size ?: 0): String {
 }
 
 /**
- * Remove spaces from a `String`
+ * Remove whitespace from a `String`
  */
-fun String.removeSpaces(): String = this.replace("\\s".toRegex(), "")
+fun String.removeWhitespace(): String = this.replace("\\s".toRegex(), "")
