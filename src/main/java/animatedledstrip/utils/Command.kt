@@ -22,7 +22,7 @@
 
 package animatedledstrip.utils
 
-data class Command(val command: String) : SendableData {
+data class Command(val command: String = "") : SendableData {
 
     companion object {
         const val prefix = "CMD "
