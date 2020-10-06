@@ -37,7 +37,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
     /**
      * A `List` of `Long`s representing the colors
      */
-    val colors = mutableListOf<Long>()
+    final override val colors = mutableListOf<Long>()
 
     /**
      * A helper property that returns the first color in [colors]. If `colors`
@@ -74,18 +74,14 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * Create a new ColorContainer from a `List<Long>`
      */
     constructor(colorList: List<Long>) : this() {
-        colorList.forEach {
-            colors += it
-        }
+        colors.addAll(colorList)
     }
 
     /**
      * Copy constructor
      */
     constructor(ccIn: ColorContainer) : this() {
-        for (c in ccIn) {
-            colors += c
-        }
+        colors.addAll(ccIn.colors)
     }
 
 
@@ -98,11 +94,9 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * and if so, returns the color stored there, if not, returns 0 (black).
      */
     operator fun get(index: Int): Long =
-        when {
-            singleColor -> color
-            colors.indices.contains(index) -> colors[index]
-            else -> 0
-        }
+        if (singleColor) color
+        else colors.getOrElse(index) { 0 }
+
 
     /**
      * Get colors from [colors]. Accepts a variable number of arguments(though
@@ -116,14 +110,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     operator fun get(vararg indices: Int): List<Long> =
         if (singleColor) listOf(color)
-        else {
-            val temp = mutableListOf<Long>()
-            for (index in indices) {
-                temp += if (colors.indices.contains(index)) colors[index]
-                else 0
-            }
-            temp
-        }
+        else indices.map { colors.getOrElse(it) { 0 } }
 
     /**
      * Get colors from [colors]. If there is only one color in `colors`,
@@ -132,14 +119,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     operator fun get(indices: IntRange): List<Long> =
         if (singleColor) listOf(color)
-        else {
-            val temp = mutableListOf<Long>()
-            for (index in indices) {
-                temp += if (colors.indices.contains(index)) colors[index]
-                else 0
-            }
-            temp
-        }
+        else indices.map { colors.getOrElse(it) { 0 } }
 
 
     /* Set color */
@@ -184,46 +164,36 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      * colors of the two nearest pure pixels. The blend ratio is determined by the
      * location of the pixel relative to the nearest pure pixels.
      *
-     * If this is not used prior to sending this ColorContainer to setPixelColor (or other
-     * set methods), then it will be called before any LEDs are set.
-     *
      * @param numLEDs The number of LEDs to create colors for
      * @return A [PreparedColorContainer] containing all the colors
      */
-    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer {
+    override fun prepare(numLEDs: Int): PreparedColorContainer {
         val returnMap = mutableMapOf<Int, Long>()
-
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
-
-        val purePixels = mutableListOf<Int>()
-        for (i in 0 until colors.size) {
-            purePixels.add((spacing * i).roundToInt())
-        }
+        val purePixels = (0 until colors.size).map { (spacing * it).roundToInt() }.toMutableList()
 
         for (i in 0 until numLEDs) {
-            for (j in purePixels) {
-                if ((i - j) < spacing) {
-                    if ((i - j) == 0) returnMap[i] = colors[purePixels.indexOf(j)]
-                    else {
+            for (p in purePixels) {
+                if ((i - p) < spacing) {
+                    val pIndex = purePixels.indexOf(p)
+                    val d =
+                        if (pIndex < purePixels.size - 1) purePixels[pIndex + 1] - p
+                        else numLEDs - p
+
+                    if ((i - p) == 0) // We are on a pure pixel
+                        returnMap[i] = colors[pIndex]
+                    else
                         returnMap[i] = blend(
-                            colors[purePixels.indexOf(j)],
-                            colors[(purePixels.indexOf(j) + 1) % purePixels.size],
-                            if (purePixels.indexOf(j) < purePixels.size - 1)
-                                (((i - j) / ((purePixels[purePixels.indexOf(j) + 1]) - j).toDouble()) * 255).toInt()
-                            else
-                                (((i - j) / (numLEDs - j).toDouble()) * 255).toInt(),
+                            colors[pIndex],
+                            colors[(pIndex + 1) % purePixels.size],
+                            (((i - p) / d.toDouble()) * 255).toInt(),
                         )
-                    }
                     break
                 }
             }
         }
 
-        val returnList = returnMap.values.toMutableList()
-
-        for (i in 1..leadingZeros) returnList.add(0, 0)
-
-        return PreparedColorContainer(returnList, colors)
+        return PreparedColorContainer(returnMap.values.toMutableList(), colors)
     }
 
 
@@ -238,16 +208,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     override fun toString(): String {
         return if (singleColor) color.toString(16)
-        else {
-            var temp = "["
-            for (c in colors) {
-                temp += c base 16
-                temp += ", "
-            }
-            temp = temp.removeSuffix(", ")
-            temp += "]"
-            temp
-        }
+        else colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
     }
 
     /**

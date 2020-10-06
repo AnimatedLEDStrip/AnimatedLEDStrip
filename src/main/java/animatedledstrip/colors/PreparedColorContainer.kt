@@ -27,20 +27,19 @@ import animatedledstrip.utils.base
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
  * to the next (see [ColorContainer.prepare]. This is created by calling
- * [ColorContainer.prepare]. Used by methods that set the color of pixel(s) on
- * a strip.
+ * [ColorContainer.prepare].
  *
  * @property colors The `List` of colors in this `PreparedColorContainer`
  * @property originalColors The colors that were used to prepare this
  * `PreparedColorContainer`
  */
-class PreparedColorContainer(val colors: List<Long>, val originalColors: List<Long> = colors) :
+class PreparedColorContainer(override val colors: List<Long>, val originalColors: List<Long> = colors) :
     ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
      */
-    operator fun get(index: Int): Long = if (colors.indices.contains(index)) colors[index] else 0
+    operator fun get(index: Int): Long = colors.getOrElse(index) { 0 }
 
     /**
      * Override for `color` that only returns 0
@@ -54,16 +53,8 @@ class PreparedColorContainer(val colors: List<Long>, val originalColors: List<Lo
      * The hexadecimal representation of each color in [colors] is
      * listed in comma delimited format, between brackets `[` & `]`
      */
-    override fun toString(): String {
-        var temp = "["
-        for (c in colors) {
-            temp += c base 16
-            temp += ", "
-        }
-        temp = temp.removeSuffix(", ")
-        temp += "]"
-        return temp
-    }
+    override fun toString(): String =
+        colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
 
     /**
      * Checks if the specified value is in [colors].
@@ -74,10 +65,9 @@ class PreparedColorContainer(val colors: List<Long>, val originalColors: List<Lo
      * If this `PreparedColorContainer` is the correct size, return this
      * instance, otherwise a new instance of the correct size
      */
-    override fun prepare(numLEDs: Int, leadingZeros: Int): PreparedColorContainer =
-        // TODO: Fix to work with changing lengths of strips
+    override fun prepare(numLEDs: Int): PreparedColorContainer =
         if (numLEDs == size) this
-        else ColorContainer(originalColors).prepare(numLEDs, leadingZeros)
+        else ColorContainer(originalColors).prepare(numLEDs)
 
     /**
      * Returns the size of [colors].

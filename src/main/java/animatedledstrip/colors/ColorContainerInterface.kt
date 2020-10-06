@@ -30,6 +30,11 @@ import java.io.Serializable
 interface ColorContainerInterface : Serializable {
 
     /**
+     * The `List` of colors in this container
+     */
+    val colors: List<Long>
+
+    /**
      * The first color in `colors`
      */
     val color: Long
@@ -37,7 +42,7 @@ interface ColorContainerInterface : Serializable {
     /**
      * Prepare the [ColorContainer] or return this [PreparedColorContainer].
      */
-    fun prepare(numLEDs: Int, leadingZeros: Int = 0): PreparedColorContainer
+    fun prepare(numLEDs: Int): PreparedColorContainer
 
     /**
      * Create a [ColorContainer] or return this [ColorContainer].
