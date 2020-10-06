@@ -23,8 +23,6 @@
 package animatedledstrip.test
 
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.colors.ccpresets.CCBlack
-import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.iterateOver
 import animatedledstrip.utils.*
@@ -44,12 +42,17 @@ class UtilsTest {
     inner class `test blend` {
         @Test
         fun `no overlay returns existing`() {
-            blend(CCBlack.color, CCBlue.color, 0) shouldBe CCBlack.color
+            blend(0x0, 0xFF, 0) shouldBe 0x0
         }
 
         @Test
         fun `full overlay returns overlay`() {
-            blend(CCBlack.color, CCBlue.color, 255) shouldBe CCBlue.color
+            blend(0x0, 0xFF, 255) shouldBe 0xFF
+        }
+
+        @Test
+        fun `blend blue with yellow`() {
+            blend(0xFF, 0xFFFF, 51) shouldBe 0x34FF
         }
     }
 

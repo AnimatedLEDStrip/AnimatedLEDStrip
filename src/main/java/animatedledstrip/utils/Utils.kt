@@ -36,9 +36,7 @@ package animatedledstrip.utils
  */
 fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     if (amountOfOverlay == 0) return existing
-
     if (amountOfOverlay == 255) return overlay
-
     if (existing == overlay) return existing
 
     val r = blend8(existing.r, overlay.r, amountOfOverlay)
