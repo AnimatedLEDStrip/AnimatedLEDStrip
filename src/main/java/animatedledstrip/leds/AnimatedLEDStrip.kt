@@ -24,6 +24,7 @@ package animatedledstrip.leds
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.utils.SendableData
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
@@ -403,14 +404,14 @@ abstract class AnimatedLEDStrip(
         /**
          * Set the temporary color of a pixel.
          */
-        fun setTemporaryPixelColor(pixel: Int, color: ColorContainerInterface) =
-            setPixelColor(getPhysicalIndex(pixel), color, prolonged = false)
+        fun setTemporaryPixelColor(pixel: Int, color: PreparedColorContainer) =
+            setTemporaryPixelColor(pixel, color[pixel])
 
         /**
          * Set the prolonged color of a pixel.
          */
-        fun setProlongedPixelColor(pixel: Int, color: ColorContainerInterface) =
-            setPixelColor(getPhysicalIndex(pixel), color, prolonged = true)
+        fun setProlongedPixelColor(pixel: Int, color: PreparedColorContainer) =
+            setProlongedPixelColor(pixel, color[pixel])
 
         /**
          * Set the temporary color of a pixel.

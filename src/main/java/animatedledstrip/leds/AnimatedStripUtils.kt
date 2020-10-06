@@ -23,7 +23,6 @@
 package animatedledstrip.leds
 
 import animatedledstrip.animationutils.AnimationData
-import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.delayBlocking
@@ -38,7 +37,7 @@ import kotlin.coroutines.EmptyCoroutineContext
  *
  * @param pixels A list of pixel indices to set
  */
-fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) {
         setTemporaryPixelColor(pixel, color)
     }
@@ -59,7 +58,7 @@ fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: List<Int>, color: L
  * Set the temporary color of the specified range of pixels
  * (alias for setTemporarySectionColor)
  */
-fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: PreparedColorContainer) =
     setTemporaryPixelColors(pixels.toList(), color)
 
 /**
@@ -74,7 +73,7 @@ fun AnimatedLEDStrip.Section.setTemporaryPixelColors(pixels: IntRange, color: Lo
  *
  * @param pixels A list of pixel indices to set
  */
-fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: ColorContainerInterface) {
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) {
         setProlongedPixelColor(pixel, color)
     }
@@ -95,7 +94,7 @@ fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: List<Int>, color: L
  * Set the prolonged color of the specified range of pixels
  * (alias for setProlongedSectionColor)
  */
-fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: ColorContainerInterface) =
+fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: PreparedColorContainer) =
     setProlongedPixelColors(pixels.toList(), color)
 
 /**
@@ -119,7 +118,7 @@ fun AnimatedLEDStrip.Section.setProlongedPixelColors(pixels: IntRange, color: Lo
  */
 fun AnimatedLEDStrip.Section.setAndFadePixel(
     pixel: Int,
-    color: ColorContainerInterface,
+    color: PreparedColorContainer,
     amountOfOverlay: Int = 25,
     delay: Int = 30,
     context: CoroutineContext = EmptyCoroutineContext,
@@ -239,7 +238,7 @@ inline fun iterateOver(
 /**
  * Set a pixel, wait the specified time in milliseconds, then revert the pixel
  */
-fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: ColorContainerInterface, delay: Long) {
+fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: PreparedColorContainer, delay: Long) {
     withPixelLock(pixel) {
         setTemporaryPixelColor(pixel, color)
         delayBlocking(delay)
