@@ -23,10 +23,15 @@
 
 package animatedledstrip.utils
 
+import kotlin.math.ceil
+import kotlin.math.floor
+import kotlin.math.max
+import kotlin.math.min
+
 /**
  * Blend a variable proportion (0-255) of one byte to another.
  *
- * From the FastLED Library.
+ * Adapted from the FastLED Library.
  *
  * @param a The starting byte value
  * @param b The byte value to blend toward
@@ -40,5 +45,6 @@ fun blend8(a: Int, b: Int, amountOfB: Int): Int {
     partial += a
     partial += (b * amountOfB)
     partial += b
-    return partial shr 8
+    return if (b > a) min(ceil(partial / 256.0).toInt(), b)
+    else max(floor(partial / 256.0).toInt(), b)
 }
