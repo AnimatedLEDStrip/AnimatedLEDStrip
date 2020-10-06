@@ -291,13 +291,6 @@ class ColorContainerTest {
         assertTrue { p.contains(testCC[1]) }
         assertTrue { p.contains(testCC[2]) }
 
-        val q = testCC.prepare(30, 20)
-        assertTrue { q[0] == 0L }
-        assertTrue { q[19] == 0L }
-        assertTrue { q[20] == testCC[0] }
-        assertTrue { q.contains(testCC[1]) }
-        assertTrue { q.contains(testCC[2]) }
-
         val testCC2 = ColorContainer()
         val r = testCC2.prepare(50)
         assertTrue { r.size == 0 }
