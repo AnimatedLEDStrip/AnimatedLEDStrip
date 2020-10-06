@@ -38,18 +38,18 @@ fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
 }
 
 fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
-    pixelTemporaryColorList.forEach {
+    pixelTemporaryColorList.forEachIndexed { i, c ->
         assertTrue(
-            "Pixel $it check failed (temporary). Expected: $color on all pixels. Actual: $pixelTemporaryColorList"
-        ) { it == color }
+            "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
+        ) { c == color }
     }
 }
 
 fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
-    pixelProlongedColorList.forEach {
+    pixelProlongedColorList.forEachIndexed { i, c ->
         assertTrue(
-            "Pixel $it check failed (prolonged). Expected: $color on all pixels. Actual: $pixelProlongedColorList"
-        ) { it == color }
+            "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"
+        ) { c == color }
     }
 }
 
@@ -61,7 +61,7 @@ fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, color: Long) {
 fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Long) {
     indices.forEach {
         assertTrue(
-            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelTemporaryColorList"
+            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
         ) { pixelTemporaryColorList[it] == color }
     }
 }
@@ -69,7 +69,7 @@ fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Lon
 fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Long) {
     indices.forEach {
         assertTrue(
-            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual: $pixelProlongedColorList"
+            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"
         ) { pixelProlongedColorList[it] == color }
     }
 }
