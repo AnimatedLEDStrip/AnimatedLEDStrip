@@ -34,6 +34,7 @@ import kotlinx.coroutines.sync.withLock
 import org.pmw.tinylog.Logger
 import java.io.FileWriter
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -328,21 +329,25 @@ abstract class LEDStrip(
          * iterations have passed, whichever comes first. The pixel's prolonged color
          * is reevaluated every iteration, allowing it to fade into a changing background
          * (i.e. a Smooth Chase animation).
+         *
+         * @param timeout How long before the fade should be aborted (in milliseconds)
          */
-        fun fade(amountOfOverlay: Int = 25, delay: Int = 30) {
+        fun fade(amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000) {
             val myName = Thread.currentThread().name
             owner = myName
-            var i = 0
-            while (getPixelColor(pixel, prolonged = false) != prolongedColors[pixel] && i <= 400) {
+            val stopTime = LocalDateTime.now().plusNanos(timeout * 1000000L)
+
+            var curTemp = getPixelColor(pixel, prolonged = false)
+            var curPro = getPixelColor(pixel, prolonged = true)
+            while (curTemp != curPro && LocalDateTime.now().isBefore(stopTime)) {
                 if (owner != myName) break
                 isFading = true
-                i++
                 withPixelLock(pixel) {
                     setPixelColor(
                         pixel,
                         blend(
-                            existing = getPixelColor(pixel, false),
-                            overlay = getPixelColor(pixel, true),
+                            existing = curTemp,
+                            overlay = curPro,
                             amountOfOverlay = amountOfOverlay,
                         ),
                         prolonged = false,
@@ -352,8 +357,10 @@ abstract class LEDStrip(
             }
             // If loop was not broken due to another thread taking over the fading,
             // reset the pixel and indicate that this pixel is no longer fading
-            if (owner == myName) revertPixel(pixel)
-            if (owner == myName) isFading = false
+            if (owner == myName) {
+                isFading = false
+                revertPixel(pixel)
+            }
         }
     }
 
@@ -365,8 +372,8 @@ abstract class LEDStrip(
      * @param delay Time in milliseconds between iterations
      * @see FadePixel
      */
-    protected fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) {
-        fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay)
+    protected fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000) {
+        fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay, timeout = timeout)
     }
 
 }

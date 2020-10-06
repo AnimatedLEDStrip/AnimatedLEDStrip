@@ -435,12 +435,12 @@ abstract class AnimatedLEDStrip(
         fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
 
         /**
-         * Fade a pixel to it's prolonged color.
+         * Fade a pixel to its prolonged color.
          *
          * See [LEDStrip.fadePixel]
          */
-        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30) =
-            ledStrip.fadePixel(getPhysicalIndex(pixel), amountOfOverlay, delay)
+        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000) =
+            ledStrip.fadePixel(getPhysicalIndex(pixel), amountOfOverlay, delay, timeout)
 
 
         /* Set strip color */
