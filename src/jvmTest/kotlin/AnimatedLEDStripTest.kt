@@ -28,14 +28,16 @@ import animatedledstrip.animationutils.delay
 import animatedledstrip.animationutils.runCount
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.utils.delayBlocking
-import org.junit.Test
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.maps.shouldContainKey
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.pmw.tinylog.Level
 import kotlin.test.assertTrue
 
-class AnimatedLEDStripTest {
-
-    @Test
-    fun testAnimationCallbacks()  {
+class AnimatedLEDStripTest : FunSpec({
+    test("start and end animation callbacks") {
         var indicator1 = false
         var indicator2 = false
         val testLEDs = EmulatedAnimatedLEDStrip(50)
@@ -54,18 +56,17 @@ class AnimatedLEDStripTest {
 
         delayBlocking(500)
 
-        assertTrue(indicator1)
-        assertTrue(indicator2)
+        indicator1.shouldBeTrue()
+        indicator2.shouldBeTrue()
     }
 
-    @Test
-    fun testCreateSection() {
+    test("create section") {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         var indicator = false
         testLEDs.createSection("Test", 5, 20)
 
-        assertTrue { testLEDs.sections.size == 2 }
-        assertTrue { testLEDs.sections.containsKey("Test") }
+        testLEDs.sections.size shouldBe 2
+        testLEDs.sections.shouldContainKey("Test")
 
         testLEDs.newSectionCallback = {
             indicator = true
@@ -75,23 +76,22 @@ class AnimatedLEDStripTest {
         val newSection = testLEDs.Section("Sect", 5, 20)
         testLEDs.createSection(newSection)
 
-        assertTrue { indicator }
-        assertTrue { testLEDs.sections.size == 3 }
-        assertTrue { testLEDs.sections.containsKey("Sect") }
+        indicator.shouldBeTrue()
+        testLEDs.sections.size shouldBe 3
+        testLEDs.sections.shouldContainKey("Sect")
         assertTrue { testLEDs.sections["Sect"] !== newSection }
     }
 
-    @Test
-    fun testGetSection() {
+    test("get section") {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
         testLEDs.createSection("Test", 5, 20)
 
-        assertTrue { testLEDs.getSection("Test") != testLEDs.wholeStrip }
-        assertTrue { testLEDs.getSection("Test").startPixel == 5 }
-        assertTrue { testLEDs.getSection("Test").endPixel == 20 }
-        assertTrue { testLEDs.wholeStrip.getSection("Test") != testLEDs.wholeStrip }
-        assertTrue { testLEDs.wholeStrip.getSection("Test").startPixel == 5 }
-        assertTrue { testLEDs.wholeStrip.getSection("Test").endPixel == 20 }
+        testLEDs.getSection("Test") shouldNotBe  testLEDs.wholeStrip
+        testLEDs.getSection("Test").startPixel shouldBe  5
+        testLEDs.getSection("Test").endPixel shouldBe  20
+        testLEDs.wholeStrip.getSection("Test") shouldNotBe testLEDs.wholeStrip
+        testLEDs.wholeStrip.getSection("Test").startPixel shouldBe 5
+        testLEDs.wholeStrip.getSection("Test").endPixel shouldBe 20
 
         startLogCapture()
 
@@ -103,8 +103,7 @@ class AnimatedLEDStripTest {
         stopLogCapture()
     }
 
-    @Test
-    fun testEndAnimationsThatAreNotRunning() {
+    test("end animations that are not running") {
         val testLEDs = EmulatedAnimatedLEDStrip(50)
 
         testLEDs.endAnimation(null)
@@ -117,4 +116,4 @@ class AnimatedLEDStripTest {
 
         stopLogCapture()
     }
-}
+})

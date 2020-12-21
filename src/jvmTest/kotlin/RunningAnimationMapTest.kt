@@ -25,69 +25,63 @@ package animatedledstrip.test
 import animatedledstrip.animationutils.AnimationData
 import animatedledstrip.animationutils.RunningAnimationMap
 import animatedledstrip.leds.AnimatedLEDStrip
+import io.kotest.core.spec.style.StringSpec
 import kotlinx.coroutines.Job
-import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class RunningAnimationMapTest {
+class RunningAnimationMapTest : StringSpec(
+    {
+        "get" {
+            val map = RunningAnimationMap()
 
-    @Test
-    fun testGet() {
-        val map = RunningAnimationMap()
+            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
 
-        map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            assertTrue { map["TEST"] == map.map["TEST"] }
+        }
 
-        assertTrue { map["TEST"] == map.map["TEST"] }
-    }
+        "set" {
+            val map = RunningAnimationMap()
+            val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
 
-    @Test
-    fun testSet() {
-        val map = RunningAnimationMap()
-        val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            map["TEST"] = testAnim
 
-        map["TEST"] = testAnim
+            assertTrue { map.map["TEST"] == testAnim }
+        }
 
-        assertTrue { map.map["TEST"] == testAnim }
-    }
+        "remove" {
+            val map = RunningAnimationMap()
 
-    @Test
-    fun testRemove() {
-        val map = RunningAnimationMap()
+            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
 
-        map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            assertTrue { map.map.containsKey("TEST") }
+            map.remove("TEST")
+            assertFalse { map.map.containsKey("TEST") }
+        }
 
-        assertTrue { map.map.containsKey("TEST") }
-        map.remove("TEST")
-        assertFalse { map.map.containsKey("TEST") }
-    }
+        "entries" {
+            val map = RunningAnimationMap()
+            val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            map.map["TEST"] = testAnim
 
-    @Test
-    fun testEntries() {
-        val map = RunningAnimationMap()
-        val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
-        map.map["TEST"] = testAnim
+            assertTrue { map.entries.contains(Pair("TEST", testAnim)) }
+            assertTrue { map.entries.size == 1 }
+        }
 
-        assertTrue { map.entries.contains(Pair("TEST", testAnim)) }
-        assertTrue { map.entries.size == 1 }
-    }
+        "ids" {
+            val map = RunningAnimationMap()
+            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
 
-    @Test
-    fun testIDs() {
-        val map = RunningAnimationMap()
-        map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            assertTrue { map.ids.contains("TEST") }
+            assertTrue { map.ids.size == 1 }
+        }
 
-        assertTrue { map.ids.contains("TEST") }
-        assertTrue { map.ids.size == 1 }
-    }
+        "animations" {
+            val map = RunningAnimationMap()
+            val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
+            map.map["TEST"] = testAnim
 
-    @Test
-    fun testAnimations() {
-        val map = RunningAnimationMap()
-        val testAnim = AnimatedLEDStrip.RunningAnimation(AnimationData(), Job())
-        map.map["TEST"] = testAnim
-
-        assertTrue { map.animations.contains(testAnim) }
-        assertTrue { map.animations.size == 1 }
-    }
-}
+            assertTrue { map.animations.contains(testAnim) }
+            assertTrue { map.animations.size == 1 }
+        }
+    })

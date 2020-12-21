@@ -26,70 +26,67 @@ import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.withPixelLock
 import animatedledstrip.utils.delayBlocking
-import org.junit.Test
+import io.kotest.core.spec.style.StringSpec
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class LEDStripTest {
+class LEDStripTest : StringSpec(
+    {
+        "toggle render" {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-    @Test
-    fun testToggleRender() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
+            delayBlocking(1000)
+            assertTrue { testLEDs.rendering }
+            testLEDs.toggleRender()
+            delayBlocking(1000)
+            assertFalse { testLEDs.rendering }
+            testLEDs.toggleRender()
+            delayBlocking(1000)
+            assertTrue { testLEDs.rendering }
+        }
 
-        delayBlocking(1000)
-        assertTrue { testLEDs.rendering }
-        testLEDs.toggleRender()
-        delayBlocking(1000)
-        assertFalse { testLEDs.rendering }
-        testLEDs.toggleRender()
-        delayBlocking(1000)
-        assertTrue { testLEDs.rendering }
-    }
+        "with pixel lock" {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
 
-    @Test
-    fun testWithPixelLock() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
+            var testVal1 = false
+            var testVal2 = true
 
-        var testVal1 = false
-        var testVal2 = true
+            testLEDs.withPixelLock(10) { testVal1 = true; Unit }
 
-        testLEDs.withPixelLock(10) { testVal1 = true; Unit }
+            // Test trying to get a lock on a non-existent pixel
+            testLEDs.withPixelLock(50) { testVal2 = false; Unit }
 
-        // Test trying to get a lock on a non-existent pixel
-        testLEDs.withPixelLock(50) { testVal2 = false; Unit }
+            assertTrue(testVal1)
+            assertTrue(testVal2)
+        }
 
-        assertTrue(testVal1)
-        assertTrue(testVal2)
-    }
+        "image debugging" {
+            // Test file name
+            val info1 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test1.csv")
+            val leds1 = EmulatedAnimatedLEDStrip(info1)
+            delayBlocking(5000)
+            leds1.toggleRender()
+            delayBlocking(1000)
+            assertTrue { Files.exists(Paths.get("test1.csv")) }
+            Files.delete(Paths.get("test1.csv"))
 
-    @Test
-    fun testImageDebugging() {
-        // Test file name
-        val info1 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test1.csv")
-        val leds1 = EmulatedAnimatedLEDStrip(info1)
-        delayBlocking(5000)
-        leds1.toggleRender()
-        delayBlocking(1000)
-        assertTrue { Files.exists(Paths.get("test1.csv")) }
-        Files.delete(Paths.get("test1.csv"))
+            // Test file name without .csv extension
+            val info2 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test2")
+            val leds2 = EmulatedAnimatedLEDStrip(info2)
+            delayBlocking(5000)
+            leds2.toggleRender()
+            delayBlocking(1000)
+            assertTrue { Files.exists(Paths.get("test2.csv")) }
+            Files.delete(Paths.get("test2.csv"))
 
-        // Test file name without .csv extension
-        val info2 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test2")
-        val leds2 = EmulatedAnimatedLEDStrip(info2)
-        delayBlocking(5000)
-        leds2.toggleRender()
-        delayBlocking(1000)
-        assertTrue { Files.exists(Paths.get("test2.csv")) }
-        Files.delete(Paths.get("test2.csv"))
-
-        // Test saving renders to file
-        val info3 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test3.csv", rendersBeforeSave = 100)
-        val leds3 = EmulatedAnimatedLEDStrip(info3)
-        delayBlocking(10000)
-        leds3.toggleRender()
-        delayBlocking(1000)
-        Files.delete(Paths.get("test3.csv"))
-    }
-}
+            // Test saving renders to file
+            val info3 = StripInfo(numLEDs = 50, imageDebugging = true, fileName = "test3.csv", rendersBeforeSave = 100)
+            val leds3 = EmulatedAnimatedLEDStrip(info3)
+            delayBlocking(10000)
+            leds3.toggleRender()
+            delayBlocking(1000)
+            Files.delete(Paths.get("test3.csv"))
+        }
+    })
