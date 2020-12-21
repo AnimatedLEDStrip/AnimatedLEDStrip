@@ -25,52 +25,52 @@ package animatedledstrip.test
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.predefined.*
-import org.junit.Test
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 import kotlin.test.assertTrue
 
-class AnimationInfoTest {
+class AnimationInfoTest : StringSpec(
+    {
+        "constructor" {
+            val info = Animation.AnimationInfo(
+                name = "Test",
+                abbr = "TST",
+                description = "A test animation",
+                signatureFile = "sig.png",
+                runCountDefault = 1,
+                minimumColors = 4,
+                unlimitedColors = true,
+                center = ParamUsage.USED,
+                delay = ParamUsage.NOTUSED,
+                direction = ParamUsage.NOTUSED,
+                distance = ParamUsage.USED,
+                spacing = ParamUsage.USED,
+                delayDefault = 5,
+                distanceDefault = 40,
+                spacingDefault = 4,
+            )
 
-    @Test
-    fun testAnimationInfoConstruction() {
-        val info = Animation.AnimationInfo(
-            name = "Test",
-            abbr = "TST",
-            description = "A test animation",
-            signatureFile = "sig.png",
-            runCountDefault = 1,
-            minimumColors = 4,
-            unlimitedColors = true,
-            center = ParamUsage.USED,
-            delay = ParamUsage.NOTUSED,
-            direction = ParamUsage.NOTUSED,
-            distance = ParamUsage.USED,
-            spacing = ParamUsage.USED,
-            delayDefault = 5,
-            distanceDefault = 40,
-            spacingDefault = 4,
-        )
+            info.name shouldBe "Test"
+            info.abbr shouldBe "TST"
+            info.description shouldBe "A test animation"
+            info.signatureFile shouldBe "sig.png"
+            info.minimumColors shouldBe 4
+            info.unlimitedColors.shouldBeTrue()
+            info.center shouldBe ParamUsage.USED
+            info.delay shouldBe ParamUsage.NOTUSED
+            info.direction shouldBe ParamUsage.NOTUSED
+            info.distance shouldBe ParamUsage.USED
+            info.spacing shouldBe ParamUsage.USED
+            info.delayDefault shouldBe 5L
+            info.distanceDefault shouldBe 40
+            info.spacingDefault shouldBe 4
+        }
 
-        assertTrue { info.name == "Test" }
-        assertTrue { info.abbr == "TST" }
-        assertTrue { info.description == "A test animation" }
-        assertTrue { info.signatureFile == "sig.png" }
-        assertTrue { info.minimumColors == 4 }
-        assertTrue { info.unlimitedColors }
-        assertTrue { info.center == ParamUsage.USED }
-        assertTrue { info.delay == ParamUsage.NOTUSED }
-        assertTrue { info.direction == ParamUsage.NOTUSED }
-        assertTrue { info.distance == ParamUsage.USED }
-        assertTrue { info.spacing == ParamUsage.USED }
-        assertTrue { info.delayDefault == 5L }
-        assertTrue { info.distanceDefault == 40 }
-        assertTrue { info.spacingDefault == 4 }
-    }
-
-    @Test
-    fun testAnimationInfoToHumanReadableString() {
-        assertTrue {
-            alternate.info.toHumanReadableString() ==
-                    """
+        "presets to human readable strings" {
+            assertTrue {
+                alternate.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Alternate
                           abbr: ALT
@@ -84,10 +84,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            bounce.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                bounce.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Bounce
                           abbr: BNC
@@ -101,10 +101,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            bounceToColor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                bounceToColor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Bounce to Color
                           abbr: BTC
@@ -118,10 +118,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            bubbleSort.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                bubbleSort.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Bubble Sort
                           abbr: BST
@@ -135,10 +135,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            catToy.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                catToy.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Cat Toy
                           abbr: CAT
@@ -152,10 +152,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            catToyToColor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                catToyToColor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Cat Toy to Color
                           abbr: CTC
@@ -169,10 +169,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            color.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                color.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Color
                           abbr: COL
@@ -186,10 +186,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            fadeToColor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                fadeToColor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Fade to Color
                           abbr: FTC
@@ -203,10 +203,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            fireworks.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                fireworks.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Fireworks
                           abbr: FWK
@@ -220,10 +220,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            mergeSortParallel.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                mergeSortParallel.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Merge Sort (Parallel)
                           abbr: MSP
@@ -237,10 +237,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            mergeSortSequential.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                mergeSortSequential.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Merge Sort (Sequential)
                           abbr: MSS
@@ -254,10 +254,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            meteor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                meteor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Meteor
                           abbr: MET
@@ -271,10 +271,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            multiPixelRun.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                multiPixelRun.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Multi Pixel Run
                           abbr: MPR
@@ -288,10 +288,10 @@ class AnimationInfoTest {
                           spacing: USED (3)
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            multiPixelRunToColor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                multiPixelRunToColor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Multi Pixel Run to Color
                           abbr: MTC
@@ -305,10 +305,10 @@ class AnimationInfoTest {
                           spacing: USED (3)
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            pixelMarathon.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                pixelMarathon.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Pixel Marathon
                           abbr: PXM
@@ -322,10 +322,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            pixelRun.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                pixelRun.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Pixel Run
                           abbr: PXR
@@ -339,10 +339,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            ripple.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                ripple.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Ripple
                           abbr: RPL
@@ -356,10 +356,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            smoothChase.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                smoothChase.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Smooth Chase
                           abbr: SCH
@@ -373,10 +373,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            smoothFade.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                smoothFade.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Smooth Fade
                           abbr: SMF
@@ -390,10 +390,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            sparkle.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                sparkle.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Sparkle
                           abbr: SPK
@@ -407,10 +407,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            sparkleFade.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                sparkleFade.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Sparkle Fade
                           abbr: SPF
@@ -424,10 +424,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            sparkleToColor.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                sparkleToColor.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Sparkle to Color
                           abbr: STC
@@ -441,10 +441,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            splat.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                splat.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Splat
                           abbr: SPT
@@ -458,10 +458,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            stack.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                stack.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Stack
                           abbr: STK
@@ -475,10 +475,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            stackOverflow.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                stackOverflow.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Stack Overflow
                           abbr: STO
@@ -492,10 +492,10 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
-        }
-        assertTrue {
-            wipe.info.toHumanReadableString() ==
-                    """
+            }
+            assertTrue {
+                wipe.info.toHumanReadableString() ==
+                        """
                         Animation Info
                           name: Wipe
                           abbr: WIP
@@ -509,6 +509,7 @@ class AnimationInfoTest {
                           spacing: NOTUSED
                         End Info
                     """.trimIndent()
+            }
+
         }
-    }
-}
+    })

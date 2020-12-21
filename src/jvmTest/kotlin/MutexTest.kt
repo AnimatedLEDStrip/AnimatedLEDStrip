@@ -23,35 +23,34 @@
 package animatedledstrip.test
 
 import animatedledstrip.utils.tryWithLock
+import io.kotest.core.spec.style.StringSpec
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
-import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class MutexTest {
+class MutexTest : StringSpec(
+    {
+        "try with lock" {
+            var success1 = false
+            val m = Mutex()
 
-    @Test
-    fun testTryWithLock() {
-        var success1 = false
-        val m = Mutex()
+            m.tryWithLock { success1 = true }
+            assertTrue { success1 }
 
-        m.tryWithLock { success1 = true }
-        assertTrue { success1 }
+            var success2 = false
+            val m2 = Mutex()
 
-        var success2 = false
-        val m2 = Mutex()
+            GlobalScope.launch {
+                m2.lock()
+            }
 
-        GlobalScope.launch {
-            m2.lock()
+            runBlocking { delay(1000) }
+            m2.tryWithLock { success2 = true }
+            assertFalse { success2 }
         }
 
-        runBlocking { delay(1000) }
-        m2.tryWithLock { success2 = true }
-        assertFalse { success2 }
-    }
-
-}
+    })

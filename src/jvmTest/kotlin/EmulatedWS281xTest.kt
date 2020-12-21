@@ -23,26 +23,23 @@
 package animatedledstrip.test
 
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import org.junit.Test
+import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertFailsWith
 
-class EmulatedWS281xTest {
-
-    @Test
-    fun testClose() {
-        EmulatedAnimatedLEDStrip(50).ledStrip.close()
-    }
-
-    @Test
-    fun testValidatePixel() {
-        val testLEDs = EmulatedAnimatedLEDStrip(50)
-
-        assertFailsWith(IllegalArgumentException::class) {
-            testLEDs.ledStrip.getPixelColor(50)
+class EmulatedWS281xTest : StringSpec(
+    {
+        "close" {
+            EmulatedAnimatedLEDStrip(50).ledStrip.close()
         }
-        assertFailsWith(IllegalArgumentException::class) {
-            testLEDs.ledStrip.getPixelColor(-1)
-        }
-    }
 
-}
+        "validate pixel" {
+            val testLEDs = EmulatedAnimatedLEDStrip(50)
+
+            assertFailsWith(IllegalArgumentException::class) {
+                testLEDs.ledStrip.getPixelColor(50)
+            }
+            assertFailsWith(IllegalArgumentException::class) {
+                testLEDs.ledStrip.getPixelColor(-1)
+            }
+        }
+    })
