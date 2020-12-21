@@ -1,8 +1,10 @@
+build/
 dokka/
 out/
 target/
 wiki/
 .idea/
+.gradle/
 *.xml
 *.iml
 !pom.xml

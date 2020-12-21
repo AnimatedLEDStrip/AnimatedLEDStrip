@@ -35,7 +35,6 @@ package animatedledstrip.utils
  * @param amountOfOverlay The proportion (0-255) of `overlay` to blend into `existing`
  */
 fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
-    println(amountOfOverlay)
     if (amountOfOverlay == 0) return existing
     if (amountOfOverlay == 255) return overlay
     if (existing == overlay) return existing
