@@ -261,6 +261,9 @@ abstract class AnimatedLEDStrip(
          */
         val indices = IntRange(0, endPixel - startPixel).toList()
 
+        val shuffledIndices: List<Int>
+            get() = indices.shuffled()
+
         /**
          * The number of LEDs in this section.
          */
@@ -318,6 +321,9 @@ abstract class AnimatedLEDStrip(
          * animation in
          * @param scope Optionally specify the parent `CoroutineScope` for the
          * coroutine that will run the animation
+         * @param subAnimation If this animation was started by another animation
+         * (rather than a user)
+         * @return The `Job` associated with the new coroutine
          */
         internal fun run(
             data: AnimationData,
@@ -332,12 +338,12 @@ abstract class AnimatedLEDStrip(
             }
 
             data.prepare(this)
+
             Logger.trace("Starting $data")
 
             return scope.launch(threadPool) {
                 if (!subAnimation) startAnimationCallback?.invoke(data)
 
-                val isContinuous = data.continuous ?: definedAnimation.info.repetitive
                 var runs = 0
                 while (isActive && (data.runCount == -1 || runs < data.runCount)) {
                     definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
@@ -354,12 +360,11 @@ abstract class AnimatedLEDStrip(
         /**
          * Start an animation in a child coroutine.
          *
-         * Note: Animation is not run continuously unless if [continuous] is `true`
-         * (even if the AnimationData instance has `continuous` as true).
-         *
          * @param scope The parent `CoroutineScope` for the coroutine that will
          * run the animation
+         * @param section The section to run the animation on
          * @param pool The pool of threads to start the animation in
+         * @param runCount The number of times to run the animation
          * @return The `Job` associated with the new coroutine
          */
         fun runParallel(
@@ -367,10 +372,10 @@ abstract class AnimatedLEDStrip(
             scope: CoroutineScope,
             section: Section = this,
             pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
-            continuous: Boolean = false,
+            runCount: Int = 1,
         ): Job? {
             return section.run(
-                animation.copy(continuous = continuous),
+                animation.copy(runCount = runCount, section = section.name),
                 threadPool = pool,
                 scope = scope,
                 subAnimation = true,
@@ -380,16 +385,16 @@ abstract class AnimatedLEDStrip(
         /**
          * Start an animation and wait for it to complete.
          *
-         * Note: Animation is not run continuously unless if [continuous] is `true`
-         * (even if the AnimationData instance has `continuous` as true).
+         * @param section The section to run the animation on
+         * @param runCount The number of times to run the animation
          */
         fun runSequential(
             animation: AnimationData,
             section: Section = this,
-            continuous: Boolean = false,
+            runCount: Int = 1,
         ) = runBlocking {
             val job = section.run(
-                animation.copy(continuous = continuous),
+                animation.copy(runCount = runCount, section = section.name),
                 threadPool = parallelAnimationThreadPool,
                 scope = this,
                 subAnimation = true,
@@ -536,9 +541,9 @@ abstract class AnimatedLEDStrip(
             return result
         }
 
-        override fun toString(): String {
-            return toHumanReadableString()
-        }
+        override fun toString() =
+            "AnimatedLEDStrip.Section(name=$name, numLEDs=$numLEDs, startPixel=$startPixel, " +
+            "endPixel=$endPixel, physicalStart=$physicalStart)"
 
     }
 

@@ -26,6 +26,7 @@ import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.utils.delayBlocking
 
 val bubbleSort = PredefinedAnimation(
@@ -46,7 +47,7 @@ val bubbleSort = PredefinedAnimation(
         spacing = ParamUsage.NOTUSED,
     )
 ) { leds, data, _ ->
-    val colorMap = data.pCols[0].colors.mapIndexed { index, it -> Pair(index, it) }.shuffled().toMutableList()
+    val colorMap = data.pCols[0].shuffledWithIndices().toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.second })
     val delay = data.delay
 

@@ -289,6 +289,8 @@ fun <T> runBlockingNonCancellable(
  */
 suspend fun AnimatedLEDStrip.RunningAnimation.join() = job.join()
 
+fun AnimatedLEDStrip.RunningAnimation.joinBlocking() = runBlocking { job.join() }
+
 /**
  * End the animation
  */

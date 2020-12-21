@@ -234,7 +234,7 @@ abstract class LEDStrip(
      */
     protected fun setPixelColor(pixel: Int, color: ColorContainerInterface, prolonged: Boolean) {
         when (color) {
-            is ColorContainer -> setPixelColor(pixel, color.prepare(numLEDs)[pixel], prolonged)
+            is ColorContainer -> error("")
             is PreparedColorContainer -> setPixelColor(pixel, color[pixel], prolonged)
         }
     }

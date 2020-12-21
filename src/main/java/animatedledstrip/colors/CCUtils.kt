@@ -103,6 +103,9 @@ fun ColorContainer.grayscaled(vararg indices: IntRange): ColorContainer {
     return temp
 }
 
+fun ColorContainerInterface.shuffledWithIndices(): List<Pair<Int, Long>> =
+    colors.mapIndexed { index, it -> Pair(index, it) }.shuffled()
+
 
 /* Invert */
 
@@ -189,6 +192,51 @@ fun ColorContainer.inverse(vararg indices: IntRange): ColorContainer {
  * @return A new [ColorContainer] instance
  */
 operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()
+
+
+/**
+ * Returns a new [ColorContainer] with the same colors as this instance,
+ * but inverted.
+ *
+ * @return A new [ColorContainer] instance
+ */
+fun PreparedColorContainer.inverse(): PreparedColorContainer =
+    ColorContainer(originalColors).invert().prepare(size)
+
+/**
+ * Returns a new [ColorContainer] with the same colors as this instance,
+ * inverted, but only including the indices specified.
+ *
+ * @return A new [ColorContainer] instance
+ */
+fun PreparedColorContainer.inverse(vararg indices: Int): PreparedColorContainer {
+    val temp = ColorContainer()
+    for (i in indices)
+            if (colors.indices.contains(i)) temp += colors[i]
+    return temp.invert().prepare(size)
+}
+
+/**
+ * Returns a new [ColorContainer] with the same colors as this instance,
+ * inverted, but only including the ranges of indices specified.
+ *
+ * @return A new [ColorContainer] instance
+ */
+fun PreparedColorContainer.inverse(vararg indices: IntRange): PreparedColorContainer {
+    val temp = ColorContainer()
+    for (r in indices)
+        for (i in r)
+            if (colors.indices.contains(i)) temp += colors[i]
+    return temp.invert().prepare(size)
+}
+
+/**
+ * Operator overload that returns a new [ColorContainer] containing the
+ * inverse of the colors in this [ColorContainer].
+ *
+ * @return A new [ColorContainer] instance
+ */
+operator fun PreparedColorContainer.unaryMinus(): PreparedColorContainer = inverse()
 
 
 /* Add offset */
