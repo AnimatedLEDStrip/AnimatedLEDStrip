@@ -47,7 +47,7 @@ class SectionTest {
         // Temporary
 
         // setPixelColor with ColorContainer
-        testLEDs.setTemporaryPixelColor(10, ColorContainer(0xFF))
+        testLEDs.setTemporaryPixelColor(10, ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(10) == 0xFFL }
         assertTrue { testLEDs.getProlongedPixelColor(10) == 0L }
@@ -62,7 +62,7 @@ class SectionTest {
         // Prolonged
 
         // setPixelColor with ColorContainer
-        testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF))
+        testLEDs.setProlongedPixelColor(10, ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(10) == 0xFFL }
         assertTrue { testLEDs.getProlongedPixelColor(10) == 0xFFL }
@@ -80,8 +80,8 @@ class SectionTest {
         testLEDs.assertPixels(10..12, 0)
 
         // Test bad pixel index
-        assertFailsWith<IllegalArgumentException> { testLEDs.setTemporaryPixelColor(50, CCBlack) }
-        assertFailsWith<IllegalArgumentException> { testLEDs.setProlongedPixelColor(50, CCBlack) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setTemporaryPixelColor(50, CCBlack.prepare(testLEDs.numLEDs)) }
+        assertFailsWith<IllegalArgumentException> { testLEDs.setProlongedPixelColor(50, CCBlack.prepare(testLEDs.numLEDs)) }
     }
 
     @Test
@@ -93,7 +93,7 @@ class SectionTest {
         // Temporary
 
         // setTemporaryPixelColors with ColorContainer
-        testLEDs.setTemporaryPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
+        testLEDs.setTemporaryPixelColors(listOf(10, 15, 20), ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(10) == 0xFFL }
         assertTrue { testLEDs.getTemporaryPixelColor(15) == 0xFFL }
@@ -117,7 +117,7 @@ class SectionTest {
         assertTrue { testLEDs.getProlongedPixelColor(21) == 0L }
 
         // setTemporaryPixelColors with IntRange and ColorContainer
-        testLEDs.setTemporaryPixelColors(30..40, ColorContainer(0xFF))
+        testLEDs.setTemporaryPixelColors(30..40, ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(0) == 0L }
         assertTrue { testLEDs.getTemporaryPixelColor(29) == 0L }
@@ -152,7 +152,7 @@ class SectionTest {
         // Prolonged
 
         // setProlongedPixelColors with ColorContainer
-        testLEDs.setProlongedPixelColors(listOf(10, 15, 20), ColorContainer(0xFF))
+        testLEDs.setProlongedPixelColors(listOf(10, 15, 20), ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(10) == 0xFFL }
         assertTrue { testLEDs.getTemporaryPixelColor(15) == 0xFFL }
@@ -176,7 +176,7 @@ class SectionTest {
         assertTrue { testLEDs.getProlongedPixelColor(21) == 0L }
 
         // setProlongedPixelColors with IntRange and ColorContainer
-        testLEDs.setProlongedPixelColors(30..40, ColorContainer(0xFF))
+        testLEDs.setProlongedPixelColors(30..40, ColorContainer(0xFF).prepare(testLEDs.numLEDs))
 
         assertTrue { testLEDs.getTemporaryPixelColor(0) == 0L }
         assertTrue { testLEDs.getTemporaryPixelColor(29) == 0L }
@@ -467,7 +467,7 @@ class SectionTest {
         testLEDs.runParallel(anim, this)
 
         // Set parameters
-        val runningAnim = testLEDs.runParallel(anim, this, pool = pool, continuous = true)
+        val runningAnim = testLEDs.runParallel(anim, this, pool = pool, runCount = -1)
         runningAnim?.cancel()
 
         // Test runParallelAndJoin

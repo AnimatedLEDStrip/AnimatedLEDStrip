@@ -52,17 +52,17 @@ val catToyToColor = PredefinedAnimation(
     )
 ) { leds, data, _ ->
     val color0 = data.pCols[0]
-    val inverseColor = data.pCols[0].toColorContainer().inverse().prepare(data.pCols[0].size)
+    val inverseColor = data.pCols[0].inverse()
     val delay = data.delay
 
     leds.apply {
-        val pixels = indices.shuffled()
+        val pixels: List<Int> = shuffledIndices
         var oldPixel = 0
 
         for (newPixel in pixels) {
             when {
                 oldPixel < newPixel ->
-                    iterateOver(oldPixel..newPixel) {
+                    iterateOver(oldPixel until newPixel) {
                         setPixelAndRevertAfterDelay(
                             it,
                             if (getProlongedPixelColor(it) == color0[it]) inverseColor else color0,
@@ -70,7 +70,7 @@ val catToyToColor = PredefinedAnimation(
                         )
                     }
                 else ->
-                    iterateOver(oldPixel downTo newPixel) {
+                    iterateOver(oldPixel downTo newPixel + 1) {
                         setPixelAndRevertAfterDelay(
                             it,
                             if (getProlongedPixelColor(it) == color0[it]) inverseColor else color0,

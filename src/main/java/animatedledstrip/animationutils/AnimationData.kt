@@ -131,6 +131,11 @@ class AnimationData(
      * and populates `pCols`.
      */
     fun prepare(ledStrip: AnimatedLEDStrip.Section): AnimationData {
+        section = when (section) {
+            "" -> ledStrip.name
+            else -> section
+        }
+
         val definedAnimation = findAnimation(animation)
 
         val sectionRunningFullAnimation = ledStrip.getSection(sectionName = section)
@@ -147,23 +152,23 @@ class AnimationData(
 
         if (colors.isEmpty()) color(CCBlack)
 
-        pCols = mutableListOf()
-        colors.forEach {
-            pCols.add(
-                it.prepare(
-                    numLEDs = sectionRunningFullAnimation.numLEDs,
-                    leadingZeros = ledStrip.physicalStart,
-                )
-            )
-        }
+        if (ledStrip == sectionRunningFullAnimation) {
+            pCols = mutableListOf()
+            colors.forEach {
+                pCols.add(it.prepare(numLEDs = sectionRunningFullAnimation.numLEDs))
+            }
 
-        for (i in colors.size until definedAnimation.info.minimumColors) {
-            pCols.add(
-                CCBlack.prepare(
-                    numLEDs = sectionRunningFullAnimation.numLEDs,
-                    leadingZeros = ledStrip.physicalStart,
+            for (i in colors.size until definedAnimation.info.minimumColors) {
+                pCols.add(CCBlack.prepare(numLEDs = sectionRunningFullAnimation.numLEDs))
+            }
+        } else {
+            val temp = mutableListOf<PreparedColorContainer>()
+            for (c in pCols) {
+                temp += PreparedColorContainer(
+                    colors = c.colors.subList(ledStrip.startPixel, ledStrip.endPixel) + c.colors[ledStrip.endPixel],
+                    originalColors = c.originalColors,
                 )
-            )
+            }
         }
 
         return this
@@ -192,20 +197,26 @@ class AnimationData(
         runCount: Int = this.runCount,
         section: String = this.section,
         spacing: Int = this.spacing,
-    ) = AnimationData(
-        animation,
-        colors,
-        center,
-        continuous,
-        delay,
-        delayMod,
-        direction,
-        distance,
-        id,
-        runCount,
-        section,
-        spacing
-    )
+    ): AnimationData {
+        val newData = AnimationData(
+            animation = animation,
+            colors = colors,
+            center = center,
+            delay = delay,
+            delayMod = delayMod,
+            direction = direction,
+            distance = distance,
+            id = id,
+            runCount = runCount,
+            section = section,
+            spacing = spacing
+        )
+        if (this::pCols.isInitialized) {
+            newData.pCols = mutableListOf()
+            newData.pCols.addAll(pCols)
+        }
+        return newData
+    }
 
     /**
      * Create a string representation.

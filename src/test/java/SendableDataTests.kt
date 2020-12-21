@@ -43,7 +43,6 @@ class SendableDataTests {
             .color(0xFF, index = 2)
             .color(0xFF, index = 3)
             .color(0xFF, index = 4)
-            .continuous(true)
             .delay(50)
             .direction(Direction.FORWARD)
             .id("TEST")
@@ -64,11 +63,11 @@ class SendableDataTests {
                           animation: Color
                           colors: []
                           center: -1
-                          continuous: null
                           delay: 50
                           delayMod: 1.0
                           direction: FORWARD
                           distance: -1
+                          runCount: 1
                           section: 
                           spacing: 3
                         End AnimationData
@@ -80,12 +79,12 @@ class SendableDataTests {
                 animation = "Bounce",
                 colors = listOf(0xFF.toColorContainer()),
                 center = 30,
-                continuous = false,
                 delay = 10,
                 delayMod = 2.0,
                 direction = Direction.BACKWARD,
                 distance = 50,
                 id = "test",
+                runCount = 2,
                 section = "section",
                 spacing = 4,
             ).toHumanReadableString() ==
@@ -94,11 +93,11 @@ class SendableDataTests {
                           animation: Bounce
                           colors: [ff]
                           center: 30
-                          continuous: false
                           delay: 10
                           delayMod: 2.0
                           direction: BACKWARD
                           distance: 50
+                          runCount: 2
                           section: section
                           spacing: 4
                         End AnimationData
@@ -132,18 +131,18 @@ class SendableDataTests {
         assertTrue { EndAnimation("15235").toHumanReadableString() == "End of animation 15235" }
     }
 
-    @Test
-    fun testSectionJson() {
-        val section1 = EmulatedAnimatedLEDStrip(50).createSection("Test", 5, 10)
-        val sectionBytes = section1.json()
-
-        val section2 = sectionBytes.toUTF8(sectionBytes.size).jsonToSection()
-
-        assertTrue { section1.startPixel == section2.startPixel }
-        assertTrue { section1.endPixel == section2.endPixel }
-        assertTrue { section1.physicalStart == section2.physicalStart }
-        assertTrue { section1.numLEDs == section2.numLEDs }
-    }
+//    @Test
+//    fun testSectionJson() {
+//        val section1 = EmulatedAnimatedLEDStrip(50).createSection("Test", 5, 10)
+//        val sectionBytes = section1.json()
+//
+//        val section2 = sectionBytes.toUTF8(sectionBytes.size).jsonToSection()
+//
+//        assertTrue { section1.startPixel == section2.startPixel }
+//        assertTrue { section1.endPixel == section2.endPixel }
+//        assertTrue { section1.physicalStart == section2.physicalStart }
+//        assertTrue { section1.numLEDs == section2.numLEDs }
+//    }
 
     @Test
     fun testSectionToHumanReadableString() {

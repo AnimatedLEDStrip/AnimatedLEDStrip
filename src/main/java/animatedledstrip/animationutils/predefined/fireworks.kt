@@ -25,7 +25,7 @@ package animatedledstrip.animationutils.predefined
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
-import animatedledstrip.colors.ccpresets.EmptyColorContainer
+import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.utils.delayBlocking
 
 val fireworks = PredefinedAnimation(
@@ -51,8 +51,8 @@ val fireworks = PredefinedAnimation(
     val delay = data.delay
 
     leds.apply {
-        val color = data.colors.random()
-        if (color != EmptyColorContainer) {
+        val color = data.pCols.random()
+        if (color.isNotEmpty()) {
             runParallel(
                 data.copy(
                     colors = listOf(color),
