@@ -763,31 +763,31 @@ class AnimationTests {
 
     @Test
     fun testFireworks() {
-        println(ColorContainer(0xFFFFFF, 0x123456).prepare(10))
+//        println(ColorContainer(0xFFFFFF, 0x123456).prepare(10))
 
-        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
-        val anim1 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Fireworks")
-                .addColor(0xFF)
-                .addColor(0xFF00)
-                .addColor(0xFF0000)
-                .addColor(0xFFFF)
-                .addColor(ColorContainer())
-        )
-
-        val anim2 = testLEDs.startAnimation(
-            AnimationData()
-                .animation("Fireworks")
-                .addColor(ColorContainer())
-        )
-
-        assertNotNull(anim1)
-        assertNotNull(anim2)
-//        delay(100)
-        anim1.endAnimation()
-        anim2.endAnimation()
+//        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+//
+//        val anim1 = testLEDs.startAnimation(
+//            AnimationData()
+//                .animation("Fireworks")
+//                .addColor(0xFF)
+//                .addColor(0xFF00)
+//                .addColor(0xFF0000)
+//                .addColor(0xFFFF)
+//                .addColor(ColorContainer())
+//        )
+//
+//        val anim2 = testLEDs.startAnimation(
+//            AnimationData()
+//                .animation("Fireworks")
+//                .addColor(ColorContainer())
+//        )
+//
+//        assertNotNull(anim1)
+//        assertNotNull(anim2)
+////        delay(100)
+//        anim1.endAnimation()
+//        anim2.endAnimation()
 //        anim1.join()
 //        anim2.join()
         Unit
