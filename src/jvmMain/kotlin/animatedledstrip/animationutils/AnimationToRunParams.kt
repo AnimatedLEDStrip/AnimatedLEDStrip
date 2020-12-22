@@ -44,8 +44,6 @@ import kotlinx.serialization.Serializable
  *   Defaults to the length of the strip, meaning it will run until the ends of the strip.
  * @property id ID for the animation.
  *   Used by server and clients to identify a specific animation.
- * @property pCols The list of [PreparedColorContainer]s after preparation of [colors].
- *   Will be populated when [prepare] is called.
  * @property runCount The number of times the animation should be run. `-1` means until stopped.
  * @property section The id of the section of the strip that will be running the whole animation
  *   (not necessarily the section running this animation, such as if this is a subanimation).
@@ -111,7 +109,6 @@ data class AnimationToRunParams(
 
         val calculatedCenter = when {
             center < 0 -> sectionRunningAnimation.numLEDs / 2
-            center > sectionRunningAnimation.endPixel -> throw IllegalArgumentException("Center must be within strip")
             else -> center
         }
 
