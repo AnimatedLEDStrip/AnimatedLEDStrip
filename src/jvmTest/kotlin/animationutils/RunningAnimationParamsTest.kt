@@ -22,10 +22,96 @@
 
 package animatedledstrip.test.animationutils
 
+import animatedledstrip.animationutils.Direction
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
 class RunningAnimationParamsTest : StringSpec(
     {
 
+        "with animation modification" {
+            newRunningAnimationParams.withModifications().animation shouldBe ""
+
+            checkAll<String> { a ->
+                newRunningAnimationParams.withModifications(animation = a).animation shouldBe a
+            }
+        }
+
+        "with colors modification" {
+
+        }
+
+        "with center modification" {
+            newRunningAnimationParams.withModifications().center shouldBe 5
+
+            checkAll<Int> { c ->
+                newRunningAnimationParams.withModifications(center = c).center shouldBe c
+            }
+        }
+
+        "with delay modification" {
+            newRunningAnimationParams.withModifications().delay shouldBe 5
+
+            checkAll<Long> { d ->
+                newRunningAnimationParams.withModifications(delay = d).delay shouldBe d
+            }
+        }
+
+        "with delayMod modification" {
+            newRunningAnimationParams.withModifications().delayMod shouldBe 2.0
+
+            checkAll<Double> { d ->
+                newRunningAnimationParams.withModifications(delayMod = d).delayMod shouldBe d
+            }
+        }
+
+        "with direction modification" {
+            newRunningAnimationParams.withModifications().direction shouldBe Direction.FORWARD
+
+            newRunningAnimationParams.withModifications(direction = Direction.FORWARD).direction shouldBe Direction.FORWARD
+
+            newRunningAnimationParams.withModifications(direction = Direction.BACKWARD).direction shouldBe Direction.BACKWARD
+        }
+
+        "with distance modification" {
+            newRunningAnimationParams.withModifications().distance shouldBe 15
+
+            checkAll<Int> { d ->
+                newRunningAnimationParams.withModifications(distance = d).distance shouldBe d
+            }
+        }
+
+        "with id modification" {
+            newRunningAnimationParams.withModifications().id shouldBe ""
+
+            checkAll<String> { i ->
+                newRunningAnimationParams.withModifications(id = i).id shouldBe i
+            }
+        }
+
+        "with runCount modification" {
+            newRunningAnimationParams.withModifications().runCount shouldBe 10
+
+            checkAll<Int> { r ->
+                newRunningAnimationParams.withModifications(runCount = r).runCount shouldBe r
+            }
+        }
+
+        "with section modification" {
+            newRunningAnimationParams.withModifications().section shouldBe ""
+
+            checkAll<String> { s ->
+                newRunningAnimationParams.withModifications(section = s).section shouldBe s
+            }
+        }
+
+        "with spacing modification" {
+            newRunningAnimationParams.withModifications().spacing shouldBe 2
+
+            checkAll<Int> { s ->
+                newRunningAnimationParams.withModifications(spacing = s).spacing shouldBe s
+            }
+        }
     }
 )
