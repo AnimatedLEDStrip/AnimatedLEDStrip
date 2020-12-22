@@ -44,8 +44,8 @@ val fadeToColor = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val color0 = data.pCols[0]
+) { leds, params, scope ->
+    val color0 = params.colors[0]
 
     leds.apply {
         iterateOverPixels {

@@ -25,6 +25,7 @@ package animatedledstrip.utils
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.animationutils.EndAnimation
+import animatedledstrip.animationutils.RunningAnimationParams
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -51,11 +52,12 @@ import kotlinx.serialization.modules.subclass
 
 val serializerModule = SerializersModule {
     polymorphic(SendableData::class) {
-        subclass(AnimationToRunParams::class)
         subclass(Animation.AnimationInfo::class)
+        subclass(AnimationToRunParams::class)
         subclass(Command::class)
         subclass(EndAnimation::class)
         subclass(Message::class)
+        subclass(RunningAnimationParams::class)
         subclass(AnimatedLEDStrip.Section::class)
         subclass(StripInfo::class)
     }
@@ -66,6 +68,7 @@ val serializerModule = SerializersModule {
 }
 
 val serializer = Json {
+    encodeDefaults = true
     serializersModule = serializerModule
 }
 

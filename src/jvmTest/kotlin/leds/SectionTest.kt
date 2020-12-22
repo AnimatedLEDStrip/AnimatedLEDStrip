@@ -32,10 +32,9 @@ import animatedledstrip.test.assertAllPixels
 import animatedledstrip.test.assertAllProlongedPixels
 import animatedledstrip.test.assertAllTemporaryPixels
 import animatedledstrip.test.assertPixels
-import animatedledstrip.utils.delayBlocking
 import io.kotest.core.spec.style.StringSpec
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -412,29 +411,23 @@ class SectionTest : StringSpec(
             val testLEDs = EmulatedAnimatedLEDStrip(50)
             val anim1 = AnimationToRunParams().animation("Alternate")
             testLEDs.startAnimation(anim1, "TEST1")
-            delayBlocking(100)
+            delay(100)
             assertTrue { testLEDs.runningAnimations.map.containsKey("TEST1") }
             assertTrue { testLEDs.runningAnimations["TEST1"]?.data == anim1 }
             testLEDs.endAnimation(EndAnimation("TEST1"))
-            runBlocking {
-                testLEDs.runningAnimations["TEST1"]?.job?.join()
-            }
+            testLEDs.runningAnimations["TEST1"]?.job?.join()
 
             val anim2 = AnimationToRunParams().animation("Wipe").addColor(0xFF)
             testLEDs.startAnimation(anim2, "TEST2")
-            delayBlocking(100)
-            runBlocking {
-                testLEDs.runningAnimations["TEST2"]?.job?.join()
-            }
+            delay(100)
+            testLEDs.runningAnimations["TEST2"]?.job?.join()
             testLEDs.wholeStrip.assertAllPixels(0xFF)
 
             testLEDs.createSection("Sect", 15, 40)
             val anim3 = AnimationToRunParams().animation("Wipe").addColor(0xFFFF).section("Sect")
             testLEDs.startAnimation(anim3, "TEST3")
-            delayBlocking(100)
-            runBlocking {
-                testLEDs.runningAnimations["TEST3"]?.job?.join()
-            }
+            delay(100)
+            testLEDs.runningAnimations["TEST3"]?.job?.join()
             testLEDs.wholeStrip.assertPixels(0..14, 0xFF)
             testLEDs.wholeStrip.assertPixels(15..40, 0xFFFF)
             testLEDs.wholeStrip.assertPixels(41..49, 0xFF)

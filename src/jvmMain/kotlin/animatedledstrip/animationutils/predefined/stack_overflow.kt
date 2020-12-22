@@ -46,13 +46,13 @@ val stackOverflow = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val color0 = data.pCols[0]
-    val color1 = data.pCols[1]
-    val delay = data.delay
+) { leds, params, scope ->
+    val color0 = params.colors[0]
+    val color1 = params.colors[1]
+    val delay = params.delay
 
     leds.apply {
-        val baseAnimation = AnimationData()
+        val baseAnimation = AnimationToRunParams()
             .animation("Stack")
             .delay(delay)
 
@@ -60,14 +60,14 @@ val stackOverflow = PredefinedAnimation(
             scope,
             Pair(
                 baseAnimation.copy(
-                    colors = listOf(color0),
+                    colors = mutableListOf(color0),
                     direction = Direction.FORWARD,
                 ),
                 this,
             ),
             Pair(
                 baseAnimation.copy(
-                    colors = listOf(color1),
+                    colors = mutableListOf(color1),
                     direction = Direction.BACKWARD,
                 ),
                 this,

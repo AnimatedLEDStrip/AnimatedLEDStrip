@@ -49,17 +49,14 @@ val bounce = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
+) { leds, params, _ ->
+    val color0 = params.colors[0]
 
     leds.apply {
         iterateOver(0 until numLEDs / 2) { i ->
-            val baseAnimation = data.copy(
-                animation = "Pixel Run",
-            )
-
             runSequential(
-                animation = baseAnimation.copy(direction = Direction.FORWARD),
+                animation = params.withModifications(animation = "Pixel Run",
+                                                     direction = Direction.FORWARD),
                 section = getSubSection(i, numLEDs - i - 1),
             )
             setAndFadePixel(
@@ -71,7 +68,8 @@ val bounce = PredefinedAnimation(
             )
 
             runSequential(
-                animation = baseAnimation.copy(direction = Direction.BACKWARD),
+                animation = params.withModifications(animation = "Pixel Run",
+                                                     direction = Direction.BACKWARD),
                 section = getSubSection(i, numLEDs - i - 2),
             )
             setAndFadePixel(

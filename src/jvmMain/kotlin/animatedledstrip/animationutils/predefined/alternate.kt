@@ -46,15 +46,15 @@ val alternate = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val nextColorIndex = data.extraData.getOrPut("nextColorIndex") { 0 } as Int
-    val color = data.pCols[nextColorIndex]
-    val delay = data.delay
+) { leds, params, _ ->
+    val nextColorIndex = params.extraData.getOrPut("nextColorIndex") { 0 } as Int
+    val color = params.colors[nextColorIndex]
+    val delay = params.delay
 
     leds.apply {
         setProlongedStripColor(color)
         delayBlocking(delay)
     }
 
-    data.extraData["nextColorIndex"] = if (nextColorIndex == data.pCols.lastIndex) 0 else nextColorIndex + 1
+    params.extraData["nextColorIndex"] = if (nextColorIndex == params.colors.lastIndex) 0 else nextColorIndex + 1
 }

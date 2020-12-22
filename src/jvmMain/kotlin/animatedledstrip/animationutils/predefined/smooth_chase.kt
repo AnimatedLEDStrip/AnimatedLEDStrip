@@ -53,10 +53,10 @@ val smoothChase = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val delay = data.delay
-    val direction = data.direction
+) { leds, params, _ ->
+    val color0 = params.colors[0]
+    val delay = params.delay
+    val direction = params.direction
 
     leds.apply {
         when (direction) {

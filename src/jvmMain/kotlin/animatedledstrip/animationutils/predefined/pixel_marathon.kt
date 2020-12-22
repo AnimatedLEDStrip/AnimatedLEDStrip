@@ -23,7 +23,7 @@
 package animatedledstrip.animationutils.predefined
 
 import animatedledstrip.animationutils.*
-import animatedledstrip.colors.ccpresets.EmptyColorContainer
+import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.utils.delayBlocking
 
 val pixelMarathon = PredefinedAnimation(
@@ -51,15 +51,15 @@ val pixelMarathon = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val color = data.colors.random()
-    val delay = data.delay
-    val direction = data.direction
+) { leds, params, scope ->
+    val color = params.colors.random()
+    val delay = params.delay
+    val direction = params.direction
 
     leds.apply {
-        if (color != EmptyColorContainer) {
+        if (color.isNotEmpty()) {
             runParallel(
-                AnimationData()
+                AnimationToRunParams()
                     .animation("Pixel Run")
                     .color(color)
                     .direction(direction)

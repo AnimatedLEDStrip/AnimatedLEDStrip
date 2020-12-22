@@ -85,7 +85,7 @@ abstract class AnimatedLEDStrip(
      * @property job The `Job` that is running the animation
      */
     data class RunningAnimation(
-        val data: AnimationData,
+        val data: AnimationToRunParams,
         val job: Job,
     ) {
         /**
@@ -107,7 +107,7 @@ abstract class AnimatedLEDStrip(
      * Start an animation. Determines the section based on the `section` parameter in `animation`.
      * See [Section.startAnimation].
      */
-    fun startAnimation(animation: AnimationData, animId: String? = null) =
+    fun startAnimation(animation: AnimationToRunParams, animId: String? = null) =
         getSection(animation.section).startAnimation(animation, animId)
 
     /**
@@ -137,13 +137,13 @@ abstract class AnimatedLEDStrip(
     /**
      * Callback run before the first iteration of the animation.
      */
-    var startAnimationCallback: ((AnimationData) -> Any?)? = null
+    var startAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
 
     /**
      * Callback run after the last iteration of the animation (but before the
      * animation is removed from `runningAnimations`).
      */
-    var endAnimationCallback: ((AnimationData) -> Any?)? = null
+    var endAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
 
     /**
      * Callback to run when a new section is created.
@@ -305,7 +305,7 @@ abstract class AnimatedLEDStrip(
          * @param animId Optional `String` parameter for setting the ID of the animation.
          * If not set, ID will be set to a random number between 0 and 100000000.
          */
-        fun startAnimation(animation: AnimationData, animId: String? = null): RunningAnimation? {
+        fun startAnimation(animation: AnimationToRunParams, animId: String? = null): RunningAnimation? {
             val id = animId ?: (random() * 100000000).toInt().toString()
             animation.id = id
             val job = run(animation)
@@ -331,7 +331,7 @@ abstract class AnimatedLEDStrip(
          * @return The `Job` associated with the new coroutine
          */
         internal fun run(
-            data: AnimationData,
+            data: AnimationToRunParams,
             threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
             scope: CoroutineScope = GlobalScope,
             subAnimation: Boolean = false,
@@ -342,21 +342,21 @@ abstract class AnimatedLEDStrip(
                 return null
             }
 
-            data.prepare(this)
+            val params = data.prepare(this)
 
             Logger.trace("Starting $data")
 
             return scope.launch(threadPool) {
-                if (!subAnimation) startAnimationCallback?.invoke(data)
+                if (!subAnimation) startAnimationCallback?.invoke(params)
 
                 var runs = 0
-                while (isActive && (data.runCount == -1 || runs < data.runCount)) {
-                    definedAnimation.runAnimation(leds = this@Section, data = data, scope = this)
+                while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+                    definedAnimation.runAnimation(leds = this@Section, params = params, scope = this)
                     runs++
                 }
                 if (!subAnimation) {
-                    endAnimationCallback?.invoke(data)
-                    runningAnimations.remove(data.id)
+                    endAnimationCallback?.invoke(params)
+                    runningAnimations.remove(params.id)
                 }
             }
         }
@@ -373,7 +373,7 @@ abstract class AnimatedLEDStrip(
          * @return The `Job` associated with the new coroutine
          */
         fun runParallel(
-            animation: AnimationData,
+            animation: AnimationToRunParams,
             scope: CoroutineScope,
             section: Section = this,
             pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
@@ -394,7 +394,7 @@ abstract class AnimatedLEDStrip(
          * @param runCount The number of times to run the animation
          */
         fun runSequential(
-            animation: AnimationData,
+            animation: AnimationToRunParams,
             section: Section = this,
             runCount: Int = 1,
         ) = runBlocking {
@@ -553,8 +553,6 @@ abstract class AnimatedLEDStrip(
     }
 
     companion object {
-        const val sectionPrefix = "SECT"
-
         object SectionExStrategy : ExclusionStrategy {
             override fun shouldSkipClass(p0: Class<*>?) = false
 

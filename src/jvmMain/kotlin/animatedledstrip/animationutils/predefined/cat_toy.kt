@@ -46,12 +46,12 @@ val catToy = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val delay = data.delay
+) { leds, params, _ ->
+    val color0 = params.colors[0]
+    val delay = params.delay
     var doRevert = true
     var doDelay = true
-    val lastPixel = data.extraData.getOrPut("lastPixel") {
+    val lastPixel = params.extraData.getOrPut("lastPixel") {
         doRevert = false
         0
     } as Int
@@ -64,18 +64,14 @@ val catToy = PredefinedAnimation(
         when {
             pixel > lastPixel ->
                 runSequential(
-                    animation = data.copy(
-                        animation = "Pixel Run",
-                        direction = Direction.FORWARD,
-                    ),
+                    animation = params.withModifications(animation = "Pixel Run",
+                                                         direction = Direction.FORWARD),
                     section = getSubSection(lastPixel, pixel),
                 )
             pixel < lastPixel ->
                 runSequential(
-                    animation = data.copy(
-                        animation = "Pixel Run",
-                        direction = Direction.BACKWARD,
-                    ),
+                    animation = params.withModifications(animation = "Pixel Run",
+                                                         direction = Direction.BACKWARD),
                     section = getSubSection(pixel, lastPixel),
                 )
             pixel == lastPixel -> doDelay = false
@@ -85,7 +81,7 @@ val catToy = PredefinedAnimation(
 
         if (doDelay) delayBlocking((Math.random() * delay * 500).toLong())
 
-        data.extraData["lastPixel"] = pixel
+        params.extraData["lastPixel"] = pixel
 
     }
 }

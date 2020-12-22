@@ -51,9 +51,9 @@ val sparkle = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val color0 = data.pCols[0]
-    val delay = data.delay
+) { leds, params, scope ->
+    val color0 = params.colors[0]
+    val delay = params.delay
 
     leds.apply {
         val jobs = indices.map { n ->

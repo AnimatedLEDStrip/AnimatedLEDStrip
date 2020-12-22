@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -20,31 +20,12 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animationutils.predefined
+package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.ParamUsage
-import animatedledstrip.animationutils.PredefinedAnimation
+import io.kotest.core.spec.style.StringSpec
 
-val color = PredefinedAnimation(
-    Animation.AnimationInfo(
-        name = "Color",
-        abbr = "COL",
-        description = "Sets the strip to a color.",
-        signatureFile = "color.png",
-        runCountDefault = 1,
-        minimumColors = 1,
-        unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.NOTUSED,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
-    )
-) { leds, params, _ ->
-    val color0 = params.colors[0]
+class RunningAnimationParamsTest : StringSpec(
+    {
 
-    leds.apply {
-        setProlongedStripColor(color0)
     }
-}
+)

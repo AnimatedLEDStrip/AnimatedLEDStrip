@@ -22,7 +22,7 @@
 
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.offsetBy
 import animatedledstrip.utils.delayBlocking
@@ -257,7 +257,7 @@ fun AnimatedLEDStrip.Section.setPixelAndRevertAfterDelay(pixel: Int, color: Prep
  */
 fun AnimatedLEDStrip.Section.runParallelAndJoin(
     scope: CoroutineScope,
-    vararg animations: Pair<AnimationData, AnimatedLEDStrip.Section>,
+    vararg animations: Pair<AnimationToRunParams, AnimatedLEDStrip.Section>,
     pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
 ) {
     val jobs = mutableListOf<Job>()
