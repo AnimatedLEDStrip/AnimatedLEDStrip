@@ -25,13 +25,9 @@ package animatedledstrip.test.utils
 import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.animationutils.Direction
 import animatedledstrip.animationutils.definedAnimationNames
-import animatedledstrip.animationutils.predefined.fireworks
 import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.utils.jsonToAnimationInfo
-import animatedledstrip.utils.jsonToStripInfo
 import animatedledstrip.utils.toColorContainer
-import animatedledstrip.utils.toUTF8
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
 
@@ -107,14 +103,14 @@ class SendableDataTests : StringSpec(
             }
         }
 
-        "animation info JSON" {
-            val info1 = fireworks.info
-            val infoBytes = info1.json()
-
-            val info2 = infoBytes.toUTF8(infoBytes.size).jsonToAnimationInfo()
-
-            assertTrue { info1 == info2 }
-        }
+//        "animation info JSON" {
+//            val info1 = fireworks.info
+//            val infoBytes = info1.json()
+//
+//            val info2 = infoBytes.toUTF8(infoBytes.size).jsonToAnimationInfo()
+//
+//            assertTrue { info1 == info2 }
+//        }
 
         "section to human readable string" {
             val section1 = EmulatedAnimatedLEDStrip(50).createSection("Test", 5, 10)
@@ -132,21 +128,21 @@ class SendableDataTests : StringSpec(
             }
         }
 
-        "strip info JSON" {
-            val info1 = StripInfo(
-                numLEDs = 10,
-                pin = 15,
-                imageDebugging = true,
-                fileName = "test.csv",
-                rendersBeforeSave = 100,
-                threadCount = 200,
-            )
-            val infoBytes = info1.json()
-
-            val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
-
-            assertTrue { info1 == info2 }
-        }
+//        "strip info JSON" {
+//            val info1 = StripInfo(
+//                numLEDs = 10,
+//                pin = 15,
+//                imageDebugging = true,
+//                fileName = "test.csv",
+//                rendersBeforeSave = 100,
+//                threadCount = 200,
+//            )
+//            val infoBytes = info1.json()
+//
+//            val info2 = infoBytes.toUTF8(infoBytes.size).jsonToStripInfo()
+//
+//            assertTrue { info1 == info2 }
+//        }
 
         "strip info to human readable string" {
             val info1 = StripInfo(

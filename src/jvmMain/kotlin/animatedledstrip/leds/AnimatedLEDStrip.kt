@@ -81,11 +81,11 @@ abstract class AnimatedLEDStrip(
     /**
      * Class for tracking a currently running animation.
      *
-     * @property data An `AnimationData` instance with the properties of the animation
+     * @property params An `AnimationData` instance with the properties of the animation
      * @property job The `Job` that is running the animation
      */
     data class RunningAnimation(
-        val data: AnimationToRunParams,
+        val params: RunningAnimationParams,
         val job: Job,
     ) {
         /**
@@ -308,10 +308,11 @@ abstract class AnimatedLEDStrip(
         fun startAnimation(animation: AnimationToRunParams, animId: String? = null): RunningAnimation? {
             val id = animId ?: (random() * 100000000).toInt().toString()
             animation.id = id
-            val job = run(animation)
+            val (job, params) = run(animation)
             Logger.trace(job)
             if (job != null) {
-                runningAnimations[id] = RunningAnimation(animation, job)
+                checkNotNull(params)
+                runningAnimations[id] = RunningAnimation(params, job)
             }
             // Will return null if job was null because runningAnimations[id] would not have been set
             return runningAnimations[id]
@@ -335,18 +336,18 @@ abstract class AnimatedLEDStrip(
             threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
             scope: CoroutineScope = GlobalScope,
             subAnimation: Boolean = false,
-        ): Job? {
+        ): Pair<Job?, RunningAnimationParams?> {
             val definedAnimation = findAnimationOrNull(data.animation) ?: run {
                 Logger.warn("Animation ${data.animation} not found")
                 Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
-                return null
+                return Pair(null, null)
             }
 
             val params = data.prepare(this)
 
             Logger.trace("Starting $data")
 
-            return scope.launch(threadPool) {
+            return Pair(scope.launch(threadPool) {
                 if (!subAnimation) startAnimationCallback?.invoke(params)
 
                 var runs = 0
@@ -358,7 +359,7 @@ abstract class AnimatedLEDStrip(
                     endAnimationCallback?.invoke(params)
                     runningAnimations.remove(params.id)
                 }
-            }
+            }, params)
         }
 
 
@@ -384,7 +385,7 @@ abstract class AnimatedLEDStrip(
                 threadPool = pool,
                 scope = scope,
                 subAnimation = true,
-            )
+            ).first
         }
 
         /**
@@ -403,7 +404,7 @@ abstract class AnimatedLEDStrip(
                 threadPool = parallelAnimationThreadPool,
                 scope = this,
                 subAnimation = true,
-            )
+            ).first
             job?.join()
             Unit
         }
