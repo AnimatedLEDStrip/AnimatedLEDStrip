@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.animationutils
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
@@ -29,6 +29,7 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.leds.endAnimation
 import animatedledstrip.leds.join
 import animatedledstrip.leds.joinBlocking
+import animatedledstrip.test.assertAllPixels
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import kotlinx.coroutines.delay
@@ -52,7 +53,7 @@ class AnimationTests {
     fun testColor() = runBlocking {
         val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-        val anim = testLEDs.startAnimation(AnimationData().animation("Color").color(0xFF))
+        val anim = testLEDs.startAnimation(AnimationToRunParams().animation("Color").color(0xFF))
         assertNotNull(anim)
         delay(500)
         anim.endAnimation()
@@ -64,7 +65,7 @@ class AnimationTests {
     fun testAlternate() {
         val leds = spyk(ledStrip.wholeStrip)
 
-        val anim = leds.startAnimation(AnimationData()
+        val anim = leds.startAnimation(AnimationToRunParams()
                                            .animation("Alternate")
                                            .color(0xFF, index = 0)
                                            .color(0xFFFF, index = 1)
@@ -89,7 +90,7 @@ class AnimationTests {
                 spyk(ledStrip.createSection("bnc-1", 0, 9))
 
             val anim = leds.startAnimation(
-                AnimationData()
+                AnimationToRunParams()
                     .animation("Bounce")
                     .color(0xFF)
                     .runCount(1)
@@ -151,7 +152,7 @@ class AnimationTests {
                 spyk(ledStrip.createSection("bnc-2", 0, 10))
 
             val anim = leds.startAnimation(
-                AnimationData()
+                AnimationToRunParams()
                     .animation("Bounce")
                     .color(0xFF)
                     .runCount(1)
@@ -221,7 +222,7 @@ class AnimationTests {
                 spyk(ledStrip.createSection("btc-1", 0, 9))
 
             val anim = leds.startAnimation(
-                AnimationData()
+                AnimationToRunParams()
                     .animation("Bounce to Color")
                     .color(0xFF)
                     .runCount(1)
@@ -275,7 +276,7 @@ class AnimationTests {
                 spyk(ledStrip.createSection("btc-2", 0, 10))
 
             val anim = leds.startAnimation(
-                AnimationData()
+                AnimationToRunParams()
                     .animation("Bounce to Color")
                     .color(0xFF)
                     .runCount(1)
@@ -332,7 +333,7 @@ class AnimationTests {
         val leds =
             spyk(ledStrip.createSection("bst", 0, 9))
 
-        val data = spyk(AnimationData()
+        val data = spyk(AnimationToRunParams()
                             .animation("Bubble Sort")
                             .color(ColorContainer(0xFF, 0xFFFF)))
 
@@ -499,7 +500,7 @@ class AnimationTests {
                 listOf(2)
 
         val anim = leds.startAnimation(
-            AnimationData()
+            AnimationToRunParams()
                 .animation("Cat Toy")
                 .color(0xFF)
                 .delay(1)
@@ -564,7 +565,7 @@ class AnimationTests {
         every { leds.shuffledIndices } returns listOf(1, 9, 4, 2, 7, 0, 3, 6, 8, 5)
 
         val anim = leds.startAnimation(
-            AnimationData()
+            AnimationToRunParams()
                 .animation("Cat Toy to Color")
                 .color(ColorContainer(0xFF, 0xFFFF))
                 .delay(1)
@@ -711,7 +712,7 @@ class AnimationTests {
             spyk(ledStrip.createSection("ftc", 0, 9))
 
         val anim = leds.startAnimation(
-            AnimationData()
+            AnimationToRunParams()
                 .animation("Fade to Color")
                 .addColor(ColorContainer(0xFF, 0xFFFF))
         )

@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.colors
 
 import animatedledstrip.colors.*
 import io.kotest.core.spec.style.StringSpec
@@ -50,8 +50,8 @@ class ColorContainerTest : StringSpec(
 
         "list constructor" {
             @Suppress("RemoveExplicitTypeArguments")
-            val testCC = ColorContainer(listOf<Long>(0xFF2431, 0x5F3C4B))
-            assertTrue { testCC.colors == listOf<Long>(0xFF2431, 0x5F3C4B) }
+            val testCC = ColorContainer(mutableListOf<Long>(0xFF2431, 0x5F3C4B))
+            assertTrue { testCC.colors == mutableListOf<Long>(0xFF2431, 0x5F3C4B) }
         }
 
         "equality" {

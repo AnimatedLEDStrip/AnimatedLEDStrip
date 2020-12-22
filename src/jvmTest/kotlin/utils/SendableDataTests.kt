@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.utils
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.animationutils.predefined.fireworks
@@ -36,7 +36,7 @@ class SendableDataTests : StringSpec(
         "animation data json" {
             val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
-            val testData1 = AnimationData().animation("Stack")
+            val testData1 = AnimationToRunParams().animation("Stack")
                 .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
                 .color(0xFF, index = 1)
                 .color(0xFF, index = 2)
@@ -55,7 +55,7 @@ class SendableDataTests : StringSpec(
 
         "animation data to human readable string" {
             assertTrue {
-                AnimationData().toHumanReadableString() ==
+                AnimationToRunParams().toHumanReadableString() ==
                         """
                         AnimationData for 
                           animation: Color
@@ -73,9 +73,9 @@ class SendableDataTests : StringSpec(
             }
 
             assertTrue {
-                AnimationData(
+                AnimationToRunParams(
                     animation = "Bounce",
-                    colors = listOf(0xFF.toColorContainer()),
+                    colors = mutableListOf(0xFF.toColorContainer()),
                     center = 30,
                     delay = 10,
                     delayMod = 2.0,
@@ -110,19 +110,6 @@ class SendableDataTests : StringSpec(
             val info2 = infoBytes.toUTF8(infoBytes.size).jsonToAnimationInfo()
 
             assertTrue { info1 == info2 }
-        }
-
-        "end animation JSON" {
-            val end1 = EndAnimation(id = "test")
-            val endBytes = end1.json()
-
-            val end2 = endBytes.toUTF8(endBytes.size).jsonToEndAnimation()
-
-            assertTrue { end1 == end2 }
-        }
-
-        "end animation to human readable string" {
-            assertTrue { EndAnimation("15235").toHumanReadableString() == "End of animation 15235" }
         }
 
         "section to human readable string" {

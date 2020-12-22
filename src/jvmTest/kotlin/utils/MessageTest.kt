@@ -20,26 +20,37 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.utils
 
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.utils.Message
+import animatedledstrip.utils.decodeJson
+import animatedledstrip.utils.toUTF8
 import io.kotest.core.spec.style.StringSpec
-import kotlin.test.assertFailsWith
+import io.kotest.matchers.shouldBe
 
-class EmulatedWS281xTest : StringSpec(
+class MessageTest : StringSpec(
     {
-        "close" {
-            EmulatedAnimatedLEDStrip(50).ledStrip.close()
+        "encode JSON" {
+            Message("A very important message").jsonString() shouldBe
+                    """{"type":"animatedledstrip.utils.Message","message":"A very important message"};;;"""
         }
 
-        "validate pixel" {
-            val testLEDs = EmulatedAnimatedLEDStrip(50)
+        "decode JSON" {
+            val json =
+                """{"type":"animatedledstrip.utils.Message","message":"a message"};;;"""
 
-            assertFailsWith(IllegalArgumentException::class) {
-                testLEDs.ledStrip.getPixelColor(50)
-            }
-            assertFailsWith(IllegalArgumentException::class) {
-                testLEDs.ledStrip.getPixelColor(-1)
-            }
+            val correctData = Message("a message")
+
+            json.decodeJson() as Message shouldBe correctData
         }
-    })
+
+        "encode and decode JSON" {
+            val msg1 = Message("Another message")
+            val msgBytes = msg1.json()
+
+            val msg2 = msgBytes.toUTF8().decodeJson() as Message
+
+            msg1 shouldBe msg2
+        }
+    }
+)

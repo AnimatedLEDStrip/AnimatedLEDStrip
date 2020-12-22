@@ -20,9 +20,9 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.utils
 
-import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.leds.StripInfo
 import animatedledstrip.leds.iterateOver
 import animatedledstrip.utils.*
@@ -127,7 +127,7 @@ class UtilsTest : StringSpec(
         }
 
         "animation data to end animation" {
-            val data = AnimationData(id = "Test")
+            val data = AnimationToRunParams(id = "Test")
             val end = data.endAnimation()
             assertTrue { data.id == end.id }
         }

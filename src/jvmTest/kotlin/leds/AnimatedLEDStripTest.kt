@@ -20,13 +20,16 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.leds
 
-import animatedledstrip.animationutils.AnimationData
+import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.animationutils.animation
 import animatedledstrip.animationutils.delay
 import animatedledstrip.animationutils.runCount
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.test.assertLogs
+import animatedledstrip.test.startLogCapture
+import animatedledstrip.test.stopLogCapture
 import animatedledstrip.utils.delayBlocking
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -52,7 +55,7 @@ class AnimatedLEDStripTest : FunSpec({
             Unit
         }
 
-        testLEDs.startAnimation(AnimationData().animation("Alternate").delay(10).runCount(1))
+        testLEDs.startAnimation(AnimationToRunParams().animation("Alternate").delay(10).runCount(1))
 
         delayBlocking(500)
 

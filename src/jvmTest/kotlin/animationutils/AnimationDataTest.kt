@@ -20,22 +20,20 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.animationutils
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.utils.toColorContainer
+import animatedledstrip.utils.decodeJson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
 
 class AnimationDataTest : StringSpec(
     {
-        "animation" {
-            val testAnimation = AnimationData()
+        "set animation" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.animation shouldBe "Color"
 
@@ -46,8 +44,8 @@ class AnimationDataTest : StringSpec(
             testAnimation.animation shouldBe "Splat"
         }
 
-        "colors" {
-            val testAnimation = AnimationData()
+        "set colors" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.color(0xFF)
             testAnimation.colors[0] shouldBe ColorContainer(0xFF)
@@ -119,8 +117,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "center" {
-            val testAnimation = AnimationData()
+        "set center" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.center = 10
             testAnimation.center shouldBe 10
@@ -129,8 +127,8 @@ class AnimationDataTest : StringSpec(
             testAnimation.center shouldBe 15
         }
 
-        "delay" {
-            val testAnimation = AnimationData()
+        "set delay" {
+            val testAnimation = AnimationToRunParams()
 
             DEFAULT_DELAY shouldBe 50L
 
@@ -160,8 +158,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "delayMod" {
-            val testAnimation = AnimationData()
+        "set delayMod" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.delayMod shouldBe 1.0
 
@@ -176,8 +174,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "direction" {
-            val testAnimation = AnimationData()
+        "set direction" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.direction shouldBe Direction.FORWARD
 
@@ -211,8 +209,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "distance" {
-            val testAnimation = AnimationData()
+        "set distance" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.distance = 50
             testAnimation.distance shouldBe 50
@@ -222,8 +220,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "id" {
-            val testAnimation = AnimationData()
+        "set id" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.id shouldBe ""
 
@@ -235,8 +233,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "section" {
-            val testAnimation = AnimationData()
+        "set section" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.section shouldBe ""
 
@@ -248,8 +246,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "spacing" {
-            val testAnimation = AnimationData()
+        "set spacing" {
+            val testAnimation = AnimationToRunParams()
 
             DEFAULT_SPACING shouldBe 3
             testAnimation.spacing shouldBe DEFAULT_SPACING
@@ -277,8 +275,8 @@ class AnimationDataTest : StringSpec(
 
         }
 
-        "speed" {
-            val testAnimation = AnimationData()
+        "set speed" {
+            val testAnimation = AnimationToRunParams()
 
             testAnimation.speed(AnimationSpeed.FAST)
             testAnimation.delayMod shouldBe 2.0
@@ -291,112 +289,25 @@ class AnimationDataTest : StringSpec(
 
         }
 
+        "decode JSON" {
+            val json =
+                """{"type":"animatedledstrip.animationutils.AnimationData","animation":"Meteor","center":50,"colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[255,65280]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
 
-        "equality" {
-            val testAnimation1 = AnimationData()
-                .animation("Stack")
-                .color0(0xFFFF)
-                .color1(0xFFFFFF)
-                .delay(10)
-                .direction(Direction.BACKWARD)
-                .spacing(4)
+            val correctData = AnimationToRunParams(animation = "Meteor",
+                                                   colors = mutableListOf(ColorContainer(0xFF, 0xFF00),
+                                                                   ColorContainer(0xFF0000)),
+                                                   center = 50,
+                                                   delay = 10,
+                                                   delayMod = 1.5,
+                                                   direction = Direction.BACKWARD,
+                                                   distance = 45,
+                                                   id = "TEST",
+                                                   runCount = 2,
+                                                   section = "SECT",
+                                                   spacing = 5)
 
-            val testAnimation2 = AnimationData().apply {
-                animation = "sta ck"
-                addColor(0xFFFF)
-                addColor(0xFFFFFF)
-                delay = 10
-                direction = Direction.BACKWARD
-                spacing = 4
-            }
-
-            testAnimation1 shouldBe testAnimation1
-            testAnimation1 shouldBe testAnimation2
-            testAnimation1 shouldNotBe 0xFF
-
+            json.decodeJson() as AnimationToRunParams shouldBe correctData
         }
 
-        "copy" {
-            val testAnimation1 = AnimationData()
-                .animation("Stack")
-                .color0(0xFFFF)
-                .color1(0xFFFFFF)
-                .delay(10)
-                .direction(Direction.BACKWARD)
-                .spacing(4)
-
-            val testAnimation2 = testAnimation1.copy()
-            assertFalse { testAnimation1 === testAnimation2 }
-            testAnimation1 shouldBe testAnimation2
-
-            val testAnimation3 = testAnimation1.copy(
-                animation = "Color",
-                colors = listOf(0xFF.toColorContainer()),
-                center = 30,
-                delay = 10,
-                delayMod = 2.0,
-                direction = Direction.FORWARD,
-                distance = 50,
-                id = "test",
-                section = "section",
-                spacing = 4,
-            )
-
-            assertFalse { testAnimation1 === testAnimation3 }
-            assertFalse { testAnimation1 == testAnimation3 }
-
-        }
-
-//        "string" {
-//            assertTrue {
-//                AnimationData().toString() ==
-//                        "AnimationData(animation=Color, colors=[], center=-1, delay=50, " +
-//                        "delayMod=1.0, direction=FORWARD, distance=-1, id=, runCount=1, section=, spacing=3)"
-//            }
-//
-//            assertTrue {
-//                AnimationData(
-//                    animation = "Bounce",
-//                    colors = listOf(0xFF.toColorContainer()),
-//                    center = 30,
-//                    delay = 10,
-//                    delayMod = 2.0,
-//                    direction = Direction.BACKWARD,
-//                    distance = 50,
-//                    id = "test",
-//                    section = "section",
-//                    spacing = 4,
-//                ).toString() ==
-//                        "AnimationData(animation=Bounce, colors=[ff], center=30, delay=10, delayMod=2.0, " +
-//                        "direction=Direction.BACKWARD, distance=50, id=test, runCount=-1, section=section, spacing=4)"
-//            }
-//
-//        }
-
-//        "serializable" {
-//            val testAnimation = AnimationData().animation("Stack")
-//                .color(ColorContainer(0xFF, 0xFFFF).prepare(5), index = 0)
-//                .color(0xFF, index = 1)
-//                .color(0xFF, index = 2)
-//                .color(0xFF, index = 3)
-//                .color(0xFF, index = 4)
-//                .delay(50)
-//                .direction(Direction.FORWARD)
-//                .id("TEST")
-//                .spacing(5)
-//            val fileOut = FileOutputStream("animation.ser")
-//            val out = ObjectOutputStream(fileOut)
-//            out.writeObject(testAnimation)
-//            out.close()
-//            fileOut.close()
-//            val fileIn = FileInputStream("animation.ser")
-//            val input = ObjectInputStream(fileIn)
-//            val testAnimation2: AnimationData = input.readObject() as AnimationData
-//            input.close()
-//            fileIn.close()
-//            testAnimation == testAnimation2
-//            Files.delete(Paths.get("animation.ser"))
-//
-//        }
 
     })

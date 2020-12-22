@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.utils
 
 import animatedledstrip.utils.tryWithLock
 import io.kotest.core.spec.style.StringSpec
