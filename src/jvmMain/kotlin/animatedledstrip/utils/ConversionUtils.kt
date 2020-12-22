@@ -22,55 +22,10 @@
 
 package animatedledstrip.utils
 
-import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.AnimationToRunParams
 import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.RunningAnimationParams
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.leds.AnimatedLEDStrip
-import animatedledstrip.leds.StripInfo
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 
-/* GSON */
-
-///**
-// * JSON Parser
-// */
-//val gson: Gson = GsonBuilder()
-//    .registerTypeAdapter(ColorContainerInterface::class.java, ColorContainerSerializer())
-//    .addSerializationExclusionStrategy(SendableData.Companion.ExStrategy)
-//    .addSerializationExclusionStrategy(AnimationData.Companion.ExStrategy)
-//    .addSerializationExclusionStrategy(AnimatedLEDStrip.Companion.SectionExStrategy)
-//    .create()
-
-
-val serializerModule = SerializersModule {
-    polymorphic(SendableData::class) {
-        subclass(Animation.AnimationInfo::class)
-        subclass(AnimationToRunParams::class)
-        subclass(Command::class)
-        subclass(EndAnimation::class)
-        subclass(Message::class)
-        subclass(RunningAnimationParams::class)
-        subclass(AnimatedLEDStrip.Section::class)
-        subclass(StripInfo::class)
-    }
-    polymorphic(ColorContainerInterface::class) {
-        subclass(ColorContainer::class)
-        subclass(PreparedColorContainer::class)
-    }
-}
-
-val serializer = Json {
-    encodeDefaults = true
-    serializersModule = serializerModule
-}
 
 /* 24-bit to 32-bit conversion */
 
@@ -101,97 +56,6 @@ fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
 /* AnimationData to EndAnimation */
 
 fun AnimationToRunParams.endAnimation(): EndAnimation = EndAnimation(this.id)
-
-/* JSON parsing */
-
-const val DELIMITER = ";;;"
-
-/**
- * Convert a json string into a class
- *
- * @param T The type of sendable data to create
- */
-fun String?.decodeJson(): SendableData {
-    requireNotNull(this)
-    return serializer.decodeFromString(this.removeSuffix(DELIMITER))
-}
-
-/**
- * Create an [AnimationToRunParams] from json
- */
-fun String?.jsonToAnimationData(): AnimationToRunParams = decodeJson() as AnimationToRunParams
-
-/**
- * Create an [Animation.AnimationInfo] from json
- */
-fun String?.jsonToAnimationInfo(): Animation.AnimationInfo = decodeJson() as Animation.AnimationInfo
-
-/**
- * Create a [Command] from json
- */
-fun String?.jsonToCommand(): Command = decodeJson() as Command
-
-/**
- * Create an [EndAnimation] from json
- */
-fun String?.jsonToEndAnimation(): EndAnimation = decodeJson() as EndAnimation
-
-/**
- * Create a [Message] from json
- */
-fun String?.jsonToMessage(): Message = decodeJson() as Message
-
-/**
- * Create an [AnimatedLEDStrip.Section] from json
- */
-fun String?.jsonToSection(ledStrip: AnimatedLEDStrip): AnimatedLEDStrip.Section = decodeJson() as AnimatedLEDStrip.Section
-
-//{
-//    requireNotNull(this)
-//    val map: Map<*, *> = try {
-//        serializer.decodeFromString(this.drop(5).removeSuffix(DELIMITER), Map::class.java)
-//    } catch (e: JsonSyntaxException) {
-//        throw JsonSyntaxException("Malformed JSON: $this", e)
-//    }
-//
-//    require(map["name"] != null || map["parent"] != null) {
-//        "name or parent property of animatedledstrip.leds.AnimatedLEDStrip.Section must be specified"
-//    }
-//    requireNotNull(map["startPixel"]) {
-//        jsonMissingPropertyMessage(AnimatedLEDStrip.Section::startPixel, AnimatedLEDStrip.Section::class)
-//    }
-//    requireNotNull(map["endPixel"]) {
-//        jsonMissingPropertyMessage(AnimatedLEDStrip.Section::endPixel, AnimatedLEDStrip.Section::class)
-//    }
-//
-//    val name = map["name"] as String?
-//    val startPixel = (map["startPixel"] as Double).toInt()
-//    val endPixel = (map["endPixel"] as Double).toInt()
-//    val parent = map["parent"] as String?
-//
-//    return if (parent != null) {
-//        ledStrip.getSection(parent).getSubSection(startPixel, endPixel)
-//    } else {
-//        ledStrip.createSection(name!!, startPixel, endPixel)
-//    }
-//}
-
-/**
- * Create a [StripInfo] from json
- */
-fun String?.jsonToStripInfo(): StripInfo = decodeJson() as StripInfo
-
-
-///**
-// * Get the four characters at the beginning of the string that are used to
-// * indicate the type of data, i.e. `DATA`, `AINF`, `CMD `, `END `, `MSG `,
-// * `SECT`, `SINF`, etc.
-// * Note the extra space at the end of `CMD `, `END ` and `MSG `.
-// */
-//fun String?.getDataTypePrefix(): String {
-//    requireNotNull(this)
-//    return this.take(4)
-//}
 
 
 /* `ByteArray` to UTF-8 `String` */
