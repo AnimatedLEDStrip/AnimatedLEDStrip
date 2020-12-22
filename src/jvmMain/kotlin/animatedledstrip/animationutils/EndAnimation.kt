@@ -23,19 +23,14 @@
 package animatedledstrip.animationutils
 
 import animatedledstrip.utils.SendableData
+import kotlinx.serialization.Serializable
 
 /**
  * Communicates that an animation should end or is ending
  *
  * @property id The ID of the animation
  */
+@Serializable
 data class EndAnimation(val id: String = "") : SendableData {
-
-    companion object {
-        const val prefix = "END "
-    }
-
-    override val prefix = EndAnimation.prefix
-
     override fun toHumanReadableString(): String = "End of animation $id"
 }

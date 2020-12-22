@@ -25,6 +25,7 @@ package animatedledstrip.animationutils
 import animatedledstrip.leds.AnimatedLEDStrip
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.serialization.Serializable
 
 /**
  * Represents an animation
@@ -63,6 +64,7 @@ abstract class Animation(open val info: AnimationInfo) {
      * @property distanceDefault Default value for the `distance` parameter
      * @property spacingDefault Default value for the `spacing` parameter
      */
+    @Serializable
     data class AnimationInfo(
         val name: String,
         val abbr: String,
@@ -80,12 +82,6 @@ abstract class Animation(open val info: AnimationInfo) {
         val distanceDefault: Int = -1,
         val spacingDefault: Int = DEFAULT_SPACING,
     ) : SendableData {
-
-        companion object {
-            const val prefix = "AINF"
-        }
-
-        override val prefix = AnimationInfo.prefix
 
         override fun toHumanReadableString(): String =
             """

@@ -22,13 +22,10 @@
 
 package animatedledstrip.utils
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Message(val message: String = "") : SendableData {
-
-    companion object {
-        const val prefix = "MSG "
-    }
-
-    override val prefix = Message.prefix
 
     override fun toHumanReadableString(): String =
         """

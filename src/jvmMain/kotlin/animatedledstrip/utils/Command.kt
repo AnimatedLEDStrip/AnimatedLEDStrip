@@ -22,13 +22,10 @@
 
 package animatedledstrip.utils
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Command(val command: String = "") : SendableData {
-
-    companion object {
-        const val prefix = "CMD "
-    }
-
-    override val prefix = Command.prefix
 
     override fun toHumanReadableString(): String =
         """

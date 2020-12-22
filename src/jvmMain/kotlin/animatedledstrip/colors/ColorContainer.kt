@@ -24,20 +24,24 @@ package animatedledstrip.colors
 
 import animatedledstrip.utils.base
 import animatedledstrip.utils.blend
+import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 
 /**
  * A class for storing colors that can be used in animations. This can store a
  * variable number of colors (stored as 24-bit Longs).
  */
-open class ColorContainer(vararg c: Long) : ColorContainerInterface {
+@Serializable
+open class ColorContainer(
+    final override val colors: MutableList<Long> = mutableListOf(),
+) : ColorContainerInterface {
 
     /* Colors */
 
     /**
      * A `List` of `Long`s representing the colors
      */
-    final override val colors = mutableListOf<Long>()
+//    final override val colors = mutableListOf<Long>()
 
     /**
      * A helper property that returns the first color in [colors]. If `colors`
@@ -59,7 +63,7 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
 
     /* Construction */
 
-    init {
+    constructor(vararg c: Long) : this() {
         for (i in c) colors += i
     }
 
@@ -69,13 +73,6 @@ open class ColorContainer(vararg c: Long) : ColorContainerInterface {
      */
     constructor(rgb: Triple<Int, Int, Int>)
             : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
-
-    /**
-     * Create a new ColorContainer from a `List<Long>`
-     */
-    constructor(colorList: List<Long>) : this() {
-        colors.addAll(colorList)
-    }
 
     /**
      * Copy constructor
