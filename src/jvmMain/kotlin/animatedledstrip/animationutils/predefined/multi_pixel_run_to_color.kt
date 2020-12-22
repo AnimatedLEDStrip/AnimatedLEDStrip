@@ -47,11 +47,11 @@ val multiPixelRunToColor = PredefinedAnimation(
         spacing = ParamUsage.USED,
         spacingDefault = 3,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val delay = data.delay
-    val direction = data.direction
-    val spacing = data.spacing
+) { leds, params, _ ->
+    val color0 = params.colors[0]
+    val delay = params.delay
+    val direction = params.direction
+    val spacing = params.spacing
 
     leds.apply {
         when (direction) {

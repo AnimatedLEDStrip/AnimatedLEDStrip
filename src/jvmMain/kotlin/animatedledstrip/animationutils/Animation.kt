@@ -43,7 +43,7 @@ abstract class Animation(open val info: AnimationInfo) {
      * Run the animation, passing it the strip section, information about how to run the animation,
      * and the scope of the animation
      */
-    abstract fun runAnimation(leds: AnimatedLEDStrip.Section, data: AnimationData, scope: CoroutineScope)
+    abstract fun runAnimation(leds: AnimatedLEDStrip.Section, params: RunningAnimationParams, scope: CoroutineScope)
 
     /**
      * Stores information about an animation.

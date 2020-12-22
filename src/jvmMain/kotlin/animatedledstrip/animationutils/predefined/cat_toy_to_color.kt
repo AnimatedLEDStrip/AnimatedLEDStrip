@@ -50,10 +50,10 @@ val catToyToColor = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val inverseColor = data.pCols[0].inverse()
-    val delay = data.delay
+) { leds, params, _ ->
+    val color0 = params.colors[0]
+    val inverseColor = params.colors[0].inverse()
+    val delay = params.delay
 
     leds.apply {
         val pixels: List<Int> = shuffledIndices

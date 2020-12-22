@@ -50,11 +50,11 @@ val mergeSortParallel = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
+) { leds, params, scope ->
 
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Long)
 
-    val colorMap = data.pCols[0].colors.mapIndexed { index, it -> Pair(index, it) }.shuffled()
+    val colorMap = params.colors[0].colors.mapIndexed { index, it -> Pair(index, it) }.shuffled()
         .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }.toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.color })
 
@@ -94,7 +94,7 @@ val mergeSortParallel = PredefinedAnimation(
                                 updateColorAtLocation(p1)
                                 p1++
                                 if (p2 < endIndex) p2++
-                                delayBlocking(data.delay)
+                                delayBlocking(params.delay)
                             }
                         }
                     }

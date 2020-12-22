@@ -46,10 +46,10 @@ val bubbleSort = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val colorMap = data.pCols[0].shuffledWithIndices().toMutableList()
+) { leds, params, _ ->
+    val colorMap = params.colors[0].shuffledWithIndices().toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.second })
-    val delay = data.delay
+    val delay = params.delay
 
     leds.apply {
         setProlongedStripColor(color)

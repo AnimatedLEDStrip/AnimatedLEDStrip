@@ -49,18 +49,18 @@ val stack = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, _ ->
-    val color0 = data.pCols[0]
-    val direction = data.direction
+) { leds, params, _ ->
+    val color0 = params.colors[0]
+    val direction = params.direction
 
     leds.apply {
-        val baseAnimation = data.copy(animation = "Pixel Run")
+        val baseAnimation = params.withModifications(animation = "Pixel Run")
 
         when (direction) {
             Direction.FORWARD ->
                 iterateOverPixelsReverse {
                     runSequential(
-                        animation = baseAnimation.copy(),
+                        animation = baseAnimation,
                         section = getSubSection(0, it),
                     )
                     setProlongedPixelColor(it, color0)
@@ -68,7 +68,7 @@ val stack = PredefinedAnimation(
             Direction.BACKWARD ->
                 iterateOverPixels {
                     runSequential(
-                        animation = baseAnimation.copy(),
+                        animation = baseAnimation,
                         section = getSubSection(it, numLEDs - 1),
                     )
                     setProlongedPixelColor(it, color0)

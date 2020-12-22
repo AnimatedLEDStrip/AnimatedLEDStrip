@@ -62,6 +62,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.3.2")
+                implementation("io.kotest:kotest-property:4.3.2")
             }
         }
         val jvmMain by getting {
@@ -75,9 +76,9 @@ kotlin {
         val jvmTest by getting {
             dependencies {
 
-//                implementation(kotlin("test-junit"))
+                implementation(kotlin("test-junit"))
                 implementation("io.kotest:kotest-runner-junit5:4.3.2")
-                implementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.21")
+//                implementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.21")
 //                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
                 implementation("io.mockk:mockk:1.10.0")
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")

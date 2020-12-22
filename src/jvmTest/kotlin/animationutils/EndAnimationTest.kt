@@ -51,7 +51,7 @@ class EndAnimationTest : StringSpec(
 
             val end2 = endBytes.toUTF8(endBytes.size).decodeJson() as EndAnimation
 
-            end1 shouldBe end2
+            end2 shouldBe end1
         }
 
         "human readable string" {

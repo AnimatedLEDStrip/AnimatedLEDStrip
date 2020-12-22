@@ -32,7 +32,7 @@ import animatedledstrip.utils.parseHex
 /**
  * Sets the `animation` parameter.
  */
-fun AnimationData.animation(animation: String): AnimationData {
+fun AnimationToRunParams.animation(animation: String): AnimationToRunParams {
     this.animation = animation
     return this
 }
@@ -42,10 +42,10 @@ fun AnimationData.animation(animation: String): AnimationData {
  * Set the color using a ColorContainer, hex String, or Int or Long
  * in range(0..16777215)
  */
-fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
+fun AnimationToRunParams.color(color: Any, index: Int = 0): AnimationToRunParams {
     if (colors.size <= index)
         for (i in colors.size..index)
-            colors += CCBlack
+            colors.add(CCBlack)
 
     when (color) {
         is ColorContainerInterface -> colors[index] = color.toColorContainer()
@@ -61,15 +61,15 @@ fun AnimationData.color(color: Any, index: Int = 0): AnimationData {
 /**
  * Append a color to the end of `colors`
  */
-fun AnimationData.addColor(color: ColorContainerInterface): AnimationData {
-    colors += color.toColorContainer()
+fun AnimationToRunParams.addColor(color: ColorContainerInterface): AnimationToRunParams {
+    colors.add(color.toColorContainer())
     return this
 }
 
 /**
  * Append multiple colors to the end of `colors`
  */
-fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationData {
+fun AnimationToRunParams.addColors(vararg colors: ColorContainerInterface): AnimationToRunParams {
     colors.forEach { addColor(it) }
     return this
 }
@@ -77,15 +77,15 @@ fun AnimationData.addColors(vararg colors: ColorContainerInterface): AnimationDa
 /**
  * Append a color to the end of `colors`
  */
-fun AnimationData.addColor(color: Long): AnimationData {
-    colors += ColorContainer(color)
+fun AnimationToRunParams.addColor(color: Long): AnimationToRunParams {
+    colors.add(ColorContainer(color))
     return this
 }
 
 /**
  * Append multiple colors to the end of `colors`
  */
-fun AnimationData.addColors(vararg colors: Long): AnimationData {
+fun AnimationToRunParams.addColors(vararg colors: Long): AnimationToRunParams {
     colors.forEach { addColor(it) }
     return this
 }
@@ -93,15 +93,15 @@ fun AnimationData.addColors(vararg colors: Long): AnimationData {
 /**
  * Append a color to the end of `colors`
  */
-fun AnimationData.addColor(color: Int): AnimationData {
-    colors += ColorContainer(color.toLong())
+fun AnimationToRunParams.addColor(color: Int): AnimationToRunParams {
+    colors.add(ColorContainer(color.toLong()))
     return this
 }
 
 /**
  * Append multiple colors to the end of `colors`
  */
-fun AnimationData.addColors(vararg colors: Int): AnimationData {
+fun AnimationToRunParams.addColors(vararg colors: Int): AnimationToRunParams {
     colors.forEach { addColor(it) }
     return this
 }
@@ -111,8 +111,8 @@ fun AnimationData.addColors(vararg colors: Int): AnimationData {
  *
  * @param color A hexadecimal `String` representing the color
  */
-fun AnimationData.addColor(color: String): AnimationData {
-    colors += ColorContainer(parseHex(color))
+fun AnimationToRunParams.addColor(color: String): AnimationToRunParams {
+    colors.add(ColorContainer(parseHex(color)))
     return this
 }
 
@@ -121,7 +121,7 @@ fun AnimationData.addColor(color: String): AnimationData {
  *
  * @param colors Hexadecimal `String`s representing the colors
  */
-fun AnimationData.addColors(vararg colors: String): AnimationData {
+fun AnimationToRunParams.addColors(vararg colors: String): AnimationToRunParams {
     colors.forEach { addColor(it) }
     return this
 }
@@ -130,7 +130,7 @@ fun AnimationData.addColors(vararg colors: String): AnimationData {
 /**
  * Append multiple colors to the end of `colors`
  */
-fun AnimationData.addColors(colors: List<*>): AnimationData {
+fun AnimationToRunParams.addColors(colors: List<*>): AnimationToRunParams {
     require(colors.isNotEmpty())
     colors.forEach {
         when (it) {
@@ -152,34 +152,34 @@ fun AnimationData.addColors(colors: List<*>): AnimationData {
 /**
  * Set `colors[0]`
  */
-fun AnimationData.color0(color: Any): AnimationData = color(color, 0)
+fun AnimationToRunParams.color0(color: Any): AnimationToRunParams = color(color, 0)
 
 /**
  * Set `colors[1]`
  */
-fun AnimationData.color1(color: Any): AnimationData = color(color, 1)
+fun AnimationToRunParams.color1(color: Any): AnimationToRunParams = color(color, 1)
 
 /**
  * Set `colors[2]`
  */
-fun AnimationData.color2(color: Any): AnimationData = color(color, 2)
+fun AnimationToRunParams.color2(color: Any): AnimationToRunParams = color(color, 2)
 
 /**
  * Set `colors[3]`
  */
-fun AnimationData.color3(color: Any): AnimationData = color(color, 3)
+fun AnimationToRunParams.color3(color: Any): AnimationToRunParams = color(color, 3)
 
 /**
  * Set `colors[4]`
  */
-fun AnimationData.color4(color: Any): AnimationData = color(color, 4)
+fun AnimationToRunParams.color4(color: Any): AnimationToRunParams = color(color, 4)
 
 /**
  * Set the `center` parameter.
  *
  * @param pixel The index of the pixel at the center of a radial animation
  */
-fun AnimationData.center(pixel: Int): AnimationData {
+fun AnimationToRunParams.center(pixel: Int): AnimationToRunParams {
     this.center = pixel
     return this
 }
@@ -189,7 +189,7 @@ fun AnimationData.center(pixel: Int): AnimationData {
  *
  * @param delay An `Int` representing the delay time in milliseconds
  */
-fun AnimationData.delay(delay: Int): AnimationData {
+fun AnimationToRunParams.delay(delay: Int): AnimationToRunParams {
     this.delay = delay.toLong()
     return this
 }
@@ -199,7 +199,7 @@ fun AnimationData.delay(delay: Int): AnimationData {
  *
  * @param delay A `Long` representing the delay time in milliseconds
  */
-fun AnimationData.delay(delay: Long): AnimationData {
+fun AnimationToRunParams.delay(delay: Long): AnimationToRunParams {
     this.delay = delay
     return this
 }
@@ -209,7 +209,7 @@ fun AnimationData.delay(delay: Long): AnimationData {
  *
  * @param delayMod A `Double` that is a multiplier for `delay`
  */
-fun AnimationData.delayMod(delayMod: Double): AnimationData {
+fun AnimationToRunParams.delayMod(delayMod: Double): AnimationToRunParams {
     this.delayMod = delayMod
     return this
 }
@@ -219,7 +219,7 @@ fun AnimationData.delayMod(delayMod: Double): AnimationData {
  *
  * @param direction A `Direction` value ([Direction].`FORWARD` or [Direction].`BACKWARD`)
  */
-fun AnimationData.direction(direction: Direction): AnimationData {
+fun AnimationToRunParams.direction(direction: Direction): AnimationToRunParams {
     this.direction = direction
     return this
 }
@@ -230,11 +230,11 @@ fun AnimationData.direction(direction: Direction): AnimationData {
  * @param direction A `Char` representing `Direction.FORWARD` ('`F`') or
  * `Direction.BACKWARD` ('`B`')
  */
-fun AnimationData.direction(direction: Char): AnimationData {
+fun AnimationToRunParams.direction(direction: Char): AnimationToRunParams {
     this.direction = when (direction) {
         'F', 'f' -> Direction.FORWARD
         'B', 'b' -> Direction.BACKWARD
-        else -> throw Exception("Direction chars can be 'F' or 'B'")
+        else -> throw IllegalArgumentException("Direction chars can be 'F' or 'B'")
     }
     return this
 }
@@ -245,7 +245,7 @@ fun AnimationData.direction(direction: Char): AnimationData {
  * @param pixels The number of pixels away from the center pixel
  * that the radial animation should travel
  */
-fun AnimationData.distance(pixels: Int): AnimationData {
+fun AnimationToRunParams.distance(pixels: Int): AnimationToRunParams {
     this.distance = pixels
     return this
 }
@@ -255,13 +255,13 @@ fun AnimationData.distance(pixels: Int): AnimationData {
  *
  * @param id A `String` used to identify a continuous animation instance
  */
-fun AnimationData.id(id: String): AnimationData {
+fun AnimationToRunParams.id(id: String): AnimationToRunParams {
     this.id = id
     return this
 }
 
 
-fun AnimationData.runCount(runs: Int): AnimationData {
+fun AnimationToRunParams.runCount(runs: Int): AnimationToRunParams {
     this.runCount = runs
     return this
 }
@@ -272,7 +272,7 @@ fun AnimationData.runCount(runs: Int): AnimationData {
  *
  * @param sectionId A `String` used to identify a section of the strip
  */
-fun AnimationData.section(sectionId: String): AnimationData {
+fun AnimationToRunParams.section(sectionId: String): AnimationToRunParams {
     this.section = sectionId
     return this
 }
@@ -282,7 +282,7 @@ fun AnimationData.section(sectionId: String): AnimationData {
  *
  * @param spacing An `Int` that is the spacing used by the animation
  */
-fun AnimationData.spacing(spacing: Int): AnimationData {
+fun AnimationToRunParams.spacing(spacing: Int): AnimationToRunParams {
     this.spacing = spacing
     return this
 }
@@ -293,7 +293,7 @@ fun AnimationData.spacing(spacing: Int): AnimationData {
  *
  * @param speed The speed to set
  */
-fun AnimationData.speed(speed: AnimationSpeed): AnimationData {
+fun AnimationToRunParams.speed(speed: AnimationSpeed): AnimationToRunParams {
     delayMod = when (speed) {
         AnimationSpeed.SLOW -> 0.5
         AnimationSpeed.DEFAULT -> 1.0

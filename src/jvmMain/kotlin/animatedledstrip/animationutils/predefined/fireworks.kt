@@ -47,18 +47,16 @@ val fireworks = PredefinedAnimation(
         distanceDefault = 20,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val delay = data.delay
+) { leds, params, scope ->
+    val delay = params.delay
 
     leds.apply {
-        val color = data.pCols.random()
+        val color = params.colors.random()
         if (color.isNotEmpty()) {
             runParallel(
-                data.copy(
-                    colors = listOf(color),
-                    animation = "Ripple",
-                    center = indices.random(),
-                ),
+                params.withModifications(colors = mutableListOf(color),
+                                         animation = "Ripple",
+                                         center = indices.random()),
                 scope = scope
             )
             delayBlocking(delay * 20)

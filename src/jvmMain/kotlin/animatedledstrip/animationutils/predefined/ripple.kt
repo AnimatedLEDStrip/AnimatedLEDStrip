@@ -47,14 +47,14 @@ val ripple = PredefinedAnimation(
         distance = ParamUsage.USED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, data, scope ->
-    val color0 = data.pCols[0]
-    val center = data.center
-    val delay = data.delay
-    val distance = data.distance
+) { leds, params, scope ->
+    val color0 = params.colors[0]
+    val center = params.center
+    val delay = params.delay
+    val distance = params.distance
 
     leds.apply {
-        val baseAnimation = AnimationData()
+        val baseAnimation = AnimationToRunParams()
             .animation("Meteor")
             .color(color0)
             .delay(delay)

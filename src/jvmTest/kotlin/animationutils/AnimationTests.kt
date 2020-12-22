@@ -338,7 +338,7 @@ class AnimationTests {
                             .color(ColorContainer(0xFF, 0xFFFF)))
 
         mockkStatic("animatedledstrip.colors.CCUtilsKt")
-        every { data.pCols[any()].shuffledWithIndices() } returns
+        every { data.colors[any()].shuffledWithIndices() } returns
                 listOf(
                     Pair(1, 0x33FF),
                     Pair(9, 0x33FF),
