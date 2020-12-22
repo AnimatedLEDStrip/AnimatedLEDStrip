@@ -23,6 +23,7 @@
 package animatedledstrip.colors
 
 import animatedledstrip.utils.base
+import kotlinx.serialization.Serializable
 
 /**
  * A prepared [ColorContainer] that holds a set of colors that blend from one
@@ -33,7 +34,11 @@ import animatedledstrip.utils.base
  * @property originalColors The colors that were used to prepare this
  * `PreparedColorContainer`
  */
-class PreparedColorContainer(override val colors: List<Long>, val originalColors: List<Long> = colors) :
+@Serializable
+class PreparedColorContainer(
+    override val colors: List<Long>,
+    val originalColors: List<Long> = listOf(),
+) :
     ColorContainerInterface {
 
     /**
@@ -67,7 +72,7 @@ class PreparedColorContainer(override val colors: List<Long>, val originalColors
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer =
         if (numLEDs == size) this
-        else ColorContainer(originalColors).prepare(numLEDs)
+        else ColorContainer(originalColors.toMutableList()).prepare(numLEDs)
 
     /**
      * Returns the size of [colors].
@@ -78,7 +83,7 @@ class PreparedColorContainer(override val colors: List<Long>, val originalColors
     /**
      * Returns a new [ColorContainer] instance with the colors in [colors].
      */
-    override fun toColorContainer() = ColorContainer(colors)
+    override fun toColorContainer() = ColorContainer(colors.toMutableList())
 
     override fun equals(other: Any?): Boolean {
         return when (other) {

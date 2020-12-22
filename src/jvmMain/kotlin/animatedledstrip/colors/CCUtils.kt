@@ -201,7 +201,7 @@ operator fun ColorContainer.unaryMinus(): ColorContainer = inverse()
  * @return A new [ColorContainer] instance
  */
 fun PreparedColorContainer.inverse(): PreparedColorContainer =
-    ColorContainer(originalColors).invert().prepare(size)
+    ColorContainer(originalColors.toMutableList()).invert().prepare(size)
 
 /**
  * Returns a new [ColorContainer] with the same colors as this instance,

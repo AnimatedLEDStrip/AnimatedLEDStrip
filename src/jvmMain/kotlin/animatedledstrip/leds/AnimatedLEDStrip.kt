@@ -29,6 +29,7 @@ import animatedledstrip.utils.SendableData
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import kotlinx.coroutines.*
+import kotlinx.serialization.Serializable
 import org.pmw.tinylog.Logger
 import java.lang.Math.random
 
@@ -200,14 +201,18 @@ abstract class AnimatedLEDStrip(
      * @param parent The parent section of this section. A null parentSection implies that the parent
      *   is the whole strip.
      */
+    @Serializable
     inner class Section(
         val name: String,
         val startPixel: Int,
         val endPixel: Int,
-        parent: Section? = null,
     ) : SendableData {
 
-        override val prefix = sectionPrefix
+        private var parentStartPixel: Int = 0
+
+        constructor(name: String, startPixel: Int, endPixel: Int, parent: Section?) : this(name, startPixel, endPixel) {
+            parentStartPixel = parent?.startPixel ?: 0
+        }
 
         override fun toHumanReadableString() =
             """
@@ -231,7 +236,7 @@ abstract class AnimatedLEDStrip(
         /**
          * The start of this section on the physical LED strip.
          */
-        val physicalStart: Int = startPixel + (parent?.startPixel ?: 0)
+        val physicalStart: Int = startPixel + parentStartPixel
 
         /**
          * Get the actual index for a pixel on the physical strip.
