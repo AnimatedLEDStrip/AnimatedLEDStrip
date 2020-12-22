@@ -1,4 +1,4 @@
-package animatedledstrip.test
+package animatedledstrip.test.colors
 
 import animatedledstrip.colors.ccpresets.*
 import io.kotest.core.spec.style.StringSpec

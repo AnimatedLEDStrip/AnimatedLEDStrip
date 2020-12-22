@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.leds
 
 import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainer
@@ -28,6 +28,10 @@ import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.colors.ccpresets.CCBlue
 import animatedledstrip.leds.*
 import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.test.assertAllPixels
+import animatedledstrip.test.assertAllProlongedPixels
+import animatedledstrip.test.assertAllTemporaryPixels
+import animatedledstrip.test.assertPixels
 import animatedledstrip.utils.delayBlocking
 import io.kotest.core.spec.style.StringSpec
 import kotlinx.coroutines.newSingleThreadContext
@@ -406,7 +410,7 @@ class SectionTest : StringSpec(
 
         "start animation" {
             val testLEDs = EmulatedAnimatedLEDStrip(50)
-            val anim1 = AnimationData().animation("Alternate")
+            val anim1 = AnimationToRunParams().animation("Alternate")
             testLEDs.startAnimation(anim1, "TEST1")
             delayBlocking(100)
             assertTrue { testLEDs.runningAnimations.map.containsKey("TEST1") }
@@ -416,7 +420,7 @@ class SectionTest : StringSpec(
                 testLEDs.runningAnimations["TEST1"]?.job?.join()
             }
 
-            val anim2 = AnimationData().animation("Wipe").addColor(0xFF)
+            val anim2 = AnimationToRunParams().animation("Wipe").addColor(0xFF)
             testLEDs.startAnimation(anim2, "TEST2")
             delayBlocking(100)
             runBlocking {
@@ -425,7 +429,7 @@ class SectionTest : StringSpec(
             testLEDs.wholeStrip.assertAllPixels(0xFF)
 
             testLEDs.createSection("Sect", 15, 40)
-            val anim3 = AnimationData().animation("Wipe").addColor(0xFFFF).section("Sect")
+            val anim3 = AnimationToRunParams().animation("Wipe").addColor(0xFFFF).section("Sect")
             testLEDs.startAnimation(anim3, "TEST3")
             delayBlocking(100)
             runBlocking {
@@ -438,12 +442,12 @@ class SectionTest : StringSpec(
 
         "start animation bad animation" {
             val testLEDs = EmulatedAnimatedLEDStrip(50)
-            assertNull(testLEDs.startAnimation(AnimationData().animation("Im not an animation"), "TEST"))
+            assertNull(testLEDs.startAnimation(AnimationToRunParams().animation("Im not an animation"), "TEST"))
         }
 
         "run parallel" {
             val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-            val anim = AnimationData().animation("Color")
+            val anim = AnimationToRunParams().animation("Color")
 
             @Suppress("EXPERIMENTAL_API_USAGE")
             val pool = newSingleThreadContext("Test Pool")
@@ -456,7 +460,7 @@ class SectionTest : StringSpec(
             runningAnim?.cancel()
 
             // Test runParallelAndJoin
-            val badAnim = AnimationData().animation("NonexistentAnimation")
+            val badAnim = AnimationToRunParams().animation("NonexistentAnimation")
             testLEDs.runParallelAndJoin(this, Pair(anim, testLEDs), Pair(badAnim, testLEDs))
 
             Unit
@@ -466,9 +470,9 @@ class SectionTest : StringSpec(
             val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
             // Continuous false (default)
-            testLEDs.runSequential(AnimationData().animation("Color"))
+            testLEDs.runSequential(AnimationToRunParams().animation("Color"))
 
             // Bad Animation
-            testLEDs.runSequential(AnimationData().animation("Im not an animation"))
+            testLEDs.runSequential(AnimationToRunParams().animation("Im not an animation"))
         }
     })

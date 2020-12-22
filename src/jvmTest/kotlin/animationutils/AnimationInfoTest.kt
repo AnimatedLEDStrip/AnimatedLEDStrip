@@ -20,11 +20,12 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test
+package animatedledstrip.test.animationutils
 
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.predefined.*
+import animatedledstrip.utils.decodeJson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
@@ -511,5 +512,28 @@ class AnimationInfoTest : StringSpec(
                     """.trimIndent()
             }
 
+        }
+
+        "decode JSON" {
+            val json =
+                """{"type":"animatedledstrip.animationutils.Animation.AnimationInfo", "name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
+
+            val correctData = Animation.AnimationInfo(name = "Alternate",
+                                                      abbr = "ALT",
+                                                      description = "A description",
+                                                      signatureFile = "alternate.png",
+                                                      runCountDefault = 1,
+                                                      minimumColors = 2,
+                                                      unlimitedColors = true,
+                                                      center = ParamUsage.NOTUSED,
+                                                      delay = ParamUsage.USED,
+                                                      direction = ParamUsage.NOTUSED,
+                                                      distance = ParamUsage.NOTUSED,
+                                                      spacing = ParamUsage.NOTUSED,
+                                                      delayDefault = 1000,
+                                                      distanceDefault = 20,
+                                                      spacingDefault = 3)
+
+            json.decodeJson() as Animation.AnimationInfo shouldBe correctData
         }
     })
