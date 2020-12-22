@@ -23,6 +23,9 @@
 
 package animatedledstrip.utils
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
+
 /* Blend colors */
 
 /**
@@ -54,12 +57,7 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
  *
  * @param wait The time (in milliseconds) to wait for
  */
-fun delayBlocking(wait: Long) {
-    try {
-        Thread.sleep(wait)
-    } catch (e: InterruptedException) {
-    }
-}
+fun delayBlocking(wait: Long) = runBlocking { delay(wait) }
 
 /**
  * Overload for delayBlocking for when an `Int` is sent.
@@ -76,18 +74,15 @@ fun delayBlocking(wait: Int) = delayBlocking(wait.toLong())
  *
  * @param string The hex `String` to decode
  */
-fun parseHex(string: String): Long = java.lang.Long.parseLong(string.remove0xPrefix(), 16)
+fun parseHex(string: String): Long = string.remove0xPrefix().toLong(16)
 
 /**
  * Returns a `Long` from a hexadecimal `String` or `default` on error.
  *
  * @param string The hex `String` to decode
  */
-fun parseHexOrDefault(string: String, default: Long = 0x0L): Long = try {
-    java.lang.Long.parseLong(string.remove0xPrefix(), 16)
-} catch (e: NumberFormatException) {
-    default
-}
+fun parseHexOrDefault(string: String, default: Long = 0x0L): Long =
+    string.remove0xPrefix().toLongOrNull(16) ?: default
 
 /**
  * Helper function for removing the 0x prefix from a hex string
