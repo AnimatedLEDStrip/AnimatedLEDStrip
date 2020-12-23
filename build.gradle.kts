@@ -6,6 +6,7 @@ plugins {
     kotlin("multiplatform") version "1.4.21"
     kotlin("plugin.serialization") version "1.4.21"
     id("io.kotest") version "0.2.6"
+    id("maven-publish")
 }
 
 repositories {
@@ -35,28 +36,33 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
-    js(LEGACY) {
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadless()
-                    webpackConfig.cssSupport.enabled = true
-                }
-            }
-        }
-    }
-    val hostOs = System.getProperty("os.name")
-    val isMingwX64 = hostOs.startsWith("Windows")
-    val nativeTarget = when {
-        hostOs == "Mac OS X" -> macosX64("native")
-        hostOs == "Linux" -> linuxX64("native")
-        isMingwX64 -> mingwX64("native")
-        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
-    }
+//    js(LEGACY) {
+//        browser {
+//            testTask {
+//                useKarma {
+//                    useChromeHeadless()
+//                    webpackConfig.cssSupport.enabled = true
+//                }
+//            }
+//        }
+//    }
+//    val hostOs = System.getProperty("os.name")
+//    val isMingwX64 = hostOs.startsWith("Windows")
+//    val nativeTarget = when {
+//        hostOs == "Mac OS X" -> macosX64("native")
+//        hostOs == "Linux" -> linuxX64("native")
+//        isMingwX64 -> mingwX64("native")
+//        else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
+//    }
 
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -67,10 +73,7 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-                implementation("org.tinylog:tinylog:1.3.6")
-                implementation("com.google.code.gson:gson:2.8.6")
+                api("org.tinylog:tinylog:1.3.6")
             }
         }
         val jvmTest by getting {
@@ -78,20 +81,18 @@ kotlin {
 
                 implementation(kotlin("test-junit"))
                 implementation("io.kotest:kotest-runner-junit5:4.3.2")
-//                implementation("org.jetbrains.kotlin:kotlin-test-junit:1.4.21")
-//                implementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
                 implementation("io.mockk:mockk:1.10.0")
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")
             }
         }
-        val jsMain by getting
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
-            }
-        }
-        val nativeMain by getting
-        val nativeTest by getting
+//        val jsMain by getting
+//        val jsTest by getting {
+//            dependencies {
+//                implementation(kotlin("test-js"))
+//            }
+//        }
+//        val nativeMain by getting
+//        val nativeTest by getting
     }
 
 }
@@ -99,7 +100,7 @@ kotlin {
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
     filter {
-        setFailOnNoMatchingTests(false)
+        isFailOnNoMatchingTests = false
     }
     testLogging {
         showExceptions = true

@@ -77,7 +77,7 @@ class AnimationTests : StringSpec(
             verify(exactly = 1) { leds.setProlongedStripColor(color = ColorContainer(0xFFFFFF)) }
         }
 
-        "Bounce even number of pixels" {
+        "Bounce even number of pixels".config(enabled = false) {
             val leds =
                 spyk(ledStrip.createSection("bnc-1", 0, 9))
 
@@ -138,7 +138,7 @@ class AnimationTests : StringSpec(
             }
         }
 
-        "Bounce odd number of pixels" {
+        "Bounce odd number of pixels".config(enabled = false) {
             val leds =
                 spyk(ledStrip.createSection("bnc-2", 0, 10))
 
@@ -322,7 +322,7 @@ class AnimationTests : StringSpec(
                                 .animation("Bubble Sort")
                                 .color(ColorContainer(0xFF, 0xFFFF)))
 
-            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            mockkStatic("animatedledstrip.animatedledstrip.colors.CCUtilsKt")
             every { data.colors[any()].shuffledWithIndices() } returns
                     listOf(
                         Pair(1, 0x33FF),

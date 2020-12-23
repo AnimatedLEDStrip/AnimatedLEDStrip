@@ -39,7 +39,6 @@ import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
 import io.kotest.property.exhaustive.enum
-import io.kotest.property.exhaustive.ints
 import kotlin.test.assertFailsWith
 
 class AnimationToRunParamsTest : StringSpec(
@@ -385,18 +384,12 @@ class AnimationToRunParamsTest : StringSpec(
         "prepare center" {
             val anim = AnimationToRunParams(animation = "Color")
 
-            checkAll(Exhaustive.ints(0..9)) { c ->
+            checkAll(Arb.int().filter { it >= 0 }) { c ->
                 anim.center(c).prepare(ledStrip).center shouldBe c
             }
 
             checkAll(Arb.int().filter { it < 0 }) { c ->
                 anim.center(c).prepare(ledStrip).center shouldBe 5
-            }
-
-            checkAll(Arb.int().filter { it > 9 }) { c ->
-                shouldThrow<IllegalArgumentException> {
-                    anim.center(c).prepare(ledStrip)
-                }
             }
         }
 

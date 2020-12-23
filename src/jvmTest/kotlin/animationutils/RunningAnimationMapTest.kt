@@ -22,11 +22,9 @@
 
 package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.AnimationToRunParams
-import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.RunningAnimation
 import animatedledstrip.animationutils.RunningAnimationMap
-import animatedledstrip.animationutils.RunningAnimationParams
-import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.maps.shouldContainKey
@@ -34,10 +32,6 @@ import io.kotest.matchers.maps.shouldNotContainKey
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import kotlinx.coroutines.Job
 
-val newRunningAnimationParams: RunningAnimationParams
-    get() = RunningAnimationParams("", listOf(), 5, 10, Direction.FORWARD,
-                                   15, "", 10, "", 2,
-                                   AnimationToRunParams(delay = 5, delayMod = 2.0))
 
 class RunningAnimationMapTest : StringSpec(
     {
@@ -45,14 +39,14 @@ class RunningAnimationMapTest : StringSpec(
         "get" {
             val map = RunningAnimationMap()
 
-            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            map.map["TEST"] = RunningAnimation(newRunningAnimationParams, Job())
 
             map["TEST"] shouldBeSameInstanceAs map.map["TEST"]
         }
 
         "set" {
             val map = RunningAnimationMap()
-            val testAnim = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            val testAnim = RunningAnimation(newRunningAnimationParams, Job())
 
             map["TEST"] = testAnim
 
@@ -62,7 +56,7 @@ class RunningAnimationMapTest : StringSpec(
         "remove" {
             val map = RunningAnimationMap()
 
-            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            map.map["TEST"] = RunningAnimation(newRunningAnimationParams, Job())
 
             map.map.shouldContainKey("TEST")
             map.remove("TEST")
@@ -71,7 +65,7 @@ class RunningAnimationMapTest : StringSpec(
 
         "entries" {
             val map = RunningAnimationMap()
-            val testAnim = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            val testAnim = RunningAnimation(newRunningAnimationParams, Job())
             map.map["TEST"] = testAnim
 
             map.entries.shouldContainExactly(Pair("TEST", testAnim))
@@ -79,14 +73,14 @@ class RunningAnimationMapTest : StringSpec(
 
         "ids" {
             val map = RunningAnimationMap()
-            map.map["TEST"] = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            map.map["TEST"] = RunningAnimation(newRunningAnimationParams, Job())
 
             map.ids.shouldContainExactly("TEST")
         }
 
         "animations" {
             val map = RunningAnimationMap()
-            val testAnim = AnimatedLEDStrip.RunningAnimation(newRunningAnimationParams, Job())
+            val testAnim = RunningAnimation(newRunningAnimationParams, Job())
             map.map["TEST"] = testAnim
 
             map.animations.shouldContainExactly(testAnim)

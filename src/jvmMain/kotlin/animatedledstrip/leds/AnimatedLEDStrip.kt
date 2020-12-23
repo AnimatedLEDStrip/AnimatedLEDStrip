@@ -26,8 +26,6 @@ import animatedledstrip.animationutils.*
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.utils.SendableData
-import com.google.gson.ExclusionStrategy
-import com.google.gson.FieldAttributes
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
 import org.pmw.tinylog.Logger
@@ -39,7 +37,7 @@ import java.lang.Math.random
  * @param stripInfo Information about this strip, such as number of
  * LEDs, etc. See [StripInfo].
  */
-abstract class AnimatedLEDStrip(
+actual abstract class AnimatedLEDStrip actual constructor(
     stripInfo: StripInfo,
 ) : LEDStrip(stripInfo) {
 
@@ -79,26 +77,9 @@ abstract class AnimatedLEDStrip(
     /* Track running animations */
 
     /**
-     * Class for tracking a currently running animation.
-     *
-     * @property params An `AnimationData` instance with the properties of the animation
-     * @property job The `Job` that is running the animation
-     */
-    data class RunningAnimation(
-        val params: RunningAnimationParams,
-        val job: Job,
-    ) {
-        /**
-         * Cancel the coroutine running the animation
-         * (in other words, end the animation after its current iteration is complete).
-         */
-        internal fun cancel(message: String, cause: Throwable? = null) = job.cancel(message, cause)
-    }
-
-    /**
      * Map containing all `RunningAnimation` instances.
      */
-    val runningAnimations = RunningAnimationMap()
+    actual val runningAnimations: RunningAnimationMap = RunningAnimationMap()
 
 
     /* Start and end animations */
@@ -107,15 +88,14 @@ abstract class AnimatedLEDStrip(
      * Start an animation. Determines the section based on the `section` parameter in `animation`.
      * See [Section.startAnimation].
      */
-    fun startAnimation(animation: AnimationToRunParams, animId: String? = null) =
+    actual fun startAnimation(animation: AnimationToRunParams, animId: String?) =
         getSection(animation.section).startAnimation(animation, animId)
 
     /**
      * End animation by ID.
      */
-    fun endAnimation(id: String) {
-        runningAnimations[id]
-            ?.endAnimation()
+    actual fun endAnimation(id: String) {
+        runningAnimations[id]?.endAnimation()
         ?: run {
             Logger.warn("Animation $id is not running")
             runningAnimations.remove(id)
@@ -126,7 +106,7 @@ abstract class AnimatedLEDStrip(
     /**
      * End animation using `EndAnimation` instance.
      */
-    fun endAnimation(animation: EndAnimation?) {
+    actual fun endAnimation(animation: EndAnimation?) {
         if (animation == null) return
         endAnimation(animation.id)
     }
@@ -137,49 +117,49 @@ abstract class AnimatedLEDStrip(
     /**
      * Callback run before the first iteration of the animation.
      */
-    var startAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
+    actual var startAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
 
     /**
      * Callback run after the last iteration of the animation (but before the
      * animation is removed from `runningAnimations`).
      */
-    var endAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
+    actual var endAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
 
     /**
      * Callback to run when a new section is created.
      */
-    var newSectionCallback: ((Section) -> Any?)? = null
+    actual var newSectionCallback: ((Section) -> Any?)? = null
 
     /* Strip Sections */
 
     /**
      * A map containing all the sections associated with this LED strip.
      */
-    val sections = mutableMapOf<String, Section>()
+    actual val sections = mutableMapOf<String, Section>()
 
     /**
      * The section that represents the full strip.
      */
-    val wholeStrip = createSection("", 0, stripInfo.numLEDs - 1)
+    actual val wholeStrip = createSection("", 0, stripInfo.numLEDs - 1)
 
     /**
      * Create a new named section.
      */
-    fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
+    actual fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
         val newSection = Section(name, startPixel, endPixel)
         sections[name] = newSection
         newSectionCallback?.invoke(newSection)
         return newSection
     }
 
-    fun createSection(section: Section): Section = createSection(section.name, section.startPixel, section.endPixel)
+    actual fun createSection(section: Section): Section = createSection(section.name, section.startPixel, section.endPixel)
 
     /**
      * Get a section by its name.
      *
      * Defaults to the whole strip if the section cannot be found.
      */
-    fun getSection(sectionName: String): Section =
+    actual fun getSection(sectionName: String): Section =
         sections.getOrElse(sectionName) {
             Logger.warn("Could not find section $sectionName, defaulting to whole strip")
             wholeStrip
@@ -190,7 +170,7 @@ abstract class AnimatedLEDStrip(
      * Clears all pixels in the strip.
      * See [Section.clear].
      */
-    fun clear() = wholeStrip.clear()
+    actual fun clear() = wholeStrip.clear()
 
 
     /**
@@ -202,19 +182,23 @@ abstract class AnimatedLEDStrip(
      *   is the whole strip.
      */
     @Serializable
-    inner class Section(
+    actual inner class Section actual constructor(
         val name: String,
         val startPixel: Int,
         val endPixel: Int,
     ) : SendableData {
 
+        actual fun name() = name
+        actual fun startPixel() = startPixel
+        actual fun endPixel() = endPixel
+
         private var parentStartPixel: Int = 0
 
-        constructor(name: String, startPixel: Int, endPixel: Int, parent: Section?) : this(name, startPixel, endPixel) {
+        actual constructor(name: String, startPixel: Int, endPixel: Int, parent: Section?) : this(name, startPixel, endPixel) {
             parentStartPixel = parent?.startPixel ?: 0
         }
 
-        override fun toHumanReadableString() =
+        actual override fun toHumanReadableString() =
             """
                 Section Info
                   name: $name
@@ -230,13 +214,13 @@ abstract class AnimatedLEDStrip(
         /**
          * Allow external functions to access the strip associated with this instance directly.
          */
-        val ledStrip: AnimatedLEDStrip
+        actual val ledStrip: AnimatedLEDStrip
             get() = this@AnimatedLEDStrip
 
         /**
          * The start of this section on the physical LED strip.
          */
-        val physicalStart: Int = startPixel + parentStartPixel
+        actual val physicalStart: Int = startPixel + parentStartPixel
 
         /**
          * Get the actual index for a pixel on the physical strip.
@@ -246,7 +230,7 @@ abstract class AnimatedLEDStrip(
         /**
          * See [LEDStrip.prolongedColors].
          */
-        val prolongedColors: MutableList<Long>
+        actual val prolongedColors: MutableList<Long>
             get() = ledStrip.prolongedColors
 
         /**
@@ -264,15 +248,15 @@ abstract class AnimatedLEDStrip(
         /**
          * Valid indices for this section.
          */
-        val indices = IntRange(0, endPixel - startPixel).toList()
+        actual val indices = IntRange(0, endPixel - startPixel).toList()
 
-        val shuffledIndices: List<Int>
+        actual val shuffledIndices: List<Int>
             get() = indices.shuffled()
 
         /**
          * The number of LEDs in this section.
          */
-        val numLEDs = endPixel - startPixel + 1
+        actual val numLEDs = endPixel - startPixel + 1
 
 
         /**
@@ -284,7 +268,7 @@ abstract class AnimatedLEDStrip(
          * Get a subsection of this section from the `subSections` map.
          * Creates the subsection if it doesn't exist.
          */
-        fun getSubSection(startPixel: Int, endPixel: Int): Section =
+        actual fun getSubSection(startPixel: Int, endPixel: Int): Section =
             subSections.getOrPut(Pair(startPixel, endPixel)) {
                 Section(
                     "$name:$startPixel:$endPixel",
@@ -297,7 +281,7 @@ abstract class AnimatedLEDStrip(
         /**
          * See [AnimatedLEDStrip.getSection].
          */
-        fun getSection(sectionName: String): Section = this@AnimatedLEDStrip.getSection(sectionName)
+        actual fun getSection(sectionName: String): Section = this@AnimatedLEDStrip.getSection(sectionName)
 
         /**
          * Start a new animation.
@@ -305,14 +289,13 @@ abstract class AnimatedLEDStrip(
          * @param animId Optional `String` parameter for setting the ID of the animation.
          * If not set, ID will be set to a random number between 0 and 100000000.
          */
-        fun startAnimation(animation: AnimationToRunParams, animId: String? = null): RunningAnimation? {
+        actual fun startAnimation(animation: AnimationToRunParams, animId: String?): RunningAnimation? {
             val id = animId ?: (random() * 100000000).toInt().toString()
             animation.id = id
-            val (job, params) = run(animation)
-            Logger.trace(job)
-            if (job != null) {
-                checkNotNull(params)
-                runningAnimations[id] = RunningAnimation(params, job)
+            val runningAnim = runBlocking { run(animation) }
+            Logger.trace(runningAnim)
+            if (runningAnim != null) {
+                runningAnimations[id] = runningAnim
             }
             // Will return null if job was null because runningAnimations[id] would not have been set
             return runningAnimations[id]
@@ -331,35 +314,38 @@ abstract class AnimatedLEDStrip(
          * (rather than a user)
          * @return The `Job` associated with the new coroutine
          */
-        internal fun run(
+        internal actual suspend fun run(
             data: AnimationToRunParams,
-            threadPool: ExecutorCoroutineDispatcher = animationThreadPool,
-            scope: CoroutineScope = GlobalScope,
-            subAnimation: Boolean = false,
-        ): Pair<Job?, RunningAnimationParams?> {
+            scope: CoroutineScope,
+            subAnimation: Boolean,
+        ): RunningAnimation? {
             val definedAnimation = findAnimationOrNull(data.animation) ?: run {
                 Logger.warn("Animation ${data.animation} not found")
                 Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
-                return Pair(null, null)
+                return null
             }
 
             val params = data.prepare(this)
 
             Logger.trace("Starting $data")
 
-            return Pair(scope.launch(threadPool) {
-                if (!subAnimation) startAnimationCallback?.invoke(params)
+            return RunningAnimation(
+                params,
+                scope.launch {
+                    if (!subAnimation) startAnimationCallback?.invoke(params)
 
-                var runs = 0
-                while (isActive && (params.runCount == -1 || runs < params.runCount)) {
-                    definedAnimation.runAnimation(leds = this@Section, params = params, scope = this)
-                    runs++
-                }
-                if (!subAnimation) {
-                    endAnimationCallback?.invoke(params)
-                    runningAnimations.remove(params.id)
-                }
-            }, params)
+                    var runs = 0
+                    while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+                        definedAnimation.runAnimation(leds = this@Section,
+                                                      params = params,
+                                                      scope = this)
+                        runs++
+                    }
+                    if (!subAnimation) {
+                        endAnimationCallback?.invoke(params)
+                        runningAnimations.remove(params.id)
+                    }
+                })
         }
 
 
@@ -373,19 +359,17 @@ abstract class AnimatedLEDStrip(
          * @param runCount The number of times to run the animation
          * @return The `Job` associated with the new coroutine
          */
-        fun runParallel(
+        actual suspend fun runParallel(
             animation: AnimationToRunParams,
             scope: CoroutineScope,
-            section: Section = this,
-            pool: ExecutorCoroutineDispatcher = parallelAnimationThreadPool,
-            runCount: Int = 1,
-        ): Job? {
+            section: Section,
+            runCount: Int,
+        ): RunningAnimation? {
             return section.run(
                 animation.copy(runCount = runCount, section = section.name),
-                threadPool = pool,
                 scope = scope,
                 subAnimation = true,
-            ).first
+            )
         }
 
         /**
@@ -394,18 +378,17 @@ abstract class AnimatedLEDStrip(
          * @param section The section to run the animation on
          * @param runCount The number of times to run the animation
          */
-        fun runSequential(
+        actual fun runSequential(
             animation: AnimationToRunParams,
-            section: Section = this,
-            runCount: Int = 1,
+            section: Section,
+            runCount: Int,
         ) = runBlocking {
-            val job = section.run(
+            val anim = section.run(
                 animation.copy(runCount = runCount, section = section.name),
-                threadPool = parallelAnimationThreadPool,
                 scope = this,
                 subAnimation = true,
-            ).first
-            job?.join()
+            )
+            anim?.join()
             Unit
         }
 
@@ -415,25 +398,25 @@ abstract class AnimatedLEDStrip(
         /**
          * Set the temporary color of a pixel.
          */
-        fun setTemporaryPixelColor(pixel: Int, color: PreparedColorContainer) =
+        actual fun setTemporaryPixelColor(pixel: Int, color: PreparedColorContainer) =
             setTemporaryPixelColor(pixel, color[pixel])
 
         /**
          * Set the prolonged color of a pixel.
          */
-        fun setProlongedPixelColor(pixel: Int, color: PreparedColorContainer) =
+        actual fun setProlongedPixelColor(pixel: Int, color: PreparedColorContainer) =
             setProlongedPixelColor(pixel, color[pixel])
 
         /**
          * Set the temporary color of a pixel.
          */
-        fun setTemporaryPixelColor(pixel: Int, color: Long) =
+        actual fun setTemporaryPixelColor(pixel: Int, color: Long) =
             setPixelColor(getPhysicalIndex(pixel), color, prolonged = false)
 
         /**
          * Set the prolonged color of a pixel.
          */
-        fun setProlongedPixelColor(pixel: Int, color: Long) =
+        actual fun setProlongedPixelColor(pixel: Int, color: Long) =
             setPixelColor(getPhysicalIndex(pixel), color, prolonged = true)
 
 
@@ -444,14 +427,14 @@ abstract class AnimatedLEDStrip(
          *
          * See [LEDStrip.revertPixel]
          */
-        fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
+        actual fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
 
         /**
          * Fade a pixel to its prolonged color.
          *
          * See [LEDStrip.fadePixel]
          */
-        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000) =
+        actual fun fadePixel(pixel: Int, amountOfOverlay: Int, delay: Int, timeout: Int) =
             ledStrip.fadePixel(getPhysicalIndex(pixel), amountOfOverlay, delay, timeout)
 
 
@@ -476,31 +459,31 @@ abstract class AnimatedLEDStrip(
         /**
          * Set the temporary color of all pixels in the strip (or section).
          */
-        fun setTemporaryStripColor(color: ColorContainerInterface) =
+        actual fun setTemporaryStripColor(color: ColorContainerInterface) =
             setStripColor(color, prolonged = false)
 
         /**
          * Set the prolonged color of all pixels in the strip (or section).
          */
-        fun setProlongedStripColor(color: ColorContainerInterface) =
+        actual fun setProlongedStripColor(color: ColorContainerInterface) =
             setStripColor(color, prolonged = true)
 
         /**
          * Set the temporary color of all pixels in the strip (or section).
          */
-        fun setTemporaryStripColor(color: Long) =
+        actual fun setTemporaryStripColor(color: Long) =
             setStripColor(color, prolonged = false)
 
         /**
          * Set the prolonged color of all pixels in the strip (or section).
          */
-        fun setProlongedStripColor(color: Long) =
+        actual fun setProlongedStripColor(color: Long) =
             setStripColor(color, prolonged = true)
 
         /**
          * Clear the section (set all pixels to black).
          */
-        fun clear() {
+        actual fun clear() {
             setProlongedStripColor(0)
             setTemporaryStripColor(0)
         }
@@ -511,26 +494,26 @@ abstract class AnimatedLEDStrip(
         /**
          * Get the temporary color of a pixel.
          */
-        fun getTemporaryPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = false)
+        actual fun getTemporaryPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = false)
 
         /**
          * Get the prolonged color of a pixel.
          */
-        fun getProlongedPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = true)
+        actual fun getProlongedPixelColor(pixel: Int) = getPixelColor(getPhysicalIndex(pixel), prolonged = true)
 
         /**
-         * Get the temporary colors of all pixels as a `List<Long>`.
+         * Get the temporary animatedledstrip.colors of all pixels as a `List<Long>`.
          */
-        val pixelTemporaryColorList: List<Long>
+        actual val pixelTemporaryColorList: List<Long>
             get() = ledStrip.pixelTemporaryColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
         /**
-         * Get the prolonged colors of all pixels as a `List<Long>`.
+         * Get the prolonged animatedledstrip.colors of all pixels as a `List<Long>`.
          */
-        val pixelProlongedColorList: List<Long>
+        actual val pixelProlongedColorList: List<Long>
             get() = ledStrip.pixelProlongedColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
-        override fun equals(other: Any?): Boolean {
+        actual override fun equals(other: Any?): Boolean {
             return super.equals(other) ||
                    (other is AnimatedLEDStrip.Section &&
                     name == other.name &&
@@ -539,7 +522,7 @@ abstract class AnimatedLEDStrip(
                     physicalStart == other.physicalStart)
         }
 
-        override fun hashCode(): Int {
+        actual override fun hashCode(): Int {
             var result = name.hashCode()
             result = 31 * result + startPixel
             result = 31 * result + endPixel
@@ -547,25 +530,10 @@ abstract class AnimatedLEDStrip(
             return result
         }
 
-        override fun toString() =
+        actual override fun toString() =
             "AnimatedLEDStrip.Section(name=$name, numLEDs=$numLEDs, startPixel=$startPixel, " +
             "endPixel=$endPixel, physicalStart=$physicalStart)"
 
-    }
-
-    companion object {
-        object SectionExStrategy : ExclusionStrategy {
-            override fun shouldSkipClass(p0: Class<*>?) = false
-
-            override fun shouldSkipField(field: FieldAttributes): Boolean {
-                if (field.declaringClass != Section::class.java)
-                    return false
-                return when (field.name) {
-                    "startPixel", "endPixel", "physicalStart", "numLEDs", "name" -> false
-                    else -> true
-                }
-            }
-        }
     }
 
 }

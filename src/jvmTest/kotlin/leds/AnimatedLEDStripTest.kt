@@ -30,12 +30,12 @@ import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
 import animatedledstrip.test.assertLogs
 import animatedledstrip.test.startLogCapture
 import animatedledstrip.test.stopLogCapture
-import animatedledstrip.utils.delayBlocking
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import kotlinx.coroutines.delay
 import org.pmw.tinylog.Level
 import kotlin.test.assertTrue
 
@@ -57,7 +57,7 @@ class AnimatedLEDStripTest : FunSpec({
 
         testLEDs.startAnimation(AnimationToRunParams().animation("Alternate").delay(10).runCount(1))
 
-        delayBlocking(500)
+        delay(500)
 
         indicator1.shouldBeTrue()
         indicator2.shouldBeTrue()
