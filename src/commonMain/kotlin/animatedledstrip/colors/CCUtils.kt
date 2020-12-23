@@ -103,7 +103,7 @@ fun ColorContainer.grayscaled(vararg indices: IntRange): ColorContainer {
     return temp
 }
 
-fun ColorContainerInterface.shuffledWithIndices(): List<Pair<Int, Long>> =
+fun ColorContainerInterface.shuffledWithIndices(): List<Pair<Int, Int>> =
     colors.mapIndexed { index, it -> Pair(index, it) }.shuffled()
 
 
@@ -257,7 +257,7 @@ fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
         else -> 0
     }
 
-    val temp = mutableListOf<Long>()
+    val temp = mutableListOf<Int>()
     for (i in colors.indices) {
         temp += colors[(i + n) % size]
     }

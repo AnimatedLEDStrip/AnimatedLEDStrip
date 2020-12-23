@@ -72,26 +72,9 @@ class EmulatedWS281x(override val numLEDs: Int) : NativeLEDStrip {
     override fun close() {}
 
     /**
-     * Size of an `Int` for use in `ByteBuffer` index calculations.
-     */
-    @Suppress("PrivatePropertyName")
-    private val SIZE_OF_INT = 4
-
-    /**
      * A `ByteBuffer` emulating the `ByteBuffer` used by the regular `WS281x` class.
      */
     var ledArray: EmulatedStripBuffer = EmulatedStripBuffer(numLEDs)
-
-    /**
-     * Check that the pixel is part of the strip.
-     *
-     * @param pixel The index to check
-     */
-    private fun validatePixel(pixel: Int) {
-        if (pixel < 0 || pixel >= numLEDs) {
-            throw IllegalArgumentException("pixel $pixel not in 0.." + (numLEDs - 1))
-        }
-    }
 
     /**
      * Get the color of a pixel in the strip.
@@ -99,8 +82,7 @@ class EmulatedWS281x(override val numLEDs: Int) : NativeLEDStrip {
      * @param pixel The pixel to check
      */
     override fun getPixelColor(pixel: Int): Int {
-        validatePixel(pixel)
-        return ledArray.getInt(pixel * SIZE_OF_INT)
+        return ledArray.getInt(pixel)
     }
 
     /**
@@ -110,7 +92,6 @@ class EmulatedWS281x(override val numLEDs: Int) : NativeLEDStrip {
      * @param color The color to set the pixel to
      */
     override fun setPixelColor(pixel: Int, color: Int) {
-        validatePixel(pixel)
-        ledArray.putInt(pixel * SIZE_OF_INT, color)
+        ledArray.putInt(pixel, color)
     }
 }

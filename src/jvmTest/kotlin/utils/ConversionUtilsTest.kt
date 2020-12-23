@@ -44,15 +44,15 @@ class ConversionUtilsTest : StringSpec(
         }
 
         "Int to ColorContainer" {
-            0x0.toColorContainer() shouldBe ColorContainer(0x0L)
-            0x158FE3.toColorContainer() shouldBe ColorContainer(0x158FE3L)
-            0xFFFFFF.toColorContainer() shouldBe ColorContainer(0xFFFFFFL)
+            0x0.toColorContainer() shouldBe ColorContainer(0x0)
+            0x158FE3.toColorContainer() shouldBe ColorContainer(0x158FE3)
+            0xFFFFFF.toColorContainer() shouldBe ColorContainer(0xFFFFFF)
         }
 
         "Long to ColorContainer" {
-            0x0L.toColorContainer() shouldBe ColorContainer(0x0L)
-            0x158FE3L.toColorContainer() shouldBe ColorContainer(0x158FE3L)
-            0xFFFFFFL.toColorContainer() shouldBe ColorContainer(0xFFFFFFL)
+            0x0L.toColorContainer() shouldBe ColorContainer(0x0)
+            0x158FE3L.toColorContainer() shouldBe ColorContainer(0x158FE3)
+            0xFFFFFFL.toColorContainer() shouldBe ColorContainer(0xFFFFFF)
         }
 
 

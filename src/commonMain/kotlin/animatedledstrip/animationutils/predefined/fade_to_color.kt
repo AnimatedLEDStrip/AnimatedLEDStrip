@@ -25,8 +25,6 @@ package animatedledstrip.animationutils.predefined
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
-import animatedledstrip.leds.iterateOverPixels
-import kotlinx.coroutines.launch
 
 val fadeToColor = PredefinedAnimation(
     Animation.AnimationInfo(
@@ -48,11 +46,12 @@ val fadeToColor = PredefinedAnimation(
     val color0 = params.colors[0]
 
     leds.apply {
-        iterateOverPixels {
-            prolongedColors[it] = color0[it]
-            scope.launch {
-                fadePixel(it)
-            }
-        }
+        setStripFadeColor(params.colors[0])
+//        iterateOverPixels {
+//            prolongedColors[it] = color0[it]
+//            scope.launch {
+//                setStripFadeColor(color0)
+//            }
+//        }
     }
 }

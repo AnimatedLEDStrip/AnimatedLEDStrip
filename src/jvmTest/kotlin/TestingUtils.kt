@@ -39,12 +39,12 @@ val newRunningAnimationParams: RunningAnimationParams
                                    15, "", 10, "", 2,
                                    AnimationToRunParams(delay = 5, delayMod = 2.0))
 
-fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
-    assertAllTemporaryPixels(color)
-    assertAllProlongedPixels(color)
+fun AnimatedLEDStrip.Section.assertAllPixels(temporaryColor: Int, prolongedColor: Int) {
+    assertAllTemporaryPixels(temporaryColor)
+    assertAllProlongedPixels(prolongedColor)
 }
 
-fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
+fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Int) {
     pixelTemporaryColorList.forEachIndexed { i, c ->
         assertTrue(
             "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
@@ -52,7 +52,7 @@ fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Long) {
     }
 }
 
-fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
+fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Int) {
     pixelProlongedColorList.forEachIndexed { i, c ->
         assertTrue(
             "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"
@@ -60,12 +60,12 @@ fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Long) {
     }
 }
 
-fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, color: Long) {
-    assertTemporaryPixels(indices, color)
-    assertProlongedPixels(indices, color)
+fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, temporaryColor: Int, prolongedColor: Int) {
+    assertTemporaryPixels(indices, temporaryColor)
+    assertProlongedPixels(indices, prolongedColor)
 }
 
-fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Long) {
+fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Int) {
     indices.forEach {
         assertTrue(
             "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
@@ -73,7 +73,7 @@ fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Lon
     }
 }
 
-fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Long) {
+fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Int) {
     indices.forEach {
         assertTrue(
             "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"

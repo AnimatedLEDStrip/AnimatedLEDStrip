@@ -36,21 +36,21 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 class PreparedColorContainer(
-    override val colors: List<Long>,
-    val originalColors: List<Long> = listOf(),
+    override val colors: List<Int>,
+    val originalColors: List<Int> = listOf(),
 ) :
     ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
      */
-    operator fun get(index: Int): Long = colors.getOrElse(index) { 0 }
+    operator fun get(index: Int): Int = colors.getOrElse(index) { 0 }
 
     /**
      * Override for `color` that only returns 0
      * @return 0
      */
-    override val color: Long
+    override val color: Int
         get() = 0
 
     /**
@@ -64,7 +64,7 @@ class PreparedColorContainer(
     /**
      * Checks if the specified value is in [colors].
      */
-    operator fun contains(value: Long): Boolean = colors.contains(value)
+    operator fun contains(value: Int): Boolean = colors.contains(value)
 
     /**
      * If this `PreparedColorContainer` is the correct size, return this

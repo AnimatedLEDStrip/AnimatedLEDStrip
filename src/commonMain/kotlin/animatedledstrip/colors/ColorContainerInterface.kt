@@ -30,12 +30,12 @@ interface ColorContainerInterface {
     /**
      * The `List` of animatedledstrip.colors in this container
      */
-    val colors: List<Long>
+    val colors: List<Int>
 
     /**
      * The first color in `animatedledstrip.colors`
      */
-    val color: Long
+    val color: Int
 
     /**
      * Prepare the [ColorContainer] or return this [PreparedColorContainer].

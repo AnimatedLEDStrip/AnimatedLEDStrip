@@ -25,9 +25,7 @@ package animatedledstrip.animationutils.predefined
 import animatedledstrip.animationutils.Animation
 import animatedledstrip.animationutils.ParamUsage
 import animatedledstrip.animationutils.PredefinedAnimation
-import animatedledstrip.leds.runBlockingNonCancellable
-import animatedledstrip.leds.setAndFadePixel
-import animatedledstrip.utils.randomInt
+import animatedledstrip.utils.randomDouble
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -56,17 +54,11 @@ val sparkleFade = PredefinedAnimation(
     leds.apply {
         val jobs = indices.map { n ->
             scope.launch {
-                delay(randomInt() * delay * 100)
-                setAndFadePixel(
-                    pixel = n,
-                    color = color0,
-                    amountOfOverlay = 25,
-                )
+                delay((randomDouble() * delay * 100).toLong())
+                setPixelFadeColor(n, color0)
                 delay(delay)
             }
         }
-        runBlockingNonCancellable {
-            jobs.joinAll()
-        }
+        jobs.joinAll()
     }
 }

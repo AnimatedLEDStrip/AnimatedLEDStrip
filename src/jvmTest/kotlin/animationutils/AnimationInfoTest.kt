@@ -69,23 +69,21 @@ class AnimationInfoTest : StringSpec(
         }
 
         "presets to human readable strings" {
-            assertTrue {
-                alternate.info.toHumanReadableString() ==
-                        """
-                        Animation Info
-                          name: Alternate
-                          abbr: ALT
-                          runCountDefault: -1
-                          minimum colors: 2
-                          unlimited colors: true
-                          center: NOTUSED
-                          delay: USED (1000)
-                          direction: NOTUSED
-                          distance: NOTUSED
-                          spacing: NOTUSED
-                        End Info
-                    """.trimIndent()
-            }
+            alternate.info.toHumanReadableString() shouldBe
+                """
+                    Animation Info
+                      name: Alternate
+                      abbr: ALT
+                      runCountDefault: -1
+                      minimum colors: 2
+                      unlimited colors: true
+                      center: NOTUSED
+                      delay: USED (1000)
+                      direction: NOTUSED
+                      distance: NOTUSED
+                      spacing: NOTUSED
+                    End Info
+                """.trimIndent()
             assertTrue {
                 bounce.info.toHumanReadableString() ==
                         """

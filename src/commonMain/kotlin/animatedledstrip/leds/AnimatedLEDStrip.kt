@@ -38,38 +38,6 @@ expect abstract class AnimatedLEDStrip(
     stripInfo: StripInfo,
 ) : LEDStrip {
 
-    /* Thread pools */
-
-    /**
-     * Multiplier used when calculating thread pool sizes
-     */
-//    private val threadCount: Int = stripInfo.threadCount
-
-//    /**
-//     * A pool of threads used to run animations.
-//     * (Animations spawned by other animations use the [parallelAnimationThreadPool])
-//     */
-//    @Suppress("EXPERIMENTAL_API_USAGE")
-//    val animationThreadPool =
-//        newFixedThreadPoolContext(threadCount, "Animation Pool")
-
-    /**
-     * A pool of threads to be used for animations that spawn new sub-threads
-     * (with the exception of sparkle-type animations, those use the
-     * [sparkleThreadPool]).
-     */
-//    @Suppress("EXPERIMENTAL_API_USAGE")
-//    val parallelAnimationThreadPool =
-//        newFixedThreadPoolContext(3 * threadCount, "Parallel Animation Pool")
-
-//    /**
-//     * A pool of threads to be used for sparkle-type animations due to the
-//     * number of threads a concurrent sparkle animation uses.
-//     */
-//    @Suppress("EXPERIMENTAL_API_USAGE")
-//    val sparkleThreadPool =
-//        newFixedThreadPoolContext(stripInfo.numLEDs + 1, "Sparkle Pool")
-
     /**
      * Map containing all `RunningAnimation` instances.
      */
@@ -188,23 +156,10 @@ expect abstract class AnimatedLEDStrip(
          */
 //        private fun getPhysicalIndex(pixel: Int): Int = pixel + physicalStart
 
-        /**
-         * See [LEDStrip.prolongedColors].
-         */
-        val prolongedColors: MutableList<Long>
-//            get() = ledStrip.prolongedColors
-
 //        /**
-//         * See [AnimatedLEDStrip.parallelAnimationThreadPool].
+//         * See [LEDStrip.prolongedColors].
 //         */
-//        val parallelAnimationThreadPool: ExecutorCoroutineDispatcher
-//            get() = ledStrip.parallelAnimationThreadPool
-
-//        /**
-//         * See [AnimatedLEDStrip.sparkleThreadPool].
-//         */
-//        val sparkleThreadPool: ExecutorCoroutineDispatcher
-//            get() = ledStrip.sparkleThreadPool
+//        val prolongedColors: MutableList<Long>
 
         /**
          * Valid indices for this section.
@@ -218,12 +173,6 @@ expect abstract class AnimatedLEDStrip(
          * The number of LEDs in this section.
          */
         val numLEDs: Int
-
-
-//        /**
-//         * A map of all subsections of this section.
-//         */
-//        private val subSections: MutableMap<Pair<Int, Int>, Section>
 
         /**
          * Get a subsection of this section from the `subSections` map.
@@ -259,7 +208,7 @@ expect abstract class AnimatedLEDStrip(
          */
         internal suspend fun run(
             data: AnimationToRunParams,
-            scope: CoroutineScope = GlobalScope,
+            scope: CoroutineScope? = null,
             subAnimation: Boolean = false,
         ): RunningAnimation?
 
@@ -306,15 +255,19 @@ expect abstract class AnimatedLEDStrip(
          */
         fun setProlongedPixelColor(pixel: Int, color: PreparedColorContainer)
 
+        fun setPixelFadeColor(pixel: Int, color: PreparedColorContainer)
+
         /**
          * Set the temporary color of a pixel.
          */
-        fun setTemporaryPixelColor(pixel: Int, color: Long)
+        fun setTemporaryPixelColor(pixel: Int, color: Int)
 
         /**
          * Set the prolonged color of a pixel.
          */
-        fun setProlongedPixelColor(pixel: Int, color: Long)
+        fun setProlongedPixelColor(pixel: Int, color: Int)
+
+        fun setPixelFadeColor(pixel: Int, color: Int)
 
 
         /* Revert/fade pixel */
@@ -326,31 +279,12 @@ expect abstract class AnimatedLEDStrip(
          */
         fun revertPixel(pixel: Int)
 
-        /**
-         * Fade a pixel to its prolonged color.
-         *
-         * See [LEDStrip.fadePixel]
-         */
-        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000)
-
-//
-//        /* Set strip color */
-//
 //        /**
-//         * Set the color of all pixels in the strip. If `prolonged` is true,
-//         * set the prolonged color, otherwise set the temporary color.
+//         * Fade a pixel to its prolonged color.
+//         *
+//         * See [LEDStrip.fadePixel]
 //         */
-//        private fun setStripColor(color: ColorContainerInterface, prolonged: Boolean) {
-//            for (i in indices) ledStrip.setPixelColor(getPhysicalIndex(i), color, prolonged)
-//        }
-//
-//        /**
-//         * Set the color of all pixels in the strip. If `prolonged` is true,
-//         * set the prolonged color, otherwise set the temporary color.
-//         */
-//        private fun setStripColor(color: Long, prolonged: Boolean) {
-//            for (i in indices) ledStrip.setPixelColor(getPhysicalIndex(i), color, prolonged)
-//        }
+//        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000)
 
         /**
          * Set the temporary color of all pixels in the strip (or section).
@@ -362,15 +296,19 @@ expect abstract class AnimatedLEDStrip(
          */
         fun setProlongedStripColor(color: ColorContainerInterface)
 
+        fun setStripFadeColor(color: ColorContainerInterface)
+
         /**
          * Set the temporary color of all pixels in the strip (or section).
          */
-        fun setTemporaryStripColor(color: Long)
+        fun setTemporaryStripColor(color: Int)
 
         /**
          * Set the prolonged color of all pixels in the strip (or section).
          */
-        fun setProlongedStripColor(color: Long)
+        fun setProlongedStripColor(color: Int)
+
+        fun setStripFadeColor(color: Int)
 
         /**
          * Clear the section (set all pixels to black).
@@ -383,22 +321,24 @@ expect abstract class AnimatedLEDStrip(
         /**
          * Get the temporary color of a pixel.
          */
-        fun getTemporaryPixelColor(pixel: Int): Long
+        fun getTemporaryPixelColor(pixel: Int): Int
 
         /**
          * Get the prolonged color of a pixel.
          */
-        fun getProlongedPixelColor(pixel: Int): Long
+        fun getProlongedPixelColor(pixel: Int): Int
+
+        fun getPixelActualColor(pixel: Int): Int
 
         /**
          * Get the temporary animatedledstrip.colors of all pixels as a `List<Long>`.
          */
-        val pixelTemporaryColorList: List<Long>
+        val pixelTemporaryColorList: List<Int>
 
         /**
          * Get the prolonged animatedledstrip.colors of all pixels as a `List<Long>`.
          */
-        val pixelProlongedColorList: List<Long>
+        val pixelProlongedColorList: List<Int>
 
         override fun equals(other: Any?): Boolean
 

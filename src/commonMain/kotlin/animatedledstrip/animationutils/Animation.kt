@@ -89,8 +89,8 @@ abstract class Animation(open val info: AnimationInfo) {
                   name: $name
                   abbr: $abbr
                   runCountDefault: $runCountDefault
-                  minimum animatedledstrip.colors: $minimumColors
-                  unlimited animatedledstrip.colors: $unlimitedColors
+                  minimum colors: $minimumColors
+                  unlimited colors: $unlimitedColors
                   center: $center
                   delay: $delay${if (delay == ParamUsage.USED) " ($delayDefault)" else ""}
                   direction: $direction

@@ -53,8 +53,9 @@ val alternate = PredefinedAnimation(
 
     leds.apply {
         setProlongedStripColor(color)
-        delay(delay)
     }
+
+    delay(delay)
 
     params.extraData["nextColorIndex"] = if (nextColorIndex == params.colors.lastIndex) 0 else nextColorIndex + 1
 }

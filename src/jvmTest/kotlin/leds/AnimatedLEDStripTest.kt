@@ -61,6 +61,8 @@ class AnimatedLEDStripTest : FunSpec({
 
         indicator1.shouldBeTrue()
         indicator2.shouldBeTrue()
+
+        delay(10000)
     }
 
     test("create section") {

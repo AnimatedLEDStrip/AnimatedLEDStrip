@@ -7,7 +7,7 @@ import kotlin.test.assertTrue
 class ColorPresetsTest : StringSpec(
     {
         "animatedledstrip/colors" {
-            val colorList = listOf<Long>(
+            val colorList = listOf(
                 0xF0F8FF,
                 0x9966CC,
                 0xFAEBD7,

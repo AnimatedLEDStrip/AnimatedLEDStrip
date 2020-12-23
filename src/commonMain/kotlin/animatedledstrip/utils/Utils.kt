@@ -36,7 +36,7 @@ import kotlin.random.Random
  * @param overlay The `ColorContainer` to blend toward
  * @param amountOfOverlay The proportion (0-255) of `overlay` to blend into `existing`
  */
-fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
+fun blend(existing: Int, overlay: Int, amountOfOverlay: Int): Int {
     if (amountOfOverlay == 0) return existing
     if (amountOfOverlay == 255) return overlay
     if (existing == overlay) return existing
@@ -45,10 +45,12 @@ fun blend(existing: Long, overlay: Long, amountOfOverlay: Int): Long {
     val g = blend8(existing.g, overlay.g, amountOfOverlay)
     val b = blend8(existing.b, overlay.b, amountOfOverlay)
 
-    return ((r shl 16) or (g shl 8) or b).toLong()
+    return (r shl 16) or (g shl 8) or b
 }
 
 fun randomInt(): Int = Random.Default.nextInt()
+
+fun randomDouble(): Double = Random.Default.nextDouble()
 
 
 /* Blocking delay helper functions */
@@ -75,15 +77,15 @@ fun randomInt(): Int = Random.Default.nextInt()
  *
  * @param string The hex `String` to decode
  */
-fun parseHex(string: String): Long = string.remove0xPrefix().toLong(16)
+fun parseHex(string: String): Int = string.remove0xPrefix().toInt(16)
 
 /**
  * Returns a `Long` from a hexadecimal `String` or `default` on error.
  *
  * @param string The hex `String` to decode
  */
-fun parseHexOrDefault(string: String, default: Long = 0x0L): Long =
-    string.remove0xPrefix().toLongOrNull(16) ?: default
+fun parseHexOrDefault(string: String, default: Int = 0x0): Int =
+    string.remove0xPrefix().toIntOrNull(16) ?: default
 
 /**
  * Helper function for removing the 0x prefix from a hex string
@@ -96,28 +98,28 @@ fun String.remove0xPrefix(): String = this.toUpperCase().removePrefix("0X")
 /**
  * Returns the 'grayscale' version of a 24-bit color.
  */
-fun Long.grayscale(): Long {
-    val avg = (((this shr 16 and 0xFF) + (this shr 8 and 0xFF) + (this and 0xFF)) / 3) base 16
+fun Int.grayscale(): Int {
+    val avg = (((this.r) + (this.g) + (this.b)) / 3) base 16
     return parseHex("$avg$avg$avg")
 }
 
 /**
  * Returns the 'red' part of a 24-bit color.
  */
-val Long.r
-    get() = (this shr 16 and 0xFF).toInt()
+val Int.r
+    get() = this shr 16 and 0xFF
 
 /**
  * Returns the 'green' part of a 24-bit color.
  */
-val Long.g
-    get() = (this shr 8 and 0xFF).toInt()
+val Int.g
+    get() = this shr 8 and 0xFF
 
 /**
  * Returns the 'blue' part of a 24-bit color.
  */
-val Long.b
-    get() = (this and 0xFF).toInt()
+val Int.b
+    get() = this and 0xFF
 
 /**
  * Infix function for easily creating string representations of a Long in
@@ -125,4 +127,4 @@ val Long.b
  *
  * @param b The base to use
  */
-infix fun Long.base(b: Int) = this.toString(b)
+infix fun Int.base(b: Int) = this.toString(b)
