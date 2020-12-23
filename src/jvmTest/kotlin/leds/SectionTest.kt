@@ -86,7 +86,7 @@ class SectionTest : StringSpec(
             assertFailsWith<IllegalArgumentException> { testLEDs.setProlongedPixelColor(50, CCBlack.prepare(testLEDs.numLEDs)) }
         }
 
-        "set pixel colors" {
+        "set pixel animatedledstrip.colors" {
             val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 
             testLEDs.assertAllPixels(0)
@@ -283,7 +283,9 @@ class SectionTest : StringSpec(
 
         "set strip color" {
             val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-
+            println(testLEDs.physicalStart)
+            println(testLEDs.ledStrip.physicalIndices)
+            println(testLEDs.pixelTemporaryColorList)
             testLEDs.assertAllPixels(0)
 
             // Temporary
@@ -449,8 +451,8 @@ class SectionTest : StringSpec(
             testLEDs.runParallel(anim, this)
 
             // Set parameters
-            val runningAnim = testLEDs.runParallel(anim, this, pool = pool, runCount = -1)
-            runningAnim?.cancel()
+            val runningAnim = testLEDs.runParallel(anim, this, runCount = -1)
+            runningAnim?.job?.cancel()
 
             // Test runParallelAndJoin
             val badAnim = AnimationToRunParams().animation("NonexistentAnimation")

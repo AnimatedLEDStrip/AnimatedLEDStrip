@@ -22,6 +22,9 @@
 
 package animatedledstrip.test
 
+import animatedledstrip.animationutils.AnimationToRunParams
+import animatedledstrip.animationutils.Direction
+import animatedledstrip.animationutils.RunningAnimationParams
 import animatedledstrip.leds.AnimatedLEDStrip
 import org.pmw.tinylog.Configuration
 import org.pmw.tinylog.Configurator
@@ -31,6 +34,10 @@ import org.pmw.tinylog.writers.LogEntryValue
 import org.pmw.tinylog.writers.Writer
 import kotlin.test.assertTrue
 
+val newRunningAnimationParams: RunningAnimationParams
+    get() = RunningAnimationParams("", listOf(), 5, 10, Direction.FORWARD,
+                                   15, "", 10, "", 2,
+                                   AnimationToRunParams(delay = 5, delayMod = 2.0))
 
 fun AnimatedLEDStrip.Section.assertAllPixels(color: Long) {
     assertAllTemporaryPixels(color)

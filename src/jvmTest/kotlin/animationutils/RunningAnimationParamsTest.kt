@@ -23,6 +23,7 @@
 package animatedledstrip.test.animationutils
 
 import animatedledstrip.animationutils.Direction
+import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
