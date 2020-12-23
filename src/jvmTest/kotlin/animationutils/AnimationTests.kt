@@ -30,6 +30,7 @@ import animatedledstrip.leds.endAnimation
 import animatedledstrip.leds.join
 import animatedledstrip.leds.joinBlocking
 import animatedledstrip.test.assertAllPixels
+import animatedledstrip.test.assertAllProlongedPixels
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
@@ -55,7 +56,7 @@ class AnimationTests : StringSpec(
             delay(500)
             anim.endAnimation()
             anim.join()
-            testLEDs.assertAllPixels(0xFF)
+            testLEDs.assertAllProlongedPixels(0xFF)
         }
 
         "Alternate" {
@@ -77,130 +78,130 @@ class AnimationTests : StringSpec(
             verify(exactly = 1) { leds.setProlongedStripColor(color = ColorContainer(0xFFFFFF)) }
         }
 
-        "Bounce even number of pixels".config(enabled = false) {
-            val leds =
-                spyk(ledStrip.createSection("bnc-1", 0, 9))
+//        "Bounce even number of pixels".config(enabled = false) {
+//            val leds =
+//                spyk(ledStrip.createSection("bnc-1", 0, 9))
+//
+//            val anim = leds.startAnimation(
+//                AnimationToRunParams()
+//                    .animation("Bounce")
+//                    .color(0xFF)
+//                    .runCount(1)
+//            )
+//
+//            assertNotNull(anim)
+//            anim.joinBlocking()
+//
+//            verify {
+//                leds.setTemporaryPixelColor(0, 0xFF)
+//                leds.setTemporaryPixelColor(1, 0xFF)
+//                leds.setTemporaryPixelColor(2, 0xFF)
+//                leds.setTemporaryPixelColor(3, 0xFF)
+//                leds.setTemporaryPixelColor(4, 0xFF)
+//                leds.setTemporaryPixelColor(5, 0xFF)
+//                leds.setTemporaryPixelColor(6, 0xFF)
+//                leds.setTemporaryPixelColor(7, 0xFF)
+//                leds.setTemporaryPixelColor(8, 0xFF)
+//                leds.setTemporaryPixelColor(9, 0xFF)
+//            }
+//
+//            verifyOrder {
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:0:9" })
+//                leds.setTemporaryPixelColor(9, 0xFF)
+//                leds.fadePixel(9, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:0:8" })
+//                leds.setTemporaryPixelColor(0, 0xFF)
+//                leds.fadePixel(0, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:1:8" })
+//                leds.setTemporaryPixelColor(8, 0xFF)
+//                leds.fadePixel(8, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:1:7" })
+//                leds.setTemporaryPixelColor(1, 0xFF)
+//                leds.fadePixel(1, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:2:7" })
+//                leds.setTemporaryPixelColor(7, 0xFF)
+//                leds.fadePixel(7, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:2:6" })
+//                leds.setTemporaryPixelColor(2, 0xFF)
+//                leds.fadePixel(2, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:3:6" })
+//                leds.setTemporaryPixelColor(6, 0xFF)
+//                leds.fadePixel(6, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:3:5" })
+//                leds.setTemporaryPixelColor(3, 0xFF)
+//                leds.fadePixel(3, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:4:5" })
+//                leds.setTemporaryPixelColor(5, 0xFF)
+//                leds.fadePixel(5, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:4:4" })
+//                leds.setTemporaryPixelColor(4, 0xFF)
+//                leds.fadePixel(4, 25, 50)
+//            }
+//        }
 
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Bounce")
-                    .color(0xFF)
-                    .runCount(1)
-            )
-
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            verify {
-                leds.setTemporaryPixelColor(0, 0xFF)
-                leds.setTemporaryPixelColor(1, 0xFF)
-                leds.setTemporaryPixelColor(2, 0xFF)
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.setTemporaryPixelColor(4, 0xFF)
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.setTemporaryPixelColor(9, 0xFF)
-            }
-
-            verifyOrder {
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:0:9" })
-                leds.setTemporaryPixelColor(9, 0xFF)
-                leds.fadePixel(9, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:0:8" })
-                leds.setTemporaryPixelColor(0, 0xFF)
-                leds.fadePixel(0, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:1:8" })
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.fadePixel(8, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:1:7" })
-                leds.setTemporaryPixelColor(1, 0xFF)
-                leds.fadePixel(1, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:2:7" })
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.fadePixel(7, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:2:6" })
-                leds.setTemporaryPixelColor(2, 0xFF)
-                leds.fadePixel(2, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:3:6" })
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.fadePixel(6, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:3:5" })
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.fadePixel(3, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:4:5" })
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.fadePixel(5, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:4:4" })
-                leds.setTemporaryPixelColor(4, 0xFF)
-                leds.fadePixel(4, 25, 50)
-            }
-        }
-
-        "Bounce odd number of pixels".config(enabled = false) {
-            val leds =
-                spyk(ledStrip.createSection("bnc-2", 0, 10))
-
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Bounce")
-                    .color(0xFF)
-                    .runCount(1)
-            )
-
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            verify {
-                leds.setTemporaryPixelColor(0, 0xFF)
-                leds.setTemporaryPixelColor(1, 0xFF)
-                leds.setTemporaryPixelColor(2, 0xFF)
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.setTemporaryPixelColor(4, 0xFF)
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.setTemporaryPixelColor(9, 0xFF)
-                leds.setTemporaryPixelColor(10, 0xFF)
-            }
-
-            verifyOrder {
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:0:10" })
-                leds.setTemporaryPixelColor(10, 0xFF)
-                leds.fadePixel(10, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:0:9" })
-                leds.setTemporaryPixelColor(0, 0xFF)
-                leds.fadePixel(0, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:1:9" })
-                leds.setTemporaryPixelColor(9, 0xFF)
-                leds.fadePixel(9, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:1:8" })
-                leds.setTemporaryPixelColor(1, 0xFF)
-                leds.fadePixel(1, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:2:8" })
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.fadePixel(8, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:2:7" })
-                leds.setTemporaryPixelColor(2, 0xFF)
-                leds.fadePixel(2, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:3:7" })
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.fadePixel(7, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:3:6" })
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.fadePixel(3, 25, 50)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:4:6" })
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.fadePixel(6, 25, 50)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:4:5" })
-                leds.setTemporaryPixelColor(4, 0xFF)
-                leds.fadePixel(4, 25, 50)
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.fadePixel(5, 25, 50)
-            }
-        }
+//        "Bounce odd number of pixels".config(enabled = false) {
+//            val leds =
+//                spyk(ledStrip.createSection("bnc-2", 0, 10))
+//
+//            val anim = leds.startAnimation(
+//                AnimationToRunParams()
+//                    .animation("Bounce")
+//                    .color(0xFF)
+//                    .runCount(1)
+//            )
+//
+//            assertNotNull(anim)
+//            anim.joinBlocking()
+//
+//            verify {
+//                leds.setTemporaryPixelColor(0, 0xFF)
+//                leds.setTemporaryPixelColor(1, 0xFF)
+//                leds.setTemporaryPixelColor(2, 0xFF)
+//                leds.setTemporaryPixelColor(3, 0xFF)
+//                leds.setTemporaryPixelColor(4, 0xFF)
+//                leds.setTemporaryPixelColor(5, 0xFF)
+//                leds.setTemporaryPixelColor(6, 0xFF)
+//                leds.setTemporaryPixelColor(7, 0xFF)
+//                leds.setTemporaryPixelColor(8, 0xFF)
+//                leds.setTemporaryPixelColor(9, 0xFF)
+//                leds.setTemporaryPixelColor(10, 0xFF)
+//            }
+//
+//            verifyOrder {
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:0:10" })
+//                leds.setTemporaryPixelColor(10, 0xFF)
+//                leds.fadePixel(10, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:0:9" })
+//                leds.setTemporaryPixelColor(0, 0xFF)
+//                leds.fadePixel(0, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:1:9" })
+//                leds.setTemporaryPixelColor(9, 0xFF)
+//                leds.fadePixel(9, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:1:8" })
+//                leds.setTemporaryPixelColor(1, 0xFF)
+//                leds.fadePixel(1, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:2:8" })
+//                leds.setTemporaryPixelColor(8, 0xFF)
+//                leds.fadePixel(8, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:2:7" })
+//                leds.setTemporaryPixelColor(2, 0xFF)
+//                leds.fadePixel(2, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:3:7" })
+//                leds.setTemporaryPixelColor(7, 0xFF)
+//                leds.fadePixel(7, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:3:6" })
+//                leds.setTemporaryPixelColor(3, 0xFF)
+//                leds.fadePixel(3, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:4:6" })
+//                leds.setTemporaryPixelColor(6, 0xFF)
+//                leds.fadePixel(6, 25, 50)
+//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:4:5" })
+//                leds.setTemporaryPixelColor(4, 0xFF)
+//                leds.fadePixel(4, 25, 50)
+//                leds.setTemporaryPixelColor(5, 0xFF)
+//                leds.fadePixel(5, 25, 50)
+//            }
+//        }
 
         @Test
         fun `btc even number of pixels`() {
@@ -217,7 +218,7 @@ class AnimationTests : StringSpec(
             assertNotNull(anim)
             anim.joinBlocking()
 
-            leds.assertAllPixels(0xFF)
+            leds.assertAllPixels(-1, 0xFF)
 
             verify {
                 leds.setProlongedPixelColor(0, 0xFF)
@@ -271,7 +272,7 @@ class AnimationTests : StringSpec(
             assertNotNull(anim)
             anim.joinBlocking()
 
-            leds.assertAllPixels(0xFF)
+            leds.assertAllPixels(-1, 0xFF)
 
             verify {
                 leds.setProlongedPixelColor(0, 0xFF)
@@ -691,61 +692,61 @@ class AnimationTests : StringSpec(
                     )
         }
 
-        @Test
-        fun testFadeToColor() {
-            val leds =
-                spyk(ledStrip.createSection("ftc", 0, 9))
-
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Fade to Color")
-                    .addColor(ColorContainer(0xFF, 0xFFFF))
-            )
-
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            verify(exactly = 1) {
-                leds.fadePixel(0)
-                leds.fadePixel(1)
-                leds.fadePixel(2)
-                leds.fadePixel(3)
-                leds.fadePixel(4)
-                leds.fadePixel(5)
-                leds.fadePixel(6)
-                leds.fadePixel(7)
-                leds.fadePixel(8)
-                leds.fadePixel(9)
-            }
-
-            leds.pixelProlongedColorList shouldBe
-                    listOf(
-                        0x00FF,
-                        0x34FF,
-                        0x67FF,
-                        0x9AFF,
-                        0xCDFF,
-                        0xFFFF,
-                        0xCCFF,
-                        0x99FF,
-                        0x66FF,
-                        0x33FF,
-                    )
-
-            leds.pixelTemporaryColorList shouldBe
-                    listOf(
-                        0x00FF,
-                        0x34FF,
-                        0x67FF,
-                        0x9AFF,
-                        0xCDFF,
-                        0xFFFF,
-                        0xCCFF,
-                        0x99FF,
-                        0x66FF,
-                        0x33FF,
-                    )
-        }
+//        @Test
+//        fun testFadeToColor() {
+//            val leds =
+//                spyk(ledStrip.createSection("ftc", 0, 9))
+//
+//            val anim = leds.startAnimation(
+//                AnimationToRunParams()
+//                    .animation("Fade to Color")
+//                    .addColor(ColorContainer(0xFF, 0xFFFF))
+//            )
+//
+//            assertNotNull(anim)
+//            anim.joinBlocking()
+//
+//            verify(exactly = 1) {
+//                leds.fadePixel(0)
+//                leds.fadePixel(1)
+//                leds.fadePixel(2)
+//                leds.fadePixel(3)
+//                leds.fadePixel(4)
+//                leds.fadePixel(5)
+//                leds.fadePixel(6)
+//                leds.fadePixel(7)
+//                leds.fadePixel(8)
+//                leds.fadePixel(9)
+//            }
+//
+//            leds.pixelProlongedColorList shouldBe
+//                    listOf(
+//                        0x00FF,
+//                        0x34FF,
+//                        0x67FF,
+//                        0x9AFF,
+//                        0xCDFF,
+//                        0xFFFF,
+//                        0xCCFF,
+//                        0x99FF,
+//                        0x66FF,
+//                        0x33FF,
+//                    )
+//
+//            leds.pixelTemporaryColorList shouldBe
+//                    listOf(
+//                        0x00FF,
+//                        0x34FF,
+//                        0x67FF,
+//                        0x9AFF,
+//                        0xCDFF,
+//                        0xFFFF,
+//                        0xCCFF,
+//                        0x99FF,
+//                        0x66FF,
+//                        0x33FF,
+//                    )
+//        }
 
         @Test
         fun testFireworks() {

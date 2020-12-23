@@ -51,7 +51,7 @@ val mergeSortParallel = PredefinedAnimation(
     )
 ) { leds, params, scope ->
 
-    data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Long)
+    data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
     val colorMap = params.colors[0].colors.mapIndexed { index, it -> Pair(index, it) }.shuffled()
         .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }.toMutableList()

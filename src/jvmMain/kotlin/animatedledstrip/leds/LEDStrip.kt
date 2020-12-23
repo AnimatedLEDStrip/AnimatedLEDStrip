@@ -26,7 +26,6 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.utils.b
-import animatedledstrip.utils.blend
 import animatedledstrip.utils.g
 import animatedledstrip.utils.r
 import kotlinx.coroutines.*
@@ -35,7 +34,6 @@ import kotlinx.coroutines.sync.Mutex
 import org.pmw.tinylog.Logger
 import java.io.FileWriter
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 /**
@@ -58,6 +56,10 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
      * Number of LEDs
      */
     actual open val numLEDs: Int = stripInfo.numLEDs
+
+    actual val pixelColors: List<PixelColor> = mutableListOf<PixelColor>().apply {
+        for (i in IntRange(0, stripInfo.numLEDs - 1)) add(PixelColor(i))
+    }.toList()
 
     /**
      * A list of all LED indices
@@ -95,14 +97,11 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
      * Each pixel has two animatedledstrip.colors, its temporary color and then its prolonged color.
      * The prolonged color is a color for it to revert or fade back to.
      */
-    protected actual val prolongedColors = mutableListOf<Long>().apply {
-        for (i in IntRange(0, stripInfo.numLEDs - 1)) add(0)
-    }
 
-    /**
-     * Map of pixel indices to `FadePixel` instances
-     */
-    private val fadeMap = mutableMapOf<Int, FadePixel>()
+//    /**
+//     * Map of pixel indices to `FadePixel` instances
+//     */
+//    private val fadeMap = mutableMapOf<Int, FadePixel>()
 
 
     /* Image Debugging */
@@ -182,13 +181,14 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
             Logger.warn("Output file name is specified but image debugging is disabled")
         for (i in IntRange(0, stripInfo.numLEDs - 1)) {
             pixelLocks += Pair(i, Mutex())
-            pixelChannels += Pair(i, Channel(Channel.CONFLATED))
-            pixelSetters += Pair(i, GlobalScope.launch {
-                for (c in pixelChannels[i]!!)
-                    ledStrip.setPixelColor(i, c.toInt())
-            })
+//            pixelChannels += Pair(i, Channel(Channel.CONFLATED))
+//            pixelSetters += Pair(i, GlobalScope.launch {
+//                for (c in pixelChannels[i]!!) {
+//                }
+////                    ledStrip.setPixelColor(i, c.toInt())
+//            })
             writeLocks += Pair(i, Mutex())
-            fadeMap += Pair(i, FadePixel(i))
+//            fadeMap += Pair(i, FadePixel(i))
         }
         runBlocking { delay(2000) }
         toggleRender()
@@ -213,7 +213,9 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
                     var renderNum = 0
                     while (rendering) {
                         try {
+                            pixelColors.forEach { it.sendColorToStrip(ledStrip, renderNum % 6 == 0) }
                             ledStrip.render()
+                            renderNum++
                         } catch (e: NullPointerException) {
                             Logger.error("LEDStrip NullPointerException when rendering")
                             delay(1000)
@@ -224,7 +226,7 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
                             }
                             saveStateBuffer.append("0,0,0\n")
 
-                            if (renderNum++ >= rendersBeforeSave) {
+                            if (renderNum >= rendersBeforeSave) {
                                 saveStateChannel.send(saveStateBuffer.toString())
                                 saveStateBuffer.clear()
                                 renderNum = 0
@@ -241,155 +243,87 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
 
     /* Set pixel color */
 
-    /**
-     * Set the pixel's color. If `prolonged` is true, set the prolonged color,
-     * otherwise set the actual color.
-     */
-    protected actual fun setPixelColor(pixel: Int, color: ColorContainerInterface, prolonged: Boolean) {
+    actual fun setPixelColor(pixel: Int, color: ColorContainerInterface, colorType: PixelColorType) {
         when (color) {
             is ColorContainer -> error("")
-            is PreparedColorContainer -> setPixelColor(pixel, color[pixel], prolonged)
+            is PreparedColorContainer -> setPixelColor(pixel, color[pixel], colorType)
         }
     }
 
-    /**
-     * Set the pixel's color. If `prolonged` is true, set the prolonged color,
-     * otherwise set the actual color.
-     */
-    protected actual fun setPixelColor(pixel: Int, color: Long, prolonged: Boolean) {
+    actual fun setPixelColor(pixel: Int, color: Int, colorType: PixelColorType) {
         require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
-        when (prolonged) {
-            true -> {
-                prolongedColors[pixel] = color
-                // Call this function again with prolonged = false to set the actual color
-                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color, prolonged = false)
-            }
-            false -> {
-//                writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
-//                    ledStrip.setPixelColor(pixel, color.toInt())
-//                } ?: Logger.warn("Pixel $pixel does not exist")
-                runBlocking {
-                    pixelChannels[pixel]?.send(color) ?: Logger.warn("err with set")
-                }
-            }
-        }
+        pixelColors[pixel].setColor(color, colorType)
     }
+
+//    /**
+//     * Set the pixel's color. If `prolonged` is true, set the prolonged color,
+//     * otherwise set the actual color.
+//     */
+//    protected actual fun setPixelColor(pixel: Int, color: Long, prolonged: Boolean) {
+//        require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
+//        when (prolonged) {
+//            true -> {
+//                prolongedColors[pixel] = color
+//                // Call this function again with prolonged = false to set the actual color
+////                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color, prolonged = false)
+//            }
+//            false -> {
+////                writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
+////                    ledStrip.setPixelColor(pixel, color.toInt())
+////                } ?: Logger.warn("Pixel $pixel does not exist")
+//                runBlocking {
+//                    pixelChannels[pixel]?.send(color) ?: Logger.warn("err with set")
+//                }
+//            }
+//        }
+//    }
 
     /**
      * Revert a pixel to its prolonged color. If it is in the middle
      * of a fade, don't revert.
      */
-    // TODO: Maybe rethink the guard here
     protected actual fun revertPixel(pixel: Int) {
-        if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, prolongedColors[pixel], prolonged = false)
+        pixelColors[pixel].revertColor()
     }
 
 
     /* Get pixel color */
 
-    /**
-     * Get the color of a pixel. If `prolonged` is true, get the prolonged
-     * color, otherwise get the pixel's actual color.
-     */
-    protected actual fun getPixelColor(pixel: Int, prolonged: Boolean): Long {
+    actual fun getPixelColor(pixel: Int, colorType: PixelColorType): Int {
         require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
-        return when (prolonged) {
-            true -> prolongedColors[pixel]
-            false -> ledStrip.getPixelColor(pixel).toLong()
-        }
+        return pixelColors[pixel].getColor(colorType)
     }
+
+//    /**
+//     * Get the color of a pixel. If `prolonged` is true, get the prolonged
+//     * color, otherwise get the pixel's actual color.
+//     */
+//    protected actual fun getPixelColor(pixel: Int, prolonged: Boolean): Long {
+//        require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
+//        return when (prolonged) {
+//            true -> prolongedColors[pixel]
+//            false -> ledStrip.getPixelColor(pixel).toLong()
+//        }
+//    }
 
     /**
      * Get the prolonged animatedledstrip.colors of all pixels as a `List<Long>`
      */
-    actual val pixelProlongedColorList: List<Long>
+    actual val pixelProlongedColorList: List<Int>
         get() {
-            val temp = mutableListOf<Long>()
-            for (i in physicalIndices) temp.add(getPixelColor(i, prolonged = true))
+            val temp = mutableListOf<Int>()
+            for (i in physicalIndices) temp.add(getPixelColor(i, PixelColorType.PROLONGED))
             return temp
         }
 
     /**
      * Get the temporary animatedledstrip.colors of all pixels as a `List<Long>`
      */
-    actual val pixelTemporaryColorList: List<Long>
+    actual val pixelTemporaryColorList: List<Int>
         get() {
-            val temp = mutableListOf<Long>()
-            for (i in physicalIndices) temp.add(getPixelColor(i, prolonged = false))
+            val temp = mutableListOf<Int>()
+            for (i in physicalIndices) temp.add(getPixelColor(i, PixelColorType.TEMPORARY))
             return temp
         }
-
-    /* Fading */
-
-    /**
-     * Helper class for fading a pixel from its current color to its prolonged color.
-     */
-    actual inner class FadePixel actual constructor(private val pixel: Int) {
-        /**
-         * Which thread is currently fading this pixel -
-         * used so another thread can take over mid-fade if necessary.
-         */
-        actual var owner = ""
-
-        /**
-         * Track if the pixel is in the middle of a fade
-         */
-        actual var isFading = false
-            private set
-
-        /**
-         * Fade a pixel from its current color to its current prolonged color.
-         *
-         * Blends the current color with pixel's current prolonged color using [blend] every
-         * `delay` milliseconds until the pixel reaches its prolonged color or 40
-         * iterations have passed, whichever comes first. The pixel's prolonged color
-         * is reevaluated every iteration, allowing it to fade into a changing background
-         * (i.e. a Smooth Chase animation).
-         *
-         * @param timeout How long before the fade should be aborted (in milliseconds)
-         */
-        actual fun fade(amountOfOverlay: Int, delay: Int, timeout: Int) {
-            val myName = Thread.currentThread().name
-            owner = myName
-            val stopTime = LocalDateTime.now().plusNanos(timeout * 1000000L)
-
-            var curTemp = getPixelColor(pixel, prolonged = false)
-            var curPro = getPixelColor(pixel, prolonged = true)
-            while (curTemp != curPro && LocalDateTime.now().isBefore(stopTime)) {
-                if (owner != myName) break
-                isFading = true
-                withPixelLock(pixel) {
-                    setPixelColor(
-                        pixel,
-                        blend(
-                            existing = curTemp,
-                            overlay = curPro,
-                            amountOfOverlay = amountOfOverlay,
-                        ),
-                        prolonged = false,
-                    )
-                }
-                runBlocking { delay(delay.toLong()) }
-            }
-            // If loop was not broken due to another thread taking over the fading,
-            // reset the pixel and indicate that this pixel is no longer fading
-            if (owner == myName) {
-                isFading = false
-                revertPixel(pixel)
-            }
-        }
-    }
-
-    /**
-     * Helper function for fading a pixel.
-     *
-     * @param pixel The pixel to be faded
-     * @param amountOfOverlay How much the pixel should fade in each iteration
-     * @param delay Time in milliseconds between iterations
-     * @see FadePixel
-     */
-    protected actual fun fadePixel(pixel: Int, amountOfOverlay: Int, delay: Int, timeout: Int) {
-        fadeMap[pixel]?.fade(amountOfOverlay = amountOfOverlay, delay = delay, timeout = timeout)
-    }
 
 }

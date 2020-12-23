@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
  */
 @Serializable
 open class ColorContainer(
-    final override val colors: MutableList<Long> = mutableListOf(),
+    final override val colors: MutableList<Int> = mutableListOf(),
 ) : ColorContainerInterface {
 
     /* Colors */
@@ -47,7 +47,7 @@ open class ColorContainer(
      * A helper property that returns the first color in [colors]. If `animatedledstrip.colors`
      * is empty, returns 0 (black).
      */
-    override val color: Long
+    override val color: Int
         get() = try {
             colors[0]
         } catch (e: IndexOutOfBoundsException) {
@@ -63,7 +63,7 @@ open class ColorContainer(
 
     /* Construction */
 
-    constructor(vararg c: Long) : this() {
+    constructor(vararg c: Int) : this() {
         for (i in c) colors += i
     }
 
@@ -72,7 +72,7 @@ open class ColorContainer(
      * containing r, g, and b.
      */
     constructor(rgb: Triple<Int, Int, Int>)
-            : this((rgb.first shl 16).toLong() or (rgb.second shl 8).toLong() or rgb.third.toLong())
+            : this((rgb.first shl 16) or (rgb.second shl 8) or rgb.third)
 
     /**
      * Copy constructor
@@ -90,7 +90,7 @@ open class ColorContainer(
      * was sent. Otherwise, it checks if `index` is a valid index of `animatedledstrip.colors`
      * and if so, returns the color stored there, if not, returns 0 (black).
      */
-    operator fun get(index: Int): Long =
+    operator fun get(index: Int): Int =
         if (singleColor) color
         else colors.getOrElse(index) { 0 }
 
@@ -105,7 +105,7 @@ open class ColorContainer(
      * to the list. The returned list contains the animatedledstrip.colors in the order
      * specified.
      */
-    operator fun get(vararg indices: Int): List<Long> =
+    operator fun get(vararg indices: Int): List<Int> =
         if (singleColor) listOf(color)
         else indices.map { colors.getOrElse(it) { 0 } }
 
@@ -114,7 +114,7 @@ open class ColorContainer(
      * this will return a list containing only that one color. If an index
      * in the range is not a valid index in `animatedledstrip.colors`, 0 is added to the list.
      */
-    operator fun get(indices: IntRange): List<Long> =
+    operator fun get(indices: IntRange): List<Int> =
         if (singleColor) listOf(color)
         else indices.map { colors.getOrElse(it) { 0 } }
 
@@ -126,7 +126,7 @@ open class ColorContainer(
      * in `animatedledstrip.colors`, this will add it to the end of `animatedledstrip.colors`, though not
      * necessarily at the index specified.
      */
-    operator fun set(vararg indices: Int, c: Long) {
+    operator fun set(vararg indices: Int, c: Int) {
         for (index in indices.sorted())
             if (colors.indices.contains(index)) colors[index] = c
             else colors += c
@@ -137,7 +137,7 @@ open class ColorContainer(
      * in [colors], this will add the color to the end of `animatedledstrip.colors`, though not
      * necessarily at the index specified.
      */
-    operator fun set(indices: IntRange, c: Long) {
+    operator fun set(indices: IntRange, c: Int) {
         for (index in indices)
             if (colors.indices.contains(index)) colors[index] = c
             else colors += c
@@ -146,7 +146,7 @@ open class ColorContainer(
     /**
      * Adds a color at the end of [colors].
      */
-    operator fun plusAssign(c: Long) {
+    operator fun plusAssign(c: Int) {
         colors.add(c)
     }
 
@@ -165,7 +165,7 @@ open class ColorContainer(
      * @return A [PreparedColorContainer] containing all the animatedledstrip.colors
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
-        val returnMap = mutableMapOf<Int, Long>()
+        val returnMap = mutableMapOf<Int, Int>()
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
         val purePixels = (0 until colors.size).map { (spacing * it).roundToInt() }.toMutableList()
 
@@ -211,15 +211,15 @@ open class ColorContainer(
     /**
      * Returns the first color in [colors].
      */
-    fun toLong(): Long = color
+    fun toInt(): Int = color
 
     /**
      * Returns the first color in [colors] a Triple containing r, g, b.
      */
     fun toRGB(): Triple<Int, Int, Int> = Triple(
-        (color shr 16 and 0xFF).toInt(),
-        (color shr 8 and 0xFF).toInt(),
-        (color and 0xFF).toInt()
+        color shr 16 and 0xFF,
+        color shr 8 and 0xFF,
+        color and 0xFF
     )
 
     /**
@@ -257,7 +257,7 @@ open class ColorContainer(
     /**
      * Checks if the specified color (Long) is in [colors].
      */
-    operator fun contains(c: Long): Boolean = colors.contains(c)
+    operator fun contains(c: Int): Boolean = colors.contains(c)
 
     /**
      * @return The hashCode of [colors]

@@ -46,12 +46,12 @@ fun Int.toARGB(): Int = (this or 0xFF000000.toInt())
 /**
  * Create a [ColorContainer] from this `Int`
  */
-fun Int.toColorContainer(): ColorContainer = ColorContainer(this.toLong())
+fun Int.toColorContainer(): ColorContainer = ColorContainer(this)
 
 /**
  * Create a [ColorContainer] from this `Long`
  */
-fun Long.toColorContainer(): ColorContainer = ColorContainer(this)
+fun Long.toColorContainer(): ColorContainer = ColorContainer(this.toInt())
 
 
 /* AnimationData to EndAnimation */

@@ -49,8 +49,8 @@ fun AnimationToRunParams.color(color: Any, index: Int = 0): AnimationToRunParams
 
     when (color) {
         is ColorContainerInterface -> colors[index] = color.toColorContainer()
-        is Long -> colors[index] = ColorContainer(color)
-        is Int -> colors[index] = ColorContainer(color.toLong())
+        is Long -> colors[index] = ColorContainer(color.toInt())
+        is Int -> colors[index] = ColorContainer(color)
         is String -> colors[index] = ColorContainer(parseHex(color))
         else -> throw IllegalArgumentException("Invalid data type: ${color::class}")
     }
@@ -78,7 +78,7 @@ fun AnimationToRunParams.addColors(vararg colors: ColorContainerInterface): Anim
  * Append a color to the end of `animatedledstrip.colors`
  */
 fun AnimationToRunParams.addColor(color: Long): AnimationToRunParams {
-    colors.add(ColorContainer(color))
+    colors.add(ColorContainer(color.toInt()))
     return this
 }
 
@@ -94,7 +94,7 @@ fun AnimationToRunParams.addColors(vararg colors: Long): AnimationToRunParams {
  * Append a color to the end of `animatedledstrip.colors`
  */
 fun AnimationToRunParams.addColor(color: Int): AnimationToRunParams {
-    colors.add(ColorContainer(color.toLong()))
+    colors.add(ColorContainer(color))
     return this
 }
 
