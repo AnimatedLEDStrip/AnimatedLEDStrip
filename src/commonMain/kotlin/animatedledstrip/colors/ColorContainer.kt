@@ -28,8 +28,10 @@ import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 
 /**
- * A class for storing animatedledstrip.colors that can be used in animations. This can store a
- * variable number of animatedledstrip.colors (stored as 24-bit Longs).
+ * A class for storing colors that can be used in animations. This can store a
+ * variable number of colors (stored as 24-bit `Int`s).
+ *
+ * Behavior when `Int`s outside the range `0..0xFFFFFF` are added is undefined.
  */
 @Serializable
 open class ColorContainer(
@@ -244,6 +246,11 @@ open class ColorContainer(
     }
 
     /**
+     * @return The hashCode of [colors]
+     */
+    override fun hashCode(): Int = colors.hashCode()
+
+    /**
      * @return The iterator for [colors]
      */
     operator fun iterator() = colors.iterator()
@@ -254,12 +261,7 @@ open class ColorContainer(
     operator fun contains(c: Int): Boolean = colors.contains(c)
 
     /**
-     * @return The hashCode of [colors]
-     */
-    override fun hashCode(): Int = colors.hashCode()
-
-    /**
-     * Returns the size of [colors].
+     * @return The size of [colors].
      */
     val size: Int
         get() = colors.size

@@ -270,19 +270,9 @@ fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
 /**
  * Report whether `animatedledstrip.colors` is empty
  */
-fun ColorContainer.isEmpty() = colors.isEmpty()
-
-/**
- * Report whether `animatedledstrip.colors` is empty
- */
-fun PreparedColorContainer.isEmpty() = colors.isEmpty()
+fun ColorContainerInterface.isEmpty() = colors.isEmpty()
 
 /**
  * Report whether `animatedledstrip.colors` is not empty
  */
-fun ColorContainer.isNotEmpty() = !isEmpty()
-
-/**
- * Report whether `animatedledstrip.colors` is not empty
- */
-fun PreparedColorContainer.isNotEmpty() = !isEmpty()
+fun ColorContainerInterface.isNotEmpty() = !isEmpty()

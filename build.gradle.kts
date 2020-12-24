@@ -8,13 +8,13 @@ plugins {
     kotlin("plugin.serialization") version "1.4.21"
     id("io.kotest") version "0.2.6"
     id("maven-publish")
-    id("java-library")
-    jacoco
+//    id("java-library")
+//    jacoco
 }
 
-jacoco {
-    toolVersion = "0.8.6"
-}
+//jacoco {
+//    toolVersion = "0.8.6"
+//}
 
 repositories {
     jcenter()
@@ -105,7 +105,7 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
+//    finalizedBy(tasks.jacocoTestReport)
     filter {
         isFailOnNoMatchingTests = false
     }
@@ -117,24 +117,25 @@ tasks.named<Test>("jvmTest") {
     }
 }
 
-tasks.jacocoTestReport {
-    val coverageSourceDirs = arrayOf(
-        "src/commonMain/kotlin",
-        "src/jvmMain/kotlin"
-    )
-
-    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
-        .walkBottomUp()
-        .toSet()
-
-
-    classDirectories.setFrom(classFiles)
-    sourceDirectories.setFrom(files(coverageSourceDirs))
-
-    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
-
-    reports {
-        xml.isEnabled = true
-        html.isEnabled = true
-    }
-}
+//tasks.jacocoTestReport {
+//    val coverageSourceDirs = arrayOf(
+//        "src/commonMain/kotlin",
+//        "src/jvmMain/kotlin"
+//    )
+//
+//    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
+//        .walkBottomUp()
+//        .toSet()
+//
+//
+//    classDirectories.setFrom(classFiles)
+//    sourceDirectories.setFrom(files(coverageSourceDirs))
+//
+//    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
+//
+//    reports {
+//        xml.isEnabled = true
+//        csv.isEnabled = true
+//        html.isEnabled = true
+//    }
+//}
