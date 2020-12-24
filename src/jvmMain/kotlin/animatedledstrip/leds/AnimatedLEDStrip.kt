@@ -41,39 +41,6 @@ actual abstract class AnimatedLEDStrip actual constructor(
     stripInfo: StripInfo,
 ) : LEDStrip(stripInfo) {
 
-    /* Thread pools */
-
-    /**
-     * Multiplier used when calculating thread pool sizes
-     */
-    private val threadCount: Int = stripInfo.threadCount
-
-    /**
-     * A pool of threads used to run animations.
-     * (Animations spawned by other animations use the [parallelAnimationThreadPool])
-     */
-    @Suppress("EXPERIMENTAL_API_USAGE")
-    val animationThreadPool =
-        newFixedThreadPoolContext(threadCount, "Animation Pool")
-
-    /**
-     * A pool of threads to be used for animations that spawn new sub-threads
-     * (with the exception of sparkle-type animations, those use the
-     * [sparkleThreadPool]).
-     */
-    @Suppress("EXPERIMENTAL_API_USAGE")
-    val parallelAnimationThreadPool =
-        newFixedThreadPoolContext(3 * threadCount, "Parallel Animation Pool")
-
-    /**
-     * A pool of threads to be used for sparkle-type animations due to the
-     * number of threads a concurrent sparkle animation uses.
-     */
-    @Suppress("EXPERIMENTAL_API_USAGE")
-    val sparkleThreadPool =
-        newFixedThreadPoolContext(stripInfo.numLEDs + 1, "Sparkle Pool")
-
-
     /* Track running animations */
 
     /**
@@ -129,6 +96,7 @@ actual abstract class AnimatedLEDStrip actual constructor(
      * Callback to run when a new section is created.
      */
     actual var newSectionCallback: ((Section) -> Any?)? = null
+
 
     /* Strip Sections */
 
@@ -231,24 +199,6 @@ actual abstract class AnimatedLEDStrip actual constructor(
         private fun getPhysicalIndex(pixel: Int): Int = pixel + physicalStart
 
         /**
-         * See [LEDStrip.prolongedColors].
-         */
-//        actual val prolongedColors: MutableList<Long>
-//            get() = ledStrip.prolongedColors
-
-        /**
-         * See [AnimatedLEDStrip.parallelAnimationThreadPool].
-         */
-        val parallelAnimationThreadPool: ExecutorCoroutineDispatcher
-            get() = ledStrip.parallelAnimationThreadPool
-
-        /**
-         * See [AnimatedLEDStrip.sparkleThreadPool].
-         */
-        val sparkleThreadPool: ExecutorCoroutineDispatcher
-            get() = ledStrip.sparkleThreadPool
-
-        /**
          * Valid indices for this section.
          */
         actual val indices = IntRange(0, endPixel - startPixel).toList()
@@ -303,6 +253,7 @@ actual abstract class AnimatedLEDStrip actual constructor(
             // Will return null if job was null because runningAnimations[id] would not have been set
             return runningAnimations[id]
         }
+
 
         /* Run animations */
 
@@ -438,14 +389,6 @@ actual abstract class AnimatedLEDStrip actual constructor(
          * See [LEDStrip.revertPixel]
          */
         actual fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
-
-//        /**
-//         * Fade a pixel to its prolonged color.
-//         *
-//         * See [LEDStrip.fadePixel]
-//         */
-//        actual fun fadePixel(pixel: Int, amountOfOverlay: Int, delay: Int, timeout: Int) =
-//            ledStrip.fadePixel(getPhysicalIndex(pixel), amountOfOverlay, delay, timeout)
 
 
         /* Set strip color */

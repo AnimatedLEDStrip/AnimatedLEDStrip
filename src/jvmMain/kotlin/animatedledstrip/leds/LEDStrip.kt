@@ -87,22 +87,6 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
      */
     internal val pixelLocks = mutableMapOf<Int, Mutex>()
 
-    internal val pixelChannels = mutableMapOf<Int, Channel<Long>>()
-
-    val pixelSetters = mutableMapOf<Int, Job>()
-
-    /**
-     * A list that tracks the prolonged color of each pixel.
-     *
-     * Each pixel has two animatedledstrip.colors, its temporary color and then its prolonged color.
-     * The prolonged color is a color for it to revert or fade back to.
-     */
-
-//    /**
-//     * Map of pixel indices to `FadePixel` instances
-//     */
-//    private val fadeMap = mutableMapOf<Int, FadePixel>()
-
 
     /* Image Debugging */
 
@@ -181,14 +165,7 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
             Logger.warn("Output file name is specified but image debugging is disabled")
         for (i in IntRange(0, stripInfo.numLEDs - 1)) {
             pixelLocks += Pair(i, Mutex())
-//            pixelChannels += Pair(i, Channel(Channel.CONFLATED))
-//            pixelSetters += Pair(i, GlobalScope.launch {
-//                for (c in pixelChannels[i]!!) {
-//                }
-////                    ledStrip.setPixelColor(i, c.toInt())
-//            })
             writeLocks += Pair(i, Mutex())
-//            fadeMap += Pair(i, FadePixel(i))
         }
         runBlocking { delay(2000) }
         toggleRender()
@@ -255,29 +232,6 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
         pixelColors[pixel].setColor(color, colorType)
     }
 
-//    /**
-//     * Set the pixel's color. If `prolonged` is true, set the prolonged color,
-//     * otherwise set the actual color.
-//     */
-//    protected actual fun setPixelColor(pixel: Int, color: Long, prolonged: Boolean) {
-//        require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
-//        when (prolonged) {
-//            true -> {
-//                prolongedColors[pixel] = color
-//                // Call this function again with prolonged = false to set the actual color
-////                if (fadeMap[pixel]?.isFading == false) setPixelColor(pixel, color, prolonged = false)
-//            }
-//            false -> {
-////                writeLocks[pixel]?.tryWithLock(owner = "Pixel $pixel") {
-////                    ledStrip.setPixelColor(pixel, color.toInt())
-////                } ?: Logger.warn("Pixel $pixel does not exist")
-//                runBlocking {
-//                    pixelChannels[pixel]?.send(color) ?: Logger.warn("err with set")
-//                }
-//            }
-//        }
-//    }
-
     /**
      * Revert a pixel to its prolonged color. If it is in the middle
      * of a fade, don't revert.
@@ -294,36 +248,22 @@ actual abstract class LEDStrip actual constructor(val stripInfo: StripInfo) {
         return pixelColors[pixel].getColor(colorType)
     }
 
-//    /**
-//     * Get the color of a pixel. If `prolonged` is true, get the prolonged
-//     * color, otherwise get the pixel's actual color.
-//     */
-//    protected actual fun getPixelColor(pixel: Int, prolonged: Boolean): Long {
-//        require(pixel in physicalIndices) { "$pixel not in indices (${physicalIndices.first()}..${physicalIndices.last()})" }
-//        return when (prolonged) {
-//            true -> prolongedColors[pixel]
-//            false -> ledStrip.getPixelColor(pixel).toLong()
-//        }
-//    }
+    actual val pixelActualColorList: List<Int>
+        get() = pixelColors.map { it.actualColor }
+
+    actual val pixelFadeColorList: List<Int>
+        get() = pixelColors.map { it.fadeColor }
 
     /**
      * Get the prolonged animatedledstrip.colors of all pixels as a `List<Long>`
      */
     actual val pixelProlongedColorList: List<Int>
-        get() {
-            val temp = mutableListOf<Int>()
-            for (i in physicalIndices) temp.add(getPixelColor(i, PixelColorType.PROLONGED))
-            return temp
-        }
+        get() = pixelColors.map { it.prolongedColor }
 
     /**
      * Get the temporary animatedledstrip.colors of all pixels as a `List<Long>`
      */
     actual val pixelTemporaryColorList: List<Int>
-        get() {
-            val temp = mutableListOf<Int>()
-            for (i in physicalIndices) temp.add(getPixelColor(i, PixelColorType.TEMPORARY))
-            return temp
-        }
+        get() = pixelColors.map { it.temporaryColor }
 
 }

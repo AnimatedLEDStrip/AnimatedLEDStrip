@@ -92,6 +92,10 @@ expect abstract class LEDStrip(stripInfo: StripInfo) {
 
     fun getPixelColor(pixel: Int, colorType: PixelColorType): Int
 
+    val pixelActualColorList: List<Int>
+
+    val pixelFadeColorList: List<Int>
+
     /**
      * Get the prolonged animatedledstrip.colors of all pixels as a `List<Long>`
      */

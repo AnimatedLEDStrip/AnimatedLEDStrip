@@ -279,13 +279,6 @@ expect abstract class AnimatedLEDStrip(
          */
         fun revertPixel(pixel: Int)
 
-//        /**
-//         * Fade a pixel to its prolonged color.
-//         *
-//         * See [LEDStrip.fadePixel]
-//         */
-//        fun fadePixel(pixel: Int, amountOfOverlay: Int = 25, delay: Int = 30, timeout: Int = 2000)
-
         /**
          * Set the temporary color of all pixels in the strip (or section).
          */
