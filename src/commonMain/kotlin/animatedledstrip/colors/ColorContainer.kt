@@ -48,11 +48,7 @@ open class ColorContainer(
      * is empty, returns 0 (black).
      */
     override val color: Int
-        get() = try {
-            colors[0]
-        } catch (e: IndexOutOfBoundsException) {
-            0
-        }
+        get() = this[0]
 
     /**
      * Tracks if there is only one color in [colors].
@@ -91,8 +87,7 @@ open class ColorContainer(
      * and if so, returns the color stored there, if not, returns 0 (black).
      */
     operator fun get(index: Int): Int =
-        if (singleColor) color
-        else colors.getOrElse(index) { 0 }
+        colors.getOrElse(index) { 0 }
 
 
     /**
@@ -106,8 +101,7 @@ open class ColorContainer(
      * specified.
      */
     operator fun get(vararg indices: Int): List<Int> =
-        if (singleColor) listOf(color)
-        else indices.map { colors.getOrElse(it) { 0 } }
+        indices.map { colors.getOrElse(it) { 0 } }
 
     /**
      * Get animatedledstrip.colors from [colors]. If there is only one color in `animatedledstrip.colors`,
@@ -115,8 +109,7 @@ open class ColorContainer(
      * in the range is not a valid index in `animatedledstrip.colors`, 0 is added to the list.
      */
     operator fun get(indices: IntRange): List<Int> =
-        if (singleColor) listOf(color)
-        else indices.map { colors.getOrElse(it) { 0 } }
+        indices.map { colors.getOrElse(it) { 0 } }
 
 
     /* Set color */
@@ -165,9 +158,10 @@ open class ColorContainer(
      * @return A [PreparedColorContainer] containing all the animatedledstrip.colors
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
+        require(numLEDs > 0)
         val returnMap = mutableMapOf<Int, Int>()
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
-        val purePixels = (0 until colors.size).map { (spacing * it).roundToInt() }.toMutableList()
+        val purePixels = (0 until colors.size).map { (spacing * it).roundToInt() }
 
         for (i in 0 until numLEDs) {
             for (p in purePixels) {
@@ -244,7 +238,7 @@ open class ColorContainer(
         return when (other) {
             is ColorContainer -> other.colors == this.colors
             is PreparedColorContainer -> other.originalColors == this.colors
-            is Long -> singleColor && other == this.color
+            is Int -> singleColor && other == this.color
             else -> super.equals(other)
         }
     }
@@ -262,9 +256,7 @@ open class ColorContainer(
     /**
      * @return The hashCode of [colors]
      */
-    override fun hashCode(): Int {
-        return colors.hashCode()
-    }
+    override fun hashCode(): Int = colors.hashCode()
 
     /**
      * Returns the size of [colors].

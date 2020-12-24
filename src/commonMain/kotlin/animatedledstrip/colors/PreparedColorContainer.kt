@@ -26,20 +26,19 @@ import animatedledstrip.utils.base
 import kotlinx.serialization.Serializable
 
 /**
- * A prepared [ColorContainer] that holds a set of animatedledstrip.colors that blend from one
+ * A prepared [ColorContainer] that holds a set of colors that blend from one
  * to the next (see [ColorContainer.prepare]. This is created by calling
  * [ColorContainer.prepare].
  *
- * @property colors The `List` of animatedledstrip.colors in this `PreparedColorContainer`
- * @property originalColors The animatedledstrip.colors that were used to prepare this
+ * @property colors The `List` of colors in this `PreparedColorContainer`
+ * @property originalColors The colors that were used to prepare this
  * `PreparedColorContainer`
  */
 @Serializable
 class PreparedColorContainer(
     override val colors: List<Int>,
     val originalColors: List<Int> = listOf(),
-) :
-    ColorContainerInterface {
+) : ColorContainerInterface {
 
     /**
      * Get the color in [colors] at the specified index.
@@ -81,9 +80,11 @@ class PreparedColorContainer(
         get() = colors.size
 
     /**
-     * Returns a new [ColorContainer] instance with the animatedledstrip.colors in [colors].
+     * Returns a new [ColorContainer] instance with the colors in [colors].
      */
     override fun toColorContainer() = ColorContainer(colors.toMutableList())
+
+    fun originalColorContainer() = ColorContainer(originalColors.toMutableList())
 
     override fun equals(other: Any?): Boolean {
         return when (other) {

@@ -23,261 +23,476 @@
 package animatedledstrip.test.colors
 
 import animatedledstrip.colors.*
+import animatedledstrip.utils.grayscale
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import kotlin.test.assertFalse
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.collections.shouldExistInOrder
+import io.kotest.matchers.collections.shouldStartWith
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.kotest.matchers.types.shouldNotBeSameInstanceAs
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.filter
+import io.kotest.property.arbitrary.int
+import io.kotest.property.arbitrary.list
+import io.kotest.property.arbitrary.next
+import io.kotest.property.checkAll
 import kotlin.test.assertTrue
 
 class ColorContainerTest : StringSpec(
     {
         "primary constructor" {
-            val testCC = ColorContainer(0xFF7B50)
-
-            assertTrue { testCC.color == 0xFF7B50 }
+            checkAll<Int> { c ->
+                ColorContainer(c).color shouldBe c
+            }
         }
 
         "ColorContainer constructor" {
-            val cc = ColorContainer(0xFF7B50)
-            val testCC = ColorContainer(cc)
-
-            assertTrue { testCC.color == 0xFF7B50 }
+            checkAll(Arb.list(Arb.int())) { c ->
+                val cc = ColorContainer(c.toMutableList())
+                ColorContainer(cc).colors shouldBe cc.colors
+            }
         }
 
         "RGB constructor" {
-            val testCC = ColorContainer(Triple(255, 123, 80))
-
-            assertTrue { testCC.color == 0xFF7B50 }
+            checkAll<Int, Int, Int> { r, g, b ->
+                ColorContainer(Triple(r, g, b)).color shouldBe ((r shl 16) or (g shl 8) or b)
+            }
         }
 
         "list constructor" {
-            @Suppress("RemoveExplicitTypeArguments")
-            val testCC = ColorContainer(mutableListOf<Int>(0xFF2431, 0x5F3C4B))
-            assertTrue { testCC.colors == mutableListOf<Int>(0xFF2431, 0x5F3C4B) }
+            checkAll(Arb.list(Arb.int())) { c ->
+                ColorContainer(c.toMutableList()).colors shouldBe c.toMutableList()
+            }
         }
 
         "equality" {
-            val testCC = ColorContainer(0xFF7B50)
+            checkAll<Int> { c ->
+                val testCC = ColorContainer(c)
 
-            assertTrue { testCC == ColorContainer(0xFF7B50) }
-            assertTrue { testCC.equals(0xFF7B50) }
-            assertFalse { testCC == ColorContainer(0xFF7B51) }
-            assertFalse { testCC.equals(10) }
-            assertFalse { ColorContainer(0xFF, 0xFFFF).equals(10) }
-            assertFalse { testCC.equals("X") }
+                testCC shouldBe ColorContainer(c)
+                testCC.hashCode() shouldBe ColorContainer(c).hashCode()
+                testCC shouldBe c
 
-            testCC.hashCode()
+                checkAll(10, Arb.int().filter { it != c }) { c2 ->
+                    testCC shouldNotBe ColorContainer(c2)
+                    testCC.hashCode() shouldNotBe ColorContainer(c2).hashCode()
+                    testCC shouldNotBe c2
+                }
 
-            val testPCC = testCC.prepare(50)
+                checkAll(10, Arb.list(Arb.int(), 2..100)) { c3 ->
+                    testCC shouldNotBe ColorContainer(c3.toMutableList())
+                }
+            }
 
-            assertTrue { testPCC.equals(ColorContainer(0xFF7B50)) }
-            assertTrue { testPCC == ColorContainer(0xFF7B50).prepare(50) }
-            assertTrue { testCC.equals(testPCC) }
-            assertFalse { testPCC.equals(ColorContainer(0xFF7B51)) }
-            assertFalse { testPCC == ColorContainer(0xFF7B51).prepare(50) }
-            assertFalse { ColorContainer(0xFF7B51).equals(testPCC) }
-            assertFalse { testPCC.equals("X") }
+            checkAll<List<Int>> { c ->
+                val testCC = ColorContainer(c.toMutableList())
 
-            testPCC.hashCode()
+                testCC shouldBe ColorContainer(c.toMutableList())
+                testCC.hashCode() shouldBe ColorContainer(c.toMutableList()).hashCode()
+                testCC shouldNotBe c
+                testCC.hashCode() shouldBe c.hashCode()
+
+                checkAll(50, Arb.int(1..500).filter { it != c.size }) { len ->
+                    testCC shouldBe ColorContainer(c.toMutableList()).prepare(len)
+                    testCC.hashCode() shouldNotBe ColorContainer(c.toMutableList()).prepare(len).hashCode()
+                }
+
+                checkAll(10, Arb.list(Arb.int()).filter { it != c }) { c2 ->
+                    testCC shouldNotBe ColorContainer(c2.toMutableList())
+                    testCC.hashCode() shouldNotBe ColorContainer(c2.toMutableList()).hashCode()
+                    testCC shouldNotBe c2
+                    testCC.hashCode() shouldNotBe c2.hashCode()
+                }
+            }
         }
 
         "contains" {
-            val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
-            assertTrue { testCC.contains(0xFF7B50) }
-            assertFalse { testCC.contains(0xFF145C) }
+            checkAll<List<Int>> { c ->
+                val testCC = ColorContainer(c.toMutableList())
+
+                for (i in c) {
+                    (i in testCC).shouldBeTrue()
+                }
+
+                for (i in Arb.list(Arb.int().filter { it !in c }, 10..10).next())
+                    (i in testCC).shouldBeFalse()
+            }
         }
 
         "get" {
-            val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
 
-            assertTrue { testCC[0] == 0xFF7B50 }
-            assertTrue { testCC[0, 2] == listOf(0xFF7B50, 0x3C538B) }
-            assertTrue { testCC[0..2] == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
-            assertTrue { testCC[IntRange(2, 0)] == listOf<Int>() }     // Test with empty IntRange
-            assertTrue { testCC.color == 0xFF7B50 }
+                testCC[0] shouldBe c1
+                testCC[0, 2] shouldBe listOf(c1, c3)
+                testCC[0..2] shouldBe listOf(c1, c2, c3)
+                testCC[IntRange(2, 0)] shouldBe listOf()     // Test with empty IntRange
+                testCC.color shouldBe c1
 
-            assertTrue { testCC[5] == 0 }
-            assertTrue { testCC[3, 5] == listOf(0x0084AF, 0) }
-            assertTrue { testCC[3..5] == listOf(0x0084AF, 0, 0) }
+                testCC[5] shouldBe 0
+                testCC[3, 5] shouldBe listOf(c4, 0)
+                testCC[3..5] shouldBe listOf(c4, 0, 0)
+            }
 
-
-            val testCC2 = ColorContainer(0xFF7B50)
-            assertTrue { testCC2.color == 0xFF7B50 }
-            assertTrue { testCC2[10] == 0xFF7B50 }
-            assertTrue { testCC2[3..5] == listOf(0xFF7B50) }
-            assertTrue { testCC2[5, 8, 10] == listOf(0xFF7B50) }
-
-            val testCC3 = ColorContainer()
-            assertTrue { testCC3.color == 0 }
-
-            val testPCC = testCC.prepare(50)
-            assertTrue { testPCC[0] == 0xFF7B50 }
-            assertTrue { testPCC[50] == 0 }
-            assertTrue { testPCC.color == 0 }
+            val testCC = ColorContainer()
+            testCC.color shouldBe 0
         }
 
         "set" {
-            val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4, c5, c6 ->
+                val testCC = ColorContainer(c1, c2, c3)
 
-            testCC[2] = 0xFF753C
-            assertTrue { testCC.colors == listOf(0xFF7B50, 0xF0AF29, 0xFF753C, 0x0084AF) }
+                testCC.colors.shouldContainExactly(c1, c2, c3)
 
-            testCC[3, 5] = 0xB39247
-            assertTrue { testCC.colors == listOf(0xFF7B50, 0xF0AF29, 0xFF753C, 0xB39247, 0xB39247) }
+                testCC[2] = c4
 
-            testCC[3..7] = 0x526BE2
-            assertTrue {
-                testCC.colors == listOf(
-                    0xFF7B50,
-                    0xF0AF29,
-                    0xFF753C,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                )
-            }
+                testCC.colors.shouldContainExactly(c1, c2, c4)
 
-            // Test empty IntRange
-            testCC[IntRange(5, 3)] = 0xFF
-            assertTrue {
-                testCC.colors == listOf(
-                    0xFF7B50,
-                    0xF0AF29,
-                    0xFF753C,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                    0x526BE2,
-                )
+                testCC[3, 5] = c5
+
+                testCC.colors.shouldContainExactly(c1, c2, c4, c5, c5)
+
+                testCC[3..7] = c6
+
+                testCC.colors.shouldContainExactly(c1, c2, c4, c6, c6, c6, c6, c6)
+
+                testCC[IntRange(5, 3)] = c1
+
+                testCC.colors.shouldContainExactly(c1, c2, c4, c6, c6, c6, c6, c6)
             }
         }
 
         "size" {
-            val testCC = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B, 0x0084AF)
-
-            assertTrue { testCC.size == 4 }
+            checkAll<List<Int>> { c ->
+                ColorContainer(c.toMutableList()).size shouldBe c.size
+            }
         }
 
         "string" {
-            val testCC = ColorContainer(0xFF3B82)
-            assertTrue { testCC.toString() == "ff3b82" }
+            ColorContainer(0xFF3B82).toString() shouldBe "ff3b82"
 
-            val testCC2 = ColorContainer(0xFF7B50, 0xFFFFFF)
-            assertTrue { testCC2.toString() == "[ff7b50, ffffff]" }
+            ColorContainer(0xFF7B50, 0xFFFFFF).toString() shouldBe "[ff7b50, ffffff]"
 
-            val testCC3 = ColorContainer()
-            assertTrue { testCC3.toString() == "[]" }
-        }
-
-        "invert" {
-            val testCC = ColorContainer(0xFF7B50, 0xFF99C2)
-            assertTrue { testCC.invert(0)[0] == 0x0084AF }
-            assertTrue { testCC[1] == 0xFF99C2 }
-
-            val testCC2 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC2.invert(0, 2, 5)[0, 2] == listOf(0x0084AF, 0xC3AC74) }
-            assertTrue { testCC2.colors == listOf(0x0084AF, 0xF0AF29, 0xC3AC74) }
-
-            val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC3.invert().colors == listOf(0x0084AF, 0x0F50D6, 0xC3AC74) }
-
-            val testCC4 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC4.invert(0..1, 5..5)[0, 1] == listOf(0x0084AF, 0x0F50D6) }
-            assertTrue { testCC4.colors == listOf(0x0084AF, 0x0F50D6, 0x3C538B) }
-
-            // Test with empty IntRange
-            val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC5.invert(IntRange(10, 5)).colors == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
-        }
-
-        "inverse" {
-            val testCC = ColorContainer(0xFF7B50, 0xFF99C2)
-            val invCC = testCC.inverse(0)
-            assertTrue { invCC[0] == 0x0084AF }
-            assertTrue { testCC.colors == listOf(0xFF7B50, 0xFF99C2) }
-
-            val testCC2 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            val invCC2 = testCC2.inverse(0, 2, 5)
-            assertTrue { invCC2.colors == listOf(0x0084AF, 0xC3AC74) }
-            assertTrue { testCC2.colors == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
-
-            val testCC3 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            val invCC3 = testCC2.inverse(0..1, 5..5)
-            assertTrue { invCC3.colors == listOf(0x0084AF, 0x0F50D6) }
-            assertTrue { testCC3.colors == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
-
-            val testCC4 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            val invCC4 = testCC4.inverse()
-            val invCC5 = -testCC4
-            assertTrue { invCC4.colors == listOf(0x0084AF, 0x0F50D6, 0xC3AC74) }
-            assertTrue { invCC5.colors == listOf(0x0084AF, 0x0F50D6, 0xC3AC74) }
-            assertTrue { testCC4.colors == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
-
-            // Test with empty IntRange
-            val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC5.inverse(IntRange(10, 5)).colors == listOf<Long>() }
+            ColorContainer().toString() shouldBe "[]"
         }
 
         "grayscale" {
-            val testCC = ColorContainer(0xFF7B51, 0xFF99C2)
-            assertTrue { testCC.grayscale(0)[0] == 0x999999 }
-            assertTrue { testCC[1] == 0xFF99C2 }
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2 ->
+                val testCC = ColorContainer(c1, c2)
 
-            val testCC2 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC2.grayscale(0, 2, 5)[0, 2] == listOf(0x999999, 0x5E5E5E) }
-            assertTrue { testCC2.colors == listOf(0x999999, 0xF0AF29, 0x5E5E5E) }
+                testCC.grayscale() shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.grayscale(),
+                                                   c2.grayscale())
+            }
 
-            val testCC3 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC3.grayscale().colors == listOf(0x999999, 0x989898, 0x5E5E5E) }
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
 
-            val testCC4 = ColorContainer(0xFF7B51, 0x3C538B, 0xF0AF29)
-            assertTrue { testCC4.grayscale(0..1, 5..5)[0, 1] == listOf(0x999999, 0x5E5E5E) }
-            assertTrue { testCC4.colors == listOf(0x999999, 0x5E5E5E, 0xF0AF29) }
+                testCC.grayscale(0, 3) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.grayscale(),
+                                                   c2,
+                                                   c3,
+                                                   c4.grayscale())
 
-            // Test with empty IntRange
-            val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC5.grayscale(IntRange(10, 5)).colors == listOf(0xFF7B50, 0xF0AF29, 0x3C538B) }
+                testCC.grayscale(1, 2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.grayscale(),
+                                                   c2.grayscale(),
+                                                   c3.grayscale(),
+                                                   c4.grayscale())
+
+                val testCC2 = ColorContainer(c1, c2, c3, c4)
+
+                testCC2.grayscale(3, 1, 2) shouldBeSameInstanceAs testCC2
+                testCC2.colors.shouldContainExactly(c1,
+                                                    c2.grayscale(),
+                                                    c3.grayscale(),
+                                                    c4.grayscale())
+
+                val testCC3 = ColorContainer(c1, c2, c3, c4)
+
+                testCC3.grayscale(8) shouldBeSameInstanceAs testCC3
+                testCC3.colors.shouldContainExactly(c1, c2, c3, c4)
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+
+                testCC.grayscale(0..2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.grayscale(),
+                                                   c2.grayscale(),
+                                                   c3.grayscale(),
+                                                   c4)
+
+                val testCC2 = ColorContainer(c1, c2, c3, c4)
+
+                testCC2.grayscale(0..1, 3..5) shouldBeSameInstanceAs testCC2
+                testCC2.colors.shouldContainExactly(c1.grayscale(),
+                                                    c2.grayscale(),
+                                                    c3,
+                                                    c4.grayscale())
+
+                val testCC3 = ColorContainer(c1, c2, c3, c4)
+
+                testCC3.grayscale(IntRange(2, 0)) shouldBeSameInstanceAs testCC3
+                testCC3.colors.shouldContainExactly(c1, c2, c3, c4)
+            }
         }
 
         "grayscaled" {
-            val testCC = ColorContainer(0xFF7B51, 0xFF99C2)
-            val grayCC = testCC.grayscaled(0)
-            assertTrue { grayCC[0] == 0x999999 }
-            assertTrue { testCC.colors == listOf(0xFF7B51, 0xFF99C2) }
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2 ->
+                val testCC = ColorContainer(c1, c2)
+                val gTestCC1 = testCC.grayscaled()
 
-            val testCC2 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            val grayCC2 = testCC2.grayscaled(0, 2, 5)
-            assertTrue { grayCC2.colors == listOf(0x999999, 0x5E5E5E) }
-            assertTrue { testCC2.colors == listOf(0xFF7B51, 0xF0AF29, 0x3C538B) }
+                gTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2)
+                gTestCC1.colors.shouldContainExactly(c1.grayscale(),
+                                                     c2.grayscale())
+            }
 
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+                val gTestCC1 = testCC.grayscaled(0, 3)
 
-            val testCC3 = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            val grayCC3 = testCC3.grayscaled()
-            assertTrue { grayCC3.colors == listOf(0x999999, 0x989898, 0X5E5E5E) }
-            assertTrue { testCC2.colors == listOf(0xFF7B51, 0xF0AF29, 0x3C538B) }
+                gTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC1.colors.shouldContainExactly(c1.grayscale(),
+                                                     c4.grayscale())
 
-            val testCC4 = ColorContainer(0xFF7B51, 0x3C538B, 0xF0AF29)
-            val grayCC4 = testCC4.grayscaled(0..1, 5..5)
-            assertTrue { grayCC4.colors == listOf(0x999999, 0x5E5E5E) }
-            assertTrue { testCC4.colors == listOf(0xFF7B51, 0x3C538B, 0xF0AF29) }
+                val gTestCC2 = testCC.grayscaled(3, 1, 2)
 
-            // Test with empty IntRange
-            val testCC5 = ColorContainer(0xFF7B50, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC5.grayscaled(IntRange(10, 5)).colors == listOf<Int>() }
+                gTestCC2 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC2.colors.shouldContainExactly(c4.grayscale(),
+                                                     c2.grayscale(),
+                                                     c3.grayscale())
+
+                val gTestCC3 = testCC.grayscaled(8)
+
+                gTestCC3 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC3.colors.shouldBeEmpty()
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+                val gTestCC1 = testCC.grayscaled(0..2)
+
+                gTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC1.colors.shouldContainExactly(c1.grayscale(),
+                                                     c2.grayscale(),
+                                                     c3.grayscale())
+
+                val gTestCC2 = testCC.grayscaled(0..1, 3..5)
+
+                gTestCC2 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC2.colors.shouldContainExactly(c1.grayscale(),
+                                                     c2.grayscale(),
+                                                     c4.grayscale())
+
+                val gTestCC3 = testCC.grayscaled(IntRange(2, 0))
+
+                gTestCC3 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                gTestCC3.colors.shouldBeEmpty()
+            }
+        }
+
+        "invert" {
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2 ->
+                val testCC = ColorContainer(c1, c2)
+
+                testCC.invert() shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2.inv() and 0xFFFFFF)
+
+                testCC.invert() shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2)
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+
+                testCC.invert(0, 3) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2,
+                                                   c3,
+                                                   c4.inv() and 0xFFFFFF)
+
+                testCC.invert(1, 2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2.inv() and 0xFFFFFF,
+                                                   c3.inv() and 0xFFFFFF,
+                                                   c4.inv() and 0xFFFFFF)
+
+                testCC.invert(3, 1, 2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2,
+                                                   c3,
+                                                   c4)
+
+                testCC.invert(8) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2,
+                                                   c3,
+                                                   c4)
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+
+                testCC.invert(0..2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2.inv() and 0xFFFFFF,
+                                                   c3.inv() and 0xFFFFFF,
+                                                   c4)
+
+                testCC.invert(1..2) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                   c2,
+                                                   c3,
+                                                   c4)
+
+                testCC.invert(0..1, 3..5) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1,
+                                                   c2.inv() and 0xFFFFFF,
+                                                   c3,
+                                                   c4.inv() and 0xFFFFFF)
+
+                testCC.invert(IntRange(2, 0)) shouldBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1,
+                                                   c2.inv() and 0xFFFFFF,
+                                                   c3,
+                                                   c4.inv() and 0xFFFFFF)
+            }
+        }
+
+        "inverse" {
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2 ->
+                val testCC = ColorContainer(c1, c2)
+                val iTestCC1 = testCC.inverse()
+
+                iTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2)
+                iTestCC1.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                     c2.inv() and 0xFFFFFF)
+
+                val iTestCC2 = -testCC
+
+                iTestCC2 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2)
+                iTestCC2.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                     c2.inv() and 0xFFFFFF)
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+                val iTestCC1 = testCC.inverse(0, 3)
+
+                iTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC1.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                     c4.inv() and 0xFFFFFF)
+
+                val iTestCC2 = testCC.inverse(3, 1, 2)
+
+                iTestCC2 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC2.colors.shouldContainExactly(c4.inv() and 0xFFFFFF,
+                                                     c2.inv() and 0xFFFFFF,
+                                                     c3.inv() and 0xFFFFFF)
+
+                val iTestCC3 = testCC.inverse(8)
+
+                iTestCC3 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC3.colors.shouldBeEmpty()
+            }
+
+            checkAll(Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF),
+                     Arb.int(0..0xFFFFFF)) { c1, c2, c3, c4 ->
+                val testCC = ColorContainer(c1, c2, c3, c4)
+                val iTestCC1 = testCC.inverse(0..2)
+
+                iTestCC1 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC1.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                     c2.inv() and 0xFFFFFF,
+                                                     c3.inv() and 0xFFFFFF)
+
+                val iTestCC2 = testCC.inverse(0..1, 3..5)
+
+                iTestCC2 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC2.colors.shouldContainExactly(c1.inv() and 0xFFFFFF,
+                                                     c2.inv() and 0xFFFFFF,
+                                                     c4.inv() and 0xFFFFFF)
+
+                val iTestCC3 = testCC.inverse(IntRange(2, 0))
+
+                iTestCC3 shouldNotBeSameInstanceAs testCC
+                testCC.colors.shouldContainExactly(c1, c2, c3, c4)
+                iTestCC3.colors.shouldBeEmpty()
+            }
         }
 
         "prepare" {
-            val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
+            val p = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B).prepare(50)
+            p.colors.shouldStartWith(0xFF7B51)
+            p.colors.shouldExistInOrder({ it == 0xFF7B51 }, { it == 0xF0AF29 }, { it == 0x3C538B })
+            p.originalColors.shouldContainExactly(0xFF7B51, 0xF0AF29, 0x3C538B)
 
-            val p = testCC.prepare(50)
-            assertTrue { p[0] == testCC[0] }
-            assertTrue { p.contains(testCC[1]) }
-            assertTrue { p.contains(testCC[2]) }
+            ColorContainer().prepare(50).colors.shouldBeEmpty()
 
-            val testCC2 = ColorContainer()
-            val r = testCC2.prepare(50)
-            assertTrue { r.size == 0 }
+            shouldThrow<IllegalArgumentException> {
+                ColorContainer(0xFF).prepare(0)
+            }
+
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
+                ColorContainer(c.toMutableList()).prepare(500)
+            }
         }
 
         "toLong" {
@@ -291,79 +506,15 @@ class ColorContainerTest : StringSpec(
             assertTrue { testCC.toTriple() == Triple(0xFF, 0x7B, 0x51) }
         }
 
-        "toPreparedColorContainer" {
-            val testPCC = PreparedColorContainer(listOf(0xFF, 0xFFFF))
-            assertTrue { testPCC.prepare(2) === testPCC }
-            assertTrue { testPCC.toString() == "[ff, ffff]" }
-        }
-
         "is empty" {
             val testCC1 = ColorContainer()
-            assertTrue { testCC1.isEmpty() }
-            assertFalse { testCC1.isNotEmpty() }
+            testCC1.isEmpty().shouldBeTrue()
+            testCC1.isNotEmpty().shouldBeFalse()
 
-            val testCC2 = ColorContainer(0xFF)
-            assertFalse { testCC2.isEmpty() }
-            assertTrue { testCC2.isNotEmpty() }
-
-            val testCC3 = ColorContainer(0xFF, 0xFFFF)
-            assertFalse { testCC3.isEmpty() }
-            assertTrue { testCC3.isNotEmpty() }
-
-            val testPCC1 = testCC1.prepare(50)
-            assertTrue { testPCC1.isEmpty() }
-            assertFalse { testPCC1.isNotEmpty() }
-
-            val testPCC2 = testCC2.prepare(50)
-            assertFalse { testPCC2.isEmpty() }
-            assertTrue { testPCC2.isNotEmpty() }
-
-            val testPCC3 = testCC3.prepare(50)
-            assertFalse { testPCC3.isEmpty() }
-            assertTrue { testPCC3.isNotEmpty() }
-        }
-
-        "offset by" {
-            val c = ColorContainer(
-                0x0000FF, 0x00FFFF, 0xFF00FF,
-                0x00FF00, 0xFF0000, 0xFFFFFF,
-            ).prepare(6)
-
-            assertTrue {
-                c.colors ==
-                        listOf<Long>(
-                            0x0000FF, 0x00FFFF, 0xFF00FF,
-                            0x00FF00, 0xFF0000, 0xFFFFFF,
-                        )
-            }
-            assertTrue {
-                c.offsetBy(0).colors ==
-                        listOf<Long>(
-                            0x0000FF, 0x00FFFF, 0xFF00FF,
-                            0x00FF00, 0xFF0000, 0xFFFFFF,
-                        )
-            }
-            assertTrue {
-                c.offsetBy(4).colors ==
-                        listOf<Long>(
-                            0xFF00FF, 0x00FF00, 0xFF0000,
-                            0xFFFFFF, 0x0000FF, 0x00FFFF,
-                        )
-            }
-            assertTrue {
-                c.offsetBy(-4).colors ==
-                        listOf<Long>(
-                            0xFF0000, 0xFFFFFF, 0x0000FF,
-                            0x00FFFF, 0xFF00FF, 0x00FF00,
-                        )
-            }
-            assertTrue {
-                c.offsetBy(10).colors ==
-                        c.offsetBy(4).colors
-            }
-            assertTrue {
-                c.offsetBy(-10).colors ==
-                        c.offsetBy(-4).colors
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
+                val testCC2 = ColorContainer(c.toMutableList())
+                testCC2.isEmpty().shouldBeFalse()
+                testCC2.isNotEmpty().shouldBeTrue()
             }
         }
     })
