@@ -25,7 +25,7 @@ jobs:
   include:
     - stage: test
       install: skip
-      script: gradle allTest
+      script: ./gradlew allTest
       after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
