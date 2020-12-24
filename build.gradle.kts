@@ -7,6 +7,12 @@ plugins {
     kotlin("plugin.serialization") version "1.4.21"
     id("io.kotest") version "0.2.6"
     id("maven-publish")
+    id("java-library")
+    jacoco
+}
+
+jacoco {
+    toolVersion = "0.8.6"
 }
 
 repositories {
@@ -98,13 +104,27 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-    filter {
-        isFailOnNoMatchingTests = false
-    }
-    testLogging {
-        showExceptions = true
-        showStandardStreams = true
-        events = setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED, org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED)
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    val coverageSourceDirs = arrayOf(
+        "src/commonMain/kotlin",
+        "src/jvmMain/kotlin"
+    )
+
+    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
+        .walkBottomUp()
+        .toSet()
+
+
+    classDirectories.setFrom(classFiles)
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
+
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = true
     }
 }

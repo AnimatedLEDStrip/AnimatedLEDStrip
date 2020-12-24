@@ -50,8 +50,8 @@ class UtilsTest : StringSpec(
         "parse hex" {
             parseHex("FFFF") shouldBe 0xFFFF
             parseHex("fFFf") shouldBe 0xFFFF
-            parseHex("FED43210") shouldBe 0xFED43210
-            parseHex("CBA98765") shouldBe 0xCBA98765
+            parseHex("FED432") shouldBe 0xFED432
+            parseHex("CBA987") shouldBe 0xCBA987
         }
 
         "parse hex with 0x" {
@@ -69,8 +69,8 @@ class UtilsTest : StringSpec(
         "parse hex or default" {
             parseHexOrDefault("FFFF") shouldBe 0xFFFF
             parseHexOrDefault("fFFf") shouldBe 0xFFFF
-            parseHexOrDefault("FED43210") shouldBe 0xFED43210
-            parseHexOrDefault("CBA98765") shouldBe 0xCBA98765
+            parseHexOrDefault("FED432") shouldBe 0xFED432
+            parseHexOrDefault("CBA987") shouldBe 0xCBA987
         }
 
         "parse hex or default with 0x" {
