@@ -23,7 +23,10 @@
 package animatedledstrip.test.colors
 
 import animatedledstrip.colors.*
+import animatedledstrip.utils.b
+import animatedledstrip.utils.g
 import animatedledstrip.utils.grayscale
+import animatedledstrip.utils.r
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -42,7 +45,6 @@ import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.list
 import io.kotest.property.arbitrary.next
 import io.kotest.property.checkAll
-import kotlin.test.assertTrue
 
 class ColorContainerTest : StringSpec(
     {
@@ -53,75 +55,23 @@ class ColorContainerTest : StringSpec(
         }
 
         "ColorContainer constructor" {
-            checkAll(Arb.list(Arb.int())) { c ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val cc = ColorContainer(c.toMutableList())
                 ColorContainer(cc).colors shouldBe cc.colors
             }
         }
 
         "RGB constructor" {
-            checkAll<Int, Int, Int> { r, g, b ->
+            checkAll(Arb.int(0..0xFF),
+                     Arb.int(0..0xFF),
+                     Arb.int(0..0xFF)) { r, g, b ->
                 ColorContainer(Triple(r, g, b)).color shouldBe ((r shl 16) or (g shl 8) or b)
             }
         }
 
         "list constructor" {
-            checkAll(Arb.list(Arb.int())) { c ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 ColorContainer(c.toMutableList()).colors shouldBe c.toMutableList()
-            }
-        }
-
-        "equality" {
-            checkAll<Int> { c ->
-                val testCC = ColorContainer(c)
-
-                testCC shouldBe ColorContainer(c)
-                testCC.hashCode() shouldBe ColorContainer(c).hashCode()
-                testCC shouldBe c
-
-                checkAll(10, Arb.int().filter { it != c }) { c2 ->
-                    testCC shouldNotBe ColorContainer(c2)
-                    testCC.hashCode() shouldNotBe ColorContainer(c2).hashCode()
-                    testCC shouldNotBe c2
-                }
-
-                checkAll(10, Arb.list(Arb.int(), 2..100)) { c3 ->
-                    testCC shouldNotBe ColorContainer(c3.toMutableList())
-                }
-            }
-
-            checkAll<List<Int>> { c ->
-                val testCC = ColorContainer(c.toMutableList())
-
-                testCC shouldBe ColorContainer(c.toMutableList())
-                testCC.hashCode() shouldBe ColorContainer(c.toMutableList()).hashCode()
-                testCC shouldNotBe c
-                testCC.hashCode() shouldBe c.hashCode()
-
-                checkAll(50, Arb.int(1..500).filter { it != c.size }) { len ->
-                    testCC shouldBe ColorContainer(c.toMutableList()).prepare(len)
-                    testCC.hashCode() shouldNotBe ColorContainer(c.toMutableList()).prepare(len).hashCode()
-                }
-
-                checkAll(10, Arb.list(Arb.int()).filter { it != c }) { c2 ->
-                    testCC shouldNotBe ColorContainer(c2.toMutableList())
-                    testCC.hashCode() shouldNotBe ColorContainer(c2.toMutableList()).hashCode()
-                    testCC shouldNotBe c2
-                    testCC.hashCode() shouldNotBe c2.hashCode()
-                }
-            }
-        }
-
-        "contains" {
-            checkAll<List<Int>> { c ->
-                val testCC = ColorContainer(c.toMutableList())
-
-                for (i in c) {
-                    (i in testCC).shouldBeTrue()
-                }
-
-                for (i in Arb.list(Arb.int().filter { it !in c }, 10..10).next())
-                    (i in testCC).shouldBeFalse()
             }
         }
 
@@ -173,12 +123,27 @@ class ColorContainerTest : StringSpec(
                 testCC[IntRange(5, 3)] = c1
 
                 testCC.colors.shouldContainExactly(c1, c2, c4, c6, c6, c6, c6, c6)
+
+                testCC += c4
+
+                testCC.colors.shouldContainExactly(c1, c2, c4, c6, c6, c6, c6, c6, c4)
             }
         }
 
-        "size" {
-            checkAll<List<Int>> { c ->
-                ColorContainer(c.toMutableList()).size shouldBe c.size
+        "prepare" {
+            val p = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B).prepare(50)
+            p.colors.shouldStartWith(0xFF7B51)
+            p.colors.shouldExistInOrder({ it == 0xFF7B51 }, { it == 0xF0AF29 }, { it == 0x3C538B })
+            p.originalColors.shouldContainExactly(0xFF7B51, 0xF0AF29, 0x3C538B)
+
+            ColorContainer().prepare(50).colors.shouldBeEmpty()
+
+            shouldThrow<IllegalArgumentException> {
+                ColorContainer(0xFF).prepare(0)
+            }
+
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
+                ColorContainer(c.toMutableList()).prepare(500)
             }
         }
 
@@ -188,6 +153,86 @@ class ColorContainerTest : StringSpec(
             ColorContainer(0xFF7B50, 0xFFFFFF).toString() shouldBe "[ff7b50, ffffff]"
 
             ColorContainer().toString() shouldBe "[]"
+        }
+
+        "toInt" {
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
+                ColorContainer(c.toMutableList()).toInt() shouldBe c.first()
+            }
+        }
+
+        "toRGB" {
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
+                ColorContainer(c.toMutableList()).toRGB() shouldBe Triple(c.first().r, c.first().g, c.first().b)
+                ColorContainer(c.toMutableList()).toTriple() shouldBe Triple(c.first().r, c.first().g, c.first().b)
+            }
+        }
+
+        "toColorContainer" {
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
+                val testCC = ColorContainer(c.toMutableList())
+                testCC.toColorContainer() shouldBeSameInstanceAs testCC
+            }
+        }
+
+        "equality" {
+            checkAll(Arb.int(0..0xFFFFFF)) { c ->
+                val testCC = ColorContainer(c)
+
+                testCC shouldBe ColorContainer(c)
+                testCC.hashCode() shouldBe ColorContainer(c).hashCode()
+                testCC shouldBe c
+
+                checkAll(10, Arb.int(0..0xFFFFFF).filter { it != c }) { c2 ->
+                    testCC shouldNotBe ColorContainer(c2)
+                    testCC.hashCode() shouldNotBe ColorContainer(c2).hashCode()
+                    testCC shouldNotBe c2
+                }
+
+                checkAll(10, Arb.list(Arb.int(0..0xFFFFFF), 2..100)) { c3 ->
+                    testCC shouldNotBe ColorContainer(c3.toMutableList())
+                }
+            }
+
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
+                val testCC = ColorContainer(c.toMutableList())
+
+                testCC shouldBe ColorContainer(c.toMutableList())
+                testCC.hashCode() shouldBe ColorContainer(c.toMutableList()).hashCode()
+                testCC shouldNotBe c
+                testCC.hashCode() shouldBe c.hashCode()
+
+                checkAll(50, Arb.int(1..500).filter { it != c.size }) { len ->
+                    testCC shouldBe ColorContainer(c.toMutableList()).prepare(len)
+                    testCC.hashCode() shouldNotBe ColorContainer(c.toMutableList()).prepare(len).hashCode()
+                }
+
+                checkAll(10, Arb.list(Arb.int(0..0xFFFFFF)).filter { it != c }) { c2 ->
+                    testCC shouldNotBe ColorContainer(c2.toMutableList())
+                    testCC.hashCode() shouldNotBe ColorContainer(c2.toMutableList()).hashCode()
+                    testCC shouldNotBe c2
+                    testCC.hashCode() shouldNotBe c2.hashCode()
+                }
+            }
+        }
+
+        "contains" {
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
+                val testCC = ColorContainer(c.toMutableList())
+
+                for (i in c) {
+                    (i in testCC).shouldBeTrue()
+                }
+
+                for (i in Arb.list(Arb.int(0..0xFFFFFF).filter { it !in c }, 10..10).next())
+                    (i in testCC).shouldBeFalse()
+            }
+        }
+
+        "size" {
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
+                ColorContainer(c.toMutableList()).size shouldBe c.size
+            }
         }
 
         "grayscale" {
@@ -476,34 +521,6 @@ class ColorContainerTest : StringSpec(
                 testCC.colors.shouldContainExactly(c1, c2, c3, c4)
                 iTestCC3.colors.shouldBeEmpty()
             }
-        }
-
-        "prepare" {
-            val p = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B).prepare(50)
-            p.colors.shouldStartWith(0xFF7B51)
-            p.colors.shouldExistInOrder({ it == 0xFF7B51 }, { it == 0xF0AF29 }, { it == 0x3C538B })
-            p.originalColors.shouldContainExactly(0xFF7B51, 0xF0AF29, 0x3C538B)
-
-            ColorContainer().prepare(50).colors.shouldBeEmpty()
-
-            shouldThrow<IllegalArgumentException> {
-                ColorContainer(0xFF).prepare(0)
-            }
-
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..100)) { c ->
-                ColorContainer(c.toMutableList()).prepare(500)
-            }
-        }
-
-        "toLong" {
-            val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC.toInt() == 0xFF7B51 }
-        }
-
-        "toRGB" {
-            val testCC = ColorContainer(0xFF7B51, 0xF0AF29, 0x3C538B)
-            assertTrue { testCC.toRGB() == Triple(0xFF, 0x7B, 0x51) }
-            assertTrue { testCC.toTriple() == Triple(0xFF, 0x7B, 0x51) }
         }
 
         "is empty" {
