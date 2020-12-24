@@ -8,7 +8,7 @@ cache:
 before_install:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
-  - mvn install -f parent-pom/pom.xml -DskipBuild=true -B
+#  - mvn install -f parent-pom/pom.xml -DskipBuild=true -B
 
 branches:
   only:
@@ -25,6 +25,7 @@ jobs:
   include:
     - stage: test
       install: skip
+      script: gradle allTest
       after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
