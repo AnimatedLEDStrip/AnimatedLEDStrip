@@ -23,12 +23,14 @@
 package animatedledstrip.utils
 
 import animatedledstrip.animations.Animation
-import animatedledstrip.leds.animationmanagement.AnimationToRunParams
-import animatedledstrip.leds.animationmanagement.EndAnimation
-import animatedledstrip.leds.animationmanagement.RunningAnimationParams
+import animatedledstrip.clients.ClientParams
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.EndAnimation
+import animatedledstrip.leds.animationmanagement.RunningAnimationParams
+import animatedledstrip.leds.colormanagement.CurrentStripColor
 import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.stripmanagement.StripInfo
 import kotlinx.serialization.decodeFromString
@@ -43,7 +45,9 @@ val serializerModule = SerializersModule {
     polymorphic(SendableData::class) {
         subclass(Animation.AnimationInfo::class)
         subclass(AnimationToRunParams::class)
+        subclass(ClientParams::class)
         subclass(Command::class)
+        subclass(CurrentStripColor::class)
         subclass(EndAnimation::class)
         subclass(Message::class)
         subclass(RunningAnimationParams::class)
