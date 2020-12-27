@@ -23,6 +23,8 @@
 
 package animatedledstrip.utils
 
+import co.touchlab.kermit.CommonLogger
+import co.touchlab.kermit.Kermit
 import kotlin.random.Random
 
 /* Blend animatedledstrip.colors */
@@ -52,22 +54,25 @@ fun randomInt(): Int = Random.Default.nextInt()
 
 fun randomDouble(): Double = Random.Default.nextDouble()
 
+/**
+ * Iterate over a range of indices
+ */
+inline fun iterateOver(
+    indices: IntProgression,
+    operation: (Int) -> Unit,
+) {
+    for (q in indices) operation.invoke(q)
+}
 
-/* Blocking delay helper functions */
-
-///**
-// * Try to pause the thread for an amount of time in milliseconds.
-// *
-// * @param wait The time (in milliseconds) to wait for
-// */
-//fun delayBlocking(wait: Long) = runBlocking { delay(wait) }
-
-///**
-// * Overload for delayBlocking for when an `Int` is sent.
-// *
-// * @param wait The time (in milliseconds) to wait for
-// */
-//fun delayBlocking(wait: Int) = delayBlocking(wait.toLong())
+/**
+ * Iterate over indices given in a list
+ */
+inline fun iterateOver(
+    indices: List<Int>,
+    operation: (Int) -> Unit,
+) {
+    for (q in indices) operation.invoke(q)
+}
 
 
 /* Parse hex string */
@@ -128,3 +133,5 @@ val Int.b
  * @param b The base to use
  */
 infix fun Int.base(b: Int) = this.toString(b)
+
+val logger = Kermit(CommonLogger())

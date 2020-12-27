@@ -22,9 +22,10 @@
 
 package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.utils.decodeJson
 import animatedledstrip.utils.toUTF8
 import io.kotest.assertions.throwables.shouldThrow
@@ -280,7 +281,7 @@ class AnimationToRunParamsTest : StringSpec(
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.animationutils.AnimationToRunParams","animation":"Meteor","center":50,"colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[255,65280]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
+                """{"type":"animatedledstrip.leds.animationmanagement.AnimationToRunParams","animation":"Meteor","center":50,"colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[255,65280]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
 
             val correctData = AnimationToRunParams(animation = "Meteor",
                                                    colors = mutableListOf(ColorContainer(0xFF, 0xFF00),
@@ -312,7 +313,7 @@ class AnimationToRunParamsTest : StringSpec(
                                  runCount = 50,
                                  section = "EEEE",
                                  spacing = 15).jsonString() shouldBe
-                    """{"type":"animatedledstrip.animationutils.AnimationToRunParams","animation":"Color","colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[65535,255,15790320]},{"type":"animatedledstrip.colors.ColorContainer","colors":[13107,4660,16711935]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16777215,15728655,16316559]}],"center":30,"delay":300,"delayMod":1.8,"direction":"FORWARD","distance":12,"id":"A TEST","runCount":50,"section":"EEEE","spacing":15};;;"""
+                    """{"type":"animatedledstrip.leds.animationmanagement.AnimationToRunParams","animation":"Color","colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[65535,255,15790320]},{"type":"animatedledstrip.colors.ColorContainer","colors":[13107,4660,16711935]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16777215,15728655,16316559]}],"center":30,"delay":300,"delayMod":1.8,"direction":"FORWARD","distance":12,"id":"A TEST","runCount":50,"section":"EEEE","spacing":15};;;"""
         }
 
         "encode and decode JSON" {
@@ -336,14 +337,14 @@ class AnimationToRunParamsTest : StringSpec(
             anim2 shouldBe anim1
         }
 
-        val ledStrip = EmulatedAnimatedLEDStrip(10).wholeStrip
+        val stripSection = createNewEmulatedStrip(10).sectionManager
 
         "prepare colors" {
             val anim = AnimationToRunParams(animation = "Color",
                                             colors = mutableListOf(ColorContainer(0x0, 0xFFFF),
                                                                    ColorContainer(0xFE2C12, 0x5A736B, 0xCD4881)))
 
-            val prep1 = anim.prepare(ledStrip)
+            val prep1 = anim.prepare(stripSection)
 
             prep1.colors.shouldHaveSize(2)
             prep1.colors[0].colors.shouldContainExactly(0x0, 0x3434, 0x6767, 0x9A9A, 0xCDCD,
@@ -351,7 +352,7 @@ class AnimationToRunParamsTest : StringSpec(
             prep1.colors[1].colors.shouldContainExactly(0xFE2C12, 0xC74530, 0x915C4E, 0x5A736B, 0x786871,
                                                         0x945D77, 0xB1537C, 0xCD4881, 0xDF3E5C, 0xEF3537)
 
-            val subSection = ledStrip.getSubSection(3, 6)
+            val subSection = stripSection.getSubSection(3, 6)
 
             val prep2 = prep1.withModifications().prepare(subSection)
 
@@ -364,7 +365,7 @@ class AnimationToRunParamsTest : StringSpec(
             val anim1 = AnimationToRunParams(animation = "Alternate",
                                              colors = mutableListOf(ColorContainer(0xFF)))
 
-            val prep1 = anim1.prepare(ledStrip)
+            val prep1 = anim1.prepare(stripSection)
 
             prep1.colors.shouldHaveSize(2)
             prep1.colors[0].colors.shouldContainExactly(0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -374,7 +375,7 @@ class AnimationToRunParamsTest : StringSpec(
 
             val anim2 = AnimationToRunParams(animation = "Color")
 
-            val prep2 = anim2.prepare(ledStrip)
+            val prep2 = anim2.prepare(stripSection)
 
             prep2.colors.shouldHaveSize(1)
             prep2.colors[0].colors.shouldContainExactly(0x0, 0x0, 0x0, 0x0, 0x0,
@@ -385,11 +386,11 @@ class AnimationToRunParamsTest : StringSpec(
             val anim = AnimationToRunParams(animation = "Color")
 
             checkAll(Arb.int().filter { it >= 0 }) { c ->
-                anim.center(c).prepare(ledStrip).center shouldBe c
+                anim.center(c).prepare(stripSection).center shouldBe c
             }
 
             checkAll(Arb.int().filter { it < 0 }) { c ->
-                anim.center(c).prepare(ledStrip).center shouldBe 5
+                anim.center(c).prepare(stripSection).center shouldBe 5
             }
         }
 
@@ -397,11 +398,11 @@ class AnimationToRunParamsTest : StringSpec(
             val anim = AnimationToRunParams(animation = "Alternate")
 
             checkAll(Arb.int().filter { it >= 0 }) { d ->
-                anim.delay(d).prepare(ledStrip).delay shouldBe d
+                anim.delay(d).prepare(stripSection).delay shouldBe d
             }
 
             checkAll(Arb.int().filter { it < 0 }) { d ->
-                anim.delay(d).prepare(ledStrip).delay shouldBe 1000
+                anim.delay(d).prepare(stripSection).delay shouldBe 1000
             }
         }
 
@@ -409,17 +410,17 @@ class AnimationToRunParamsTest : StringSpec(
             val anim1 = AnimationToRunParams(animation = "Color")
 
             checkAll(Arb.int().filter { it >= 0 }) { d ->
-                anim1.distance(d).prepare(ledStrip).distance shouldBe d
+                anim1.distance(d).prepare(stripSection).distance shouldBe d
             }
 
             checkAll(Arb.int().filter { it < 0 }) { d ->
-                anim1.distance(d).prepare(ledStrip).distance shouldBe 10
+                anim1.distance(d).prepare(stripSection).distance shouldBe 10
             }
 
             val anim2 = AnimationToRunParams(animation = "Fireworks")
 
             checkAll(Arb.int().filter { it < 0 }) { d ->
-                anim2.distance(d).prepare(ledStrip).distance shouldBe 20
+                anim2.distance(d).prepare(stripSection).distance shouldBe 20
             }
         }
 
@@ -427,17 +428,17 @@ class AnimationToRunParamsTest : StringSpec(
             val anim1 = AnimationToRunParams(animation = "Color")
 
             checkAll(Arb.int().filter { it > 0 }) { r ->
-                anim1.runCount(r).prepare(ledStrip).runCount shouldBe r
+                anim1.runCount(r).prepare(stripSection).runCount shouldBe r
             }
 
             checkAll(Arb.int().filter { it < 0 }) { r ->
-                anim1.runCount(r).prepare(ledStrip).runCount shouldBe 1
+                anim1.runCount(r).prepare(stripSection).runCount shouldBe 1
             }
 
             val anim2 = AnimationToRunParams(animation = "Alternate")
 
             checkAll(Arb.int().filter { it < 0 }) { r ->
-                anim2.runCount(r).prepare(ledStrip).runCount shouldBe -1
+                anim2.runCount(r).prepare(stripSection).runCount shouldBe -1
             }
         }
 
@@ -445,18 +446,18 @@ class AnimationToRunParamsTest : StringSpec(
             val anim = AnimationToRunParams(animation = "Multi Pixel Run")
 
             checkAll(Arb.int().filter { it > 0 }) { s ->
-                anim.spacing(s).prepare(ledStrip).spacing shouldBe s
+                anim.spacing(s).prepare(stripSection).spacing shouldBe s
             }
 
             checkAll(Arb.int().filter { it <= 0 }) { s ->
-                anim.spacing(s).prepare(ledStrip).spacing shouldBe 3
+                anim.spacing(s).prepare(stripSection).spacing shouldBe 3
             }
         }
 
         "prepare source params" {
             val anim = AnimationToRunParams(animation = "Color")
 
-            anim.prepare(ledStrip).sourceParams shouldBeSameInstanceAs anim
+            anim.prepare(stripSection).sourceParams shouldBeSameInstanceAs anim
         }
 
         "prepare other params" {
@@ -465,9 +466,9 @@ class AnimationToRunParamsTest : StringSpec(
                                             id = "ABCD",
                                             section = "EFGH")
 
-            val prep = anim.prepare(ledStrip)
+            val prep = anim.prepare(stripSection)
 
-            prep.animation shouldBe "Color"
+            prep.animationName shouldBe "Color"
             prep.direction shouldBe Direction.BACKWARD
             prep.id shouldBe "ABCD"
             prep.section shouldBe "EFGH"

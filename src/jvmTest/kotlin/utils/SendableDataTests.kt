@@ -22,11 +22,10 @@
 
 package animatedledstrip.test.utils
 
-import animatedledstrip.animationutils.AnimationToRunParams
-import animatedledstrip.animationutils.Direction
-import animatedledstrip.animationutils.definedAnimationNames
-import animatedledstrip.leds.StripInfo
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.animations.Direction
+import animatedledstrip.animations.definedAnimationNames
+import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.toColorContainer
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
@@ -112,21 +111,21 @@ class SendableDataTests : StringSpec(
 //            assertTrue { info1 == info2 }
 //        }
 
-        "section to human readable string" {
-            val section1 = EmulatedAnimatedLEDStrip(50).createSection("Test", 5, 10)
-            assertTrue {
-                section1.toHumanReadableString() ==
-                        """
-                        Section Info
-                          name: Test
-                          numLEDs: 6
-                          startPixel: 5
-                          endPixel: 10
-                          physicalStart: 5
-                        End Info
-                    """.trimIndent()
-            }
-        }
+//        "section to human readable string" {
+//            val section1 = EmulatedAnimatedLEDStrip(50).createSection("Test", 5, 10)
+//            assertTrue {
+//                section1.toHumanReadableString() ==
+//                        """
+//                        Section Info
+//                          name: Test
+//                          numLEDs: 6
+//                          startPixel: 5
+//                          endPixel: 10
+//                          physicalStart: 5
+//                        End Info
+//                    """.trimIndent()
+//            }
+//        }
 
 //        "strip info JSON" {
 //            val info1 = StripInfo(

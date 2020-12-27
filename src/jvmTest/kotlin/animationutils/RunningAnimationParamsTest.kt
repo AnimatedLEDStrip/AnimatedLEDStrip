@@ -22,7 +22,7 @@
 
 package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.Direction
+import animatedledstrip.animations.Direction
 import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -40,7 +40,7 @@ class RunningAnimationParamsTest : StringSpec(
         }
 
         "with colors modification" {
-
+            TODO()
         }
 
         "with center modification" {

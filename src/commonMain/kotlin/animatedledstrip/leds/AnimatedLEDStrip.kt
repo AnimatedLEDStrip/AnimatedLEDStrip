@@ -22,21 +22,23 @@
 
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.*
 
 /**
- * A subclass of [LEDStrip] that manages the running of animations.
+ * A subclass of [OldLEDStrip] that manages the running of animations.
  *
  * @param stripInfo Information about this strip, such as number of
  * LEDs, etc. See [StripInfo].
  */
 expect abstract class AnimatedLEDStrip(
     stripInfo: StripInfo,
-) : LEDStrip {
+) : OldLEDStrip {
 
     /**
      * Map containing all `RunningAnimation` instances.
@@ -164,7 +166,7 @@ expect abstract class AnimatedLEDStrip(
         /**
          * Valid indices for this section.
          */
-        val indices: List<Int>
+        val validIndices: List<Int>
 
         val shuffledIndices: List<Int>
 //            get() = indices.shuffled()
@@ -275,7 +277,7 @@ expect abstract class AnimatedLEDStrip(
         /**
          * Revert a pixel to its prolonged color.
          *
-         * See [LEDStrip.revertPixel]
+         * See [OldLEDStrip.revertPixel]
          */
         fun revertPixel(pixel: Int)
 

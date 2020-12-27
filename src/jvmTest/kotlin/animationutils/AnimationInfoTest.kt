@@ -22,9 +22,9 @@
 
 package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.Animation
-import animatedledstrip.animationutils.ParamUsage
-import animatedledstrip.animationutils.predefined.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.ParamUsage
+import animatedledstrip.animations.predefined.*
 import animatedledstrip.utils.decodeJson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue

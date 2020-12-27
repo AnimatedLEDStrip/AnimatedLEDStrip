@@ -95,7 +95,8 @@ class PreparedColorContainerTest : StringSpec(
                 val testCC = testPCC.toColorContainer()
 
                 testCC.colors.shouldContainExactly(testPCC.colors)
-                testCC shouldNotBe testPCC
+                if (n != c.size) testCC shouldNotBe testPCC
+                else testCC shouldBe testPCC
             }
         }
 

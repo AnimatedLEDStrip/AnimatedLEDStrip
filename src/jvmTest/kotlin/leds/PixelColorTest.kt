@@ -1,8 +1,8 @@
 package animatedledstrip.test.leds
 
-import animatedledstrip.leds.PixelColor
-import animatedledstrip.leds.PixelColorType
-import animatedledstrip.leds.emulated.EmulatedWS281x
+import animatedledstrip.leds.colormanagement.PixelColor
+import animatedledstrip.leds.colormanagement.PixelColorType
+import animatedledstrip.leds.emulation.EmulatedWS281x
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

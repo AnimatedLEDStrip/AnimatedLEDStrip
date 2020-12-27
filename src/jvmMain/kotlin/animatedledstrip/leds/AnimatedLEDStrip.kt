@@ -22,9 +22,12 @@
 
 package animatedledstrip.leds
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.colormanagement.PixelColorType
+import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
@@ -32,14 +35,14 @@ import org.pmw.tinylog.Logger
 import java.lang.Math.random
 
 /**
- * A subclass of [LEDStrip] that manages the running of animations.
+ * A subclass of [OldLEDStrip] that manages the running of animations.
  *
  * @param stripInfo Information about this strip, such as number of
  * LEDs, etc. See [StripInfo].
  */
 actual abstract class AnimatedLEDStrip actual constructor(
     stripInfo: StripInfo,
-) : LEDStrip(stripInfo) {
+) : OldLEDStrip(stripInfo) {
 
     /* Track running animations */
 
@@ -201,10 +204,10 @@ actual abstract class AnimatedLEDStrip actual constructor(
         /**
          * Valid indices for this section.
          */
-        actual val indices = IntRange(0, endPixel - startPixel).toList()
+        actual val validIndices = IntRange(0, endPixel - startPixel).toList()
 
         actual val shuffledIndices: List<Int>
-            get() = indices.shuffled()
+            get() = validIndices.shuffled()
 
         /**
          * The number of LEDs in this section.
@@ -273,35 +276,35 @@ actual abstract class AnimatedLEDStrip actual constructor(
             scope: CoroutineScope?,
             subAnimation: Boolean,
         ): RunningAnimation? {
-            val definedAnimation = findAnimationOrNull(data.animation) ?: run {
-                Logger.warn("Animation ${data.animation} not found")
-                Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
+//            val definedAnimation = findAnimationOrNull(data.animation) ?: run {
+//                Logger.warn("Animation ${data.animation} not found")
+//                Logger.warn("Possible animations: ${definedAnimations.map { it.value.info.name }}")
                 return null
-            }
-
-            val params = data.prepare(this)
-
-            Logger.trace("Starting $data")
-
-            val animationScope = scope ?: GlobalScope
-
-            return RunningAnimation(
-                params,
-                animationScope.launch {
-                    if (!subAnimation) startAnimationCallback?.invoke(params)
-
-                    var runs = 0
-                    while (isActive && (params.runCount == -1 || runs < params.runCount)) {
-                        definedAnimation.runAnimation(leds = this@Section,
-                                                      params = params,
-                                                      scope = this)
-                        runs++
-                    }
-                    if (!subAnimation) {
-                        endAnimationCallback?.invoke(params)
-                        runningAnimations.remove(params.id)
-                    }
-                })
+//            }
+//
+//            val params = data.prepare(this)
+//
+//            Logger.trace("Starting $data")
+//
+//            val animationScope = scope ?: GlobalScope
+//
+//            return RunningAnimation(
+//                params,
+//                animationScope.launch {
+//                    if (!subAnimation) startAnimationCallback?.invoke(params)
+//
+//                    var runs = 0
+//                    while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+//                        definedAnimation.runAnimation(leds = this@Section,
+//                                                      params = params,
+//                                                      scope = this)
+//                        runs++
+//                    }
+//                    if (!subAnimation) {
+//                        endAnimationCallback?.invoke(params)
+//                        runningAnimations.remove(params.id)
+//                    }
+//                })
         }
 
 
@@ -386,7 +389,7 @@ actual abstract class AnimatedLEDStrip actual constructor(
         /**
          * Revert a pixel to its prolonged color.
          *
-         * See [LEDStrip.revertPixel]
+         * See [OldLEDStrip.revertPixel]
          */
         actual fun revertPixel(pixel: Int) = ledStrip.revertPixel(getPhysicalIndex(pixel))
 
@@ -398,7 +401,7 @@ actual abstract class AnimatedLEDStrip actual constructor(
          * set the prolonged color, otherwise set the temporary color.
          */
         private fun setStripColor(color: ColorContainerInterface, colorType: PixelColorType) {
-            for (i in indices) setPixelColor(getPhysicalIndex(i), color, colorType)
+            for (i in validIndices) setPixelColor(getPhysicalIndex(i), color, colorType)
         }
 
         /**
@@ -406,7 +409,7 @@ actual abstract class AnimatedLEDStrip actual constructor(
          * set the prolonged color, otherwise set the temporary color.
          */
         private fun setStripColor(color: Int, colorType: PixelColorType) {
-            for (i in indices) setPixelColor(getPhysicalIndex(i), color, colorType)
+            for (i in validIndices) setPixelColor(getPhysicalIndex(i), color, colorType)
         }
 
         /**
