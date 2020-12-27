@@ -50,6 +50,8 @@ val SectionManager.pixelProlongedColorList: List<Int>
 val SectionManager.pixelTemporaryColorList: List<Int>
     get() = stripManager.pixelTemporaryColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
+fun LEDStrip.currentStripColor(): CurrentStripColor = CurrentStripColor(pixelActualColorList)
+
 
 /* Set Pixel Fade Color */
 
