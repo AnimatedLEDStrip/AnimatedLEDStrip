@@ -22,9 +22,8 @@
 
 package animatedledstrip.test.utils
 
-import animatedledstrip.animationutils.AnimationToRunParams
-import animatedledstrip.leds.StripInfo
-import animatedledstrip.leds.iterateOver
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec

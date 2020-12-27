@@ -23,7 +23,7 @@
 package animatedledstrip.test.utils
 
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.leds.StripInfo
+import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -164,7 +164,7 @@ class ConversionUtilsTest : StringSpec(
 
         "good JSON to StripInfo" {
             val json =
-                """{"type":"animatedledstrip.leds.StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000,"threadCount":100};;;"""
+                """{"type":"animatedledstrip.leds.stripmanagement.StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000,"threadCount":100};;;"""
 
             val correctData = StripInfo(numLEDs = 240,
                                         pin = 12,

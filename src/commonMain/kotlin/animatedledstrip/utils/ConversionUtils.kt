@@ -22,9 +22,9 @@
 
 package animatedledstrip.utils
 
-import animatedledstrip.animationutils.AnimationToRunParams
-import animatedledstrip.animationutils.EndAnimation
-import animatedledstrip.animationutils.RunningAnimationParams
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.EndAnimation
+import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.colors.ColorContainer
 
 

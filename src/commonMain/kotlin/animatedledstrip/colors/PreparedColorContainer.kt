@@ -58,7 +58,7 @@ class PreparedColorContainer(
      * listed in comma delimited format, between brackets `[` & `]`
      */
     override fun toString(): String =
-        colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
+        "PCC" + colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 } + originalColors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
 
     /**
      * Checks if the specified value is in [colors].

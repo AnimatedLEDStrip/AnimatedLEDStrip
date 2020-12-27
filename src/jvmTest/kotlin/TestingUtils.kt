@@ -22,10 +22,16 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animationutils.AnimationToRunParams
-import animatedledstrip.animationutils.Direction
-import animatedledstrip.animationutils.RunningAnimationParams
-import animatedledstrip.leds.AnimatedLEDStrip
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.animations.Direction
+import animatedledstrip.leds.animationmanagement.RunningAnimationParams
+import animatedledstrip.animations.predefined.color
+import animatedledstrip.colors.PreparedColorContainer
+import animatedledstrip.leds.sectionmanagement.SectionManager
+import animatedledstrip.leds.colormanagement.pixelProlongedColorList
+import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
+import io.kotest.matchers.Matcher
+import io.kotest.matchers.MatcherResult
 import org.pmw.tinylog.Configuration
 import org.pmw.tinylog.Configurator
 import org.pmw.tinylog.Level
@@ -35,49 +41,70 @@ import org.pmw.tinylog.writers.Writer
 import kotlin.test.assertTrue
 
 val newRunningAnimationParams: RunningAnimationParams
-    get() = RunningAnimationParams("", listOf(), 5, 10, Direction.FORWARD,
+    get() = RunningAnimationParams(color, "", listOf(), 5, 10, Direction.FORWARD,
                                    15, "", 10, "", 2,
                                    AnimationToRunParams(delay = 5, delayMod = 2.0))
 
-fun AnimatedLEDStrip.Section.assertAllPixels(temporaryColor: Int, prolongedColor: Int) {
-    assertAllTemporaryPixels(temporaryColor)
-    assertAllProlongedPixels(prolongedColor)
+fun haveProlongedColors(colors: PreparedColorContainer) = object : Matcher<SectionManager> {
+    override fun test(value: SectionManager) =
+        MatcherResult(passed = value.pixelProlongedColorList == colors.colors,
+                      failureMessage = "Prolonged colors do not match:\nExpected:\n" +
+                                       "    ${colors.colors}\nActual:\n    ${value.pixelProlongedColorList}",
+                      negatedFailureMessage = "Prolonged colors match:\n" +
+                                              "    ${value.pixelProlongedColorList}")
 }
 
-fun AnimatedLEDStrip.Section.assertAllTemporaryPixels(color: Int) {
-    pixelTemporaryColorList.forEachIndexed { i, c ->
+fun SectionManager.assertAllPixelProlongedColors(prolongedColor: Int) {
+    val colors = pixelProlongedColorList
+    colors.forEachIndexed { i, c ->
         assertTrue(
-            "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
+            "Pixel $i check failed (prolonged). Expected: $prolongedColor on all pixels. Actual: $colors"
+        ) { c == prolongedColor }
+    }
+}
+
+fun SectionManager.assertAllTemporaryPixels(color: Int) {
+    stripManager.pixelTemporaryColorList.forEachIndexed { i, c ->
+        assertTrue(
+            "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${
+                startPixel + getPhysicalIndex(0)
+            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
         ) { c == color }
     }
 }
 
-fun AnimatedLEDStrip.Section.assertAllProlongedPixels(color: Int) {
-    pixelProlongedColorList.forEachIndexed { i, c ->
+fun SectionManager.assertAllProlongedPixels(color: Int) {
+    stripManager.pixelProlongedColorList.forEachIndexed { i, c ->
         assertTrue(
-            "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"
+            "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${
+                startPixel + getPhysicalIndex(0)
+            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
         ) { c == color }
     }
 }
 
-fun AnimatedLEDStrip.Section.assertPixels(indices: IntRange, temporaryColor: Int, prolongedColor: Int) {
+fun SectionManager.assertPixels(indices: IntRange, temporaryColor: Int, prolongedColor: Int) {
     assertTemporaryPixels(indices, temporaryColor)
     assertProlongedPixels(indices, prolongedColor)
 }
 
-fun AnimatedLEDStrip.Section.assertTemporaryPixels(indices: IntRange, color: Int) {
+fun SectionManager.assertTemporaryPixels(indices: IntRange, color: Int) {
     indices.forEach {
         assertTrue(
-            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelTemporaryColorList"
-        ) { pixelTemporaryColorList[it] == color }
+            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
+                startPixel + getPhysicalIndex(0)
+            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
+        ) { stripManager.pixelTemporaryColorList[it] == color }
     }
 }
 
-fun AnimatedLEDStrip.Section.assertProlongedPixels(indices: IntRange, color: Int) {
+fun SectionManager.assertProlongedPixels(indices: IntRange, color: Int) {
     indices.forEach {
         assertTrue(
-            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${startPixel + physicalStart}:${endPixel + physicalStart}): $pixelProlongedColorList"
-        ) { pixelProlongedColorList[it] == color }
+            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
+                startPixel + getPhysicalIndex(0)
+            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
+        ) { stripManager.pixelProlongedColorList[it] == color }
     }
 }
 
@@ -106,13 +133,13 @@ object TestLogWriter : Writer {
 
         assertTrue(
             "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-                    "extra values in expected: ${expectedLogs.minus(actualLogs)}"
+            "extra values in expected: ${expectedLogs.minus(actualLogs)}"
         ) {
             actualLogs.containsAll(expectedLogs)
         }
         assertTrue(
             "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-                    "extra values in actual: ${actualLogs.minus(expectedLogs)}"
+            "extra values in actual: ${actualLogs.minus(expectedLogs)}"
         ) {
             expectedLogs.containsAll(actualLogs)
         }

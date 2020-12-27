@@ -22,407 +22,464 @@
 
 package animatedledstrip.test.animationutils
 
-import animatedledstrip.animationutils.*
+import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
+import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.inverse
 import animatedledstrip.colors.shuffledWithIndices
-import animatedledstrip.leds.emulated.EmulatedAnimatedLEDStrip
-import animatedledstrip.leds.endAnimation
-import animatedledstrip.leds.join
-import animatedledstrip.leds.joinBlocking
-import animatedledstrip.test.assertAllPixels
-import animatedledstrip.test.assertAllProlongedPixels
+import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.colormanagement.*
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
+import animatedledstrip.test.haveProlongedColors
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.should
 import io.mockk.*
-import kotlinx.coroutines.delay
-import org.junit.jupiter.api.Test
-import kotlin.test.assertNotNull
 
 @Suppress("RedundantInnerClassModifier", "ClassName")
 class AnimationTests : StringSpec(
     {
 
-        val ledStrip = EmulatedAnimatedLEDStrip(50)
+        mockkStatic("animatedledstrip.leds.colormanagement.StripColorUtilsKt",
+                    "animatedledstrip.leds.animationmanagement.StripAnimationUtilsKt")
 
-        beforeEach() {
+        val ledStrip = createNewEmulatedStrip(50)
+
+        beforeEach {
             ledStrip.clear()
         }
 
         "Color" {
-            val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
+            val section = ledStrip.sectionManager.createSection("col", 0, 49)
 
-            val anim = testLEDs.startAnimation(AnimationToRunParams().animation("Color").color(0xFF))
-            assertNotNull(anim)
-            delay(500)
-            anim.endAnimation()
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Color")
+                                                                    .color(0xFF)
+                                                                    .section("col"))
+
             anim.join()
-            testLEDs.assertAllProlongedPixels(0xFF)
+
+            verify {
+                section.setStripProlongedColor(ColorContainer(0xFF).prepare(50))
+            }
+
+            section should haveProlongedColors(ColorContainer(0xFF).prepare(50))
         }
 
         "Alternate" {
-            val leds = spyk(ledStrip.wholeStrip)
+            val section = ledStrip.sectionManager.createSection("alt", 0, 49)
 
-            val anim = leds.startAnimation(AnimationToRunParams()
-                                               .animation("Alternate")
-                                               .color(0xFF, index = 0)
-                                               .color(0xFFFF, index = 1)
-                                               .color(0xFFFFFF, index = 2)
-                                               .delay(100)
-                                               .runCount(3))
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Alternate")
+                                                                    .color(0xFF, index = 0)
+                                                                    .color(0xFFFF, index = 1)
+                                                                    .color(0xFFFFFF, index = 2)
+                                                                    .delay(100)
+                                                                    .runCount(3)
+                                                                    .section("alt"))
 
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            verify(exactly = 1) { leds.setProlongedStripColor(color = ColorContainer(0xFF)) }
-            verify(exactly = 1) { leds.setProlongedStripColor(color = ColorContainer(0xFFFF)) }
-            verify(exactly = 1) { leds.setProlongedStripColor(color = ColorContainer(0xFFFFFF)) }
-        }
-
-//        "Bounce even number of pixels".config(enabled = false) {
-//            val leds =
-//                spyk(ledStrip.createSection("bnc-1", 0, 9))
-//
-//            val anim = leds.startAnimation(
-//                AnimationToRunParams()
-//                    .animation("Bounce")
-//                    .color(0xFF)
-//                    .runCount(1)
-//            )
-//
-//            assertNotNull(anim)
-//            anim.joinBlocking()
-//
-//            verify {
-//                leds.setTemporaryPixelColor(0, 0xFF)
-//                leds.setTemporaryPixelColor(1, 0xFF)
-//                leds.setTemporaryPixelColor(2, 0xFF)
-//                leds.setTemporaryPixelColor(3, 0xFF)
-//                leds.setTemporaryPixelColor(4, 0xFF)
-//                leds.setTemporaryPixelColor(5, 0xFF)
-//                leds.setTemporaryPixelColor(6, 0xFF)
-//                leds.setTemporaryPixelColor(7, 0xFF)
-//                leds.setTemporaryPixelColor(8, 0xFF)
-//                leds.setTemporaryPixelColor(9, 0xFF)
-//            }
-//
-//            verifyOrder {
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:0:9" })
-//                leds.setTemporaryPixelColor(9, 0xFF)
-//                leds.fadePixel(9, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:0:8" })
-//                leds.setTemporaryPixelColor(0, 0xFF)
-//                leds.fadePixel(0, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:1:8" })
-//                leds.setTemporaryPixelColor(8, 0xFF)
-//                leds.fadePixel(8, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:1:7" })
-//                leds.setTemporaryPixelColor(1, 0xFF)
-//                leds.fadePixel(1, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:2:7" })
-//                leds.setTemporaryPixelColor(7, 0xFF)
-//                leds.fadePixel(7, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:2:6" })
-//                leds.setTemporaryPixelColor(2, 0xFF)
-//                leds.fadePixel(2, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:3:6" })
-//                leds.setTemporaryPixelColor(6, 0xFF)
-//                leds.fadePixel(6, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:3:5" })
-//                leds.setTemporaryPixelColor(3, 0xFF)
-//                leds.fadePixel(3, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-1:4:5" })
-//                leds.setTemporaryPixelColor(5, 0xFF)
-//                leds.fadePixel(5, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-1:4:4" })
-//                leds.setTemporaryPixelColor(4, 0xFF)
-//                leds.fadePixel(4, 25, 50)
-//            }
-//        }
-
-//        "Bounce odd number of pixels".config(enabled = false) {
-//            val leds =
-//                spyk(ledStrip.createSection("bnc-2", 0, 10))
-//
-//            val anim = leds.startAnimation(
-//                AnimationToRunParams()
-//                    .animation("Bounce")
-//                    .color(0xFF)
-//                    .runCount(1)
-//            )
-//
-//            assertNotNull(anim)
-//            anim.joinBlocking()
-//
-//            verify {
-//                leds.setTemporaryPixelColor(0, 0xFF)
-//                leds.setTemporaryPixelColor(1, 0xFF)
-//                leds.setTemporaryPixelColor(2, 0xFF)
-//                leds.setTemporaryPixelColor(3, 0xFF)
-//                leds.setTemporaryPixelColor(4, 0xFF)
-//                leds.setTemporaryPixelColor(5, 0xFF)
-//                leds.setTemporaryPixelColor(6, 0xFF)
-//                leds.setTemporaryPixelColor(7, 0xFF)
-//                leds.setTemporaryPixelColor(8, 0xFF)
-//                leds.setTemporaryPixelColor(9, 0xFF)
-//                leds.setTemporaryPixelColor(10, 0xFF)
-//            }
-//
-//            verifyOrder {
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:0:10" })
-//                leds.setTemporaryPixelColor(10, 0xFF)
-//                leds.fadePixel(10, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:0:9" })
-//                leds.setTemporaryPixelColor(0, 0xFF)
-//                leds.fadePixel(0, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:1:9" })
-//                leds.setTemporaryPixelColor(9, 0xFF)
-//                leds.fadePixel(9, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:1:8" })
-//                leds.setTemporaryPixelColor(1, 0xFF)
-//                leds.fadePixel(1, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:2:8" })
-//                leds.setTemporaryPixelColor(8, 0xFF)
-//                leds.fadePixel(8, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:2:7" })
-//                leds.setTemporaryPixelColor(2, 0xFF)
-//                leds.fadePixel(2, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:3:7" })
-//                leds.setTemporaryPixelColor(7, 0xFF)
-//                leds.fadePixel(7, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:3:6" })
-//                leds.setTemporaryPixelColor(3, 0xFF)
-//                leds.fadePixel(3, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "bnc-2:4:6" })
-//                leds.setTemporaryPixelColor(6, 0xFF)
-//                leds.fadePixel(6, 25, 50)
-//                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "bnc-2:4:5" })
-//                leds.setTemporaryPixelColor(4, 0xFF)
-//                leds.fadePixel(4, 25, 50)
-//                leds.setTemporaryPixelColor(5, 0xFF)
-//                leds.fadePixel(5, 25, 50)
-//            }
-//        }
-
-        @Test
-        fun `btc even number of pixels`() {
-            val leds =
-                spyk(ledStrip.createSection("btc-1", 0, 9))
-
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Bounce to Color")
-                    .color(0xFF)
-                    .runCount(1)
-            )
-
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            leds.assertAllPixels(-1, 0xFF)
-
-            verify {
-                leds.setProlongedPixelColor(0, 0xFF)
-                leds.setProlongedPixelColor(1, 0xFF)
-                leds.setProlongedPixelColor(2, 0xFF)
-                leds.setProlongedPixelColor(3, 0xFF)
-                leds.setProlongedPixelColor(4, 0xFF)
-                leds.setProlongedPixelColor(5, 0xFF)
-                leds.setProlongedPixelColor(6, 0xFF)
-                leds.setProlongedPixelColor(7, 0xFF)
-                leds.setProlongedPixelColor(8, 0xFF)
-                leds.setProlongedPixelColor(9, 0xFF)
-            }
+            anim.join()
 
             verifyOrder {
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-1:0:9" })
-                leds.setProlongedPixelColor(9, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-1:0:8" })
-                leds.setProlongedPixelColor(0, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-1:1:8" })
-                leds.setProlongedPixelColor(8, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-1:1:7" })
-                leds.setProlongedPixelColor(1, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-1:2:7" })
-                leds.setProlongedPixelColor(7, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-1:2:6" })
-                leds.setProlongedPixelColor(2, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-1:3:6" })
-                leds.setProlongedPixelColor(6, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-1:3:5" })
-                leds.setProlongedPixelColor(3, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-1:4:5" })
-                leds.setProlongedPixelColor(5, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-1:4:4" })
-                leds.setProlongedPixelColor(4, 0xFF)
+                section.setStripProlongedColor(ColorContainer(0xFF).prepare(50))
+                section.setStripProlongedColor(ColorContainer(0xFFFF).prepare(50))
+                section.setStripProlongedColor(ColorContainer(0xFFFFFF).prepare(50))
             }
         }
 
-        @Test
-        fun `btc odd number of pixels`() {
-            val leds =
-                spyk(ledStrip.createSection("btc-2", 0, 10))
+        "Bounce even number of pixels" {
+            val section = ledStrip.sectionManager.createSection("bnc-1", 0, 9)
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Bounce")
+                                                                    .color(0xFF)
+                                                                    .runCount(1)
+                                                                    .section("bnc-1"))
 
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Bounce to Color")
-                    .color(0xFF)
-                    .runCount(1)
-            )
+            anim.join()
 
-            assertNotNull(anim)
-            anim.joinBlocking()
-
-            leds.assertAllPixels(-1, 0xFF)
+            val pCC = ColorContainer(0xFF).prepare(10)
 
             verify {
-                leds.setProlongedPixelColor(0, 0xFF)
-                leds.setProlongedPixelColor(1, 0xFF)
-                leds.setProlongedPixelColor(2, 0xFF)
-                leds.setProlongedPixelColor(3, 0xFF)
-                leds.setProlongedPixelColor(4, 0xFF)
-                leds.setProlongedPixelColor(5, 0xFF)
-                leds.setProlongedPixelColor(6, 0xFF)
-                leds.setProlongedPixelColor(7, 0xFF)
-                leds.setProlongedPixelColor(8, 0xFF)
-                leds.setProlongedPixelColor(9, 0xFF)
-                leds.setProlongedPixelColor(10, 0xFF)
+                section.setPixelFadeColor(0, pCC)
+                section.setPixelFadeColor(1, pCC)
+                section.setPixelFadeColor(2, pCC)
+                section.setPixelFadeColor(3, pCC)
+                section.setPixelFadeColor(4, pCC)
+                section.setPixelFadeColor(5, pCC)
+                section.setPixelFadeColor(6, pCC)
+                section.setPixelFadeColor(7, pCC)
+                section.setPixelFadeColor(8, pCC)
+                section.setPixelFadeColor(9, pCC)
             }
 
-            verifyOrder {
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-2:0:10" })
-                leds.setProlongedPixelColor(10, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-2:0:9" })
-                leds.setProlongedPixelColor(0, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-2:1:9" })
-                leds.setProlongedPixelColor(9, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-2:1:8" })
-                leds.setProlongedPixelColor(1, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-2:2:8" })
-                leds.setProlongedPixelColor(8, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-2:2:7" })
-                leds.setProlongedPixelColor(2, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-2:3:7" })
-                leds.setProlongedPixelColor(7, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-2:3:6" })
-                leds.setProlongedPixelColor(3, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD }, match { it.name == "btc-2:4:6" })
-                leds.setProlongedPixelColor(6, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD }, match { it.name == "btc-2:4:5" })
-                leds.setProlongedPixelColor(4, 0xFF)
-                leds.setProlongedPixelColor(5, 0xFF)
+            coVerifyOrder {
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 9))
+                section.setPixelFadeColor(9, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(0, 8))
+                section.setPixelFadeColor(0, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(1, 8))
+                section.setPixelFadeColor(8, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(1, 7))
+                section.setPixelFadeColor(1, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(2, 7))
+                section.setPixelFadeColor(7, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 6))
+                section.setPixelFadeColor(2, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(3, 6))
+                section.setPixelFadeColor(6, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(3, 5))
+                section.setPixelFadeColor(3, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(4, 5))
+                section.setPixelFadeColor(5, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(4, 4))
+                section.setPixelFadeColor(4, pCC)
+            }
+        }
+
+        "Bounce odd number of pixels" {
+            val section = ledStrip.sectionManager.createSection("bnc-2", 0, 10)
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Bounce")
+                                                                    .color(0xFF)
+                                                                    .runCount(1)
+                                                                    .section("bnc-2"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF).prepare(11)
+
+            verify {
+                section.setPixelFadeColor(0, pCC)
+                section.setPixelFadeColor(1, pCC)
+                section.setPixelFadeColor(2, pCC)
+                section.setPixelFadeColor(3, pCC)
+                section.setPixelFadeColor(4, pCC)
+                section.setPixelFadeColor(5, pCC)
+                section.setPixelFadeColor(6, pCC)
+                section.setPixelFadeColor(7, pCC)
+                section.setPixelFadeColor(8, pCC)
+                section.setPixelFadeColor(9, pCC)
+                section.setPixelFadeColor(10, pCC)
+            }
+
+            coVerifyOrder {
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 10))
+                section.setPixelFadeColor(10, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(0, 9))
+                section.setPixelFadeColor(0, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(1, 9))
+                section.setPixelFadeColor(9, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(1, 8))
+                section.setPixelFadeColor(1, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(2, 8))
+                section.setPixelFadeColor(8, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 7))
+                section.setPixelFadeColor(2, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(3, 7))
+                section.setPixelFadeColor(7, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(3, 6))
+                section.setPixelFadeColor(3, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(4, 6))
+                section.setPixelFadeColor(6, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(4, 5))
+                section.setPixelFadeColor(4, pCC)
+                section.setPixelFadeColor(5, pCC)
+            }
+        }
+
+        "Bounce to Color even number of pixels" {
+            val section = ledStrip.sectionManager.createSection("btc-1", 0, 9)
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Bounce to Color")
+                                                                    .color(0xFF)
+                                                                    .runCount(1)
+                                                                    .section("btc-1"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF).prepare(10)
+
+            section should haveProlongedColors(pCC)
+
+            verify {
+                section.setPixelProlongedColor(0, pCC)
+                section.setPixelProlongedColor(1, pCC)
+                section.setPixelProlongedColor(2, pCC)
+                section.setPixelProlongedColor(3, pCC)
+                section.setPixelProlongedColor(4, pCC)
+                section.setPixelProlongedColor(5, pCC)
+                section.setPixelProlongedColor(6, pCC)
+                section.setPixelProlongedColor(7, pCC)
+                section.setPixelProlongedColor(8, pCC)
+                section.setPixelProlongedColor(9, pCC)
+            }
+
+            coVerifyOrder {
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 9))
+                section.setPixelProlongedColor(9, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(0, 8))
+                section.setPixelProlongedColor(0, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(1, 8))
+                section.setPixelProlongedColor(8, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(1, 7))
+                section.setPixelProlongedColor(1, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(2, 7))
+                section.setPixelProlongedColor(7, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 6))
+                section.setPixelProlongedColor(2, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(3, 6))
+                section.setPixelProlongedColor(6, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(3, 5))
+                section.setPixelProlongedColor(3, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(4, 5))
+                section.setPixelProlongedColor(5, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(4, 4))
+                section.setPixelProlongedColor(4, pCC)
+            }
+        }
+
+        "Bounce to Color odd number of pixels" {
+            val section = ledStrip.sectionManager.createSection("btc-2", 0, 10)
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Bounce to Color")
+                                                                    .color(0xFF)
+                                                                    .runCount(1)
+                                                                    .section("btc-2"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF).prepare(11)
+
+            section should haveProlongedColors(pCC)
+
+            verify {
+                section.setPixelProlongedColor(0, pCC)
+                section.setPixelProlongedColor(1, pCC)
+                section.setPixelProlongedColor(2, pCC)
+                section.setPixelProlongedColor(3, pCC)
+                section.setPixelProlongedColor(4, pCC)
+                section.setPixelProlongedColor(5, pCC)
+                section.setPixelProlongedColor(6, pCC)
+                section.setPixelProlongedColor(7, pCC)
+                section.setPixelProlongedColor(8, pCC)
+                section.setPixelProlongedColor(9, pCC)
+                section.setPixelProlongedColor(10, pCC)
+            }
+
+            coVerifyOrder {
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 10))
+                section.setPixelProlongedColor(10, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(0, 9))
+                section.setPixelProlongedColor(0, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(1, 9))
+                section.setPixelProlongedColor(9, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(1, 8))
+                section.setPixelProlongedColor(1, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(2, 8))
+                section.setPixelProlongedColor(8, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 7))
+                section.setPixelProlongedColor(2, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(3, 7))
+                section.setPixelProlongedColor(7, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(3, 6))
+                section.setPixelProlongedColor(3, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(4, 6))
+                section.setPixelProlongedColor(6, pCC)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(4, 5))
+                section.setPixelProlongedColor(4, pCC)
+                section.setPixelProlongedColor(5, pCC)
             }
         }
 
 
-        @Test
-        fun testBubbleSort() {
-            val leds =
-                spyk(ledStrip.createSection("bst", 0, 9))
+        "Bubble Sort" {
+            val section = ledStrip.sectionManager.createSection("bst", 0, 9)
 
-            val data = spyk(AnimationToRunParams()
-                                .animation("Bubble Sort")
-                                .color(ColorContainer(0xFF, 0xFFFF)))
-
-            mockkStatic("animatedledstrip.animatedledstrip.colors.CCUtilsKt")
-            every { data.colors[any()].shuffledWithIndices() } returns
+            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            every { any<ColorContainerInterface>().shuffledWithIndices() } returns
                     listOf(
-                        Pair(1, 0x33FF),
+                        Pair(1, 0x34FF),
                         Pair(9, 0x33FF),
-                        Pair(4, 0xCCFF),
-                        Pair(2, 0x66FF),
+                        Pair(4, 0xCDFF),
+                        Pair(2, 0x67FF),
                         Pair(7, 0x99FF),
                         Pair(0, 0x00FF),
-                        Pair(3, 0x99FF),
+                        Pair(3, 0x9AFF),
                         Pair(6, 0xCCFF),
                         Pair(8, 0x66FF),
                         Pair(5, 0xFFFF),
                     )
 
-            val anim = leds.startAnimation(data)
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Bubble Sort")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .section("bst"))
 
-            assertNotNull(anim)
-            anim.joinBlocking()
+            anim.join()
 
             verifyOrder {
                 // |19|42703685
                 // 1|94|2703685
-                leds.setProlongedPixelColor(1, 0xCCFF)
-                leds.setProlongedPixelColor(2, 0x33FF)
+                section.setPixelProlongedColor(1, 0xCDFF)
+                section.setPixelProlongedColor(2, 0x33FF)
                 // 14|92|703685
-                leds.setProlongedPixelColor(2, 0x66FF)
-                leds.setProlongedPixelColor(3, 0x33FF)
+                section.setPixelProlongedColor(2, 0x67FF)
+                section.setPixelProlongedColor(3, 0x33FF)
                 // 142|97|03685
-                leds.setProlongedPixelColor(3, 0x99FF)
-                leds.setProlongedPixelColor(4, 0x33FF)
+                section.setPixelProlongedColor(3, 0x99FF)
+                section.setPixelProlongedColor(4, 0x33FF)
                 // 1427|90|3685
-                leds.setProlongedPixelColor(4, 0x00FF)
-                leds.setProlongedPixelColor(5, 0x33FF)
+                section.setPixelProlongedColor(4, 0x00FF)
+                section.setPixelProlongedColor(5, 0x33FF)
                 // 14270|93|685
-                leds.setProlongedPixelColor(5, 0x99FF)
-                leds.setProlongedPixelColor(6, 0x33FF)
+                section.setPixelProlongedColor(5, 0x9AFF)
+                section.setPixelProlongedColor(6, 0x33FF)
                 // 142703|96|85
-                leds.setProlongedPixelColor(6, 0xCCFF)
-                leds.setProlongedPixelColor(7, 0x33FF)
+                section.setPixelProlongedColor(6, 0xCCFF)
+                section.setPixelProlongedColor(7, 0x33FF)
                 // 1427036|98|5
-                leds.setProlongedPixelColor(7, 0x66FF)
-                leds.setProlongedPixelColor(8, 0x33FF)
+                section.setPixelProlongedColor(7, 0x66FF)
+                section.setPixelProlongedColor(8, 0x33FF)
                 // 14270368|95|
-                leds.setProlongedPixelColor(8, 0xFFFF)
-                leds.setProlongedPixelColor(9, 0x33FF)
+                section.setPixelProlongedColor(8, 0xFFFF)
+                section.setPixelProlongedColor(9, 0x33FF)
                 // =1427036859=
                 // |14|27036859
                 // 1|42|7036859
-                leds.setProlongedPixelColor(1, 0x66FF)
-                leds.setProlongedPixelColor(2, 0xCCFF)
+                section.setPixelProlongedColor(1, 0x67FF)
+                section.setPixelProlongedColor(2, 0xCDFF)
                 // 12|47|036859
                 // 124|70|36859
-                leds.setProlongedPixelColor(3, 0x00FF)
-                leds.setProlongedPixelColor(4, 0x99FF)
+                section.setPixelProlongedColor(3, 0x00FF)
+                section.setPixelProlongedColor(4, 0x99FF)
                 // 1240|73|6859
-                leds.setProlongedPixelColor(4, 0x99FF)
-                leds.setProlongedPixelColor(5, 0x99FF)
+                section.setPixelProlongedColor(4, 0x9AFF)
+                section.setPixelProlongedColor(5, 0x99FF)
                 // 12403|76|859
-                leds.setProlongedPixelColor(5, 0xCCFF)
-                leds.setProlongedPixelColor(6, 0x99FF)
+                section.setPixelProlongedColor(5, 0xCCFF)
+                section.setPixelProlongedColor(6, 0x99FF)
                 // 124036|78|59
                 // 1240367|85|9
-                leds.setProlongedPixelColor(7, 0xFFFF)
-                leds.setProlongedPixelColor(8, 0x66FF)
+                section.setPixelProlongedColor(7, 0xFFFF)
+                section.setPixelProlongedColor(8, 0x66FF)
                 // 12403675|89|
                 // =1240367589=
                 // |12|40367589
                 // 1|24|0367589
                 // 12|40|367589
-                leds.setProlongedPixelColor(2, 0x00FF)
-                leds.setProlongedPixelColor(3, 0xCCFF)
+                section.setPixelProlongedColor(2, 0x00FF)
+                section.setPixelProlongedColor(3, 0xCDFF)
                 // 120|43|67589
-                leds.setProlongedPixelColor(3, 0x99FF)
-                leds.setProlongedPixelColor(4, 0xCCFF)
+                section.setPixelProlongedColor(3, 0x9AFF)
+                section.setPixelProlongedColor(4, 0xCDFF)
                 // 1203|46|7589
                 // 12034|67|589
                 // 120346|75|89
-                leds.setProlongedPixelColor(6, 0xFFFF)
-                leds.setProlongedPixelColor(7, 0x99FF)
+                section.setPixelProlongedColor(6, 0xFFFF)
+                section.setPixelProlongedColor(7, 0x99FF)
                 // 1203465|78|9
                 // 12034657|89|
                 // =1203465789=
                 // |12|03465789
                 // 1|20|3465789
-                leds.setProlongedPixelColor(1, 0x00FF)
-                leds.setProlongedPixelColor(2, 0x66FF)
+                section.setPixelProlongedColor(1, 0x00FF)
+                section.setPixelProlongedColor(2, 0x67FF)
                 // 10|23|465789
                 // 102|34|65789
                 // 1023|46|5789
                 // 10234|65|789
-                leds.setProlongedPixelColor(5, 0xFFFF)
-                leds.setProlongedPixelColor(6, 0xCCFF)
+                section.setPixelProlongedColor(5, 0xFFFF)
+                section.setPixelProlongedColor(6, 0xCCFF)
                 // 102345|67|89
                 // 1023456|78|9
                 // 10234567|89|
                 // =1203456789=
                 // |10|23456789
-                leds.setProlongedPixelColor(0, 0x00FF)
-                leds.setProlongedPixelColor(1, 0x33FF)
+                section.setPixelProlongedColor(0, 0x00FF)
+                section.setPixelProlongedColor(1, 0x34FF)
                 // 0|12|3456789
                 // 01|23|456789
                 // 012|34|56789
@@ -434,323 +491,274 @@ class AnimationTests : StringSpec(
                 // =0123456789=
             }
 
-            leds.pixelProlongedColorList shouldBe
-                    listOf(
-                        0x00FF,
-                        0x33FF,
-                        0x66FF,
-                        0x99FF,
-                        0xCCFF,
-                        0xFFFF,
-                        0xCCFF,
-                        0x99FF,
-                        0x66FF,
-                        0x33FF,
-                    )
-
-            leds.pixelTemporaryColorList shouldBe
-                    listOf(
-                        0x00FF,
-                        0x33FF,
-                        0x66FF,
-                        0x99FF,
-                        0xCCFF,
-                        0xFFFF,
-                        0xCCFF,
-                        0x99FF,
-                        0x66FF,
-                        0x33FF,
-                    )
+            section should haveProlongedColors(ColorContainer(0xFF, 0xFFFF).prepare(10))
         }
 
-        @Test
-        fun testCatToy() {
-            val leds =
-                spyk(ledStrip.createSection("cat", 0, 9))
+        "Cat Toy" {
+            val section = ledStrip.sectionManager.createSection("cat", 0, 9)
 
-            every { leds.indices } returns
-                    listOf(8) andThen
-                    listOf(9) andThen
-                    listOf(3) andThen
-                    listOf(5) andThen
-                    listOf(1) andThen
-                    listOf(3) andThen
-                    listOf(2) andThen
-                    listOf(5) andThen
-                    listOf(7) andThen
-                    listOf(0) andThen
-                    listOf(7) andThen
-                    listOf(6) andThen
-                    listOf(6) andThen
-                    listOf(8) andThen
-                    listOf(2)
+            every { any<AnimationManager>().randomPixel() } returns
+                    8 andThen 9 andThen 3 andThen 5 andThen
+                    1 andThen 3 andThen 2 andThen 5 andThen
+                    7 andThen 0 andThen 7 andThen 6 andThen
+                    6 andThen 8 andThen 2
 
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Cat Toy")
-                    .color(0xFF)
-                    .delay(1)
-                    .runCount(15)
-            )
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Cat Toy")
+                                                                    .color(0xFF)
+                                                                    .delay(1)
+                                                                    .runCount(15)
+                                                                    .section("cat"))
 
-            assertNotNull(anim)
-            anim.joinBlocking()
+            anim.join()
 
-            verifyOrder {
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:0:8" })
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:8:9" })
-                leds.setTemporaryPixelColor(9, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:3:9" })
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:3:5" })
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:1:5" })
-                leds.setTemporaryPixelColor(1, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:1:3" })
-                leds.setTemporaryPixelColor(3, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:2:3" })
-                leds.setTemporaryPixelColor(2, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:2:5" })
-                leds.setTemporaryPixelColor(5, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:5:7" })
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:0:7" })
-                leds.setTemporaryPixelColor(0, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:0:7" })
-                leds.setTemporaryPixelColor(7, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:6:7" })
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.setTemporaryPixelColor(6, 0xFF)
-                leds.runSequential(match { it.direction == Direction.FORWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:6:8" })
-                leds.setTemporaryPixelColor(8, 0xFF)
-                leds.runSequential(match { it.direction == Direction.BACKWARD && it.animation == "Pixel Run" },
-                                   match { it.name == "cat:2:8" })
-                leds.setTemporaryPixelColor(2, 0xFF)
+            val pCC = ColorContainer(0xFF).prepare(10)
+
+            coVerifyOrder {
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 8))
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(8, 9))
+                section.setPixelTemporaryColor(9, pCC)
+                section.revertPixel(9)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(3, 9))
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(3, 5))
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(1, 5))
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(1, 3))
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 3))
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(2, 5))
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(5, 7))
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(0, 7))
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(0, 7))
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(6, 7))
+                section.setPixelTemporaryColor(6, pCC)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.FORWARD),
+                                   section.getSubSection(6, 8))
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
+                                                                 direction = Direction.BACKWARD),
+                                   section.getSubSection(2, 8))
+                section.setPixelTemporaryColor(2, pCC)
             }
         }
 
-        @Test
-        fun testCatToyToColor() {
-            val leds =
-                spyk(ledStrip.createSection("ctc", 0, 9))
+        "Cat Toy to Color" {
+            val section = ledStrip.sectionManager.createSection("ctc", 0, 9)
 
-            every { leds.shuffledIndices } returns listOf(1, 9, 4, 2, 7, 0, 3, 6, 8, 5)
+            every { any<AnimationManager>().shuffledIndices() } returns listOf(1, 9, 4, 2, 7, 0, 3, 6, 8, 5)
 
-            val anim = leds.startAnimation(
-                AnimationToRunParams()
-                    .animation("Cat Toy to Color")
-                    .color(ColorContainer(0xFF, 0xFFFF))
-                    .delay(1)
-            )
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Cat Toy to Color")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .delay(1)
+                                                                    .section("ctc"))
 
-            assertNotNull(anim)
-            anim.joinBlocking()
+            anim.join()
+
+            val pCC = ColorContainer(0xFF, 0xFFFF).prepare(10)
+            val iPCC = pCC.inverse()
 
             verifyOrder {
                 // set:
-                leds.setTemporaryPixelColor(0, 0x0000FF)
-                leds.revertPixel(0)
-                leds.setProlongedPixelColor(1, 0x0034FF)
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+                section.setPixelProlongedColor(1, pCC)
                 // set: 1
-                leds.setTemporaryPixelColor(1, 0xFFCC00)
-                leds.revertPixel(1)
-                leds.setTemporaryPixelColor(2, 0x0067FF)
-                leds.revertPixel(2)
-                leds.setTemporaryPixelColor(3, 0x009AFF)
-                leds.revertPixel(3)
-                leds.setTemporaryPixelColor(4, 0x00CDFF)
-                leds.revertPixel(4)
-                leds.setTemporaryPixelColor(5, 0x00FFFF)
-                leds.revertPixel(5)
-                leds.setTemporaryPixelColor(6, 0x00CCFF)
-                leds.revertPixel(6)
-                leds.setTemporaryPixelColor(7, 0x0099FF)
-                leds.revertPixel(7)
-                leds.setTemporaryPixelColor(8, 0x0066FF)
-                leds.revertPixel(8)
-                leds.setProlongedPixelColor(9, 0x0033FF)
+                section.setPixelTemporaryColor(1, iPCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelProlongedColor(9, pCC)
                 // set: 1 9
-                leds.setTemporaryPixelColor(9, 0xFFCD00)
-                leds.revertPixel(9)
-                leds.setTemporaryPixelColor(8, 0x0066FF)
-                leds.revertPixel(8)
-                leds.setTemporaryPixelColor(7, 0x0099FF)
-                leds.revertPixel(7)
-                leds.setTemporaryPixelColor(6, 0x00CCFF)
-                leds.revertPixel(6)
-                leds.setTemporaryPixelColor(5, 0x00FFFF)
-                leds.revertPixel(5)
-                leds.setProlongedPixelColor(4, 0x00CDFF)
+                section.setPixelTemporaryColor(9, iPCC)
+                section.revertPixel(9)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelProlongedColor(4, pCC)
                 // set: 1 4 9
-                leds.setTemporaryPixelColor(4, 0xFF3300)
-                leds.revertPixel(4)
-                leds.setTemporaryPixelColor(3, 0x009AFF)
-                leds.revertPixel(3)
-                leds.setProlongedPixelColor(2, 0x0067FF)
+                section.setPixelTemporaryColor(4, iPCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelProlongedColor(2, pCC)
                 // set: 1 2 4 9
-                leds.setTemporaryPixelColor(2, 0xFF9900)
-                leds.revertPixel(2)
-                leds.setTemporaryPixelColor(3, 0x009AFF)
-                leds.revertPixel(3)
-                leds.setTemporaryPixelColor(4, 0xFF3300)
-                leds.revertPixel(4)
-                leds.setTemporaryPixelColor(5, 0x00FFFF)
-                leds.revertPixel(5)
-                leds.setTemporaryPixelColor(6, 0x00CCFF)
-                leds.revertPixel(6)
-                leds.setProlongedPixelColor(7, 0x0099FF)
+                section.setPixelTemporaryColor(2, iPCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, iPCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelProlongedColor(7, pCC)
                 // set: 1 2 4 7 9
-                leds.setTemporaryPixelColor(7, 0xFF6700)
-                leds.revertPixel(7)
-                leds.setTemporaryPixelColor(6, 0x00CCFF)
-                leds.revertPixel(6)
-                leds.setTemporaryPixelColor(5, 0x00FFFF)
-                leds.revertPixel(5)
-                leds.setTemporaryPixelColor(4, 0xFF3300)
-                leds.revertPixel(4)
-                leds.setTemporaryPixelColor(3, 0x009AFF)
-                leds.revertPixel(3)
-                leds.setTemporaryPixelColor(2, 0xFF9900)
-                leds.revertPixel(2)
-                leds.setTemporaryPixelColor(1, 0xFFCC00)
-                leds.revertPixel(1)
-                leds.setProlongedPixelColor(0, 0x0000FF)
+                section.setPixelTemporaryColor(7, iPCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, iPCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(2, iPCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(1, iPCC)
+                section.revertPixel(1)
+                section.setPixelProlongedColor(0, pCC)
                 // set: 0 1 2 4 7 9
-                leds.setTemporaryPixelColor(0, 0xFFFF00)
-                leds.revertPixel(0)
-                leds.setTemporaryPixelColor(1, 0xFFCC00)
-                leds.revertPixel(1)
-                leds.setTemporaryPixelColor(2, 0xFF9900)
-                leds.revertPixel(2)
-                leds.setProlongedPixelColor(3, 0x009AFF)
+                section.setPixelTemporaryColor(0, iPCC)
+                section.revertPixel(0)
+                section.setPixelTemporaryColor(1, iPCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, iPCC)
+                section.revertPixel(2)
+                section.setPixelProlongedColor(3, pCC)
                 // set: 0 1 2 3 4 7 9
-                leds.setTemporaryPixelColor(3, 0xFF6600)
-                leds.revertPixel(3)
-                leds.setTemporaryPixelColor(4, 0xFF3300)
-                leds.revertPixel(4)
-                leds.setTemporaryPixelColor(5, 0x00FFFF)
-                leds.revertPixel(5)
-                leds.setProlongedPixelColor(6, 0x00CCFF)
+                section.setPixelTemporaryColor(3, iPCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, iPCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelProlongedColor(6, pCC)
                 // set: 0 1 2 3 4 6 7 9
-                leds.setTemporaryPixelColor(6, 0xFF3400)
-                leds.revertPixel(6)
-                leds.setTemporaryPixelColor(7, 0xFF6700)
-                leds.revertPixel(7)
-                leds.setProlongedPixelColor(8, 0x0066FF)
+                section.setPixelTemporaryColor(6, iPCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, iPCC)
+                section.revertPixel(7)
+                section.setPixelProlongedColor(8, pCC)
                 // set: 0 1 2 3 4 6 7 8 9
-                leds.setTemporaryPixelColor(8, 0xFF9A00)
-                leds.revertPixel(8)
-                leds.setTemporaryPixelColor(7, 0xFF6700)
-                leds.revertPixel(7)
-                leds.setTemporaryPixelColor(6, 0xFF3400)
-                leds.revertPixel(6)
-                leds.setProlongedPixelColor(5, 0x00FFFF)
+                section.setPixelTemporaryColor(8, iPCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(7, iPCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, iPCC)
+                section.revertPixel(6)
+                section.setPixelProlongedColor(5, pCC)
                 // set: 0 1 2 3 4 5 6 7 8 9
             }
 
-            leds.pixelProlongedColorList shouldBe
-                    listOf(
-                        //         Inverses:
-                        0x00FF, // 0xFFFF00
-                        0x34FF, // 0xFFCC00
-                        0x67FF, // 0xFF9900
-                        0x9AFF, // 0xFF6600
-                        0xCDFF, // 0xFF3300
-                        0xFFFF, // 0xFF0000
-                        0xCCFF, // 0xFF3400
-                        0x99FF, // 0xFF6700
-                        0x66FF, // 0xFF9A00
-                        0x33FF, // 0xFFCD00
-                    )
-
-            leds.pixelTemporaryColorList shouldBe
-                    listOf(
-                        0x00FF,
-                        0x34FF,
-                        0x67FF,
-                        0x9AFF,
-                        0xCDFF,
-                        0xFFFF,
-                        0xCCFF,
-                        0x99FF,
-                        0x66FF,
-                        0x33FF,
-                    )
+            section should haveProlongedColors(pCC)
         }
 
-//        @Test
-//        fun testFadeToColor() {
-//            val leds =
-//                spyk(ledStrip.createSection("ftc", 0, 9))
-//
-//            val anim = leds.startAnimation(
-//                AnimationToRunParams()
-//                    .animation("Fade to Color")
-//                    .addColor(ColorContainer(0xFF, 0xFFFF))
-//            )
-//
-//            assertNotNull(anim)
-//            anim.joinBlocking()
-//
-//            verify(exactly = 1) {
-//                leds.fadePixel(0)
-//                leds.fadePixel(1)
-//                leds.fadePixel(2)
-//                leds.fadePixel(3)
-//                leds.fadePixel(4)
-//                leds.fadePixel(5)
-//                leds.fadePixel(6)
-//                leds.fadePixel(7)
-//                leds.fadePixel(8)
-//                leds.fadePixel(9)
-//            }
-//
-//            leds.pixelProlongedColorList shouldBe
-//                    listOf(
-//                        0x00FF,
-//                        0x34FF,
-//                        0x67FF,
-//                        0x9AFF,
-//                        0xCDFF,
-//                        0xFFFF,
-//                        0xCCFF,
-//                        0x99FF,
-//                        0x66FF,
-//                        0x33FF,
-//                    )
-//
-//            leds.pixelTemporaryColorList shouldBe
-//                    listOf(
-//                        0x00FF,
-//                        0x34FF,
-//                        0x67FF,
-//                        0x9AFF,
-//                        0xCDFF,
-//                        0xFFFF,
-//                        0xCCFF,
-//                        0x99FF,
-//                        0x66FF,
-//                        0x33FF,
-//                    )
-//        }
+        "Fade to Color" {
+            val section = ledStrip.sectionManager.createSection("ftc", 0, 9)
 
-        @Test
-        fun testFireworks() {
-//        println(ColorContainer(0xFFFFFF, 0x123456).prepare(10))
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Fade to Color")
+                                                                    .addColor(ColorContainer(0xFF, 0xFFFF))
+                                                                    .section("ftc"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF, 0xFFFF).prepare(10)
+
+            verifyOrder {
+                section.setStripProlongedColor(pCC)
+                section.setStripFadeColor(CCBlack.prepare(10).toColorContainer().prepare(10))
+            }
+        }
+
+        "Fireworks" {
+            ledStrip.sectionManager.createSection("fwk", 0, 25)
+
+            val pCC1 = ColorContainer(0xFF).prepare(26)
+            val pCC2 = ColorContainer(0xFFFF).prepare(26)
+            val pCC3 = ColorContainer(0xFF00).prepare(26)
+
+            every { any<AnimationManager>().randomPixel() } returns 15 andThen 3 andThen 20
+            every { any<RunningAnimationParams>().randomColor() } returns pCC3 andThen pCC1 andThen pCC2
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Fireworks")
+                                                                    .color(pCC1, index = 0)
+                                                                    .color(pCC2, index = 1)
+                                                                    .color(pCC3, index = 2)
+                                                                    .runCount(3)
+                                                                    .section("fwk"))
+
+            anim.join()
+
+            verifyOrder {
+                anim.runParallel(anim.params.withModifications(animation = "Ripple",
+                                                               center = 15,
+                                                               colors = mutableListOf(pCC3)))
+                anim.runParallel(anim.params.withModifications(animation = "Ripple",
+                                                               center = 3,
+                                                               colors = mutableListOf(pCC1)))
+                anim.runParallel(anim.params.withModifications(animation = "Ripple",
+                                                               center = 20,
+                                                               colors = mutableListOf(pCC2)))
+            }
+
 
 //        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
 //
@@ -777,64 +785,286 @@ class AnimationTests : StringSpec(
 //        anim2.endAnimation()
 //        anim1.join()
 //        anim2.join()
-            Unit
+//            Unit
         }
 
-//    @Test
-//    fun testMergeSort() = runBlocking {
-//        val testLEDs = EmulatedAnimatedLEDStrip(25).wholeStrip
-//
-//        val anim1 = testLEDs.startAnimation(
-//            AnimationData()
-//                .animation("Merge Sort Parallel")
-//                .color(ColorContainer(0xFF, 0xFF00))
-//        )
-//
-//        val anim2 = testLEDs.startAnimation(
-//            AnimationData()
-//                .animation("Merge Sort Sequential")
-//                .color(ColorContainer(0xFF, 0xFF00))
-//        )
-//
-//        assertNotNull(anim1)
-//        assertNotNull(anim2)
-//        delay(100)
-//        anim1.endAnimation()
-//        anim2.endAnimation()
-//        anim1.join()
-//        anim2.join()
-//    }
-//
-//    @Test
-//    fun testMeteor() = runBlocking {
-//        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip
-//
-//        val anim1 = testLEDs.startAnimation(
-//            AnimationData()
-//                .animation("Meteor")
-//                .color(0xFF)
-//                .direction(Direction.FORWARD)
-//        )
-//
-//        val anim2 = testLEDs.startAnimation(
-//            AnimationData()
-//                .animation("Meteor")
-//                .color(0xFF00)
-//                .direction(Direction.BACKWARD)
-//        )
-//
-//        assertNotNull(anim1)
-//        assertNotNull(anim2)
-//
-//        delay(100)
-//        anim1.endAnimation()
-//        anim2.endAnimation()
-//
-//        anim1.join()
-//        anim2.join()
-//        Unit
-//    }
-//
+        "Merge Sort Sequential" {
+            val section = ledStrip.sectionManager.createSection("mss", 0, 9)
+
+            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            every { any<ColorContainerInterface>().shuffledWithIndices() } returns
+                    listOf(
+                        Pair(1, 0x34FF),
+                        Pair(9, 0x33FF),
+                        Pair(4, 0xCDFF),
+                        Pair(2, 0x67FF),
+                        Pair(7, 0x99FF),
+                        Pair(0, 0x00FF),
+                        Pair(3, 0x9AFF),
+                        Pair(6, 0xCCFF),
+                        Pair(8, 0x66FF),
+                        Pair(5, 0xFFFF),
+                    )
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Merge Sort Sequential")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .section("mss"))
+
+            anim.join()
+
+            verifyOrder {
+                // 1942703685
+                // 19427-03685
+                // 194-27 03685
+                // 19-4 27 03685
+                // 1-9 4 27 03685
+                // |1 9| 4 27 03685
+                // |1(9)| 4 27 03685
+                // 19 4 27 03685
+                // |19 4| 27 03685
+                section.setPixelProlongedColor(2, 0x33FF)
+                // |1(4)9| 27 03685
+                section.setPixelProlongedColor(1, 0xCDFF)
+                // (149) 27 03685
+                // 149 2-7 03685
+                // 149 |2 7| 03685
+                // 149 |2(7)| 03685
+                // 149 (27) 03685
+                // |149 27| 03685
+                section.setPixelProlongedColor(3, 0x33FF)
+                // |14[2]9 7| 03685
+                section.setPixelProlongedColor(2, 0xCDFF)
+                section.setPixelProlongedColor(1, 0x67FF)
+                // |1(2)49 7| 03685
+                section.setPixelProlongedColor(4, 0x33FF)
+                section.setPixelProlongedColor(3, 0x99FF)
+                // |124(7)9| 03685
+                // (12479) 03685
+                // 12479 036-85
+                // 12479 03-6 85
+                // 12479 0-3 6 85
+                // 12479 |0 3| 6 85
+                // 12479 |0(3)| 6 85
+                // 12479 (03) 6 85
+                // 12479 |03 6| 85
+                // 12479 |03(6)| 85
+                // 12479 (036) 85
+                // 12479 036 8-5
+                // 12479 036 |8 5|
+                section.setPixelProlongedColor(9, 0x66FF)
+                // 12479 036 |(5)8|
+                section.setPixelProlongedColor(8, 0xFFFF)
+                // 12479 036 (58)
+                // 12479 |036 58|
+                section.setPixelProlongedColor(8, 0xCCFF)
+                // 12479 |03(5)6 8|
+                section.setPixelProlongedColor(7, 0xFFFF)
+                // 12479 |0356(8)|
+                // 12479 (03568)
+                // |12479 03568|
+                section.setPixelProlongedColor(5, 0x33FF)
+                // |1247[0]9 3568|
+                section.setPixelProlongedColor(4, 0x99FF)
+                // |124[0]79 3568|
+                section.setPixelProlongedColor(3, 0xCDFF)
+                // |12[0]479 3568|
+                section.setPixelProlongedColor(2, 0x67FF)
+                // |1[0]2479 3568|
+                section.setPixelProlongedColor(1, 0x34FF)
+                section.setPixelProlongedColor(0, 0x00FF)
+                // |(0)12479 3568|
+                section.setPixelProlongedColor(6, 0x33FF)
+                // |01247[3]9 568|
+                section.setPixelProlongedColor(5, 0x99FF)
+                // |0124[3]79 568|
+                section.setPixelProlongedColor(4, 0xCDFF)
+                section.setPixelProlongedColor(3, 0x9AFF)
+                // |012(3)479 568|
+                section.setPixelProlongedColor(7, 0x33FF)
+                // |012347[5]9 68|
+                section.setPixelProlongedColor(6, 0x99FF)
+                section.setPixelProlongedColor(5, 0xFFFF)
+                // |01234(5)79 68|
+                section.setPixelProlongedColor(8, 0x33FF)
+                // |0123457[6]9 8|
+                section.setPixelProlongedColor(7, 0x99FF)
+                section.setPixelProlongedColor(6, 0xCCFF)
+                // |012345(6)79 8|
+                section.setPixelProlongedColor(9, 0x33FF)
+                section.setPixelProlongedColor(8, 0x66FF)
+                // |01234567(8)9|
+                // (0123456789)
+            }
+        }
+
+        "Merge Sort Parallel" {
+            val section = ledStrip.sectionManager.createSection("msp", 0, 9)
+
+            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            every { any<ColorContainerInterface>().shuffledWithIndices() } returns
+                    listOf(
+                        Pair(1, 0x34FF),
+                        Pair(9, 0x33FF),
+                        Pair(4, 0xCDFF),
+                        Pair(2, 0x67FF),
+                        Pair(7, 0x99FF),
+                        Pair(0, 0x00FF),
+                        Pair(3, 0x9AFF),
+                        Pair(6, 0xCCFF),
+                        Pair(8, 0x66FF),
+                        Pair(5, 0xFFFF),
+                    )
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Merge Sort Parallel")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .section("msp"))
+
+            anim.join()
+
+            verify {
+                // 1942703685
+                // 19427-03685
+                // 194-27 03685
+                // 19-4 27 03685
+                // 1-9 4 27 03685
+                // |1 9| 4 27 03685
+                // |1(9)| 4 27 03685
+                // 19 4 27 03685
+                // |19 4| 27 03685
+                section.setPixelProlongedColor(2, 0x33FF)
+                // |1(4)9| 27 03685
+                section.setPixelProlongedColor(1, 0xCDFF)
+                // (149) 27 03685
+                // 149 2-7 03685
+                // 149 |2 7| 03685
+                // 149 |2(7)| 03685
+                // 149 (27) 03685
+                // |149 27| 03685
+                section.setPixelProlongedColor(3, 0x33FF)
+                // |14[2]9 7| 03685
+                section.setPixelProlongedColor(2, 0xCDFF)
+                section.setPixelProlongedColor(1, 0x67FF)
+                // |1(2)49 7| 03685
+                section.setPixelProlongedColor(4, 0x33FF)
+                section.setPixelProlongedColor(3, 0x99FF)
+                // |124(7)9| 03685
+                // (12479) 03685
+                // 12479 036-85
+                // 12479 03-6 85
+                // 12479 0-3 6 85
+                // 12479 |0 3| 6 85
+                // 12479 |0(3)| 6 85
+                // 12479 (03) 6 85
+                // 12479 |03 6| 85
+                // 12479 |03(6)| 85
+                // 12479 (036) 85
+                // 12479 036 8-5
+                // 12479 036 |8 5|
+                section.setPixelProlongedColor(9, 0x66FF)
+                // 12479 036 |(5)8|
+                section.setPixelProlongedColor(8, 0xFFFF)
+                // 12479 036 (58)
+                // 12479 |036 58|
+                section.setPixelProlongedColor(8, 0xCCFF)
+                // 12479 |03(5)6 8|
+                section.setPixelProlongedColor(7, 0xFFFF)
+                // 12479 |0356(8)|
+                // 12479 (03568)
+                // |12479 03568|
+                section.setPixelProlongedColor(5, 0x33FF)
+                // |1247[0]9 3568|
+                section.setPixelProlongedColor(4, 0x99FF)
+                // |124[0]79 3568|
+                section.setPixelProlongedColor(3, 0xCDFF)
+                // |12[0]479 3568|
+                section.setPixelProlongedColor(2, 0x67FF)
+                // |1[0]2479 3568|
+                section.setPixelProlongedColor(1, 0x34FF)
+                section.setPixelProlongedColor(0, 0x00FF)
+                // |(0)12479 3568|
+                section.setPixelProlongedColor(6, 0x33FF)
+                // |01247[3]9 568|
+                section.setPixelProlongedColor(5, 0x99FF)
+                // |0124[3]79 568|
+                section.setPixelProlongedColor(4, 0xCDFF)
+                section.setPixelProlongedColor(3, 0x9AFF)
+                // |012(3)479 568|
+                section.setPixelProlongedColor(7, 0x33FF)
+                // |012347[5]9 68|
+                section.setPixelProlongedColor(6, 0x99FF)
+                section.setPixelProlongedColor(5, 0xFFFF)
+                // |01234(5)79 68|
+                section.setPixelProlongedColor(8, 0x33FF)
+                // |0123457[6]9 8|
+                section.setPixelProlongedColor(7, 0x99FF)
+                section.setPixelProlongedColor(6, 0xCCFF)
+                // |012345(6)79 8|
+                section.setPixelProlongedColor(9, 0x33FF)
+                section.setPixelProlongedColor(8, 0x66FF)
+                // |01234567(8)9|
+                // (0123456789)
+            }
+        }
+
+        "Meteor Forward" {
+            val section = ledStrip.sectionManager.createSection("met-1", 0, 9)
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Meteor")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .direction(Direction.FORWARD)
+                                                                    .runCount(1)
+                                                                    .section("met-1"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF, 0xFFFF).prepare(10)
+
+            verifyOrder {
+                section.setPixelFadeColor(0, pCC)
+                section.setPixelFadeColor(1, pCC)
+                section.setPixelFadeColor(2, pCC)
+                section.setPixelFadeColor(3, pCC)
+                section.setPixelFadeColor(4, pCC)
+                section.setPixelFadeColor(5, pCC)
+                section.setPixelFadeColor(6, pCC)
+                section.setPixelFadeColor(7, pCC)
+                section.setPixelFadeColor(8, pCC)
+                section.setPixelFadeColor(9, pCC)
+            }
+        }
+
+        "Meteor Backward" {
+            val section = ledStrip.sectionManager.createSection("met-2", 0, 9)
+
+            val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
+                                                                    .animation("Meteor")
+                                                                    .color(ColorContainer(0xFF, 0xFFFF))
+                                                                    .direction(Direction.BACKWARD)
+                                                                    .runCount(1)
+                                                                    .section("met-2"))
+
+            anim.join()
+
+            val pCC = ColorContainer(0xFF, 0xFFFF).prepare(10)
+
+            verifyOrder {
+                section.setPixelFadeColor(9, pCC)
+                section.setPixelFadeColor(8, pCC)
+                section.setPixelFadeColor(7, pCC)
+                section.setPixelFadeColor(6, pCC)
+                section.setPixelFadeColor(5, pCC)
+                section.setPixelFadeColor(4, pCC)
+                section.setPixelFadeColor(3, pCC)
+                section.setPixelFadeColor(2, pCC)
+                section.setPixelFadeColor(1, pCC)
+                section.setPixelFadeColor(0, pCC)
+            }
+        }
+
+
 //    @Test
 //    fun testMultiPixelRun() = runBlocking {
 //        val testLEDs = EmulatedAnimatedLEDStrip(50).wholeStrip

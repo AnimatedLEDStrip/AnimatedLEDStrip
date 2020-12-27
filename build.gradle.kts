@@ -68,6 +68,7 @@ kotlin {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+                api("co.touchlab:kermit:0.1.8")
             }
         }
         val commonTest by getting {
@@ -86,8 +87,8 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.kotest:kotest-runner-junit5:4.3.2")
                 implementation("io.mockk:mockk:1.10.0")
+                implementation("io.kotest:kotest-runner-junit5:4.3.2")
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")
             }
         }
