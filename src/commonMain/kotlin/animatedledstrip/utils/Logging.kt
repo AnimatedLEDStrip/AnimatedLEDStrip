@@ -1,5 +1,6 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *  Copyright (c) 2013 FastLED
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,19 +23,9 @@
 
 package animatedledstrip.utils
 
-import kotlinx.serialization.encodeToString
+import co.touchlab.kermit.CommonLogger
+import co.touchlab.kermit.Kermit
 
-/**
- * Represents a class that can be sent over sockets between server and clients.
- * Handles conversion of class to json.
- *
- * Each implementing class must override `prefix` and `toHumanReadableString`.
- *
- */
-interface SendableData {
-    fun toHumanReadableString(): String
+// TODO Improve logging support
+val logger = Kermit(CommonLogger())
 
-    fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
-
-    fun json(): ByteArray = this.jsonString().encodeToByteArray()
-}

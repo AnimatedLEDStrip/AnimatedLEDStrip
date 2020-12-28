@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,10 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Direction
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
-import animatedledstrip.utils.iterateOver
 import kotlinx.coroutines.delay
 
 val multiPixelRun = PredefinedAnimation(

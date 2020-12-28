@@ -28,22 +28,23 @@ package animatedledstrip.colors
 interface ColorContainerInterface {
 
     /**
-     * The `List` of animatedledstrip.colors in this container
+     * The `List` of colors in this container
      */
     val colors: List<Int>
 
     /**
-     * The first color in `animatedledstrip.colors`
+     * The first color in `colors`
      */
     val color: Int
 
     /**
-     * Prepare the [ColorContainer] or return this [PreparedColorContainer].
+     * Create a [PreparedColorContainer] of the specified length
+     * for use with a LED strip
      */
     fun prepare(numLEDs: Int): PreparedColorContainer
 
     /**
-     * Create a [ColorContainer] or return this [ColorContainer].
+     * Create a [ColorContainer] or return this [ColorContainer]
      */
     fun toColorContainer(): ColorContainer
 }

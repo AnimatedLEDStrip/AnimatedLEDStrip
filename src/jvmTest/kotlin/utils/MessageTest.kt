@@ -22,9 +22,9 @@
 
 package animatedledstrip.test.utils
 
-import animatedledstrip.utils.Message
-import animatedledstrip.utils.decodeJson
-import animatedledstrip.utils.toUTF8
+import animatedledstrip.communication.Message
+import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -32,12 +32,12 @@ class MessageTest : StringSpec(
     {
         "encode JSON" {
             Message("A very important message").jsonString() shouldBe
-                    """{"type":"animatedledstrip.utils.Message","message":"A very important message"};;;"""
+                    """{"type":"animatedledstrip.communication.Message","message":"A very important message"};;;"""
         }
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.utils.Message","message":"a message"};;;"""
+                """{"type":"animatedledstrip.communication.Message","message":"a message"};;;"""
 
             val correctData = Message("a message")
 
@@ -48,7 +48,7 @@ class MessageTest : StringSpec(
             val msg1 = Message("Another message")
             val msgBytes = msg1.json()
 
-            val msg2 = msgBytes.toUTF8().decodeJson() as Message
+            val msg2 = msgBytes.toUTF8String().decodeJson() as Message
 
             msg1 shouldBe msg2
         }

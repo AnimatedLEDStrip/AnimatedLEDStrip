@@ -20,10 +20,9 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.utils
+package animatedledstrip.communication
 
 import animatedledstrip.animations.Animation
-import animatedledstrip.clients.ClientParams
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -41,7 +40,7 @@ import kotlinx.serialization.modules.subclass
 
 const val DELIMITER = ";;;"
 
-val serializerModule = SerializersModule {
+private val serializerModule: SerializersModule = SerializersModule {
     polymorphic(SendableData::class) {
         subclass(Animation.AnimationInfo::class)
         subclass(AnimationToRunParams::class)
@@ -60,7 +59,7 @@ val serializerModule = SerializersModule {
     }
 }
 
-val serializer = Json {
+val serializer: Json = Json {
     encodeDefaults = true
     serializersModule = serializerModule
 }
@@ -75,3 +74,14 @@ fun String?.decodeJson(): SendableData {
 }
 
 fun SendableData.encodeJson(): ByteArray = jsonString().encodeToByteArray()
+
+/**
+ * Create a `String` from a `ByteArray` using the UTF-8 charset
+ *
+ * @param size The numbers of characters to include
+ * (used to remove excess null bytes)
+ */
+fun ByteArray?.toUTF8String(size: Int = this?.size ?: 0): String {
+    requireNotNull(this)
+    return this.decodeToString(endIndex = size, throwOnInvalidSequence = true)
+}

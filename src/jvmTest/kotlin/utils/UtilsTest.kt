@@ -22,9 +22,15 @@
 
 package animatedledstrip.test.utils
 
+import animatedledstrip.colors.blend
+import animatedledstrip.colors.parseHex
+import animatedledstrip.colors.parseHexOrDefault
+import animatedledstrip.colors.remove0xPrefix
+import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.endAnimation
+import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.stripmanagement.StripInfo
-import animatedledstrip.utils.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -101,10 +107,10 @@ class UtilsTest : StringSpec(
         "to utf8" {
             assertFailsWith<IllegalArgumentException> {
                 val arr: ByteArray? = null
-                arr.toUTF8()
+                arr.toUTF8String()
             }
 
-            assertTrue { ByteArray(5).toUTF8().length == 5 }
+            assertTrue { ByteArray(5).toUTF8String().length == 5 }
         }
 
         "strip info" {

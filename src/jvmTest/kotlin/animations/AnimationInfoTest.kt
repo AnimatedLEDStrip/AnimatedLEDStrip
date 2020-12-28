@@ -25,7 +25,7 @@ package animatedledstrip.test.animationutils
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.predefined.*
-import animatedledstrip.utils.decodeJson
+import animatedledstrip.communication.decodeJson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,14 +22,14 @@
 
 package animatedledstrip.animations
 
+import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
-import animatedledstrip.utils.SendableData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.Serializable
 
 /**
- * Represents an animation
+ * Represents an animation that can be run
  *
  * @property info Information about the animation
  */
@@ -41,8 +41,8 @@ abstract class Animation(open val info: AnimationInfo) {
     }
 
     /**
-     * Run the animation, passing it the strip section, information about how to run the animation,
-     * and the scope of the animation
+     * Run the animation, passing it the AnimationManager running it, parameters specifying how to run the animation,
+     * and the CoroutineScope the animation is running in
      */
     abstract suspend fun runAnimation(leds: AnimationManager, params: RunningAnimationParams, scope: CoroutineScope)
 

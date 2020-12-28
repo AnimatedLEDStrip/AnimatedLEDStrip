@@ -20,17 +20,21 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.utils
+package animatedledstrip.communication
 
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 
-@Serializable
-data class Command(val command: String = "") : SendableData {
+/**
+ * Represents a class that can be sent over sockets between server and clients.
+ * Handles conversion of class to json.
+ *
+ * Each implementing class must override `prefix` and `toHumanReadableString`.
+ *
+ */
+interface SendableData {
+    fun toHumanReadableString(): String
 
-    override fun toHumanReadableString(): String =
-        """
-            Command
-              command: $command
-            End Command
-        """.trimIndent()
+    fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
+
+    fun json(): ByteArray = this.jsonString().encodeToByteArray()
 }

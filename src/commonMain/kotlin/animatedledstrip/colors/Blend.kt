@@ -21,12 +21,33 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.utils
+package animatedledstrip.colors
 
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
+
+/**
+ * Blend two colors together and return a new color.
+ *
+ * Adapted from the FastLED library.
+ *
+ * @param existing The starting color
+ * @param overlay The color to blend toward
+ * @param amountOfOverlay The proportion (0-255) of `overlay` to blend into `existing`
+ */
+fun blend(existing: Int, overlay: Int, amountOfOverlay: Int): Int {
+    if (amountOfOverlay == 0) return existing
+    if (amountOfOverlay == 255) return overlay
+    if (existing == overlay) return existing
+
+    val r = blend8(existing.r, overlay.r, amountOfOverlay)
+    val g = blend8(existing.g, overlay.g, amountOfOverlay)
+    val b = blend8(existing.b, overlay.b, amountOfOverlay)
+
+    return (r shl 16) or (g shl 8) or b
+}
 
 /**
  * Blend a variable proportion (0-255) of one byte to another.

@@ -22,14 +22,13 @@
 
 package animatedledstrip.colors
 
-import animatedledstrip.utils.base
 import kotlinx.serialization.Serializable
 
 /**
- * A prepared [ColorContainer] that holds a set of colors that blend from one
- * to the next (see [ColorContainer.prepare]. This is created by calling
- * [ColorContainer.prepare].
+ * A set of colors ready for use with a LED strip.
+ * Colors blend from one to the next along the length of the strip.
  *
+ * @see ColorContainer.prepare
  * @property colors The `List` of colors in this `PreparedColorContainer`
  * @property originalColors The colors that were used to prepare this
  * `PreparedColorContainer`
@@ -42,28 +41,18 @@ class PreparedColorContainer(
 
     /**
      * Get the color in [colors] at the specified index.
+     * Checks if `index` is a valid index of `colors`
+     * and if so, returns the color stored there,
+     * if not, returns `0` (black).
      */
     operator fun get(index: Int): Int = colors.getOrElse(index) { 0 }
 
     /**
-     * Override for `color` that only returns 0
-     * @return 0
+     * Override for `color` that only returns `0`
+     * @return `0`
      */
     override val color: Int
         get() = 0
-
-    /**
-     * Create a string representation of this `PreparedColorContainer`.
-     * The hexadecimal representation of each color in [colors] is
-     * listed in comma delimited format, between brackets `[` & `]`
-     */
-    override fun toString(): String =
-        "PCC" + colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 } + originalColors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
-
-    /**
-     * Checks if the specified value is in [colors].
-     */
-    operator fun contains(value: Int): Boolean = colors.contains(value)
 
     /**
      * If this `PreparedColorContainer` is the correct size, return this
@@ -74,18 +63,46 @@ class PreparedColorContainer(
         else ColorContainer(originalColors.toMutableList()).prepare(numLEDs)
 
     /**
-     * Returns the size of [colors].
+     * Create a string representation of this `PreparedColorContainer`.
+     * The hexadecimal representation of each color in [colors] is
+     * listed in comma delimited format, between brackets `[` & `]`.
+     */
+    override fun toString(): String =
+        colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
+
+    /**
+     * @return The iterator for [colors]
+     */
+    operator fun iterator(): Iterator<Int> = colors.iterator()
+
+    /**
+     * Checks if the specified color is in [colors]
+     */
+    operator fun contains(value: Int): Boolean = colors.contains(value)
+
+    /**
+     * @return The size of [colors]
      */
     val size: Int
         get() = colors.size
 
     /**
-     * Returns a new [ColorContainer] instance with the colors in [colors].
+     * @return A new [ColorContainer] instance with the colors in [colors]
      */
     override fun toColorContainer() = ColorContainer(colors.toMutableList())
 
+    /**
+     * @return A new [ColorContainer] instance with the colors in [originalColors]
+     */
     fun originalColorContainer() = ColorContainer(originalColors.toMutableList())
 
+    /**
+     * Compares this `PreparedColorContainer` against another `ColorContainer` or an `Int`.
+     * If `other` is a `ColorContainer`, the [originalColors] parameter is compared
+     * to the `originalColors` parameter.
+     * If `other` is a `PreparedColorContainer`, the [originalColors] parameters are compared.
+     * If `other` is an `Int`, the [color] parameter is compared to the `Int`.
+     */
     override fun equals(other: Any?): Boolean {
         return when (other) {
             is ColorContainer -> other.colors == originalColors
@@ -94,6 +111,9 @@ class PreparedColorContainer(
         }
     }
 
+    /**
+     * @return A combination of the hash codes of [colors] and [originalColors]
+     */
     override fun hashCode(): Int {
         var result = colors.hashCode()
         result = 31 * result + originalColors.hashCode()

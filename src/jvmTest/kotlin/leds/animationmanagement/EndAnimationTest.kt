@@ -20,37 +20,42 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.utils
+package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.utils.tryWithLock
+import animatedledstrip.leds.animationmanagement.EndAnimation
+import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import io.kotest.matchers.shouldBe
 
-class MutexTest : StringSpec(
+class EndAnimationTest : StringSpec(
     {
-        "try with lock" {
-            var success1 = false
-            val m = Mutex()
+        "encode JSON" {
+            EndAnimation("test").jsonString() shouldBe
+                    """{"type":"animatedledstrip.leds.animationmanagement.EndAnimation","id":"test"};;;"""
 
-            m.tryWithLock { success1 = true }
-            assertTrue { success1 }
-
-            var success2 = false
-            val m2 = Mutex()
-
-            GlobalScope.launch {
-                m2.lock()
-            }
-
-            runBlocking { delay(1000) }
-            m2.tryWithLock { success2 = true }
-            assertFalse { success2 }
         }
 
-    })
+        "decode JSON" {
+            val json =
+                """{"type":"animatedledstrip.leds.animationmanagement.EndAnimation", "id":"12345"};;;"""
+
+            val correctData = EndAnimation("12345")
+
+            json.decodeJson() as EndAnimation shouldBe correctData
+        }
+
+        "encode and decode JSON" {
+            val end1 = EndAnimation("a test")
+            val endBytes = end1.json()
+
+            val end2 = endBytes.toUTF8String(endBytes.size).decodeJson() as EndAnimation
+
+            end2 shouldBe end1
+        }
+
+        "human readable string" {
+            EndAnimation("15235").toHumanReadableString() shouldBe "End of animation 15235"
+        }
+    }
+)

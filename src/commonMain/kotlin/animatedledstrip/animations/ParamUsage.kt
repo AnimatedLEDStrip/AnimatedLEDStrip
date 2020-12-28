@@ -23,7 +23,7 @@
 package animatedledstrip.animations
 
 /**
- * Enum for specifying the requirement level of an animation parameter
+ * Specifyies the requirement level of an animation parameter
  */
 enum class ParamUsage {
     /**

@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.animationutils
+package animatedledstrip.test.animations.predefined
 
 import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
@@ -37,7 +37,7 @@ import io.kotest.matchers.should
 import io.mockk.*
 
 @Suppress("RedundantInnerClassModifier", "ClassName")
-class AnimationTests : StringSpec(
+class PredefinedAnimationTests : StringSpec(
     {
 
         mockkStatic("animatedledstrip.leds.colormanagement.StripColorUtilsKt",

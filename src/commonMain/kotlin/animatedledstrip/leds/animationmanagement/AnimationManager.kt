@@ -1,71 +1,47 @@
+/*
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import kotlinx.coroutines.CoroutineScope
 
+/**
+ * Represents an instance that can run animations on a specific section
+ * of a strip
+ */
 interface AnimationManager {
-
+    /**
+     * Tracks the currently running animations managed by this instance
+     */
     val runningAnimations: RunningAnimationMap
 
+    /**
+     * The `CoroutineScope` all animations managed by this instance will run in
+     */
     val animationScope: CoroutineScope
 
+    /**
+     * The section associated with this instance
+     */
     val sectionManager: SectionManager
-
-//    fun startAnimation(params: AnimationToRunParams, animId: String? = null): RunningAnimation {
-//        val id = animId ?: (randomDouble() * 100000000).toInt().toString()
-//        params.id = id
-//
-//        val section = sectionManager.getSection(params.section)
-//
-//        val runningAnim = RunningAnimation(params.prepare(section),
-//                                           animationScope,
-//                                           section,
-//                                           this)
-//        runningAnimations[id] = runningAnim
-//        return runningAnim
-//    }
-
-//    fun endAnimation(id: String) {
-//        runningAnimations[id]?.endAnimation()
-//        ?: run {
-//            logger.w { "Animation $id is not running" }
-//            runningAnimations.remove(id)
-//            return
-//        }
-//    }
-
-//    fun endAnimation(endAnimation: EndAnimation?) {
-//        if (endAnimation == null) return
-//        else endAnimation(endAnimation.id)
-//    }
-
-//    fun runParallel(
-//        animation: AnimationToRunParams,
-//        section: SectionManager = sectionManager,
-//        runCount: Int = 1,
-//    ): RunningAnimation {
-//        val params = animation.copy(runCount = runCount, section = section.name).prepare(section)
-//
-//        return RunningAnimation(
-//            params,
-//            animationScope,
-//            section,
-//            this,
-//        )
-//    }
-
-//    suspend fun runSequential(
-//        animation: AnimationToRunParams,
-//        section: SectionManager = sectionManager,
-//        runCount: Int = 1,
-//    ) {
-//        val params = animation.copy(runCount = runCount, section = section.name).prepare(section)
-//
-//        RunningAnimation(
-//            params,
-//            animationScope,
-//            section,
-//            this,
-//        ).join()
-//    }
 }

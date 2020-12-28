@@ -29,11 +29,11 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.CCBlack
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import animatedledstrip.utils.SendableData
+import animatedledstrip.communication.SendableData
 import kotlinx.serialization.Serializable
 
 /**
- * Used to describe the properties of animations to run or that are running.
+ * Describes the properties of an animation to run
  *
  * @property animation Name of the animation
  * @property colors The list of [ColorContainer]s to use
@@ -69,10 +69,10 @@ data class AnimationToRunParams(
 ) : SendableData {
 
     /**
-     * Prepare the `AnimationData` instance for use by the specified `AnimatedLedStrip.Section`.
+     * Prepare the animation parameters for running the animation.
+     * Prepares colors, replaces values with defaults when necessary.
      *
-     * Sets defaults for properties with length-dependent defaults (`center` and `distance`)
-     * and populates `pCols`.
+     * @return A [RunningAnimationParams] ready for running an animation
      */
     fun prepare(sectionRunningAnimation: SectionManager): RunningAnimationParams {
 

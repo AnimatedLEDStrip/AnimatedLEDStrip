@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.utils
+package animatedledstrip.communication
 
 import kotlinx.serialization.Serializable
 

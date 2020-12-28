@@ -22,7 +22,12 @@
 
 package animatedledstrip.test.utils
 
+import animatedledstrip.communication.decodeJson
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.toARGB
+import animatedledstrip.colors.toColorContainer
+import animatedledstrip.communication.toUTF8String
+import animatedledstrip.leds.animationmanagement.removeWhitespace
 import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.*
 import io.kotest.assertions.throwables.shouldThrow
@@ -217,7 +222,7 @@ class ConversionUtilsTest : StringSpec(
                 this[2] = 's'.toByte()
                 this[3] = 't'.toByte()
                 this[4] = 's'.toByte()
-            }.toUTF8(5) shouldBe "tests"
+            }.toUTF8String(5) shouldBe "tests"
         }
 
         "bytearray to string take only part of array" {
@@ -227,7 +232,7 @@ class ConversionUtilsTest : StringSpec(
                 this[2] = 's'.toByte()
                 this[3] = 't'.toByte()
                 this[4] = 's'.toByte()
-            }.toUTF8(3) shouldBe "tes"
+            }.toUTF8String(3) shouldBe "tes"
         }
 
         "bytearray to string length inferred" {
@@ -237,11 +242,11 @@ class ConversionUtilsTest : StringSpec(
                 this[2] = 's'.toByte()
                 this[3] = 't'.toByte()
                 this[4] = 's'.toByte()
-            }.toUTF8() shouldBe "tests"
+            }.toUTF8String() shouldBe "tests"
         }
 
         "bytearray to string null check" {
-            shouldThrow<IllegalArgumentException> { (null as ByteArray?).toUTF8(5) }
+            shouldThrow<IllegalArgumentException> { (null as ByteArray?).toUTF8String(5) }
         }
 
         "remove whitespace spaces" {

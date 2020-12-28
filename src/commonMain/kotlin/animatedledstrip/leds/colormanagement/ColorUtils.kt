@@ -1,3 +1,25 @@
+/*
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
+ *
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+
 package animatedledstrip.leds.colormanagement
 
 import animatedledstrip.colors.PreparedColorContainer
@@ -7,240 +29,437 @@ import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.leds.stripmanagement.LEDStrip
 import kotlinx.coroutines.delay
 
+/**
+ * A list of the actual colors for the strip
+ */
 val LEDStripColorManager.pixelActualColorList: List<Int>
     get() = pixelColors.map { it.actualColor }
 
+/**
+ * A list of the fade colors for the strip
+ */
 val LEDStripColorManager.pixelFadeColorList: List<Int>
     get() = pixelColors.map { it.fadeColor }
 
 /**
- * Get the prolonged colors of all pixels as a `List<Long>`
+ * A list of the prolonged colors for the strip
  */
 val LEDStripColorManager.pixelProlongedColorList: List<Int>
     get() = pixelColors.map { it.prolongedColor }
 
 /**
- * Get the temporary colors of all pixels as a `List<Long>`
+ * A list of the temporary colors for the strip
  */
 val LEDStripColorManager.pixelTemporaryColorList: List<Int>
     get() = pixelColors.map { it.temporaryColor }
 
+/**
+ * A list of the actual colors for the strip
+ */
 val LEDStrip.pixelActualColorList: List<Int>
     get() = colorManager.pixelActualColorList
 
+/**
+ * A list of the fade colors for the strip
+ */
 val LEDStrip.pixelFadeColorList: List<Int>
     get() = colorManager.pixelFadeColorList
 
+/**
+ * A list of the prolonged colors for the strip
+ */
 val LEDStrip.pixelProlongedColorList: List<Int>
     get() = colorManager.pixelProlongedColorList
 
+/**
+ * A list of the temporary colors for the strip
+ */
 val LEDStrip.pixelTemporaryColorList: List<Int>
     get() = colorManager.pixelTemporaryColorList
 
-
+/**
+ * A list of the actual colors for the section
+ */
 val SectionManager.pixelActualColorList: List<Int>
     get() = stripManager.pixelActualColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
+/**
+ * A list of the fade colors for the section
+ */
 val SectionManager.pixelFadeColorList: List<Int>
     get() = stripManager.pixelFadeColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
+/**
+ * A list of the prolonged colors for the section
+ */
 val SectionManager.pixelProlongedColorList: List<Int>
     get() = stripManager.pixelProlongedColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
+/**
+ * A list of the temporary colors for the section
+ */
 val SectionManager.pixelTemporaryColorList: List<Int>
     get() = stripManager.pixelTemporaryColorList.slice(getPhysicalIndex(startPixel)..getPhysicalIndex(endPixel))
 
+/**
+ * @return A [CurrentStripColor] with the strip's current state that can be sent to a client
+ */
 fun LEDStrip.currentStripColor(): CurrentStripColor = CurrentStripColor(pixelActualColorList)
 
 
 /* Set Pixel Fade Color */
 
+/**
+ * Set a pixel's fade color
+ */
 fun LEDStrip.setPixelFadeColor(pixel: Int, color: PreparedColorContainer): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.FADE)
 
+/**
+ * Set a pixel's fade color
+ */
 fun LEDStrip.setPixelFadeColor(pixel: Int, color: Int): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.FADE)
 
+/**
+ * Set a pixel's fade color
+ */
 fun LEDStrip.setPixelFadeColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelFadeColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun LEDStrip.setPixelFadeColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelFadeColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun LEDStrip.setPixelFadeColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun LEDStrip.setPixelFadeColors(pixels: IntRange, color: Int): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's fade color
+ */
 fun SectionManager.setPixelFadeColor(pixel: Int, color: PreparedColorContainer): Unit =
     stripManager.setPixelFadeColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set a pixel's fade color
+ */
 fun SectionManager.setPixelFadeColor(pixel: Int, color: Int): Unit =
     stripManager.setPixelFadeColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun SectionManager.setPixelFadeColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelFadeColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun SectionManager.setPixelFadeColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelFadeColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun SectionManager.setPixelFadeColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun SectionManager.setPixelFadeColors(pixels: IntRange, color: Int): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's fade color
+ */
 fun AnimationManager.setPixelFadeColor(pixel: Int, color: PreparedColorContainer): Unit =
     sectionManager.setPixelFadeColor(pixel, color)
 
+/**
+ * Set a pixel's fade color
+ */
 fun AnimationManager.setPixelFadeColor(pixel: Int, color: Int): Unit =
     sectionManager.setPixelFadeColor(pixel, color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun AnimationManager.setPixelFadeColors(pixels: List<Int>, color: PreparedColorContainer): Unit =
     sectionManager.setPixelFadeColors(pixels, color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun AnimationManager.setPixelFadeColors(pixels: List<Int>, color: Int): Unit =
     sectionManager.setPixelFadeColors(pixels, color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun AnimationManager.setPixelFadeColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' fade color
+ */
 fun AnimationManager.setPixelFadeColors(pixels: IntRange, color: Int): Unit =
     setPixelFadeColors(pixels.toList(), color)
 
 
 /* Set Pixel Prolonged Color */
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun LEDStrip.setPixelProlongedColor(pixel: Int, color: PreparedColorContainer): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.PROLONGED)
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun LEDStrip.setPixelProlongedColor(pixel: Int, color: Int): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.PROLONGED)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun LEDStrip.setPixelProlongedColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelProlongedColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun LEDStrip.setPixelProlongedColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelProlongedColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun LEDStrip.setPixelProlongedColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun LEDStrip.setPixelProlongedColors(pixels: IntRange, color: Int): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun SectionManager.setPixelProlongedColor(pixel: Int, color: PreparedColorContainer): Unit =
     stripManager.setPixelProlongedColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun SectionManager.setPixelProlongedColor(pixel: Int, color: Int): Unit =
     stripManager.setPixelProlongedColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun SectionManager.setPixelProlongedColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelProlongedColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun SectionManager.setPixelProlongedColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelProlongedColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun SectionManager.setPixelProlongedColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun SectionManager.setPixelProlongedColors(pixels: IntRange, color: Int): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun AnimationManager.setPixelProlongedColor(pixel: Int, color: PreparedColorContainer): Unit =
     sectionManager.setPixelProlongedColor(pixel, color)
 
+/**
+ * Set a pixel's prolonged color
+ */
 fun AnimationManager.setPixelProlongedColor(pixel: Int, color: Int): Unit =
     sectionManager.setPixelProlongedColor(pixel, color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun AnimationManager.setPixelProlongedColors(pixels: List<Int>, color: PreparedColorContainer): Unit =
     sectionManager.setPixelProlongedColors(pixels, color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun AnimationManager.setPixelProlongedColors(pixels: List<Int>, color: Int): Unit =
     sectionManager.setPixelProlongedColors(pixels, color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun AnimationManager.setPixelProlongedColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' prolonged color
+ */
 fun AnimationManager.setPixelProlongedColors(pixels: IntRange, color: Int): Unit =
     setPixelProlongedColors(pixels.toList(), color)
 
 
 /* Set Pixel Temporary Color */
 
+/**
+ * Set a pixel's temporary color
+ */
 fun LEDStrip.setPixelTemporaryColor(pixel: Int, color: PreparedColorContainer): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.TEMPORARY)
 
+/**
+ * Set a pixel's temporary color
+ */
 fun LEDStrip.setPixelTemporaryColor(pixel: Int, color: Int): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.TEMPORARY)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun LEDStrip.setPixelTemporaryColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelTemporaryColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun LEDStrip.setPixelTemporaryColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelTemporaryColor(pixel, color)
 }
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun LEDStrip.setPixelTemporaryColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun LEDStrip.setPixelTemporaryColors(pixels: IntRange, color: Int): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's temporary color
+ */
 fun SectionManager.setPixelTemporaryColor(pixel: Int, color: PreparedColorContainer): Unit =
     stripManager.setPixelTemporaryColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set a pixel's temporary color
+ */
 fun SectionManager.setPixelTemporaryColor(pixel: Int, color: Int): Unit =
     stripManager.setPixelTemporaryColor(getPhysicalIndex(pixel), color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun SectionManager.setPixelTemporaryColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelTemporaryColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun SectionManager.setPixelTemporaryColors(pixels: List<Int>, color: Int) {
     for (pixel in pixels) setPixelTemporaryColor(getPhysicalIndex(pixel), color)
 }
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun SectionManager.setPixelTemporaryColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun SectionManager.setPixelTemporaryColors(pixels: IntRange, color: Int): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
 
+/**
+ * Set a pixel's temporary color
+ */
 fun AnimationManager.setPixelTemporaryColor(pixel: Int, color: PreparedColorContainer): Unit =
     sectionManager.setPixelTemporaryColor(pixel, color)
 
+/**
+ * Set a pixel's temporary color
+ */
 fun AnimationManager.setPixelTemporaryColor(pixel: Int, color: Int): Unit =
     sectionManager.setPixelTemporaryColor(pixel, color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun AnimationManager.setPixelTemporaryColors(pixels: List<Int>, color: PreparedColorContainer): Unit =
     sectionManager.setPixelTemporaryColors(pixels, color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun AnimationManager.setPixelTemporaryColors(pixels: List<Int>, color: Int): Unit =
     sectionManager.setPixelTemporaryColors(pixels, color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun AnimationManager.setPixelTemporaryColors(pixels: IntRange, color: PreparedColorContainer): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
+/**
+ * Set multiple pixels' temporary color
+ */
 fun AnimationManager.setPixelTemporaryColors(pixels: IntRange, color: Int): Unit =
     setPixelTemporaryColors(pixels.toList(), color)
 
+/**
+ * Set a pixel's temporary color and revert (reset its temporary color) after a delay
+ */
 suspend fun AnimationManager.setPixelAndRevertAfterDelay(pixel: Int, color: PreparedColorContainer, delay: Long) {
     setPixelTemporaryColor(pixel, color)
     delay(delay)
@@ -250,109 +469,193 @@ suspend fun AnimationManager.setPixelAndRevertAfterDelay(pixel: Int, color: Prep
 
 /* Revert Pixel */
 
+/**
+ * Revert a pixel's color (reset its temporary color)
+ */
 fun LEDStrip.revertPixel(pixel: Int): Unit = colorManager.revertPixel(pixel)
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun LEDStrip.revertPixels(pixels: List<Int>) {
     for (pixel in pixels) revertPixel(pixel)
 }
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun LEDStrip.revertPixels(pixels: IntRange): Unit =
     revertPixels(pixels.toList())
 
 
+/**
+ * Revert a pixel's color (reset its temporary color)
+ */
 fun SectionManager.revertPixel(pixel: Int): Unit =
     stripManager.revertPixel(getPhysicalIndex(pixel))
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun SectionManager.revertPixels(pixels: List<Int>) {
     for (pixel in pixels) revertPixel(getPhysicalIndex(pixel))
 }
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun SectionManager.revertPixels(pixels: IntRange): Unit =
     revertPixels(pixels.toList())
 
 
+/**
+ * Revert a pixel's color (reset its temporary color)
+ */
 fun AnimationManager.revertPixel(pixel: Int): Unit =
     sectionManager.revertPixel(pixel)
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun AnimationManager.revertPixels(pixels: List<Int>): Unit =
     sectionManager.revertPixels(pixels)
 
+/**
+ * Revert multiple pixels' color (reset their temporary colors)
+ */
 fun AnimationManager.revertPixels(pixels: IntRange): Unit =
     revertPixels(pixels.toList())
 
 
 /* Set Strip Fade Color */
 
+/**
+ * Set the strip's fade color
+ */
 fun LEDStrip.setStripFadeColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelFadeColor(i, color)
 }
 
+/**
+ * Set the strip's fade color
+ */
 fun LEDStrip.setStripFadeColor(color: Int) {
     for (i in validIndices) setPixelFadeColor(i, color)
 }
 
+/**
+ * Set the section's fade color
+ */
 fun SectionManager.setStripFadeColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelFadeColor(i, color)
 }
 
+/**
+ * Set the section's fade color
+ */
 fun SectionManager.setStripFadeColor(color: Int) {
     for (i in validIndices) setPixelFadeColor(i, color)
 }
 
+/**
+ * Set the strip's/section's fade color
+ */
 fun AnimationManager.setStripFadeColor(color: PreparedColorContainer): Unit = sectionManager.setStripFadeColor(color)
 
+/**
+ * Set the strip's/section's fade color
+ */
 fun AnimationManager.setStripFadeColor(color: Int): Unit = sectionManager.setStripFadeColor(color)
 
 
 /* Set Strip Prolonged Color */
 
+/**
+ * Set the strip's prolonged color
+ */
 fun LEDStrip.setStripProlongedColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelProlongedColor(i, color)
 }
 
+/**
+ * Set the strip's prolonged color
+ */
 fun LEDStrip.setStripProlongedColor(color: Int) {
     for (i in validIndices) setPixelProlongedColor(i, color)
 }
 
+/**
+ * Set the section's prolonged color
+ */
 fun SectionManager.setStripProlongedColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelProlongedColor(i, color)
 }
 
+/**
+ * Set the section's prolonged color
+ */
 fun SectionManager.setStripProlongedColor(color: Int) {
     for (i in validIndices) setPixelProlongedColor(i, color)
 }
 
+/**
+ * Set the strip's/section's prolonged color
+ */
 fun AnimationManager.setStripProlongedColor(color: PreparedColorContainer): Unit =
     sectionManager.setStripProlongedColor(color)
 
+/**
+ * Set the strip's/section's prolonged color
+ */
 fun AnimationManager.setStripProlongedColor(color: Int): Unit = sectionManager.setStripProlongedColor(color)
 
 
 /* Set Strip Temporary Color */
 
+/**
+ * Set the strip's temporary color
+ */
 fun LEDStrip.setStripTemporaryColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelTemporaryColor(i, color)
 }
 
+/**
+ * Set the strip's temporary color
+ */
 fun LEDStrip.setStripTemporaryColor(color: Int) {
     for (i in validIndices) setPixelTemporaryColor(i, color)
 }
 
+/**
+ * Set the section's temporary color
+ */
 fun SectionManager.setStripTemporaryColor(color: PreparedColorContainer) {
     for (i in validIndices) setPixelTemporaryColor(i, color)
 }
 
+/**
+ * Set the section's temporary color
+ */
 fun SectionManager.setStripTemporaryColor(color: Int) {
     for (i in validIndices) setPixelTemporaryColor(i, color)
 }
 
+/**
+ * Set the strip's/section's temporary color
+ */
 fun AnimationManager.setStripTemporaryColor(color: PreparedColorContainer): Unit =
     sectionManager.setStripTemporaryColor(color)
 
+/**
+ * Set the strip's/section's temporary color
+ */
 fun AnimationManager.setStripTemporaryColor(color: Int): Unit = sectionManager.setStripTemporaryColor(color)
 
 /* Clear */
 
+/**
+ * Clear the strip (set all pixels to 0)
+ */
 fun LEDStrip.clear() {
     for (i in validIndices) {
         setPixelProlongedColor(i, 0)
@@ -361,6 +664,9 @@ fun LEDStrip.clear() {
     }
 }
 
+/**
+ * Clear the section (set all pixels to 0)
+ */
 fun SectionManager.clear() {
     for (i in validIndices) {
         setPixelProlongedColor(i, 0)
@@ -369,13 +675,22 @@ fun SectionManager.clear() {
     }
 }
 
+/**
+ * Clear the strip/section (set all pixels to 0)
+ */
 fun AnimationManager.clear(): Unit = sectionManager.clear()
 
 /* Get Pixel Actual Color */
 
+/**
+ * @return The pixel's actual color
+ */
 fun LEDStrip.getPixelActualColor(pixel: Int): Int =
     colorManager.getPixelColor(pixel, PixelColorType.ACTUAL)
 
+/**
+ * @return The pixel's actual color, or null if the index was invalid
+ */
 fun LEDStrip.getPixelActualColorOrNull(pixel: Int): Int? =
     try {
         getPixelActualColor(pixel)
@@ -383,24 +698,42 @@ fun LEDStrip.getPixelActualColorOrNull(pixel: Int): Int? =
         null
     }
 
+/**
+ * @return The pixel's actual color
+ */
 fun SectionManager.getPixelActualColor(pixel: Int): Int =
     stripManager.getPixelActualColor(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's actual color, or null if the index was invalid
+ */
 fun SectionManager.getPixelActualColorOrNull(pixel: Int): Int? =
     stripManager.getPixelActualColorOrNull(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's actual color
+ */
 fun AnimationManager.getPixelActualColor(pixel: Int): Int =
     sectionManager.getPixelActualColor(pixel)
 
+/**
+ * @return The pixel's actual color, or null if the index was invalid
+ */
 fun AnimationManager.getPixelActualColorOrNull(pixel: Int): Int? =
     sectionManager.getPixelActualColorOrNull(pixel)
 
 
 /* Get Pixel Fade Color */
 
+/**
+ * @return The pixel's fade color
+ */
 fun LEDStrip.getPixelFadeColor(pixel: Int): Int =
     colorManager.getPixelColor(pixel, PixelColorType.FADE)
 
+/**
+ * @return The pixel's fade color, or null if the index was invalid
+ */
 fun LEDStrip.getPixelFadeColorOrNull(pixel: Int): Int? =
     try {
         getPixelFadeColor(pixel)
@@ -408,24 +741,42 @@ fun LEDStrip.getPixelFadeColorOrNull(pixel: Int): Int? =
         null
     }
 
+/**
+ * @return The pixel's fade color
+ */
 fun SectionManager.getPixelFadeColor(pixel: Int): Int =
     stripManager.getPixelFadeColor(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's fade color, or null if the index was invalid
+ */
 fun SectionManager.getPixelFadeColorOrNull(pixel: Int): Int? =
     stripManager.getPixelFadeColorOrNull(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's fade color
+ */
 fun AnimationManager.getPixelFadeColor(pixel: Int): Int =
     sectionManager.getPixelFadeColor(pixel)
 
+/**
+ * @return The pixel's fade color, or null if the index was invalid
+ */
 fun AnimationManager.getPixelFadeColorOrNull(pixel: Int): Int? =
     sectionManager.getPixelFadeColorOrNull(pixel)
 
 
 /* Get Pixel Prolonged Color */
 
+/**
+ * @return The pixel's prolonged color
+ */
 fun LEDStrip.getPixelProlongedColor(pixel: Int): Int =
     colorManager.getPixelColor(pixel, PixelColorType.PROLONGED)
 
+/**
+ * @return The pixel's prolonged color, or null if the index was invalid
+ */
 fun LEDStrip.getPixelProlongedColorOrNull(pixel: Int): Int? =
     try {
         getPixelProlongedColor(pixel)
@@ -433,24 +784,42 @@ fun LEDStrip.getPixelProlongedColorOrNull(pixel: Int): Int? =
         null
     }
 
+/**
+ * @return The pixel's prolonged color
+ */
 fun SectionManager.getPixelProlongedColor(pixel: Int): Int =
     stripManager.getPixelProlongedColor(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's prolonged color, or null if the index was invalid
+ */
 fun SectionManager.getPixelProlongedColorOrNull(pixel: Int): Int? =
     stripManager.getPixelProlongedColorOrNull(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's prolonged color
+ */
 fun AnimationManager.getPixelProlongedColor(pixel: Int): Int =
     sectionManager.getPixelProlongedColor(pixel)
 
+/**
+ * @return The pixel's prolonged color, or null if the index was invalid
+ */
 fun AnimationManager.getPixelProlongedColorOrNull(pixel: Int): Int? =
     sectionManager.getPixelProlongedColorOrNull(pixel)
 
 
 /* Get Pixel Temporary Color */
 
+/**
+ * @return The pixel's temporary color
+ */
 fun LEDStrip.getPixelTemporaryColor(pixel: Int): Int =
     colorManager.getPixelColor(pixel, PixelColorType.TEMPORARY)
 
+/**
+ * @return The pixel's temporary color, or null if the index was invalid
+ */
 fun LEDStrip.getPixelTemporaryColorOrNull(pixel: Int): Int? =
     try {
         getPixelTemporaryColor(pixel)
@@ -458,16 +827,31 @@ fun LEDStrip.getPixelTemporaryColorOrNull(pixel: Int): Int? =
         null
     }
 
+/**
+ * @return The pixel's temporary color
+ */
 fun SectionManager.getPixelTemporaryColor(pixel: Int): Int =
     stripManager.getPixelTemporaryColor(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's temporary color, or null if the index was invalid
+ */
 fun SectionManager.getPixelTemporaryColorOrNull(pixel: Int): Int? =
     stripManager.getPixelTemporaryColorOrNull(getPhysicalIndex(pixel))
 
+/**
+ * @return The pixel's temporary color
+ */
 fun AnimationManager.getPixelTemporaryColor(pixel: Int): Int =
     sectionManager.getPixelTemporaryColor(pixel)
 
+/**
+ * @return The pixel's temporary color, or null if the index was invalid
+ */
 fun AnimationManager.getPixelTemporaryColorOrNull(pixel: Int): Int? =
     sectionManager.getPixelTemporaryColorOrNull(pixel)
 
+/**
+ * @return A random color from `colors`
+ */
 fun RunningAnimationParams.randomColor(): PreparedColorContainer = colors.random()
