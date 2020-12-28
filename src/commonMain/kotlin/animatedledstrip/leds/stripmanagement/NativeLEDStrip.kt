@@ -24,37 +24,30 @@ package animatedledstrip.leds.stripmanagement
 
 /**
  * Interface defining what is needed from a native LED strip class.
+ *
+ * A native LED strip class bridges the gap between this library
+ * and the actual strip, whether that is through another library
+ * or directly.
  */
 interface NativeLEDStrip {
-
     /**
      * Close the LED strip's communication channel and release memory associated
-     * with it.
+     * with it
      */
     fun close()
 
     /**
-     * The number of LEDs in the strip.
+     * The number of LEDs in the strip
      */
     val numLEDs: Int
 
     /**
-     * Send data to the LED strip.
+     * Send data to the LED strip
      */
     fun render()
 
     /**
-     * Get a pixel's color.
-     *
-     * @param pixel The pixel's index
-     */
-    fun getPixelColor(pixel: Int): Int
-
-    /**
-     * Set a pixel's color.
-     *
-     * @param pixel The pixel's index
-     * @param color The color to set the pixel to
+     * Set a pixel's color
      */
     fun setPixelColor(pixel: Int, color: Int)
 }

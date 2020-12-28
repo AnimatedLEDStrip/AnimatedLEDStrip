@@ -26,7 +26,7 @@ import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.animations.Direction
 import animatedledstrip.animations.definedAnimationNames
 import animatedledstrip.leds.stripmanagement.StripInfo
-import animatedledstrip.utils.toColorContainer
+import animatedledstrip.colors.toColorContainer
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
 

@@ -20,14 +20,14 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.animationutils
+package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
-import animatedledstrip.utils.decodeJson
-import animatedledstrip.utils.toUTF8
+import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.toUTF8String
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -332,7 +332,7 @@ class AnimationToRunParamsTest : StringSpec(
                                              spacing = 4)
             val animBytes = anim1.json()
 
-            val anim2 = animBytes.toUTF8().decodeJson() as AnimationToRunParams
+            val anim2 = animBytes.toUTF8String().decodeJson() as AnimationToRunParams
 
             anim2 shouldBe anim1
         }

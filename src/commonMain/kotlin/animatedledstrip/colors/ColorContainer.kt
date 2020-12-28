@@ -22,8 +22,6 @@
 
 package animatedledstrip.colors
 
-import animatedledstrip.utils.base
-import animatedledstrip.utils.blend
 import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 
@@ -38,16 +36,8 @@ open class ColorContainer(
     final override val colors: MutableList<Int> = mutableListOf(),
 ) : ColorContainerInterface {
 
-    /* Colors */
-
     /**
-     * A `List` of `Long`s representing the animatedledstrip.colors
-     */
-//    final override val animatedledstrip.colors = mutableListOf<Long>()
-
-    /**
-     * A helper property that returns the first color in [colors]. If `animatedledstrip.colors`
-     * is empty, returns 0 (black).
+     * A helper property that tries to return the first color in [colors]
      */
     override val color: Int
         get() = this[0]
@@ -61,12 +51,15 @@ open class ColorContainer(
 
     /* Construction */
 
+    /**
+     * Create a `ColorContainer` from 0 or more `Int`s
+     */
     constructor(vararg c: Int) : this() {
         for (i in c) colors += i
     }
 
     /**
-     * Create a new ColorContainer with one color represented as a Triple
+     * Create a new `ColorContainer` with one color, passed as a Triple
      * containing r, g, and b.
      */
     constructor(rgb: Triple<Int, Int, Int>)
@@ -83,32 +76,29 @@ open class ColorContainer(
     /* Get color */
 
     /**
-     * Get one color from [colors]. If there is only one color ([singleColor]
-     * returns true), this will return that color, regardless of what index
-     * was sent. Otherwise, it checks if `index` is a valid index of `animatedledstrip.colors`
-     * and if so, returns the color stored there, if not, returns 0 (black).
+     * Get the color in [colors] at the specified index.
+     * Checks if `index` is a valid index of `colors`
+     * and if so, returns the color stored there,
+     * if not, returns `0` (black).
      */
     operator fun get(index: Int): Int =
         colors.getOrElse(index) { 0 }
 
 
     /**
-     * Get animatedledstrip.colors from [colors]. Accepts a variable number of arguments(though
-     * a single argument will be caught by the get() operator above). If no
+     * Get multiple colors from [colors]. Accepts a variable number of arguments
+     * (a single argument will be caught by the `get()` operator above). If no
      * indices are provided, this will return an empty list.
-     * If multiple indices are provided but there is only one color
-     * in the list, this will return a list containing only that one
-     * color. If an index is not a valid index in `animatedledstrip.colors`, 0 is added
-     * to the list. The returned list contains the animatedledstrip.colors in the order
+     * If an index is not a valid index in `colors`, `0` is added
+     * to the list. The returned list contains the colors in the order
      * specified.
      */
     operator fun get(vararg indices: Int): List<Int> =
         indices.map { colors.getOrElse(it) { 0 } }
 
     /**
-     * Get animatedledstrip.colors from [colors]. If there is only one color in `animatedledstrip.colors`,
-     * this will return a list containing only that one color. If an index
-     * in the range is not a valid index in `animatedledstrip.colors`, 0 is added to the list.
+     * Get multiple colors from [colors]. If an index in the range is not a
+     * valid index in `colors`, `0` is added to the list.
      */
     operator fun get(indices: IntRange): List<Int> =
         indices.map { colors.getOrElse(it) { 0 } }
@@ -118,7 +108,7 @@ open class ColorContainer(
 
     /**
      * Set some indices of [colors] to [c]. If an index is not a valid index
-     * in `animatedledstrip.colors`, this will add it to the end of `animatedledstrip.colors`, though not
+     * in `colors`, this will add it to the end of `colors`, though not
      * necessarily at the index specified.
      */
     operator fun set(vararg indices: Int, c: Int) {
@@ -129,7 +119,7 @@ open class ColorContainer(
 
     /**
      * Set a range of indices of [colors] to [c]. If an index is not a valid
-     * in [colors], this will add the color to the end of `animatedledstrip.colors`, though not
+     * in [colors], this will add the color to the end of `colors`, though not
      * necessarily at the index specified.
      */
     operator fun set(indices: IntRange, c: Int) {
@@ -149,15 +139,19 @@ open class ColorContainer(
     /* Preparation */
 
     /**
-     * Create a collection of animatedledstrip.colors that blend between multiple animatedledstrip.colors along a 'strip'.
+     * Prepare these colors for use with a LED strip by creating a collection of
+     * colors that blend between multiple colors along the 'strip'.
      *
-     * The palette animatedledstrip.colors are spread out along the strip at approximately equal
+     * The palette colors are spread out along the strip at approximately equal
      * intervals. All pixels between these 'pure' pixels are a blend between the
-     * animatedledstrip.colors of the two nearest pure pixels. The blend ratio is determined by the
+     * colors of the two nearest pure pixels. The blend ratio is determined by the
      * location of the pixel relative to the nearest pure pixels.
      *
-     * @param numLEDs The number of LEDs to create animatedledstrip.colors for
-     * @return A [PreparedColorContainer] containing all the animatedledstrip.colors
+     * If the `ColorContainer` has more colors than there are pixels in the strip,
+     * some colors will be dropped.
+     *
+     * @param numLEDs The number of LEDs to create colors for
+     * @return A [PreparedColorContainer] containing all the calculated colors
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
         require(numLEDs > 0)
@@ -193,24 +187,20 @@ open class ColorContainer(
     /* Conversion */
 
     /**
-     * Create a string representation of this ColorContainer.
+     * Create a string representation of this `ColorContainer`.
      * The hexadecimal representation of each color in [colors] is
-     * listed in comma delimited format, between brackets `[` & `]`
-     * If there is only one color in this ColorContainer, the brackets
-     * are dropped.
+     * listed in comma delimited format, between brackets `[` & `]`.
      */
-    override fun toString(): String {
-        return if (singleColor) color.toString(16)
-        else colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
-    }
+    override fun toString(): String = colors.joinToString(separator = ", ", prefix = "[", postfix = "]") { it base 16 }
+
 
     /**
-     * Returns the first color in [colors].
+     * @return The first color in [colors].
      */
     fun toInt(): Int = color
 
     /**
-     * Returns the first color in [colors] a Triple containing r, g, b.
+     * @return The first color in [colors] as a Triple containing r, g, b
      */
     fun toRGB(): Triple<Int, Int, Int> = Triple(
         color shr 16 and 0xFF,
@@ -221,7 +211,7 @@ open class ColorContainer(
     /**
      * Calls toRGB()
      */
-    fun toTriple() = toRGB()
+    fun toTriple(): Triple<Int, Int, Int> = toRGB()
 
     /**
      * @return This ColorContainer instance
@@ -232,9 +222,27 @@ open class ColorContainer(
     /* Operators/Other */
 
     /**
-     * Compares this ColorContainer against another ColorContainer or a Long.
-     * If [other] is a ColorContainer, the [colors] parameters are compared.
-     * If [other] is a Long, the [color] parameter is compared to the Long.
+     * @return The iterator for [colors]
+     */
+    operator fun iterator(): MutableIterator<Int> = colors.iterator()
+
+    /**
+     * Checks if the specified color is in [colors]
+     */
+    operator fun contains(c: Int): Boolean = colors.contains(c)
+
+    /**
+     * @return The size of [colors]
+     */
+    val size: Int
+        get() = colors.size
+
+    /**
+     * Compares this `ColorContainer` against another `ColorContainer` or an `Int`.
+     * If `other` is a `ColorContainer`, the [colors] parameters are compared.
+     * If `other` is a `PreparedColorContainer`, the [colors] parameter is compared
+     * to the `originalColors` parameter.
+     * If `other` is an `Int`, the [color] parameter is compared to the `Int`.
      */
     override fun equals(other: Any?): Boolean {
         return when (other) {
@@ -249,21 +257,4 @@ open class ColorContainer(
      * @return The hashCode of [colors]
      */
     override fun hashCode(): Int = colors.hashCode()
-
-    /**
-     * @return The iterator for [colors]
-     */
-    operator fun iterator() = colors.iterator()
-
-    /**
-     * Checks if the specified color (Long) is in [colors].
-     */
-    operator fun contains(c: Int): Boolean = colors.contains(c)
-
-    /**
-     * @return The size of [colors].
-     */
-    val size: Int
-        get() = colors.size
-
 }

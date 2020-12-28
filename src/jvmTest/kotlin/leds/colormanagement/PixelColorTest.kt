@@ -1,4 +1,4 @@
-package animatedledstrip.test.leds
+package animatedledstrip.test.leds.colormanagement
 
 import animatedledstrip.leds.colormanagement.PixelColor
 import animatedledstrip.leds.colormanagement.PixelColorType

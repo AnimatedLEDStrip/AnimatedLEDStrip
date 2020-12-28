@@ -22,8 +22,8 @@
 
 package animatedledstrip.test.utils
 
-import animatedledstrip.utils.Command
-import animatedledstrip.utils.decodeJson
+import animatedledstrip.communication.Command
+import animatedledstrip.communication.decodeJson
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -31,12 +31,12 @@ class CommandTest : StringSpec(
     {
         "encode JSON" {
             Command("a command").jsonString() shouldBe
-                    """{"type":"animatedledstrip.utils.Command","command":"a command"};;;"""
+                    """{"type":"animatedledstrip.communication.Command","command":"a command"};;;"""
         }
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.utils.Command", "command":"run a command"};;;"""
+                """{"type":"animatedledstrip.communication.Command", "command":"run a command"};;;"""
 
             val correctData = Command("run a command")
 

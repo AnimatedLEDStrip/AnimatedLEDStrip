@@ -18,32 +18,26 @@
  *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
- *
- *
- *  Small modification on a method with this copyright:
- *  Copyright 2016-2018 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license.
  */
 
-package animatedledstrip.utils
-
-import kotlinx.coroutines.sync.Mutex
+package animatedledstrip.communication
 
 /**
- * An extension function based on `Mutex.withLock()` from the Kotlin coroutines library.
- *
- * If another thread has already locked the `Mutex`, this will return and print a
- * message to the terminal. Otherwise, this will lock the `Mutex` and execute the
- * action.
+ * Represents the frequency at which messages about a certain subject should be sent
  */
-inline fun <T> Mutex.tryWithLock(owner: Any? = null, action: () -> T) {
-    if (tryLock(owner)) {
-        try {
-            action()
-            return
-        } finally {
-            unlock(owner)
-        }
-    } else {
-        return
-    }
+enum class MessageFrequency {
+    /**
+     * Send a message immediately when an event is recorded
+     */
+    IMMEDIATE,
+
+    /**
+     * Wait for a defined interval before sending all messages that have accumulated since the last message dump
+     */
+    INTERVAL,
+
+    /**
+     * Don't proactively send messages, instead wait for the client to ask for the information
+     */
+    REQUEST
 }

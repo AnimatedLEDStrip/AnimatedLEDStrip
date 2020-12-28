@@ -23,10 +23,9 @@
 package animatedledstrip.test.colors
 
 import animatedledstrip.colors.*
-import animatedledstrip.utils.b
-import animatedledstrip.utils.g
-import animatedledstrip.utils.grayscale
-import animatedledstrip.utils.r
+import animatedledstrip.colors.b
+import animatedledstrip.colors.g
+import animatedledstrip.colors.r
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse

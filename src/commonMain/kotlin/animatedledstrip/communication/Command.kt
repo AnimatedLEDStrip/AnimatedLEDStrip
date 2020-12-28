@@ -20,24 +20,22 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.communication
+
+import kotlinx.serialization.Serializable
 
 /**
- * Enum used for easily modifying the speed of an animation
+ * TODO
+ *
+ * @property command
  */
-enum class AnimationSpeed {
-    /**
-     * Set delayMod to 0.5
-     */
-    SLOW,
+@Serializable
+data class Command(val command: String = "") : SendableData {
 
-    /**
-     * Set delayMod to 1.0
-     */
-    DEFAULT,
-
-    /**
-     * Set delayMod to 2.0
-     */
-    FAST,
+    override fun toHumanReadableString(): String =
+        """
+            Command
+              command: $command
+            End Command
+        """.trimIndent()
 }

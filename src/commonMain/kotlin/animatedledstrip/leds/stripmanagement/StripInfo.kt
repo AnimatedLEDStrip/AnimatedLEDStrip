@@ -23,7 +23,7 @@
 package animatedledstrip.leds.stripmanagement
 
 import animatedledstrip.animations.definedAnimationNames
-import animatedledstrip.utils.SendableData
+import animatedledstrip.communication.SendableData
 import kotlinx.serialization.Serializable
 
 /**
@@ -44,11 +44,11 @@ data class StripInfo(
     val pin: Int? = null,
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
-    val rendersBeforeSave: Int? = null,
+    val rendersBeforeSave: Int = 1000,
     val threadCount: Int = 100,
 ) : SendableData {
 
-    val supportedAnimations
+    val supportedAnimations: List<String>
         get() = definedAnimationNames
 
     override fun toHumanReadableString() =

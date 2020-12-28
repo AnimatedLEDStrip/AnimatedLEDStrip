@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,11 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.ParamUsage
+import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
-import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.animationmanagement.*
-import animatedledstrip.utils.randomInt
 import kotlinx.coroutines.delay
 
 val pixelMarathon = PredefinedAnimation(

@@ -22,12 +22,11 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.AnimationSpeed
 import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.CCBlack
-import animatedledstrip.utils.parseHex
+import animatedledstrip.colors.parseHex
 
 /* Helper functions for setting values */
 
@@ -61,7 +60,7 @@ fun AnimationToRunParams.color(color: Any, index: Int = 0): AnimationToRunParams
 }
 
 /**
- * Append a color to the end of `animatedledstrip.colors`
+ * Append a color to the end of `colors`
  */
 fun AnimationToRunParams.addColor(color: ColorContainerInterface): AnimationToRunParams {
     colors.add(color.toColorContainer())
@@ -69,7 +68,7 @@ fun AnimationToRunParams.addColor(color: ColorContainerInterface): AnimationToRu
 }
 
 /**
- * Append multiple animatedledstrip.colors to the end of `animatedledstrip.colors`
+ * Append multiple colors to the end of `colors`
  */
 fun AnimationToRunParams.addColors(vararg colors: ColorContainerInterface): AnimationToRunParams {
     colors.forEach { addColor(it) }
@@ -77,7 +76,7 @@ fun AnimationToRunParams.addColors(vararg colors: ColorContainerInterface): Anim
 }
 
 /**
- * Append a color to the end of `animatedledstrip.colors`
+ * Append a color to the end of `colors`
  */
 fun AnimationToRunParams.addColor(color: Long): AnimationToRunParams {
     colors.add(ColorContainer(color.toInt()))
@@ -85,7 +84,7 @@ fun AnimationToRunParams.addColor(color: Long): AnimationToRunParams {
 }
 
 /**
- * Append multiple animatedledstrip.colors to the end of `animatedledstrip.colors`
+ * Append multiple colors to the end of `colors`
  */
 fun AnimationToRunParams.addColors(vararg colors: Long): AnimationToRunParams {
     colors.forEach { addColor(it) }
@@ -93,7 +92,7 @@ fun AnimationToRunParams.addColors(vararg colors: Long): AnimationToRunParams {
 }
 
 /**
- * Append a color to the end of `animatedledstrip.colors`
+ * Append a color to the end of `colors`
  */
 fun AnimationToRunParams.addColor(color: Int): AnimationToRunParams {
     colors.add(ColorContainer(color))
@@ -101,7 +100,7 @@ fun AnimationToRunParams.addColor(color: Int): AnimationToRunParams {
 }
 
 /**
- * Append multiple animatedledstrip.colors to the end of `animatedledstrip.colors`
+ * Append multiple colors to the end of `colors`
  */
 fun AnimationToRunParams.addColors(vararg colors: Int): AnimationToRunParams {
     colors.forEach { addColor(it) }
@@ -109,7 +108,7 @@ fun AnimationToRunParams.addColors(vararg colors: Int): AnimationToRunParams {
 }
 
 /**
- * Append a color to the end of `animatedledstrip.colors`
+ * Append a color to the end of `colors`
  *
  * @param color A hexadecimal `String` representing the color
  */
@@ -119,7 +118,7 @@ fun AnimationToRunParams.addColor(color: String): AnimationToRunParams {
 }
 
 /**
- * Append multiple animatedledstrip.colors to the end of `animatedledstrip.colors`
+ * Append multiple colors to the end of `colors`
  *
  * @param colors Hexadecimal `String`s representing the animatedledstrip.colors
  */
@@ -130,7 +129,7 @@ fun AnimationToRunParams.addColors(vararg colors: String): AnimationToRunParams 
 
 
 /**
- * Append multiple animatedledstrip.colors to the end of `animatedledstrip.colors`
+ * Append multiple colors to the end of `colors`
  */
 fun AnimationToRunParams.addColors(colors: List<*>): AnimationToRunParams {
     require(colors.isNotEmpty())
@@ -152,27 +151,27 @@ fun AnimationToRunParams.addColors(colors: List<*>): AnimationToRunParams {
 
 
 /**
- * Set `animatedledstrip.colors[0]`
+ * Set `colors[0]`
  */
 fun AnimationToRunParams.color0(color: Any): AnimationToRunParams = color(color, 0)
 
 /**
- * Set `animatedledstrip.colors[1]`
+ * Set `colors[1]`
  */
 fun AnimationToRunParams.color1(color: Any): AnimationToRunParams = color(color, 1)
 
 /**
- * Set `animatedledstrip.colors[2]`
+ * Set `colors[2]`
  */
 fun AnimationToRunParams.color2(color: Any): AnimationToRunParams = color(color, 2)
 
 /**
- * Set `animatedledstrip.colors[3]`
+ * Set `colors[3]`
  */
 fun AnimationToRunParams.color3(color: Any): AnimationToRunParams = color(color, 3)
 
 /**
- * Set `animatedledstrip.colors[4]`
+ * Set `colors[4]`
  */
 fun AnimationToRunParams.color4(color: Any): AnimationToRunParams = color(color, 4)
 
@@ -286,20 +285,5 @@ fun AnimationToRunParams.section(sectionId: String): AnimationToRunParams {
  */
 fun AnimationToRunParams.spacing(spacing: Int): AnimationToRunParams {
     this.spacing = spacing
-    return this
-}
-
-
-/**
- * Simple way to set the speed of an animation. Setting this will modify delayMod accordingly.
- *
- * @param speed The speed to set
- */
-fun AnimationToRunParams.speed(speed: AnimationSpeed): AnimationToRunParams {
-    delayMod = when (speed) {
-        AnimationSpeed.SLOW -> 0.5
-        AnimationSpeed.DEFAULT -> 1.0
-        AnimationSpeed.FAST -> 2.0
-    }
     return this
 }

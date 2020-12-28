@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 AnimatedLEDStrip
+ *  Copyright (c) 2018-2020 AnimatedLEDStrip
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 package animatedledstrip.animations
 
 import animatedledstrip.animations.predefined.*
-import animatedledstrip.utils.removeWhitespace
+import animatedledstrip.leds.animationmanagement.removeWhitespace
 
 val definedAnimations = mutableMapOf<String, Animation>()
 val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
