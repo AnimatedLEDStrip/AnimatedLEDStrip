@@ -54,7 +54,7 @@ val pixelMarathon = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, params, scope ->
+) { leds, params, _ ->
     val color = params.colors.random()
     val delay = params.delay
     val direction = params.direction

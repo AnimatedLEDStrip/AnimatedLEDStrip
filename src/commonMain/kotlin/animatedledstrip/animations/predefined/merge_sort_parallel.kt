@@ -33,7 +33,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-@Suppress("DuplicatedCode")
 val mergeSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Parallel)",
@@ -56,8 +55,11 @@ val mergeSortParallel = PredefinedAnimation(
 
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
-    val colorMap = params.colors[0].shuffledWithIndices()
-        .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }.toMutableList()
+    val colorMap =
+        params.colors[0]
+            .shuffledWithIndices()
+            .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }
+            .toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.color })
 
     leds.apply {

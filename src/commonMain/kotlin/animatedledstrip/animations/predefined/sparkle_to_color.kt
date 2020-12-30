@@ -54,7 +54,7 @@ val sparkleToColor = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, params, scope ->
+) { leds, params, _ ->
     val color0 = params.colors[0]
     val delay = params.delay
 

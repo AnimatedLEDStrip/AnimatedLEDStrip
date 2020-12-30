@@ -24,17 +24,18 @@ package animatedledstrip.animations
 
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.leds.animationmanagement.removeWhitespace
+import animatedledstrip.utils.logger
 
 val definedAnimations = mutableMapOf<String, Animation>()
 val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
 
 fun addNewAnimation(anim: Animation) {
     if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-//        Logger.error("Animation ${anim.info.name} already defined")
+        logger.e { "Animation ${anim.info.name} already defined" }
         return
     }
     if (definedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-//        Logger.error("Animation with abbreviation ${anim.info.abbr} already defined")
+        logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
         return
     }
 
@@ -52,6 +53,7 @@ val predefinedAnimations = listOf(
     color,
     fadeToColor,
     fireworks,
+    heapSort,
     mergeSortParallel,
     mergeSortSequential,
     meteor,
@@ -59,6 +61,8 @@ val predefinedAnimations = listOf(
     multiPixelRunToColor,
     pixelMarathon,
     pixelRun,
+    quickSortParallel,
+    quickSortSequential,
     ripple,
     smoothChase,
     smoothFade,

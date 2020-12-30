@@ -31,7 +31,6 @@ import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
-@Suppress("DuplicatedCode")
 val mergeSortSequential = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Sequential)",
@@ -53,8 +52,11 @@ val mergeSortSequential = PredefinedAnimation(
 
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
-    val colorMap = params.colors[0].shuffledWithIndices()
-        .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }.toMutableList()
+    val colorMap =
+        params.colors[0]
+            .shuffledWithIndices()
+            .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }
+            .toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.color })
 
     leds.apply {
