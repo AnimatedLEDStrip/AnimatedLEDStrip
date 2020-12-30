@@ -82,6 +82,9 @@ interface SectionManager {
      * and ending at [endPixel], with this section manager as its parent
      */
     fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
+        require(startPixel in validIndices) { "startPixel ($startPixel) must be within the parent section (${this.startPixel}..${this.endPixel})" }
+        require(endPixel in validIndices) { "endPixel ($endPixel) must be within the parent section (${this.startPixel}..${this.endPixel})" }
+
         val newSection = Section(name, startPixel, endPixel, stripManager, this)
         sections[name] = newSection
         stripManager.newSectionCallback?.invoke(newSection)
@@ -107,14 +110,16 @@ interface SectionManager {
      * @return A subsection for a subanimation running on a part of this section.
      * If the subsection already exists, reuse it, otherwise create a new one.
      */
-    fun getSubSection(startPixel: Int, endPixel: Int): Section =
-        subSections.getOrPut(Pair(startPixel, endPixel)) {
-            Section(
-                "$name:$startPixel:$endPixel",
-                startPixel,
-                endPixel,
-                stripManager,
-                this,
-            )
+    fun getSubSection(startPixel: Int, endPixel: Int): Section {
+        require(startPixel in validIndices) { "startPixel ($startPixel) must be within the parent section (0..${this.numLEDs - 1})" }
+        require(endPixel in validIndices) { "endPixel ($endPixel) must be within the parent section (0..${this.numLEDs - 1})" }
+
+        return subSections.getOrPut(Pair(startPixel, endPixel)) {
+            Section("$name:$startPixel:$endPixel",
+                    startPixel,
+                    endPixel,
+                    stripManager,
+                    this)
         }
+    }
 }

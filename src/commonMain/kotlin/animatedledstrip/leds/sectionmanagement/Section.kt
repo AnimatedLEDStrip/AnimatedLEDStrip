@@ -22,8 +22,8 @@
 
 package animatedledstrip.leds.sectionmanagement
 
-import animatedledstrip.leds.stripmanagement.LEDStrip
 import animatedledstrip.communication.SendableData
+import animatedledstrip.leds.stripmanagement.LEDStrip
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.properties.Delegates
@@ -34,11 +34,15 @@ import kotlin.properties.Delegates
  * to start a subanimation in a subsection
  */
 @Serializable
-class Section private constructor(
+class Section(
     override val name: String = "",
     override val startPixel: Int = 0,
     override val endPixel: Int = 0,
 ) : SectionManager, SendableData {
+
+    init {
+        require(startPixel <= endPixel) { "startPixel should be less than or equal to endPixel" }
+    }
 
     override val numLEDs: Int = endPixel - startPixel + 1
 
@@ -86,9 +90,7 @@ class Section private constructor(
      * return this section.
      */
     override fun getSection(sectionName: String): Section =
-        sections.getOrElse(sectionName) {
-            this
-        }
+        sections.getOrElse(sectionName) { this }
 
     override fun toHumanReadableString() =
         """
