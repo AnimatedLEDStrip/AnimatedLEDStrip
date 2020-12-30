@@ -25,10 +25,10 @@ package animatedledstrip.animations.predefined
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.colors.isNotEmpty
-import animatedledstrip.leds.colormanagement.randomColor
 import animatedledstrip.leds.animationmanagement.randomPixel
+import animatedledstrip.leds.animationmanagement.runParallel
+import animatedledstrip.leds.colormanagement.randomColor
 import kotlinx.coroutines.delay
 
 val fireworks = PredefinedAnimation(
@@ -50,7 +50,7 @@ val fireworks = PredefinedAnimation(
         distanceDefault = 20,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, params, scope ->
+) { leds, params, _ ->
     val delay = params.delay
 
     leds.apply {

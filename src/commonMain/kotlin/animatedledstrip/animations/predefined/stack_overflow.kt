@@ -22,7 +22,10 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Direction
+import animatedledstrip.animations.ParamUsage
+import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.animation
 import animatedledstrip.leds.animationmanagement.delay
@@ -49,7 +52,7 @@ val stackOverflow = PredefinedAnimation(
         distance = ParamUsage.NOTUSED,
         spacing = ParamUsage.NOTUSED,
     )
-) { leds, params, scope ->
+) { leds, params, _ ->
     val color0 = params.colors[0]
     val color1 = params.colors[1]
     val delay = params.delay

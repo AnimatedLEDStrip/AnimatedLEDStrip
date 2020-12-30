@@ -25,7 +25,7 @@ package animatedledstrip.test.animations.predefined
 import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.colors.inverse
 import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.leds.animationmanagement.*
@@ -40,8 +40,9 @@ import io.mockk.*
 class PredefinedAnimationTests : StringSpec(
     {
 
-        mockkStatic("animatedledstrip.leds.colormanagement.StripColorUtilsKt",
-                    "animatedledstrip.leds.animationmanagement.StripAnimationUtilsKt")
+        mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
+                    "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
+                    "animatedledstrip.leds.colormanagement.ColorUtilsKt")
 
         val ledStrip = createNewEmulatedStrip(50)
 
@@ -723,7 +724,7 @@ class PredefinedAnimationTests : StringSpec(
 
             verifyOrder {
                 section.setStripProlongedColor(pCC)
-                section.setStripFadeColor(CCBlack.prepare(10).toColorContainer().prepare(10))
+                section.setStripFadeColor(ColorContainer.Black.prepare(10).toColorContainer().prepare(10))
             }
         }
 
