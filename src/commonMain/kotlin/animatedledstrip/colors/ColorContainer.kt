@@ -68,8 +68,9 @@ open class ColorContainer(
     /**
      * Copy constructor
      */
-    constructor(ccIn: ColorContainer) : this() {
-        colors.addAll(ccIn.colors)
+    constructor(vararg ccs: ColorContainer) : this() {
+        for (cc in ccs)
+            colors.addAll(cc.colors)
     }
 
 

@@ -27,9 +27,9 @@ import animatedledstrip.animations.findAnimation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.colors.ccpresets.CCBlack
-import animatedledstrip.leds.sectionmanagement.SectionManager
+import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.communication.SendableData
+import animatedledstrip.leds.sectionmanagement.SectionManager
 import kotlinx.serialization.Serializable
 
 /**
@@ -95,7 +95,7 @@ data class AnimationToRunParams(
         }
 
         for (i in colors.size until definedAnimation.info.minimumColors) {
-            calculatedColors.add(CCBlack.prepare(numLEDs = sectionRunningFullAnimation.numLEDs))
+            calculatedColors.add(ColorContainer.Black.prepare(numLEDs = sectionRunningFullAnimation.numLEDs))
         }
 
         val calculatedAndTrimmedColors = mutableListOf<PreparedColorContainer>()
