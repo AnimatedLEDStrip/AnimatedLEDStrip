@@ -22,15 +22,11 @@
 
 package animatedledstrip.leds.colormanagement
 
-import animatedledstrip.colors.ColorContainer
-import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.stripmanagement.LEDStrip
 
 /**
  * Tracks the color of pixels in the strip so they can be used, rendered and/or logged
- *
- * @property stripManager The strip to manage
  */
 class LEDStripColorManager(val stripManager: LEDStrip) {
 
@@ -46,12 +42,8 @@ class LEDStripColorManager(val stripManager: LEDStrip) {
      *
      * @param colorType The color type to set (see [PixelColorType])
      */
-    fun setPixelColor(pixel: Int, color: ColorContainerInterface, colorType: PixelColorType) {
-        when (color) {
-            is ColorContainer -> error("")
-            is PreparedColorContainer -> setPixelColor(pixel, color[pixel], colorType)
-        }
-    }
+    fun setPixelColor(pixel: Int, color: PreparedColorContainer, colorType: PixelColorType) =
+        setPixelColor(pixel, color[pixel], colorType)
 
     /**
      * Set a pixel's color
@@ -59,7 +51,7 @@ class LEDStripColorManager(val stripManager: LEDStrip) {
      * @param colorType The color type to set (see [PixelColorType])
      */
     fun setPixelColor(pixel: Int, color: Int, colorType: PixelColorType) {
-//        require(pixel in ledStripManager.validIndices) { "$pixel not in indices (${ledStripManager.validIndices.first()}..${ledStripManager.validIndices.last()})" }
+        require(pixel in stripManager.validIndices) { "$pixel not in indices (${stripManager.validIndices.first()}..${stripManager.validIndices.last()})" }
         pixelColors[pixel].setColor(color, colorType)
     }
 
