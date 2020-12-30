@@ -60,14 +60,16 @@ actual class LEDStripColorLogger actual constructor(
             var renderNum = 0
 
             for (saveState in saveStateChannel) {
-                saveStateBuffer.appendLine(saveState)
-                if (renderNum++ >= stripColorManager.stripManager.stripInfo.rendersBeforeSave) {
-                    if (stripColorManager.stripManager.stripInfo.imageDebugging)
+                renderNum++
+                if (stripColorManager.stripManager.stripInfo.imageDebugging) {
+                    saveStateBuffer.appendLine(saveState)
+                    if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBeforeSave) {
                         launch(Dispatchers.IO) {
                             FileWriter(fileName, true).append(saveStateBuffer.toString()).close()
                             saveStateBuffer.clear()
                         }.join()
-                    renderNum = 0
+                        renderNum = 0
+                    }
                 }
             }
         }
