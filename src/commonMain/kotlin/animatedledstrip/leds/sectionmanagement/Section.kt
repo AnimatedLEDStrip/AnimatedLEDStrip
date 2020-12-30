@@ -62,7 +62,11 @@ class Section(
      * by adding the index to the index on the full strip associated with
      * index 0 on this section
      */
-    override fun getPhysicalIndex(pixel: Int): Int = pixel + physicalStart
+    override fun getPhysicalIndex(pixel: Int): Int {
+        require(pixel in validIndices) { "$pixel not in indices (${validIndices.first()}..${validIndices.last()})" }
+
+        return pixel + physicalStart
+    }
 
     @Transient
     override val validIndices: List<Int> = IntRange(0, endPixel - startPixel).toList()

@@ -151,11 +151,16 @@ open class ColorContainer(
      * If the `ColorContainer` has more colors than there are pixels in the strip,
      * some colors will be dropped.
      *
+     * If the `ColorContainer` is empty, the resulting `PreparedColorContainer`
+     * will contain 0s.
+     *
      * @param numLEDs The number of LEDs to create colors for
      * @return A [PreparedColorContainer] containing all the calculated colors
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
         require(numLEDs > 0)
+        if (colors.isEmpty()) colors.add(0)
+
         val returnMap = mutableMapOf<Int, Int>()
         val spacing = numLEDs.toDouble() / colors.size.toDouble()
         val purePixels = (0 until colors.size).map { (spacing * it).roundToInt() }
