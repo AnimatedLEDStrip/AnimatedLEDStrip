@@ -25,7 +25,7 @@ package animatedledstrip.leds.animationmanagement
 import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
-import animatedledstrip.colors.ccpresets.CCBlack
+import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.colors.parseHex
 
 /* Helper functions for setting values */
@@ -46,7 +46,7 @@ fun AnimationToRunParams.animation(animation: String): AnimationToRunParams {
 fun AnimationToRunParams.color(color: Any, index: Int = 0): AnimationToRunParams {
     if (colors.size <= index)
         for (i in colors.size..index)
-            colors.add(CCBlack)
+            colors.add(ColorContainer.Black)
 
     when (color) {
         is ColorContainerInterface -> colors[index] = color.toColorContainer()

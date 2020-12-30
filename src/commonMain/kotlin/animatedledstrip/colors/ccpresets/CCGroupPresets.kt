@@ -30,143 +30,152 @@ import animatedledstrip.colors.ColorContainer
  */
 
 
-object CCRainbowColors : ColorContainer(
-    0xFF0000,
-    0xD52A00,
-    0xAB5500,
-    0xAB7F00,
-    0xABAB00,
-    0x56D500,
-    0x00FF00,
-    0x00D52A,
-    0x00AB55,
-    0x0056AA,
-    0x0000FF,
-    0x2A00D5,
-    0x5500AB,
-    0x7F0081,
-    0xAB0055,
-    0xD5002B,
+val ColorContainer.Companion.RainbowColors: ColorContainer
+    get() = ColorContainer(
+        0xFF0000,
+        0xD52A00,
+        0xAB5500,
+        0xAB7F00,
+        0xABAB00,
+        0x56D500,
+        0x00FF00,
+        0x00D52A,
+        0x00AB55,
+        0x0056AA,
+        0x0000FF,
+        0x2A00D5,
+        0x5500AB,
+        0x7F0081,
+        0xAB0055,
+        0xD5002B,
+    )
+
+val ColorContainer.Companion.CloudColors: ColorContainer
+    get() = ColorContainer(
+        ColorContainer.Blue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.Blue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.SkyBlue.color,
+        ColorContainer.SkyBlue.color,
+        ColorContainer.LightBlue.color,
+        ColorContainer.White.color,
+        ColorContainer.LightBlue.color,
+        ColorContainer.SkyBlue.color,
+    )
+
+val ColorContainer.Companion.LavaColors: ColorContainer
+    get() = ColorContainer(
+        ColorContainer.Black.color,
+        ColorContainer.Maroon.color,
+        ColorContainer.Black.color,
+        ColorContainer.Maroon.color,
+        ColorContainer.DarkRed.color,
+        ColorContainer.Maroon.color,
+        ColorContainer.DarkRed.color,
+        ColorContainer.DarkRed.color,
+        ColorContainer.DarkRed.color,
+        ColorContainer.Red.color,
+        ColorContainer.Orange.color,
+        ColorContainer.White.color,
+        ColorContainer.Orange.color,
+        ColorContainer.Red.color,
+        ColorContainer.DarkRed.color,
+    )
+
+val ColorContainer.Companion.OceanColors: ColorContainer
+    get() = ColorContainer(
+        ColorContainer.MidnightBlue.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.MidnightBlue.color,
+        ColorContainer.Navy.color,
+        ColorContainer.DarkBlue.color,
+        ColorContainer.MediumBlue.color,
+        ColorContainer.SeaGreen.color,
+        ColorContainer.Teal.color,
+        ColorContainer.CadetBlue.color,
+        ColorContainer.Blue.color,
+        ColorContainer.DarkCyan.color,
+        ColorContainer.CornflowerBlue.color,
+        ColorContainer.Aquamarine.color,
+        ColorContainer.SeaGreen.color,
+        ColorContainer.Aqua.color,
+        ColorContainer.LightSkyBlue.color,
+    )
+
+val ColorContainer.Companion.ForestColors: ColorContainer
+    get() = ColorContainer(
+        ColorContainer.DarkGreen.color,
+        ColorContainer.DarkGreen.color,
+        ColorContainer.DarkOliveGreen.color,
+        ColorContainer.DarkGreen.color,
+        ColorContainer.Green.color,
+        ColorContainer.ForestGreen.color,
+        ColorContainer.OliveDrab.color,
+        ColorContainer.Green.color,
+        ColorContainer.SeaGreen.color,
+        ColorContainer.MediumAquamarine.color,
+        ColorContainer.LimeGreen.color,
+        ColorContainer.LawnGreen.color,
+        ColorContainer.MediumAquamarine.color,
+        ColorContainer.ForestGreen.color,
+    )
+
+val ColorContainer.Companion.RainbowStripesColors: ColorContainer
+    get() = ColorContainer(
+        0xFF0000,
+        0x000000,
+        0xAB5500,
+        0x000000,
+        0xABAB00,
+        0x000000,
+        0x00FF00,
+        0x000000,
+        0x00AB55,
+        0x000000,
+        0x0000FF,
+        0x000000,
+        0x5500AB,
+        0x000000,
+        0xAB0055,
+        0x000000,
+    )
+
+val ColorContainer.Companion.PartyColors: ColorContainer
+    get() = ColorContainer(
+        0x5500AB,
+        0x84007C,
+        0xB5004B,
+        0xE5001B,
+        0xE81700,
+        0xB84700,
+        0xAB7700,
+        0xABAB00,
+        0xAB5500,
+        0xDD2200,
+        0xF2000E,
+        0xC2003E,
+        0x8F0071,
+        0x5F00A1,
+        0x2F00D0,
+        0x0007F9,
+    )
+
+val CCGroupPresets: List<ColorContainer> = listOf(
+    ColorContainer.RainbowColors,
+    ColorContainer.CloudColors,
+    ColorContainer.LavaColors,
+    ColorContainer.OceanColors,
+    ColorContainer.ForestColors,
+    ColorContainer.RainbowStripesColors,
+    ColorContainer.PartyColors,
 )
 
-object CCCloudColors : ColorContainer(
-    CCBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCDarkBlue.color,
-    CCBlue.color,
-    CCDarkBlue.color,
-    CCSkyBlue.color,
-    CCSkyBlue.color,
-    CCLightBlue.color,
-    CCWhite.color,
-    CCLightBlue.color,
-    CCSkyBlue.color,
-)
-
-object CCLavaColors : ColorContainer(
-    CCBlack.color,
-    CCMaroon.color,
-    CCBlack.color,
-    CCMaroon.color,
-    CCDarkRed.color,
-    CCMaroon.color,
-    CCDarkRed.color,
-    CCDarkRed.color,
-    CCDarkRed.color,
-    CCRed.color,
-    CCOrange.color,
-    CCWhite.color,
-    CCOrange.color,
-    CCRed.color,
-    CCDarkRed.color,
-)
-
-object CCOceanColors : ColorContainer(
-    CCMidnightBlue.color,
-    CCDarkBlue.color,
-    CCMidnightBlue.color,
-    CCNavy.color,
-    CCDarkBlue.color,
-    CCMediumBlue.color,
-    CCSeaGreen.color,
-    CCTeal.color,
-    CCCadetBlue.color,
-    CCBlue.color,
-    CCDarkCyan.color,
-    CCCornflowerBlue.color,
-    CCAquamarine.color,
-    CCSeaGreen.color,
-    CCAqua.color,
-    CCLightSkyBlue.color,
-)
-
-object CCForestColors : ColorContainer(
-    CCDarkGreen.color,
-    CCDarkGreen.color,
-    CCDarkOliveGreen.color,
-    CCDarkGreen.color,
-    CCGreen.color,
-    CCForestGreen.color,
-    CCOliveDrab.color,
-    CCGreen.color,
-    CCSeaGreen.color,
-    CCMediumAquamarine.color,
-    CCLimeGreen.color,
-    CCLawnGreen.color,
-    CCMediumAquamarine.color,
-    CCForestGreen.color,
-)
-
-object CCRainbowStripesColors : ColorContainer(
-    0xFF0000,
-    0x000000,
-    0xAB5500,
-    0x000000,
-    0xABAB00,
-    0x000000,
-    0x00FF00,
-    0x000000,
-    0x00AB55,
-    0x000000,
-    0x0000FF,
-    0x000000,
-    0x5500AB,
-    0x000000,
-    0xAB0055,
-    0x000000,
-)
-
-object CCPartyColors : ColorContainer(
-    0x5500AB,
-    0x84007C,
-    0xB5004B,
-    0xE5001B,
-    0xE81700,
-    0xB84700,
-    0xAB7700,
-    0xABAB00,
-    0xAB5500,
-    0xDD2200,
-    0xF2000E,
-    0xC2003E,
-    0x8F0071,
-    0x5F00A1,
-    0x2F00D0,
-    0x0007F9,
-)
-
-val CCGroupPresets = listOf(
-    CCRainbowColors,
-    CCCloudColors,
-    CCLavaColors,
-    CCOceanColors,
-    CCForestColors,
-    CCRainbowStripesColors,
-    CCPartyColors,
-)
-
+val ColorContainer.Companion.groupPresets: List<ColorContainer>
+    get() = CCGroupPresets
