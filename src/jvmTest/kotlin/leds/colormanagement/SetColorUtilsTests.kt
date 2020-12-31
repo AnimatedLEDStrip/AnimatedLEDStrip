@@ -39,6 +39,10 @@ class SetColorUtilsTests : StringSpec(
             renderer.stopRendering()
         }
 
+        afterSpec {
+            ledStrip.renderer.close()
+        }
+
         "set pixel fade color" {
             checkAll(Arb.int(0..49), Arb.list(Arb.int(0..0xFFFFFF))) { p, c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)

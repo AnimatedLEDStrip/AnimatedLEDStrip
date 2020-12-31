@@ -39,6 +39,10 @@ class LEDStripColorManagerTest : StringSpec(
     {
         val ledStrip = createNewEmulatedStrip(50)
 
+        afterSpec {
+            ledStrip.renderer.close()
+        }
+
         "set pixel color" {
             val colorManager = LEDStripColorManager(ledStrip)
 

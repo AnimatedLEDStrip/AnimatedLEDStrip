@@ -42,6 +42,10 @@ class GetColorUtilsTests : StringSpec(
     {
         val listTestStrip = createNewEmulatedStrip(10)
 
+        afterSpec {
+            listTestStrip.renderer.close()
+        }
+
         "pixel actual color list" {
             listTestStrip.colorManager.pixelActualColorList shouldBe listOf(0, 0, 0, 0, 0,
                                                                             0, 0, 0, 0, 0)
@@ -82,6 +86,10 @@ class GetColorUtilsTests : StringSpec(
 
         val ledStrip = createNewEmulatedStrip(50).apply {
             renderer.stopRendering()
+        }
+
+        afterSpec {
+            ledStrip.renderer.close()
         }
 
         "get pixel actual color" {

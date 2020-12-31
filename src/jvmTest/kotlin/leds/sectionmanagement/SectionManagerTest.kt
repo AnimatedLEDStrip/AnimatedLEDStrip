@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.leds.stripmanagement
+package animatedledstrip.test.leds.sectionmanagement
 
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager
@@ -34,6 +34,10 @@ import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 class SectionManagerTest : StringSpec(
     {
         val ledStrip = createNewEmulatedStrip(50)
+
+        afterSpec {
+            ledStrip.renderer.close()
+        }
 
         "create section" {
             val manager = LEDStripSectionManager(ledStrip)

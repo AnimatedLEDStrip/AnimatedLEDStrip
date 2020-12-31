@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.utils
+package animatedledstrip.test.communication
 
 import animatedledstrip.communication.Command
 import animatedledstrip.communication.decodeJson

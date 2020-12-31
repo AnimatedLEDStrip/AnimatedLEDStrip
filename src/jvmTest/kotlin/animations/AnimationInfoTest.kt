@@ -514,7 +514,7 @@ class AnimationInfoTest : StringSpec(
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.animationutils.Animation.AnimationInfo", "name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
+                """{"type":"animatedledstrip.animations.Animation.AnimationInfo", "name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
 
             val correctData = Animation.AnimationInfo(name = "Alternate",
                                                       abbr = "ALT",
