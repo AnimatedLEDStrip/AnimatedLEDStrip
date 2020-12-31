@@ -31,23 +31,29 @@ import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.colormanagement.*
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
+import animatedledstrip.test.AnimationTestTag
 import animatedledstrip.test.haveProlongedColors
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.should
 import io.mockk.*
 
-@Suppress("RedundantInnerClassModifier", "ClassName")
 class PredefinedAnimationTests : StringSpec(
     {
-
         mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
                     "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
-                    "animatedledstrip.leds.colormanagement.ColorUtilsKt")
+                    "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
+                    "animatedledstrip.leds.colormanagement.GetColorUtilsKt")
 
         val ledStrip = createNewEmulatedStrip(50)
 
+        tags(AnimationTestTag)
+
         beforeEach {
             ledStrip.clear()
+        }
+
+        afterSpec {
+            ledStrip.renderer.close()
         }
 
         "Color" {
@@ -379,7 +385,7 @@ class PredefinedAnimationTests : StringSpec(
         "Bubble Sort" {
             val section = ledStrip.sectionManager.createSection("bst", 0, 9)
 
-            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            mockkStatic("animatedledstrip.colors.ColorUtilsKt")
             every { any<ColorContainerInterface>().shuffledWithIndices() } returns
                     listOf(
                         Pair(1, 0x34FF),
@@ -792,7 +798,7 @@ class PredefinedAnimationTests : StringSpec(
         "Merge Sort Sequential" {
             val section = ledStrip.sectionManager.createSection("mss", 0, 9)
 
-            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            mockkStatic("animatedledstrip.colors.ColorUtilsKt")
             every { any<ColorContainerInterface>().shuffledWithIndices() } returns
                     listOf(
                         Pair(1, 0x34FF),
@@ -902,7 +908,7 @@ class PredefinedAnimationTests : StringSpec(
         "Merge Sort Parallel" {
             val section = ledStrip.sectionManager.createSection("msp", 0, 9)
 
-            mockkStatic("animatedledstrip.colors.CCUtilsKt")
+            mockkStatic("animatedledstrip.colors.ColorUtilsKt")
             every { any<ColorContainerInterface>().shuffledWithIndices() } returns
                     listOf(
                         Pair(1, 0x34FF),

@@ -22,96 +22,16 @@
 
 package animatedledstrip.test.utils
 
-import animatedledstrip.colors.blend
-import animatedledstrip.colors.parseHex
-import animatedledstrip.colors.parseHexOrDefault
-import animatedledstrip.colors.remove0xPrefix
-import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.endAnimation
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.stripmanagement.StripInfo
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
-import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class UtilsTest : StringSpec(
     {
-        "blend no overlay returns existing" {
-            blend(0x0, 0xFF, 0) shouldBe 0x0
-        }
-
-        "full overlay returns overlay" {
-            blend(0x0, 0xFF, 255) shouldBe 0xFF
-        }
-
-        "blend blue with yellow" {
-            blend(0xFF, 0xFFFF, 51) shouldBe 0x34FF
-        }
-
-        "parse hex" {
-            parseHex("FFFF") shouldBe 0xFFFF
-            parseHex("fFFf") shouldBe 0xFFFF
-            parseHex("FED432") shouldBe 0xFED432
-            parseHex("CBA987") shouldBe 0xCBA987
-        }
-
-        "parse hex with 0x" {
-            parseHex("0xFF") shouldBe 0xFF
-        }
-
-        "parse hex with capitalization" {
-            parseHex("FE4d") shouldBe 0xFE4D
-        }
-
-        "parse hex bad input" {
-            shouldThrow<NumberFormatException> { parseHex("0xG") }
-        }
-
-        "parse hex or default" {
-            parseHexOrDefault("FFFF") shouldBe 0xFFFF
-            parseHexOrDefault("fFFf") shouldBe 0xFFFF
-            parseHexOrDefault("FED432") shouldBe 0xFED432
-            parseHexOrDefault("CBA987") shouldBe 0xCBA987
-        }
-
-        "parse hex or default with 0x" {
-            parseHexOrDefault("0xAA") shouldBe 0xAA
-        }
-
-        "parse hex or default with capitalization" {
-            parseHexOrDefault("aeC5") shouldBe 0xAEC5
-        }
-
-        "parse hex or default bad input" {
-            parseHexOrDefault("0xABT") shouldBe 0
-            parseHexOrDefault("0xGF3", 0xF1E) shouldBe 0xF1E
-        }
-
-        "remove 0x prefix" {
-            "0x55".remove0xPrefix() shouldBe "55"
-            "0x".remove0xPrefix() shouldBe ""
-        }
-
-        "remove 0x with capitalization" {
-            "0X55".remove0xPrefix() shouldBe "55"
-        }
-
-        "don't remove 0x if not at beginning" {
-            "340x55".remove0xPrefix() shouldBe "340X55"
-        }
-
-        "to utf8" {
-            assertFailsWith<IllegalArgumentException> {
-                val arr: ByteArray? = null
-                arr.toUTF8String()
-            }
-
-            assertTrue { ByteArray(5).toUTF8String().length == 5 }
-        }
 
         "strip info" {
             val info = StripInfo(

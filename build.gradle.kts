@@ -116,6 +116,7 @@ tasks.named<Test>("jvmTest") {
         events = setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED, org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED)
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
+    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
 }
 
 //tasks.jacocoTestReport {

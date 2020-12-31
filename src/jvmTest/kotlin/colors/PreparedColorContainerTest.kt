@@ -38,11 +38,11 @@ class PreparedColorContainerTest : StringSpec(
         }
 
         "equality" {
-            checkAll(100, Arb.list(Arb.int(0, 0xFFFFFF), 1..500)) { c ->
-                checkAll(50, Arb.int(1..500)) { len ->
+            checkAll(25, Arb.list(Arb.int(0, 0xFFFFFF), 1..500)) { c ->
+                checkAll(10, Arb.int(1..500)) { len ->
                     val testPCC = ColorContainer(c.toMutableList()).prepare(len)
 
-                    checkAll(10, Arb.int(1..500).filter { it != len }) { len2 ->
+                    checkAll(5, Arb.int(1..500).filter { it != len }) { len2 ->
                         testPCC shouldBe ColorContainer(c.toMutableList()).prepare(len2)
                         testPCC.hashCode() shouldNotBe ColorContainer(c.toMutableList()).prepare(len2).hashCode()
                     }
@@ -54,11 +54,11 @@ class PreparedColorContainerTest : StringSpec(
             ColorContainer(0xFF3B82).prepare(1).toString() shouldBe "[ff3b82]"
 
             ColorContainer(0xFF7B50, 0xFFFFFF).prepare(2).toString() shouldBe "[ff7b50, ffffff]"
-            ColorContainer().prepare(1).toString() shouldBe "[]"
+            ColorContainer().prepare(1).toString() shouldBe "[0]"
         }
 
         "contains" {
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF)), Arb.int(1..500)) { c, n ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..1500), Arb.int(1..1500)) { c, n ->
                 val testPCC = ColorContainer(c.toMutableList()).prepare(n)
 
                 for (i in c) {
@@ -71,7 +71,7 @@ class PreparedColorContainerTest : StringSpec(
         }
 
         "prepare" {
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..500), Arb.int(1..500)) { c, n ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..1500), Arb.int(1..1500)) { c, n ->
                 val testPCC = ColorContainer(c.toMutableList()).prepare(n)
 
                 testPCC.prepare(n).colors.shouldContainExactly(testPCC.colors)
@@ -83,13 +83,13 @@ class PreparedColorContainerTest : StringSpec(
         }
 
         "size" {
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..500), Arb.int(1..500)) { c, n ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..1500), Arb.int(1..1500)) { c, n ->
                 ColorContainer(c.toMutableList()).prepare(n).size shouldBe n
             }
         }
 
         "toColorContainer" {
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..500), Arb.int(1..500)) { c, n ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF), 1..1500), Arb.int(1..1500)) { c, n ->
                 val testPCC = ColorContainer(c.toMutableList()).prepare(n)
 
                 val testCC = testPCC.toColorContainer()

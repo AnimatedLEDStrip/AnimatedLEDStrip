@@ -20,37 +20,22 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.utils
+package animatedledstrip.test.communication
 
-import animatedledstrip.communication.Message
-import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
+import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
-class MessageTest : StringSpec(
+class JSONSerializationTests: StringSpec(
     {
-        "encode JSON" {
-            Message("A very important message").jsonString() shouldBe
-                    """{"type":"animatedledstrip.communication.Message","message":"A very important message"};;;"""
-        }
+        "to utf8 string" {
+            assertFailsWith<IllegalArgumentException> {
+                val arr: ByteArray? = null
+                arr.toUTF8String()
+            }
 
-        "decode JSON" {
-            val json =
-                """{"type":"animatedledstrip.communication.Message","message":"a message"};;;"""
-
-            val correctData = Message("a message")
-
-            json.decodeJson() as Message shouldBe correctData
-        }
-
-        "encode and decode JSON" {
-            val msg1 = Message("Another message")
-            val msgBytes = msg1.json()
-
-            val msg2 = msgBytes.toUTF8String().decodeJson() as Message
-
-            msg1 shouldBe msg2
+            assertTrue { ByteArray(5).toUTF8String().length == 5 }
         }
     }
 )

@@ -20,7 +20,7 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.leds.stripmanagement
+package animatedledstrip.test.leds.sectionmanagement
 
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager

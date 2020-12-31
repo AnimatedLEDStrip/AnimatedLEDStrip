@@ -22,14 +22,15 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.animations.Direction
-import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.animations.predefined.color
 import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.leds.sectionmanagement.SectionManager
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.pixelProlongedColorList
 import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
+import animatedledstrip.leds.sectionmanagement.SectionManager
+import io.kotest.core.Tag
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
 import org.pmw.tinylog.Configuration
@@ -39,6 +40,8 @@ import org.pmw.tinylog.LogEntry
 import org.pmw.tinylog.writers.LogEntryValue
 import org.pmw.tinylog.writers.Writer
 import kotlin.test.assertTrue
+
+object AnimationTestTag : Tag()
 
 val newRunningAnimationParams: RunningAnimationParams
     get() = RunningAnimationParams(color, "", listOf(), 5, 10, Direction.FORWARD,

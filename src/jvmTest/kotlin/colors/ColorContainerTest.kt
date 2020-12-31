@@ -23,9 +23,6 @@
 package animatedledstrip.test.colors
 
 import animatedledstrip.colors.*
-import animatedledstrip.colors.b
-import animatedledstrip.colors.g
-import animatedledstrip.colors.r
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -135,7 +132,7 @@ class ColorContainerTest : StringSpec(
             p.colors.shouldExistInOrder({ it == 0xFF7B51 }, { it == 0xF0AF29 }, { it == 0x3C538B })
             p.originalColors.shouldContainExactly(0xFF7B51, 0xF0AF29, 0x3C538B)
 
-            ColorContainer().prepare(50).colors.shouldBeEmpty()
+            ColorContainer().prepare(5).colors.shouldContainExactly(0, 0, 0, 0, 0)
 
             shouldThrow<IllegalArgumentException> {
                 ColorContainer(0xFF).prepare(0)
@@ -147,7 +144,7 @@ class ColorContainerTest : StringSpec(
         }
 
         "string" {
-            ColorContainer(0xFF3B82).toString() shouldBe "ff3b82"
+            ColorContainer(0xFF3B82).toString() shouldBe "[ff3b82]"
 
             ColorContainer(0xFF7B50, 0xFFFFFF).toString() shouldBe "[ff7b50, ffffff]"
 
@@ -175,7 +172,7 @@ class ColorContainerTest : StringSpec(
         }
 
         "equality" {
-            checkAll(Arb.int(0..0xFFFFFF)) { c ->
+            checkAll(50, Arb.int(0..0xFFFFFF)) { c ->
                 val testCC = ColorContainer(c)
 
                 testCC shouldBe ColorContainer(c)
@@ -193,7 +190,7 @@ class ColorContainerTest : StringSpec(
                 }
             }
 
-            checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
+            checkAll(Arb.list(Arb.int(0..0xFFFFFF)).filter { it.isNotEmpty() }) { c ->
                 val testCC = ColorContainer(c.toMutableList())
 
                 testCC shouldBe ColorContainer(c.toMutableList())

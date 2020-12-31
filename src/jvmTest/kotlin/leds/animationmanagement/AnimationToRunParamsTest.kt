@@ -24,10 +24,10 @@ package animatedledstrip.test.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.leds.animationmanagement.*
-import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
+import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -337,7 +337,12 @@ class AnimationToRunParamsTest : StringSpec(
             anim2 shouldBe anim1
         }
 
-        val stripSection = createNewEmulatedStrip(10).sectionManager
+        val ledStrip = createNewEmulatedStrip(10)
+        val stripSection = ledStrip.sectionManager.fullStripSection
+
+        afterSpec {
+            ledStrip.renderer.close()
+        }
 
         "prepare colors" {
             val anim = AnimationToRunParams(animation = "Color",

@@ -20,13 +20,13 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.utils
+package animatedledstrip.test.communication
 
-import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.animations.Direction
 import animatedledstrip.animations.definedAnimationNames
-import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.colors.toColorContainer
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.stripmanagement.StripInfo
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
 
