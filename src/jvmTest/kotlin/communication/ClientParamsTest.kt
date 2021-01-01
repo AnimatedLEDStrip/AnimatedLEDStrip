@@ -20,19 +20,12 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.communication
+package animatedledstrip.test.communication
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import io.kotest.core.spec.style.StringSpec
 
-@Serializable
-@SerialName("Message")
-data class Message(val message: String = "") : SendableData {
-
-    override fun toHumanReadableString(): String =
-        """
-            Message
-              message: $message
-            End Message
-        """.trimIndent()
-}
+class ClientParamsTest : StringSpec(
+    {
+        // TODO
+    }
+)

@@ -281,7 +281,7 @@ class AnimationToRunParamsTest : StringSpec(
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.leds.animationmanagement.AnimationToRunParams","animation":"Meteor","center":50,"colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[255,65280]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
+                """{"type":"AnimationToRunParams","animation":"Meteor","center":50,"colors":[{"type":"ColorContainer","colors":[255,65280]},{"type":"ColorContainer","colors":[16711680]}],"delay":10,"delayMod":1.5,"direction":"BACKWARD","distance":45,"id":"TEST","runCount":2,"section":"SECT","spacing":5};;;"""
 
             val correctData = AnimationToRunParams(animation = "Meteor",
                                                    colors = mutableListOf(ColorContainer(0xFF, 0xFF00),
@@ -313,7 +313,7 @@ class AnimationToRunParamsTest : StringSpec(
                                  runCount = 50,
                                  section = "EEEE",
                                  spacing = 15).jsonString() shouldBe
-                    """{"type":"animatedledstrip.leds.animationmanagement.AnimationToRunParams","animation":"Color","colors":[{"type":"animatedledstrip.colors.ColorContainer","colors":[65535,255,15790320]},{"type":"animatedledstrip.colors.ColorContainer","colors":[13107,4660,16711935]},{"type":"animatedledstrip.colors.ColorContainer","colors":[16777215,15728655,16316559]}],"center":30,"delay":300,"delayMod":1.8,"direction":"FORWARD","distance":12,"id":"A TEST","runCount":50,"section":"EEEE","spacing":15};;;"""
+                    """{"type":"AnimationToRunParams","animation":"Color","colors":[{"type":"ColorContainer","colors":[65535,255,15790320]},{"type":"ColorContainer","colors":[13107,4660,16711935]},{"type":"ColorContainer","colors":[16777215,15728655,16316559]}],"center":30,"delay":300,"delayMod":1.8,"direction":"FORWARD","distance":12,"id":"A TEST","runCount":50,"section":"EEEE","spacing":15};;;"""
         }
 
         "encode and decode JSON" {
@@ -338,7 +338,7 @@ class AnimationToRunParamsTest : StringSpec(
         }
 
         val ledStrip = createNewEmulatedStrip(10)
-        val stripSection = ledStrip.sectionManager.fullStripSection
+        val stripSection = ledStrip.sectionManager.createSection("test", 0, 9)
 
         afterSpec {
             ledStrip.renderer.close()
@@ -347,7 +347,8 @@ class AnimationToRunParamsTest : StringSpec(
         "prepare colors" {
             val anim = AnimationToRunParams(animation = "Color",
                                             colors = mutableListOf(ColorContainer(0x0, 0xFFFF),
-                                                                   ColorContainer(0xFE2C12, 0x5A736B, 0xCD4881)))
+                                                                   ColorContainer(0xFE2C12, 0x5A736B, 0xCD4881)),
+                                            section = "test")
 
             val prep1 = anim.prepare(stripSection)
 
@@ -359,7 +360,7 @@ class AnimationToRunParamsTest : StringSpec(
 
             val subSection = stripSection.getSubSection(3, 6)
 
-            val prep2 = prep1.withModifications().prepare(subSection)
+            val prep2 = prep1.withModifications().prepare(subSection, stripSection)
 
             prep2.colors.shouldHaveSize(2)
             prep2.colors[0].colors.shouldContainExactly(0x9A9A, 0xCDCD, 0xFFFF, 0xCCCC)

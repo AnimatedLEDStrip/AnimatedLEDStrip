@@ -24,6 +24,7 @@ package animatedledstrip.leds.stripmanagement
 
 import animatedledstrip.animations.definedAnimationNames
 import animatedledstrip.communication.SendableData
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -39,6 +40,7 @@ import kotlinx.serialization.Serializable
  * @property threadCount Number of threads used by animations
  */
 @Serializable
+@SerialName("StripInfo")
 data class StripInfo(
     val numLEDs: Int = 0,
     val pin: Int? = null,

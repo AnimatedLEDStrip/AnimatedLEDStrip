@@ -20,19 +20,16 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.utils
+package animatedledstrip.test.leds.stripmanagement
 
-import animatedledstrip.leds.animationmanagement.AnimationToRunParams
-import animatedledstrip.leds.animationmanagement.endAnimation
-import animatedledstrip.leds.animationmanagement.iterateOver
+import animatedledstrip.communication.decodeJson
 import animatedledstrip.leds.stripmanagement.StripInfo
 import io.kotest.core.spec.style.StringSpec
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.shouldBe
 
-class UtilsTest : StringSpec(
+class StripInfoTest : StringSpec(
     {
-
         "strip info" {
             val info = StripInfo(
                 numLEDs = 10,
@@ -43,39 +40,25 @@ class UtilsTest : StringSpec(
                 threadCount = 200,
             )
 
-            assertTrue { info.numLEDs == 10 }
-            assertTrue { info.pin == 15 }
-            assertTrue { info.imageDebugging }
-            assertTrue { info.fileName == "test.csv" }
-            assertTrue { info.rendersBeforeSave == 100 }
-            assertTrue { info.threadCount == 200 }
+            info.numLEDs shouldBe 10
+            info.pin shouldBe 15
+            info.imageDebugging.shouldBeTrue()
+            info.fileName shouldBe "test.csv"
+            info.rendersBeforeSave shouldBe 100
+            info.threadCount shouldBe 200
         }
 
-        "animation data to end animation" {
-            val data = AnimationToRunParams(id = "Test")
-            val end = data.endAnimation()
-            assertTrue { data.id == end.id }
+        "decode JSON"{
+            val json =
+                """{"type":"StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000,"threadCount":100};;;"""
+
+            val correctData = StripInfo(numLEDs = 240,
+                                        pin = 12,
+                                        imageDebugging = true,
+                                        rendersBeforeSave = 1000,
+                                        threadCount = 100)
+
+            json.decodeJson() as StripInfo shouldBe correctData
         }
-
-        "iterate over" {
-            val testVals1 = mutableListOf(false, false, false, false)
-            iterateOver(0..3) {
-                testVals1[it] = true
-            }
-
-            assertTrue(testVals1[0])
-            assertTrue(testVals1[1])
-            assertTrue(testVals1[2])
-            assertTrue(testVals1[3])
-
-            val testVals2 = mutableListOf(false, false, false, false)
-            iterateOver(listOf(3, 1, 2)) {
-                testVals2[it] = true
-            }
-
-            assertFalse(testVals2[0])
-            assertTrue(testVals2[1])
-            assertTrue(testVals2[2])
-            assertTrue(testVals2[3])
-        }
-    })
+    }
+)

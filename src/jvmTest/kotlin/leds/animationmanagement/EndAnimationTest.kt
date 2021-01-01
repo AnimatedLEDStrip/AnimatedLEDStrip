@@ -22,9 +22,9 @@
 
 package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.leds.animationmanagement.EndAnimation
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
+import animatedledstrip.leds.animationmanagement.EndAnimation
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -32,13 +32,13 @@ class EndAnimationTest : StringSpec(
     {
         "encode JSON" {
             EndAnimation("test").jsonString() shouldBe
-                    """{"type":"animatedledstrip.leds.animationmanagement.EndAnimation","id":"test"};;;"""
+                    """{"type":"EndAnimation","id":"test"};;;"""
 
         }
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.leds.animationmanagement.EndAnimation", "id":"12345"};;;"""
+                """{"type":"EndAnimation", "id":"12345"};;;"""
 
             val correctData = EndAnimation("12345")
 

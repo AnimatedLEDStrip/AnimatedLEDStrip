@@ -22,6 +22,7 @@
 
 package animatedledstrip.colors
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -34,6 +35,7 @@ import kotlinx.serialization.Serializable
  * `PreparedColorContainer`
  */
 @Serializable
+@SerialName("PreparedColorContainer")
 class PreparedColorContainer(
     override val colors: List<Int>,
     val originalColors: List<Int> = listOf(),

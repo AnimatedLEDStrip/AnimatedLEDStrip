@@ -49,7 +49,7 @@ class SectionTest : StringSpec(
             section.name shouldBe ""
             section.startPixel shouldBe 0
             section.endPixel shouldBe 0
-            section.numLEDs shouldBe 0
+            section.numLEDs shouldBe 1
             section.validIndices.shouldHaveSize(1)
         }
 
@@ -77,6 +77,18 @@ class SectionTest : StringSpec(
             shouldThrow<IllegalStateException> {
                 manager.getSubSection(0, 10)
             }
+        }
+
+        "encode JSON" {
+            // TODO
+        }
+
+        "decode JSON" {
+            // TODO
+        }
+
+        "encode and decode JSON" {
+            // TODO
         }
     }
 )

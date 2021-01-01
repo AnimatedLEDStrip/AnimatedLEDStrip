@@ -22,6 +22,7 @@
 
 package animatedledstrip.colors
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.math.roundToInt
 
@@ -32,6 +33,7 @@ import kotlin.math.roundToInt
  * Behavior when `Int`s outside the range `0..0xFFFFFF` are added is undefined.
  */
 @Serializable
+@SerialName("ColorContainer")
 open class ColorContainer(
     final override val colors: MutableList<Int> = mutableListOf(),
 ) : ColorContainerInterface {

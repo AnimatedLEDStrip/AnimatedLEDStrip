@@ -20,19 +20,24 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.communication
+package animatedledstrip.test.colors
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import animatedledstrip.colors.blend
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
-@Serializable
-@SerialName("Message")
-data class Message(val message: String = "") : SendableData {
+class BlendTests: StringSpec(
+    {
+        "blend no overlay returns existing" {
+            blend(0x0, 0xFF, 0) shouldBe 0x0
+        }
 
-    override fun toHumanReadableString(): String =
-        """
-            Message
-              message: $message
-            End Message
-        """.trimIndent()
-}
+        "full overlay returns overlay" {
+            blend(0x0, 0xFF, 255) shouldBe 0xFF
+        }
+
+        "blend blue with yellow" {
+            blend(0xFF, 0xFFFF, 51) shouldBe 0x34FF
+        }
+    }
+)
