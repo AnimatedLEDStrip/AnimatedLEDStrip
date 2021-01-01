@@ -20,9 +20,10 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.animationutils
+package animatedledstrip.test.animations
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.communication.decodeJson
@@ -38,6 +39,7 @@ class AnimationInfoTest : StringSpec(
             val info = Animation.AnimationInfo(
                 name = "Test",
                 abbr = "TST",
+                dimensionality = Dimensionality.ONE_DIMENSIONAL,
                 description = "A test animation",
                 signatureFile = "sig.png",
                 runCountDefault = 1,
@@ -55,6 +57,7 @@ class AnimationInfoTest : StringSpec(
 
             info.name shouldBe "Test"
             info.abbr shouldBe "TST"
+            info.dimensionality shouldBe Dimensionality.ONE_DIMENSIONAL
             info.description shouldBe "A test animation"
             info.signatureFile shouldBe "sig.png"
             info.minimumColors shouldBe 4
@@ -71,7 +74,7 @@ class AnimationInfoTest : StringSpec(
 
         "presets to human readable strings" {
             alternate.info.toHumanReadableString() shouldBe
-                """
+                    """
                     Animation Info
                       name: Alternate
                       abbr: ALT
@@ -514,15 +517,16 @@ class AnimationInfoTest : StringSpec(
         }
 
         "encode JSON" {
-            bubbleSort.info.jsonString() shouldBe """{"type":"AnimationInfo","name":"Bubble Sort","abbr":"BST","description":"Visualization of bubble sort.\n`pCols[0]` is randomized, then bubble sort is used to resort it.","signatureFile":"bubble_sort.png","runCountDefault":1,"minimumColors":1,"unlimitedColors":false,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":5,"distanceDefault":-1,"spacingDefault":3};;;"""
+            bubbleSort.info.jsonString() shouldBe """{"type":"AnimationInfo","name":"Bubble Sort","abbr":"BST","dimensionality":"ONE_DIMENSIONAL","description":"Visualization of bubble sort.\n`pCols[0]` is randomized, then bubble sort is used to resort it.","signatureFile":"bubble_sort.png","runCountDefault":1,"minimumColors":1,"unlimitedColors":false,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":5,"distanceDefault":-1,"spacingDefault":3};;;"""
         }
 
         "decode JSON" {
             val json =
-                """{"type":"AnimationInfo", "name":"Alternate","abbr":"ALT","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
+                """{"type":"AnimationInfo", "name":"Alternate","abbr":"ALT","dimensionality":"ONE_DIMENSIONAL","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
 
             val correctData = Animation.AnimationInfo(name = "Alternate",
                                                       abbr = "ALT",
+                                                      dimensionality = Dimensionality.ONE_DIMENSIONAL,
                                                       description = "A description",
                                                       signatureFile = "alternate.png",
                                                       runCountDefault = 1,

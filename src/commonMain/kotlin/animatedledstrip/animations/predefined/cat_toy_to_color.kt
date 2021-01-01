@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.inverse
@@ -38,6 +39,7 @@ val catToyToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy to Color",
         abbr = "CTC",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Using a process similar to the [Cat Toy](Cat-Toy) " +
                       "animation, set a strip's color.\n" +
                       "When the moving pixel goes past a pixel it has already set, " +

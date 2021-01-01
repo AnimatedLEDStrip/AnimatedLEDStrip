@@ -1,6 +1,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
@@ -14,6 +15,7 @@ val quickSortSequential = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Quick Sort (Sequential)",
         abbr = "QKS",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of quick sort.\n" +
                       "`pCols[0]` is randomized, then a quick sort is " +
                       "used to re-sort it. Pivot locations are chosen randomly.",

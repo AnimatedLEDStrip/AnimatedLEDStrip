@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.animationmanagement.runSequential
@@ -36,6 +33,7 @@ val bounceToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce to Color",
         abbr = "BTC",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Pixel 'bounces' back and forth, leaving behind a pixel " +
                       "set from `pCols[0]` at each end like [Stack](Stack), eventually " +
                       "ending in the middle.\n\n" +

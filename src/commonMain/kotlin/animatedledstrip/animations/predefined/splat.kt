@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.sectionmanagement.getSubSection
 import kotlin.math.max
@@ -35,6 +32,7 @@ val splat = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Splat",
         abbr = "SPT",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to a [Ripple](Ripple) but the pixels don't " +
                       "fade back.\n" +
                       "Runs two Wipe animations in opposite directions starting " +

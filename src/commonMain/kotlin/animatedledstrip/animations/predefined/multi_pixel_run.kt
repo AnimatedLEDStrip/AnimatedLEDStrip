@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.revertPixel
@@ -36,6 +33,7 @@ val multiPixelRun = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Multi Pixel Run",
         abbr = "MPR",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
                       "at a specified spacing.",
         signatureFile = "multi_pixel_run.png",

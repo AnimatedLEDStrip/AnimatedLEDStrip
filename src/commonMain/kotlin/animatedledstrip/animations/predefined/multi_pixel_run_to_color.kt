@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
@@ -35,6 +32,7 @@ val multiPixelRunToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Multi Pixel Run to Color",
         abbr = "MTC",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs " +
                       "do not revert back to their prolonged color.",
         signatureFile = "multi_pixel_run_to_color.png",

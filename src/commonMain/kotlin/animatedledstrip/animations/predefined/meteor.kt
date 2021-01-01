@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
@@ -35,6 +32,7 @@ val meteor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Meteor",
         abbr = "MET",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Like a [Pixel Run](Pixel-Run) animation, but the " +
                       "'running' pixel has a trail behind it where the pixels " +
                       "fade back from `pCols[0]`.",

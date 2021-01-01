@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
@@ -35,6 +32,7 @@ val wipe = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Wipe",
         abbr = "WIP",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to a [Pixel Run](Pixel-Run) animation, but the " +
                       "pixels do not revert to their prolonged color.",
         signatureFile = "wipe.png",

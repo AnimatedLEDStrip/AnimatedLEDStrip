@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.randomDouble
@@ -36,6 +37,7 @@ val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle Fade",
         abbr = "SPF",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Sparkle](Sparkle) but pixels fade back to " +
                       "their prolonged color.",
         signatureFile = "sparkle_fade.png",

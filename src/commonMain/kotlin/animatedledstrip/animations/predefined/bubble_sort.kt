@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
@@ -36,6 +37,7 @@ val bubbleSort = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bubble Sort",
         abbr = "BST",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of bubble sort.\n" +
                       "`pCols[0]` is randomized, then bubble sort is used to resort it.",
         signatureFile = "bubble_sort.png",
