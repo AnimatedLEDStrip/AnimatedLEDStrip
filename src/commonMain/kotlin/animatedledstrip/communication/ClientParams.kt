@@ -46,6 +46,7 @@ import kotlinx.serialization.Serializable
  * @property sendSectionCreation Should the server send a message whenever a new strip section is created?
  * (See [MessageFrequency])
  * @property sendLogs Should the server send log outputs to the client?
+ * @property bufferedMessageInterval If any data is set to be sent in regular intervals ([MessageFrequency.INTERVAL]), how long in milliseconds should the server wait between sends?
  */
 @Serializable
 @SerialName("ClientParams")
@@ -58,6 +59,7 @@ data class ClientParams(
     var sendAnimationEnd: MessageFrequency = MessageFrequency.IMMEDIATE,
     var sendSectionCreation: MessageFrequency = MessageFrequency.IMMEDIATE,
     var sendLogs: Boolean = false,
+    var bufferedMessageInterval: Long = 500,
 ) : SendableData {
 
     override fun toHumanReadableString(): String  = toString()
