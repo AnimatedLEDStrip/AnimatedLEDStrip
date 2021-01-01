@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.randomInt
@@ -36,6 +37,7 @@ val sparkleToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle to Color",
         abbr = "STC",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to the [Sparkle](Sparkle) animation, but the " +
                       "LEDs are not reverted to their prolonged color after " +
                       "the sparkle.\n" +

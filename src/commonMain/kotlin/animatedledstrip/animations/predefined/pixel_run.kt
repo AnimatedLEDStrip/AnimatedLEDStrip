@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
@@ -34,6 +31,7 @@ val pixelRun = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Run",
         abbr = "PXR",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "A pixel colored from `pCols[0]` runs along the strip.\n" +
                       "Similar to [Multi Pixel Run](Multi-Pixel-Run) but with only " +
                       "one pixel.",

@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.colors.offsetBy
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
@@ -36,6 +33,7 @@ val smoothChase = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Chase",
         abbr = "SCH",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Each pixel is set to its respective color in `pCols[0]`.\n" +
                       "Then, if the direction is `Direction.FORWARD`, each pixel is set " +
                       "to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create " +

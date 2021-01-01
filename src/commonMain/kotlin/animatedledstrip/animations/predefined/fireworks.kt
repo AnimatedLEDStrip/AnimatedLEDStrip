@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
@@ -35,6 +36,7 @@ val fireworks = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Runs [Ripple](Ripple) animations from random centers in " +
                       "the section, with a predefined distance.\n" +
                       "Color is chosen randomly from `pCols`.",

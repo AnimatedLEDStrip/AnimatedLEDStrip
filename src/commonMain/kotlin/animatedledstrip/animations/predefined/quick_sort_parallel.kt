@@ -1,6 +1,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
@@ -16,6 +17,7 @@ val quickSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Quick Sort (Parallel)",
         abbr = "QKP",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of quick sort.\n" +
                       "`pCols[0]` is randomized, then a parallelized quick sort is " +
                       "used to re-sort it. Pivot locations are chosen randomly.",

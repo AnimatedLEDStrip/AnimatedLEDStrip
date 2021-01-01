@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.sectionmanagement.getSubSection
 import kotlinx.coroutines.delay
@@ -36,6 +33,7 @@ val ripple = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Ripple",
         abbr = "RPL",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Starts two [Meteor](Meteor) animations running in opposite " +
                       "directions from `center`, stopping after traveling `distance` " +
                       "or at the end of the strip/section, whichever comes first.\n" +

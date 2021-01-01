@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
@@ -37,6 +38,7 @@ val mergeSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Parallel)",
         abbr = "MSP",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of merge sort.\n" +
                       "`pCols[0]` is randomized, then a parallelized merge sort is " +
                       "used to re-sort it.",

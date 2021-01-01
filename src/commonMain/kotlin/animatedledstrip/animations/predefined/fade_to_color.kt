@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.ColorContainer
@@ -35,6 +36,7 @@ val fadeToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fade to Color",
         abbr = "FTC",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Fade the strip to a color.",
         signatureFile = "fade_to_color.png",
         runCountDefault = 1,

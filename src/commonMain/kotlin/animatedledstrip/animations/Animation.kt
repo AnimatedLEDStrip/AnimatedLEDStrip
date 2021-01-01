@@ -71,6 +71,7 @@ abstract class Animation(open val info: AnimationInfo) {
     data class AnimationInfo(
         val name: String,
         val abbr: String,
+        val dimensionality: Dimensionality,
         val description: String,
         val signatureFile: String,
         val runCountDefault: Int,

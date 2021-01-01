@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
@@ -33,6 +34,7 @@ val smoothFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Fade",
         abbr = "SMF",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
                       "whole strip is the same color while fading through `pCols[0]`.",
         signatureFile = "smooth_fade.png",

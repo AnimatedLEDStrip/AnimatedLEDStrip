@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.leds.animationmanagement.randomPixel
 import animatedledstrip.leds.animationmanagement.runSequential
@@ -38,6 +35,7 @@ val catToy = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy",
         abbr = "CAT",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Entertain your cat with a pixel running back and forth to " +
                       "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
                       "Works better on a shorter strip (~100 pixels).",

@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
@@ -32,6 +33,7 @@ val alternate = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Strip alternates* between each color in pCols, " +
                       "delaying delay milliseconds between changes.\n\n" +
                       "\\* alternate may not be the best word because this animation " +

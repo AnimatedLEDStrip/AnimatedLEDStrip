@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
@@ -33,6 +34,7 @@ val pixelMarathon = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Watch pixels race each other along the strip.\n\n" +
                       "Note that in the animation signature that there are a couple " +
                       "points where the slope of the line gets shallower (meaning the " +

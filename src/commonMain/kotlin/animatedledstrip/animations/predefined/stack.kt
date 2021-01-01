@@ -23,7 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.animationmanagement.iterateOverPixels
+import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
+import animatedledstrip.leds.animationmanagement.numLEDs
+import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.sectionmanagement.getSubSection
 
@@ -31,6 +34,7 @@ val stack = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Pixels are run from one end of the strip/section to the " +
                       "other, 'stacking' up.\n" +
                       "Each pixel has to travel a shorter distance than the last.\n\n" +

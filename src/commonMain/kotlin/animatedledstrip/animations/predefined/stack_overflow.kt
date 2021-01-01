@@ -22,10 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.animation
 import animatedledstrip.leds.animationmanagement.delay
@@ -35,6 +32,7 @@ val stackOverflow = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack Overflow",
         abbr = "STO",
+        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Two [Stack](Stack) animations are started from opposite " +
                       "ends of the strip/section.\n" +
                       "The stacks meet in the middle and 'overflow' their half.\n" +
