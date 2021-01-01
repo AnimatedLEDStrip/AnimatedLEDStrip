@@ -29,7 +29,8 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.communication.SendableData
-import animatedledstrip.leds.sectionmanagement.SectionManager
+import animatedledstrip.leds.sectionmanagement.Section
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -54,6 +55,7 @@ import kotlinx.serialization.Serializable
  * @property spacing Spacing used in the animation
  */
 @Serializable
+@SerialName("AnimationToRunParams")
 data class AnimationToRunParams(
     var animation: String = "",
     var colors: MutableList<ColorContainerInterface> = mutableListOf(),
@@ -74,19 +76,12 @@ data class AnimationToRunParams(
      *
      * @return A [RunningAnimationParams] ready for running an animation
      */
-    fun prepare(sectionRunningAnimation: SectionManager): RunningAnimationParams {
-
-        val sectionName = when (section) {
-            "" -> sectionRunningAnimation.name
-            else -> section
-        }
-
+    fun prepare(
+        sectionRunningAnimation: Section,
+        sectionRunningFullAnimation: Section = sectionRunningAnimation,
+    ): RunningAnimationParams {
         // Animation's existence should be verified before now
         val definedAnimation = findAnimation(animation)
-
-        // Isn't actually dependent on the section running animation,
-        // it just needs it to get to the AnimatedLEDStrip containing it
-        val sectionRunningFullAnimation = sectionRunningAnimation.getSection(sectionName = sectionName)
 
         val calculatedColors = mutableListOf<PreparedColorContainer>()
 
@@ -102,7 +97,9 @@ data class AnimationToRunParams(
 
         calculatedColors.forEach {
             calculatedAndTrimmedColors += PreparedColorContainer(
-                colors = it.colors.slice(sectionRunningAnimation.startPixel - sectionRunningFullAnimation.startPixel..sectionRunningAnimation.endPixel - sectionRunningFullAnimation.startPixel),
+                colors = it.colors.slice(
+                    sectionRunningAnimation.startPixel - sectionRunningFullAnimation.startPixel..
+                            sectionRunningAnimation.endPixel - sectionRunningFullAnimation.startPixel),
                 originalColors = it.originalColors,
             )
         }

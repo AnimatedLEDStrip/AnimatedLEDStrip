@@ -24,6 +24,7 @@ package animatedledstrip.leds.sectionmanagement
 
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.stripmanagement.LEDStrip
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.properties.Delegates
@@ -34,6 +35,7 @@ import kotlin.properties.Delegates
  * to start a subanimation in a subsection
  */
 @Serializable
+@SerialName("Section")
 class Section(
     override val name: String = "",
     override val startPixel: Int = 0,

@@ -22,6 +22,8 @@
 
 package animatedledstrip.test.leds.colormanagement
 
+import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.colormanagement.CurrentStripColor
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -33,6 +35,31 @@ class CurrentStripColorTest : StringSpec(
             checkAll<List<Int>> { c ->
                 CurrentStripColor(c).color shouldBe c
             }
+        }
+
+        "encode JSON" {
+            CurrentStripColor(listOf(0xFF, 0xFFFF, 0x1234)).jsonString() shouldBe
+                    """{"type":"CurrentStripColor","color":[255,65535,4660]};;;"""
+        }
+
+        "decode JSON" {
+            val json =
+                """{"type":"CurrentStripColor","color":[10769581,12585646,11519448,381541,415164]};;;"""
+
+            val correctData = CurrentStripColor(listOf(0xA454AD, 0xC00AAE, 0xAFC5D8,
+                                                       0x05D265, 0x0655BC))
+
+            json.decodeJson() as CurrentStripColor shouldBe correctData
+        }
+
+        "encode and decode JSON" {
+            val col1 = CurrentStripColor(listOf(0xD88077, 0x74F49B, 0x07CF85,
+                                                0xC8EE42, 0xC27AE4, 0x443707))
+            val colBytes = col1.json()
+
+            val col2 = colBytes.toUTF8String().decodeJson() as CurrentStripColor
+
+            col2 shouldBe col1
         }
     }
 )

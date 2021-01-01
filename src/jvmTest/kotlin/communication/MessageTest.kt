@@ -32,12 +32,12 @@ class MessageTest : StringSpec(
     {
         "encode JSON" {
             Message("A very important message").jsonString() shouldBe
-                    """{"type":"animatedledstrip.communication.Message","message":"A very important message"};;;"""
+                    """{"type":"Message","message":"A very important message"};;;"""
         }
 
         "decode JSON" {
             val json =
-                """{"type":"animatedledstrip.communication.Message","message":"a message"};;;"""
+                """{"type":"Message","message":"a message"};;;"""
 
             val correctData = Message("a message")
 
@@ -50,7 +50,7 @@ class MessageTest : StringSpec(
 
             val msg2 = msgBytes.toUTF8String().decodeJson() as Message
 
-            msg1 shouldBe msg2
+            msg2 shouldBe msg1
         }
     }
 )

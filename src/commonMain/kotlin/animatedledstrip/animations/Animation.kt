@@ -26,6 +26,7 @@ import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -66,6 +67,7 @@ abstract class Animation(open val info: AnimationInfo) {
      * @property spacingDefault Default value for the `spacing` parameter
      */
     @Serializable
+    @SerialName("AnimationInfo")
     data class AnimationInfo(
         val name: String,
         val abbr: String,

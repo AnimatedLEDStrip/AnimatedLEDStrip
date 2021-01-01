@@ -22,26 +22,35 @@
 
 package animatedledstrip.test.colors
 
-import animatedledstrip.colors.blend
-import animatedledstrip.colors.parseHex
-import animatedledstrip.colors.parseHexOrDefault
-import animatedledstrip.colors.remove0xPrefix
+import animatedledstrip.colors.*
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class ColorUtilsTests : StringSpec(
     {
-        "blend no overlay returns existing" {
-            blend(0x0, 0xFF, 0) shouldBe 0x0
+        "Int to ARGB" {
+            0x0.toARGB() shouldBe 0xFF000000.toInt()
+            0x158FE3.toARGB() shouldBe 0xFF158FE3.toInt()
+            0xFFFFFF.toARGB() shouldBe 0xFFFFFFFF.toInt()
         }
 
-        "full overlay returns overlay" {
-            blend(0x0, 0xFF, 255) shouldBe 0xFF
+        "Long to ARGB" {
+            0x0L.toARGB() shouldBe 0xFF000000.toInt()
+            0x158FE3L.toARGB() shouldBe 0xFF158FE3.toInt()
+            0xFFFFFFL.toARGB() shouldBe 0xFFFFFFFF.toInt()
         }
 
-        "blend blue with yellow" {
-            blend(0xFF, 0xFFFF, 51) shouldBe 0x34FF
+        "Int to ColorContainer" {
+            0x0.toColorContainer() shouldBe ColorContainer(0x0)
+            0x158FE3.toColorContainer() shouldBe ColorContainer(0x158FE3)
+            0xFFFFFF.toColorContainer() shouldBe ColorContainer(0xFFFFFF)
+        }
+
+        "Long to ColorContainer" {
+            0x0L.toColorContainer() shouldBe ColorContainer(0x0)
+            0x158FE3L.toColorContainer() shouldBe ColorContainer(0x158FE3)
+            0xFFFFFFL.toColorContainer() shouldBe ColorContainer(0xFFFFFF)
         }
 
         "parse hex" {

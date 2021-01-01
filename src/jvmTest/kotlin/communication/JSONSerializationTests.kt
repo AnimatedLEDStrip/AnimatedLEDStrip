@@ -22,20 +22,50 @@
 
 package animatedledstrip.test.communication
 
+import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import kotlin.test.assertFailsWith
-import kotlin.test.assertTrue
+import io.kotest.matchers.shouldBe
 
-class JSONSerializationTests: StringSpec(
+class JSONSerializationTests : StringSpec(
     {
-        "to utf8 string" {
-            assertFailsWith<IllegalArgumentException> {
-                val arr: ByteArray? = null
-                arr.toUTF8String()
-            }
+        "decode JSON null check" {
+            shouldThrow<IllegalArgumentException> { (null as String?).decodeJson() }
+        }
 
-            assertTrue { ByteArray(5).toUTF8String().length == 5 }
+        "bytearray to utf8 string length specified" {
+            ByteArray(5).apply {
+                this[0] = 't'.toByte()
+                this[1] = 'e'.toByte()
+                this[2] = 's'.toByte()
+                this[3] = 't'.toByte()
+                this[4] = 's'.toByte()
+            }.toUTF8String(5) shouldBe "tests"
+        }
+
+        "bytearray to utf8 string take only part of array" {
+            ByteArray(5).apply {
+                this[0] = 't'.toByte()
+                this[1] = 'e'.toByte()
+                this[2] = 's'.toByte()
+                this[3] = 't'.toByte()
+                this[4] = 's'.toByte()
+            }.toUTF8String(3) shouldBe "tes"
+        }
+
+        "bytearray to utf8 string length inferred" {
+            ByteArray(5).apply {
+                this[0] = 't'.toByte()
+                this[1] = 'e'.toByte()
+                this[2] = 's'.toByte()
+                this[3] = 't'.toByte()
+                this[4] = 's'.toByte()
+            }.toUTF8String() shouldBe "tests"
+        }
+
+        "bytearray to string null check" {
+            shouldThrow<IllegalArgumentException> { (null as ByteArray?).toUTF8String(5) }
         }
     }
 )

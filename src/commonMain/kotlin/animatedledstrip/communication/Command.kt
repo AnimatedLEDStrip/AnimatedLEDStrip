@@ -22,6 +22,7 @@
 
 package animatedledstrip.communication
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -30,6 +31,7 @@ import kotlinx.serialization.Serializable
  * @property command
  */
 @Serializable
+@SerialName("Command")
 data class Command(val command: String = "") : SendableData {
 
     override fun toHumanReadableString(): String =

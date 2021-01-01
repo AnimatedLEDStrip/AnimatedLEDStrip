@@ -22,6 +22,7 @@
 
 package animatedledstrip.communication
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -47,6 +48,7 @@ import kotlinx.serialization.Serializable
  * @property sendLogs Should the server send log outputs to the client?
  */
 @Serializable
+@SerialName("ClientParams")
 data class ClientParams(
     var sendDefinedAnimationInfoOnConnection: Boolean = true,
     var sendRunningAnimationInfoOnConnection: Boolean = true,

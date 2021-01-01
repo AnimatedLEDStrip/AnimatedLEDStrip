@@ -20,19 +20,35 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.communication
+package animatedledstrip.test.leds.animationmanagement
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import animatedledstrip.leds.animationmanagement.iterateOver
+import io.kotest.core.spec.style.StringSpec
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
-@Serializable
-@SerialName("Message")
-data class Message(val message: String = "") : SendableData {
+class AnimationUtilsTests: StringSpec(
+    {
+        "iterate over" {
+            val testVals1 = mutableListOf(false, false, false, false)
+            iterateOver(0..3) {
+                testVals1[it] = true
+            }
 
-    override fun toHumanReadableString(): String =
-        """
-            Message
-              message: $message
-            End Message
-        """.trimIndent()
-}
+            assertTrue(testVals1[0])
+            assertTrue(testVals1[1])
+            assertTrue(testVals1[2])
+            assertTrue(testVals1[3])
+
+            val testVals2 = mutableListOf(false, false, false, false)
+            iterateOver(listOf(3, 1, 2)) {
+                testVals2[it] = true
+            }
+
+            assertFalse(testVals2[0])
+            assertTrue(testVals2[1])
+            assertTrue(testVals2[2])
+            assertTrue(testVals2[3])
+        }
+    }
+)

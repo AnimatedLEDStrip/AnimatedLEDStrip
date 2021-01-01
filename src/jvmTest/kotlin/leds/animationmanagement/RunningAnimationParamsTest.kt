@@ -40,7 +40,7 @@ class RunningAnimationParamsTest : StringSpec(
         }
 
         "with colors modification" {
-            TODO()
+            // TODO
         }
 
         "with center modification" {
@@ -113,6 +113,18 @@ class RunningAnimationParamsTest : StringSpec(
             checkAll<Int> { s ->
                 newRunningAnimationParams.withModifications(spacing = s).spacing shouldBe s
             }
+        }
+
+        "encode JSON" {
+            // TODO
+        }
+
+        "decode JSON" {
+            // TODO
+        }
+
+        "encode and decode JSON" {
+            // TODO
         }
     }
 )

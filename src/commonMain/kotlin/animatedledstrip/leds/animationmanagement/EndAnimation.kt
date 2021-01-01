@@ -23,6 +23,7 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.communication.SendableData
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -31,6 +32,7 @@ import kotlinx.serialization.Serializable
  * @property id The ID of the animation
  */
 @Serializable
+@SerialName("EndAnimation")
 data class EndAnimation(val id: String = "") : SendableData {
     override fun toHumanReadableString(): String = "End of animation $id"
 }

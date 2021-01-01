@@ -27,6 +27,7 @@ import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -51,6 +52,7 @@ import kotlinx.serialization.Transient
  */
 @Suppress("DataClassPrivateConstructor")
 @Serializable
+@SerialName("RunningAnimationParams")
 data class RunningAnimationParams private constructor(
     val animationName: String,
     val colors: List<PreparedColorContainer>,

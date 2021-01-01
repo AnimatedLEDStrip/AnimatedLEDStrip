@@ -73,8 +73,6 @@ fun String?.decodeJson(): SendableData {
     return serializer.decodeFromString(this.removeSuffix(DELIMITER))
 }
 
-fun SendableData.encodeJson(): ByteArray = jsonString().encodeToByteArray()
-
 /**
  * Create a `String` from a `ByteArray` using the UTF-8 charset
  *

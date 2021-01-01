@@ -23,12 +23,14 @@
 package animatedledstrip.leds.colormanagement
 
 import animatedledstrip.communication.SendableData
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
  * Packages the current strip state into a format that can be sent to a client
  */
 @Serializable
+@SerialName("CurrentStripColor")
 data class CurrentStripColor(val color: List<Int>) : SendableData {
     override fun toHumanReadableString(): String = toString()
 }

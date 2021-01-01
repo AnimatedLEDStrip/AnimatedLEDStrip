@@ -22,9 +22,9 @@
 
 package animatedledstrip.leds.animationmanagement
 
+import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.logger
-import animatedledstrip.leds.animationmanagement.randomDouble
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 
@@ -41,7 +41,7 @@ fun AnimationManager.startAnimation(params: AnimationToRunParams, animId: String
     val id = animId ?: (randomDouble() * 100000000).toInt().toString()
     params.id = id
 
-    val section: SectionManager = sectionManager.getSection(params.section)
+    val section: Section = sectionManager.getSection(params.section)
 
     val runningAnim = RunningAnimation(params.prepare(section),
                                        animationScope,
@@ -84,7 +84,8 @@ fun AnimationManager.runParallel(
     section: SectionManager = sectionManager,
     runCount: Int = 1,
 ): RunningAnimation {
-    val params = animation.copy(runCount = runCount, section = section.name).prepare(section)
+    val params = animation.copy(runCount = runCount, section = section.name).prepare(section as Section,
+                                                                                     sectionManager as Section)
 
     return RunningAnimation(
         params,
@@ -121,7 +122,8 @@ suspend fun AnimationManager.runSequential(
     section: SectionManager = sectionManager,
     runCount: Int = 1,
 ) {
-    val params = animation.copy(runCount = runCount, section = section.name).prepare(section)
+    val params = animation.copy(runCount = runCount, section = section.name).prepare(section as Section,
+                                                                                     sectionManager as Section)
 
     RunningAnimation(
         params,

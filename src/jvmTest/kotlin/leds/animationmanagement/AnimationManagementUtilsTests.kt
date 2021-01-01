@@ -20,37 +20,42 @@
  *  THE SOFTWARE.
  */
 
-package animatedledstrip.test.communication
+package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.communication.Command
-import animatedledstrip.communication.decodeJson
-import animatedledstrip.communication.toUTF8String
+import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.endAnimation
+import animatedledstrip.leds.animationmanagement.removeWhitespace
+import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class CommandTest : StringSpec(
+class AnimationManagementUtilsTests : StringSpec(
     {
-        "encode JSON" {
-            Command("a command").jsonString() shouldBe
-                    """{"type":"Command","command":"a command"};;;"""
+        "animation to run params to end animation" {
+            val params = AnimationToRunParams(id = "Test")
+            val end = params.endAnimation()
+            params.id shouldBe end.id
         }
 
-        "decode JSON" {
-            val json =
-                """{"type":"Command", "command":"run a command"};;;"""
-
-            val correctData = Command("run a command")
-
-            json.decodeJson() as Command shouldBe correctData
+        "running animation params to end animation" {
+            val params = newRunningAnimationParams.copy(id = "test2")
+            val end = params.endAnimation()
+            params.id shouldBe end.id
         }
 
-        "encode and decode JSON" {
-            val cmd1 = Command("test command")
-            val cmdBytes = cmd1.json()
+        "remove whitespace spaces" {
+            "     ".removeWhitespace() shouldBe ""
+            "a b c d e".removeWhitespace() shouldBe "abcde"
+        }
 
-            val cmd2 = cmdBytes.toUTF8String().decodeJson() as Command
+        "remove whitespace tabs" {
+            "\t".removeWhitespace() shouldBe ""
+            "a\tb\tc\td\te".removeWhitespace() shouldBe "abcde"
+        }
 
-            cmd2 shouldBe cmd1
+        "remove whitespace newlines" {
+            "\n\r".removeWhitespace() shouldBe ""
+            "a\nb\rc\nd\re".removeWhitespace() shouldBe "abcde"
         }
     }
 )
