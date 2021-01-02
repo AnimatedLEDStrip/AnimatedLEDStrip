@@ -27,9 +27,10 @@ import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
-import animatedledstrip.leds.animationmanagement.randomPixel
+import animatedledstrip.leds.animationmanagement.randomIndex
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import kotlinx.coroutines.delay
 
 val fireworks = PredefinedAnimation(
@@ -60,7 +61,7 @@ val fireworks = PredefinedAnimation(
         if (color.isNotEmpty()) {
             runParallel(params.withModifications(colors = mutableListOf(color),
                                                  animation = "Ripple",
-                                                 center = randomPixel()))
+                                                 center = LEDLocation(randomIndex().toDouble(), 0.0, 0.0)))
             delay(delay * 20)
         }
     }

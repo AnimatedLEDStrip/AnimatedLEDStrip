@@ -37,7 +37,6 @@ class StripInfoTest : StringSpec(
                 imageDebugging = true,
                 fileName = "test.csv",
                 rendersBeforeSave = 100,
-                threadCount = 200,
             )
 
             info.numLEDs shouldBe 10
@@ -45,18 +44,16 @@ class StripInfoTest : StringSpec(
             info.imageDebugging.shouldBeTrue()
             info.fileName shouldBe "test.csv"
             info.rendersBeforeSave shouldBe 100
-            info.threadCount shouldBe 200
         }
 
         "decode JSON"{
             val json =
-                """{"type":"StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000,"threadCount":100};;;"""
+                """{"type":"StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000};;;"""
 
             val correctData = StripInfo(numLEDs = 240,
                                         pin = 12,
                                         imageDebugging = true,
-                                        rendersBeforeSave = 1000,
-                                        threadCount = 100)
+                                        rendersBeforeSave = 1000)
 
             json.decodeJson() as StripInfo shouldBe correctData
         }

@@ -47,7 +47,10 @@ data class StripInfo(
     val imageDebugging: Boolean = false,
     val fileName: String? = null,
     val rendersBeforeSave: Int = 1000,
-    val threadCount: Int = 100,
+    val include1D: Boolean = true,
+    val include2D: Boolean = false,
+    val include3D: Boolean = false,
+    val ledLocations: List<Triple<Double, Double, Double>>? = null,
 ) : SendableData {
 
     val supportedAnimations: List<String>
@@ -61,7 +64,6 @@ data class StripInfo(
               imageDebugging: $imageDebugging
               fileName: $fileName
               rendersBeforeSave: $rendersBeforeSave
-              threadCount: $threadCount
               supportedAnimations: $supportedAnimations
             End Strip Info
         """.trimIndent()

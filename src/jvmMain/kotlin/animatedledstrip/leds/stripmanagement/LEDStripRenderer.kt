@@ -27,6 +27,7 @@ import animatedledstrip.leds.colormanagement.LEDStripColorManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import org.pmw.tinylog.Logger
 
 /**
@@ -40,8 +41,8 @@ actual class LEDStripRenderer actual constructor(
 ) {
     actual val stripColorLogger = LEDStripColorLogger(stripColorManager)
 
-//    @Suppress("EXPERIMENTAL_API_USAGE")
-//    private val renderThread = newSingleThreadContext("Render Thread")
+    @Suppress("EXPERIMENTAL_API_USAGE")
+    private val renderThread = newSingleThreadContext("Render Thread")
 
     actual var isRendering: Boolean = true
 
@@ -55,10 +56,10 @@ actual class LEDStripRenderer actual constructor(
 
     fun close() {
         job.cancel()
-//        renderThread.close()
+        renderThread.close()
     }
 
-    private val job = GlobalScope.launch {
+    private val job = GlobalScope.launch(renderThread) {
         var renderNum = 0
         while (true) {
             if (isRendering)

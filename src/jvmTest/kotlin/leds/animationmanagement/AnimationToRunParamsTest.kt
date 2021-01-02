@@ -28,6 +28,7 @@ import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -135,14 +136,14 @@ class AnimationToRunParamsTest : StringSpec(
         "set center" {
             val testAnimation = AnimationToRunParams()
 
-            checkAll<Int> { c ->
-                testAnimation.center = c
-                testAnimation.center shouldBe c
+            checkAll<Double, Double, Double> { c1, c2, c3 ->
+                testAnimation.center = LEDLocation(c1, c2, c3)
+                testAnimation.center shouldBe LEDLocation(c1, c2, c3)
             }
 
-            checkAll<Int> { c ->
-                testAnimation.center(c)
-                testAnimation.center shouldBe c
+            checkAll<Double, Double, Double> { c1, c2, c3 ->
+                testAnimation.center(LEDLocation(c1, c2, c3))
+                testAnimation.center shouldBe LEDLocation(c1, c2, c3)
             }
         }
 
@@ -286,7 +287,7 @@ class AnimationToRunParamsTest : StringSpec(
             val correctData = AnimationToRunParams(animation = "Meteor",
                                                    colors = mutableListOf(ColorContainer(0xFF, 0xFF00),
                                                                           ColorContainer(0xFF0000)),
-                                                   center = 50,
+                                                   center = LEDLocation(50.0, 0.0, 0.0),
                                                    delay = 10,
                                                    delayMod = 1.5,
                                                    direction = Direction.BACKWARD,
@@ -304,7 +305,7 @@ class AnimationToRunParamsTest : StringSpec(
                                  colors = mutableListOf(ColorContainer(0xFFFF, 0xFF, 0xF0F0F0),
                                                         ColorContainer(0x3333, 0x1234, 0xFF00FF),
                                                         ColorContainer(0xFFFFFF, 0xF0000F, 0xF8F88F)),
-                                 center = 30,
+                                 center = LEDLocation(30.0, 0.0, 0.0),
                                  delay = 300,
                                  delayMod = 1.8,
                                  direction = Direction.FORWARD,
@@ -321,7 +322,7 @@ class AnimationToRunParamsTest : StringSpec(
                                              colors = mutableListOf(ColorContainer(0x31FF4, 0xFFF, 0xF00FFF),
                                                                     ColorContainer(0x3FCB3, 0x16F4C, 0xDFDDF),
                                                                     ColorContainer(0xFBAC9F, 0xFBEE0F, 0xF263F7)),
-                                             center = 50,
+                                             center = LEDLocation(50.0, 0.0, 0.0),
                                              delay = 20,
                                              delayMod = 5.0,
                                              direction = Direction.BACKWARD,
@@ -392,11 +393,11 @@ class AnimationToRunParamsTest : StringSpec(
             val anim = AnimationToRunParams(animation = "Color")
 
             checkAll(Arb.int().filter { it >= 0 }) { c ->
-                anim.center(c).prepare(stripSection).center shouldBe c
+                anim.center(LEDLocation(c)).prepare(stripSection).center shouldBe c
             }
 
             checkAll(Arb.int().filter { it < 0 }) { c ->
-                anim.center(c).prepare(stripSection).center shouldBe 5
+                anim.center(LEDLocation(c)).prepare(stripSection).center shouldBe 5
             }
         }
 

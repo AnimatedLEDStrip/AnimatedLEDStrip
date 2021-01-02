@@ -23,13 +23,13 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
-import animatedledstrip.animations.findAnimation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.sectionmanagement.Section
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -59,7 +59,7 @@ import kotlinx.serialization.Serializable
 data class AnimationToRunParams(
     var animation: String = "",
     var colors: MutableList<ColorContainerInterface> = mutableListOf(),
-    var center: Int = -1,
+    var center: LEDLocation? = null,
     var delay: Long = -1L,
     var delayMod: Double = 1.0,
     var direction: Direction = Direction.FORWARD,
@@ -81,7 +81,7 @@ data class AnimationToRunParams(
         sectionRunningFullAnimation: Section = sectionRunningAnimation,
     ): RunningAnimationParams {
         // Animation's existence should be verified before now
-        val definedAnimation = findAnimation(animation)
+        val definedAnimation = sectionRunningAnimation.findAnimation(animation)
 
         val calculatedColors = mutableListOf<PreparedColorContainer>()
 
@@ -104,9 +104,9 @@ data class AnimationToRunParams(
             )
         }
 
-        val calculatedCenter = when {
-            center < 0 -> sectionRunningAnimation.numLEDs / 2
-            else -> center
+        val calculatedCenter = when (center) {
+            null -> LEDLocation((sectionRunningAnimation.numLEDs / 2).toDouble(), 0.0, 0.0)
+            else -> center!!
         }
 
         val tempDelay = if (delay < 0L) definedAnimation.info.delayDefault

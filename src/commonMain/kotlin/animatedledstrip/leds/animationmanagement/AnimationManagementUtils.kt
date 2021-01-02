@@ -22,6 +22,8 @@
 
 package animatedledstrip.leds.animationmanagement
 
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.prepareAnimIdentifier
 import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.logger
@@ -132,6 +134,13 @@ suspend fun AnimationManager.runSequential(
         this,
     ).join()
 }
+
+fun Section.findAnimation(animId: String): Animation =
+    this.findAnimationOrNull(animId)!!
+
+fun Section.findAnimationOrNull(animId: String): Animation? =
+    this.stripManager.animationManager.supportedAnimations[prepareAnimIdentifier(animId)] ?:
+    this.stripManager.animationManager.supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
 fun AnimationToRunParams.endAnimation(): EndAnimation = EndAnimation(this.id)
 fun RunningAnimationParams.endAnimation(): EndAnimation = EndAnimation(this.id)

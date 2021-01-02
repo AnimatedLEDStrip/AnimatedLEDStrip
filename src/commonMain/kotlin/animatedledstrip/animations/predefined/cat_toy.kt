@@ -24,7 +24,7 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.randomDouble
-import animatedledstrip.leds.animationmanagement.randomPixel
+import animatedledstrip.leds.animationmanagement.randomIndex
 import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
@@ -61,7 +61,7 @@ val catToy = PredefinedAnimation(
     } as Int
 
     leds.apply {
-        val pixel = randomPixel()
+        val pixel = randomIndex()
 
         if (doRevert && pixel != lastPixel) revertPixel(lastPixel)
 
