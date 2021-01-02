@@ -27,6 +27,7 @@ import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -56,7 +57,7 @@ import kotlinx.serialization.Transient
 data class RunningAnimationParams private constructor(
     val animationName: String,
     val colors: List<PreparedColorContainer>,
-    val center: Int,
+    val center: LEDLocation,
     val delay: Long,
     val direction: Direction,
     val distance: Int,
@@ -77,7 +78,7 @@ data class RunningAnimationParams private constructor(
         animation: Animation,
         animationName: String,
         colors: List<PreparedColorContainer>,
-        center: Int,
+        center: LEDLocation,
         delay: Long,
         direction: Direction,
         distance: Int,
@@ -104,7 +105,7 @@ data class RunningAnimationParams private constructor(
     fun withModifications(
         animation: String = this.animationName,
         colors: MutableList<ColorContainerInterface> = this.colors.toMutableList(),
-        center: Int = this.center,
+        center: LEDLocation = this.center,
         delay: Long = this.sourceParams.delay,
         delayMod: Double = this.sourceParams.delayMod,
         direction: Direction = this.direction,

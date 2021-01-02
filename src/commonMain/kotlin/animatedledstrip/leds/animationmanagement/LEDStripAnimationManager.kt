@@ -22,6 +22,10 @@
 
 package animatedledstrip.leds.animationmanagement
 
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.definedAnimations
+import animatedledstrip.animations.definedAnimationsByAbbr
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
@@ -39,4 +43,20 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
      * The `CoroutineScope` all animations managed by this instance will run in
      */
     override val animationScope: CoroutineScope = GlobalScope
+
+    val supportedAnimations: MutableMap<String, Animation> =
+        definedAnimations.filter {
+            it.value.info.dimensionality == Dimensionality.ANY_DIMENSIONAL ||
+            (it.value.info.dimensionality == Dimensionality.ONE_DIMENSIONAL && sectionManager.stripManager.stripInfo.include1D) ||
+            (it.value.info.dimensionality == Dimensionality.TWO_DIMENSIONAL && sectionManager.stripManager.stripInfo.include2D) ||
+            (it.value.info.dimensionality == Dimensionality.THREE_DIMENSIONAL && sectionManager.stripManager.stripInfo.include3D)
+        }.toMutableMap()
+
+    val supportedAnimationsByAbbr: MutableMap<String, Animation> =
+        definedAnimationsByAbbr.filter {
+            it.value.info.dimensionality == Dimensionality.ANY_DIMENSIONAL ||
+            (it.value.info.dimensionality == Dimensionality.ONE_DIMENSIONAL && sectionManager.stripManager.stripInfo.include1D) ||
+            (it.value.info.dimensionality == Dimensionality.TWO_DIMENSIONAL && sectionManager.stripManager.stripInfo.include2D) ||
+            (it.value.info.dimensionality == Dimensionality.THREE_DIMENSIONAL && sectionManager.stripManager.stripInfo.include3D)
+        }.toMutableMap()
 }

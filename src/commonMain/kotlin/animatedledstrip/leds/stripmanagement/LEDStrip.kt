@@ -70,6 +70,8 @@ class LEDStrip(
      */
     val animationManager: LEDStripAnimationManager = LEDStripAnimationManager(sectionManager)
 
+    val ledLocationManager: LEDLocationManager = LEDLocationManager(this)
+
 
     /**
      * Callback run before the first iteration of the animation

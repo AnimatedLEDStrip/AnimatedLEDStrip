@@ -64,11 +64,11 @@ val splat = PredefinedAnimation(
         runParallelAndJoin(
             Pair(
                 baseAnimation.copy(direction = Direction.FORWARD),
-                getSubSection(center, min(center + distance, numLEDs - 1)),
+                getSubSection(center.x.toInt(), min(center.x.toInt() + distance, numLEDs - 1)),
             ),
             Pair(
                 baseAnimation.copy(direction = Direction.BACKWARD),
-                getSubSection(max(center - distance, 0), center),
+                getSubSection(max(center.x.toInt() - distance, 0), center.x.toInt()),
             )
         )
     }

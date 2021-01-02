@@ -27,6 +27,7 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.colors.parseHex
+import animatedledstrip.leds.stripmanagement.LEDLocation
 
 /* Helper functions for setting values */
 
@@ -180,8 +181,8 @@ fun AnimationToRunParams.color4(color: Any): AnimationToRunParams = color(color,
  *
  * @param pixel The index of the pixel at the center of a radial animation
  */
-fun AnimationToRunParams.center(pixel: Int): AnimationToRunParams {
-    this.center = pixel
+fun AnimationToRunParams.center(pixelLocation: LEDLocation): AnimationToRunParams {
+    this.center = pixelLocation
     return this
 }
 

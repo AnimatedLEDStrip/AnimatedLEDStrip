@@ -26,6 +26,7 @@ import animatedledstrip.animations.Direction
 import animatedledstrip.animations.definedAnimationNames
 import animatedledstrip.colors.toColorContainer
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import animatedledstrip.leds.stripmanagement.StripInfo
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
@@ -75,7 +76,7 @@ class SendableDataTests : StringSpec(
                 AnimationToRunParams(
                     animation = "Bounce",
                     colors = mutableListOf(0xFF.toColorContainer()),
-                    center = 30,
+                    center = LEDLocation(30),
                     delay = 10,
                     delayMod = 2.0,
                     direction = Direction.BACKWARD,
@@ -150,7 +151,6 @@ class SendableDataTests : StringSpec(
                 imageDebugging = true,
                 fileName = "test.csv",
                 rendersBeforeSave = 100,
-                threadCount = 200,
             )
             assertTrue {
                 info1.toHumanReadableString() ==

@@ -64,6 +64,7 @@ val predefinedAnimations = listOf(
     quickSortParallel,
     quickSortSequential,
     ripple,
+    ripple2D,
     smoothChase,
     smoothFade,
     sparkle,
@@ -73,9 +74,8 @@ val predefinedAnimations = listOf(
     stack,
     stackOverflow,
     wipe,
-).apply {
-    forEach { addNewAnimation(it) }
-}
+    wipe2D,
+).onEach { addNewAnimation(it) }
 
 fun prepareAnimIdentifier(name: String): String =
     name.removeWhitespace()

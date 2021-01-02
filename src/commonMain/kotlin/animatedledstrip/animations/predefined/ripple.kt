@@ -66,13 +66,13 @@ val ripple = PredefinedAnimation(
             baseAnimation.copy(
                 direction = Direction.FORWARD,
             ),
-            section = getSubSection(center, min(center + distance, numLEDs - 1)),
+            section = getSubSection(center.x.toInt(), min(center.x.toInt() + distance, numLEDs - 1)),
         )
         runParallel(
             baseAnimation.copy(
                 direction = Direction.BACKWARD,
             ),
-            section = getSubSection(max(center - distance, 0), center),
+            section = getSubSection(max(center.x.toInt() - distance, 0), center.x.toInt()),
         )
         delay(delay * 20)
     }

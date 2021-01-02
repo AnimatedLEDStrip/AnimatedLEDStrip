@@ -31,6 +31,7 @@ import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.colormanagement.*
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
+import animatedledstrip.leds.stripmanagement.LEDLocation
 import animatedledstrip.test.AnimationTestTag
 import animatedledstrip.test.haveProlongedColors
 import io.kotest.core.spec.style.StringSpec
@@ -504,7 +505,7 @@ class PredefinedAnimationTests : StringSpec(
         "Cat Toy" {
             val section = ledStrip.sectionManager.createSection("cat", 0, 9)
 
-            every { any<AnimationManager>().randomPixel() } returns
+            every { any<AnimationManager>().randomIndex() } returns
                     8 andThen 9 andThen 3 andThen 5 andThen
                     1 andThen 3 andThen 2 andThen 5 andThen
                     7 andThen 0 andThen 7 andThen 6 andThen
@@ -741,7 +742,7 @@ class PredefinedAnimationTests : StringSpec(
             val pCC2 = ColorContainer(0xFFFF).prepare(26)
             val pCC3 = ColorContainer(0xFF00).prepare(26)
 
-            every { any<AnimationManager>().randomPixel() } returns 15 andThen 3 andThen 20
+            every { any<AnimationManager>().randomIndex() } returns 15 andThen 3 andThen 20
             every { any<RunningAnimationParams>().randomColor() } returns pCC3 andThen pCC1 andThen pCC2
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
@@ -756,13 +757,13 @@ class PredefinedAnimationTests : StringSpec(
 
             verifyOrder {
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = 15,
+                                                               center = LEDLocation(15),
                                                                colors = mutableListOf(pCC3)))
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = 3,
+                                                               center = LEDLocation(3),
                                                                colors = mutableListOf(pCC1)))
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = 20,
+                                                               center = LEDLocation(20),
                                                                colors = mutableListOf(pCC2)))
             }
 
