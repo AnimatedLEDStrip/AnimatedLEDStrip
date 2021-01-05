@@ -158,6 +158,8 @@ open class ColorContainer(
      *
      * @param numLEDs The number of LEDs to create colors for
      * @return A [PreparedColorContainer] containing all the calculated colors
+     *
+     * TODO: Support preparing based on location rather than index
      */
     override fun prepare(numLEDs: Int): PreparedColorContainer {
         require(numLEDs > 0)

@@ -18,19 +18,19 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.animations
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import kotlin.test.assertTrue
 
@@ -40,37 +40,25 @@ class AnimationInfoTest : StringSpec(
             val info = Animation.AnimationInfo(
                 name = "Test",
                 abbr = "TST",
-                dimensionality = Dimensionality.ONE_DIMENSIONAL,
                 description = "A test animation",
                 signatureFile = "sig.png",
                 runCountDefault = 1,
                 minimumColors = 4,
                 unlimitedColors = true,
-                center = ParamUsage.USED,
-                delay = ParamUsage.NOTUSED,
-                direction = ParamUsage.NOTUSED,
-                distance = ParamUsage.USED,
-                spacing = ParamUsage.USED,
-                delayDefault = 5,
-                distanceDefault = 40,
-                spacingDefault = 4,
+                dimensionality = Dimensionality.oneDimensional,
+                directional = false,
+                // TODO: Test remaining properties
             )
 
             info.name shouldBe "Test"
             info.abbr shouldBe "TST"
-            info.dimensionality shouldBe Dimensionality.ONE_DIMENSIONAL
             info.description shouldBe "A test animation"
             info.signatureFile shouldBe "sig.png"
             info.minimumColors shouldBe 4
             info.unlimitedColors.shouldBeTrue()
-            info.center shouldBe ParamUsage.USED
-            info.delay shouldBe ParamUsage.NOTUSED
-            info.direction shouldBe ParamUsage.NOTUSED
-            info.distance shouldBe ParamUsage.USED
-            info.spacing shouldBe ParamUsage.USED
-            info.delayDefault shouldBe 5L
-            info.distanceDefault shouldBe 40
-            info.spacingDefault shouldBe 4
+            info.dimensionality.shouldContainExactly(Dimensionality.ONE_DIMENSIONAL)
+            info.directional.shouldBeFalse()
+
         }
 
         "presets to human readable strings" {
@@ -516,31 +504,26 @@ class AnimationInfoTest : StringSpec(
             }
 
         }
-
         "encode JSON" {
+            // TODO: 1/5/2021 Fix
             bubbleSort.info.jsonString() shouldBe """{"type":"AnimationInfo","name":"Bubble Sort","abbr":"BST","dimensionality":"ONE_DIMENSIONAL","description":"Visualization of bubble sort.\n`pCols[0]` is randomized, then bubble sort is used to resort it.","signatureFile":"bubble_sort.png","runCountDefault":1,"minimumColors":1,"unlimitedColors":false,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":5,"distanceDefault":-1,"spacingDefault":3};;;"""
         }
-
         "decode JSON" {
+            // TODO: 1/5/2021 Fix
             val json =
                 """{"type":"AnimationInfo", "name":"Alternate","abbr":"ALT","dimensionality":"ONE_DIMENSIONAL","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
 
-            val correctData = Animation.AnimationInfo(name = "Alternate",
-                                                      abbr = "ALT",
-                                                      dimensionality = Dimensionality.ONE_DIMENSIONAL,
-                                                      description = "A description",
-                                                      signatureFile = "alternate.png",
-                                                      runCountDefault = 1,
-                                                      minimumColors = 2,
-                                                      unlimitedColors = true,
-                                                      center = ParamUsage.NOTUSED,
-                                                      delay = ParamUsage.USED,
-                                                      direction = ParamUsage.NOTUSED,
-                                                      distance = ParamUsage.NOTUSED,
-                                                      spacing = ParamUsage.NOTUSED,
-                                                      delayDefault = 1000,
-                                                      distanceDefault = 20,
-                                                      spacingDefault = 3)
+            val correctData = Animation.AnimationInfo(
+                name = "Alternate",
+                abbr = "ALT",
+                description = "A description",
+                signatureFile = "alternate.png",
+                runCountDefault = 1,
+                minimumColors = 2,
+                unlimitedColors = true,
+                dimensionality = Dimensionality.oneDimensional,
+                directional = true,
+            )
 
             json.decodeJson() as Animation.AnimationInfo shouldBe correctData
         }

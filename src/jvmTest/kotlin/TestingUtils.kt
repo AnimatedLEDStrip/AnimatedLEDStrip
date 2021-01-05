@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test
@@ -31,7 +30,6 @@ import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.pixelProlongedColorList
 import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import animatedledstrip.leds.stripmanagement.Location
 import io.kotest.core.Tag
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
@@ -46,9 +44,9 @@ import kotlin.test.assertTrue
 object AnimationTestTag : Tag()
 
 val newRunningAnimationParams: RunningAnimationParams
-    get() = RunningAnimationParams(color, "", listOf(), Location(5), 10, Direction.FORWARD,
-                                   15, "", 10, "", 2,
-                                   AnimationToRunParams(delay = 5, delayMod = 2.0))
+    get() = RunningAnimationParams(color, "", listOf(), "", "", -1,
+                                   Direction.FORWARD, mapOf(), mapOf(), mapOf(),
+                                   mapOf(), mapOf(), AnimationToRunParams())
 
 fun haveProlongedColors(colors: PreparedColorContainer) = object : Matcher<SectionManager> {
     override fun test(value: SectionManager) =

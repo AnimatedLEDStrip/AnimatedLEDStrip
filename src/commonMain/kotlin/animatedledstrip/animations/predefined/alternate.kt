@@ -33,34 +33,30 @@ val alternate = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",
-        description = "Strip alternates* between each color in pCols, " +
+        description = "Strip alternates* between each color in colors, " +
                       "delaying delay milliseconds between changes.\n\n" +
                       "\\* alternate may not be the best word because this animation " +
-                      "supports more than two animatedledstrip.colors",
+                      "supports more than two colors",
         signatureFile = "alternate.png",
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = true,
         dimensionality = Dimensionality.anyDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay between alternations", 1000))
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 1000,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
+        intParams = listOf(AnimationParameter("alternationPeriod",
+                                              "Delay in milliseconds between alternations",
+                                              1000)),
     )
 ) { leds, params, _ ->
     val nextColorIndex = params.extraData.getOrPut("nextColorIndex") { 0 } as Int
     val color = params.colors[nextColorIndex]
-    val delay = params.intParams.getValue("delay").toLong()
+    val alternationPeriod = params.intParams.getValue("alternationPeriod").toLong()
 
     leds.apply {
         setStripProlongedColor(color)
     }
 
-    delay(delay)
+    delay(alternationPeriod)
 
     params.extraData["nextColorIndex"] = if (nextColorIndex == params.colors.lastIndex) 0 else nextColorIndex + 1
 }
