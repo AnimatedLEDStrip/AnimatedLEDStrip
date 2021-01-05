@@ -30,7 +30,7 @@ import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.pixelProlongedColorList
 import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import io.kotest.core.Tag
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
@@ -45,7 +45,7 @@ import kotlin.test.assertTrue
 object AnimationTestTag : Tag()
 
 val newRunningAnimationParams: RunningAnimationParams
-    get() = RunningAnimationParams(color, "", listOf(), LEDLocation(5), 10, Direction.FORWARD,
+    get() = RunningAnimationParams(color, "", listOf(), Location(5), 10, Direction.FORWARD,
                                    15, "", 10, "", 2,
                                    AnimationToRunParams(delay = 5, delayMod = 2.0))
 

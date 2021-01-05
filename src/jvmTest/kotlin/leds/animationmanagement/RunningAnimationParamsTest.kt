@@ -23,7 +23,7 @@
 package animatedledstrip.test.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -48,7 +48,7 @@ class RunningAnimationParamsTest : StringSpec(
             newRunningAnimationParams.withModifications().center shouldBe 5
 
             checkAll<Int> { c ->
-                newRunningAnimationParams.withModifications(center = LEDLocation(c)).center shouldBe c
+                newRunningAnimationParams.withModifications(center = Location(c)).center shouldBe c
             }
         }
 

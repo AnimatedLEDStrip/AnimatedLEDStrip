@@ -23,13 +23,15 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
+import animatedledstrip.animations.Distance
+import animatedledstrip.animations.Equation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.sectionmanagement.Section
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -59,15 +61,15 @@ import kotlinx.serialization.Serializable
 data class AnimationToRunParams(
     var animation: String = "",
     var colors: MutableList<ColorContainerInterface> = mutableListOf(),
-    var center: LEDLocation? = null,
-    var delay: Long = -1L,
-    var delayMod: Double = 1.0,
-    var direction: Direction = Direction.FORWARD,
-    var distance: Int = -1,
     var id: String = "",
-    var runCount: Int = 0,
     var section: String = "",
-    var spacing: Int = -1,
+    var runCount: Int = 0,
+    var direction: Direction = Direction.FORWARD,
+    var intParams: MutableMap<String, Int> = mutableMapOf(),
+    var doubleParams: MutableMap<String, Double> = mutableMapOf(),
+    var locationParams: MutableMap<String, Location> = mutableMapOf(),
+    var distanceParams: MutableMap<String, Distance> = mutableMapOf(),
+    var equationParams: MutableMap<String, Equation> = mutableMapOf(),
 ) : SendableData {
 
     /**
@@ -104,40 +106,84 @@ data class AnimationToRunParams(
             )
         }
 
-        val calculatedCenter = when (center) {
-            null -> LEDLocation((sectionRunningAnimation.numLEDs / 2).toDouble(), 0.0, 0.0)
-            else -> center!!
-        }
+        val preparedIntParams: MutableMap<String, Int> = mutableMapOf()
+        val preparedDoubleParams: MutableMap<String, Double> = mutableMapOf()
+        val preparedLocationParams: MutableMap<String, Location> = mutableMapOf()
+        val preparedDistanceParams: MutableMap<String, Distance> = mutableMapOf()
+        val preparedEquationParams: MutableMap<String, Equation> = mutableMapOf()
 
-        val tempDelay = if (delay < 0L) definedAnimation.info.delayDefault
-        else delay
+        for (intParam in definedAnimation.info.intParams)
+            preparedIntParams[intParam.name] =
+                when (val paramValue = intParams[intParam.name]) {
+                    null -> intParam.default ?: 0
+                    else -> paramValue
+                }
 
-        val calculatedDelay = (tempDelay * delayMod).toLong()
+        for (doubleParam in definedAnimation.info.doubleParams)
+            preparedDoubleParams[doubleParam.name] =
+                when (val paramValue = doubleParams[doubleParam.name]) {
+                    null -> doubleParam.default ?: 0.0
+                    else -> paramValue
+                }
 
-        val calculatedDistance = if (distance < 0) {
-            if (definedAnimation.info.distanceDefault != -1)
-                definedAnimation.info.distanceDefault
-            else sectionRunningAnimation.numLEDs
-        } else distance
+        for (distanceParam in definedAnimation.info.distanceParams)
+            preparedDistanceParams[distanceParam.name] =
+                when (val paramValue = distanceParams[distanceParam.name]) {
+                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance * distanceParam.default
+                            ?: sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance
+                    else -> paramValue
+                }
 
+        for (locationParam in definedAnimation.info.locationParams)
+            preparedLocationParams[locationParam.name] =
+                when (val paramValue = locationParams[locationParam.name]) {
+                    null -> locationParam.default
+                            ?: sectionRunningAnimation.stripManager.pixelLocationManager.defaultLocation
+                    else -> paramValue
+                }
+
+        for (equationParam in definedAnimation.info.equationParams)
+            preparedEquationParams[equationParam.name] =
+                when (val paramValue = equationParams[equationParam.name]) {
+                    null -> equationParam.default ?: Equation.default
+                    else -> paramValue
+                }
+
+//        val calculatedCenter = when (center) {
+//            null -> Location((sectionRunningAnimation.numLEDs / 2).toDouble(), 0.0, 0.0)
+//            else -> center!!
+//        }
+//
+//        val tempDelay = if (delay < 0L) definedAnimation.info.delayDefault
+//        else delay
+//
+//        val calculatedDelay = (tempDelay * delayMod).toLong()
+//
+//        val calculatedDistance = if (distance < 0) {
+//            if (definedAnimation.info.distanceDefault != -1)
+//                definedAnimation.info.distanceDefault
+//            else sectionRunningAnimation.numLEDs
+//        } else distance
+//
         val calculatedRunCount = if (runCount <= 0) definedAnimation.info.runCountDefault
         else runCount
-
-        val calculatedSpacing = if (spacing <= 0) definedAnimation.info.spacingDefault
-        else spacing
+//
+//        val calculatedSpacing = if (spacing <= 0) definedAnimation.info.spacingDefault
+//        else spacing
 
 
         return RunningAnimationParams(definedAnimation,
                                       animation,
                                       calculatedAndTrimmedColors,
-                                      calculatedCenter,
-                                      calculatedDelay,
-                                      direction,
-                                      calculatedDistance,
                                       id,
-                                      calculatedRunCount,
                                       section,
-                                      calculatedSpacing,
+                                      calculatedRunCount,
+                                      direction,
+                                      preparedIntParams,
+                                      preparedDoubleParams,
+                                      preparedLocationParams,
+                                      preparedDistanceParams,
+                                      preparedEquationParams,
                                       this)
     }
 
@@ -149,14 +195,9 @@ data class AnimationToRunParams(
             AnimationData for $id
               animation: $animation
               colors: $colors
-              center: $center
-              delay: $delay
-              delayMod: $delayMod
-              direction: $direction
-              distance: $distance
-              runCount: $runCount
               section: $section
-              spacing: $spacing
+              runCount: $runCount
+              direction: $direction
             End AnimationData
         """.trimIndent()
 

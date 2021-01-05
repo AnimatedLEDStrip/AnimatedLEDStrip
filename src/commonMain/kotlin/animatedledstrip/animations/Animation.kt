@@ -25,6 +25,7 @@ package animatedledstrip.animations
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
+import animatedledstrip.leds.stripmanagement.Location
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -57,34 +58,38 @@ abstract class Animation(open val info: AnimationInfo) {
      * @property runCountDefault Default value for the `runCount` parameter
      * @property minimumColors The number of required animatedledstrip.colors for this animation
      * @property unlimitedColors Can this animation take an unlimited number of animatedledstrip.colors
-     * @property center Does this animation use the `center` parameter
-     * @property delay Does this animation use the `delay` parameter
-     * @property direction Does this animation use the `direction` parameter
-     * @property distance Does this animation use the `distance` parameter
-     * @property spacing Does this animation use the `spacing` parameter
-     * @property delayDefault Default value for the `delay` parameter
-     * @property distanceDefault Default value for the `distance` parameter
-     * @property spacingDefault Default value for the `spacing` parameter
+     * @property intParams A list of integer parameters the animation uses
+     * @property doubleParams A list of double parameters the animation uses
+     * @property locationParams A list of [Location] parameters the animation uses
+     * @property distanceParams A list of [Distance] parameters the animation uses
+     * (note that default values are percentages of the strip span in that dimension, not the full distance)
+     * @property equationParams A list of [Equation] parameters the animation uses
      */
     @Serializable
     @SerialName("AnimationInfo")
     data class AnimationInfo(
         val name: String,
         val abbr: String,
-        val dimensionality: Dimensionality,
         val description: String,
         val signatureFile: String,
         val runCountDefault: Int,
         val minimumColors: Int,
         val unlimitedColors: Boolean,
-        val center: ParamUsage,
-        val delay: ParamUsage,
-        val direction: ParamUsage,
-        val distance: ParamUsage,
-        val spacing: ParamUsage,
-        val delayDefault: Long = DEFAULT_DELAY,
-        val distanceDefault: Int = -1,
-        val spacingDefault: Int = DEFAULT_SPACING,
+        val dimensionality: Set<Dimensionality>,
+        val directional: Boolean,
+        val intParams: List<AnimationParameter<Int>> = listOf(),
+        val doubleParams: List<AnimationParameter<Double>> = listOf(),
+        val locationParams: List<AnimationParameter<Location>> = listOf(),
+        val distanceParams: List<AnimationParameter<Distance>> = listOf(),
+        val equationParams: List<AnimationParameter<Equation>> = listOf(),
+//        val center: ParamUsage,
+//        val delay: ParamUsage,
+//        val direction: ParamUsage,
+//        val distance: ParamUsage,
+//        val spacing: ParamUsage,
+//        val delayDefault: Long = DEFAULT_DELAY,
+//        val distanceDefault: Int = -1,
+//        val spacingDefault: Int = DEFAULT_SPACING,
     ) : SendableData {
 
         override fun toHumanReadableString(): String =
@@ -95,11 +100,6 @@ abstract class Animation(open val info: AnimationInfo) {
                   runCountDefault: $runCountDefault
                   minimum colors: $minimumColors
                   unlimited colors: $unlimitedColors
-                  center: $center
-                  delay: $delay${if (delay == ParamUsage.USED) " ($delayDefault)" else ""}
-                  direction: $direction
-                  distance: $distance${if (distance == ParamUsage.USED) " (${if (distanceDefault == -1) "whole strip" else distanceDefault.toString()})" else ""}
-                  spacing: $spacing${if (spacing == ParamUsage.USED) " ($spacingDefault)" else ""}
                 End Info
             """.trimIndent()
     }

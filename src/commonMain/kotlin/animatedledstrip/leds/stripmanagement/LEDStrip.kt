@@ -70,7 +70,9 @@ class LEDStrip(
      */
     val animationManager: LEDStripAnimationManager = LEDStripAnimationManager(sectionManager)
 
-    val ledLocationManager: LEDLocationManager = LEDLocationManager(this)
+    val pixelLocationManager: PixelLocationManager = PixelLocationManager(stripInfo.ledLocations,
+                                                                          numLEDs,
+                                                                          stripInfo.include1D)
 
 
     /**

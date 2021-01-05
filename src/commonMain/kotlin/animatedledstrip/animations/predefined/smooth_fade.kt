@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
@@ -34,27 +34,29 @@ val smoothFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Fade",
         abbr = "SMF",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
                       "whole strip is the same color while fading through `pCols[0]`.",
         signatureFile = "smooth_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.delay
+    val color = params.colors[0]
+    val delay = params.intParams.getValue("delay").toLong()
 
     leds.apply {
         iterateOverPixels {
-            setStripProlongedColor(color0[it])
+            setStripProlongedColor(color[it])
             delay(delay)
         }
     }

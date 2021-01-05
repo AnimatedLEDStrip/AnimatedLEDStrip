@@ -32,26 +32,29 @@ val multiPixelRunToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Multi Pixel Run to Color",
         abbr = "MTC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs " +
                       "do not revert back to their prolonged color.",
         signatureFile = "multi_pixel_run_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 150,
-        direction = ParamUsage.USED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.USED,
-        spacingDefault = 3,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = true,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 150),
+                           AnimationParameter("spacing", "Spacing between lit pixels", 3)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 150,
+//        direction = ParamUsage.USED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.USED,
+//        spacingDefault = 3,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
     val direction = params.direction
-    val spacing = params.spacing
+    val spacing = params.intParams.getValue("spacing")
 
     leds.apply {
         when (direction) {

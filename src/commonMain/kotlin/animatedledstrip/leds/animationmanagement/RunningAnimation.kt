@@ -68,6 +68,7 @@ data class RunningAnimation(
 
         var runs = 0
         while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+            logger.v { "Iteration $runs" }
             params.animation.runAnimation(leds = this@RunningAnimation,
                                           params = params,
                                           this)

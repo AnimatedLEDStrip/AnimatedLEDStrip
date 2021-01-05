@@ -33,7 +33,6 @@ val bounce = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce",
         abbr = "BNC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Bounce to Color](Bounce-to-Color) but the " +
                       "pixels at the end of each bounce fade back to their prolonged " +
                       "color after being set from `pCols[0]`.\n\n" +
@@ -43,12 +42,15 @@ val bounce = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 10,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation"))
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 10,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

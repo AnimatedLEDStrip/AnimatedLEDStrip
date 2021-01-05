@@ -1,8 +1,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.shuffledWithIndices
@@ -14,7 +14,6 @@ val heapSort = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Heap Sort",
         abbr = "HPS",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of heap sort.\n" +
                       "`pCols[0]` is randomized, then a heap sort is " +
                       "used to re-sort it.",
@@ -22,15 +21,18 @@ val heapSort = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 25,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 25)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 25,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-
+    val delay = params.intParams.getValue("delay").toLong()
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
     val colorMap =
@@ -73,7 +75,7 @@ val heapSort = PredefinedAnimation(
 
                     root = swap
 
-                    delay(params.delay)
+                    delay(delay)
                 }
             }
         }
@@ -95,7 +97,7 @@ val heapSort = PredefinedAnimation(
             colorMap[end] = tmp
             updateColorAtLocation(end)
 
-            delay(params.delay)
+            delay(delay)
 
             end--
 

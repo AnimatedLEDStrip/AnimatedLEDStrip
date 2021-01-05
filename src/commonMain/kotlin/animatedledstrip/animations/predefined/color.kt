@@ -24,7 +24,6 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 
@@ -32,17 +31,13 @@ val color = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Color",
         abbr = "COL",
-        dimensionality = Dimensionality.ANY_DIMENSIONAL,
         description = "Sets the strip to a color.",
         signatureFile = "color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.NOTUSED,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
     )
 ) { leds, params, _ ->
     leds.apply {

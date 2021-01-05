@@ -22,17 +22,18 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.*
-import animatedledstrip.leds.sectionmanagement.getSubSection
-import kotlin.math.max
-import kotlin.math.min
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.stripmanagement.PixelLocation
+import kotlinx.coroutines.delay
 
 val splat = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Splat",
         abbr = "SPT",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to a [Ripple](Ripple) but the pixels don't " +
                       "fade back.\n" +
                       "Runs two Wipe animations in opposite directions starting " +
@@ -42,34 +43,56 @@ val splat = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.USED,
-        delay = ParamUsage.USED,
-        delayDefault = 5,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.USED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 15)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move during each iteration of the animation",
+                                                 10.0)),
+        locationParams = listOf(AnimationParameter("center", "The center of the splat")),
+        distanceParams = listOf(AnimationParameter("distance", "How far the splat should reach")),
+//        center = ParamUsage.USED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 5,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.USED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val center = params.center
-    val delay = params.delay
-    val distance = params.distance
+    val color = params.colors[0]
 
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+
+    val center = params.locationParams.getValue("center")
+
+    val distance = params.distanceParams.getValue("distance").maxDistance
+
+    @Suppress("DuplicatedCode")
     leds.apply {
-        val baseAnimation = AnimationToRunParams()
-            .animation("Wipe")
-            .color(color0)
-            .delay(delay)
+        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
+        val changedPixels: MutableList<PixelLocation> = mutableListOf()
 
-        runParallelAndJoin(
-            Pair(
-                baseAnimation.copy(direction = Direction.FORWARD),
-                getSubSection(center.x.toInt(), min(center.x.toInt() + distance, numLEDs - 1)),
-            ),
-            Pair(
-                baseAnimation.copy(direction = Direction.BACKWARD),
-                getSubSection(max(center.x.toInt() - distance, 0), center.x.toInt()),
-            )
-        )
+        var iteration = 0
+        var currentDistance = 0.0
+
+        while (currentDistance < distance) {
+            pixelsToModifyPerIteration[iteration] = mutableListOf()
+            for (pixel in leds.sectionManager.stripManager.pixelLocationManager.pixelLocations) {
+                if (pixel !in changedPixels && pixel.location.distanceFrom(center) < currentDistance) {
+                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
+                    changedPixels.add(pixel)
+                }
+            }
+            iteration++
+            currentDistance += movementPerIteration
+        }
+
+        for (i in 0 until iteration) {
+            for (pixel in pixelsToModifyPerIteration[i]!!)
+                leds.setPixelProlongedColor(pixel, color)
+            delay(interMovementDelay)
+        }
     }
 }

@@ -50,7 +50,7 @@ data class StripInfo(
     val include1D: Boolean = true,
     val include2D: Boolean = false,
     val include3D: Boolean = false,
-    val ledLocations: List<Triple<Double, Double, Double>>? = null,
+    val ledLocations: List<Location>? = null,
 ) : SendableData {
 
     val supportedAnimations: List<String>

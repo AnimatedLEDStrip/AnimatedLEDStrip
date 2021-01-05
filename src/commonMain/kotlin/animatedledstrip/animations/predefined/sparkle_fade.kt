@@ -23,10 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.leds.animationmanagement.randomDouble
+import animatedledstrip.leds.animationmanagement.randomInt
 import animatedledstrip.leds.animationmanagement.validIndices
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import kotlinx.coroutines.delay
@@ -37,32 +37,37 @@ val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle Fade",
         abbr = "SPF",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to [Sparkle](Sparkle) but pixels fade back to " +
                       "their prolonged color.",
         signatureFile = "sparkle_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("sparkleDuration", "Length of sparkle", 50),
+                           AnimationParameter("maxDelayBeforeSparkle",
+                                              "Maximum amount of time before a pixel will sparkle",
+                                              5000)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val delay = params.delay
+    val sparkleDuration = params.intParams.getValue("sparkleDuration").toLong()
+    val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
-        val jobs = validIndices.map { n ->
+        validIndices.map { n ->
             animationScope.launch {
-                delay((randomDouble() * delay * 100).toLong())
+                delay((randomInt() % maxDelayBeforeSparkle).toLong())
                 setPixelFadeColor(n, color0)
-                delay(delay)
+                delay(sparkleDuration)
             }
-        }
-        jobs.joinAll()
+        }.joinAll()
     }
 }

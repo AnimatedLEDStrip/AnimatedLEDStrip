@@ -31,7 +31,7 @@ import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.colormanagement.*
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import animatedledstrip.test.AnimationTestTag
 import animatedledstrip.test.haveProlongedColors
 import io.kotest.core.spec.style.StringSpec
@@ -757,13 +757,13 @@ class PredefinedAnimationTests : StringSpec(
 
             verifyOrder {
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = LEDLocation(15),
+                                                               center = Location(15),
                                                                colors = mutableListOf(pCC3)))
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = LEDLocation(3),
+                                                               center = Location(3),
                                                                colors = mutableListOf(pCC1)))
                 anim.runParallel(anim.params.withModifications(animation = "Ripple",
-                                                               center = LEDLocation(20),
+                                                               center = Location(20),
                                                                colors = mutableListOf(pCC2)))
             }
 

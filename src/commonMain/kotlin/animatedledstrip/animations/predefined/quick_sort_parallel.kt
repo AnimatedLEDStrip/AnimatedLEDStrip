@@ -1,11 +1,6 @@
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.colors.shuffledWithIndices
+import animatedledstrip.animations.*
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.Job
@@ -17,7 +12,6 @@ val quickSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Quick Sort (Parallel)",
         abbr = "QKP",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of quick sort.\n" +
                       "`pCols[0]` is randomized, then a parallelized quick sort is " +
                       "used to re-sort it. Pivot locations are chosen randomly.",
@@ -25,29 +19,28 @@ val quickSortParallel = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, scope ->
+    val delay = params.intParams.getValue("delay").toLong()
 
-    data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
+    val sortablePixels = params.colors[0].toSortableList()
+    val color = sortablePixels.toPreparedColorContainer()
 
-    val colorMap =
-        params.colors[0]
-            .shuffledWithIndices()
-            .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }
-            .toMutableList()
-    val color = PreparedColorContainer(colorMap.map { it.color })
-
+    @Suppress("DuplicatedCode")
     leds.apply {
         setStripProlongedColor(color)
 
         fun updateColorAtLocation(location: Int) {
-            setPixelProlongedColor(location, colorMap[location].color)
+            setPixelProlongedColor(location, sortablePixels[location].color)
         }
 
         suspend fun partition(startIndex: Int, endIndex: Int): Int {
@@ -56,30 +49,30 @@ val quickSortParallel = PredefinedAnimation(
             var j = pivotLocation + 1
 
             while (i < pivotLocation) {
-                if (colorMap[i].finalLocation > colorMap[pivotLocation].finalLocation) {
-                    val tmp = colorMap[i]
+                if (sortablePixels[i].finalLocation > sortablePixels[pivotLocation].finalLocation) {
+                    val tmp = sortablePixels[i]
                     for (p in i until pivotLocation) {
-                        colorMap[p] = colorMap[p + 1]
+                        sortablePixels[p] = sortablePixels[p + 1]
                         updateColorAtLocation(p)
                     }
-                    colorMap[pivotLocation] = tmp
+                    sortablePixels[pivotLocation] = tmp
                     updateColorAtLocation(pivotLocation)
                     pivotLocation--
-                    delay(params.delay)
+                    delay(delay)
                 } else i++
             }
 
             while (j <= endIndex) {
-                if (colorMap[j].finalLocation < colorMap[pivotLocation].finalLocation) {
-                    val tmp = colorMap[j]
+                if (sortablePixels[j].finalLocation < sortablePixels[pivotLocation].finalLocation) {
+                    val tmp = sortablePixels[j]
                     for (p in j downTo pivotLocation + 1) {
-                        colorMap[p] = colorMap[p - 1]
+                        sortablePixels[p] = sortablePixels[p - 1]
                         updateColorAtLocation(p)
                     }
-                    colorMap[pivotLocation] = tmp
+                    sortablePixels[pivotLocation] = tmp
                     updateColorAtLocation(pivotLocation)
                     pivotLocation++
-                    delay(params.delay)
+                    delay(delay)
                 }
                 j++
             }
@@ -98,6 +91,6 @@ val quickSortParallel = PredefinedAnimation(
                 op2?.join()
             }
         }
-        sort(0, colorMap.lastIndex)?.join()
+        sort(0, sortablePixels.lastIndex)?.join()
     }
 }

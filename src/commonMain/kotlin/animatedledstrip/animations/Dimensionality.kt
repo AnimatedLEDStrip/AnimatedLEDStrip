@@ -25,6 +25,12 @@ package animatedledstrip.animations
 enum class Dimensionality {
     ONE_DIMENSIONAL,
     TWO_DIMENSIONAL,
-    THREE_DIMENSIONAL,
-    ANY_DIMENSIONAL,
+    THREE_DIMENSIONAL;
+
+    companion object {
+        val oneDimensional: Set<Dimensionality> = setOf(ONE_DIMENSIONAL)
+        val twoDimensional: Set<Dimensionality> = setOf(TWO_DIMENSIONAL)
+        val threeDimensional: Set<Dimensionality> = setOf(THREE_DIMENSIONAL)
+        val anyDimensional: Set<Dimensionality> = setOf(ONE_DIMENSIONAL, TWO_DIMENSIONAL, THREE_DIMENSIONAL)
+    }
 }

@@ -33,7 +33,6 @@ val smoothChase = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Chase",
         abbr = "SCH",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Each pixel is set to its respective color in `pCols[0]`.\n" +
                       "Then, if the direction is `Direction.FORWARD`, each pixel is set " +
                       "to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create " +
@@ -45,16 +44,19 @@ val smoothChase = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.USED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = true,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.USED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
     val direction = params.direction
 
     leds.apply {
