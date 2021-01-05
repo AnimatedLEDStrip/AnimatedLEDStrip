@@ -27,21 +27,23 @@ import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.numLEDs
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.stripmanagement.PixelLocation
 import animatedledstrip.leds.stripmanagement.PixelLocationManager
 import animatedledstrip.leds.stripmanagement.transformLocations
 import kotlinx.coroutines.delay
 
-val wipe = PredefinedAnimation(
+@Suppress("DuplicatedCode")
+val planeRun = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "Wipe",
-        abbr = "WIP",
-        description = "Wipes a plane through all pixels, leaving behind colors[0].\n\n" +
+        name = "Plane Run",
+        abbr = "PLR",
+        description = "Runs a plane through all pixels.\n\n" +
                       "Note: Two-dimensional operation requires plane to be rotated around the X axis " +
                       "(probably by Pi/2 radians in most use cases)",
-        signatureFile = "wipe.png",
-        runCountDefault = 1,
+        signatureFile = "plane_run.png",
+        runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
@@ -49,7 +51,7 @@ val wipe = PredefinedAnimation(
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 30)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
-                                                 10.0),
+                                                 30.0),
                               AnimationParameter("zRotation", "Rotation around the Z axis (radians)"),
                               AnimationParameter("xRotation", "Rotation around the X axis (radians)")),
     )
@@ -84,11 +86,13 @@ val wipe = PredefinedAnimation(
         } while (currentZ < newManager.zMax)
 
         for (i in 0 until iteration) {
+            for (pixel in pixelsToModifyPerIteration[i - 1] ?: IntRange(0, -1))
+                leds.revertPixel(pixel)
             for (pixel in pixelsToModifyPerIteration[i]!!)
-                leds.setPixelProlongedColor(pixel, color)
-//            for (pixel in pixelsToRipplePerIteration[iteration - 1] ?: pixelsToRipplePerIteration[pixelsToRipplePerIteration.size - 1]!!)
-//                leds.revertPixel(pixel)
+                leds.setPixelTemporaryColor(pixel, color)
             delay(interMovementDelay)
         }
+        for (pixel in pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1]!!)
+            leds.revertPixel(pixel)
     }
 }

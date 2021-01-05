@@ -61,6 +61,7 @@ val predefinedAnimations: List<PredefinedAnimation> = listOf(
     multiPixelRunToColor,
     pixelMarathon,
     pixelRun,
+    planeRun,
     quickSortParallel,
     quickSortSequential,
     ripple,
