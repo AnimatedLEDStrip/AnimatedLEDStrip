@@ -18,16 +18,12 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.communication
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.animations.definedAnimationNames
-import animatedledstrip.colors.toColorContainer
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
-import animatedledstrip.leds.stripmanagement.Location
 import animatedledstrip.leds.stripmanagement.StripInfo
 import io.kotest.core.spec.style.StringSpec
 import kotlin.test.assertTrue
@@ -73,35 +69,35 @@ class SendableDataTests : StringSpec(
                     """.trimIndent()
             }
 
-            assertTrue {
-                AnimationToRunParams(
-                    animation = "Bounce",
-                    colors = mutableListOf(0xFF.toColorContainer()),
-                    center = Location(30),
-                    delay = 10,
-                    delayMod = 2.0,
-                    direction = Direction.BACKWARD,
-                    distance = 50,
-                    id = "test",
-                    runCount = 2,
-                    section = "section",
-                    spacing = 4,
-                ).toHumanReadableString() ==
-                        """
-                        AnimationData for test
-                          animation: Bounce
-                          animatedledstrip.colors: [ff]
-                          center: 30
-                          delay: 10
-                          delayMod: 2.0
-                          direction: BACKWARD
-                          distance: 50
-                          runCount: 2
-                          section: section
-                          spacing: 4
-                        End AnimationData
-                    """.trimIndent()
-            }
+//            assertTrue {
+//                AnimationToRunParams(
+//                    animation = "Bounce",
+//                    colors = mutableListOf(0xFF.toColorContainer()),
+//                    center = Location(30),
+//                    delay = 10,
+//                    delayMod = 2.0,
+//                    direction = Direction.BACKWARD,
+//                    distance = 50,
+//                    id = "test",
+//                    runCount = 2,
+//                    section = "section",
+//                    spacing = 4,
+//                ).toHumanReadableString() ==
+//                        """
+//                        AnimationData for test
+//                          animation: Bounce
+//                          animatedledstrip.colors: [ff]
+//                          center: 30
+//                          delay: 10
+//                          delayMod: 2.0
+//                          direction: BACKWARD
+//                          distance: 50
+//                          runCount: 2
+//                          section: section
+//                          spacing: 4
+//                        End AnimationData
+//                    """.trimIndent()
+//            }
         }
 
 //        "animation info JSON" {

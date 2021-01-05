@@ -18,13 +18,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
-import animatedledstrip.leds.stripmanagement.Location
 import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -45,44 +43,12 @@ class RunningAnimationParamsTest : StringSpec(
             // TODO
         }
 
-        "with center modification" {
-            newRunningAnimationParams.withModifications().center shouldBe 5
-
-            checkAll<Int> { c ->
-                newRunningAnimationParams.withModifications(center = Location(c)).center shouldBe c
-            }
-        }
-
-        "with delay modification" {
-            newRunningAnimationParams.withModifications().delay shouldBe 5
-
-            checkAll<Long> { d ->
-                newRunningAnimationParams.withModifications(delay = d).delay shouldBe d
-            }
-        }
-
-        "with delayMod modification" {
-            newRunningAnimationParams.withModifications().delayMod shouldBe 2.0
-
-            checkAll<Double> { d ->
-                newRunningAnimationParams.withModifications(delayMod = d).delayMod shouldBe d
-            }
-        }
-
         "with direction modification" {
             newRunningAnimationParams.withModifications().direction shouldBe Direction.FORWARD
 
             newRunningAnimationParams.withModifications(direction = Direction.FORWARD).direction shouldBe Direction.FORWARD
 
             newRunningAnimationParams.withModifications(direction = Direction.BACKWARD).direction shouldBe Direction.BACKWARD
-        }
-
-        "with distance modification" {
-            newRunningAnimationParams.withModifications().distance shouldBe 15
-
-            checkAll<Int> { d ->
-                newRunningAnimationParams.withModifications(distance = d).distance shouldBe d
-            }
         }
 
         "with id modification" {
@@ -106,14 +72,6 @@ class RunningAnimationParamsTest : StringSpec(
 
             checkAll<String> { s ->
                 newRunningAnimationParams.withModifications(section = s).section shouldBe s
-            }
-        }
-
-        "with spacing modification" {
-            newRunningAnimationParams.withModifications().spacing shouldBe 2
-
-            checkAll<Int> { s ->
-                newRunningAnimationParams.withModifications(spacing = s).spacing shouldBe s
             }
         }
 
