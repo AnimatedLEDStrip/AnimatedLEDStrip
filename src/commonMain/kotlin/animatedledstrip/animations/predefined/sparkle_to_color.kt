@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.randomInt
 import animatedledstrip.leds.animationmanagement.validIndices
@@ -37,7 +37,6 @@ val sparkleToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle to Color",
         abbr = "STC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Similar to the [Sparkle](Sparkle) animation, but the " +
                       "LEDs are not reverted to their prolonged color after " +
                       "the sparkle.\n" +
@@ -49,25 +48,28 @@ val sparkleToColor = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("maxDelayBeforeSparkle",
+                                              "Maximum amount of time before a pixel will sparkle",
+                                              5000)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val delay = params.delay
+    val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
-        val jobs = validIndices.map { n ->
+        validIndices.map { n ->
             animationScope.launch {
-                delay(randomInt() * delay * 100 % 4950)
+                delay((randomInt() % maxDelayBeforeSparkle).toLong())
                 setPixelProlongedColor(n, color0)
-                delay(delay)
             }
-        }
-        jobs.joinAll()
+        }.joinAll()
     }
 }

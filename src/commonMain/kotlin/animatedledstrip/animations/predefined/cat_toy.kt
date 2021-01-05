@@ -35,7 +35,6 @@ val catToy = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy",
         abbr = "CAT",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Entertain your cat with a pixel running back and forth to " +
                       "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
                       "Works better on a shorter strip (~100 pixels).",
@@ -43,16 +42,19 @@ val catToy = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 5,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 5,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
     var doRevert = true
     var doDelay = true
     val lastPixel = params.extraData.getOrPut("lastPixel") {

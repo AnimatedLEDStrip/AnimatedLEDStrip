@@ -23,11 +23,13 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
+import animatedledstrip.animations.Distance
+import animatedledstrip.animations.Equation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.colors.parseHex
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 
 /* Helper functions for setting values */
 
@@ -176,45 +178,45 @@ fun AnimationToRunParams.color3(color: Any): AnimationToRunParams = color(color,
  */
 fun AnimationToRunParams.color4(color: Any): AnimationToRunParams = color(color, 4)
 
-/**
- * Set the `center` parameter.
- *
- * @param pixel The index of the pixel at the center of a radial animation
- */
-fun AnimationToRunParams.center(pixelLocation: LEDLocation): AnimationToRunParams {
-    this.center = pixelLocation
-    return this
-}
+///**
+// * Set the `center` parameter.
+// *
+// * @param pixel The index of the pixel at the center of a radial animation
+// */
+//fun AnimationToRunParams.center(pixelLocation: Location): AnimationToRunParams {
+//    this.center = pixelLocation
+//    return this
+//}
 
-/**
- * Set the `delay` parameter.
- *
- * @param delay An `Int` representing the delay time in milliseconds
- */
-fun AnimationToRunParams.delay(delay: Int): AnimationToRunParams {
-    this.delay = delay.toLong()
-    return this
-}
+///**
+// * Set the `delay` parameter.
+// *
+// * @param delay An `Int` representing the delay time in milliseconds
+// */
+//fun AnimationToRunParams.delay(delay: Int): AnimationToRunParams {
+//    this.delay = delay.toLong()
+//    return this
+//}
 
-/**
- * Set the `delay` parameter.
- *
- * @param delay A `Long` representing the delay time in milliseconds
- */
-fun AnimationToRunParams.delay(delay: Long): AnimationToRunParams {
-    this.delay = delay
-    return this
-}
+///**
+// * Set the `delay` parameter.
+// *
+// * @param delay A `Long` representing the delay time in milliseconds
+// */
+//fun AnimationToRunParams.delay(delay: Long): AnimationToRunParams {
+//    this.delay = delay
+//    return this
+//}
 
-/**
- * Set the `delayMod` parameter.
- *
- * @param delayMod A `Double` that is a multiplier for `delay`
- */
-fun AnimationToRunParams.delayMod(delayMod: Double): AnimationToRunParams {
-    this.delayMod = delayMod
-    return this
-}
+///**
+// * Set the `delayMod` parameter.
+// *
+// * @param delayMod A `Double` that is a multiplier for `delay`
+// */
+//fun AnimationToRunParams.delayMod(delayMod: Double): AnimationToRunParams {
+//    this.delayMod = delayMod
+//    return this
+//}
 
 /**
  * Set the `direction` parameter.
@@ -241,16 +243,16 @@ fun AnimationToRunParams.direction(direction: Char): AnimationToRunParams {
     return this
 }
 
-/**
- * Set the `distance` parameter.
- *
- * @param pixels The number of pixels away from the center pixel
- * that the radial animation should travel
- */
-fun AnimationToRunParams.distance(pixels: Int): AnimationToRunParams {
-    this.distance = pixels
-    return this
-}
+///**
+// * Set the `distance` parameter.
+// *
+// * @param pixels The number of pixels away from the center pixel
+// * that the radial animation should travel
+// */
+//fun AnimationToRunParams.distance(pixels: Int): AnimationToRunParams {
+//    this.distance = pixels
+//    return this
+//}
 
 /**
  * Set the `id` parameter.
@@ -279,12 +281,37 @@ fun AnimationToRunParams.section(sectionId: String): AnimationToRunParams {
     return this
 }
 
-/**
- * Set the `spacing` parameter.
- *
- * @param spacing An `Int` that is the spacing used by the animation
- */
-fun AnimationToRunParams.spacing(spacing: Int): AnimationToRunParams {
-    this.spacing = spacing
+fun AnimationToRunParams.intParam(key: String, value: Int): AnimationToRunParams {
+    this.intParams[key] = value
     return this
 }
+
+fun AnimationToRunParams.doubleParam(key: String, value: Double): AnimationToRunParams {
+    this.doubleParams[key] = value
+    return this
+}
+
+fun AnimationToRunParams.locationParam(key: String, value: Location): AnimationToRunParams {
+    this.locationParams[key] = value
+    return this
+}
+
+fun AnimationToRunParams.distanceParam(key: String, value: Distance): AnimationToRunParams {
+    this.distanceParams[key] = value
+    return this
+}
+
+fun AnimationToRunParams.equationParam(key: String, value: Equation): AnimationToRunParams {
+    this.equationParams[key] = value
+    return this
+}
+
+///**
+// * Set the `spacing` parameter.
+// *
+// * @param spacing An `Int` that is the spacing used by the animation
+// */
+//fun AnimationToRunParams.spacing(spacing: Int): AnimationToRunParams {
+//    this.spacing = spacing
+//    return this
+//}

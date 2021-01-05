@@ -24,7 +24,6 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.numLEDs
@@ -36,18 +35,19 @@ val fadeToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fade to Color",
         abbr = "FTC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Fade the strip to a color.",
         signatureFile = "fade_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 30,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 30,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     leds.apply {

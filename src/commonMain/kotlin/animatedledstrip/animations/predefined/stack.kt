@@ -34,7 +34,6 @@ val stack = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Pixels are run from one end of the strip/section to the " +
                       "other, 'stacking' up.\n" +
                       "Each pixel has to travel a shorter distance than the last.\n\n" +
@@ -44,15 +43,18 @@ val stack = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 10,
-        direction = ParamUsage.USED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = true,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 10,
+//        direction = ParamUsage.USED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
+    val color = params.colors[0]
     val direction = params.direction
 
     leds.apply {
@@ -65,7 +67,7 @@ val stack = PredefinedAnimation(
                         animation = baseAnimation,
                         section = getSubSection(0, it),
                     )
-                    setPixelProlongedColor(it, color0)
+                    setPixelProlongedColor(it, color)
                 }
             Direction.BACKWARD ->
                 iterateOverPixels {
@@ -73,7 +75,7 @@ val stack = PredefinedAnimation(
                         animation = baseAnimation,
                         section = getSubSection(it, numLEDs - 1),
                     )
-                    setPixelProlongedColor(it, color0)
+                    setPixelProlongedColor(it, color)
                 }
         }
     }

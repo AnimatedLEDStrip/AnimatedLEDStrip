@@ -23,7 +23,7 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import kotlin.random.Random
 
 /**
@@ -75,13 +75,11 @@ inline fun AnimationManager.iterateOverPixelsReverse(operation: (Int) -> Unit) {
 /**
  * @return A random valid index in the section that corresponds with this animation manager
  */
-fun AnimationManager.randomLocation(dimensionality: Dimensionality): LEDLocation =
+fun AnimationManager.randomLocation(dimensionality: Dimensionality): Location =
     when (dimensionality) {
-        Dimensionality.ONE_DIMENSIONAL,
-        Dimensionality.ANY_DIMENSIONAL,
-        -> LEDLocation(validIndices.random().toDouble(), 0.0, 0.0)
-        Dimensionality.TWO_DIMENSIONAL -> LEDLocation(0.0, 0.0, 0.0)
-        Dimensionality.THREE_DIMENSIONAL -> LEDLocation(0.0, 0.0, 0.0)
+        Dimensionality.ONE_DIMENSIONAL -> Location(validIndices.random().toDouble(), 0.0, 0.0)
+        Dimensionality.TWO_DIMENSIONAL -> Location(0.0, 0.0, 0.0)
+        Dimensionality.THREE_DIMENSIONAL -> Location(0.0, 0.0, 0.0)
     }
 
 fun AnimationManager.randomIndex(): Int = validIndices.random()

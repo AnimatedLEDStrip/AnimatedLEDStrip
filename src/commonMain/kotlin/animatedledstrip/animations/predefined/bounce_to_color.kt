@@ -33,7 +33,6 @@ val bounceToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce to Color",
         abbr = "BTC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Pixel 'bounces' back and forth, leaving behind a pixel " +
                       "set from `pCols[0]` at each end like [Stack](Stack), eventually " +
                       "ending in the middle.\n\n" +
@@ -43,12 +42,15 @@ val bounceToColor = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 5,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 5,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

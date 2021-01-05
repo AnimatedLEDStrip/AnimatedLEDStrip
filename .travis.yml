@@ -70,8 +70,8 @@ jobs:
         - source "/home/travis/.sdkman/bin/sdkman-init.sh"
         - sdk install kotlin
         - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
-        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null)
-        - kotlinc-jvm -script create_docs.kts -cp target/animatedledstrip-core-${VERSION}.jar
+        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null) # TODO Use gradle
+        - kotlinc-jvm -script create_docs.kts -cp build/libs/animatedledstrip-core-jvm-${VERSION}.jar
         - cd wiki
         - git add .
         - git commit --allow-empty -m "Update animation documentation"

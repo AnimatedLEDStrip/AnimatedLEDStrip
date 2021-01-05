@@ -22,18 +22,19 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.*
-import animatedledstrip.leds.sectionmanagement.getSubSection
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.stripmanagement.PixelLocation
 import kotlinx.coroutines.delay
-import kotlin.math.max
-import kotlin.math.min
+import kotlinx.coroutines.launch
 
 val ripple = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Ripple",
         abbr = "RPL",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Starts two [Meteor](Meteor) animations running in opposite " +
                       "directions from `center`, stopping after traveling `distance` " +
                       "or at the end of the strip/section, whichever comes first.\n" +
@@ -43,37 +44,55 @@ val ripple = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.USED,
-        delay = ParamUsage.USED,
-        delayDefault = 30,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.USED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 30),
+                           AnimationParameter("interAnimationDelay", "Time between start of one animation and start of the next", 500)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration", "How far to move during each iteration of the animation", 10.0)),
+        locationParams = listOf(AnimationParameter("center", "The center of the ripple")),
+        distanceParams = listOf(AnimationParameter("distance", "How far the ripple should travel")),
     )
-) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val center = params.center
-    val delay = params.delay
-    val distance = params.distance
+) { leds, params, scope ->
+    val color = params.colors[0]
 
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+    val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
+
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+
+    val center = params.locationParams.getValue("center")
+
+    val distance = params.distanceParams.getValue("distance").maxDistance
+
+    @Suppress("DuplicatedCode")
     leds.apply {
-        val baseAnimation = AnimationToRunParams()
-            .animation("Meteor")
-            .color(color0)
-            .delay(delay)
+        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
+        val changedPixels: MutableList<PixelLocation> = mutableListOf()
 
-        runParallel(
-            baseAnimation.copy(
-                direction = Direction.FORWARD,
-            ),
-            section = getSubSection(center.x.toInt(), min(center.x.toInt() + distance, numLEDs - 1)),
-        )
-        runParallel(
-            baseAnimation.copy(
-                direction = Direction.BACKWARD,
-            ),
-            section = getSubSection(max(center.x.toInt() - distance, 0), center.x.toInt()),
-        )
-        delay(delay * 20)
+        var iteration = 0
+        var currentDistance = 0.0
+
+        while (currentDistance < distance) {
+            pixelsToModifyPerIteration[iteration] = mutableListOf()
+            for (pixel in leds.sectionManager.stripManager.pixelLocationManager.pixelLocations) {
+                if (pixel !in changedPixels && pixel.location.distanceFrom(center) < currentDistance) {
+                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
+                    changedPixels.add(pixel)
+                }
+            }
+            iteration++
+            currentDistance += movementPerIteration
+        }
+
+        scope.launch {
+            for (i in 0 until iteration) {
+                for (pixel in pixelsToModifyPerIteration[i]!!)
+                    leds.setPixelFadeColor(pixel, color)
+//            for (pixel in pixelsToRipplePerIteration[iteration - 1] ?: pixelsToRipplePerIteration[pixelsToRipplePerIteration.size - 1]!!)
+//                leds.revertPixel(pixel)
+                delay(interMovementDelay)
+            }
+        }
+        delay(interAnimationDelay)
     }
 }

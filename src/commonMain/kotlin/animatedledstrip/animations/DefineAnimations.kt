@@ -24,26 +24,26 @@ package animatedledstrip.animations
 
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.leds.animationmanagement.removeWhitespace
-import animatedledstrip.utils.logger
 
 val definedAnimations = mutableMapOf<String, Animation>()
 val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
 
 fun addNewAnimation(anim: Animation) {
     if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-        logger.e { "Animation ${anim.info.name} already defined" }
+//        logger.e { "Animation ${anim.info.name} already defined" }
         return
     }
     if (definedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-        logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
+//        logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
         return
     }
 
     definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
     definedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
+//    logger.d { "Added animation ${anim.info.name}" }
 }
 
-val predefinedAnimations = listOf(
+val predefinedAnimations: List<PredefinedAnimation> = listOf(
     alternate,
     bounce,
     bounceToColor,
@@ -64,7 +64,6 @@ val predefinedAnimations = listOf(
     quickSortParallel,
     quickSortSequential,
     ripple,
-    ripple2D,
     smoothChase,
     smoothFade,
     sparkle,
@@ -74,7 +73,6 @@ val predefinedAnimations = listOf(
     stack,
     stackOverflow,
     wipe,
-    wipe2D,
 ).onEach { addNewAnimation(it) }
 
 fun prepareAnimIdentifier(name: String): String =

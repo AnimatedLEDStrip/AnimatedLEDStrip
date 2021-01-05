@@ -24,10 +24,12 @@ package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Direction
+import animatedledstrip.animations.Distance
+import animatedledstrip.animations.Equation
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -57,14 +59,15 @@ import kotlinx.serialization.Transient
 data class RunningAnimationParams private constructor(
     val animationName: String,
     val colors: List<PreparedColorContainer>,
-    val center: LEDLocation,
-    val delay: Long,
-    val direction: Direction,
-    val distance: Int,
     val id: String,
-    val runCount: Int,
     val section: String,
-    val spacing: Int,
+    val runCount: Int,
+    val direction: Direction,
+    val intParams: Map<String, Int>,
+    val doubleParams: Map<String, Double>,
+    val locationParams: Map<String, Location>,
+    val distanceParams: Map<String, Distance>,
+    val equationParams: Map<String, Equation>,
     val sourceParams: AnimationToRunParams,
 ) : SendableData {
 
@@ -78,16 +81,28 @@ data class RunningAnimationParams private constructor(
         animation: Animation,
         animationName: String,
         colors: List<PreparedColorContainer>,
-        center: LEDLocation,
-        delay: Long,
-        direction: Direction,
-        distance: Int,
         id: String,
-        runCount: Int,
         section: String,
-        spacing: Int,
+        runCount: Int,
+        direction: Direction,
+        intParams: Map<String, Int>,
+        doubleParams: Map<String, Double>,
+        locationParams: Map<String, Location>,
+        distanceParams: Map<String, Distance>,
+        equationParams: Map<String, Equation>,
         sourceParams: AnimationToRunParams,
-    ) : this(animationName, colors, center, delay, direction, distance, id, runCount, section, spacing, sourceParams) {
+    ) : this(animationName,
+             colors,
+             id,
+             section,
+             runCount,
+             direction,
+             intParams,
+             doubleParams,
+             locationParams,
+             distanceParams,
+             equationParams,
+             sourceParams) {
         this.animation = animation
     }
 
@@ -105,17 +120,26 @@ data class RunningAnimationParams private constructor(
     fun withModifications(
         animation: String = this.animationName,
         colors: MutableList<ColorContainerInterface> = this.colors.toMutableList(),
-        center: LEDLocation = this.center,
-        delay: Long = this.sourceParams.delay,
-        delayMod: Double = this.sourceParams.delayMod,
-        direction: Direction = this.direction,
-        distance: Int = this.distance,
         id: String = this.id,
-        runCount: Int = this.runCount,
         section: String = this.section,
-        spacing: Int = this.spacing,
-    ): AnimationToRunParams = AnimationToRunParams(animation, colors, center, delay, delayMod,
-                                                   direction, distance, id, runCount, section, spacing)
+        runCount: Int = this.runCount,
+        direction: Direction = this.direction,
+        intParamMods: Map<String, Int> = mapOf(),
+        doubleParamMods: Map<String, Double> = mapOf(),
+        locationParamMods: Map<String, Location> = mapOf(),
+        distanceParamMods: Map<String, Distance> = mapOf(),
+        equationParamMods: Map<String, Equation> = mapOf(),
+    ): AnimationToRunParams = AnimationToRunParams(animation,
+                                                   colors,
+                                                   id,
+                                                   section,
+                                                   runCount,
+                                                   direction,
+                                                   (intParams + intParamMods).toMutableMap(),
+                                                   (doubleParams + doubleParamMods).toMutableMap(),
+                                                   (locationParams + locationParamMods).toMutableMap(),
+                                                   (distanceParams + distanceParamMods).toMutableMap(),
+                                                   (equationParams + equationParamMods).toMutableMap())
 
     override fun toHumanReadableString(): String = toString()
 }

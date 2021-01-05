@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.leds.animationmanagement.*
@@ -34,7 +34,6 @@ val pixelMarathon = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Watch pixels race each other along the strip.\n\n" +
                       "Note that in the animation signature that there are a couple " +
                       "points where the slope of the line gets shallower (meaning the " +
@@ -49,17 +48,22 @@ val pixelMarathon = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 8,
-        direction = ParamUsage.USED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = true,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 8),
+        AnimationParameter("maxInterAnimationDelay", "Maximum time between start of one pixel run and start of the next", 1000)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 8,
+//        direction = ParamUsage.USED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color = params.colors.random()
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay")
     val direction = params.direction
+    val maxInterAnimationDelay = params.intParams.getValue("maxInterAnimationDelay").toLong()
 
     leds.apply {
         if (color.isNotEmpty()) {
@@ -68,9 +72,9 @@ val pixelMarathon = PredefinedAnimation(
                     .animation("Pixel Run")
                     .color(color)
                     .direction(direction)
-                    .delay(delay),
+                    .intParam("delay", delay),
             )
-            delay(randomInt() * delay * 100)
+            delay((randomDouble() * maxInterAnimationDelay).toLong())
         }
     }
 }

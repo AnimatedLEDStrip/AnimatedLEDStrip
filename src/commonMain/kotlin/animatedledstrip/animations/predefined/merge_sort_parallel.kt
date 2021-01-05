@@ -22,12 +22,7 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.colors.shuffledWithIndices
+import animatedledstrip.animations.*
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.Job
@@ -38,7 +33,6 @@ val mergeSortParallel = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Parallel)",
         abbr = "MSP",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of merge sort.\n" +
                       "`pCols[0]` is randomized, then a parallelized merge sort is " +
                       "used to re-sort it.",
@@ -46,31 +40,30 @@ val mergeSortParallel = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 50,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 50,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, scope ->
+    val delay = params.intParams.getValue("delay").toLong()
 
-    data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
-
-    val colorMap =
-        params.colors[0]
-            .shuffledWithIndices()
-            .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }
-            .toMutableList()
-    val color = PreparedColorContainer(colorMap.map { it.color })
+    val sortablePixels = params.colors[0].toSortableList()
+    val startColor = sortablePixels.toPreparedColorContainer()
 
     leds.apply {
-        setStripProlongedColor(color)
+        setStripProlongedColor(startColor)
 
         fun updateColorAtLocation(location: Int) {
-            setPixelProlongedColor(location, colorMap[location].color)
+            setPixelProlongedColor(location, sortablePixels[location].color)
         }
 
+        @Suppress("DuplicatedCode")
         fun sort(startIndex: Int, endIndex: Int): Job? {
             if (startIndex == endIndex) return null
 
@@ -86,25 +79,25 @@ val mergeSortParallel = PredefinedAnimation(
                 var p2 = midpoint + 1
                 for (x in 0 until endIndex - startIndex) {
                     when {
-                        colorMap[p1].finalLocation < colorMap[p2].finalLocation -> {
+                        sortablePixels[p1].finalLocation < sortablePixels[p2].finalLocation -> {
                             p1++
                         }
-                        colorMap[p2].finalLocation < colorMap[p1].finalLocation -> {
-                            val temp = colorMap[p2]
+                        sortablePixels[p2].finalLocation < sortablePixels[p1].finalLocation -> {
+                            val temp = sortablePixels[p2]
                             for (i in p2 downTo p1 + 1) {
-                                colorMap[i] = colorMap[i - 1]
+                                sortablePixels[i] = sortablePixels[i - 1]
                                 updateColorAtLocation(i)
                             }
-                            colorMap[p1] = temp
+                            sortablePixels[p1] = temp
                             updateColorAtLocation(p1)
                             p1++
                             if (p2 < endIndex) p2++
-                            delay(params.delay)
+                            delay(delay)
                         }
                     }
                 }
             }
         }
-        sort(0, colorMap.lastIndex)?.join()
+        sort(0, sortablePixels.lastIndex)?.join()
     }
 }

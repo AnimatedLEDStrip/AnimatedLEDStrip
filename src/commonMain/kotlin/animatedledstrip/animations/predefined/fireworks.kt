@@ -22,22 +22,18 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.leds.animationmanagement.randomIndex
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
-import animatedledstrip.leds.stripmanagement.LEDLocation
+import animatedledstrip.leds.stripmanagement.Location
 import kotlinx.coroutines.delay
 
 val fireworks = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Runs [Ripple](Ripple) animations from random centers in " +
                       "the section, with a predefined distance.\n" +
                       "Color is chosen randomly from `pCols`.",
@@ -45,24 +41,36 @@ val fireworks = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 30,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.USED,
-        distanceDefault = 20,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during ripple animation", 30),
+                           AnimationParameter("interAnimationDelay",
+                                              "Time between start of one animation and start of the next",
+                                              500)),
+        distanceParams = listOf(AnimationParameter("distance",
+                                                   "Distance each firework should travel",
+                                                   Distance(0.2, 0.2, 0.2))),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 30,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.USED,
+//        distanceDefault = 20,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-    val delay = params.delay
+    val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
+
 
     leds.apply {
         val color = params.randomColor()
         if (color.isNotEmpty()) {
-            runParallel(params.withModifications(colors = mutableListOf(color),
-                                                 animation = "Ripple",
-                                                 center = LEDLocation(randomIndex().toDouble(), 0.0, 0.0)))
-            delay(delay * 20)
+            runParallel(params.withModifications(
+                colors = mutableListOf(color),
+                animation = "Ripple",
+                locationParamMods = mapOf("center" to Location(randomIndex().toDouble(), 0.0, 0.0))
+            ))
+            delay(interAnimationDelay)
         }
     }
 }

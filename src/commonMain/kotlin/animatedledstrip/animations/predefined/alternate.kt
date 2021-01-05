@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
@@ -33,7 +33,6 @@ val alternate = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Strip alternates* between each color in pCols, " +
                       "delaying delay milliseconds between changes.\n\n" +
                       "\\* alternate may not be the best word because this animation " +
@@ -42,17 +41,20 @@ val alternate = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = true,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 1000,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.anyDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay between alternations", 1000))
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 1000,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val nextColorIndex = params.extraData.getOrPut("nextColorIndex") { 0 } as Int
     val color = params.colors[nextColorIndex]
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
 
     leds.apply {
         setStripProlongedColor(color)

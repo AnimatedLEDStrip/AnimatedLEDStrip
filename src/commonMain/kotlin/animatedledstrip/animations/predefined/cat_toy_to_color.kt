@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.inverse
 import animatedledstrip.leds.animationmanagement.iterateOver
@@ -39,7 +39,6 @@ val catToyToColor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy to Color",
         abbr = "CTC",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Using a process similar to the [Cat Toy](Cat-Toy) " +
                       "animation, set a strip's color.\n" +
                       "When the moving pixel goes past a pixel it has already set, " +
@@ -49,17 +48,20 @@ val catToyToColor = PredefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 5,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 5,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
     val inverseColor = params.colors[0].inverse()
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
 
     leds.apply {
         val pixels = shuffledIndices()

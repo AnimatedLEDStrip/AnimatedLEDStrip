@@ -32,7 +32,6 @@ val meteor = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Meteor",
         abbr = "MET",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Like a [Pixel Run](Pixel-Run) animation, but the " +
                       "'running' pixel has a trail behind it where the pixels " +
                       "fade back from `pCols[0]`.",
@@ -40,25 +39,28 @@ val meteor = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 10,
-        direction = ParamUsage.USED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = true,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 10,
+//        direction = ParamUsage.USED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.delay
+    val color = params.colors[0]
+    val delay = params.intParams.getValue("delay").toLong()
 
     leds.apply {
         when (params.direction) {
             Direction.FORWARD -> iterateOverPixels {
-                setPixelFadeColor(it, color0)
+                setPixelFadeColor(it, color)
                 delay(delay)
             }
             Direction.BACKWARD -> iterateOverPixelsReverse {
-                setPixelFadeColor(it, color0)
+                setPixelFadeColor(it, color)
                 delay(delay)
             }
         }

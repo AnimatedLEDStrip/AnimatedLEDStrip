@@ -23,8 +23,8 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.ParamUsage
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.shuffledWithIndices
@@ -37,24 +37,26 @@ val bubbleSort = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bubble Sort",
         abbr = "BST",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Visualization of bubble sort.\n" +
                       "`pCols[0]` is randomized, then bubble sort is used to resort it.",
         signatureFile = "bubble_sort.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 5,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 5,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val colorMap = params.colors[0].shuffledWithIndices().toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.second })
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay").toLong()
 
     leds.apply {
         setStripProlongedColor(color)

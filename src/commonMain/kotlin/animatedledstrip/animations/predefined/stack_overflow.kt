@@ -25,14 +25,13 @@ package animatedledstrip.animations.predefined
 import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.animation
-import animatedledstrip.leds.animationmanagement.delay
+import animatedledstrip.leds.animationmanagement.intParam
 import animatedledstrip.leds.animationmanagement.runParallelAndJoin
 
 val stackOverflow = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack Overflow",
         abbr = "STO",
-        dimensionality = Dimensionality.ONE_DIMENSIONAL,
         description = "Two [Stack](Stack) animations are started from opposite " +
                       "ends of the strip/section.\n" +
                       "The stacks meet in the middle and 'overflow' their half.\n" +
@@ -43,22 +42,25 @@ val stackOverflow = PredefinedAnimation(
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = false,
-        center = ParamUsage.NOTUSED,
-        delay = ParamUsage.USED,
-        delayDefault = 2,
-        direction = ParamUsage.NOTUSED,
-        distance = ParamUsage.NOTUSED,
-        spacing = ParamUsage.NOTUSED,
+        dimensionality = Dimensionality.oneDimensional,
+        directional = false,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+//        center = ParamUsage.NOTUSED,
+//        delay = ParamUsage.USED,
+//        delayDefault = 2,
+//        direction = ParamUsage.NOTUSED,
+//        distance = ParamUsage.NOTUSED,
+//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
     val color1 = params.colors[1]
-    val delay = params.delay
+    val delay = params.intParams.getValue("delay")
 
     leds.apply {
         val baseAnimation = AnimationToRunParams()
             .animation("Stack")
-            .delay(delay)
+            .intParam("delay", delay)
 
         runParallelAndJoin(
             Pair(
