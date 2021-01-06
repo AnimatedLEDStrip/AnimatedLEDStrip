@@ -37,7 +37,7 @@ val heapSort = PredefinedAnimation(
         name = "Heap Sort",
         abbr = "HPS",
         description = "Visualization of heap sort.\n" +
-                      "`pCols[0]` is randomized, then a heap sort is " +
+                      "`colors[0]` is randomized, then a heap sort is " +
                       "used to re-sort it.",
         signatureFile = "heap_sort.png",
         runCountDefault = 1,
@@ -45,16 +45,10 @@ val heapSort = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 25)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 25,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
+        intParams = listOf(AnimationParameter("movementDelay", "Delay between sorting movements", 25)),
     )
 ) { leds, params, _ ->
-    val delay = params.intParams.getValue("delay").toLong()
+    val movementDelay = params.intParams.getValue("movementDelay").toLong()
 
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
@@ -98,7 +92,7 @@ val heapSort = PredefinedAnimation(
 
                     root = swap
 
-                    delay(delay)
+                    delay(movementDelay)
                 }
             }
         }
@@ -120,7 +114,7 @@ val heapSort = PredefinedAnimation(
             colorMap[end] = tmp
             updateColorAtLocation(end)
 
-            delay(delay)
+            delay(movementDelay)
 
             end--
 

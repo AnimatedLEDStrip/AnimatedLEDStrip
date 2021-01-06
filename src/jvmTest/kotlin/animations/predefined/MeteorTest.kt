@@ -38,7 +38,7 @@ class MeteorTest : StringSpec(
                     "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
                     "animatedledstrip.leds.colormanagement.GetColorUtilsKt")
 
-        val ledStrip = createNewEmulatedStrip(11)
+        val ledStrip = createNewEmulatedStrip(10)
 
         afterSpec { ledStrip.renderer.close() }
 
