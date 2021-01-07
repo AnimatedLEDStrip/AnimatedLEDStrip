@@ -51,12 +51,6 @@ val catToyToColor = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 5,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

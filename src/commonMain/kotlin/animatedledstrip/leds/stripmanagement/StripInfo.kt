@@ -24,6 +24,7 @@ package animatedledstrip.leds.stripmanagement
 
 import animatedledstrip.animations.definedAnimationNames
 import animatedledstrip.communication.SendableData
+import animatedledstrip.leds.locationmanagement.Location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

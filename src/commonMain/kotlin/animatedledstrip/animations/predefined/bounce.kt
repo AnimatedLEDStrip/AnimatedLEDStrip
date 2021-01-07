@@ -44,13 +44,7 @@ val bounce = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation"))
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 10,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
+        intParams = listOf(AnimationParameter("delay", "Delay used during animation")),
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

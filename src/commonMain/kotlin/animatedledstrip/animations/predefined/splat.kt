@@ -27,7 +27,7 @@ import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.leds.stripmanagement.PixelLocation
+import animatedledstrip.leds.locationmanagement.PixelLocation
 import kotlinx.coroutines.delay
 
 val splat = PredefinedAnimation(

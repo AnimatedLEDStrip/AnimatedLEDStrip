@@ -40,12 +40,6 @@ val mergeSortSequential = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 25)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 25,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val delay = params.intParams.getValue("delay").toLong()

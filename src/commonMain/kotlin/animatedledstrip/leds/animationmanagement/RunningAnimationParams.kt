@@ -29,7 +29,7 @@ import animatedledstrip.animations.Equation
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData
-import animatedledstrip.leds.stripmanagement.Location
+import animatedledstrip.leds.locationmanagement.Location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient

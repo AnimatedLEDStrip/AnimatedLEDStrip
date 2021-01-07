@@ -42,12 +42,6 @@ val fadeToColor = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
         directional = false,
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 30,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     leds.apply {

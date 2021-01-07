@@ -27,7 +27,7 @@ import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.leds.animationmanagement.randomIndex
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
-import animatedledstrip.leds.stripmanagement.Location
+import animatedledstrip.leds.locationmanagement.Location
 import kotlinx.coroutines.delay
 
 val fireworks = PredefinedAnimation(
@@ -50,13 +50,6 @@ val fireworks = PredefinedAnimation(
         distanceParams = listOf(AnimationParameter("distance",
                                                    "Distance each firework should travel",
                                                    Distance(0.2, 0.2, 0.2))),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 30,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.USED,
-//        distanceDefault = 20,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
