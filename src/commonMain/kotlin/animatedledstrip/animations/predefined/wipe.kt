@@ -28,9 +28,9 @@ import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.leds.stripmanagement.PixelLocation
-import animatedledstrip.leds.stripmanagement.PixelLocationManager
-import animatedledstrip.leds.stripmanagement.transformLocations
+import animatedledstrip.leds.locationmanagement.PixelLocation
+import animatedledstrip.leds.locationmanagement.PixelLocationManager
+import animatedledstrip.leds.locationmanagement.transformLocations
 import kotlinx.coroutines.delay
 
 val wipe = PredefinedAnimation(

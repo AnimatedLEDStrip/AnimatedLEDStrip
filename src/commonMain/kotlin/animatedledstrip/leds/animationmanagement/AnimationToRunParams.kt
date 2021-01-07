@@ -30,8 +30,8 @@ import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.communication.SendableData
+import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.sectionmanagement.Section
-import animatedledstrip.leds.stripmanagement.Location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

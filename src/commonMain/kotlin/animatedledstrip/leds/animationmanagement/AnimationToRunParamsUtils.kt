@@ -29,7 +29,7 @@ import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.Black
 import animatedledstrip.colors.parseHex
-import animatedledstrip.leds.stripmanagement.Location
+import animatedledstrip.leds.locationmanagement.Location
 
 /* Helper functions for setting values */
 

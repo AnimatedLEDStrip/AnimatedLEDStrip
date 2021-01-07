@@ -25,6 +25,7 @@ package animatedledstrip.leds.stripmanagement
 import animatedledstrip.leds.animationmanagement.LEDStripAnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.LEDStripColorManager
+import animatedledstrip.leds.locationmanagement.PixelLocationManager
 import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager
 import animatedledstrip.leds.sectionmanagement.Section
 
@@ -70,9 +71,7 @@ class LEDStrip(
      */
     val animationManager: LEDStripAnimationManager = LEDStripAnimationManager(sectionManager)
 
-    val pixelLocationManager: PixelLocationManager = PixelLocationManager(stripInfo.ledLocations,
-                                                                          numLEDs,
-                                                                          stripInfo.include1D)
+    val pixelLocationManager: PixelLocationManager = PixelLocationManager(stripInfo.ledLocations, numLEDs)
 
 
     /**

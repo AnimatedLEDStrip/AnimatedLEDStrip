@@ -23,7 +23,7 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.stripmanagement.Location
+import animatedledstrip.leds.locationmanagement.Location
 import kotlin.random.Random
 
 /**

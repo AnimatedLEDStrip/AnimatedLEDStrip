@@ -20,20 +20,20 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.leds.stripmanagement
+package animatedledstrip.leds.locationmanagement
 
 import animatedledstrip.animations.Distance
+import animatedledstrip.utils.logger
 import kotlin.math.abs
 
-class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int, include1D: Boolean = true) {
+class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int) {
     val pixelLocations: List<PixelLocation>
 
     init {
         val tempLocationList = mutableListOf<PixelLocation>()
         val tempUsedLocationsList = mutableListOf<Location>()
-        if (ledLocations == null && !include1D) {
-            error("Must specify locations for pixels if not using 1D")
-        } else if (ledLocations == null) {
+        if (ledLocations == null) {
+            logger.w { "No LED locations defined, assuming LEDs are in one dimensional strip with equal spacing" }
             for (i in 0 until numLEDs) {
                 tempLocationList.add(PixelLocation(i, Location(i.toDouble())))
             }

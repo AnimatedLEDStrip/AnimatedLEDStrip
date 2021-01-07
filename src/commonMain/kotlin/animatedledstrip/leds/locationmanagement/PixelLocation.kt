@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.leds.stripmanagement
+package animatedledstrip.leds.locationmanagement
 
 data class PixelLocation(
     val index: Int,

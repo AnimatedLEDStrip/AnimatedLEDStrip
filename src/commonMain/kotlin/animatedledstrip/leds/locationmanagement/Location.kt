@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.leds.stripmanagement
+package animatedledstrip.leds.locationmanagement
 
 import kotlinx.serialization.Serializable
 import kotlin.math.pow
