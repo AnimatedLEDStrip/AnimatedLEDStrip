@@ -44,14 +44,20 @@ val catToy = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+        intParams = listOf(AnimationParameter("interMovementDelay",
+                                              "Delay between movements in the pixel run animation",
+                                              5),
+                           AnimationParameter("maximumWait",
+                                              "Maximum time spent waiting at a pixel before moving to the next",
+                                              1000)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val color = params.colors[0]
+    val maximumWait = params.intParams.getValue("maximumWait")
+
     var doRevert = true
     var doDelay = true
-    val lastPixel = params.extraData.getOrPut("lastPixel") {
+    val lastPixel = params.extraData.getOrPut("previousPixel") {
         doRevert = false
         0
     } as Int
@@ -77,11 +83,11 @@ val catToy = PredefinedAnimation(
             pixel == lastPixel -> doDelay = false
         }
 
-        setPixelTemporaryColor(pixel, color0)
+        setPixelTemporaryColor(pixel, color)
 
-        if (doDelay) delay((randomDouble() * delay * 500).toLong())
+        if (doDelay) delay((randomDouble() * maximumWait).toLong())
 
-        params.extraData["lastPixel"] = pixel
+        params.extraData["previousPixel"] = pixel
 
     }
 }

@@ -23,6 +23,7 @@
 package animatedledstrip.leds.locationmanagement
 
 import animatedledstrip.animations.AbsoluteDistance
+import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.utils.logger
 import kotlin.math.abs
 
@@ -60,4 +61,9 @@ class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int) {
 
     val defaultLocation = Location(xAvg, yAvg, zAvg)
     val defaultDistance = AbsoluteDistance(abs(xMin) + abs(xMax), abs(yMin) + abs(yMax), abs(zMin) + abs(zMax))
+
+    fun randomLocation(): Location =
+        Location(abs(xMin - xMax) * randomDouble() + xMin,
+                 abs(yMin - yMax) * randomDouble() + yMin,
+                 abs(zMin - zMax) * randomDouble() + zMin)
 }

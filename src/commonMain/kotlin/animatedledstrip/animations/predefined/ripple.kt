@@ -58,14 +58,10 @@ val ripple = PredefinedAnimation(
     )
 ) { leds, params, scope ->
     val color = params.colors[0]
-
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
-
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
-
     val center = params.locationParams.getValue("center")
-
     val distance = params.distanceParams.getValue("distance").maxDistance
 
     @Suppress("DuplicatedCode")

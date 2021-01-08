@@ -29,24 +29,24 @@ import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import kotlinx.coroutines.delay
 
-val multiPixelRun = PredefinedAnimation(
+val runwayLights = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "Multi Pixel Run",
-        abbr = "MPR",
+        name = "Runway Lights",
+        abbr = "RUN",
         description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
                       "at a specified spacing.",
-        signatureFile = "multi_pixel_run.png",
+        signatureFile = "runway_lights.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 100),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 100),
                            AnimationParameter("spacing", "Spacing between lit pixels", 3)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val color = params.colors[0]
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val direction = params.direction
     val spacing = params.intParams.getValue("spacing")
 
@@ -58,9 +58,9 @@ val multiPixelRun = PredefinedAnimation(
                     iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s2 < numLEDs) revertPixel(i + s2)
                         if (i + s < numLEDs)
-                            setPixelTemporaryColor(i + s, color0)
+                            setPixelTemporaryColor(i + s, color)
                     }
-                    delay(delay)
+                    delay(interMovementDelay)
                 }
             Direction.BACKWARD ->
                 iterateOver(spacing - 1 downTo 0) { s ->
@@ -68,9 +68,9 @@ val multiPixelRun = PredefinedAnimation(
                     iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s2 < numLEDs) revertPixel(i + s2)
                         if (i + s < numLEDs)
-                            setPixelTemporaryColor(i + s, color0)
+                            setPixelTemporaryColor(i + s, color)
                     }
-                    delay(delay)
+                    delay(interMovementDelay)
                 }
         }
     }

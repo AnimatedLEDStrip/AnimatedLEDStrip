@@ -26,7 +26,6 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
@@ -35,23 +34,27 @@ val smoothFade = PredefinedAnimation(
         name = "Smooth Fade",
         abbr = "SMF",
         description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
-                      "whole strip is the same color while fading through `pCols[0]`.",
+                      "whole strip is the same color while fading through `colors[0]`.",
         signatureFile = "smooth_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+        intParams = listOf(AnimationParameter("interColorChangeDelay", "Delay between color changes", 50),
+                           AnimationParameter("colorsToFadeThrough",
+                                              "Number of colors to fade through (used to prepare the ColorContainer)",
+                                              100)),
     )
 ) { leds, params, _ ->
-    val color = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val colorsToFadeThrough = params.intParams.getValue("colorsToFadeThrough")
+    val color = params.colors[0].originalColorContainer().prepare(colorsToFadeThrough)
+    val interColorChangeDelay = params.intParams.getValue("interColorChangeDelay").toLong()
 
     leds.apply {
-        iterateOverPixels {
-            setStripProlongedColor(color[it])
-            delay(delay)
+        for (i in 0 until colorsToFadeThrough) {
+            setStripProlongedColor(color[i])
+            delay(interColorChangeDelay)
         }
     }
 }

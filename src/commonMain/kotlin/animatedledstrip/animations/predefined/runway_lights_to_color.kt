@@ -28,24 +28,24 @@ import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import kotlinx.coroutines.delay
 
-val multiPixelRunToColor = PredefinedAnimation(
+val runwayLightsToColor = PredefinedAnimation(
     Animation.AnimationInfo(
-        name = "Multi Pixel Run to Color",
-        abbr = "MTC",
-        description = "Similar to [Multi Pixel Run](Multi-Pixel-Run) but LEDs " +
+        name = "Runway Lights to Color",
+        abbr = "RTC",
+        description = "Similar to [Runway Lights](Runway-Lights) but LEDs " +
                       "do not revert back to their prolonged color.",
-        signatureFile = "multi_pixel_run_to_color.png",
+        signatureFile = "runway_lights_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 150),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 150),
                            AnimationParameter("spacing", "Spacing between lit pixels", 3)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val color = params.colors[0]
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val direction = params.direction
     val spacing = params.intParams.getValue("spacing")
 
@@ -55,17 +55,17 @@ val multiPixelRunToColor = PredefinedAnimation(
                 iterateOver(spacing - 1 downTo 0) { s ->
                     iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s < numLEDs)
-                            setPixelProlongedColor(i + s, color0)
+                            setPixelProlongedColor(i + s, color)
                     }
-                    delay(delay)
+                    delay(interMovementDelay)
                 }
             Direction.BACKWARD ->
                 iterateOver(0 until spacing) { s ->
                     iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s < numLEDs)
-                            setPixelProlongedColor(i + s, color0)
+                            setPixelProlongedColor(i + s, color)
                     }
-                    delay(delay)
+                    delay(interMovementDelay)
                 }
         }
     }

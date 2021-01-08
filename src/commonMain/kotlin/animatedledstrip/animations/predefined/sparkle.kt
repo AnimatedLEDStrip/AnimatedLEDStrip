@@ -38,12 +38,12 @@ val sparkle = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle",
         abbr = "SPK",
-        description = "Each LED is changed to `pCols[0]` for delay milliseconds " +
-                      "before reverting to its prolonged color.\n" +
-                      "A separate thread is created for each pixel.\n" +
-                      "Each thread waits up to `delay * 100` milliseconds before " +
+        description = "Each LED is changed to `colors[0]` for `sparkleDuration` milliseconds " +
+                      "before reverting.\n" +
+                      "A separate coroutine is created for each pixel.\n" +
+                      "Each coroutine waits up to `maxDelayBeforeSparkle` milliseconds before " +
                       "sparkling its pixel.",
-        signatureFile = "merge_sort_sequential.png",
+        signatureFile = "sparkle.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

@@ -33,21 +33,21 @@ val bounce = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce",
         abbr = "BNC",
-        description = "Similar to [Bounce to Color](Bounce-to-Color) but the " +
-                      "pixels at the end of each bounce fade back to their prolonged " +
-                      "color after being set from `pCols[0]`.\n\n" +
-                      "Note that this animation has a quadratic time " +
-                      "complexity, meaning it gets very long very quickly.",
+        description = "Pixel 'bounces' back and forth, with " +
+                      "pixels at the end of each bounce fading back to their prolonged " +
+                      "color after being set from `colors[0]`.\n\n" +
+                      "Note that this animation has a quadratic time complexity.",
         signatureFile = "bounce.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation")),
+        intParams = listOf(AnimationParameter("interMovementDelay",
+                                              "Delay between movements in the pixel run animations")),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
+    val color = params.colors[0]
 
     leds.apply {
         iterateOver(0 until numLEDs / 2) { i ->
@@ -56,15 +56,15 @@ val bounce = PredefinedAnimation(
                                                      direction = Direction.FORWARD),
                 section = getSubSection(i, numLEDs - i - 1),
             )
-            setPixelFadeColor(numLEDs - i - 1, color0)
+            setPixelFadeColor(numLEDs - i - 1, color)
 
             runSequential(
                 animation = params.withModifications(animation = "Pixel Run",
                                                      direction = Direction.BACKWARD),
                 section = getSubSection(i, numLEDs - i - 2),
             )
-            setPixelFadeColor(i, color0)
+            setPixelFadeColor(i, color)
         }
-        if (numLEDs % 2 == 1) setPixelFadeColor(numLEDs / 2, color0)
+        if (numLEDs % 2 == 1) setPixelFadeColor(numLEDs / 2, color)
     }
 }

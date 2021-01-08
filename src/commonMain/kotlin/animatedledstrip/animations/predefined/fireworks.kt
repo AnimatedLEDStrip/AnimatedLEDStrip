@@ -24,19 +24,17 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
-import animatedledstrip.leds.animationmanagement.randomIndex
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
-import animatedledstrip.leds.locationmanagement.Location
 import kotlinx.coroutines.delay
 
 val fireworks = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",
-        description = "Runs [Ripple](Ripple) animations from random centers in " +
-                      "the section, with a predefined distance.\n" +
-                      "Color is chosen randomly from `pCols`.",
+        description = "Runs [Ripple](Ripple) animations from random center points within the defined " +
+                      "locations of all pixels, travelling a predefined distance.\n" +
+                      "Color is chosen randomly from `colors`.",
         signatureFile = "fireworks.png",
         runCountDefault = -1,
         minimumColors = 1,
@@ -65,7 +63,7 @@ val fireworks = PredefinedAnimation(
             runParallel(params.withModifications(
                 colors = mutableListOf(color),
                 animation = "Ripple",
-                locationParamMods = mapOf("center" to Location(randomIndex().toDouble(), 0.0, 0.0))
+                locationParamMods = mapOf("center" to leds.sectionManager.stripManager.pixelLocationManager.randomLocation())
             ))
             delay(interAnimationDelay)
         }
