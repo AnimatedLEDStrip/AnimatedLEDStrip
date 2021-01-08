@@ -1,3 +1,25 @@
+/*
+ * Copyright (c) 2018-2021 AnimatedLEDStrip
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 
 tasks.wrapper {
     gradleVersion = "6.7.1"
@@ -8,13 +30,13 @@ plugins {
     kotlin("plugin.serialization") version "1.4.21"
     id("io.kotest") version "0.2.6"
     id("maven-publish")
-//    id("java-library")
-//    jacoco
+    id("java-library")
+    jacoco
 }
 
-//jacoco {
-//    toolVersion = "0.8.6"
-//}
+jacoco {
+    toolVersion = "0.8.6"
+}
 
 repositories {
     jcenter()
@@ -106,7 +128,7 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-//    finalizedBy(tasks.jacocoTestReport)
+    finalizedBy(tasks.jacocoTestReport)
     filter {
         isFailOnNoMatchingTests = false
     }
@@ -119,25 +141,25 @@ tasks.named<Test>("jvmTest") {
     systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
 }
 
-//tasks.jacocoTestReport {
-//    val coverageSourceDirs = arrayOf(
-//        "src/commonMain/kotlin",
-//        "src/jvmMain/kotlin"
-//    )
-//
-//    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
-//        .walkBottomUp()
-//        .toSet()
-//
-//
-//    classDirectories.setFrom(classFiles)
-//    sourceDirectories.setFrom(files(coverageSourceDirs))
-//
-//    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
-//
-//    reports {
-//        xml.isEnabled = true
-//        csv.isEnabled = true
-//        html.isEnabled = true
-//    }
-//}
+tasks.jacocoTestReport {
+    val coverageSourceDirs = arrayOf(
+        "src/commonMain/kotlin",
+        "src/jvmMain/kotlin"
+    )
+
+    val classFiles = File("${buildDir}/classes/kotlin/jvm/main/")
+        .walkBottomUp()
+        .toSet()
+
+
+    classDirectories.setFrom(classFiles)
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
+
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = true
+        html.isEnabled = true
+    }
+}
