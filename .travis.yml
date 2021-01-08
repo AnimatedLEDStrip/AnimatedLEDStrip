@@ -30,6 +30,7 @@ jobs:
         #        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
         #        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*" -i
+        - ls -l build/jacoco/jvmTest.exec
       after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
