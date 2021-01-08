@@ -32,6 +32,7 @@ import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 
 val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
@@ -57,6 +58,7 @@ val sparkleFade = PredefinedAnimation(
         validIndices.map { n ->
             animationScope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
+                yield()
                 setPixelFadeColor(n, color0)
             }
         }.joinAll()

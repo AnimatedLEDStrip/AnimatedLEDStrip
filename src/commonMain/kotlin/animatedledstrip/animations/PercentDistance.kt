@@ -22,18 +22,12 @@
 
 package animatedledstrip.animations
 
-interface Distance {
-    val x: Double
-    val y: Double
-    val z: Double
+import kotlinx.serialization.Serializable
+import kotlin.math.max
 
-    val coordinates: String
+@Serializable
+class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance {
+    override val coordinates: String = "$x, $y, $z"
 
-    operator fun times(multiplier: Distance?): Distance? =
-        if (multiplier == null) null
-        else AbsoluteDistance(x * multiplier.x,
-                              y * multiplier.y,
-                              z * multiplier.z)
-
-    val maxDistance: Double
+    override val maxDistance: Double = max(x, max(y, z))
 }
