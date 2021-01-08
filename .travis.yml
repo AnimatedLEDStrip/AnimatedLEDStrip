@@ -26,11 +26,11 @@ jobs:
     - stage: test
       install: skip
       script:
-        - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
-        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
+#        - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
+        #        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
+        #        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-#      after_success: bash <(curl -s https://codecov.io/bash)
+      after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
       install: skip
