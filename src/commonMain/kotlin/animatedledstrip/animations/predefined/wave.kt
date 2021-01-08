@@ -53,7 +53,7 @@ val wave = PredefinedAnimation(
                                               500)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
-                                                 10.0),
+                                                 1.0),
                               AnimationParameter("zRotation", "Rotation around the Z axis (radians)"),
                               AnimationParameter("xRotation", "Rotation around the X axis (radians)")),
     )
