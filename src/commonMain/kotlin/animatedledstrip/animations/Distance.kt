@@ -33,6 +33,8 @@ data class Distance(
 ) {
     constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())
 
+    val coordinates: String = "$x, $y, $z"
+
     operator fun times(multiplier: Distance?): Distance? =
         if (multiplier == null) null
         else Distance(x * multiplier.x,

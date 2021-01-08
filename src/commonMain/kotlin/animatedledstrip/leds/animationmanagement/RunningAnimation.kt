@@ -39,6 +39,7 @@ data class RunningAnimation(
     override val animationScope: CoroutineScope,
     override val sectionManager: SectionManager,
     val parentManager: AnimationManager,
+    val topLevelAnimation: Boolean = false,
 ) : AnimationManager {
 
     /**
@@ -60,22 +61,26 @@ data class RunningAnimation(
      * The `Job` running the animation
      */
     val job: Job = animationScope.launch {
-        if (animationScope == GlobalScope) {
+        logger.v { topLevelAnimation.toString() }
+        if (topLevelAnimation) {
             sectionManager.stripManager.startAnimationCallback?.invoke(params)
         }
 
         logger.v { "Starting $params" }
 
-        var runs = 0
-        while (isActive && (params.runCount == -1 || runs < params.runCount)) {
-            logger.v { "Iteration $runs" }
-            params.animation.runAnimation(leds = this@RunningAnimation,
-                                          params = params,
-                                          this)
-            runs++
-        }
-        if (animationScope == GlobalScope) {
-            sectionManager.stripManager.endAnimationCallback?.invoke(params)
+        try {
+            var runs = 0
+            while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+                logger.v { parentManager.runningAnimations.ids.toString() }
+                params.animation.runAnimation(leds = this@RunningAnimation,
+                                              params = params,
+                                              this)
+                runs++
+            }
+        } finally {
+            if (topLevelAnimation) {
+                sectionManager.stripManager.endAnimationCallback?.invoke(params)
+            }
             parentManager.runningAnimations.remove(params.id)
         }
     }

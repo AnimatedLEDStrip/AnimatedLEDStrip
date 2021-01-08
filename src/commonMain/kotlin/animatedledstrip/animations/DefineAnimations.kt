@@ -74,6 +74,7 @@ val predefinedAnimations: List<PredefinedAnimation> = listOf(
     splat,
     stack,
     stackOverflow,
+    wave,
     wipe,
 ).onEach { addNewAnimation(it) }
 

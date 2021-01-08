@@ -48,7 +48,8 @@ fun AnimationManager.startAnimation(params: AnimationToRunParams, animId: String
     val runningAnim = RunningAnimation(params.prepare(section),
                                        animationScope,
                                        section,
-                                       this)
+                                       this,
+                                       this is LEDStripAnimationManager)
     runningAnimations[id] = runningAnim
     return runningAnim
 }
@@ -139,8 +140,8 @@ fun Section.findAnimation(animId: String): Animation =
     this.findAnimationOrNull(animId)!!
 
 fun Section.findAnimationOrNull(animId: String): Animation? =
-    this.stripManager.animationManager.supportedAnimations[prepareAnimIdentifier(animId)] ?:
-    this.stripManager.animationManager.supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
+    this.stripManager.animationManager.supportedAnimations[prepareAnimIdentifier(animId)]
+    ?: this.stripManager.animationManager.supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
 fun AnimationToRunParams.endAnimation(): EndAnimation = EndAnimation(this.id)
 fun RunningAnimationParams.endAnimation(): EndAnimation = EndAnimation(this.id)
