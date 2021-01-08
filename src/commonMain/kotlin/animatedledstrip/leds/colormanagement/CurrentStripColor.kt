@@ -31,6 +31,4 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 @SerialName("CurrentStripColor")
-data class CurrentStripColor(val color: List<Int>) : SendableData {
-    override fun toHumanReadableString(): String = toString()
-}
+data class CurrentStripColor(val color: List<Int>) : SendableData

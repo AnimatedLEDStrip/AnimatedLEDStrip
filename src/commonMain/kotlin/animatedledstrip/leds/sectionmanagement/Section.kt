@@ -97,15 +97,4 @@ class Section(
      */
     override fun getSection(sectionName: String): Section =
         sections.getOrElse(sectionName) { this }
-
-    override fun toHumanReadableString() =
-        """
-                Section Info
-                  name: $name
-                  numLEDs: $numLEDs
-                  startPixel: $startPixel
-                  endPixel: $endPixel
-                  physicalStart: $physicalStart
-                End Info
-            """.trimIndent()
 }

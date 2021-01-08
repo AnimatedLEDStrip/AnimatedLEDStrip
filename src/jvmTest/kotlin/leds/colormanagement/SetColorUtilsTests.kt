@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.colormanagement
@@ -543,6 +542,10 @@ class SetColorUtilsTests : StringSpec(
                 for (pixel in IntRange(p[0], p[1]))
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c
             }
+        }
+
+        "set and revert after delay" {
+            // TODO
         }
 
         "revert pixel" {

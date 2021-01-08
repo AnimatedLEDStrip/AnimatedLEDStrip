@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.colormanagement
@@ -128,6 +127,10 @@ class GetColorUtilsTests : StringSpec(
                 ledStrip.colorManager.pixelColors[p].fadeColor shouldBe c
                 ledStrip.getPixelFadeColor(p) shouldBe c
                 ledStrip.getPixelFadeColorOrNull(p) shouldBe c
+                ledStrip.sectionManager.getPixelFadeColor(p) shouldBe c
+                ledStrip.sectionManager.getPixelFadeColorOrNull(p) shouldBe c
+                ledStrip.animationManager.getPixelFadeColor(p) shouldBe c
+                ledStrip.animationManager.getPixelFadeColorOrNull(p) shouldBe c
             }
 
             checkAll(Arb.int().filter { it !in 0..49 }) { p ->
@@ -135,6 +138,14 @@ class GetColorUtilsTests : StringSpec(
                     ledStrip.getPixelFadeColor(p)
                 }
                 ledStrip.getPixelFadeColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.sectionManager.getPixelFadeColor(p)
+                }
+                ledStrip.sectionManager.getPixelFadeColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.animationManager.getPixelFadeColor(p)
+                }
+                ledStrip.animationManager.getPixelFadeColorOrNull(p) shouldBe null
             }
         }
 
@@ -144,6 +155,10 @@ class GetColorUtilsTests : StringSpec(
                 ledStrip.colorManager.pixelColors[p].prolongedColor shouldBe c
                 ledStrip.getPixelProlongedColor(p) shouldBe c
                 ledStrip.getPixelProlongedColorOrNull(p) shouldBe c
+                ledStrip.sectionManager.getPixelProlongedColor(p) shouldBe c
+                ledStrip.sectionManager.getPixelProlongedColorOrNull(p) shouldBe c
+                ledStrip.animationManager.getPixelProlongedColor(p) shouldBe c
+                ledStrip.animationManager.getPixelProlongedColorOrNull(p) shouldBe c
             }
 
             checkAll(Arb.int().filter { it !in 0..49 }) { p ->
@@ -151,6 +166,14 @@ class GetColorUtilsTests : StringSpec(
                     ledStrip.getPixelProlongedColor(p)
                 }
                 ledStrip.getPixelProlongedColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.sectionManager.getPixelProlongedColor(p)
+                }
+                ledStrip.sectionManager.getPixelProlongedColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.animationManager.getPixelProlongedColor(p)
+                }
+                ledStrip.animationManager.getPixelProlongedColorOrNull(p) shouldBe null
             }
         }
 
@@ -160,6 +183,10 @@ class GetColorUtilsTests : StringSpec(
                 ledStrip.colorManager.pixelColors[p].temporaryColor shouldBe c
                 ledStrip.getPixelTemporaryColor(p) shouldBe c
                 ledStrip.getPixelTemporaryColorOrNull(p) shouldBe c
+                ledStrip.sectionManager.getPixelTemporaryColor(p) shouldBe c
+                ledStrip.sectionManager.getPixelTemporaryColorOrNull(p) shouldBe c
+                ledStrip.animationManager.getPixelTemporaryColor(p) shouldBe c
+                ledStrip.animationManager.getPixelTemporaryColorOrNull(p) shouldBe c
             }
 
             checkAll(Arb.int().filter { it !in 0..49 }) { p ->
@@ -167,6 +194,14 @@ class GetColorUtilsTests : StringSpec(
                     ledStrip.getPixelTemporaryColor(p)
                 }
                 ledStrip.getPixelTemporaryColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.sectionManager.getPixelTemporaryColor(p)
+                }
+                ledStrip.sectionManager.getPixelTemporaryColorOrNull(p) shouldBe null
+                shouldThrow<IllegalArgumentException> {
+                    ledStrip.animationManager.getPixelTemporaryColor(p)
+                }
+                ledStrip.animationManager.getPixelTemporaryColorOrNull(p) shouldBe null
             }
         }
 

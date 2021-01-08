@@ -33,6 +33,4 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 @SerialName("EndAnimation")
-data class EndAnimation(val id: String = "") : SendableData {
-    override fun toHumanReadableString(): String = "End of animation $id"
-}
+data class EndAnimation(val id: String = "") : SendableData

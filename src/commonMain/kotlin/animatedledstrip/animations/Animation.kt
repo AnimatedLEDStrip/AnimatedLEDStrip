@@ -82,17 +82,5 @@ abstract class Animation(open val info: AnimationInfo) {
         val locationParams: List<AnimationParameter<Location>> = listOf(),
         val distanceParams: List<AnimationParameter<Distance>> = listOf(),
         val equationParams: List<AnimationParameter<Equation>> = listOf(),
-    ) : SendableData {
-
-        override fun toHumanReadableString(): String =
-            """
-                Animation Info
-                  name: $name
-                  abbr: $abbr
-                  runCountDefault: $runCountDefault
-                  minimum colors: $minimumColors
-                  unlimited colors: $unlimitedColors
-                End Info
-            """.trimIndent()
-    }
+    ) : SendableData
 }

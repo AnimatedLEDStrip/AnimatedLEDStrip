@@ -45,7 +45,7 @@ class EmulatedWS281x(stripInfo: StripInfo) : NativeLEDStrip {
     /**
      * An array standing in for a LED strip
      */
-    var ledArray = IntArray(numLEDs)
+    internal var ledArray = IntArray(numLEDs)
 
     /**
      * Get the color of a pixel in the strip
