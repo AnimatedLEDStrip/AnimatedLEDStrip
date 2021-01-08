@@ -26,7 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.prepareAnimIdentifier
 import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import animatedledstrip.utils.logger
+import animatedledstrip.utils.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 
@@ -62,7 +62,7 @@ fun AnimationManager.startAnimation(params: AnimationToRunParams, animId: String
 fun AnimationManager.endAnimation(id: String) {
     runningAnimations[id]?.endAnimation()
     ?: run {
-        logger.w { "Animation $id is not running" }
+        Logger.w { "Animation $id is not running" }
         runningAnimations.remove(id)
         return
     }

@@ -22,9 +22,44 @@
 
 package animatedledstrip.utils
 
-import co.touchlab.kermit.CommonLogger
 import co.touchlab.kermit.Kermit
+import co.touchlab.kermit.Logger
+import co.touchlab.kermit.Severity
 
-// TODO Improve logging support
-val logger = Kermit(CommonLogger())
+object ALSLogger : Logger() {
+    var minSeverity: Severity = Severity.Warn
+
+    override fun isLoggable(severity: Severity): Boolean = severity >= minSeverity
+
+    override fun log(severity: Severity, message: String, tag: String, throwable: Throwable?) {
+        println("$severity: ($tag) $message")
+    }
+}
+
+object TestLogger : Logger() {
+    private var trackLogs: Boolean = false
+    var minSeverity: Severity = Severity.Warn
+
+    fun startLogCapture() {
+        trackLogs = true
+    }
+
+    fun stopLogCapture() {
+        trackLogs = false
+        logs.clear()
+    }
+
+    data class Log(val severity: Severity, val message: String, val tag: String)
+
+    val logs: MutableList<Log> = mutableListOf()
+
+    override fun isLoggable(severity: Severity): Boolean = trackLogs && severity >= minSeverity
+
+    override fun log(severity: Severity, message: String, tag: String, throwable: Throwable?) {
+        logs.add(Log(severity, message, tag))
+    }
+}
+
+// TODO Support additional loggers
+val Logger = Kermit(ALSLogger, TestLogger).withTag("LEDs")
 
