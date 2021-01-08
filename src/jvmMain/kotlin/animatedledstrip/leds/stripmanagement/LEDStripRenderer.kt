@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.leds.stripmanagement
@@ -68,7 +67,7 @@ actual class LEDStripRenderer actual constructor(
                     stripColorManager.pixelColors.forEach {
                         it.sendColorToStrip(
                             ledStrip,
-                            doFade = renderNum % 6 == 0, // 6 iterations * 5 ms delay = 30 ms between fades
+                            doFade = renderNum % 2 == 0, // 2 iterations * 5 ms delay = 10 ms between fades
                         )
                     }
                     ledStrip.render()
