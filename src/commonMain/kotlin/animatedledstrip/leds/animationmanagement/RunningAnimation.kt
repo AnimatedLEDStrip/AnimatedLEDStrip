@@ -23,7 +23,7 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import animatedledstrip.utils.logger
+import animatedledstrip.utils.Logger
 import kotlinx.coroutines.*
 
 /**
@@ -61,17 +61,17 @@ data class RunningAnimation(
      * The `Job` running the animation
      */
     val job: Job = animationScope.launch {
-        logger.v { topLevelAnimation.toString() }
+        Logger.v { topLevelAnimation.toString() }
         if (topLevelAnimation) {
             sectionManager.stripManager.startAnimationCallback?.invoke(params)
         }
 
-        logger.v { "Starting $params" }
+        Logger.v { "Starting $params" }
 
         try {
             var runs = 0
             while (isActive && (params.runCount == -1 || runs < params.runCount)) {
-                logger.v { parentManager.runningAnimations.ids.toString() }
+                Logger.v { parentManager.runningAnimations.ids.toString() }
                 params.animation.runAnimation(leds = this@RunningAnimation,
                                               params = params,
                                               this)

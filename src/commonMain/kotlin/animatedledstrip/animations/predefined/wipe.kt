@@ -31,7 +31,7 @@ import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.locationmanagement.PixelLocation
 import animatedledstrip.leds.locationmanagement.PixelLocationManager
 import animatedledstrip.leds.locationmanagement.transformLocations
-import animatedledstrip.utils.logger
+import animatedledstrip.utils.Logger
 import kotlinx.coroutines.delay
 
 val wipe = PredefinedAnimation(
@@ -84,7 +84,7 @@ val wipe = PredefinedAnimation(
             iteration++
         } while (currentZ < newManager.zMax)
 
-        logger.v { pixelsToModifyPerIteration.toString() }
+        Logger.v { pixelsToModifyPerIteration.toString() }
 
         for (i in 0 until iteration) {
             for (pixel in pixelsToModifyPerIteration[i]!!)

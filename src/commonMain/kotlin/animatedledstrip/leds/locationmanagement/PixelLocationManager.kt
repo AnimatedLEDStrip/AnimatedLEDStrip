@@ -24,7 +24,7 @@ package animatedledstrip.leds.locationmanagement
 
 import animatedledstrip.animations.AbsoluteDistance
 import animatedledstrip.leds.animationmanagement.randomDouble
-import animatedledstrip.utils.logger
+import animatedledstrip.utils.Logger
 import kotlin.math.abs
 
 class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int) {
@@ -34,7 +34,7 @@ class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int) {
         val tempLocationList = mutableListOf<PixelLocation>()
         val tempUsedLocationsList = mutableListOf<Location>()
         if (ledLocations == null) {
-            logger.w { "No LED locations defined, assuming LEDs are in one dimensional strip with equal spacing" }
+            Logger.w("Pixel Location Manager") { "No LED locations defined, assuming LEDs are in one dimensional strip with equal spacing" }
             for (i in 0 until numLEDs) {
                 tempLocationList.add(PixelLocation(i, Location(i.toDouble())))
             }
