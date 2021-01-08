@@ -26,7 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.PredefinedAnimation
-import animatedledstrip.leds.animationmanagement.randomInt
+import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.leds.animationmanagement.validIndices
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import kotlinx.coroutines.delay
@@ -49,12 +49,6 @@ val sparkleFade = PredefinedAnimation(
                            AnimationParameter("maxDelayBeforeSparkle",
                                               "Maximum amount of time before a pixel will sparkle",
                                               5000)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 50,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
@@ -64,7 +58,7 @@ val sparkleFade = PredefinedAnimation(
     leds.apply {
         validIndices.map { n ->
             animationScope.launch {
-                delay((randomInt() % maxDelayBeforeSparkle).toLong())
+                delay((randomDouble() * maxDelayBeforeSparkle).toLong())
                 setPixelFadeColor(n, color0)
                 delay(sparkleDuration)
             }
