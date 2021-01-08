@@ -51,12 +51,6 @@ val splat = PredefinedAnimation(
                                                  10.0)),
         locationParams = listOf(AnimationParameter("center", "The center of the splat")),
         distanceParams = listOf(AnimationParameter("distance", "How far the splat should reach")),
-//        center = ParamUsage.USED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 5,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.USED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color = params.colors[0]

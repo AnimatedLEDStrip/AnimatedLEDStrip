@@ -44,12 +44,6 @@ val quickSortParallel = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 50,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, scope ->
     val delay = params.intParams.getValue("delay").toLong()

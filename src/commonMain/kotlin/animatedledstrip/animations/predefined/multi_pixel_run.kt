@@ -43,13 +43,6 @@ val multiPixelRun = PredefinedAnimation(
         directional = true,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 100),
                            AnimationParameter("spacing", "Spacing between lit pixels", 3)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 100,
-//        direction = ParamUsage.USED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.USED,
-//        spacingDefault = 3,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

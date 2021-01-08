@@ -45,14 +45,12 @@ val sparkleFade = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("sparkleDuration", "Length of sparkle", 50),
-                           AnimationParameter("maxDelayBeforeSparkle",
+        intParams = listOf(AnimationParameter("maxDelayBeforeSparkle",
                                               "Maximum amount of time before a pixel will sparkle",
                                               5000)),
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
-    val sparkleDuration = params.intParams.getValue("sparkleDuration").toLong()
     val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
@@ -60,7 +58,6 @@ val sparkleFade = PredefinedAnimation(
             animationScope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
                 setPixelFadeColor(n, color0)
-                delay(sparkleDuration)
             }
         }.joinAll()
     }

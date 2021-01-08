@@ -47,12 +47,6 @@ val smoothChase = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 50,
-//        direction = ParamUsage.USED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]

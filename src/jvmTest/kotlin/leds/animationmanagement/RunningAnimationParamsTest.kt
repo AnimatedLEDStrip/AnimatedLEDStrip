@@ -60,7 +60,7 @@ class RunningAnimationParamsTest : StringSpec(
         }
 
         "with runCount modification" {
-            newRunningAnimationParams.withModifications().runCount shouldBe 10
+            newRunningAnimationParams.withModifications().runCount shouldBe -1
 
             checkAll<Int> { r ->
                 newRunningAnimationParams.withModifications(runCount = r).runCount shouldBe r
