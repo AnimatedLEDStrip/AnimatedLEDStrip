@@ -20,22 +20,19 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.leds.locationmanagement
+package animatedledstrip.animations
 
 import kotlinx.serialization.Serializable
-import kotlin.math.pow
+import kotlin.math.max
 
 @Serializable
-data class Location(
-    val x: Double = 0.0,
-    val y: Double = 0.0,
-    val z: Double = 0.0,
-) {
+class AbsoluteDistance(override val x: Double = 0.0, override val y: Double = 0.0, override val z: Double = 0.0) :
+    Distance {
     constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())
 
-    val coordinates: String = "$x, $y, $z"
+    override val coordinates: String = "$x, $y, $z"
 
-    fun distanceFrom(other: Location): Double = ((x - other.x).pow(2) +
-                                                 (y - other.y).pow(2) +
-                                                 (z - other.z).pow(2)).pow(0.5)
+    override val maxDistance: Double = max(x, max(y, z))
+
+    override fun toString(): String = "AbsoluteDistance(x=$x, y=$y, z=$z)"
 }

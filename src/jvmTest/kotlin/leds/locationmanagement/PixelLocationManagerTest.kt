@@ -20,22 +20,21 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.leds.locationmanagement
+package animatedledstrip.test.leds.locationmanagement
 
-import kotlinx.serialization.Serializable
-import kotlin.math.pow
+import io.kotest.core.spec.style.StringSpec
 
-@Serializable
-data class Location(
-    val x: Double = 0.0,
-    val y: Double = 0.0,
-    val z: Double = 0.0,
-) {
-    constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())
+class PixelLocationManagerTest : StringSpec(
+    {
+        "constructor" {
+            repeat(10) {
+//                checkAll(Arb.list(Arb.shuffle(Arb.list(Arb.int()).filter { it.size > 30 }.chunked() .next().shuffled().subList(0, 3)))) { l ->
+//                    val newManager = PixelLocationManager(l.map { Location(it[0], it[1], it[2]) }, l.size)
+//                    for ((index, location) in newManager.pixelLocations.withIndex())
+//                        location shouldBe PixelLocation(index, l[index].let { Location(it[0], it[1], it[2]) })
+//                }
+            }
+        }
 
-    val coordinates: String = "$x, $y, $z"
-
-    fun distanceFrom(other: Location): Double = ((x - other.x).pow(2) +
-                                                 (y - other.y).pow(2) +
-                                                 (z - other.z).pow(2)).pow(0.5)
-}
+    }
+)
