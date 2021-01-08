@@ -32,6 +32,7 @@ import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 
 val sparkleToColor = PredefinedAnimation(
     Animation.AnimationInfo(
@@ -62,6 +63,7 @@ val sparkleToColor = PredefinedAnimation(
         validIndices.map { n ->
             animationScope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
+                yield() // don't set color if the animation was cancelled during the delay
                 setPixelProlongedColor(n, color0)
             }
         }.joinAll()
