@@ -47,15 +47,15 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
 
     val supportedAnimations: MutableMap<String, Animation> =
         definedAnimations.filter {
-            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include1D) ||
-            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include2D) ||
-            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include3D)
+            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
+            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
+            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
         }.toMutableMap()
 
     val supportedAnimationsByAbbr: MutableMap<String, Animation> =
         definedAnimationsByAbbr.filter {
-            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include1D) ||
-            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include2D) ||
-            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.include3D)
+            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
+            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
+            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
         }.toMutableMap()
 }
