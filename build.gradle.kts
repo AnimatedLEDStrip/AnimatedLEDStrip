@@ -142,7 +142,6 @@ tasks.named<Test>("jvmTest") {
 }
 
 tasks.jacocoTestReport {
-    println(buildDir)
     val coverageSourceDirs = arrayOf(
         "src/commonMain/kotlin",
         "src/jvmMain/kotlin"
