@@ -22,7 +22,10 @@
 
 package animatedledstrip.communication
 
+import animatedledstrip.animations.AbsoluteDistance
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Distance
+import animatedledstrip.animations.PercentDistance
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -56,6 +59,10 @@ private val serializerModule: SerializersModule = SerializersModule {
     polymorphic(ColorContainerInterface::class) {
         subclass(ColorContainer::class)
         subclass(PreparedColorContainer::class)
+    }
+    polymorphic(Distance::class) {
+        subclass(AbsoluteDistance::class)
+        subclass(PercentDistance::class)
     }
 }
 

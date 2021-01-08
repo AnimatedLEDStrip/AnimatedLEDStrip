@@ -43,17 +43,21 @@ val fireworks = PredefinedAnimation(
         unlimitedColors = true,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during ripple animation", 30),
+        intParams = listOf(AnimationParameter("interMovementDelay",
+                                              "Delay between movements in the ripple animation",
+                                              30),
                            AnimationParameter("interAnimationDelay",
                                               "Time between start of one animation and start of the next",
                                               500)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move during each iteration of the animation",
+                                                 1.0)),
         distanceParams = listOf(AnimationParameter("distance",
                                                    "Distance each firework should travel",
-                                                   Distance(0.2, 0.2, 0.2))),
+                                                   PercentDistance(0.1, 0.1, 0.1))),
     )
 ) { leds, params, _ ->
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
-
 
     leds.apply {
         val color = params.randomColor()

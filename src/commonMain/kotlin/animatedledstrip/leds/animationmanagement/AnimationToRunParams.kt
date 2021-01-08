@@ -22,9 +22,7 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.Distance
-import animatedledstrip.animations.Equation
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -130,7 +128,8 @@ data class AnimationToRunParams(
             preparedDistanceParams[distanceParam.name] =
                 when (val paramValue = distanceParams[distanceParam.name]) {
                     null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance * distanceParam.default
-                            ?: sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance
+                            ?: AbsoluteDistance(1, 1, 1)
+                    is PercentDistance -> (sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance * paramValue) as Distance
                     else -> paramValue
                 }
 
