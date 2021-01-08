@@ -82,14 +82,6 @@ abstract class Animation(open val info: AnimationInfo) {
         val locationParams: List<AnimationParameter<Location>> = listOf(),
         val distanceParams: List<AnimationParameter<Distance>> = listOf(),
         val equationParams: List<AnimationParameter<Equation>> = listOf(),
-//        val center: ParamUsage,
-//        val delay: ParamUsage,
-//        val direction: ParamUsage,
-//        val distance: ParamUsage,
-//        val spacing: ParamUsage,
-//        val delayDefault: Long = DEFAULT_DELAY,
-//        val distanceDefault: Int = -1,
-//        val spacingDefault: Int = DEFAULT_SPACING,
     ) : SendableData {
 
         override fun toHumanReadableString(): String =

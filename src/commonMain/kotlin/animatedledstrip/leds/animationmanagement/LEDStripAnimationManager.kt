@@ -42,7 +42,8 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
     /**
      * The `CoroutineScope` all animations managed by this instance will run in
      */
-    override val animationScope: CoroutineScope = GlobalScope
+    override val animationScope: CoroutineScope
+        get() = GlobalScope
 
     val supportedAnimations: MutableMap<String, Animation> =
         definedAnimations.filter {

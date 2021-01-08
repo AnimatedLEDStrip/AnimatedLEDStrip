@@ -62,5 +62,5 @@ data class ClientParams(
     var bufferedMessageInterval: Long = 500,
 ) : SendableData {
 
-    override fun toHumanReadableString(): String  = toString()
+    override fun toHumanReadableString(): String = toString()
 }

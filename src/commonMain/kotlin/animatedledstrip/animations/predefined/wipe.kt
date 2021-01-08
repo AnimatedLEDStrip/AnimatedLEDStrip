@@ -86,8 +86,6 @@ val wipe = PredefinedAnimation(
         for (i in 0 until iteration) {
             for (pixel in pixelsToModifyPerIteration[i]!!)
                 leds.setPixelProlongedColor(pixel, color)
-//            for (pixel in pixelsToRipplePerIteration[iteration - 1] ?: pixelsToRipplePerIteration[pixelsToRipplePerIteration.size - 1]!!)
-//                leds.revertPixel(pixel)
             delay(interMovementDelay)
         }
     }
