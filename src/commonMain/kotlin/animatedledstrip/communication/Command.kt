@@ -32,12 +32,4 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 @SerialName("Command")
-data class Command(val command: String = "") : SendableData {
-
-    override fun toHumanReadableString(): String =
-        """
-            Command
-              command: $command
-            End Command
-        """.trimIndent()
-}
+data class Command(val command: String = "") : SendableData

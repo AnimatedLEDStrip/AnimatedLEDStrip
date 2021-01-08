@@ -60,7 +60,4 @@ data class ClientParams(
     var sendSectionCreation: MessageFrequency = MessageFrequency.IMMEDIATE,
     var sendLogs: Boolean = false,
     var bufferedMessageInterval: Long = 500,
-) : SendableData {
-
-    override fun toHumanReadableString(): String = toString()
-}
+) : SendableData

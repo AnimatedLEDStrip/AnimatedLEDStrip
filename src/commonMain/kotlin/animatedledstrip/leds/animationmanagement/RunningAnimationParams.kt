@@ -140,6 +140,4 @@ data class RunningAnimationParams private constructor(
                                                    (locationParams + locationParamMods).toMutableMap(),
                                                    (distanceParams + distanceParamMods).toMutableMap(),
                                                    (equationParams + equationParamMods).toMutableMap())
-
-    override fun toHumanReadableString(): String = toString()
 }

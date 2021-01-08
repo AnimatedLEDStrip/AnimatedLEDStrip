@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.animationmanagement
@@ -53,10 +52,6 @@ class EndAnimationTest : StringSpec(
             val end2 = endBytes.toUTF8String(endBytes.size).decodeJson() as EndAnimation
 
             end2 shouldBe end1
-        }
-
-        "human readable string" {
-            EndAnimation("15235").toHumanReadableString() shouldBe "End of animation 15235"
         }
     }
 )

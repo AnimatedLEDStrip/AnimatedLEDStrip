@@ -149,28 +149,8 @@ data class AnimationToRunParams(
                     else -> paramValue
                 }
 
-//        val calculatedCenter = when (center) {
-//            null -> Location((sectionRunningAnimation.numLEDs / 2).toDouble(), 0.0, 0.0)
-//            else -> center!!
-//        }
-//
-//        val tempDelay = if (delay < 0L) definedAnimation.info.delayDefault
-//        else delay
-//
-//        val calculatedDelay = (tempDelay * delayMod).toLong()
-//
-//        val calculatedDistance = if (distance < 0) {
-//            if (definedAnimation.info.distanceDefault != -1)
-//                definedAnimation.info.distanceDefault
-//            else sectionRunningAnimation.numLEDs
-//        } else distance
-//
         val calculatedRunCount = if (runCount <= 0) definedAnimation.info.runCountDefault
         else runCount
-//
-//        val calculatedSpacing = if (spacing <= 0) definedAnimation.info.spacingDefault
-//        else spacing
-
 
         return RunningAnimationParams(definedAnimation,
                                       animation,
@@ -186,19 +166,4 @@ data class AnimationToRunParams(
                                       preparedEquationParams,
                                       this)
     }
-
-    /**
-     * Create a nicely formatted string representation.
-     */
-    override fun toHumanReadableString() =
-        """
-            AnimationData for $id
-              animation: $animation
-              colors: $colors
-              section: $section
-              runCount: $runCount
-              direction: $direction
-            End AnimationData
-        """.trimIndent()
-
 }

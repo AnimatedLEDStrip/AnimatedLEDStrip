@@ -32,8 +32,6 @@ import kotlinx.serialization.encodeToString
  *
  */
 interface SendableData {
-    fun toHumanReadableString(): String
-
     fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
 
     fun json(): ByteArray = this.jsonString().encodeToByteArray()

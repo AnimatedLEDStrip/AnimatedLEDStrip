@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.animationmanagement
@@ -26,12 +25,50 @@ package animatedledstrip.test.leds.animationmanagement
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.endAnimation
 import animatedledstrip.leds.animationmanagement.removeWhitespace
+import animatedledstrip.leds.animationmanagement.startAnimation
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
+import io.kotest.property.checkAll
 
 class AnimationManagementUtilsTests : StringSpec(
     {
+        "start animation with random id" {
+            val ledStrip = createNewEmulatedStrip(10)
+
+            val permittedIDs = (0..99999999).toList()
+
+            checkAll<String>(100) {
+                ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color")).params.id.toInt() shouldBeIn permittedIDs
+            }
+            ledStrip.nativeLEDStrip.close()
+        }
+
+        "start animation with custom id" {
+            val ledStrip = createNewEmulatedStrip(10)
+            checkAll<String> { id ->
+                ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color"),
+                                                         id).params.id shouldBe id
+            }
+            ledStrip.nativeLEDStrip.close()
+        }
+
+//        "end animation that is running" {
+//            val ledStrip = createNewEmulatedStrip(10)
+//            checkAll<String> { id ->
+//                ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color", runCount = -1), id)
+//                ledStrip.animationManager.runningAnimations.ids.shouldContain(id)
+//                ledStrip.animationManager.endAnimation(id)
+//                withTimeout(1000) {
+//                    ledStrip.animationManager.runningAnimations[id]?.join()
+//                }
+//            }
+//            delay(1000)
+//            ledStrip.animationManager.runningAnimations.ids.shouldBeEmpty()
+//        }
+
         "animation to run params to end animation" {
             val params = AnimationToRunParams(id = "Test")
             val end = params.endAnimation()

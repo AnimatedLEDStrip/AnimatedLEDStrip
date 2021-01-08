@@ -22,7 +22,7 @@
 
 package animatedledstrip.test.leds.emulation
 
-import animatedledstrip.leds.emulation.EmulatedWS281x
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.leds.stripmanagement.StripInfo
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -30,37 +30,23 @@ import io.kotest.property.Arb
 import io.kotest.property.arbitrary.int
 import io.kotest.property.checkAll
 
-class EmulatedWS281xTest : StringSpec(
+class EmulationUtilsTests : StringSpec(
     {
-        "strip info constructor" {
-            checkAll(Arb.int(0..50000)) { n ->
-                val newEmulation = EmulatedWS281x(StripInfo(numLEDs = n))
-                newEmulation.numLEDs shouldBe n
-                newEmulation.ledArray.size shouldBe n
+        "create new emulated strip with strip info" {
+            checkAll(Arb.int(1..50000)) { n ->
+                val newStrip = createNewEmulatedStrip(StripInfo(numLEDs = n))
+                newStrip.numLEDs shouldBe n
+                newStrip.nativeLEDStrip.numLEDs shouldBe n
+                newStrip.renderer.close()
             }
         }
 
-        "num LEDs constructor" {
-            checkAll(Arb.int(0..50000)) { n ->
-                val newEmulation = EmulatedWS281x(n)
-                newEmulation.numLEDs shouldBe n
-                newEmulation.ledArray.size shouldBe n
-            }
-        }
-
-        "get pixel color" {
-            val newEmulation = EmulatedWS281x(50)
-            checkAll(Arb.int(0..49), Arb.int(0..0xFFFFFF)) { p, c ->
-                newEmulation.ledArray[p] = c
-                newEmulation.getPixelColor(p) shouldBe c
-            }
-        }
-
-        "set pixel color" {
-            val newEmulation = EmulatedWS281x(50)
-            checkAll(Arb.int(0..49), Arb.int(0..0xFFFFFF)) { p, c ->
-                newEmulation.setPixelColor(p, c)
-                newEmulation.ledArray[p] shouldBe c
+        "create new emulated strip with num LEDs" {
+            checkAll(Arb.int(1..50000)) { n ->
+                val newStrip = createNewEmulatedStrip(n)
+                newStrip.numLEDs shouldBe n
+                newStrip.nativeLEDStrip.numLEDs shouldBe n
+                newStrip.renderer.close()
             }
         }
     }

@@ -27,12 +27,4 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @SerialName("Message")
-data class Message(val message: String = "") : SendableData {
-
-    override fun toHumanReadableString(): String =
-        """
-            Message
-              message: $message
-            End Message
-        """.trimIndent()
-}
+data class Message(val message: String = "") : SendableData

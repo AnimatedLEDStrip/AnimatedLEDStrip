@@ -56,16 +56,4 @@ data class StripInfo(
 
     val supportedAnimations: List<String>
         get() = definedAnimationNames
-
-    override fun toHumanReadableString() =
-        """
-            Strip Info
-              numLEDs: $numLEDs
-              pin: $pin
-              imageDebugging: $imageDebugging
-              fileName: $fileName
-              rendersBeforeSave: $rendersBeforeSave
-              supportedAnimations: $supportedAnimations
-            End Strip Info
-        """.trimIndent()
 }
