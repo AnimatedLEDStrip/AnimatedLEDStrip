@@ -58,7 +58,7 @@ val sparkleFade = PredefinedAnimation(
         validIndices.map { n ->
             animationScope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
-                yield()
+                yield() // don't set color if the animation was cancelled during the delay
                 setPixelFadeColor(n, color0)
             }
         }.joinAll()
