@@ -46,12 +46,6 @@ val stack = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 10,
-//        direction = ParamUsage.USED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color = params.colors[0]

@@ -52,12 +52,6 @@ val pixelMarathon = PredefinedAnimation(
         directional = true,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 8),
         AnimationParameter("maxInterAnimationDelay", "Maximum time between start of one pixel run and start of the next", 1000)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 8,
-//        direction = ParamUsage.USED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color = params.colors.random()

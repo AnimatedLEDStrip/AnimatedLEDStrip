@@ -45,12 +45,6 @@ val stackOverflow = PredefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
-//        center = ParamUsage.NOTUSED,
-//        delay = ParamUsage.USED,
-//        delayDefault = 2,
-//        direction = ParamUsage.NOTUSED,
-//        distance = ParamUsage.NOTUSED,
-//        spacing = ParamUsage.NOTUSED,
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
