@@ -45,12 +45,12 @@ val bubbleSort = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 5)),
     )
 ) { leds, params, _ ->
     val colorMap = params.colors[0].shuffledWithIndices().toMutableList()
     val color = PreparedColorContainer(colorMap.map { it.second })
-    val delay = params.intParams.getValue("delay").toLong()
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
 
     leds.apply {
         setStripProlongedColor(color)
@@ -68,7 +68,7 @@ val bubbleSort = PredefinedAnimation(
                     colorMap[pixel + 1] = temp
                     setPixelProlongedColor(pixel + 1, colorMap[pixel + 1].second)
                 }
-                delay(delay)
+                delay(interMovementDelay)
             }
         }
     }

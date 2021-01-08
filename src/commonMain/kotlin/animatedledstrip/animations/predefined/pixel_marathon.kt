@@ -34,7 +34,10 @@ val pixelMarathon = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
-        description = "Watch pixels race each other along the strip.\n\n" +
+        description = "Watch pixels race each other along the strip.\n" +
+                      "A color is chosen randomly, then a pixel is sent down the strip.\n" +
+                      "After waiting for up to `maxInterAnimationDelay` milliseconds, " +
+                      "another pixel is sent.\n\n" +
                       "Note that in the animation signature that there are a couple " +
                       "points where the slope of the line gets shallower (meaning the " +
                       "pixel is 'moving' faster).\n" +
@@ -50,14 +53,16 @@ val pixelMarathon = PredefinedAnimation(
         unlimitedColors = true,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 8),
-        AnimationParameter("maxInterAnimationDelay", "Maximum time between start of one pixel run and start of the next", 1000)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay used during animation", 8),
+                           AnimationParameter("maxInterAnimationDelay",
+                                              "Maximum time between start of one pixel run and start of the next",
+                                              1000)),
     )
 ) { leds, params, _ ->
     val color = params.colors.random()
-    val delay = params.intParams.getValue("delay")
+    val interMovementDelay = params.intParams.getValue("interMovementDelay")
     val direction = params.direction
-    val maxInterAnimationDelay = params.intParams.getValue("maxInterAnimationDelay").toLong()
+    val maxInterAnimationDelay = params.intParams.getValue("maxInterAnimationDelay")
 
     leds.apply {
         if (color.isNotEmpty()) {
@@ -66,7 +71,7 @@ val pixelMarathon = PredefinedAnimation(
                     .animation("Pixel Run")
                     .color(color)
                     .direction(direction)
-                    .intParam("delay", delay),
+                    .intParam("interMovementDelay", interMovementDelay),
             )
             delay((randomDouble() * maxInterAnimationDelay).toLong())
         }

@@ -34,10 +34,9 @@ val bounceToColor = PredefinedAnimation(
         name = "Bounce to Color",
         abbr = "BTC",
         description = "Pixel 'bounces' back and forth, leaving behind a pixel " +
-                      "set from `pCols[0]` at each end like [Stack](Stack), eventually " +
+                      "set from `colors[0]` at each end like [Stack](Stack), eventually " +
                       "ending in the middle.\n\n" +
-                      "Note that this animation has a quadratic time complexity, " +
-                      "meaning it gets very long very quickly.",
+                      "Note that this animation has a quadratic time complexity.",
         signatureFile = "bounce_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
@@ -47,7 +46,7 @@ val bounceToColor = PredefinedAnimation(
         intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
+    val color = params.colors[0]
 
     leds.apply {
         iterateOver(0 until numLEDs / 2) { i ->
@@ -56,17 +55,17 @@ val bounceToColor = PredefinedAnimation(
                                                      direction = Direction.FORWARD),
                 section = getSubSection(i, numLEDs - i - 1),
             )
-            setPixelProlongedColor(numLEDs - i - 1, color0)
+            setPixelProlongedColor(numLEDs - i - 1, color)
 
             runSequential(
                 animation = params.withModifications(animation = "Pixel Run",
                                                      direction = Direction.BACKWARD),
                 section = getSubSection(i, numLEDs - i - 2),
             )
-            setPixelProlongedColor(i, color0)
+            setPixelProlongedColor(i, color)
         }
         if (numLEDs % 2 == 1) {
-            setPixelProlongedColor(numLEDs / 2, color0)
+            setPixelProlongedColor(numLEDs / 2, color)
         }
     }
 }

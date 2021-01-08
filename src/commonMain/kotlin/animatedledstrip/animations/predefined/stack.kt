@@ -34,31 +34,28 @@ val stack = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",
-        description = "Pixels are run from one end of the strip/section to the " +
+        description = "Pixels are run from one end of the strip to the " +
                       "other, 'stacking' up.\n" +
                       "Each pixel has to travel a shorter distance than the last.\n\n" +
-                      "Note that this animation has a quadratic time complexity, " +
-                      "meaning it gets very long very quickly.",
+                      "Note that this animation has a quadratic time complexity.",
         signatureFile = "stack.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
     val direction = params.direction
 
     leds.apply {
-        val baseAnimation = params.withModifications(animation = "Pixel Run")
-
         when (direction) {
             Direction.FORWARD ->
                 iterateOverPixelsReverse {
                     runSequential(
-                        animation = baseAnimation,
+                        animation = params.withModifications(animation = "Pixel Run"),
                         section = getSubSection(0, it),
                     )
                     setPixelProlongedColor(it, color)
@@ -66,7 +63,7 @@ val stack = PredefinedAnimation(
             Direction.BACKWARD ->
                 iterateOverPixels {
                     runSequential(
-                        animation = baseAnimation,
+                        animation = params.withModifications(animation = "Pixel Run"),
                         section = getSubSection(it, numLEDs - 1),
                     )
                     setPixelProlongedColor(it, color)

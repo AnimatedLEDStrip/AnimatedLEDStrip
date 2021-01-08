@@ -33,28 +33,27 @@ val stackOverflow = PredefinedAnimation(
         name = "Stack Overflow",
         abbr = "STO",
         description = "Two [Stack](Stack) animations are started from opposite " +
-                      "ends of the strip/section.\n" +
+                      "ends of the strip.\n" +
                       "The stacks meet in the middle and 'overflow' their half.\n" +
                       "And yes, the pun was very much intended.\n\n" +
-                      "Note that this animation has a quadratic time complexity, " +
-                      "meaning it gets very long very quickly.",
+                      "Note that this animation has a quadratic time complexity.",
         signatureFile = "stack_overflow.png",
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
     )
 ) { leds, params, _ ->
     val color0 = params.colors[0]
     val color1 = params.colors[1]
-    val delay = params.intParams.getValue("delay")
+    val interMovementDelay = params.intParams.getValue("interMovementDelay")
 
     leds.apply {
         val baseAnimation = AnimationToRunParams()
             .animation("Stack")
-            .intParam("delay", delay)
+            .intParam("interMovementDelay", interMovementDelay)
 
         runParallelAndJoin(
             Pair(

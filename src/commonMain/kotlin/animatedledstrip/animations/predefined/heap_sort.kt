@@ -45,10 +45,10 @@ val heapSort = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("movementDelay", "Delay between sorting movements", 25)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 25)),
     )
 ) { leds, params, _ ->
-    val movementDelay = params.intParams.getValue("movementDelay").toLong()
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
 
     data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
@@ -92,7 +92,7 @@ val heapSort = PredefinedAnimation(
 
                     root = swap
 
-                    delay(movementDelay)
+                    delay(interMovementDelay)
                 }
             }
         }
@@ -114,7 +114,7 @@ val heapSort = PredefinedAnimation(
             colorMap[end] = tmp
             updateColorAtLocation(end)
 
-            delay(movementDelay)
+            delay(interMovementDelay)
 
             end--
 

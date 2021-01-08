@@ -38,8 +38,7 @@ val sparkleFade = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle Fade",
         abbr = "SPF",
-        description = "Similar to [Sparkle](Sparkle) but pixels fade back to " +
-                      "their prolonged color.",
+        description = "Similar to [Sparkle](Sparkle) but pixels fade back.",
         signatureFile = "sparkle_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
@@ -51,7 +50,7 @@ val sparkleFade = PredefinedAnimation(
                                               5000)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
+    val color = params.colors[0]
     val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
@@ -59,7 +58,7 @@ val sparkleFade = PredefinedAnimation(
             animationScope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
                 yield() // don't set color if the animation was cancelled during the delay
-                setPixelFadeColor(n, color0)
+                setPixelFadeColor(n, color)
             }
         }.joinAll()
     }

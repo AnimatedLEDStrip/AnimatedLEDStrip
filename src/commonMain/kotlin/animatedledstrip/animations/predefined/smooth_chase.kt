@@ -33,37 +33,37 @@ val smoothChase = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Chase",
         abbr = "SCH",
-        description = "Each pixel is set to its respective color in `pCols[0]`.\n" +
+        description = "Each pixel is set to its respective color in `colors[0]`.\n" +
                       "Then, if the direction is `Direction.FORWARD`, each pixel is set " +
-                      "to `pCols[0][i + 1]`, then `pCols[0][i + 2]`, etc. to create " +
+                      "to `colors[0][i + 1]`, then `colors[0][i + 2]`, etc. to create " +
                       "the illusion that the animation is 'moving'.\n" +
                       "If the direction is `Direction.BACKWARD`, the same happens but " +
                       "with indices `i`, `i-1`, `i-2`, etc.\n" +
-                      "Works best with a ColorContainer with multiple animatedledstrip.colors.",
+                      "Works best with a ColorContainer with multiple colors.",
         signatureFile = "smooth_chase.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 50)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 50)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val color = params.colors[0]
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val direction = params.direction
 
     leds.apply {
         when (direction) {
             Direction.FORWARD ->
                 iterateOverPixels { m ->
-                    setStripProlongedColor(color0.offsetBy(m))
-                    delay(delay)
+                    setStripProlongedColor(color.offsetBy(m))
+                    delay(interMovementDelay)
                 }
             Direction.BACKWARD ->
                 iterateOverPixelsReverse { m ->
-                    setStripProlongedColor(color0.offsetBy(m))
-                    delay(delay)
+                    setStripProlongedColor(color.offsetBy(m))
+                    delay(interMovementDelay)
                 }
         }
     }

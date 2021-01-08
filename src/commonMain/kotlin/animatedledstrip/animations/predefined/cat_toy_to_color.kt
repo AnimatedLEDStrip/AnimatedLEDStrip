@@ -50,12 +50,18 @@ val catToyToColor = PredefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 5)),
+        intParams = listOf(AnimationParameter("interMovementDelay",
+                                              "Delay between movements in the pixel run animation",
+                                              5),
+                           AnimationParameter("maximumWait",
+                                              "Maximum time spent waiting at a pixel before moving to the next",
+                                              1000)),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
+    val color = params.colors[0]
     val inverseColor = params.colors[0].inverse()
-    val delay = params.intParams.getValue("delay").toLong()
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+    val maximumWait = params.intParams.getValue("maximumWait")
 
     leds.apply {
         val pixels = shuffledIndices()
@@ -67,21 +73,21 @@ val catToyToColor = PredefinedAnimation(
                     iterateOver(oldPixel until newPixel) {
                         setPixelAndRevertAfterDelay(
                             it,
-                            if (getPixelProlongedColor(it) == color0[it]) inverseColor else color0,
-                            delay,
+                            if (getPixelProlongedColor(it) == color[it]) inverseColor else color,
+                            interMovementDelay,
                         )
                     }
                 else ->
                     iterateOver(oldPixel downTo newPixel + 1) {
                         setPixelAndRevertAfterDelay(
                             it,
-                            if (getPixelProlongedColor(it) == color0[it]) inverseColor else color0,
-                            delay,
+                            if (getPixelProlongedColor(it) == color[it]) inverseColor else color,
+                            interMovementDelay,
                         )
                     }
             }
-            setPixelProlongedColor(newPixel, color0)
-            delay((randomDouble() * delay * 100).toLong())
+            setPixelProlongedColor(newPixel, color)
+            delay((randomDouble() * maximumWait).toLong())
             oldPixel = newPixel
         }
     }

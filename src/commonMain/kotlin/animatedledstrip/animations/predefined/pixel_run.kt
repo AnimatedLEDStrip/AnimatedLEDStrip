@@ -31,31 +31,29 @@ val pixelRun = PredefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Run",
         abbr = "PXR",
-        description = "A pixel colored from `pCols[0]` runs along the strip.\n" +
-                      "Similar to [Multi Pixel Run](Multi-Pixel-Run) but with only " +
-                      "one pixel.",
+        description = "A pixel colored from `colors[0]` runs along the strip.",
         signatureFile = "pixel_run.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("delay", "Delay used during animation", 10)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
-    val delay = params.intParams.getValue("delay").toLong()
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val direction = params.direction
 
     leds.apply {
         when (direction) {
             Direction.FORWARD ->
                 iterateOverPixels {
-                    setPixelAndRevertAfterDelay(it, color, delay)
+                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
                 }
             Direction.BACKWARD ->
                 iterateOverPixelsReverse {
-                    setPixelAndRevertAfterDelay(it, color, delay)
+                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
                 }
         }
     }
