@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.stripmanagement
@@ -35,16 +34,16 @@ class StripInfoTest : StringSpec(
             val info = StripInfo(
                 numLEDs = 10,
                 pin = 15,
-                imageDebugging = true,
-                fileName = "test.csv",
-                rendersBeforeSave = 100,
+                isDebugEnabled = true,
+                debugFile = "test.csv",
+                rendersBetweenDebugOutputs = 100,
             )
 
             info.numLEDs shouldBe 10
             info.pin shouldBe 15
-            info.imageDebugging.shouldBeTrue()
-            info.fileName shouldBe "test.csv"
-            info.rendersBeforeSave shouldBe 100
+            info.isDebugEnabled.shouldBeTrue()
+            info.debugFile shouldBe "test.csv"
+            info.rendersBetweenDebugOutputs shouldBe 100
         }
 
         "decode JSON"{
@@ -53,8 +52,8 @@ class StripInfoTest : StringSpec(
 
             val correctData = StripInfo(numLEDs = 240,
                                         pin = 12,
-                                        imageDebugging = true,
-                                        rendersBeforeSave = 1000)
+                                        isDebugEnabled = true,
+                                        rendersBetweenDebugOutputs = 1000)
 
             json.decodeJson() as StripInfo shouldBe correctData
         }

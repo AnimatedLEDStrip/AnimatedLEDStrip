@@ -35,22 +35,26 @@ import kotlinx.serialization.Serializable
  *
  * @property numLEDs Number of LEDs in the strip
  * @property pin Physical pin the strip is connected to
- * @property imageDebugging If image debugging should be enabled
- * @property fileName File to write image debugging output to
- * @property rendersBeforeSave Renders between image debugging writes
- * @property threadCount Number of threads used by animations
+ * @property isDebugEnabled If debugging should be enabled
+ * @property debugFile File to write debugging output to
+ * @property rendersBetweenDebugOutputs Renders between debug writes
+ * @property is1DSupported Should 1D animations be included in the supported animations list
+ * @property is2DSupported Should 2D animations be included in the supported animations list
+ * @property is3DSupported Should 3D animations be included in the supported animations list
+ * @property ledLocations Locations in 3D space of all LEDs.
+ * If null, strip is assumed to be one dimensional and with LEDs spaced equally.
  */
 @Serializable
 @SerialName("StripInfo")
 data class StripInfo(
     val numLEDs: Int = 0,
     val pin: Int? = null,
-    val imageDebugging: Boolean = false,
-    val fileName: String? = null,
-    val rendersBeforeSave: Int = 1000,
-    val include1D: Boolean = true,
-    val include2D: Boolean = false,
-    val include3D: Boolean = false,
+    val isDebugEnabled: Boolean = false,
+    val debugFile: String? = null,
+    val rendersBetweenDebugOutputs: Int = 1000,
+    val is1DSupported: Boolean = true,
+    val is2DSupported: Boolean = false,
+    val is3DSupported: Boolean = false,
     val ledLocations: List<Location>? = null,
 ) : SendableData {
 

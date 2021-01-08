@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.leds.colormanagement
@@ -43,12 +42,12 @@ actual class LEDStripColorLogger actual constructor(
     val stripColorManager: LEDStripColorManager,
 ) {
 
-    private val fileName = when (stripColorManager.stripManager.stripInfo.fileName) {
+    private val fileName = when (stripColorManager.stripManager.stripInfo.debugFile) {
         null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
         else -> {
-            if (stripColorManager.stripManager.stripInfo.fileName.endsWith(".csv"))
-                stripColorManager.stripManager.stripInfo.fileName
-            else "${stripColorManager.stripManager.stripInfo.fileName}.csv"
+            if (stripColorManager.stripManager.stripInfo.debugFile.endsWith(".csv"))
+                stripColorManager.stripManager.stripInfo.debugFile
+            else "${stripColorManager.stripManager.stripInfo.debugFile}.csv"
         }
     }
 
@@ -62,9 +61,9 @@ actual class LEDStripColorLogger actual constructor(
 
             for (saveState in saveStateChannel) {
                 renderNum++
-                if (stripColorManager.stripManager.stripInfo.imageDebugging) {
+                if (stripColorManager.stripManager.stripInfo.isDebugEnabled) {
                     saveStateBuffer.appendLine(saveState)
-                    if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBeforeSave) {
+                    if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBetweenDebugOutputs) {
                         launch(Dispatchers.IO) {
                             FileWriter(fileName, true).append(saveStateBuffer.toString()).close()
                             saveStateBuffer.clear()
