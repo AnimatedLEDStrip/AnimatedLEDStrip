@@ -25,6 +25,7 @@ package animatedledstrip.test.leds.locationmanagement
 import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.locationmanagement.PixelLocation
 import animatedledstrip.leds.locationmanagement.PixelLocationManager
+import animatedledstrip.test.locationArb
 import animatedledstrip.utils.TestLogger
 import co.touchlab.kermit.Severity
 import io.kotest.assertions.throwables.shouldThrow
@@ -35,8 +36,6 @@ import io.kotest.matchers.doubles.shouldBeGreaterThanOrEqual
 import io.kotest.matchers.doubles.shouldBeLessThanOrEqual
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
-import io.kotest.property.arbitrary.arbitrary
-import io.kotest.property.arbitrary.bind
 import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.list
 import io.kotest.property.checkAll
@@ -44,17 +43,6 @@ import kotlin.math.abs
 
 class PixelLocationManagerTest : StringSpec(
     {
-        val largeDoubleArb: Arb<Double> = arbitrary { rs ->
-            val i = rs.random.nextInt(Int.MIN_VALUE + 1, Int.MAX_VALUE - 1)
-            return@arbitrary if (i < 0) i - rs.random.nextDouble()
-            else i + rs.random.nextDouble()
-        }
-
-        val locationArb: Arb<Location> =
-            Arb.bind(largeDoubleArb,
-                     largeDoubleArb,
-                     largeDoubleArb) { x, y, z -> Location(x, y, z) }
-
         "constructor locations defined" {
             checkAll(Arb.list(locationArb, 1..5000)) { locs ->
                 val newManager = PixelLocationManager(locs, locs.size)

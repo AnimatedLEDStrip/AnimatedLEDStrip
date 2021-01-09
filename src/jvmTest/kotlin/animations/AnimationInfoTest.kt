@@ -22,107 +22,20 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.serializer
 import animatedledstrip.communication.toUTF8String
-import animatedledstrip.leds.locationmanagement.Location
+import animatedledstrip.test.animInfoArb
+import animatedledstrip.test.animParamsArb
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.property.Arb
-import io.kotest.property.arbitrary.*
 import io.kotest.property.checkAll
 import kotlinx.serialization.encodeToString
 
 class AnimationInfoTest : StringSpec(
     {
-        val largeDoubleArb: Arb<Double> = arbitrary { rs ->
-            val i = rs.random.nextInt(Int.MIN_VALUE + 1, Int.MAX_VALUE - 1)
-            return@arbitrary if (i < 0) i - rs.random.nextDouble()
-            else i + rs.random.nextDouble()
-        }
 
-        val locationArb: Arb<Location> =
-            Arb.bind(largeDoubleArb,
-                     largeDoubleArb,
-                     largeDoubleArb) { x, y, z -> Location(x, y, z) }
-
-        val distanceArb: Arb<Distance> =
-            Arb.bind(largeDoubleArb,
-                     largeDoubleArb,
-                     largeDoubleArb,
-                     Arb.bool()) { x, y, z, aOrP ->
-                if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
-            }
-
-        val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
-        val intArb = Arb.int()
-        val dimensionalityArb = Arb.enum<Dimensionality>()
-        val nullableIntArb = Arb.int().orNull()
-        val nullableDoubleArb = Arb.double().orNull()
-        val nullableLocationArb = locationArb.orNull()
-        val nullableDistanceArb = distanceArb.orNull()
-
-        val animIntParamArb: Arb<AnimationParameter<Int>> =
-            arbitrary { rs ->
-                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableIntArb.next(rs))
-            }
-
-        val animDoubleParamArb: Arb<AnimationParameter<Double>> =
-            arbitrary { rs ->
-                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDoubleArb.next(rs))
-            }
-
-        val animLocationParamArb: Arb<AnimationParameter<Location>> =
-            arbitrary { rs ->
-                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableLocationArb.next(rs))
-            }
-
-        val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
-            arbitrary { rs ->
-                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDistanceArb.next(rs))
-            }
-
-        data class ArbParams(
-            val intParams: List<AnimationParameter<Int>>,
-            val doubleParams: List<AnimationParameter<Double>>,
-            val locationParams: List<AnimationParameter<Location>>,
-            val distanceParams: List<AnimationParameter<Distance>>,
-        )
-
-        val animParamsArb: Arb<ArbParams> =
-            Arb.bind(Arb.list(animIntParamArb, 0..3),
-                     Arb.list(animDoubleParamArb, 0..3),
-                     Arb.list(animLocationParamArb, 0..3),
-                     Arb.list(animDistanceParamArb, 0..3)) { i, d, l, ds ->
-                ArbParams(i, d, l, ds)
-            }
-
-        data class ArbInfo(
-            val name: String,
-            val abbr: String,
-            val description: String,
-            val signatureFile: String,
-            val runCountDefault: Int,
-            val minimumColors: Int,
-            val unlimitedColors: Boolean,
-            val dimensionality: Set<Dimensionality>,
-            val directional: Boolean,
-        )
-
-        val animInfoArb: Arb<ArbInfo> =
-            arbitrary { rs ->
-                ArbInfo(
-                    filteredStringArb.next(rs),
-                    filteredStringArb.next(rs),
-                    filteredStringArb.next(rs),
-                    filteredStringArb.next(rs),
-                    intArb.next(rs),
-                    intArb.next(rs),
-                    Arb.bool().next(rs),
-                    Arb.set(dimensionalityArb, 1..3).next(rs),
-                    Arb.bool().next(rs))
-            }
 
         "encode JSON" {
             checkAll(animInfoArb, animParamsArb) { ai, ap ->
