@@ -45,6 +45,7 @@ fun addNewAnimation(anim: Animation) {
 }
 
 val predefinedAnimations: List<PredefinedAnimation> = listOf(
+    alterFade,
     alternate,
     bounce,
     bounceToColor,
@@ -80,10 +81,7 @@ val predefinedAnimations: List<PredefinedAnimation> = listOf(
 
 fun prepareAnimIdentifier(name: String): String =
     name.removeWhitespace()
-        .replace("-", "")
-        .replace("_", "")
-        .replace("(", "")
-        .replace(")", "")
+        .replace("[-_()]".toRegex(), "")
         .toLowerCase()
 
 fun findAnimation(animId: String): Animation = findAnimationOrNull(animId)!!
