@@ -22,26 +22,20 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animations.Direction
+import animatedledstrip.animations.*
 import animatedledstrip.animations.predefined.color
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.pixelProlongedColorList
 import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
+import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.sectionmanagement.SectionManager
-import io.kotest.core.Tag
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
-import org.pmw.tinylog.Configuration
-import org.pmw.tinylog.Configurator
-import org.pmw.tinylog.Level
-import org.pmw.tinylog.LogEntry
-import org.pmw.tinylog.writers.LogEntryValue
-import org.pmw.tinylog.writers.Writer
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.*
 import kotlin.test.assertTrue
-
-object AnimationTestTag : Tag()
 
 val newRunningAnimationParams: RunningAnimationParams
     get() = RunningAnimationParams(color, "", listOf(), "", "", -1,
@@ -111,53 +105,90 @@ fun SectionManager.assertProlongedPixels(indices: IntRange, color: Int) {
     }
 }
 
-/* Log Testing */
+val largeDoubleArb: Arb<Double> = arbitrary { rs ->
+    val i = rs.random.nextInt(Int.MIN_VALUE + 1, Int.MAX_VALUE - 1)
+    return@arbitrary if (i < 0) i - rs.random.nextDouble()
+    else i + rs.random.nextDouble()
+}
 
-object TestLogWriter : Writer {
-    private val logs = mutableSetOf<LogEntry>()
+val locationArb: Arb<Location> =
+    Arb.bind(largeDoubleArb,
+             largeDoubleArb,
+             largeDoubleArb) { x, y, z -> Location(x, y, z) }
 
-    fun clearLogs() = logs.clear()
-
-    override fun getRequiredLogEntryValues(): MutableSet<LogEntryValue> =
-        mutableSetOf(LogEntryValue.LEVEL, LogEntryValue.MESSAGE)
-
-    override fun write(log: LogEntry) {
-        logs.add(log)
+val distanceArb: Arb<Distance> =
+    Arb.bind(largeDoubleArb,
+             largeDoubleArb,
+             largeDoubleArb,
+             Arb.bool()) { x, y, z, aOrP ->
+        if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
     }
 
-    override fun init(p0: Configuration?) {}
+val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
+val intArb = Arb.int()
+val dimensionalityArb = Arb.enum<Dimensionality>()
+val nullableIntArb = Arb.int().orNull()
+val nullableDoubleArb = Arb.double().orNull()
+val nullableLocationArb = locationArb.orNull()
+val nullableDistanceArb = distanceArb.orNull()
 
-    override fun flush() {}
-
-    override fun close() {}
-
-    fun assertLogs(expectedLogs: Set<Pair<Level, String>>) {
-        val actualLogs = logs.map { Pair(it.level, it.message) }.toSet()
-
-        assertTrue(
-            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-            "extra values in expected: ${expectedLogs.minus(actualLogs)}"
-        ) {
-            actualLogs.containsAll(expectedLogs)
-        }
-        assertTrue(
-            "logs do not match:\nexpected: $expectedLogs\nactual: $actualLogs\n" +
-            "extra values in actual: ${actualLogs.minus(expectedLogs)}"
-        ) {
-            expectedLogs.containsAll(actualLogs)
-        }
+val animIntParamArb: Arb<AnimationParameter<Int>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableIntArb.next(rs))
     }
-}
 
-fun startLogCapture() {
-    Configurator.currentConfig().addWriter(TestLogWriter, Level.DEBUG).activate()
-    clearLogs()
-}
+val animDoubleParamArb: Arb<AnimationParameter<Double>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDoubleArb.next(rs))
+    }
 
-fun stopLogCapture() {
-    Configurator.currentConfig().removeWriter(TestLogWriter).activate()
-}
+val animLocationParamArb: Arb<AnimationParameter<Location>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableLocationArb.next(rs))
+    }
 
-fun assertLogs(expectedLogs: Set<Pair<Level, String>>) = TestLogWriter.assertLogs(expectedLogs)
+val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDistanceArb.next(rs))
+    }
 
-fun clearLogs() = TestLogWriter.clearLogs()
+data class ArbParams(
+    val intParams: List<AnimationParameter<Int>>,
+    val doubleParams: List<AnimationParameter<Double>>,
+    val locationParams: List<AnimationParameter<Location>>,
+    val distanceParams: List<AnimationParameter<Distance>>,
+)
+
+val animParamsArb: Arb<ArbParams> =
+    Arb.bind(Arb.list(animIntParamArb, 0..3),
+             Arb.list(animDoubleParamArb, 0..3),
+             Arb.list(animLocationParamArb, 0..3),
+             Arb.list(animDistanceParamArb, 0..3)) { i, d, l, ds ->
+        ArbParams(i, d, l, ds)
+    }
+
+data class ArbInfo(
+    val name: String,
+    val abbr: String,
+    val description: String,
+    val signatureFile: String,
+    val runCountDefault: Int,
+    val minimumColors: Int,
+    val unlimitedColors: Boolean,
+    val dimensionality: Set<Dimensionality>,
+    val directional: Boolean,
+)
+
+val animInfoArb: Arb<ArbInfo> =
+    arbitrary { rs ->
+        ArbInfo(
+            filteredStringArb.next(rs),
+            filteredStringArb.next(rs),
+            filteredStringArb.next(rs),
+            filteredStringArb.next(rs),
+            intArb.next(rs),
+            intArb.next(rs),
+            Arb.bool().next(rs),
+            Arb.set(dimensionalityArb, 1..3).next(rs),
+            Arb.bool().next(rs))
+    }
