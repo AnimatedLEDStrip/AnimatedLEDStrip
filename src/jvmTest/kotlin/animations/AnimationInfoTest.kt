@@ -22,75 +22,172 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.predefined.bubbleSort
-import animatedledstrip.animations.predefined.mergeSortParallel
+import animatedledstrip.animations.*
 import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.serializer
 import animatedledstrip.communication.toUTF8String
+import animatedledstrip.leds.locationmanagement.Location
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.booleans.shouldBeFalse
-import io.kotest.matchers.booleans.shouldBeTrue
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.*
+import io.kotest.property.checkAll
+import kotlinx.serialization.encodeToString
 
 class AnimationInfoTest : StringSpec(
     {
-        "constructor" {
-            val info = Animation.AnimationInfo(
-                name = "Test",
-                abbr = "TST",
-                description = "A test animation",
-                signatureFile = "sig.png",
-                runCountDefault = 1,
-                minimumColors = 4,
-                unlimitedColors = true,
-                dimensionality = Dimensionality.oneDimensional,
-                directional = false,
-                // TODO: Test remaining properties
-            )
-
-            info.name shouldBe "Test"
-            info.abbr shouldBe "TST"
-            info.description shouldBe "A test animation"
-            info.signatureFile shouldBe "sig.png"
-            info.minimumColors shouldBe 4
-            info.unlimitedColors.shouldBeTrue()
-            info.dimensionality.shouldContainExactly(Dimensionality.ONE_DIMENSIONAL)
-            info.directional.shouldBeFalse()
-
+        val largeDoubleArb: Arb<Double> = arbitrary { rs ->
+            val i = rs.random.nextInt(Int.MIN_VALUE + 1, Int.MAX_VALUE - 1)
+            return@arbitrary if (i < 0) i - rs.random.nextDouble()
+            else i + rs.random.nextDouble()
         }
 
-        "encode JSON".config(enabled = false) {
-            // TODO: 1/5/2021 Fix
-            bubbleSort.info.jsonString() shouldBe """{"type":"AnimationInfo","name":"Bubble Sort","abbr":"BST","dimensionality":"ONE_DIMENSIONAL","description":"Visualization of bubble sort.\n`pCols[0]` is randomized, then bubble sort is used to resort it.","signatureFile":"bubble_sort.png","runCountDefault":1,"minimumColors":1,"unlimitedColors":false,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":5,"distanceDefault":-1,"spacingDefault":3};;;"""
+        val locationArb: Arb<Location> =
+            Arb.bind(largeDoubleArb,
+                     largeDoubleArb,
+                     largeDoubleArb) { x, y, z -> Location(x, y, z) }
+
+        val distanceArb: Arb<Distance> =
+            Arb.bind(largeDoubleArb,
+                     largeDoubleArb,
+                     largeDoubleArb,
+                     Arb.bool()) { x, y, z, aOrP ->
+                if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
+            }
+
+        val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
+        val intArb = Arb.int()
+        val dimensionalityArb = Arb.enum<Dimensionality>()
+        val nullableIntArb = Arb.int().orNull()
+        val nullableDoubleArb = Arb.double().orNull()
+        val nullableLocationArb = locationArb.orNull()
+        val nullableDistanceArb = distanceArb.orNull()
+
+        val animIntParamArb: Arb<AnimationParameter<Int>> =
+            arbitrary { rs ->
+                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableIntArb.next(rs))
+            }
+
+        val animDoubleParamArb: Arb<AnimationParameter<Double>> =
+            arbitrary { rs ->
+                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDoubleArb.next(rs))
+            }
+
+        val animLocationParamArb: Arb<AnimationParameter<Location>> =
+            arbitrary { rs ->
+                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableLocationArb.next(rs))
+            }
+
+        val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
+            arbitrary { rs ->
+                AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDistanceArb.next(rs))
+            }
+
+        data class ArbParams(
+            val intParams: List<AnimationParameter<Int>>,
+            val doubleParams: List<AnimationParameter<Double>>,
+            val locationParams: List<AnimationParameter<Location>>,
+            val distanceParams: List<AnimationParameter<Distance>>,
+        )
+
+        val animParamsArb: Arb<ArbParams> =
+            Arb.bind(Arb.list(animIntParamArb, 0..3),
+                     Arb.list(animDoubleParamArb, 0..3),
+                     Arb.list(animLocationParamArb, 0..3),
+                     Arb.list(animDistanceParamArb, 0..3)) { i, d, l, ds ->
+                ArbParams(i, d, l, ds)
+            }
+
+        data class ArbInfo(
+            val name: String,
+            val abbr: String,
+            val description: String,
+            val signatureFile: String,
+            val runCountDefault: Int,
+            val minimumColors: Int,
+            val unlimitedColors: Boolean,
+            val dimensionality: Set<Dimensionality>,
+            val directional: Boolean,
+        )
+
+        val animInfoArb: Arb<ArbInfo> =
+            arbitrary { rs ->
+                ArbInfo(
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    intArb.next(rs),
+                    intArb.next(rs),
+                    Arb.bool().next(rs),
+                    Arb.set(dimensionalityArb, 1..3).next(rs),
+                    Arb.bool().next(rs))
+            }
+
+        "encode JSON" {
+            checkAll(animInfoArb, animParamsArb) { ai, ap ->
+                Animation.AnimationInfo(ai.name, ai.abbr, ai.description, ai.signatureFile, ai.runCountDefault,
+                                        ai.minimumColors, ai.unlimitedColors, ai.dimensionality, ai.directional,
+                                        ap.intParams, ap.doubleParams, ap.locationParams, ap.distanceParams, listOf())
+                    .jsonString() shouldBe """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","signatureFile":"${ai.signatureFile}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
+                        """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
+                        """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
+            }
         }
-        "decode JSON".config(enabled = false) {
-            // TODO: 1/5/2021 Fix
-            val json =
-                """{"type":"AnimationInfo", "name":"Alternate","abbr":"ALT","dimensionality":"ONE_DIMENSIONAL","description":"A description","signatureFile":"alternate.png","runCountDefault":1,"minimumColors":2,"unlimitedColors":true,"center":"NOTUSED","delay":"USED","direction":"NOTUSED","distance":"NOTUSED","spacing":"NOTUSED","delayDefault":1000,"distanceDefault":20,"spacingDefault":3}"""
 
-            val correctData = Animation.AnimationInfo(
-                name = "Alternate",
-                abbr = "ALT",
-                description = "A description",
-                signatureFile = "alternate.png",
-                runCountDefault = 1,
-                minimumColors = 2,
-                unlimitedColors = true,
-                dimensionality = Dimensionality.oneDimensional,
-                directional = true,
-            )
+        "decode JSON" {
+            checkAll(animInfoArb, animParamsArb) { ai, ap ->
+                val json =
+                    """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","signatureFile":"${ai.signatureFile}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
+                    """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
+                    """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
 
-            json.decodeJson() as Animation.AnimationInfo shouldBe correctData
+                val correctData = Animation.AnimationInfo(name = ai.name,
+                                                          abbr = ai.abbr,
+                                                          description = ai.description,
+                                                          signatureFile = ai.signatureFile,
+                                                          runCountDefault = ai.runCountDefault,
+                                                          minimumColors = ai.minimumColors,
+                                                          unlimitedColors = ai.unlimitedColors,
+                                                          dimensionality = ai.dimensionality,
+                                                          directional = ai.directional,
+                                                          intParams = ap.intParams,
+                                                          doubleParams = ap.doubleParams,
+                                                          locationParams = ap.locationParams,
+                                                          distanceParams = ap.distanceParams,
+                                                          equationParams = listOf())
+
+                json.decodeJson() as Animation.AnimationInfo shouldBe correctData
+            }
         }
 
         "encode and decode JSON" {
-            val info1 = mergeSortParallel.info
-            val infoBytes = info1.json()
+            checkAll(animInfoArb, animParamsArb) { ai, ap ->
+                val info1 = Animation.AnimationInfo(name = ai.name,
+                                                    abbr = ai.abbr,
+                                                    description = ai.description,
+                                                    signatureFile = ai.signatureFile,
+                                                    runCountDefault = ai.runCountDefault,
+                                                    minimumColors = ai.minimumColors,
+                                                    unlimitedColors = ai.unlimitedColors,
+                                                    dimensionality = ai.dimensionality,
+                                                    directional = ai.directional,
+                                                    intParams = ap.intParams,
+                                                    doubleParams = ap.doubleParams,
+                                                    locationParams = ap.locationParams,
+                                                    distanceParams = ap.distanceParams,
+                                                    equationParams = listOf())
+                val infoBytes = info1.json()
 
-            val info2 = infoBytes.toUTF8String().decodeJson() as Animation.AnimationInfo
+                val info2 = infoBytes.toUTF8String().decodeJson() as Animation.AnimationInfo
 
-            info2 shouldBe info1
+                info2 shouldBe info1
+            }
         }
     })

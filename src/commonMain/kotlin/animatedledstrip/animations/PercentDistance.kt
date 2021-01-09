@@ -26,7 +26,7 @@ import kotlinx.serialization.Serializable
 import kotlin.math.max
 
 @Serializable
-class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance {
+data class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance {
     override val coordinates: String = "$x, $y, $z"
 
     override val maxDistance: Double = max(x, max(y, z))
