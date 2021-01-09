@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.communication
@@ -28,30 +27,39 @@ import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.filter
+import io.kotest.property.arbitrary.string
+import io.kotest.property.checkAll
 
 class CommandTest : StringSpec(
     {
         "encode JSON" {
-            Command("a command").jsonString() shouldBe
-                    """{"type":"Command","command":"a command"};;;"""
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { c ->
+                Command(c).jsonString() shouldBe
+                        """{"type":"Command","command":"$c"};;;"""
+            }
         }
 
         "decode JSON" {
-            val json =
-                """{"type":"Command", "command":"run a command"};;;"""
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { c ->
+                val json =
+                    """{"type":"Command", "command":"$c"};;;"""
 
-            val correctData = Command("run a command")
-
-            json.decodeJson() as Command shouldBe correctData
+                val correctData = Command(c)
+                json.decodeJson() as Command shouldBe correctData
+            }
         }
 
         "encode and decode JSON" {
-            val cmd1 = Command("test command")
-            val cmdBytes = cmd1.json()
+            checkAll<String> { c ->
+                val cmd1 = Command(c)
+                val cmdBytes = cmd1.json()
 
-            val cmd2 = cmdBytes.toUTF8String().decodeJson() as Command
+                val cmd2 = cmdBytes.toUTF8String().decodeJson() as Command
 
-            cmd2 shouldBe cmd1
+                cmd2 shouldBe cmd1
+            }
         }
     }
 )
