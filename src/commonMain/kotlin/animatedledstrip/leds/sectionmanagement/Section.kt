@@ -46,11 +46,14 @@ class Section(
         require(startPixel <= endPixel) { "startPixel should be less than or equal to endPixel" }
     }
 
+    @Transient
     override val numLEDs: Int = endPixel - startPixel + 1
 
+    @Suppress("JoinDeclarationAndAssignment")
     @Transient
     override lateinit var stripManager: LEDStrip
 
+    @Suppress("JoinDeclarationAndAssignment")
     @Transient
     private lateinit var parentSection: SectionManager
 
