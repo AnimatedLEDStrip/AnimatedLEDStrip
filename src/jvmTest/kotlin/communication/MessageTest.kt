@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.communication
@@ -28,30 +27,40 @@ import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.filter
+import io.kotest.property.arbitrary.string
+import io.kotest.property.checkAll
 
 class MessageTest : StringSpec(
     {
         "encode JSON" {
-            Message("A very important message").jsonString() shouldBe
-                    """{"type":"Message","message":"A very important message"};;;"""
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
+                Message(m).jsonString() shouldBe
+                        """{"type":"Message","message":"$m"};;;"""
+            }
         }
 
         "decode JSON" {
-            val json =
-                """{"type":"Message","message":"a message"};;;"""
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
+                val json =
+                    """{"type":"Message","message":"$m"};;;"""
 
-            val correctData = Message("a message")
+                val correctData = Message(m)
 
-            json.decodeJson() as Message shouldBe correctData
+                json.decodeJson() as Message shouldBe correctData
+            }
         }
 
         "encode and decode JSON" {
-            val msg1 = Message("Another message")
-            val msgBytes = msg1.json()
+            checkAll<String> { m ->
+                val msg1 = Message(m)
+                val msgBytes = msg1.json()
 
-            val msg2 = msgBytes.toUTF8String().decodeJson() as Message
+                val msg2 = msgBytes.toUTF8String().decodeJson() as Message
 
-            msg2 shouldBe msg1
+                msg2 shouldBe msg1
+            }
         }
     }
 )
