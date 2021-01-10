@@ -79,8 +79,10 @@ abstract class Animation(open val info: AnimationInfo) {
         val directional: Boolean,
         val intParams: List<AnimationParameter<Int>> = listOf(),
         val doubleParams: List<AnimationParameter<Double>> = listOf(),
+        val stringParams: List<AnimationParameter<String>> = listOf(),
         val locationParams: List<AnimationParameter<Location>> = listOf(),
         val distanceParams: List<AnimationParameter<Distance>> = listOf(),
+        val rotationParams: List<AnimationParameter<Rotation>> = listOf(),
         val equationParams: List<AnimationParameter<Equation>> = listOf(),
     ) : SendableData
 }

@@ -22,10 +22,7 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Direction
-import animatedledstrip.animations.Distance
-import animatedledstrip.animations.Equation
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData
@@ -65,8 +62,10 @@ data class RunningAnimationParams private constructor(
     val direction: Direction,
     val intParams: Map<String, Int>,
     val doubleParams: Map<String, Double>,
+    val stringParams: Map<String, String>,
     val locationParams: Map<String, Location>,
-    val distanceParams: Map<String, Distance>,
+    val distanceParams: Map<String, AbsoluteDistance>,
+    val rotationParams: Map<String, RadiansRotation>,
     val equationParams: Map<String, Equation>,
     val sourceParams: AnimationToRunParams,
 ) : SendableData {
@@ -87,8 +86,10 @@ data class RunningAnimationParams private constructor(
         direction: Direction,
         intParams: Map<String, Int>,
         doubleParams: Map<String, Double>,
+        stringParams: Map<String, String>,
         locationParams: Map<String, Location>,
-        distanceParams: Map<String, Distance>,
+        distanceParams: Map<String, AbsoluteDistance>,
+        rotationParams: Map<String, RadiansRotation>,
         equationParams: Map<String, Equation>,
         sourceParams: AnimationToRunParams,
     ) : this(animationName,
@@ -99,8 +100,10 @@ data class RunningAnimationParams private constructor(
              direction,
              intParams,
              doubleParams,
+             stringParams,
              locationParams,
              distanceParams,
+             rotationParams,
              equationParams,
              sourceParams) {
         this.animation = animation
@@ -126,8 +129,10 @@ data class RunningAnimationParams private constructor(
         direction: Direction = this.direction,
         intParamMods: Map<String, Int> = mapOf(),
         doubleParamMods: Map<String, Double> = mapOf(),
+        stringParamMods: Map<String, String> = mapOf(),
         locationParamMods: Map<String, Location> = mapOf(),
         distanceParamMods: Map<String, Distance> = mapOf(),
+        rotationParamMods: Map<String, Rotation> = mapOf(),
         equationParamMods: Map<String, Equation> = mapOf(),
     ): AnimationToRunParams = AnimationToRunParams(animation,
                                                    colors,
@@ -137,7 +142,9 @@ data class RunningAnimationParams private constructor(
                                                    direction,
                                                    (intParams + intParamMods).toMutableMap(),
                                                    (doubleParams + doubleParamMods).toMutableMap(),
+                                                   (stringParams + stringParamMods).toMutableMap(),
                                                    (locationParams + locationParamMods).toMutableMap(),
                                                    (distanceParams + distanceParamMods).toMutableMap(),
+                                                   (rotationParams + rotationParamMods).toMutableMap(),
                                                    (equationParams + equationParamMods).toMutableMap())
 }

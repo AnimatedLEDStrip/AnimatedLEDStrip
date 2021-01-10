@@ -22,23 +22,11 @@
 
 package animatedledstrip.leds.locationmanagement
 
+import animatedledstrip.animations.RadiansRotation
+import animatedledstrip.animations.RotationAxis
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import kotlin.math.cos
 import kotlin.math.sin
-
-/**
- * Rotate a point around the Z axis by [rotation] radians using the matrix
- * | cos(zRotation) -sin(zRotation) 0 |
- * | sin(zRotation) cos(zRotation)  0 |
- * | 0              0               1 |
- *
- * Adapted from Matt Parker's video
- * (https://youtu.be/TvlpIojusBE?t=1078)
- */
-fun Location.zRotate(rotation: Double): Location =
-    Location(x * cos(rotation) + y * sin(rotation) + z * 0,
-             x * -sin(rotation) + y * cos(rotation) + z * 0,
-             x * 0 + y * 0 + z * 1)
 
 /**
  * Rotate a point around the X axis by [rotation] radians using the matrix
@@ -55,6 +43,34 @@ fun Location.xRotate(rotation: Double): Location =
              x * 0 + y * -sin(rotation) + z * cos(rotation))
 
 /**
+ * Rotate a point around the Y axis by [rotation] radians using the matrix
+ * | cos(yRotation)  0 sin(xRotation) |
+ * | 0               1 0              |
+ * | -sin(xRotation) 0 cos(xRotation) |
+ *
+ * Adapted from Matt Parker's video
+ * (https://youtu.be/TvlpIojusBE?t=1078)
+ */
+fun Location.yRotate(rotation: Double): Location =
+    Location(x * cos(rotation) + y * 0 + sin(rotation),
+             x * 0 + y * 1 + z * 0,
+             x * -sin(rotation) + y * 0 + z * cos(rotation))
+
+/**
+ * Rotate a point around the Z axis by [rotation] radians using the matrix
+ * | cos(zRotation) -sin(zRotation) 0 |
+ * | sin(zRotation) cos(zRotation)  0 |
+ * | 0              0               1 |
+ *
+ * Adapted from Matt Parker's video
+ * (https://youtu.be/TvlpIojusBE?t=1078)
+ */
+fun Location.zRotate(rotation: Double): Location =
+    Location(x * cos(rotation) + y * sin(rotation) + z * 0,
+             x * -sin(rotation) + y * cos(rotation) + z * 0,
+             x * 0 + y * 0 + z * 1)
+
+/**
  * Transform a location of a pixel around the Z and X axes.
  *
  * Adapted from Matt Parker's video
@@ -64,8 +80,17 @@ fun Location.xRotate(rotation: Double): Location =
  * @param xRotation How far to rotate around X axis (in radians)
  * @return A new [Location]
  */
-fun PixelLocation.transform(zRotation: Double, xRotation: Double): Location =
-    location.zRotate(zRotation).xRotate(xRotation)
+fun PixelLocation.transform(rotation: RadiansRotation): Location {
+    var tmpLocation = location
+    for (axis in rotation.rotationOrder) {
+        tmpLocation = when (axis) {
+            RotationAxis.ROTATE_X -> tmpLocation.xRotate(rotation.xRotation)
+            RotationAxis.ROTATE_Y -> tmpLocation.yRotate(rotation.yRotation)
+            RotationAxis.ROTATE_Z -> tmpLocation.zRotate(rotation.zRotation)
+        }
+    }
+    return tmpLocation
+}
 
-fun AnimationManager.transformLocations(zRotation: Double, xRotation: Double): List<Location> =
-    sectionManager.stripManager.pixelLocationManager.pixelLocations.map { it.transform(zRotation, xRotation) }
+fun AnimationManager.transformLocations(rotation: RadiansRotation): List<Location> =
+    sectionManager.stripManager.pixelLocationManager.pixelLocations.map { it.transform(rotation) }

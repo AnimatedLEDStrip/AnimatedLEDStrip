@@ -22,19 +22,9 @@
 
 package animatedledstrip.animations
 
-interface Distance {
-    val x: Double
-    val y: Double
-    val z: Double
-
-    val coordinates: String
-
-    operator fun times(multiplier: Distance): Distance =
-        AbsoluteDistance(x * multiplier.x,
-                         y * multiplier.y,
-                         z * multiplier.z)
-
-    val maxDistance: Double
-
-    fun asAbsoluteDistance(): AbsoluteDistance = AbsoluteDistance(x, y, z)
+interface Rotation {
+    val xRotation: Double
+    val yRotation: Double
+    val zRotation: Double
+    val rotationOrder: List<RotationAxis>
 }

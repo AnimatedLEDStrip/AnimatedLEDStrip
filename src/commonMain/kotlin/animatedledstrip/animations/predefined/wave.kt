@@ -53,9 +53,8 @@ val wave = PredefinedAnimation(
                                               500)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
-                                                 1.0),
-                              AnimationParameter("zRotation", "Rotation around the Z axis (radians)"),
-                              AnimationParameter("xRotation", "Rotation around the X axis (radians)")),
+                                                 1.0)),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the plane around the XYZ axes")),
     )
 ) { leds, params, scope ->
     val color = params.colors[0]
@@ -64,11 +63,10 @@ val wave = PredefinedAnimation(
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
 
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
-    val zRotation = params.doubleParams.getValue("zRotation")
-    val xRotation = params.doubleParams.getValue("xRotation")
+    val rotation = params.rotationParams.getValue("rotation")
 
     val newManager = PixelLocationManager(
-        leds.transformLocations(zRotation, xRotation),
+        leds.transformLocations(rotation),
         leds.numLEDs)
 
     leds.apply {
