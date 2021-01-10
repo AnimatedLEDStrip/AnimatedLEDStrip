@@ -24,7 +24,6 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.AnimationManager
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -38,23 +37,13 @@ suspend fun AnimationManager.partition(
     endIndex: Int,
     interMovementDelay: Long,
 ): Int {
-    fun updateColorAtLocation(location: Int) {
-        setPixelProlongedColor(location, sortablePixels[location].color)
-    }
-
     var pivotLocation = Random.nextInt(startIndex, endIndex)
     var i = startIndex
     var j = pivotLocation + 1
 
     while (i < pivotLocation) {
         if (sortablePixels[i].finalLocation > sortablePixels[pivotLocation].finalLocation) {
-            val tmp = sortablePixels[i]
-            for (p in i until pivotLocation) {
-                sortablePixels[p] = sortablePixels[p + 1]
-                updateColorAtLocation(p)
-            }
-            sortablePixels[pivotLocation] = tmp
-            updateColorAtLocation(pivotLocation)
+            shiftPixel(i, pivotLocation, sortablePixels)
             pivotLocation--
             delay(interMovementDelay)
         } else i++
@@ -62,13 +51,7 @@ suspend fun AnimationManager.partition(
 
     while (j <= endIndex) {
         if (sortablePixels[j].finalLocation < sortablePixels[pivotLocation].finalLocation) {
-            val tmp = sortablePixels[j]
-            for (p in j downTo pivotLocation + 1) {
-                sortablePixels[p] = sortablePixels[p - 1]
-                updateColorAtLocation(p)
-            }
-            sortablePixels[pivotLocation] = tmp
-            updateColorAtLocation(pivotLocation)
+            shiftPixel(j, pivotLocation, sortablePixels)
             pivotLocation++
             delay(interMovementDelay)
         }

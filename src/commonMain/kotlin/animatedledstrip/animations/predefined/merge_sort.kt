@@ -24,7 +24,6 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.leds.animationmanagement.AnimationManager
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -39,10 +38,6 @@ suspend fun AnimationManager.mergeSort(
     interMovementDelay: Long,
     parallel: Boolean,
 ): Job? {
-    fun updateColorAtLocation(location: Int) {
-        setPixelProlongedColor(location, sortablePixels[location].color)
-    }
-
     if (startIndex == endIndex) return null
 
     return scope.launch {
@@ -63,13 +58,7 @@ suspend fun AnimationManager.mergeSort(
                     p1++
                 }
                 sortablePixels[p2].finalLocation < sortablePixels[p1].finalLocation -> {
-                    val temp = sortablePixels[p2]
-                    for (i in p2 downTo p1 + 1) {
-                        sortablePixels[i] = sortablePixels[i - 1]
-                        updateColorAtLocation(i)
-                    }
-                    sortablePixels[p1] = temp
-                    updateColorAtLocation(p1)
+                    shiftPixel(p2, p1, sortablePixels)
                     p1++
                     if (p2 < endIndex) p2++
                     delay(interMovementDelay)
