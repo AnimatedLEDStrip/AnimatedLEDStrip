@@ -30,11 +30,15 @@ import kotlinx.coroutines.CoroutineScope
  * An animation that is defined in the library and compiled into the jar
  */
 class PredefinedAnimation(
-    info: AnimationInfo,
+    override val info: AnimationInfo,
     val animation: suspend (AnimationManager, RunningAnimationParams, CoroutineScope) -> Unit,
-) : Animation(info) {
+) : Animation() {
 
-    override suspend fun runAnimation(leds: AnimationManager, params: RunningAnimationParams, scope: CoroutineScope) =
+    override suspend fun runAnimation(
+        leds: AnimationManager,
+        params: RunningAnimationParams,
+        scope: CoroutineScope,
+    ): Unit =
         animation(leds, params, scope)
 
 }

@@ -35,12 +35,9 @@ import kotlinx.serialization.Serializable
  *
  * @property info Information about the animation
  */
-abstract class Animation(open val info: AnimationInfo) {
+abstract class Animation {
 
-    companion object {
-        const val DEFAULT_DELAY = 50L
-        const val DEFAULT_SPACING = 3
-    }
+    abstract val info: AnimationInfo
 
     /**
      * Run the animation, passing it the AnimationManager running it, parameters specifying how to run the animation,
