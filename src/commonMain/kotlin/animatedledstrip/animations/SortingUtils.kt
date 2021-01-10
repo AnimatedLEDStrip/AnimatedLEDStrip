@@ -24,6 +24,8 @@ package animatedledstrip.animations
 
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.shuffledWithIndices
+import animatedledstrip.leds.animationmanagement.AnimationManager
+import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 
 data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
 
@@ -34,3 +36,30 @@ fun PreparedColorContainer.toSortableList(): MutableList<SortablePixel> =
 
 fun List<SortablePixel>.toPreparedColorContainer(): PreparedColorContainer =
     PreparedColorContainer(this.map { it.color })
+
+fun AnimationManager.updateColorAtIndex(index: Int, sortablePixels: List<SortablePixel>) {
+    setPixelProlongedColor(index, sortablePixels[index].color)
+}
+
+fun AnimationManager.shiftPixel(from: Int, to: Int, sortablePixels: MutableList<SortablePixel>) {
+    when {
+        from < to -> {
+            val tmp = sortablePixels[from]
+            for (p in from until to) {
+                sortablePixels[p] = sortablePixels[p + 1]
+                updateColorAtIndex(p, sortablePixels)
+            }
+            sortablePixels[to] = tmp
+            updateColorAtIndex(to, sortablePixels)
+        }
+        from > to -> {
+            val tmp = sortablePixels[from]
+            for (p in from downTo to + 1) {
+                sortablePixels[p] = sortablePixels[p - 1]
+                updateColorAtIndex(p, sortablePixels)
+            }
+            sortablePixels[to] = tmp
+            updateColorAtIndex(to, sortablePixels)
+        }
+    }
+}

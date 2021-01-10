@@ -22,13 +22,9 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.AnimationParameter
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
+import animatedledstrip.animations.*
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.shuffledWithIndices
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
@@ -50,21 +46,15 @@ val heapSort = PredefinedAnimation(
 ) { leds, params, _ ->
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
 
-    data class SortablePixel(val finalLocation: Int, val currentLocation: Int, val color: Int)
-
-    val colorMap =
+    val sortablePixels =
         params.colors[0]
             .shuffledWithIndices()
             .mapIndexed { index, it -> SortablePixel(it.first, index, it.second) }
             .toMutableList()
-    val color = PreparedColorContainer(colorMap.map { it.color })
+    val startColor = PreparedColorContainer(sortablePixels.map { it.color })
 
     leds.apply {
-        setStripProlongedColor(color)
-
-        fun updateColorAtLocation(location: Int) {
-            setPixelProlongedColor(location, colorMap[location].color)
-        }
+        setStripProlongedColor(startColor)
 
         suspend fun siftDown(start: Int, end: Int) {
             var root = start
@@ -73,22 +63,22 @@ val heapSort = PredefinedAnimation(
                 val child = 2 * root + 1
                 var swap = root
 
-                if (colorMap[swap].finalLocation < colorMap[child].finalLocation)
+                if (sortablePixels[swap].finalLocation < sortablePixels[child].finalLocation)
                     swap = child
 
-                if (child + 1 <= end && colorMap[swap].finalLocation < colorMap[child + 1].finalLocation)
+                if (child + 1 <= end && sortablePixels[swap].finalLocation < sortablePixels[child + 1].finalLocation)
                     swap = child + 1
 
                 if (swap == root)
                     return
                 else {
-                    val tmp = colorMap[root]
+                    val tmp = sortablePixels[root]
 
-                    colorMap[root] = colorMap[swap]
-                    updateColorAtLocation(root)
+                    sortablePixels[root] = sortablePixels[swap]
+                    updateColorAtIndex(root, sortablePixels)
 
-                    colorMap[swap] = tmp
-                    updateColorAtLocation(swap)
+                    sortablePixels[swap] = tmp
+                    updateColorAtIndex(swap, sortablePixels)
 
                     root = swap
 
@@ -97,22 +87,22 @@ val heapSort = PredefinedAnimation(
             }
         }
 
-        var start = (colorMap.lastIndex - 1) / 2
+        var start = (sortablePixels.lastIndex - 1) / 2
 
         while (start >= 0) {
-            siftDown(start, colorMap.lastIndex)
+            siftDown(start, sortablePixels.lastIndex)
             start--
         }
 
-        var end = colorMap.lastIndex
+        var end = sortablePixels.lastIndex
         while (end > 0) {
-            val tmp = colorMap[0]
+            val tmp = sortablePixels[0]
 
-            colorMap[0] = colorMap[end]
-            updateColorAtLocation(0)
+            sortablePixels[0] = sortablePixels[end]
+            updateColorAtIndex(0, sortablePixels)
 
-            colorMap[end] = tmp
-            updateColorAtLocation(end)
+            sortablePixels[end] = tmp
+            updateColorAtIndex(end, sortablePixels)
 
             delay(interMovementDelay)
 
