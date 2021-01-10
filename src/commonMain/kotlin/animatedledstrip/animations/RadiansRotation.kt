@@ -22,19 +22,12 @@
 
 package animatedledstrip.animations
 
-interface Distance {
-    val x: Double
-    val y: Double
-    val z: Double
+import kotlinx.serialization.Serializable
 
-    val coordinates: String
-
-    operator fun times(multiplier: Distance): Distance =
-        AbsoluteDistance(x * multiplier.x,
-                         y * multiplier.y,
-                         z * multiplier.z)
-
-    val maxDistance: Double
-
-    fun asAbsoluteDistance(): AbsoluteDistance = AbsoluteDistance(x, y, z)
-}
+@Serializable
+data class RadiansRotation(
+    override val xRotation: Double = 0.0,
+    override val yRotation: Double = 0.0,
+    override val zRotation: Double = 0.0,
+    override val rotationOrder: List<RotationAxis> = listOf(RotationAxis.ROTATE_Z, RotationAxis.ROTATE_X),
+) : Rotation

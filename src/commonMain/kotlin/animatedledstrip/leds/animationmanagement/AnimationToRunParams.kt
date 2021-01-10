@@ -38,21 +38,21 @@ import kotlinx.serialization.Serializable
  *
  * @property animation Name of the animation
  * @property colors The list of [ColorContainer]s to use
- * @property center The pixel at the center of an animation.
- *   Defaults to the center of the strip.
- * @property delay Delay time (in milliseconds) used in the animation
- * @property delayMod Multiplier for `delay`
- * @property direction The direction the animation will appear to move
- * @property distance The distance an animation will travel from its center.
- *   Defaults to the length of the strip, meaning it will run until the ends of the strip.
  * @property id ID for the animation.
  *   Used by server and clients to identify a specific animation.
- * @property runCount The number of times the animation should be run. `-1` means until stopped.
  * @property section The id of the section of the strip that will be running the whole animation
  *   (not necessarily the section running this animation, such as if this is a subanimation).
  *   This is the section that ColorContainer blend preparation will be based upon.
  *   An empty string means the whole strip.
- * @property spacing Spacing used in the animation
+ * @property runCount The number of times the animation should be run. `-1` means until stopped.
+ * @property direction The direction the animation will appear to move
+ * @property intParams A map of integer parameters for the animation
+ * @property doubleParams A map of double parameters for the animation
+ * @property stringParams A map of string parameters for the animation
+ * @property locationParams A map of [Location] parameters for the animation
+ * @property distanceParams A map of [Distance] parameters for the animation
+ * @property rotationParams A map of [Rotation] parameters for the animation
+ * @property equationParams A map of [Equation] parameters for the animation
  */
 @Serializable
 @SerialName("AnimationToRunParams")
@@ -65,8 +65,10 @@ data class AnimationToRunParams(
     var direction: Direction = Direction.FORWARD,
     var intParams: MutableMap<String, Int> = mutableMapOf(),
     var doubleParams: MutableMap<String, Double> = mutableMapOf(),
+    var stringParams: MutableMap<String, String> = mutableMapOf(),
     var locationParams: MutableMap<String, Location> = mutableMapOf(),
     var distanceParams: MutableMap<String, Distance> = mutableMapOf(),
+    var rotationParams: MutableMap<String, Rotation> = mutableMapOf(),
     var equationParams: MutableMap<String, Equation> = mutableMapOf(),
 ) : SendableData {
 
@@ -80,7 +82,7 @@ data class AnimationToRunParams(
         sectionRunningAnimation: Section,
         sectionRunningFullAnimation: Section = sectionRunningAnimation,
     ): RunningAnimationParams {
-        // Animation's existence should be verified before now
+        // Animation's existence (and support by strip) should be verified before now
         val definedAnimation = sectionRunningAnimation.findAnimation(animation)
 
         val calculatedColors = mutableListOf<PreparedColorContainer>()
@@ -106,39 +108,45 @@ data class AnimationToRunParams(
 
         val preparedIntParams: MutableMap<String, Int> = mutableMapOf()
         val preparedDoubleParams: MutableMap<String, Double> = mutableMapOf()
+        val preparedStringParams: MutableMap<String, String> = mutableMapOf()
         val preparedLocationParams: MutableMap<String, Location> = mutableMapOf()
-        val preparedDistanceParams: MutableMap<String, Distance> = mutableMapOf()
+        val preparedDistanceParams: MutableMap<String, AbsoluteDistance> = mutableMapOf()
+        val preparedRotationParams: MutableMap<String, RadiansRotation> = mutableMapOf()
         val preparedEquationParams: MutableMap<String, Equation> = mutableMapOf()
 
         for (intParam in definedAnimation.info.intParams)
-            preparedIntParams[intParam.name] =
-                when (val paramValue = intParams[intParam.name]) {
-                    null -> intParam.default ?: 0
-                    else -> paramValue
-                }
+            preparedIntParams[intParam.name] = intParams[intParam.name] ?: intParam.default ?: 0
 
         for (doubleParam in definedAnimation.info.doubleParams)
-            preparedDoubleParams[doubleParam.name] =
-                when (val paramValue = doubleParams[doubleParam.name]) {
-                    null -> doubleParam.default ?: 0.0
-                    else -> paramValue
-                }
+            preparedDoubleParams[doubleParam.name] = doubleParams[doubleParam.name] ?: doubleParam.default ?: 0.0
+
+        for (stringParam in definedAnimation.info.stringParams)
+            preparedStringParams[stringParam.name] = stringParams[stringParam.name] ?: stringParam.default ?: ""
 
         for (distanceParam in definedAnimation.info.distanceParams)
             preparedDistanceParams[distanceParam.name] =
                 when (val paramValue = distanceParams[distanceParam.name]) {
-                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance * distanceParam.default
-                            ?: AbsoluteDistance(1, 1, 1)
-                    is PercentDistance -> (sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance * paramValue) as Distance
+                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance *
+                            (distanceParam.default ?: AbsoluteDistance(1.0, 1.0, 1.0))
+                    is PercentDistance -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance *
+                                          paramValue
                     else -> paramValue
-                }
+                }.asAbsoluteDistance()
 
         for (locationParam in definedAnimation.info.locationParams)
             preparedLocationParams[locationParam.name] =
-                when (val paramValue = locationParams[locationParam.name]) {
-                    null -> locationParam.default
-                            ?: sectionRunningAnimation.stripManager.pixelLocationManager.defaultLocation
+                when (val paramValue = locationParams[locationParam.name] ?: locationParam.default) {
+                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultLocation
                     else -> paramValue
+                }
+
+        for (rotationParam in definedAnimation.info.rotationParams)
+            preparedRotationParams[rotationParam.name] =
+                when (val paramValue = rotationParams[rotationParam.name]
+                                       ?: rotationParam.default
+                                       ?: RadiansRotation(0.0, 0.0, 0.0)) {
+                    is DegreesRotation -> paramValue.toRadiansRotation()
+                    else -> paramValue as RadiansRotation
                 }
 
         for (equationParam in definedAnimation.info.equationParams)
@@ -160,8 +168,10 @@ data class AnimationToRunParams(
                                       direction,
                                       preparedIntParams,
                                       preparedDoubleParams,
+                                      preparedStringParams,
                                       preparedLocationParams,
                                       preparedDistanceParams,
+                                      preparedRotationParams,
                                       preparedEquationParams,
                                       this)
     }

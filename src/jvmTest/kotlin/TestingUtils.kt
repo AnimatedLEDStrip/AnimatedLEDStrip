@@ -39,7 +39,7 @@ import kotlin.test.assertTrue
 
 val newRunningAnimationParams: RunningAnimationParams
     get() = RunningAnimationParams(color, "", listOf(), "", "", -1,
-                                   Direction.FORWARD, mapOf(), mapOf(), mapOf(),
+                                   Direction.FORWARD, mapOf(), mapOf(), mapOf(), mapOf(), mapOf(),
                                    mapOf(), mapOf(), AnimationToRunParams())
 
 fun haveProlongedColors(colors: PreparedColorContainer) = object : Matcher<SectionManager> {
