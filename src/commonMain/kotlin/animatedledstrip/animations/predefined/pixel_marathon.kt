@@ -24,13 +24,13 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.leds.animationmanagement.*
 import kotlinx.coroutines.delay
 
-val pixelMarathon = PredefinedAnimation(
+val pixelMarathon = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",

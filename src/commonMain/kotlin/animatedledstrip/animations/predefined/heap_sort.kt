@@ -28,7 +28,7 @@ import animatedledstrip.colors.shuffledWithIndices
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
-val heapSort = PredefinedAnimation(
+val heapSort = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Heap Sort",
         abbr = "HPS",

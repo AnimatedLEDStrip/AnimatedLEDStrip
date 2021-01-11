@@ -31,7 +31,7 @@ import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.sectionmanagement.getSubSection
 import kotlinx.coroutines.delay
 
-val catToy = PredefinedAnimation(
+val catToy = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy",
         abbr = "CAT",

@@ -29,7 +29,7 @@ import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import kotlinx.coroutines.delay
 
-val runwayLights = PredefinedAnimation(
+val runwayLights = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Runway Lights",
         abbr = "RUN",

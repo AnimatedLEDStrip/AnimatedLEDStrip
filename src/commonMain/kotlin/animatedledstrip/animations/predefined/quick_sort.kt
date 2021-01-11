@@ -82,7 +82,7 @@ suspend fun AnimationManager.quickSort(
     }
 }
 
-val quickSortParallel = PredefinedAnimation(
+val quickSortParallel = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Quick Sort (Parallel)",
         abbr = "QKP",
@@ -110,7 +110,7 @@ val quickSortParallel = PredefinedAnimation(
     }
 }
 
-val quickSortSequential = PredefinedAnimation(
+val quickSortSequential = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Quick Sort (Sequential)",
         abbr = "QKS",

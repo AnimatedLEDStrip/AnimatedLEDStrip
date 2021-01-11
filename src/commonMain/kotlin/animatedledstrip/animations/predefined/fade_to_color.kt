@@ -23,15 +23,15 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.pixelActualColorList
 import animatedledstrip.leds.colormanagement.setStripFadeColor
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 
-val fadeToColor = PredefinedAnimation(
+val fadeToColor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Fade to Color",
         abbr = "FTC",

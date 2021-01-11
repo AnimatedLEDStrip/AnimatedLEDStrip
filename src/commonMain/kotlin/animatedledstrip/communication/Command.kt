@@ -26,9 +26,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * TODO
- *
- * @property command
+ * Send a command for the server to execute
  */
 @Serializable
 @SerialName("Command")

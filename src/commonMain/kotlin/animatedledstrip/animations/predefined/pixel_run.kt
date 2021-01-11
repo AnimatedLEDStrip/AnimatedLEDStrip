@@ -27,7 +27,7 @@ import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
 
-val pixelRun = PredefinedAnimation(
+val pixelRun = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Run",
         abbr = "PXR",

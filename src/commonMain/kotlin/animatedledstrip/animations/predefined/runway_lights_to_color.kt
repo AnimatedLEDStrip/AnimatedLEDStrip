@@ -28,7 +28,7 @@ import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import kotlinx.coroutines.delay
 
-val runwayLightsToColor = PredefinedAnimation(
+val runwayLightsToColor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Runway Lights to Color",
         abbr = "RTC",

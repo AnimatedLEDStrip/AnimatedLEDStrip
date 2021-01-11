@@ -24,12 +24,12 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
-val alternate = PredefinedAnimation(
+val alternate = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Alternate",
         abbr = "ALT",

@@ -28,7 +28,7 @@ import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
 import kotlinx.coroutines.delay
 
-val fireworks = PredefinedAnimation(
+val fireworks = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Fireworks",
         abbr = "FWK",

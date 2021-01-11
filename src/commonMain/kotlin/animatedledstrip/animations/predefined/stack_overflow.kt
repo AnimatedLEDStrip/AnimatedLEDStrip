@@ -28,7 +28,7 @@ import animatedledstrip.leds.animationmanagement.animation
 import animatedledstrip.leds.animationmanagement.intParam
 import animatedledstrip.leds.animationmanagement.runParallelAndJoin
 
-val stackOverflow = PredefinedAnimation(
+val stackOverflow = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack Overflow",
         abbr = "STO",

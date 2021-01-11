@@ -68,7 +68,7 @@ suspend fun AnimationManager.mergeSort(
     }
 }
 
-val mergeSortParallel = PredefinedAnimation(
+val mergeSortParallel = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Parallel)",
         abbr = "MSP",
@@ -96,7 +96,7 @@ val mergeSortParallel = PredefinedAnimation(
     }
 }
 
-val mergeSortSequential = PredefinedAnimation(
+val mergeSortSequential = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Merge Sort (Sequential)",
         abbr = "MSS",

@@ -44,7 +44,7 @@ fun addNewAnimation(anim: Animation) {
 //    logger.d { "Added animation ${anim.info.name}" }
 }
 
-val predefinedAnimations: List<PredefinedAnimation> = listOf(
+val predefinedAnimations: List<DefinedAnimation> = listOf(
     alterFade,
     alternate,
     bounce,
