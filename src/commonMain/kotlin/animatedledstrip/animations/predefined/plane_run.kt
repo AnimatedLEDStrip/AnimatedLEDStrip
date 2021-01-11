@@ -24,8 +24,8 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
@@ -34,7 +34,7 @@ import animatedledstrip.leds.locationmanagement.PixelLocationManager
 import animatedledstrip.leds.locationmanagement.transformLocations
 import kotlinx.coroutines.delay
 
-val planeRun = PredefinedAnimation(
+val planeRun = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Plane Run",
         abbr = "PLR",

@@ -23,11 +23,11 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 
-val color = PredefinedAnimation(
+val color = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Color",
         abbr = "COL",

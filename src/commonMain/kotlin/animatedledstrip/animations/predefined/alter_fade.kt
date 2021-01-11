@@ -24,12 +24,12 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.runSequential
 import kotlinx.coroutines.delay
 
-val alterFade = PredefinedAnimation(
+val alterFade = DefinedAnimation(
     Animation.AnimationInfo(
         "AlterFade",
         "ALF",

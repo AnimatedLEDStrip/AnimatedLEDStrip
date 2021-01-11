@@ -24,14 +24,14 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.locationmanagement.PixelLocation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-val ripple = PredefinedAnimation(
+val ripple = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Ripple",
         abbr = "RPL",

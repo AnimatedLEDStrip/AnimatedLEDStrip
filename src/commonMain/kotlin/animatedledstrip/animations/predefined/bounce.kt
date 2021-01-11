@@ -29,7 +29,7 @@ import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.sectionmanagement.getSubSection
 
-val bounce = PredefinedAnimation(
+val bounce = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce",
         abbr = "BNC",

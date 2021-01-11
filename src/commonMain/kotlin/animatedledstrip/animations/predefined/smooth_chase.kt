@@ -29,7 +29,7 @@ import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
 
-val smoothChase = PredefinedAnimation(
+val smoothChase = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Smooth Chase",
         abbr = "SCH",

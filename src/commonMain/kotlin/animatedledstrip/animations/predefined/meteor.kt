@@ -28,7 +28,7 @@ import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import kotlinx.coroutines.delay
 
-val meteor = PredefinedAnimation(
+val meteor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Meteor",
         abbr = "MET",

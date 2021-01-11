@@ -47,7 +47,6 @@ class OrderedAnimationGroup(
         val locationParams: MutableList<AnimationParameter<Location>> = mutableListOf()
         val distanceParams: MutableList<AnimationParameter<Distance>> = mutableListOf()
         val rotationParams: MutableList<AnimationParameter<Rotation>> = mutableListOf()
-        val animationCounts: MutableMap<String, Int> = mutableMapOf()
 
         intParams.add(AnimationParameter("interAnimationDelay-Group",
                                          "Delay between animations in the group",

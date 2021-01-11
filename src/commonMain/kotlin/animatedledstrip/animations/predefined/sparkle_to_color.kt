@@ -24,8 +24,8 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.leds.animationmanagement.validIndices
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
@@ -34,7 +34,7 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 
-val sparkleToColor = PredefinedAnimation(
+val sparkleToColor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Sparkle to Color",
         abbr = "STC",

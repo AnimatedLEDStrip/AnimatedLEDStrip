@@ -29,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * An animation that is defined in the library and compiled into the jar
  */
-class PredefinedAnimation(
+class DefinedAnimation(
     override val info: AnimationInfo,
     val animation: suspend (AnimationManager, RunningAnimationParams, CoroutineScope) -> Unit,
 ) : Animation() {

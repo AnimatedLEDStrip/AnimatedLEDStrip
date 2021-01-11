@@ -24,8 +24,8 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.locationmanagement.PixelLocation
@@ -34,7 +34,7 @@ import animatedledstrip.leds.locationmanagement.transformLocations
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-val wave = PredefinedAnimation(
+val wave = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Wave",
         abbr = "WAV",

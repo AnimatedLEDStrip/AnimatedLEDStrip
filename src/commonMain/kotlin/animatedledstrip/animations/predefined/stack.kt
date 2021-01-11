@@ -30,7 +30,7 @@ import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.sectionmanagement.getSubSection
 
-val stack = PredefinedAnimation(
+val stack = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",

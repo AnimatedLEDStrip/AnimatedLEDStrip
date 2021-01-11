@@ -24,8 +24,8 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.PredefinedAnimation
 import animatedledstrip.colors.inverse
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.randomDouble
@@ -35,7 +35,7 @@ import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import kotlinx.coroutines.delay
 
-val catToyToColor = PredefinedAnimation(
+val catToyToColor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Cat Toy to Color",
         abbr = "CTC",

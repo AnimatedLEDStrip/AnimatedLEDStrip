@@ -29,7 +29,7 @@ import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import animatedledstrip.leds.sectionmanagement.getSubSection
 
-val bounceToColor = PredefinedAnimation(
+val bounceToColor = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Bounce to Color",
         abbr = "BTC",
