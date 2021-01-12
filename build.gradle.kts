@@ -20,7 +20,6 @@
  * THE SOFTWARE.
  */
 
-
 tasks.wrapper {
     gradleVersion = "6.7.1"
 }
@@ -102,9 +101,6 @@ kotlin {
             }
         }
         val jvmMain by getting {
-            dependencies {
-                api("org.tinylog:tinylog:1.3.6")
-            }
         }
         val jvmTest by getting {
             dependencies {
