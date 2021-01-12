@@ -10,6 +10,6 @@ Functionality:
 - Abstract the communication with a generic LED strip (`LEDStrip`, `NativeLEDStrip`)
 - Define animations (`PredefinedAnimation`)
 - Handle the running of animations (`AnimatedLEDStrip`)
-- Specify how to handle colors (`ColorContainer`)
+- Specify how to handle animatedledstrip.colors (`ColorContainer`)
 - Provide an option for emulating an LED strip (`EmulatedAnimatedLEDStrip`)
 - Specify what can be sent between servers and clients and how it should be formatted (`SendableData`) 
