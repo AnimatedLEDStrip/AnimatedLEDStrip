@@ -23,39 +23,100 @@
 package animatedledstrip.test.leds.stripmanagement
 
 import animatedledstrip.communication.decodeJson
+import animatedledstrip.communication.serializer
+import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.stripmanagement.StripInfo
+import animatedledstrip.test.filteredStringArb
+import animatedledstrip.test.locationArb
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.*
+import io.kotest.property.checkAll
+import kotlinx.serialization.encodeToString
 
 class StripInfoTest : StringSpec(
     {
-        "strip info" {
-            val info = StripInfo(
-                numLEDs = 10,
-                pin = 15,
-                isDebugEnabled = true,
-                debugFile = "test.csv",
-                rendersBetweenDebugOutputs = 100,
-            )
-
-            info.numLEDs shouldBe 10
-            info.pin shouldBe 15
-            info.isDebugEnabled.shouldBeTrue()
-            info.debugFile shouldBe "test.csv"
-            info.rendersBetweenDebugOutputs shouldBe 100
+        "encode JSON" {
+            checkAll(Arb.int(),
+                     Arb.int().orNull(),
+                     Arb.long(),
+                     Arb.bool(),
+                     filteredStringArb.orNull(),
+                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
+                StripInfo(
+                    numLEDs = i,
+                    pin = ni,
+                    renderDelay = l,
+                    isRenderLoggingEnabled = b,
+                    renderLogFile = s,
+                    rendersBetweenLogSaves = i,
+                    is1DSupported = b,
+                    is2DSupported = b,
+                    is3DSupported = b,
+                    ledLocations = loc,
+                ).jsonString() shouldBe """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
+                    loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
+                }};;;"""
+            }
         }
 
         "decode JSON"{
-            val json =
-                """{"type":"StripInfo","numLEDs":240,"pin":12,"imageDebugging":true,"rendersBeforeSave":1000};;;"""
+            checkAll(Arb.int(),
+                     Arb.int().orNull(),
+                     Arb.long(),
+                     Arb.bool(),
+                     filteredStringArb.orNull(),
+                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
 
-            val correctData = StripInfo(numLEDs = 240,
-                                        pin = 12,
-                                        isDebugEnabled = true,
-                                        rendersBetweenDebugOutputs = 1000)
+                val json =
+                    """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
+                        loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
+                    }};;;"""
 
-            json.decodeJson() as StripInfo shouldBe correctData
+                val correctData = StripInfo(
+                    numLEDs = i,
+                    pin = ni,
+                    renderDelay = l,
+                    isRenderLoggingEnabled = b,
+                    renderLogFile = s,
+                    rendersBetweenLogSaves = i,
+                    is1DSupported = b,
+                    is2DSupported = b,
+                    is3DSupported = b,
+                    ledLocations = loc,
+                )
+
+                json.decodeJson() as StripInfo shouldBe correctData
+            }
+        }
+
+        "encode and decode JSON" {
+            checkAll(Arb.int(),
+                     Arb.int().orNull(),
+                     Arb.long(),
+                     Arb.bool(),
+                     Arb.string().orNull(),
+                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
+                val info1 = StripInfo(
+                    numLEDs = i,
+                    pin = ni,
+                    renderDelay = l,
+                    isRenderLoggingEnabled = b,
+                    renderLogFile = s,
+                    rendersBetweenLogSaves = i,
+                    is1DSupported = b,
+                    is2DSupported = b,
+                    is3DSupported = b,
+                    ledLocations = loc,
+                )
+
+                val infoBytes = info1.json()
+
+                val info2 = infoBytes.toUTF8String().decodeJson() as StripInfo
+
+                info2 shouldBe info1
+            }
         }
     }
 )
