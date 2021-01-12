@@ -33,16 +33,16 @@ import io.mockk.verifyOrder
 
 class MeteorTest : StringSpec(
     {
-        mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
-                    "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
-                    "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
-                    "animatedledstrip.leds.colormanagement.GetColorUtilsKt")
-
         val ledStrip = createNewEmulatedStrip(10)
 
         afterSpec { ledStrip.renderer.close() }
 
         "Meteor Forward" {
+            mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
+                        "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
+                        "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
+                        "animatedledstrip.leds.colormanagement.GetColorUtilsKt")
+
             val section = ledStrip.sectionManager.createSection("met-1", 0, 9)
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
@@ -71,6 +71,11 @@ class MeteorTest : StringSpec(
         }
 
         "Meteor Backward" {
+            mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
+                        "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
+                        "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
+                        "animatedledstrip.leds.colormanagement.GetColorUtilsKt")
+
             val section = ledStrip.sectionManager.createSection("met-2", 0, 9)
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
