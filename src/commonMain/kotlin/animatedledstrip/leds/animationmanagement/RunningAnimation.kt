@@ -61,27 +61,28 @@ data class RunningAnimation(
      * The `Job` running the animation
      */
     val job: Job = animationScope.launch {
-        Logger.v { topLevelAnimation.toString() }
         if (topLevelAnimation) {
             sectionManager.stripManager.startAnimationCallback?.invoke(params)
         }
 
-        Logger.v { "Starting $params" }
+        Logger.v("Running Animation") { "Starting $params" }
 
         try {
             var runs = 0
             while (isActive && (params.runCount == -1 || runs < params.runCount)) {
-                Logger.v { parentManager.runningAnimations.ids.toString() }
                 params.animation.runAnimation(leds = this@RunningAnimation,
                                               params = params,
                                               this)
                 runs++
             }
+        } catch (e: Exception) {
+            if (e !is CancellationException) Logger.e("Running Animation") { "Animation ${params.id} errored with\n${e.stackTraceToString()}" }
         } finally {
             if (topLevelAnimation) {
                 sectionManager.stripManager.endAnimationCallback?.invoke(params)
             }
             parentManager.runningAnimations.remove(params.id)
+            Logger.v("Running Animation") { "Animation ${params.id} complete" }
         }
     }
 }

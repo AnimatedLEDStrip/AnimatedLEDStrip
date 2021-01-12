@@ -54,7 +54,7 @@ val runwayLights = DefinedAnimation(
         when (direction) {
             Direction.FORWARD ->
                 iterateOver(0 until spacing) { s ->
-                    val s2 = s - 1 % spacing
+                    val s2 = (s - 1 + spacing) % spacing
                     iterateOver(0 until numLEDs step spacing) { i ->
                         if (i + s2 < numLEDs) revertPixel(i + s2)
                         if (i + s < numLEDs)
