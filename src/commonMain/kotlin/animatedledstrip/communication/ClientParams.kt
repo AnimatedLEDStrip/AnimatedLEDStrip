@@ -28,7 +28,7 @@ import kotlinx.serialization.Serializable
 /**
  * Settings for a server-client connection.
  *
- * This should be sent to the server by a client to initialize the connection.
+ * This should be sent by the client to the server to initialize the connection.
  *
  *
  * @property sendDefinedAnimationInfoOnConnection Should the server send information about all supported animations
