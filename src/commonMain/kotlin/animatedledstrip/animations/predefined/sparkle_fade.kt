@@ -39,7 +39,6 @@ val sparkleFade = DefinedAnimation(
         name = "Sparkle Fade",
         abbr = "SPF",
         description = "Similar to [Sparkle](Sparkle) but pixels fade back.",
-        signatureFile = "sparkle_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

@@ -91,7 +91,6 @@ class OrderedAnimationGroup(
         info = AnimationInfo(groupInfo.name,
                              groupInfo.abbr,
                              groupInfo.description,
-                             groupInfo.signatureFile,
                              groupInfo.runCountDefault,
                              groupInfo.minimumColors,
                              groupInfo.unlimitedColors,

@@ -68,7 +68,6 @@ abstract class Animation {
         val name: String,
         val abbr: String,
         val description: String,
-        val signatureFile: String,
         val runCountDefault: Int,
         val minimumColors: Int,
         val unlimitedColors: Boolean,

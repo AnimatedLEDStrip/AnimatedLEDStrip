@@ -35,7 +35,6 @@ val fireworks = DefinedAnimation(
         description = "Runs [Ripple](Ripple) animations from random center points within the defined " +
                       "locations of all pixels, travelling a predefined distance.\n" +
                       "Color is chosen randomly from `colors`.",
-        signatureFile = "fireworks.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,

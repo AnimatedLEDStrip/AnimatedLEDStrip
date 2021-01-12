@@ -34,7 +34,6 @@ val runwayLightsToColor = DefinedAnimation(
         abbr = "RTC",
         description = "Similar to [Runway Lights](Runway-Lights) but LEDs " +
                       "do not revert back to their prolonged color.",
-        signatureFile = "runway_lights_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

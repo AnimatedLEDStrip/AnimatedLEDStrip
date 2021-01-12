@@ -35,7 +35,6 @@ val heapSort = DefinedAnimation(
         description = "Visualization of heap sort.\n" +
                       "`colors[0]` is randomized, then a heap sort is " +
                       "used to re-sort it.",
-        signatureFile = "heap_sort.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

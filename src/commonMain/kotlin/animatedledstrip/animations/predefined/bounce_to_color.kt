@@ -37,7 +37,6 @@ val bounceToColor = DefinedAnimation(
                       "set from `colors[0]` at each end like [Stack](Stack), eventually " +
                       "ending in the middle.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
-        signatureFile = "bounce_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

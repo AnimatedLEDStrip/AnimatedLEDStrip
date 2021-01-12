@@ -41,7 +41,6 @@ val planeRun = DefinedAnimation(
         description = "Runs a plane through all pixels.\n\n" +
                       "Note: Two-dimensional operation requires plane to be rotated around the X axis " +
                       "(probably by Pi/2 radians in most use cases)",
-        signatureFile = "plane_run.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

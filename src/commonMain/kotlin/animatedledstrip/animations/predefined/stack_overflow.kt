@@ -37,7 +37,6 @@ val stackOverflow = DefinedAnimation(
                       "The stacks meet in the middle and 'overflow' their half.\n" +
                       "And yes, the pun was very much intended.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
-        signatureFile = "stack_overflow.png",
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = false,

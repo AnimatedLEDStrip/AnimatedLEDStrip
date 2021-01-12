@@ -44,7 +44,6 @@ val sparkleToColor = DefinedAnimation(
                       "A separate coroutine is created for each pixel.\n" +
                       "Each coroutine waits up to `maxDelayBeforeSparkle` seconds before " +
                       "sparkling its pixel.",
-        signatureFile = "sparkle_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

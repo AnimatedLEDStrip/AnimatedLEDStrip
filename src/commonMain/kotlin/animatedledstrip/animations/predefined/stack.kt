@@ -38,7 +38,6 @@ val stack = DefinedAnimation(
                       "other, 'stacking' up.\n" +
                       "Each pixel has to travel a shorter distance than the last.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
-        signatureFile = "stack.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
