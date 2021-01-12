@@ -24,11 +24,11 @@ package animatedledstrip.leds.stripmanagement
 
 import animatedledstrip.leds.colormanagement.LEDStripColorLogger
 import animatedledstrip.leds.colormanagement.LEDStripColorManager
+import animatedledstrip.utils.Logger
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
-import org.pmw.tinylog.Logger
 
 /**
  * Manages rendering the colors on the strip
@@ -38,6 +38,7 @@ import org.pmw.tinylog.Logger
 actual class LEDStripRenderer actual constructor(
     val ledStrip: NativeLEDStrip,
     val stripColorManager: LEDStripColorManager,
+    val renderDelay: Long,
 ) {
     actual val stripColorLogger = LEDStripColorLogger(stripColorManager)
 
@@ -60,26 +61,27 @@ actual class LEDStripRenderer actual constructor(
     }
 
     private val job = GlobalScope.launch(renderThread) {
-        var renderNum = 0
+        var renderTime = 0
+        val renderDelay = renderDelay / 5
         while (true) {
             if (isRendering)
                 try {
                     stripColorManager.pixelColors.forEach {
                         it.sendColorToStrip(
                             ledStrip,
-                            doFade = renderNum % 2 == 0, // 2 iterations * 5 ms delay = 10 ms between fades
+                            doFade = renderTime % 2 == 0, // 2 * 5 iterations = 10 ms between fades
                         )
                     }
-                    ledStrip.render()
+                    if (renderTime % renderDelay == 0L) ledStrip.render()
                     stripColorLogger.saveStripState()
-                    renderNum++
-                    if (renderNum >= 60000000) // A very big number divisible by 6
-                        renderNum = 0
                 } catch (e: NullPointerException) {
-                    Logger.error("LEDStrip NullPointerException when rendering")
+                    Logger.e("Renderer") { "LEDStrip NullPointerException when rendering" }
                     delay(1000)
                 }
             delay(5)
+            renderTime++
+            if (renderTime >= renderDelay * 1000000) // A very big number divisible by renderDelay
+                renderTime = 0
         }
     }
 }

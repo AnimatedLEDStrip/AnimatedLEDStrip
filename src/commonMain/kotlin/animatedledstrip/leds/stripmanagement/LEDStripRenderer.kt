@@ -33,6 +33,7 @@ import animatedledstrip.leds.colormanagement.LEDStripColorManager
 expect class LEDStripRenderer(
     ledStrip: NativeLEDStrip,
     stripColorManager: LEDStripColorManager,
+    renderDelay: Long,
 ) {
     /**
      * Should the renderer be actually sending data to the strip?
