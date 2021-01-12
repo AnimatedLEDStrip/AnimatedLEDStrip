@@ -31,13 +31,13 @@ jobs:
       install: skip
       script:
         - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
-        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-animations.csv
+        - mv build/reports/jacoco/test/html/jacocoTestReport.xml build/reports/jacoco/test/html/jacocoTestReport-animations.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-colors.csv
+        - mv build/reports/jacoco/test/html/jacocoTestReport.xml build/reports/jacoco/test/html/jacocoTestReport-colors.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
-        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-communication.csv
+        - mv build/reports/jacoco/test/html/jacocoTestReport.xml build/reports/jacoco/test/html/jacocoTestReport-communication.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-leds.csv
+        - mv build/reports/jacoco/test/html/jacocoTestReport.xml build/reports/jacoco/test/html/jacocoTestReport-leds.xml
       after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
