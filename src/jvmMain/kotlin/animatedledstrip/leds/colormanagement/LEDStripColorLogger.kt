@@ -42,12 +42,12 @@ actual class LEDStripColorLogger actual constructor(
     val stripColorManager: LEDStripColorManager,
 ) {
 
-    private val fileName = when (stripColorManager.stripManager.stripInfo.debugFile) {
+    private val fileName = when (stripColorManager.stripManager.stripInfo.renderLogFile) {
         null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
         else -> {
-            if (stripColorManager.stripManager.stripInfo.debugFile.endsWith(".csv"))
-                stripColorManager.stripManager.stripInfo.debugFile
-            else "${stripColorManager.stripManager.stripInfo.debugFile}.csv"
+            if (stripColorManager.stripManager.stripInfo.renderLogFile.endsWith(".csv"))
+                stripColorManager.stripManager.stripInfo.renderLogFile
+            else "${stripColorManager.stripManager.stripInfo.renderLogFile}.csv"
         }
     }
 
@@ -61,9 +61,9 @@ actual class LEDStripColorLogger actual constructor(
 
             for (saveState in saveStateChannel) {
                 renderNum++
-                if (stripColorManager.stripManager.stripInfo.isDebugEnabled) {
+                if (stripColorManager.stripManager.stripInfo.isRenderLoggingEnabled) {
                     saveStateBuffer.appendLine(saveState)
-                    if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBetweenDebugOutputs) {
+                    if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBetweenLogSaves) {
                         launch(Dispatchers.IO) {
                             FileWriter(fileName, true).append(saveStateBuffer.toString()).close()
                             saveStateBuffer.clear()

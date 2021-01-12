@@ -59,7 +59,7 @@ class LEDStrip(
     /**
      * Manages rendering the colors on the strip
      */
-    val renderer: LEDStripRenderer = LEDStripRenderer(nativeLEDStrip, colorManager)
+    val renderer: LEDStripRenderer = LEDStripRenderer(nativeLEDStrip, colorManager, stripInfo.renderDelay)
 
     /**
      * Manages strip sections
