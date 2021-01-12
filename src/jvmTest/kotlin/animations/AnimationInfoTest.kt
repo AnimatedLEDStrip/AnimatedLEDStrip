@@ -35,19 +35,32 @@ import kotlinx.serialization.encodeToString
 
 class AnimationInfoTest : StringSpec(
     {
-
-
         "encode JSON" {
             checkAll(animInfoArb, animParamsArb) { ai, ap ->
-                Animation.AnimationInfo(ai.name, ai.abbr, ai.description, ai.signatureFile, ai.runCountDefault,
-                                        ai.minimumColors, ai.unlimitedColors, ai.dimensionality, ai.directional,
-                                        ap.intParams, ap.doubleParams, ap.locationParams, ap.distanceParams, listOf())
+                Animation.AnimationInfo(ai.name,
+                                        ai.abbr,
+                                        ai.description,
+                                        ai.signatureFile,
+                                        ai.runCountDefault,
+                                        ai.minimumColors,
+                                        ai.unlimitedColors,
+                                        ai.dimensionality,
+                                        ai.directional,
+                                        ap.intParams,
+                                        ap.doubleParams,
+                                        ap.stringParams,
+                                        ap.locationParams,
+                                        ap.distanceParams,
+                                        ap.rotationParams,
+                                        listOf())
                     .jsonString() shouldBe """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","signatureFile":"${ai.signatureFile}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
                         """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
                         """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                        """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
+                        """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
             }
         }
 
@@ -58,8 +71,10 @@ class AnimationInfoTest : StringSpec(
                     """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
                     """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                    """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
+                    """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
 
                 val correctData = Animation.AnimationInfo(name = ai.name,
                                                           abbr = ai.abbr,
@@ -72,8 +87,10 @@ class AnimationInfoTest : StringSpec(
                                                           directional = ai.directional,
                                                           intParams = ap.intParams,
                                                           doubleParams = ap.doubleParams,
+                                                          stringParams = ap.stringParams,
                                                           locationParams = ap.locationParams,
                                                           distanceParams = ap.distanceParams,
+                                                          rotationParams = ap.rotationParams,
                                                           equationParams = listOf())
 
                 json.decodeJson() as Animation.AnimationInfo shouldBe correctData
@@ -93,8 +110,10 @@ class AnimationInfoTest : StringSpec(
                                                     directional = ai.directional,
                                                     intParams = ap.intParams,
                                                     doubleParams = ap.doubleParams,
+                                                    stringParams = ap.stringParams,
                                                     locationParams = ap.locationParams,
                                                     distanceParams = ap.distanceParams,
+                                                    rotationParams = ap.rotationParams,
                                                     equationParams = listOf())
                 val infoBytes = info1.json()
 
