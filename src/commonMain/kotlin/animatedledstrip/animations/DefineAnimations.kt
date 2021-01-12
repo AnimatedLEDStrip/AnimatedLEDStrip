@@ -24,6 +24,7 @@ package animatedledstrip.animations
 
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.leds.animationmanagement.removeWhitespace
+import animatedledstrip.utils.Logger
 
 val definedAnimations = mutableMapOf<String, Animation>()
 val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
@@ -31,17 +32,17 @@ val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
 // TODO: Figure out how to include logging in jar so docs script can still use this file
 fun addNewAnimation(anim: Animation) {
     if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-//        logger.e { "Animation ${anim.info.name} already defined" }
+        Logger.e { "Animation ${anim.info.name} already defined" }
         return
     }
     if (definedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-//        logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
+        Logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
         return
     }
 
     definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
     definedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
-//    logger.d { "Added animation ${anim.info.name}" }
+    Logger.d { "Added animation ${anim.info.name}" }
 }
 
 val predefinedAnimations: List<DefinedAnimation> = listOf(
