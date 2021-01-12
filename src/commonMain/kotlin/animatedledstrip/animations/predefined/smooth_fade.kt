@@ -35,7 +35,6 @@ val smoothFade = DefinedAnimation(
         abbr = "SMF",
         description = "Like a [Smooth Chase](Smooth-Chase) animation, but the " +
                       "whole strip is the same color while fading through `colors[0]`.",
-        signatureFile = "smooth_fade.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

@@ -32,7 +32,6 @@ val color = DefinedAnimation(
         name = "Color",
         abbr = "COL",
         description = "Set the strip to a color.",
-        signatureFile = "color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

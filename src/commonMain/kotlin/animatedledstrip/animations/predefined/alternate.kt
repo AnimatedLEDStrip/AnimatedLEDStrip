@@ -37,7 +37,6 @@ val alternate = DefinedAnimation(
                       "delaying `alternationPeriod` milliseconds between changes.\n\n" +
                       "\\* alternate may not be the best word because this animation " +
                       "supports more than two colors",
-        signatureFile = "alternate.png",
         runCountDefault = -1,
         minimumColors = 2,
         unlimitedColors = true,

@@ -32,7 +32,6 @@ val pixelRun = DefinedAnimation(
         name = "Pixel Run",
         abbr = "PXR",
         description = "A pixel colored from `colors[0]` runs along the strip.",
-        signatureFile = "pixel_run.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

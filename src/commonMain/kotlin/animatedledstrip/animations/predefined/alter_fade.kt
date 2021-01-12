@@ -35,7 +35,6 @@ val alterFade = DefinedAnimation(
         "ALF",
         "Strip fades* between each color in colors, " +
         "delaying `alternationPeriod` milliseconds between changes.",
-        "",
         -1,
         2,
         true,

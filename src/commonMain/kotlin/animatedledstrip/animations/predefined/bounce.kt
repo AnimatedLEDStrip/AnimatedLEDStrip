@@ -37,7 +37,6 @@ val bounce = DefinedAnimation(
                       "pixels at the end of each bounce fading back to their prolonged " +
                       "color after being set from `colors[0]`.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
-        signatureFile = "bounce.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

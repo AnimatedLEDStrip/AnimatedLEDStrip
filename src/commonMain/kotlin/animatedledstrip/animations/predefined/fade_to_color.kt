@@ -36,7 +36,6 @@ val fadeToColor = DefinedAnimation(
         name = "Fade to Color",
         abbr = "FTC",
         description = "Fade the strip to a color.",
-        signatureFile = "fade_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

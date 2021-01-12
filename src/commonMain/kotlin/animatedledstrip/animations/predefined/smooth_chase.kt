@@ -40,7 +40,6 @@ val smoothChase = DefinedAnimation(
                       "If the direction is `Direction.BACKWARD`, the same happens but " +
                       "with indices `i`, `i-1`, `i-2`, etc.\n" +
                       "Works best with a ColorContainer with multiple colors.",
-        signatureFile = "smooth_chase.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

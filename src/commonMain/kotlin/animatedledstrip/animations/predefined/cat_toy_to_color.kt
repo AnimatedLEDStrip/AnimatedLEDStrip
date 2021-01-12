@@ -44,7 +44,6 @@ val catToyToColor = DefinedAnimation(
                       "When the moving pixel goes past a pixel it has already set, " +
                       "it temporarily sets it to the inverse of that color before " +
                       "reverting it and moving on.",
-        signatureFile = "cat_toy_to_color.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

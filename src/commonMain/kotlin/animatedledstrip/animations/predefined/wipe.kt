@@ -41,7 +41,6 @@ val wipe = DefinedAnimation(
         description = "Wipes a plane through all pixels, leaving behind colors[0].\n\n" +
                       "Note: Two-dimensional operation requires plane to be rotated around the X axis " +
                       "(probably by Pi/2 radians in most use cases)",
-        signatureFile = "wipe.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

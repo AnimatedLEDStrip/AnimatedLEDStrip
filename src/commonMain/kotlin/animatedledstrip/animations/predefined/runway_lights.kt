@@ -35,7 +35,6 @@ val runwayLights = DefinedAnimation(
         abbr = "RUN",
         description = "Similar to [Pixel Run](Pixel-Run) but with multiple LEDs " +
                       "at a specified spacing.",
-        signatureFile = "runway_lights.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

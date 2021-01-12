@@ -75,7 +75,6 @@ val mergeSortParallel = DefinedAnimation(
         description = "Visualization of merge sort.\n" +
                       "`colors[0]` is randomized, then a parallelized merge sort is " +
                       "used to re-sort it.",
-        signatureFile = "merge_sort_parallel.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
@@ -102,7 +101,6 @@ val mergeSortSequential = DefinedAnimation(
         abbr = "MSS",
         description = "Visualization of merge sort.\n" +
                       "`pCols[0]` is randomized, then merge sort is used to re-sort it.",
-        signatureFile = "merge_sort_sequential.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

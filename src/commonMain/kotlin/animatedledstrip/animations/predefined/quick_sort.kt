@@ -89,7 +89,6 @@ val quickSortParallel = DefinedAnimation(
         description = "Visualization of quick sort.\n" +
                       "`colors[0]` is randomized, then a parallelized quick sort is " +
                       "used to re-sort it. Pivot locations are chosen randomly.",
-        signatureFile = "quick_sort_parallel.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
@@ -117,7 +116,6 @@ val quickSortSequential = DefinedAnimation(
         description = "Visualization of quick sort.\n" +
                       "`colors[0]` is randomized, then a quick sort is " +
                       "used to re-sort it. Pivot locations are chosen randomly.",
-        signatureFile = "quick_sort_sequential.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

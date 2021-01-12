@@ -41,7 +41,6 @@ val wave = DefinedAnimation(
         description = "Wipes a plane through all pixels, leaving a fading trail behind.\n\n" +
                       "Note: Two-dimensional operation requires plane to be rotated around the X axis " +
                       "(probably by Pi/2 radians in most use cases)",
-        signatureFile = "wave.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

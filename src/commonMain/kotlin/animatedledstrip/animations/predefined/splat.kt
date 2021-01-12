@@ -39,7 +39,6 @@ val splat = DefinedAnimation(
                       "Runs two Wipe animations in opposite directions starting " +
                       "from `center`, stopping after traveling `distance` or at " +
                       "the end of the section, whichever comes first.",
-        signatureFile = "splat.png",
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,

@@ -35,7 +35,6 @@ val meteor = DefinedAnimation(
         description = "Like a [Pixel Run](Pixel-Run) animation, but the " +
                       "'running' pixel has a trail behind it where the pixels " +
                       "fade back from `colors[0]`.",
-        signatureFile = "meteor.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

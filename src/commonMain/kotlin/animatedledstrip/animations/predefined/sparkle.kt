@@ -43,7 +43,6 @@ val sparkle = DefinedAnimation(
                       "A separate coroutine is created for each pixel.\n" +
                       "Each coroutine waits up to `maxDelayBeforeSparkle` milliseconds before " +
                       "sparkling its pixel.",
-        signatureFile = "sparkle.png",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
