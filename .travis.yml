@@ -44,7 +44,7 @@ jobs:
         #        - provider: script
         #          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
         - provider: script
-          script: ./gradlew publish
+          script: ./gradlew publish --stacktrace
 
 #    - stage: deploy
 #      install: skip
