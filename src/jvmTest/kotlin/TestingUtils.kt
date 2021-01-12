@@ -124,13 +124,23 @@ val distanceArb: Arb<Distance> =
         if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
     }
 
+val rotationArb: Arb<Rotation> =
+    Arb.bind(largeDoubleArb,
+             largeDoubleArb,
+             largeDoubleArb,
+             Arb.bool()) { x, y, z, rOrD ->
+        if (rOrD) RadiansRotation(x, y, z) else DegreesRotation(x, y, z)
+    }
+
 val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
 val intArb = Arb.int()
 val dimensionalityArb = Arb.enum<Dimensionality>()
 val nullableIntArb = Arb.int().orNull()
 val nullableDoubleArb = Arb.double().orNull()
+val nullableStringArb = filteredStringArb.orNull()
 val nullableLocationArb = locationArb.orNull()
 val nullableDistanceArb = distanceArb.orNull()
+val nullableRotationArb = rotationArb.orNull()
 
 val animIntParamArb: Arb<AnimationParameter<Int>> =
     arbitrary { rs ->
@@ -140,6 +150,11 @@ val animIntParamArb: Arb<AnimationParameter<Int>> =
 val animDoubleParamArb: Arb<AnimationParameter<Double>> =
     arbitrary { rs ->
         AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDoubleArb.next(rs))
+    }
+
+val animStringParamArb: Arb<AnimationParameter<String>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableStringArb.next(rs))
     }
 
 val animLocationParamArb: Arb<AnimationParameter<Location>> =
@@ -152,19 +167,28 @@ val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
         AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableDistanceArb.next(rs))
     }
 
+val animRotationParamArb: Arb<AnimationParameter<Rotation>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableRotationArb.next(rs))
+    }
+
 data class ArbParams(
     val intParams: List<AnimationParameter<Int>>,
     val doubleParams: List<AnimationParameter<Double>>,
+    val stringParams: List<AnimationParameter<String>>,
     val locationParams: List<AnimationParameter<Location>>,
     val distanceParams: List<AnimationParameter<Distance>>,
+    val rotationParams: List<AnimationParameter<Rotation>>,
 )
 
 val animParamsArb: Arb<ArbParams> =
     Arb.bind(Arb.list(animIntParamArb, 0..3),
              Arb.list(animDoubleParamArb, 0..3),
+             Arb.list(animStringParamArb, 0..3),
              Arb.list(animLocationParamArb, 0..3),
-             Arb.list(animDistanceParamArb, 0..3)) { i, d, l, ds ->
-        ArbParams(i, d, l, ds)
+             Arb.list(animDistanceParamArb, 0..3),
+             Arb.list(animRotationParamArb, 0..3)) { i, d, s, l, ds, r ->
+        ArbParams(i, d, s, l, ds, r)
     }
 
 data class ArbInfo(
