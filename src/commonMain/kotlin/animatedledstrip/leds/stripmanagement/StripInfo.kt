@@ -35,9 +35,10 @@ import kotlinx.serialization.Serializable
  *
  * @property numLEDs Number of LEDs in the strip
  * @property pin Physical pin the strip is connected to
- * @property isDebugEnabled If debugging should be enabled
- * @property debugFile File to write debugging output to
- * @property rendersBetweenDebugOutputs Renders between debug writes
+ * @property renderDelay Delay between renders sent to the strip
+ * @property isRenderLoggingEnabled If logging should be enabled
+ * @property renderLogFile File to write log output to
+ * @property rendersBetweenLogSaves Renders between log saves
  * @property is1DSupported Should 1D animations be included in the supported animations list
  * @property is2DSupported Should 2D animations be included in the supported animations list
  * @property is3DSupported Should 3D animations be included in the supported animations list
@@ -49,9 +50,10 @@ import kotlinx.serialization.Serializable
 data class StripInfo(
     val numLEDs: Int = 0,
     val pin: Int? = null,
-    val isDebugEnabled: Boolean = false,
-    val debugFile: String? = null,
-    val rendersBetweenDebugOutputs: Int = 1000,
+    val renderDelay: Long = 10,
+    val isRenderLoggingEnabled: Boolean = false,
+    val renderLogFile: String? = null,
+    val rendersBetweenLogSaves: Int = 1000,
     val is1DSupported: Boolean = true,
     val is2DSupported: Boolean = false,
     val is3DSupported: Boolean = false,
