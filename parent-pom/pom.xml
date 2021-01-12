@@ -83,7 +83,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
-            <version>1.10.0</version>
+            <version>1.10.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
