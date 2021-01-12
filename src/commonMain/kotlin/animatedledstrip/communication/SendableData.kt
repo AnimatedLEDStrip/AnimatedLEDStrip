@@ -25,11 +25,8 @@ package animatedledstrip.communication
 import kotlinx.serialization.encodeToString
 
 /**
- * Represents a class that can be sent over sockets between server and clients.
+ * Represents a class that can be sent over sockets between servers and clients.
  * Handles conversion of class to json.
- *
- * Each implementing class must override `prefix` and `toHumanReadableString`.
- *
  */
 interface SendableData {
     fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"

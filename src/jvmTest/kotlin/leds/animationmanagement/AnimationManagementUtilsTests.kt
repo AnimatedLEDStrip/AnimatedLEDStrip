@@ -43,7 +43,7 @@ class AnimationManagementUtilsTests : StringSpec(
             checkAll<String>(100) {
                 ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color")).params.id.toInt() shouldBeIn permittedIDs
             }
-            ledStrip.nativeLEDStrip.close()
+            ledStrip.renderer.close()
         }
 
         "start animation with custom id" {
@@ -52,7 +52,7 @@ class AnimationManagementUtilsTests : StringSpec(
                 ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color"),
                                                          id).params.id shouldBe id
             }
-            ledStrip.nativeLEDStrip.close()
+            ledStrip.renderer.close()
         }
 
 //        "end animation that is running" {
