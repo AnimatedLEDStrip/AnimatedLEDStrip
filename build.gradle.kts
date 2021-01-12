@@ -29,6 +29,7 @@ plugins {
     kotlin("plugin.serialization") version "1.4.21"
     id("io.kotest") version "0.2.6"
     id("maven-publish")
+    signing
     id("java-library")
     jacoco
 }
@@ -43,16 +44,44 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "0.9-SNAPSHOT"
-description = "io.github.animatedledstrip:animatedledstrip-core"
+version = "1.0.0-pre1-SNAPSHOT"
+description = "A library designed to simplify running animations on WS281x strips"
 //java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 
-//publishing {
-//    publications.create<MavenPublication>("maven") {
-//        from(components["java"])
-//    }
-//}
+publishing {
+    repositories {
+        maven {
+            val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl)
+        }
+    }
+    publications.create<MavenPublication>("maven") {
+        from(components["java"])
+        pom {
+            licenses {
+                license {
+                    name.set("MIT License")
+                    url.set("http://www.opensource.org/licenses/mit-license.php")
+                }
+                developers {
+                    developer {
+                        name.set("Max Narvaez")
+                        email.set("mnmax.narvaez3@gmail.com")
+                        organization.set("AnimatedLEDStrip")
+                        organizationUrl.set("https://animatedledstrip.github.io")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.git")
+                    developerConnection.set("scm:git:https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.git")
+                    url.set("https://github.com/AnimatedLEDStrip/AnimatedLEDStrip")
+                }
+            }
+        }
+    }
+}
 
 //tasks.withType<JavaCompile>() {
 //    options.encoding = "UTF-8"
@@ -157,5 +186,15 @@ tasks.jacocoTestReport {
         xml.isEnabled = true
         csv.isEnabled = true
         html.isEnabled = true
+    }
+}
+
+signing {
+    sign(publishing.publications["maven"])
+}
+
+tasks.javadoc {
+    if (JavaVersion.current().isJava9Compatible) {
+        (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
 }

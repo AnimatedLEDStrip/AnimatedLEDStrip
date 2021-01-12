@@ -37,10 +37,10 @@ jobs:
       install: skip
       script: skip
       deploy:
+#        - provider: script
+        #          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
         - provider: script
-          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
-        - provider: script
-          script: mvn deploy -f pom.xml --settings .maven.xml -DskipTests=true -Ddokka=true -B
+          script: ./gradlew publish
 
     - stage: deploy
       install: skip
