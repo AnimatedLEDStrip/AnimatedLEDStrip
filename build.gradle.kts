@@ -142,10 +142,9 @@ tasks.named<Test>("jvmTest") {
 }
 
 tasks.jacocoTestReport {
-    println(path)
     val coverageSourceDirs = arrayOf(
-        "${path}/src/commonMain/kotlin",
-        "${path}/src/jvmMain/kotlin"
+        "${projectDir}/src/commonMain/kotlin",
+        "${projectDir}/src/jvmMain/kotlin"
     )
 
     val classFiles = File("${buildDir}/classes/kotlin/jvm/main/")
