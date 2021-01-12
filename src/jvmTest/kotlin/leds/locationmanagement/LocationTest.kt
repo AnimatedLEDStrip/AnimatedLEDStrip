@@ -37,6 +37,11 @@ class LocationTest : StringSpec(
                 newLocation.y shouldBe y
                 newLocation.z shouldBe z
             }
+            val newLocation = Location(x = 0.0)
+            newLocation.y shouldBe 0.0
+            newLocation.z shouldBe 0.0
+            val newLocation2 = Location(y = 0.0)
+            newLocation2.x shouldBe 0.0
         }
 
         "int constructor" {
