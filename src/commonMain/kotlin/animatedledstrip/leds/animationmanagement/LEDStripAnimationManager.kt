@@ -37,7 +37,7 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
     /**
      * Tracks the currently running animations managed by this instance
      */
-    override val runningAnimations: RunningAnimationMap = RunningAnimationMap()
+    override val runningAnimations: MutableMap<String, RunningAnimation> = mutableMapOf()
 
     /**
      * The `CoroutineScope` all animations managed by this instance will run in

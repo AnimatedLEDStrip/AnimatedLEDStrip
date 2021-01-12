@@ -45,7 +45,7 @@ data class RunningAnimation(
     /**
      * Tracks the currently running subanimations managed by this instance
      */
-    override val runningAnimations: RunningAnimationMap = RunningAnimationMap()
+    override val runningAnimations: MutableMap<String, RunningAnimation> = mutableMapOf()
 
     /**
      * Join the `RunningAnimation`'s job
