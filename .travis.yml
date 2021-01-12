@@ -25,10 +25,12 @@ jobs:
     - stage: test
       install: skip
       script:
-        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-        - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-colors.xml
+        # Run a test first so we build everything before trying to test
+        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.ClientParamsTest"
         - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
         - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
+        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
+        - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-colors.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
         - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-communication.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
