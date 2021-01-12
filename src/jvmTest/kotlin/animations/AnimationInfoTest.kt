@@ -40,7 +40,6 @@ class AnimationInfoTest : StringSpec(
                 Animation.AnimationInfo(ai.name,
                                         ai.abbr,
                                         ai.description,
-                                        ai.signatureFile,
                                         ai.runCountDefault,
                                         ai.minimumColors,
                                         ai.unlimitedColors,
@@ -53,7 +52,7 @@ class AnimationInfoTest : StringSpec(
                                         ap.distanceParams,
                                         ap.rotationParams,
                                         listOf())
-                    .jsonString() shouldBe """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","signatureFile":"${ai.signatureFile}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
+                    .jsonString() shouldBe """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
                         """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
                         """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
@@ -67,7 +66,7 @@ class AnimationInfoTest : StringSpec(
         "decode JSON" {
             checkAll(animInfoArb, animParamsArb) { ai, ap ->
                 val json =
-                    """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","signatureFile":"${ai.signatureFile}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
+                    """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
                     """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
                     """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
@@ -79,7 +78,6 @@ class AnimationInfoTest : StringSpec(
                 val correctData = Animation.AnimationInfo(name = ai.name,
                                                           abbr = ai.abbr,
                                                           description = ai.description,
-                                                          signatureFile = ai.signatureFile,
                                                           runCountDefault = ai.runCountDefault,
                                                           minimumColors = ai.minimumColors,
                                                           unlimitedColors = ai.unlimitedColors,
@@ -102,7 +100,6 @@ class AnimationInfoTest : StringSpec(
                 val info1 = Animation.AnimationInfo(name = ai.name,
                                                     abbr = ai.abbr,
                                                     description = ai.description,
-                                                    signatureFile = ai.signatureFile,
                                                     runCountDefault = ai.runCountDefault,
                                                     minimumColors = ai.minimumColors,
                                                     unlimitedColors = ai.unlimitedColors,
