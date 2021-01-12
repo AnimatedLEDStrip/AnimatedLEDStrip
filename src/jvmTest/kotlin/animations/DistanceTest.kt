@@ -27,6 +27,7 @@ import animatedledstrip.animations.PercentDistance
 import animatedledstrip.test.largeDoubleArb
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.double
 import io.kotest.property.checkAll
@@ -77,6 +78,25 @@ class DistanceTest : StringSpec(
                 res.x shouldBe x1 * x2
                 res.y shouldBe y1 * y2
                 res.z shouldBe z1 * z2
+            }
+        }
+
+        "as absolute distance" {
+            checkAll(Arb.double(), Arb.double(), Arb.double()) { x, y, z ->
+                val dist = PercentDistance(x, y, z)
+                val aDist = dist.asAbsoluteDistance()
+                aDist.x shouldBe dist.x
+                aDist.y shouldBe dist.y
+                aDist.z shouldBe dist.z
+                aDist.shouldBeTypeOf<AbsoluteDistance>()
+            }
+            checkAll(Arb.double(), Arb.double(), Arb.double()) { x, y, z ->
+                val dist = AbsoluteDistance(x, y, z)
+                val aDist = dist.asAbsoluteDistance()
+                aDist.x shouldBe dist.x
+                aDist.y shouldBe dist.y
+                aDist.z shouldBe dist.z
+                aDist.shouldBeTypeOf<AbsoluteDistance>()
             }
         }
     }
