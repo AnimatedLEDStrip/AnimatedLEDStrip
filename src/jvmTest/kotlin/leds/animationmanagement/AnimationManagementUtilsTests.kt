@@ -29,7 +29,8 @@ import animatedledstrip.leds.animationmanagement.startAnimation
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.test.newRunningAnimationParams
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.collections.shouldBeIn
+import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
+import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
 
@@ -38,10 +39,11 @@ class AnimationManagementUtilsTests : StringSpec(
         "start animation with random id" {
             val ledStrip = createNewEmulatedStrip(10)
 
-            val permittedIDs = (0..99999999).toList()
-
-            checkAll<String>(100) {
-                ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color")).params.id.toInt() shouldBeIn permittedIDs
+            checkAll<String>(10) {
+                val id =
+                    ledStrip.animationManager.startAnimation(AnimationToRunParams(animation = "Color")).params.id.toInt()
+                id shouldBeGreaterThanOrEqual 0
+                id shouldBeLessThan 100000000
             }
             ledStrip.renderer.close()
         }
