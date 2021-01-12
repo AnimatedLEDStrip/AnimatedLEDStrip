@@ -26,9 +26,9 @@ jobs:
     - stage: test
       install: skip
       script:
-#        - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
-        #        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-        #        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
+        - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
+        - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
+        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
         - ls -l build/jacoco/jvmTest.exec
       after_success: bash <(curl -s https://codecov.io/bash)
@@ -37,49 +37,49 @@ jobs:
       install: skip
       script: skip
       deploy:
-#        - provider: script
+        #        - provider: script
         #          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
         - provider: script
           script: ./gradlew publish
 
-    - stage: deploy
-      install: skip
-      script: skip
-      before_script:
-        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
-      deploy:
-        - provider: script
-          script: mvn site --settings .maven.xml -DskipTests=true -Ddokka=true -B && git add -f dokka
-          on:
-            condition: $DEPLOY_DOCS
-        - provider: pages
-          skip_cleanup: true
-          github_token: $GITHUB_TOKEN
-          keep_history: true
-          verbose: true
-          local_dir: ./dokka
-          on:
-            condition: $DEPLOY_DOCS
+#    - stage: deploy
+#      install: skip
+#      script: skip
+#      before_script:
+#        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
+#      deploy:
+#        - provider: script
+#          script: mvn site --settings .maven.xml -DskipTests=true -Ddokka=true -B && git add -f dokka
+#          on:
+#            condition: $DEPLOY_DOCS
+#        - provider: pages
+#          skip_cleanup: true
+#          github_token: $GITHUB_TOKEN
+#          keep_history: true
+#          verbose: true
+#          local_dir: ./dokka
+#          on:
+#            condition: $DEPLOY_DOCS
 
-    - stage: deploy docs
-      install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
-      script: skip
-      before_script:
-        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
-      before_deploy:
-        - curl -s https://get.sdkman.io | bash
-        - source "/home/travis/.sdkman/bin/sdkman-init.sh"
-        - sdk install kotlin
-        - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
-        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null) # TODO Use gradle
-        - kotlinc-jvm -script create_docs.kts -cp build/libs/animatedledstrip-core-jvm-${VERSION}.jar
-        - cd wiki
-        - git add .
-        - git commit --allow-empty -m "Update animation documentation"
-      deploy:
-        - provider: script
-          script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
-          skip_cleanup: true
-          on:
-            all_branches: true
-            condition: $DEPLOY_DOCS
+#    - stage: deploy docs
+#      install: mvn package --settings .maven.xml -DskipTests=true -Dshade=true -B
+#      script: skip
+#      before_script:
+#        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
+#      before_deploy:
+#        - curl -s https://get.sdkman.io | bash
+#        - source "/home/travis/.sdkman/bin/sdkman-init.sh"
+#        - sdk install kotlin
+#        - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
+#        - VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null) # TODO Use gradle
+#        - kotlinc-jvm -script create_docs.kts -cp build/libs/animatedledstrip-core-jvm-${VERSION}.jar
+#        - cd wiki
+#        - git add .
+#        - git commit --allow-empty -m "Update animation documentation"
+#      deploy:
+#        - provider: script
+#          script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
+#          skip_cleanup: true
+#          on:
+#            all_branches: true
+#            condition: $DEPLOY_DOCS
