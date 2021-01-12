@@ -22,19 +22,19 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.SortablePixel
-import animatedledstrip.animations.toPreparedColorContainer
-import animatedledstrip.animations.toSortableList
+import animatedledstrip.animations.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.colors.shuffledWithIndices
+import animatedledstrip.leds.animationmanagement.AnimationManager
+import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import io.kotest.property.checkAll
-import io.mockk.every
-import io.mockk.mockkStatic
+import io.mockk.*
 
 class SortingUtilsTests : StringSpec(
     {
@@ -97,6 +97,66 @@ class SortingUtilsTests : StringSpec(
                     PreparedColorContainer(listOf(0x34FF, 0x33FF, 0xCDFF, 0x67FF, 0x99FF,
                                                   0x00FF, 0x9AFF, 0xCCFF, 0x66FF, 0xFFFF),
                                            listOf())
+        }
+
+        "update color at index" {
+            val ledStrip = createNewEmulatedStrip(10)
+            mockkStatic("animatedledstrip.leds.colormanagement.SetColorUtilsKt")
+
+            val sortableList = listOf(SortablePixel(1, 0, 0x34FF),
+                                      SortablePixel(9, 1, 0x33FF),
+                                      SortablePixel(4, 2, 0xCDFF),
+                                      SortablePixel(2, 3, 0x67FF),
+                                      SortablePixel(7, 4, 0x99FF),
+                                      SortablePixel(0, 5, 0x00FF),
+                                      SortablePixel(3, 6, 0x9AFF),
+                                      SortablePixel(6, 7, 0xCCFF),
+                                      SortablePixel(8, 8, 0x66FF),
+                                      SortablePixel(5, 9, 0xFFFF))
+
+            ledStrip.animationManager.updateColorAtIndex(5, sortableList)
+
+            verify {
+                ledStrip.animationManager.setPixelProlongedColor(5, 0x00FF)
+            }
+
+            ledStrip.renderer.close()
+        }
+
+        "shift pixel" {
+            mockkStatic("animatedledstrip.leds.colormanagement.SetColorUtilsKt")
+
+            val sortableList = mutableListOf(SortablePixel(1, 0, 0x34FF),
+                                             SortablePixel(9, 1, 0x33FF),
+                                             SortablePixel(4, 2, 0xCDFF),
+                                             SortablePixel(2, 3, 0x67FF),
+                                             SortablePixel(7, 4, 0x99FF),
+                                             SortablePixel(0, 5, 0x00FF),
+                                             SortablePixel(3, 6, 0x9AFF),
+                                             SortablePixel(6, 7, 0xCCFF),
+                                             SortablePixel(8, 8, 0x66FF),
+                                             SortablePixel(5, 9, 0xFFFF))
+
+            val animManager = mockk<AnimationManager>()
+
+            justRun { any<AnimationManager>().setPixelProlongedColor(any(), any<Int>()) }
+
+            animManager.shiftPixel(5, 7, sortableList)
+
+            verify {
+                animManager.setPixelProlongedColor(5, 0x9AFF)
+                animManager.setPixelProlongedColor(6, 0xCCFF)
+                animManager.setPixelProlongedColor(7, 0x00FF)
+            }
+
+            animManager.shiftPixel(4, 1, sortableList)
+
+            verify {
+                animManager.setPixelProlongedColor(4, 0x67FF)
+                animManager.setPixelProlongedColor(3, 0xCDFF)
+                animManager.setPixelProlongedColor(2, 0x33FF)
+                animManager.setPixelProlongedColor(1, 0x99FF)
+            }
         }
     }
 )

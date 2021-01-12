@@ -33,7 +33,7 @@ interface AnimationManager {
     /**
      * Tracks the currently running animations managed by this instance
      */
-    val runningAnimations: RunningAnimationMap
+    val runningAnimations: MutableMap<String, RunningAnimation>
 
     /**
      * The `CoroutineScope` all animations managed by this instance will run in
