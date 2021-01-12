@@ -122,7 +122,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
                 api("co.touchlab:kermit:0.1.8")
             }
         }
