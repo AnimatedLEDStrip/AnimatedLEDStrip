@@ -31,10 +31,13 @@ jobs:
       install: skip
       script:
         - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
+        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-animations.csv
         - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
+        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-colors.csv
         - ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
+        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-communication.csv
         - ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-        - ls -l build/jacoco/jvmTest.exec
+        - mv build/reports/jacoco/test/html/jacocoTestReport.csv build/reports/jacoco/test/html/jacocoTestReport-leds.csv
       after_success: bash <(curl -s https://codecov.io/bash)
 
     - stage: deploy
