@@ -25,6 +25,7 @@ package animatedledstrip.leds.animationmanagement
 import animatedledstrip.animations.Direction
 import animatedledstrip.animations.Distance
 import animatedledstrip.animations.Equation
+import animatedledstrip.animations.Rotation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.ccpresets.Black
@@ -43,8 +44,8 @@ fun AnimationToRunParams.animation(animation: String): AnimationToRunParams {
 
 
 /**
- * Set the color using a ColorContainer, hex String, or Int or Long
- * in range(0..16777215)
+ * Set a color using a ColorContainer, hex String, or Int or Long
+ * in range(0..0xFFFFFF), along with the index of the color
  */
 fun AnimationToRunParams.color(color: Any, index: Int = 0): AnimationToRunParams {
     if (colors.size <= index)
@@ -135,7 +136,6 @@ fun AnimationToRunParams.addColors(vararg colors: String): AnimationToRunParams 
  * Append multiple colors to the end of `colors`
  */
 fun AnimationToRunParams.addColors(colors: List<*>): AnimationToRunParams {
-    require(colors.isNotEmpty())
     colors.forEach {
         when (it) {
             is ColorContainerInterface -> addColor(it)
@@ -178,82 +178,6 @@ fun AnimationToRunParams.color3(color: Any): AnimationToRunParams = color(color,
  */
 fun AnimationToRunParams.color4(color: Any): AnimationToRunParams = color(color, 4)
 
-///**
-// * Set the `center` parameter.
-// *
-// * @param pixel The index of the pixel at the center of a radial animation
-// */
-//fun AnimationToRunParams.center(pixelLocation: Location): AnimationToRunParams {
-//    this.center = pixelLocation
-//    return this
-//}
-
-///**
-// * Set the `delay` parameter.
-// *
-// * @param delay An `Int` representing the delay time in milliseconds
-// */
-//fun AnimationToRunParams.delay(delay: Int): AnimationToRunParams {
-//    this.delay = delay.toLong()
-//    return this
-//}
-
-///**
-// * Set the `delay` parameter.
-// *
-// * @param delay A `Long` representing the delay time in milliseconds
-// */
-//fun AnimationToRunParams.delay(delay: Long): AnimationToRunParams {
-//    this.delay = delay
-//    return this
-//}
-
-///**
-// * Set the `delayMod` parameter.
-// *
-// * @param delayMod A `Double` that is a multiplier for `delay`
-// */
-//fun AnimationToRunParams.delayMod(delayMod: Double): AnimationToRunParams {
-//    this.delayMod = delayMod
-//    return this
-//}
-
-/**
- * Set the `direction` parameter.
- *
- * @param direction A `Direction` value ([Direction].`FORWARD` or [Direction].`BACKWARD`)
- */
-fun AnimationToRunParams.direction(direction: Direction): AnimationToRunParams {
-    this.direction = direction
-    return this
-}
-
-/**
- * Set the `direction` parameter with a `Char`.
- *
- * @param direction A `Char` representing `Direction.FORWARD` ('`F`') or
- * `Direction.BACKWARD` ('`B`')
- */
-fun AnimationToRunParams.direction(direction: Char): AnimationToRunParams {
-    this.direction = when (direction) {
-        'F', 'f' -> Direction.FORWARD
-        'B', 'b' -> Direction.BACKWARD
-        else -> throw IllegalArgumentException("Direction chars can be 'F' or 'B'")
-    }
-    return this
-}
-
-///**
-// * Set the `distance` parameter.
-// *
-// * @param pixels The number of pixels away from the center pixel
-// * that the radial animation should travel
-// */
-//fun AnimationToRunParams.distance(pixels: Int): AnimationToRunParams {
-//    this.distance = pixels
-//    return this
-//}
-
 /**
  * Set the `id` parameter.
  *
@@ -281,6 +205,32 @@ fun AnimationToRunParams.section(sectionId: String): AnimationToRunParams {
     return this
 }
 
+
+/**
+ * Set the `direction` parameter.
+ *
+ * @param direction A `Direction` value ([Direction].`FORWARD` or [Direction].`BACKWARD`)
+ */
+fun AnimationToRunParams.direction(direction: Direction): AnimationToRunParams {
+    this.direction = direction
+    return this
+}
+
+/**
+ * Set the `direction` parameter with a `Char`.
+ *
+ * @param direction A `Char` representing `Direction.FORWARD` ('`F`') or
+ * `Direction.BACKWARD` ('`B`')
+ */
+fun AnimationToRunParams.direction(direction: Char): AnimationToRunParams {
+    this.direction = when (direction) {
+        'F', 'f' -> Direction.FORWARD
+        'B', 'b' -> Direction.BACKWARD
+        else -> throw IllegalArgumentException("Direction chars can be 'F' or 'B'")
+    }
+    return this
+}
+
 fun AnimationToRunParams.intParam(key: String, value: Int): AnimationToRunParams {
     this.intParams[key] = value
     return this
@@ -288,6 +238,11 @@ fun AnimationToRunParams.intParam(key: String, value: Int): AnimationToRunParams
 
 fun AnimationToRunParams.doubleParam(key: String, value: Double): AnimationToRunParams {
     this.doubleParams[key] = value
+    return this
+}
+
+fun AnimationToRunParams.stringParam(key: String, value: String): AnimationToRunParams {
+    this.stringParams[key] = value
     return this
 }
 
@@ -301,17 +256,12 @@ fun AnimationToRunParams.distanceParam(key: String, value: Distance): AnimationT
     return this
 }
 
+fun AnimationToRunParams.rotationParam(key: String, value: Rotation): AnimationToRunParams {
+    this.rotationParams[key] = value
+    return this
+}
+
 fun AnimationToRunParams.equationParam(key: String, value: Equation): AnimationToRunParams {
     this.equationParams[key] = value
     return this
 }
-
-///**
-// * Set the `spacing` parameter.
-// *
-// * @param spacing An `Int` that is the spacing used by the animation
-// */
-//fun AnimationToRunParams.spacing(spacing: Int): AnimationToRunParams {
-//    this.spacing = spacing
-//    return this
-//}

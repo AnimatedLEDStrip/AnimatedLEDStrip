@@ -22,19 +22,66 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.Animation
+import animatedledstrip.animations.*
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.serializer
 import animatedledstrip.communication.toUTF8String
-import animatedledstrip.test.animInfoArb
-import animatedledstrip.test.animParamsArb
+import animatedledstrip.leds.locationmanagement.Location
+import animatedledstrip.test.*
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.property.Arb
+import io.kotest.property.arbitrary.*
 import io.kotest.property.checkAll
 import kotlinx.serialization.encodeToString
 
 class AnimationInfoTest : StringSpec(
     {
+        data class ArbParams(
+            val intParams: List<AnimationParameter<Int>>,
+            val doubleParams: List<AnimationParameter<Double>>,
+            val stringParams: List<AnimationParameter<String>>,
+            val locationParams: List<AnimationParameter<Location>>,
+            val distanceParams: List<AnimationParameter<Distance>>,
+            val rotationParams: List<AnimationParameter<Rotation>>,
+        )
+
+        val animParamsArb: Arb<ArbParams> =
+            Arb.bind(Arb.list(animIntParamArb, 0..3),
+                     Arb.list(animDoubleParamArb, 0..3),
+                     Arb.list(animStringParamArb, 0..3),
+                     Arb.list(animLocationParamArb, 0..3),
+                     Arb.list(animDistanceParamArb, 0..3),
+                     Arb.list(animRotationParamArb, 0..3)) { i, d, s, l, ds, r ->
+                ArbParams(i, d, s, l, ds, r)
+            }
+
+        data class ArbInfo(
+            val name: String,
+            val abbr: String,
+            val description: String,
+            val signatureFile: String,
+            val runCountDefault: Int,
+            val minimumColors: Int,
+            val unlimitedColors: Boolean,
+            val dimensionality: Set<Dimensionality>,
+            val directional: Boolean,
+        )
+
+        val animInfoArb: Arb<ArbInfo> =
+            arbitrary { rs ->
+                ArbInfo(
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    filteredStringArb.next(rs),
+                    intArb.next(rs),
+                    intArb.next(rs),
+                    Arb.bool().next(rs),
+                    Arb.set(dimensionalityArb, 1..3).next(rs),
+                    Arb.bool().next(rs))
+            }
+
         "encode JSON" {
             checkAll(animInfoArb, animParamsArb) { ai, ap ->
                 Animation.AnimationInfo(ai.name,
@@ -52,28 +99,44 @@ class AnimationInfoTest : StringSpec(
                                         ap.distanceParams,
                                         ap.rotationParams,
                                         listOf())
-                    .jsonString() shouldBe """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
-                        """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
+                    .jsonString() shouldBe """{"type":"AnimationInfo",""" +
+                        """"name":"${ai.name}",""" +
+                        """"abbr":"${ai.abbr}",""" +
+                        """"description":"${ai.description}",""" +
+                        """"runCountDefault":${ai.runCountDefault},""" +
+                        """"minimumColors":${ai.minimumColors},""" +
+                        """"unlimitedColors":${ai.unlimitedColors},""" +
+                        """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],""" +
+                        """"directional":${ai.directional},""" +
                         """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                        """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
+                        """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                        """"equationParams":[]};;;"""
             }
         }
 
         "decode JSON" {
             checkAll(animInfoArb, animParamsArb) { ai, ap ->
                 val json =
-                    """{"type":"AnimationInfo","name":"${ai.name}","abbr":"${ai.abbr}","description":"${ai.description}","runCountDefault":${ai.runCountDefault},"minimumColors":${ai.minimumColors},"unlimitedColors":${ai.unlimitedColors},""" +
-                    """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],"directional":${ai.directional},""" +
+                    """{"type":"AnimationInfo",""" +
+                    """"name":"${ai.name}",""" +
+                    """"abbr":"${ai.abbr}",""" +
+                    """"description":"${ai.description}",""" +
+                    """"runCountDefault":${ai.runCountDefault},""" +
+                    """"minimumColors":${ai.minimumColors},""" +
+                    """"unlimitedColors":${ai.unlimitedColors},""" +
+                    """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],""" +
+                    """"directional":${ai.directional},""" +
                     """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                    """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],"equationParams":[]};;;"""
+                    """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
+                    """"equationParams":[]};;;"""
 
                 val correctData = Animation.AnimationInfo(name = ai.name,
                                                           abbr = ai.abbr,
@@ -119,4 +182,5 @@ class AnimationInfoTest : StringSpec(
                 info2 shouldBe info1
             }
         }
-    })
+    }
+)
