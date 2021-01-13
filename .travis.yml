@@ -18,6 +18,8 @@ branches:
 stages:
   - name: test
   - name: deploy
+    if: branch = master AND type != pull_request
+  - name: deploy docs
     if: (branch = master OR branch =~ ^.*-doc$) AND type != pull_request
 
 jobs:
@@ -46,7 +48,7 @@ jobs:
         - provider: script
           script: ./gradlew publish --stacktrace
 
-#    - stage: deploy
+    #    - stage: deploy docs
 #      install: skip
 #      script: skip
 #      before_script:
@@ -69,14 +71,14 @@ jobs:
       install: ./gradlew jvmJar
       script: skip
       before_script:
-        - "DEPLOY_DOCS=$(gradle properties | grep '^version:' | sed 's/version: //g' | grep -v SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
+        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
         - KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
       before_deploy:
         - curl -s https://get.sdkman.io | bash
         - source "/home/travis/.sdkman/bin/sdkman-init.sh"
         - sdk install kotlin
         - git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
-        - "VERSION=$(gradle properties | grep '^version:' | sed 's/version: //g')"
+        - "VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')"
         - kotlinc-jvm -script create_docs.kts -cp "build/libs/animatedledstrip-core-jvm-${VERSION}.jar:$KERMIT_JAR"
         - cd wiki
         - git add .
