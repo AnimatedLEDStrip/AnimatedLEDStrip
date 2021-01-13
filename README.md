@@ -7,9 +7,10 @@
 This is the core of the AnimatedLEDStrip libraries.
 
 Functionality:
-- Abstract the communication with a generic LED strip (`LEDStrip`, `NativeLEDStrip`)
-- Define animations (`PredefinedAnimation`)
-- Handle the running of animations (`AnimatedLEDStrip`)
-- Specify how to handle animatedledstrip.colors (`ColorContainer`)
-- Provide an option for emulating an LED strip (`EmulatedAnimatedLEDStrip`)
+- Abstract the communication with a generic LED strip (`LEDStripRenderer`, `NativeLEDStrip`)
+- Define animations (`DefinedAnimation`)
+- Define animation groups (`OrderedAnimationGroup`, `RandomizedAnimationGroup`)
+- Handle the running of animations (`LEDStripAnimationManager`)
+- Specify how to handle colors (`ColorContainer`)
+- Provide an option for emulating an LED strip (`EmulatedWS281x`)
 - Specify what can be sent between servers and clients and how it should be formatted (`SendableData`) 
