@@ -48,24 +48,23 @@ jobs:
         - provider: script
           script: ./gradlew publish --stacktrace
 
-    #    - stage: deploy docs
-#      install: skip
-#      script: skip
-#      before_script:
-#        - DEPLOY_DOCS=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2> /dev/null | grep -v SNAPSHOT) || echo "Snapshot detected, skipping doc deploy"
-#      deploy:
-#        - provider: script
-#          script: mvn site --settings .maven.xml -DskipTests=true -Ddokka=true -B && git add -f dokka
-#          on:
-    #            condition: $DEPLOY_DOCS
-    #        - provider: pages
-    #          skip_cleanup: true
-    #          github_token: $GITHUB_TOKEN
-    #          keep_history: true
-    #          verbose: true
-    #          local_dir: ./dokka
-    #          on:
-    #            condition: $DEPLOY_DOCS
+    - stage: deploy docs
+      install: skip
+      script: skip
+      before_script:
+        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
+      before_deploy:
+        - ./gradlew dokkaHtml
+        - git add -f dokka
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          keep_history: true
+          verbose: true
+          local_dir: ./dokka
+          on:
+            condition: $DEPLOY_DOCS
 
     - stage: deploy docs
       install: ./gradlew jvmJar
