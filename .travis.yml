@@ -27,8 +27,8 @@ jobs:
     - stage: test
       install: skip
       script:
-        # Run a test first so we build everything before trying to test
-        - ./gradlew jvmTest --tests "animatedledstrip.test.communication.ClientParamsTest"
+        # Build everything before trying to test, otherwise the first set of tests will have no coverage data
+        - ./gradlew jvmTestClasses
         - ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
         - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
         - ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
