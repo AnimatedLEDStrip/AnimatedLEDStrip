@@ -43,7 +43,7 @@ actual class LEDStripColorLogger actual constructor(
 ) {
 
     private val fileName = when (stripColorManager.stripManager.stripInfo.renderLogFile) {
-        null -> "signature_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
+        null -> "color_log_${SimpleDateFormat("MMDDYY_hhmmss").format(Date())}.csv"
         else -> {
             if (stripColorManager.stripManager.stripInfo.renderLogFile.endsWith(".csv"))
                 stripColorManager.stripManager.stripInfo.renderLogFile

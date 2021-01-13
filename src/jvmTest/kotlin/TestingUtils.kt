@@ -24,6 +24,8 @@ package animatedledstrip.test
 
 import animatedledstrip.animations.*
 import animatedledstrip.animations.predefined.color
+import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
@@ -132,6 +134,11 @@ val rotationArb: Arb<Rotation> =
         if (rOrD) RadiansRotation(x, y, z) else DegreesRotation(x, y, z)
     }
 
+val colorContainerArb: Arb<ColorContainerInterface> =
+    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, cOrP ->
+        if (cOrP) ColorContainer(c.toMutableList()) else PreparedColorContainer(c)
+    }
+
 val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
 val intArb = Arb.int()
 val dimensionalityArb = Arb.enum<Dimensionality>()
@@ -170,49 +177,4 @@ val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
 val animRotationParamArb: Arb<AnimationParameter<Rotation>> =
     arbitrary { rs ->
         AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableRotationArb.next(rs))
-    }
-
-data class ArbParams(
-    val intParams: List<AnimationParameter<Int>>,
-    val doubleParams: List<AnimationParameter<Double>>,
-    val stringParams: List<AnimationParameter<String>>,
-    val locationParams: List<AnimationParameter<Location>>,
-    val distanceParams: List<AnimationParameter<Distance>>,
-    val rotationParams: List<AnimationParameter<Rotation>>,
-)
-
-val animParamsArb: Arb<ArbParams> =
-    Arb.bind(Arb.list(animIntParamArb, 0..3),
-             Arb.list(animDoubleParamArb, 0..3),
-             Arb.list(animStringParamArb, 0..3),
-             Arb.list(animLocationParamArb, 0..3),
-             Arb.list(animDistanceParamArb, 0..3),
-             Arb.list(animRotationParamArb, 0..3)) { i, d, s, l, ds, r ->
-        ArbParams(i, d, s, l, ds, r)
-    }
-
-data class ArbInfo(
-    val name: String,
-    val abbr: String,
-    val description: String,
-    val signatureFile: String,
-    val runCountDefault: Int,
-    val minimumColors: Int,
-    val unlimitedColors: Boolean,
-    val dimensionality: Set<Dimensionality>,
-    val directional: Boolean,
-)
-
-val animInfoArb: Arb<ArbInfo> =
-    arbitrary { rs ->
-        ArbInfo(
-            filteredStringArb.next(rs),
-            filteredStringArb.next(rs),
-            filteredStringArb.next(rs),
-            filteredStringArb.next(rs),
-            intArb.next(rs),
-            intArb.next(rs),
-            Arb.bool().next(rs),
-            Arb.set(dimensionalityArb, 1..3).next(rs),
-            Arb.bool().next(rs))
     }
