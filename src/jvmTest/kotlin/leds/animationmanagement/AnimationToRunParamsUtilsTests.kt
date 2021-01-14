@@ -119,7 +119,6 @@ class AnimationToRunParamsUtilsTests : StringSpec(
             testAnimation.colors[16] shouldBe ColorContainer(0xFF00FF)
             testAnimation.colors[17] shouldBe ColorContainer(0x8888)
 
-            assertFailsWith<IllegalArgumentException> { testAnimation.addColors(listOf<Int>()) }
             assertFailsWith<IllegalArgumentException> {
                 testAnimation.addColors(listOf<Int?>(null))
             }

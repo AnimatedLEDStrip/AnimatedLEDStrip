@@ -206,3 +206,7 @@ tasks.javadoc {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
 }
+
+tasks.dokkaHtml.configure {
+    outputDirectory.set(projectDir.resolve("dokka"))
+}
