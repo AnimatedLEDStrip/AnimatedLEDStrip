@@ -44,6 +44,11 @@ jobs:
       deploy:
         - provider: script
           script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
+
+    - stage: deploy
+      install: skip
+      script: skip
+      deploy:
         - provider: script
           script: ./gradlew publish --stacktrace
 
@@ -51,7 +56,7 @@ jobs:
       install: skip
       script: skip
       before_script:
-        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
+        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep -v SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
       before_deploy:
         - ./gradlew dokkaHtml
         - git add -f dokka
@@ -69,7 +74,7 @@ jobs:
       install: ./gradlew jvmJar
       script: skip
       before_script:
-        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
+        - "DEPLOY_DOCS=$(./gradlew properties | grep '^version:' | sed 's/version: //g' | grep -v SNAPSHOT) || echo 'Snapshot detected, skipping doc deploy'"
         - KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
       before_deploy:
         - curl -s https://get.sdkman.io | bash
