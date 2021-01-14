@@ -45,9 +45,8 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre1-SNAPSHOT"
+version = "1.0.0-pre1"
 description = "A library designed to simplify running animations on WS281x strips"
-//java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 
 publishing {
@@ -87,10 +86,6 @@ publishing {
         }
     }
 }
-
-//tasks.withType<JavaCompile>() {
-//    options.encoding = "UTF-8"
-//}
 
 kotlin {
     jvm {

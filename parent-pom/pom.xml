@@ -28,7 +28,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-parent-pom</artifactId>
-    <version>0.9-SNAPSHOT</version>
+    <version>1.0.0-pre1</version>
     <packaging>pom</packaging>
 
     <name>io.github.animatedledstrip:animatedledstrip-parent-pom</name>
@@ -105,7 +105,7 @@
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
-            <version>1.10.0</version>
+            <version>1.10.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -283,7 +283,7 @@
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
                         <artifactId>dokka-maven-plugin</artifactId>
-                        <version>1.4.0</version>
+                        <version>1.4.10.2</version>
                         <executions>
                             <execution>
                                 <id>javadoc</id>
