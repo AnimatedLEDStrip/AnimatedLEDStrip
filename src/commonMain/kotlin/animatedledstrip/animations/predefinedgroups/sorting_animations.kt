@@ -29,7 +29,7 @@ import animatedledstrip.animations.RandomizedAnimationGroup
 val sortingAnimations = RandomizedAnimationGroup(
     groupInfo = Animation.AnimationInfo(name = "Sorting",
                                         abbr = "SRT",
-                                        description = "",
+                                        description = "Runs all of the different sorting animations currently defined.",
                                         runCountDefault = -1,
                                         minimumColors = 1,
                                         unlimitedColors = false,
