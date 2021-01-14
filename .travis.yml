@@ -38,19 +38,19 @@ jobs:
         - mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
       after_success: bash <(curl -s https://codecov.io/bash)
 
-    - stage: deploy
-      install: skip
-      script: skip
-      deploy:
-        - provider: script
-          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
+    #    - stage: deploy
+    #      install: skip
+    #      script: skip
+    #      deploy:
+    #        - provider: script
+    #          script: mvn deploy -f parent-pom/pom.xml --settings .maven.xml -DskipBuild=true -B
 
     - stage: deploy
       install: skip
       script: skip
       deploy:
         - provider: script
-          script: ./gradlew publish --stacktrace
+          script: ./gradlew publish --stacktrace -i
 
     - stage: deploy docs
       install: skip
