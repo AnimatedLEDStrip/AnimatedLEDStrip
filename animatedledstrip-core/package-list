@@ -3,6 +3,7 @@ $dokka.linkExtension:html
 
 animatedledstrip.animations
 animatedledstrip.animations.predefined
+animatedledstrip.animations.predefinedgroups
 animatedledstrip.colors
 animatedledstrip.colors.ccpresets
 animatedledstrip.communication
