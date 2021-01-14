@@ -45,7 +45,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre1"
+version = "1.0.0-pre1-SNAPSHOT"
 description = "A library designed to simplify running animations on WS281x strips"
 
 
@@ -62,7 +62,8 @@ publishing {
         }
     }
     publications.create<MavenPublication>("maven") {
-        from(components["java"])
+        from(components["kotlin"])
+        artifact(tasks.dokkaJavadoc)
         pom {
             licenses {
                 license {
