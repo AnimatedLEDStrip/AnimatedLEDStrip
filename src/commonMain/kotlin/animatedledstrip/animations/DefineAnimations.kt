@@ -23,13 +23,13 @@
 package animatedledstrip.animations
 
 import animatedledstrip.animations.predefined.*
+import animatedledstrip.animations.predefinedgroups.sortingAnimations
 import animatedledstrip.leds.animationmanagement.removeWhitespace
 import animatedledstrip.utils.Logger
 
 val definedAnimations = mutableMapOf<String, Animation>()
 val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
 
-// TODO: Figure out how to include logging in jar so docs script can still use this file
 fun addNewAnimation(anim: Animation) {
     if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
         Logger.e { "Animation ${anim.info.name} already defined" }
@@ -45,7 +45,7 @@ fun addNewAnimation(anim: Animation) {
     Logger.d { "Added animation ${anim.info.name}" }
 }
 
-val predefinedAnimations: List<DefinedAnimation> = listOf(
+val predefinedAnimations: List<Animation> = listOf(
     alterFade,
     alternate,
     bounce,
@@ -70,6 +70,7 @@ val predefinedAnimations: List<DefinedAnimation> = listOf(
     ripple,
     smoothChase,
     smoothFade,
+    sortingAnimations,
     sparkle,
     sparkleFade,
     sparkleToColor,

@@ -53,13 +53,13 @@ val sparkleToColor = DefinedAnimation(
                                               "Maximum amount of time before a pixel will sparkle",
                                               5000)),
     )
-) { leds, params, _ ->
+) { leds, params, scope ->
     val color = params.colors[0]
     val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
         validIndices.map { n ->
-            animationScope.launch {
+            scope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
                 yield() // don't set color if the animation was cancelled during the delay
                 setPixelProlongedColor(n, color)

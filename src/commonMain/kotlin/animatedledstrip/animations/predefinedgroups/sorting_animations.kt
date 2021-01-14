@@ -20,17 +20,25 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.predefinedgroups
 
-import kotlinx.serialization.Serializable
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.RandomizedAnimationGroup
 
-@Serializable
-class Equation(
-    val xCoefficients: List<Double> = listOf(),
-    val yCoefficients: List<Double> = listOf(),
-    val zCoefficients: List<Double> = listOf(),
-) {
-    companion object {
-        val default = Equation()
-    }
-}
+val sortingAnimations = RandomizedAnimationGroup(
+    groupInfo = Animation.AnimationInfo(name = "Sorting",
+                                        abbr = "SRT",
+                                        description = "",
+                                        runCountDefault = -1,
+                                        minimumColors = 1,
+                                        unlimitedColors = false,
+                                        dimensionality = Dimensionality.oneDimensional,
+                                        directional = false),
+    animationList = listOf("Bubble Sort",
+                           "Heap Sort",
+                           "Merge Sort Parallel",
+                           "Merge Sort Sequential",
+                           "Quick Sort Parallel",
+                           "Quick Sort Sequential"),
+)
