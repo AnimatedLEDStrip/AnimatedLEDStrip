@@ -1,1 +1,1 @@
-sourceset_dependencies = '{"animatedledstrip-core/JVM": []}'
+sourceset_dependencies = '{":dokkaHtml/commonMain": [], ":dokkaHtml/jvmMain": [":dokkaHtml/commonMain"]}'

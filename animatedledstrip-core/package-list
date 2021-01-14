@@ -1,11 +1,16 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
 
-animatedledstrip.animationutils
-animatedledstrip.animationutils.predefined
+animatedledstrip.animations
+animatedledstrip.animations.predefined
 animatedledstrip.colors
 animatedledstrip.colors.ccpresets
-animatedledstrip.leds
-animatedledstrip.leds.emulated
+animatedledstrip.communication
+animatedledstrip.leds.animationmanagement
+animatedledstrip.leds.colormanagement
+animatedledstrip.leds.emulation
+animatedledstrip.leds.locationmanagement
+animatedledstrip.leds.sectionmanagement
+animatedledstrip.leds.stripmanagement
 animatedledstrip.utils
 
