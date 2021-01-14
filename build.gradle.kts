@@ -61,8 +61,9 @@ publishing {
             }
         }
     }
-    publications.create<MavenPublication>("maven") {
-        from(components["kotlin"])
+    publications.named<MavenPublication>("kotlinMultiplatform") {
+        println(publications.names)
+//        from(components["kotlin"])
         artifact(tasks.dokkaJavadoc)
         pom {
             licenses {
@@ -194,7 +195,7 @@ signing {
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
-    sign(publishing.publications["maven"])
+    sign(publishing.publications["kotlinMultiplatform"])
 }
 
 tasks.javadoc {
