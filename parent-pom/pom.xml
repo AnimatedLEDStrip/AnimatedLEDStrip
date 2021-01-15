@@ -28,7 +28,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-parent-pom</artifactId>
-    <version>1.0.0-pre2-SNAPSHOT</version>
+    <version>1.0.0-pre1</version>
     <packaging>pom</packaging>
 
     <name>io.github.animatedledstrip:animatedledstrip-parent-pom</name>
@@ -69,6 +69,12 @@
             <url>https://jcenter.bintray.com/</url>
         </pluginRepository>
     </pluginRepositories>
+
+    <scm>
+        <connection>scm:git:https://github.com/AnimatedLEDStrip/server-pi.git</connection>
+        <developerConnection>scm:git:https://github.com/AnimatedLEDStrip/server-pi.git</developerConnection>
+        <url>https://github.com/AnimatedLEDStrip/server-pi</url>
+    </scm>
 
     <properties>
         <kotlin.version>1.4.21</kotlin.version>
@@ -304,6 +310,33 @@
                                 </packageOptions>
                             </perPackageOptions>
                         </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>publishPom</id>
+            <activation>
+                <property>
+                    <name>publishPom</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
