@@ -30,8 +30,13 @@ import kotlin.math.abs
 
 class PixelLocationManager(ledLocations: List<Location>?, val numLEDs: Int) {
 
-    constructor(oldLocations: PixelLocationManager, rotation: RadiansRotation)
-            : this(oldLocations.pixelLocations.transformLocations(rotation), oldLocations.numLEDs)
+    constructor(
+        oldLocations: PixelLocationManager,
+        offset: AbsoluteDistance = AbsoluteDistance(0, 0, 0),
+        rotation: RadiansRotation = RadiansRotation(0.0, 0.0, 0.0, listOf()),
+    )
+            : this(oldLocations.pixelLocations.map { it.location }.transformLocations(offset, rotation),
+                   oldLocations.numLEDs)
 
     val pixelLocations: List<PixelLocation>
 

@@ -26,9 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.animationmanagement.groupPixelsByXLocation
-import animatedledstrip.leds.colormanagement.revertPixel
-import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
+import animatedledstrip.leds.colormanagement.revertPixels
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColors
+import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 
 val planeRun = DefinedAnimation(
@@ -61,13 +61,10 @@ val planeRun = DefinedAnimation(
             groupPixelsByXLocation(rotation, movementPerIteration)
 
         for (i in pixelsToModifyPerIteration.indices) {
-            for (pixel in pixelsToModifyPerIteration[i])
-                leds.setPixelTemporaryColor(pixel, color)
-            for (pixel in pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
-                leds.revertPixel(pixel)
+            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
+            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
             delay(interMovementDelay)
         }
-        for (pixel in pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
-            leds.revertPixel(pixel)
+        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
     }
 }
