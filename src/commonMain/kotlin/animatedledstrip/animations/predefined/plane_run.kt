@@ -26,12 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.animationmanagement.numLEDs
+import animatedledstrip.leds.animationmanagement.groupPixelsByXLocation
 import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
-import animatedledstrip.leds.locationmanagement.PixelLocation
-import animatedledstrip.leds.locationmanagement.PixelLocationManager
-import animatedledstrip.leds.locationmanagement.transformLocations
 import kotlinx.coroutines.delay
 
 val planeRun = DefinedAnimation(
@@ -49,7 +46,7 @@ val planeRun = DefinedAnimation(
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 30)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
-                                                 30.0)),
+                                                 1.0)),
         rotationParams = listOf(AnimationParameter("rotation", "Rotation of the plane around the XYZ axes")),
     )
 ) { leds, params, _ ->
@@ -59,36 +56,18 @@ val planeRun = DefinedAnimation(
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
     val rotation = params.rotationParams.getValue("rotation")
 
-    val newManager = PixelLocationManager(
-        leds.transformLocations(rotation),
-        leds.numLEDs)
-
     leds.apply {
-        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
-        val changedPixels: MutableList<PixelLocation> = mutableListOf()
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsByXLocation(rotation, movementPerIteration)
 
-        var iteration = 0
-        var currentZ = newManager.zMin
-        do {
-            currentZ += movementPerIteration
-            pixelsToModifyPerIteration[iteration] = mutableListOf()
-            for (pixel in newManager.pixelLocations) {
-                if (pixel !in changedPixels && pixel.location.z <= currentZ) {
-                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
-                    changedPixels.add(pixel)
-                }
-            }
-            iteration++
-        } while (currentZ < newManager.zMax)
-
-        for (i in 0 until iteration) {
-            for (pixel in pixelsToModifyPerIteration[i - 1] ?: IntRange(0, -1))
-                leds.revertPixel(pixel)
-            for (pixel in pixelsToModifyPerIteration[i]!!)
+        for (i in pixelsToModifyPerIteration.indices) {
+            for (pixel in pixelsToModifyPerIteration[i])
                 leds.setPixelTemporaryColor(pixel, color)
+            for (pixel in pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
+                leds.revertPixel(pixel)
             delay(interMovementDelay)
         }
-        for (pixel in pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1]!!)
+        for (pixel in pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
             leds.revertPixel(pixel)
     }
 }

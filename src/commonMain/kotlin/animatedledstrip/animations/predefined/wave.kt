@@ -26,11 +26,8 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
-import animatedledstrip.leds.locationmanagement.PixelLocation
-import animatedledstrip.leds.locationmanagement.PixelLocationManager
-import animatedledstrip.leds.locationmanagement.transformLocations
+import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -60,35 +57,16 @@ val wave = DefinedAnimation(
 
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
-
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
     val rotation = params.rotationParams.getValue("rotation")
 
-    val newManager = PixelLocationManager(
-        leds.transformLocations(rotation),
-        leds.numLEDs)
-
     leds.apply {
-        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
-        val changedPixels: MutableList<PixelLocation> = mutableListOf()
-
-        var iteration = 0
-        var currentZ = newManager.zMin
-        do {
-            currentZ += movementPerIteration
-            pixelsToModifyPerIteration[iteration] = mutableListOf()
-            for (pixel in newManager.pixelLocations) {
-                if (pixel !in changedPixels && pixel.location.z <= currentZ) {
-                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
-                    changedPixels.add(pixel)
-                }
-            }
-            iteration++
-        } while (currentZ < newManager.zMax)
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsByXLocation(rotation, movementPerIteration)
 
         scope.launch {
-            for (i in 0 until iteration) {
-                for (pixel in pixelsToModifyPerIteration[i]!!)
+            for (pixelList in pixelsToModifyPerIteration) {
+                for (pixel in pixelList)
                     leds.setPixelFadeColor(pixel, color)
                 delay(interMovementDelay)
             }

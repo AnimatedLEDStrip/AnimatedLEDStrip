@@ -38,11 +38,21 @@ val pixelRun = DefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move during each iteration of the animation",
+                                                 1.0)),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow"))
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val direction = params.direction
+    val lineEquation = params.equationParams.getValue("lineEquation")
+
+
+
 
     leds.apply {
         when (direction) {

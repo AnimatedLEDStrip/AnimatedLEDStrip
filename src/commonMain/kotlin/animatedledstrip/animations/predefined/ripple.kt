@@ -27,7 +27,7 @@ import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
-import animatedledstrip.leds.locationmanagement.PixelLocation
+import animatedledstrip.leds.locationmanagement.groupPixelsByDistance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -61,31 +61,15 @@ val ripple = DefinedAnimation(
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
     val center = params.locationParams.getValue("center")
-    val distance = params.distanceParams.getValue("distance").maxDistance
+    val distance = params.distanceParams.getValue("distance")
 
-    @Suppress("DuplicatedCode")
     leds.apply {
-        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
-        val changedPixels: MutableList<PixelLocation> = mutableListOf()
-
-        var iteration = 0
-        var currentDistance = 0.0
-
-        while (currentDistance < distance) {
-            pixelsToModifyPerIteration[iteration] = mutableListOf()
-            for (pixel in leds.sectionManager.stripManager.pixelLocationManager.pixelLocations) {
-                if (pixel !in changedPixels && pixel.location.distanceFrom(center) < currentDistance) {
-                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
-                    changedPixels.add(pixel)
-                }
-            }
-            iteration++
-            currentDistance += movementPerIteration
-        }
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsByDistance(center, distance, movementPerIteration)
 
         scope.launch {
-            for (i in 0 until iteration) {
-                for (pixel in pixelsToModifyPerIteration[i]!!)
+            for (pixelList in pixelsToModifyPerIteration) {
+                for (pixel in pixelList)
                     leds.setPixelFadeColor(pixel, color)
                 delay(interMovementDelay)
             }
