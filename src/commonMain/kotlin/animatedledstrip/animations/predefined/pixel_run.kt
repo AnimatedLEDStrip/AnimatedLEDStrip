@@ -23,9 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.iterateOverPixels
-import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
-import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
+import animatedledstrip.leds.colormanagement.revertPixels
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColors
+import animatedledstrip.leds.locationmanagement.groupPixelsAlongLine
+import kotlinx.coroutines.delay
 
 val pixelRun = DefinedAnimation(
     Animation.AnimationInfo(
@@ -36,11 +37,17 @@ val pixelRun = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = true,
+        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
-                                                 "How far to move during each iteration of the animation",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be set",
                                                  1.0)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
         rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
         equationParams = listOf(AnimationParameter("lineEquation",
                                                    "The equation representing the line the the pixel will follow"))
@@ -48,22 +55,32 @@ val pixelRun = DefinedAnimation(
 ) { leds, params, _ ->
     val color = params.colors[0]
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
-    val direction = params.direction
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+    val maximumInfluence = params.doubleParams.getValue("maximumInfluence")
+    val offset = params.distanceParams.getValue("offset")
+    val rotation = params.rotationParams.getValue("rotation")
     val lineEquation = params.equationParams.getValue("lineEquation")
 
-
-
-
     leds.apply {
-        when (direction) {
-            Direction.FORWARD ->
-                iterateOverPixels {
-                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
-                }
-            Direction.BACKWARD ->
-                iterateOverPixelsReverse {
-                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
-                }
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+
+        for (i in pixelsToModifyPerIteration.indices) {
+            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
+            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i])
+            delay(interMovementDelay)
         }
+        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
+
+//        when (direction) {
+//            Direction.FORWARD ->
+//                iterateOverPixels {
+//                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
+//                }
+//            Direction.BACKWARD ->
+//                iterateOverPixelsReverse {
+//                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
+//                }
+//        }
     }
 }

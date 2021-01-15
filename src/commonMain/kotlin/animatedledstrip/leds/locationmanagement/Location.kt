@@ -22,6 +22,7 @@
 
 package animatedledstrip.leds.locationmanagement
 
+import animatedledstrip.animations.AbsoluteDistance
 import kotlinx.serialization.Serializable
 import kotlin.math.pow
 
@@ -38,4 +39,8 @@ data class Location(
     fun distanceFrom(other: Location): Double = ((x - other.x).pow(2) +
                                                  (y - other.y).pow(2) +
                                                  (z - other.z).pow(2)).pow(0.5)
+
+    fun offsetBy(offset: AbsoluteDistance): Location = Location(x + offset.x,
+                                                                y + offset.y,
+                                                                z + offset.z)
 }

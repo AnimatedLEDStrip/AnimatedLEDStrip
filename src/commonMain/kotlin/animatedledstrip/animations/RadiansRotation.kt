@@ -30,4 +30,6 @@ data class RadiansRotation(
     override val yRotation: Double = 0.0,
     override val zRotation: Double = 0.0,
     override val rotationOrder: List<RotationAxis> = listOf(RotationAxis.ROTATE_Z, RotationAxis.ROTATE_X),
-) : Rotation
+) : Rotation {
+    operator fun unaryMinus(): RadiansRotation = RadiansRotation(-xRotation, -yRotation, -zRotation, rotationOrder)
+}

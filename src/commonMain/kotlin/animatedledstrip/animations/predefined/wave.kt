@@ -26,7 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.colormanagement.setPixelFadeColors
 import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -66,8 +66,7 @@ val wave = DefinedAnimation(
 
         scope.launch {
             for (pixelList in pixelsToModifyPerIteration) {
-                for (pixel in pixelList)
-                    leds.setPixelFadeColor(pixel, color)
+                setPixelFadeColors(pixelList, color)
                 delay(interMovementDelay)
             }
         }

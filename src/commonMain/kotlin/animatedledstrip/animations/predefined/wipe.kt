@@ -26,7 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.colormanagement.setPixelProlongedColors
 import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 
@@ -60,8 +60,7 @@ val wipe = DefinedAnimation(
             groupPixelsByXLocation(rotation, movementPerIteration)
 
         for (pixelList in pixelsToModifyPerIteration) {
-            for (pixel in pixelList)
-                leds.setPixelProlongedColor(pixel, color)
+            setPixelProlongedColors(pixelList, color)
             delay(interMovementDelay)
         }
     }

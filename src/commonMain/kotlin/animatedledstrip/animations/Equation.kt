@@ -23,10 +23,17 @@
 package animatedledstrip.animations
 
 import kotlinx.serialization.Serializable
+import kotlin.math.pow
 
 @Serializable
-class Equation(
+data class Equation(
     val coefficients: List<Double> = listOf(),
 ) {
     constructor(vararg coefficients: Double) : this(coefficients.toList())
+
+    fun calculate(value: Double): Double =
+        coefficients.reduceIndexed { power, acc, c ->
+            acc + (value.pow(power) * c)
+        }
+
 }
