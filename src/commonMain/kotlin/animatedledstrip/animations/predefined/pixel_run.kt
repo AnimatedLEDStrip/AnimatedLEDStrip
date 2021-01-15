@@ -32,25 +32,26 @@ val pixelRun = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Run",
         abbr = "PXR",
-        description = "A pixel colored from `colors[0]` runs along the strip.",
+        description = "A pixel colored from `colors[0]` runs along a line, " +
+                      "affecting pixels within `maximumInfluence` of the line.",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        dimensionality = Dimensionality.oneDimensional,
+        dimensionality = Dimensionality.anyDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move along the X axis during each iteration of the animation",
                                                  1.0),
                               AnimationParameter("maximumInfluence",
-                                                 "How far away from the line a pixel can be set",
+                                                 "How far away from the line a pixel can be affected",
                                                  1.0)),
         distanceParams = listOf(AnimationParameter("offset",
                                                    "Offset of the line in the XYZ directions",
                                                    AbsoluteDistance(0.0, 0.0, 0.0))),
         rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
         equationParams = listOf(AnimationParameter("lineEquation",
-                                                   "The equation representing the line the the pixel will follow"))
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
@@ -71,16 +72,5 @@ val pixelRun = DefinedAnimation(
             delay(interMovementDelay)
         }
         revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
-
-//        when (direction) {
-//            Direction.FORWARD ->
-//                iterateOverPixels {
-//                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
-//                }
-//            Direction.BACKWARD ->
-//                iterateOverPixelsReverse {
-//                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
-//                }
-//        }
     }
 }

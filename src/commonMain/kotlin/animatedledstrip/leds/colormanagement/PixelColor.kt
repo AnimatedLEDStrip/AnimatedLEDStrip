@@ -106,7 +106,7 @@ data class PixelColor(val pixelNumber: Int) {
         actualColor = colorToSet
 
         if (doFade && fadeColor != -1) {
-            fadeColor = blend(fadeColor, prolongedColor, 50)
+            fadeColor = blend(fadeColor, prolongedColor, 25)
             if (fadeColor == prolongedColor) fadeColor = -1
         }
     }

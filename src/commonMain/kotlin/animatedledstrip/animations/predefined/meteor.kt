@@ -23,9 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.iterateOverPixels
-import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
-import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.colormanagement.revertPixels
+import animatedledstrip.leds.colormanagement.setPixelFadeColors
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColors
+import animatedledstrip.leds.locationmanagement.groupPixelsAlongLine
 import kotlinx.coroutines.delay
 
 val meteor = DefinedAnimation(
@@ -38,24 +39,41 @@ val meteor = DefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        dimensionality = Dimensionality.oneDimensional,
+        dimensionality = Dimensionality.anyDimensional,
         directional = true,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 1.0)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the meteor will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+    val maximumInfluence = params.doubleParams.getValue("maximumInfluence")
+    val offset = params.distanceParams.getValue("offset")
+    val rotation = params.rotationParams.getValue("rotation")
+    val lineEquation = params.equationParams.getValue("lineEquation")
 
     leds.apply {
-        when (params.direction) {
-            Direction.FORWARD -> iterateOverPixels {
-                setPixelFadeColor(it, color)
-                delay(interMovementDelay)
-            }
-            Direction.BACKWARD -> iterateOverPixelsReverse {
-                setPixelFadeColor(it, color)
-                delay(interMovementDelay)
-            }
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+
+        for (i in pixelsToModifyPerIteration.indices) {
+            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
+            setPixelFadeColors(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i],
+                               color)
+            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i])
+            delay(interMovementDelay)
         }
     }
 }
