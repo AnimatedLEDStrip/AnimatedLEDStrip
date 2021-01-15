@@ -22,6 +22,7 @@
 
 package animatedledstrip.leds.locationmanagement
 
+import animatedledstrip.animations.AbsoluteDistance
 import animatedledstrip.animations.RadiansRotation
 import animatedledstrip.animations.RotationAxis
 import animatedledstrip.leds.animationmanagement.AnimationManager
@@ -92,5 +93,60 @@ fun PixelLocation.transform(rotation: RadiansRotation): Location {
     return tmpLocation
 }
 
-fun AnimationManager.transformLocations(rotation: RadiansRotation): List<Location> =
-    sectionManager.stripManager.pixelLocationManager.pixelLocations.map { it.transform(rotation) }
+fun List<PixelLocation>.transformLocations(rotation: RadiansRotation): List<Location> =
+    map { it.transform(rotation) }
+
+val AnimationManager.pixelLocationManager: PixelLocationManager
+    get() = sectionManager.stripManager.pixelLocationManager
+
+fun AnimationManager.groupPixelsByXLocation(
+    rotation: RadiansRotation,
+    movementPerIteration: Double,
+): List<List<Int>> {
+    val locationManager = PixelLocationManager(pixelLocationManager, rotation)
+    val pixelsToModifyPerIteration: MutableList<MutableList<Int>> = mutableListOf()
+    val changedPixels: MutableList<PixelLocation> = mutableListOf()
+
+    var iteration = 0
+    var currentX = locationManager.xMin
+    do {
+        currentX += movementPerIteration
+        pixelsToModifyPerIteration.add(mutableListOf())
+        for (pixel in locationManager.pixelLocations) {
+            if (pixel !in changedPixels && pixel.location.x <= currentX) {
+                pixelsToModifyPerIteration[iteration].add(pixel.index)
+                changedPixels.add(pixel)
+            }
+        }
+        iteration++
+    } while (currentX < locationManager.xMax)
+
+    return pixelsToModifyPerIteration.map { it.toList() }
+}
+
+fun AnimationManager.groupPixelsByDistance(
+    center: Location,
+    maximumDistance: AbsoluteDistance,
+    movementPerIteration: Double,
+): List<List<Int>> {
+    val maxDistance = maximumDistance.maxDistance
+    val locationManager = pixelLocationManager
+    val pixelsToModifyPerIteration: MutableList<MutableList<Int>> = mutableListOf()
+    val changedPixels: MutableList<PixelLocation> = mutableListOf()
+
+    var iteration = 0
+    var currentDistance = 0.0
+    while (currentDistance < maxDistance) {
+        pixelsToModifyPerIteration.add(mutableListOf())
+        for (pixel in locationManager.pixelLocations) {
+            if (pixel !in changedPixels && pixel.location.distanceFrom(center) <= currentDistance) {
+                pixelsToModifyPerIteration[iteration].add(pixel.index)
+                changedPixels.add(pixel)
+            }
+        }
+        iteration++
+        currentDistance += movementPerIteration
+    }
+
+    return pixelsToModifyPerIteration.map { it.toList() }
+}

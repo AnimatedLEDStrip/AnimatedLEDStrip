@@ -152,7 +152,7 @@ data class AnimationToRunParams(
         for (equationParam in definedAnimation.info.equationParams)
             preparedEquationParams[equationParam.name] =
                 when (val paramValue = equationParams[equationParam.name]) {
-                    null -> equationParam.default ?: Equation.default
+                    null -> equationParam.default ?: Equation()
                     else -> paramValue
                 }
 

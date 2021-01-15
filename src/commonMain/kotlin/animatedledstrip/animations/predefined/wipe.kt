@@ -26,12 +26,8 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.leds.locationmanagement.PixelLocation
-import animatedledstrip.leds.locationmanagement.PixelLocationManager
-import animatedledstrip.leds.locationmanagement.transformLocations
-import animatedledstrip.utils.Logger
+import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 
 val wipe = DefinedAnimation(
@@ -59,32 +55,12 @@ val wipe = DefinedAnimation(
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
     val rotation = params.rotationParams.getValue("rotation")
 
-    val newManager = PixelLocationManager(
-        leds.transformLocations(rotation),
-        leds.numLEDs)
-
     leds.apply {
-        val pixelsToModifyPerIteration: MutableMap<Int, MutableList<Int>> = mutableMapOf()
-        val changedPixels: MutableList<PixelLocation> = mutableListOf()
+        val pixelsToModifyPerIteration: List<List<Int>> =
+            groupPixelsByXLocation(rotation, movementPerIteration)
 
-        var iteration = 0
-        var currentZ = newManager.zMin
-        do {
-            currentZ += movementPerIteration
-            pixelsToModifyPerIteration[iteration] = mutableListOf()
-            for (pixel in newManager.pixelLocations) {
-                if (pixel !in changedPixels && pixel.location.z <= currentZ) {
-                    pixelsToModifyPerIteration[iteration]!!.add(pixel.index)
-                    changedPixels.add(pixel)
-                }
-            }
-            iteration++
-        } while (currentZ < newManager.zMax)
-
-        Logger.v { pixelsToModifyPerIteration.toString() }
-
-        for (i in 0 until iteration) {
-            for (pixel in pixelsToModifyPerIteration[i]!!)
+        for (pixelList in pixelsToModifyPerIteration) {
+            for (pixel in pixelList)
                 leds.setPixelProlongedColor(pixel, color)
             delay(interMovementDelay)
         }

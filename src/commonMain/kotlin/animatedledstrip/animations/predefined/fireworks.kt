@@ -26,6 +26,7 @@ import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
+import animatedledstrip.leds.locationmanagement.pixelLocationManager
 import kotlinx.coroutines.delay
 
 val fireworks = DefinedAnimation(
@@ -62,7 +63,7 @@ val fireworks = DefinedAnimation(
             runParallel(params.withModifications(
                 colors = mutableListOf(color),
                 animation = "Ripple",
-                locationParamMods = mapOf("center" to leds.sectionManager.stripManager.pixelLocationManager.randomLocation())
+                locationParamMods = mapOf("center" to pixelLocationManager.randomLocation())
             ))
             delay(interAnimationDelay)
         }

@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre1.1"
+version = "1.0.0-pre2-SNAPSHOT"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -204,8 +204,6 @@ signing {
 nexusPublishing {
     repositories {
         sonatype {
-//            nexusUrl.set(uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/"))
-//            snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots/"))
             val nexusUsername: String? by project
             val nexusPassword: String? by project
             username.set(nexusUsername)

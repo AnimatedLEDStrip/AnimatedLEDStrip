@@ -23,11 +23,16 @@
 package animatedledstrip.leds.locationmanagement
 
 import animatedledstrip.animations.AbsoluteDistance
+import animatedledstrip.animations.RadiansRotation
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.utils.Logger
 import kotlin.math.abs
 
-class PixelLocationManager(ledLocations: List<Location>?, numLEDs: Int) {
+class PixelLocationManager(ledLocations: List<Location>?, val numLEDs: Int) {
+
+    constructor(oldLocations: PixelLocationManager, rotation: RadiansRotation)
+            : this(oldLocations.pixelLocations.transformLocations(rotation), oldLocations.numLEDs)
+
     val pixelLocations: List<PixelLocation>
 
     init {

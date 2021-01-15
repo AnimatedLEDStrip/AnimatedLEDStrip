@@ -26,11 +26,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Equation(
-    val xCoefficients: List<Double> = listOf(),
-    val yCoefficients: List<Double> = listOf(),
-    val zCoefficients: List<Double> = listOf(),
+    val coefficients: List<Double> = listOf(),
 ) {
-    companion object {
-        val default = Equation()
-    }
+    constructor(vararg coefficients: Double) : this(coefficients.toList())
 }
