@@ -29,10 +29,11 @@ plugins {
     kotlin("plugin.serialization") version "1.4.21"
     id("org.jetbrains.dokka") version "1.4.20"
     id("io.kotest") version "0.2.6"
-    id("maven-publish")
-    signing
-    id("java-library")
     jacoco
+    id("java-library")
+    signing
+    id("de.marcphilipp.nexus-publish") version "0.4.0"
+    id("io.codearte.nexus-staging") version "0.22.0"
 }
 
 jacoco {
@@ -45,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre2-SNAPSHOT"
+version = "1.0.0-pre1.1"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -158,17 +159,6 @@ val javadocJar by tasks.creating(Jar::class) {
 }
 
 publishing {
-    repositories {
-        maven {
-            val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsUrl else releasesUrl)
-            credentials {
-                username = System.getenv("SONATYPE_USERNAME")
-                password = System.getenv("SONATYPE_PASSWORD")
-            }
-        }
-    }
     publications.withType<MavenPublication>().forEach {
         it.apply {
             artifact(javadocJar)
@@ -209,6 +199,19 @@ signing {
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications)
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            nexusUrl.set(uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/"))
+            snapshotRepositoryUrl.set(uri("https://oss.sonatype.org/content/repositories/snapshots"))
+            val nexusUsername: String? by project
+            val nexusPassword: String? by project
+            username.set(nexusUsername)
+            password.set(nexusPassword)
+        }
+    }
 }
 
 tasks.dokkaHtml.configure {

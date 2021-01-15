@@ -28,7 +28,7 @@
 
     <groupId>io.github.animatedledstrip</groupId>
     <artifactId>animatedledstrip-parent-pom</artifactId>
-    <version>1.0.0-pre1</version>
+    <version>1.0.0-pre1.1</version>
     <packaging>pom</packaging>
 
     <name>io.github.animatedledstrip:animatedledstrip-parent-pom</name>
