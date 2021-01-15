@@ -210,6 +210,7 @@ nexusPublishing {
             val nexusPassword: String? by project
             username.set(nexusUsername)
             password.set(nexusPassword)
+            stagingProfileId.set("io.github.animatedledstrip")
         }
     }
 }
