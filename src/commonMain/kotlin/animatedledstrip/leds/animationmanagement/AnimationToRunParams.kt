@@ -62,6 +62,7 @@ data class AnimationToRunParams(
     var id: String = "",
     var section: String = "",
     var runCount: Int = 0,
+    @Deprecated("Directional animations will be replaced by animations which can be rotated")
     var direction: Direction = Direction.FORWARD,
     var intParams: MutableMap<String, Int> = mutableMapOf(),
     var doubleParams: MutableMap<String, Double> = mutableMapOf(),

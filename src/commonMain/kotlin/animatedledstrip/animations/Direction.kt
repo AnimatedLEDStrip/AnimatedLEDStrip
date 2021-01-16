@@ -31,6 +31,7 @@ package animatedledstrip.animations
  * The end of the LED strip is the opposite end from the start (small arrows on
  * strip point towards it).
  */
+@Deprecated("Directional animations will be replaced by animations which can be rotated")
 enum class Direction {
     /**
      * Animation appears to move from the start to the end of the strip/section.
