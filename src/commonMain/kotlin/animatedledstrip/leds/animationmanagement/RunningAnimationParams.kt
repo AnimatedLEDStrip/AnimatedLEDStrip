@@ -60,6 +60,7 @@ data class RunningAnimationParams private constructor(
     val id: String,
     val section: String,
     val runCount: Int,
+    @Deprecated("Directional animations will be replaced by animations which can be rotated")
     val direction: Direction,
     val intParams: Map<String, Int>,
     val doubleParams: Map<String, Double>,

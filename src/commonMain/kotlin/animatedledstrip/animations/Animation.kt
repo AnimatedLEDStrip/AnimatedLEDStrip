@@ -72,6 +72,7 @@ abstract class Animation {
         val minimumColors: Int,
         val unlimitedColors: Boolean,
         val dimensionality: Set<Dimensionality>,
+        @Deprecated("Directional animations will be replaced by animations which can be rotated")
         val directional: Boolean,
         val intParams: List<AnimationParameter<Int>> = listOf(),
         val doubleParams: List<AnimationParameter<Double>> = listOf(),
