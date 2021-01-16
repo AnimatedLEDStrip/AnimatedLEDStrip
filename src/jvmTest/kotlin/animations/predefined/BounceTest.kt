@@ -22,15 +22,16 @@
 
 package animatedledstrip.test.animations.predefined
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import io.kotest.core.spec.style.StringSpec
-import io.mockk.coVerifyOrder
 import io.mockk.mockkStatic
 import io.mockk.verify
+import io.mockk.verifyOrder
 
 class BounceTest : StringSpec(
     {
@@ -55,7 +56,7 @@ class BounceTest : StringSpec(
 
             val pCC = ColorContainer(0xFF).prepare(10)
 
-            verify {
+            verify(exactly = 1) {
                 section.setPixelFadeColor(0, pCC)
                 section.setPixelFadeColor(1, pCC)
                 section.setPixelFadeColor(2, pCC)
@@ -68,46 +69,165 @@ class BounceTest : StringSpec(
                 section.setPixelFadeColor(9, pCC)
             }
 
-            coVerifyOrder {
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(0, 9))
+            verify(exactly = 1) {
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+            }
+
+            verify(exactly = 3) {
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+            }
+
+            verify(exactly = 5) {
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+            }
+
+            verify(exactly = 7) {
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+            }
+
+            verify(exactly = 9) {
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+            }
+
+            verify(exactly = 8) {
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+            }
+
+            verify(exactly = 6) {
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+            }
+
+            verify(exactly = 4) {
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+            }
+
+            verify(exactly = 2) {
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+            }
+
+            verify(exactly = 0) {
+                section.setPixelTemporaryColor(9, pCC)
+                section.revertPixel(9)
+            }
+
+            verifyOrder {
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
                 section.setPixelFadeColor(9, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(0, 8))
+
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
                 section.setPixelFadeColor(0, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(1, 8))
+
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
                 section.setPixelFadeColor(8, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(1, 7))
+
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
                 section.setPixelFadeColor(1, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(2, 7))
+
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
                 section.setPixelFadeColor(7, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(2, 6))
+
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
                 section.setPixelFadeColor(2, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(3, 6))
+
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
                 section.setPixelFadeColor(6, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(3, 5))
+
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
                 section.setPixelFadeColor(3, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(4, 5))
+
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
                 section.setPixelFadeColor(5, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(4, 4))
+
                 section.setPixelFadeColor(4, pCC)
             }
         }
@@ -125,7 +245,7 @@ class BounceTest : StringSpec(
 
             val pCC = ColorContainer(0xFF).prepare(11)
 
-            verify {
+            verify(exactly = 1) {
                 section.setPixelFadeColor(0, pCC)
                 section.setPixelFadeColor(1, pCC)
                 section.setPixelFadeColor(2, pCC)
@@ -139,47 +259,192 @@ class BounceTest : StringSpec(
                 section.setPixelFadeColor(10, pCC)
             }
 
-            coVerifyOrder {
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(0, 10))
+            verify(exactly = 1) {
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+            }
+
+            verify(exactly = 3) {
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+            }
+
+            verify(exactly = 5) {
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+            }
+
+            verify(exactly = 7) {
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+            }
+
+            verify(exactly = 9) {
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+            }
+
+            verify(exactly = 10) {
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+            }
+
+            verify(exactly = 8) {
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+            }
+
+            verify(exactly = 6) {
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+            }
+
+            verify(exactly = 4) {
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+            }
+
+            verify(exactly = 2) {
+                section.setPixelTemporaryColor(9, pCC)
+                section.revertPixel(9)
+            }
+
+            verify(exactly = 0) {
+                section.setPixelTemporaryColor(10, pCC)
+                section.revertPixel(10)
+            }
+
+            verifyOrder {
+                section.setPixelTemporaryColor(0, pCC)
+                section.revertPixel(0)
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(9, pCC)
+                section.revertPixel(9)
                 section.setPixelFadeColor(10, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(0, 9))
+
+                section.setPixelTemporaryColor(9, pCC)
+                section.revertPixel(9)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
                 section.setPixelFadeColor(0, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(1, 9))
+
+                section.setPixelTemporaryColor(1, pCC)
+                section.revertPixel(1)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
                 section.setPixelFadeColor(9, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(1, 8))
+
+                section.setPixelTemporaryColor(8, pCC)
+                section.revertPixel(8)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
                 section.setPixelFadeColor(1, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(2, 8))
+
+                section.setPixelTemporaryColor(2, pCC)
+                section.revertPixel(2)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
                 section.setPixelFadeColor(8, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(2, 7))
+
+                section.setPixelTemporaryColor(7, pCC)
+                section.revertPixel(7)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
                 section.setPixelFadeColor(2, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(3, 7))
+
+                section.setPixelTemporaryColor(3, pCC)
+                section.revertPixel(3)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
                 section.setPixelFadeColor(7, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(3, 6))
+
+                section.setPixelTemporaryColor(6, pCC)
+                section.revertPixel(6)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
                 section.setPixelFadeColor(3, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.FORWARD),
-                                   section.getSubSection(4, 6))
+
+                section.setPixelTemporaryColor(4, pCC)
+                section.revertPixel(4)
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
                 section.setPixelFadeColor(6, pCC)
-                anim.runSequential(anim.params.withModifications(animation = "Pixel Run",
-                                                                 direction = Direction.BACKWARD),
-                                   section.getSubSection(4, 5))
+
+                section.setPixelTemporaryColor(5, pCC)
+                section.revertPixel(5)
                 section.setPixelFadeColor(4, pCC)
+
                 section.setPixelFadeColor(5, pCC)
             }
         }
