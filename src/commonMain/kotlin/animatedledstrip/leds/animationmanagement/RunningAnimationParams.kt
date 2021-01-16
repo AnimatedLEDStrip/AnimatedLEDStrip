@@ -37,17 +37,18 @@ import kotlinx.serialization.Transient
  * @property animation The animation being run
  * @property animationName The name of the animation being run
  * @property colors The list of [PreparedColorContainer]s used
- * @property center The pixel at the center of the animation, if applicable
- * @property delay Delay time (in milliseconds) used in the animation
- * @property direction The direction the animation will appear to move
- * @property distance The distance an animation will travel from its center
- * @property id ID for the animation.
- *   Used by server and clients to identify a specific animation.
- * @property runCount The number of times the animation should be run. `-1` means until stopped.
+ * @property id ID for the animation. Used by server and clients to identify a specific animation.
  * @property section The id of the section of the strip that will be running the whole animation
  *   (not necessarily the section running this animation, such as if this is a subanimation).
  *   An empty string means the whole strip.
- * @property spacing Spacing used in the animation
+ * @property runCount The number of times the animation should be run. `-1` means until stopped.
+ * @property intParams A map of integer parameters for the animation
+ * @property doubleParams A map of double parameters for the animation
+ * @property stringParams A map of string parameters for the animation
+ * @property locationParams A map of [Location] parameters for the animation
+ * @property distanceParams A map of [Distance] parameters for the animation
+ * @property rotationParams A map of [Rotation] parameters for the animation
+ * @property equationParams A map of [Equation] parameters for the animation
  * @property sourceParams The [AnimationToRunParams] instance that created this [RunningAnimationParams]
  */
 @Suppress("DataClassPrivateConstructor")
@@ -70,6 +71,7 @@ data class RunningAnimationParams private constructor(
     val sourceParams: AnimationToRunParams,
 ) : SendableData {
 
+    @Suppress("JoinDeclarationAndAssignment")
     @Transient
     lateinit var animation: Animation
 
@@ -122,7 +124,7 @@ data class RunningAnimationParams private constructor(
      */
     fun withModifications(
         animation: String = this.animationName,
-        colors: MutableList<ColorContainerInterface> = this.colors.toMutableList(),
+        colors: List<ColorContainerInterface> = this.colors,
         id: String = this.id,
         section: String = this.section,
         runCount: Int = this.runCount,
@@ -135,7 +137,7 @@ data class RunningAnimationParams private constructor(
         rotationParamMods: Map<String, Rotation> = mapOf(),
         equationParamMods: Map<String, Equation> = mapOf(),
     ): AnimationToRunParams = AnimationToRunParams(animation,
-                                                   colors,
+                                                   colors.toMutableList(),
                                                    id,
                                                    section,
                                                    runCount,

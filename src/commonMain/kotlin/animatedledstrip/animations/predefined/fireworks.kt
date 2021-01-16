@@ -34,7 +34,7 @@ val fireworks = DefinedAnimation(
         name = "Fireworks",
         abbr = "FWK",
         description = "Runs [Ripple](Ripple) animations from random center points within the defined " +
-                      "locations of all pixels, travelling a predefined distance.\n" +
+                      "locations of all pixels, travelling a defined distance.\n" +
                       "Color is chosen randomly from `colors`.",
         runCountDefault = -1,
         minimumColors = 1,
