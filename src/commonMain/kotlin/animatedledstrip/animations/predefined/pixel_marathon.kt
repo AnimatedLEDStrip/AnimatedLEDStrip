@@ -22,12 +22,10 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.AnimationParameter
-import animatedledstrip.animations.DefinedAnimation
-import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
-import animatedledstrip.leds.animationmanagement.*
+import animatedledstrip.leds.animationmanagement.randomDouble
+import animatedledstrip.leds.animationmanagement.runParallel
 import kotlinx.coroutines.delay
 
 val pixelMarathon = DefinedAnimation(
@@ -52,26 +50,32 @@ val pixelMarathon = DefinedAnimation(
         unlimitedColors = true,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("interMovementDelay", "Delay used during animation", 8),
+        intParams = listOf(AnimationParameter("interMovementDelay",
+                                              "Delay between movements in the pixel run animations",
+                                              8),
                            AnimationParameter("maxInterAnimationDelay",
                                               "Maximum time between start of one pixel run and start of the next",
                                               1000)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 1.0)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors.random()
-    val interMovementDelay = params.intParams.getValue("interMovementDelay")
-    val direction = params.direction
     val maxInterAnimationDelay = params.intParams.getValue("maxInterAnimationDelay")
 
     leds.apply {
         if (color.isNotEmpty()) {
-            runParallel(
-                AnimationToRunParams()
-                    .animation("Pixel Run")
-                    .color(color)
-                    .direction(direction)
-                    .intParam("interMovementDelay", interMovementDelay),
-            )
+            runParallel(params.withModifications(colors = mutableListOf(color)))
             delay((randomDouble() * maxInterAnimationDelay).toLong())
         }
     }
