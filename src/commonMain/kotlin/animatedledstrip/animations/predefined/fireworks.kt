@@ -55,15 +55,16 @@ val fireworks = DefinedAnimation(
                                                    PercentDistance(0.1, 0.1, 0.1))),
     )
 ) { leds, params, _ ->
+    val color = params.randomColor()
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
 
     leds.apply {
-        val color = params.randomColor()
         if (color.isNotEmpty()) {
             runParallel(params.withModifications(
-                colors = mutableListOf(color),
                 animation = "Ripple",
-                locationParamMods = mapOf("center" to pixelLocationManager.randomLocation())
+                colors = listOf(color),
+                locationParamMods = mapOf("center" to pixelLocationManager.randomLocation()),
+                distanceParamMods = mapOf("distance" to params.distanceParams.getValue("distance") / 2)
             ))
             delay(interAnimationDelay)
         }
