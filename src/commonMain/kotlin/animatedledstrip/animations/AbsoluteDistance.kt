@@ -34,5 +34,7 @@ data class AbsoluteDistance(override val x: Double = 0.0, override val y: Double
 
     override val maxDistance: Double = max(x, max(y, z))
 
-    operator fun unaryMinus() = AbsoluteDistance(-x, -y, -z)
+    operator fun unaryMinus(): AbsoluteDistance = AbsoluteDistance(-x, -y, -z)
+
+    operator fun div(divisor: Int): AbsoluteDistance = AbsoluteDistance(x / divisor, y / divisor, z / divisor)
 }
