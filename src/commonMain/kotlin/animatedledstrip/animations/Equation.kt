@@ -32,8 +32,7 @@ data class Equation(
     constructor(vararg coefficients: Double) : this(coefficients.toList())
 
     fun calculate(value: Double): Double =
-        coefficients.reduceIndexed { power, acc, c ->
+        coefficients.reduceIndexedOrNull { power, acc, c ->
             acc + (value.pow(power) * c)
-        }
-
+        } ?: 0.0
 }
