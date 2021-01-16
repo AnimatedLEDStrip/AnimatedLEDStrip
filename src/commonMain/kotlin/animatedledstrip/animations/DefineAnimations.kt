@@ -70,7 +70,6 @@ val predefinedAnimations: List<Animation> = listOf(
     ripple,
     smoothChase,
     smoothFade,
-    sortingAnimations,
     sparkle,
     sparkleFade,
     sparkleToColor,
@@ -79,6 +78,10 @@ val predefinedAnimations: List<Animation> = listOf(
     stackOverflow,
     wave,
     wipe,
+).onEach { addNewAnimation(it) }
+
+val predefinedGroups: List<Animation> = listOf(
+    sortingAnimations,
 ).onEach { addNewAnimation(it) }
 
 fun prepareAnimIdentifier(name: String): String =
