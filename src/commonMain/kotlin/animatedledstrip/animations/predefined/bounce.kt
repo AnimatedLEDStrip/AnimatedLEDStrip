@@ -22,12 +22,14 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
-import animatedledstrip.leds.animationmanagement.runSequential
+import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
-import animatedledstrip.leds.sectionmanagement.getSubSection
 
 val bounce = DefinedAnimation(
     Animation.AnimationInfo(
@@ -43,25 +45,24 @@ val bounce = DefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay",
-                                              "Delay between movements in the pixel run animations")),
+                                              "Delay between movements",
+                                              5)),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
 
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+
     leds.apply {
         iterateOver(0 until numLEDs / 2) { i ->
-            runSequential(
-                animation = params.withModifications(animation = "Pixel Run",
-                                                     direction = Direction.FORWARD),
-                section = getSubSection(i, numLEDs - i - 1),
-            )
+            for (j in i until numLEDs - i - 1) {
+                setPixelAndRevertAfterDelay(j, color, interMovementDelay)
+            }
             setPixelFadeColor(numLEDs - i - 1, color)
 
-            runSequential(
-                animation = params.withModifications(animation = "Pixel Run",
-                                                     direction = Direction.BACKWARD),
-                section = getSubSection(i, numLEDs - i - 2),
-            )
+            for (j in numLEDs - i - 2 downTo i + 1) {
+                setPixelAndRevertAfterDelay(j, color, interMovementDelay)
+            }
             setPixelFadeColor(i, color)
         }
         if (numLEDs % 2 == 1) setPixelFadeColor(numLEDs / 2, color)
