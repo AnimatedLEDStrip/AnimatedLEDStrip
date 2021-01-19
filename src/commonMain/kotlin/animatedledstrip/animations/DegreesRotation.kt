@@ -22,10 +22,15 @@
 
 package animatedledstrip.animations
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.math.PI
 
+/**
+ * A [Rotation] specified in degrees
+ */
 @Serializable
+@SerialName("DegreesRotation")
 data class DegreesRotation(
     override val xRotation: Double = 0.0,
     override val yRotation: Double = 0.0,

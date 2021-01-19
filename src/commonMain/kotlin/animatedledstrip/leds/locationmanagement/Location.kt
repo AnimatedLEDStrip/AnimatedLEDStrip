@@ -26,6 +26,13 @@ import animatedledstrip.animations.AbsoluteDistance
 import kotlinx.serialization.Serializable
 import kotlin.math.pow
 
+/**
+ * A location in 3D space
+ *
+ * @property x X coordinate
+ * @property y Y coordinate
+ * @property z Z coordinate
+ */
 @Serializable
 data class Location(
     val x: Double = 0.0,

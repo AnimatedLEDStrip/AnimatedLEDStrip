@@ -22,9 +22,14 @@
 
 package animatedledstrip.animations
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * A [Rotation] specified in radians
+ */
 @Serializable
+@SerialName("RadiansRotation")
 data class RadiansRotation(
     override val xRotation: Double = 0.0,
     override val yRotation: Double = 0.0,
