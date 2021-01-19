@@ -27,7 +27,6 @@ import animatedledstrip.leds.stripmanagement.LEDStrip
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlin.properties.Delegates
 
 /**
  * Represents a section of the full strip and is used by running animations
@@ -38,16 +37,12 @@ import kotlin.properties.Delegates
 @SerialName("Section")
 class Section(
     override val name: String = "",
-    override val startPixel: Int = 0,
-    override val endPixel: Int = 0,
+    override val pixels: List<Int> = listOf(),
+    val parentSectionName: String = "",
 ) : SectionManager, SendableData {
 
-    init {
-        require(startPixel <= endPixel) { "startPixel should be less than or equal to endPixel" }
-    }
-
     @Transient
-    override val numLEDs: Int = endPixel - startPixel + 1
+    override val numLEDs: Int = pixels.size
 
     @Suppress("JoinDeclarationAndAssignment")
     @Transient
@@ -58,41 +53,29 @@ class Section(
     private lateinit var parentSection: SectionManager
 
     /**
-     * The index on the full strip associated with index 0 in this section
-     */
-    var physicalStart: Int by Delegates.notNull()
-
-    /**
      * Get the appropriate index on the full strip for the specified pixel
-     * by adding the index to the index on the full strip associated with
-     * index 0 on this section
      */
     override fun getPhysicalIndex(pixel: Int): Int {
-        require(pixel in validIndices) { "$pixel not in indices (${validIndices.first()}..${validIndices.last()})" }
+        require(pixel in pixels.indices) { "$pixel not in section (${pixels.indices})" }
 
-        return pixel + physicalStart
+        return parentSection.getPhysicalIndex(pixels[pixel])
     }
-
-    @Transient
-    override val validIndices: List<Int> = IntRange(0, endPixel - startPixel).toList()
 
     constructor(
         name: String,
-        startPixel: Int,
-        endPixel: Int,
+        pixels: List<Int>,
         stripManager: LEDStrip,
         parentSection: SectionManager,
-    ) : this(name, startPixel, endPixel) {
+    ) : this(name, pixels, parentSection.name) {
         this.stripManager = stripManager
         this.parentSection = parentSection
-        this.physicalStart = startPixel + parentSection.startPixel
     }
 
     @Transient
     override val sections: MutableMap<String, Section> = mutableMapOf()
 
     @Transient
-    override val subSections: MutableMap<Pair<Int, Int>, Section> = mutableMapOf()
+    override val subSections: MutableMap<Int, Section> = mutableMapOf()
 
     /**
      * @return the section specified for the animation. If it doesn't exist,

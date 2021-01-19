@@ -100,9 +100,7 @@ data class AnimationToRunParams(
 
         calculatedColors.forEach {
             calculatedAndTrimmedColors += PreparedColorContainer(
-                colors = it.colors.slice(
-                    sectionRunningAnimation.startPixel - sectionRunningFullAnimation.startPixel..
-                            sectionRunningAnimation.endPixel - sectionRunningFullAnimation.startPixel),
+                colors = it.colors.filterIndexed { index, _ -> index in sectionRunningAnimation.pixels },
                 originalColors = it.originalColors,
             )
         }

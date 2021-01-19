@@ -80,25 +80,25 @@ val LEDStrip.pixelTemporaryColorList: List<Int>
  * A list of the actual colors for the section
  */
 val SectionManager.pixelActualColorList: List<Int>
-    get() = stripManager.pixelActualColorList.slice(startPixel..endPixel)
+    get() = stripManager.pixelActualColorList.filterIndexed { index, _ -> index in pixels }
 
 /**
  * A list of the fade colors for the section
  */
 val SectionManager.pixelFadeColorList: List<Int>
-    get() = stripManager.pixelFadeColorList.slice(startPixel..endPixel)
+    get() = stripManager.pixelFadeColorList.filterIndexed { index, _ -> index in pixels }
 
 /**
  * A list of the prolonged colors for the section
  */
 val SectionManager.pixelProlongedColorList: List<Int>
-    get() = stripManager.pixelProlongedColorList.slice(startPixel..endPixel)
+    get() = stripManager.pixelProlongedColorList.filterIndexed { index, _ -> index in pixels }
 
 /**
  * A list of the temporary colors for the section
  */
 val SectionManager.pixelTemporaryColorList: List<Int>
-    get() = stripManager.pixelTemporaryColorList.slice(startPixel..endPixel)
+    get() = stripManager.pixelTemporaryColorList.filterIndexed { index, _ -> index in pixels }
 
 /**
  * @return A [CurrentStripColor] with the strip's current state that can be sent to a client

@@ -663,13 +663,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.setStripFadeColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.setStripFadeColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c
             }
 
@@ -677,13 +677,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.sectionManager.setStripFadeColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.sectionManager.setStripFadeColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c
             }
 
@@ -693,13 +693,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 testSection.setStripFadeColor(pCC)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].fadeColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 testSection.setStripFadeColor(c)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].fadeColor shouldBe c
             }
 
@@ -707,13 +707,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.animationManager.setStripFadeColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.animationManager.setStripFadeColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c
             }
         }
@@ -722,13 +722,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.setStripProlongedColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.setStripProlongedColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c
             }
 
@@ -736,13 +736,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.sectionManager.setStripProlongedColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.sectionManager.setStripProlongedColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c
             }
 
@@ -752,13 +752,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 testSection.setStripProlongedColor(pCC)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].prolongedColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 testSection.setStripProlongedColor(c)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].prolongedColor shouldBe c
             }
 
@@ -766,13 +766,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.animationManager.setStripProlongedColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.animationManager.setStripProlongedColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c
             }
         }
@@ -781,13 +781,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.setStripTemporaryColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.setStripTemporaryColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c
             }
 
@@ -795,13 +795,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.sectionManager.setStripTemporaryColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.sectionManager.setStripTemporaryColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c
             }
 
@@ -811,13 +811,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 testSection.setStripTemporaryColor(pCC)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].temporaryColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 testSection.setStripTemporaryColor(c)
-                for (pixel in testSection.validIndices)
+                for (pixel in testSection.pixels)
                     ledStrip.colorManager.pixelColors[pixel + 5].temporaryColor shouldBe c
             }
 
@@ -825,13 +825,13 @@ class SetColorUtilsTests : StringSpec(
             checkAll(Arb.list(Arb.int(0..0xFFFFFF))) { c ->
                 val pCC = ColorContainer(c.toMutableList()).prepare(50)
                 ledStrip.animationManager.setStripTemporaryColor(pCC)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe pCC[pixel]
             }
 
             checkAll(Arb.int(0..0xFFFFFF)) { c ->
                 ledStrip.animationManager.setStripTemporaryColor(c)
-                for (pixel in ledStrip.validIndices)
+                for (pixel in ledStrip.pixelIndices)
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c
             }
         }
@@ -843,14 +843,14 @@ class SetColorUtilsTests : StringSpec(
                 ledStrip.setStripFadeColor(c1)
                 ledStrip.setStripProlongedColor(c2)
                 ledStrip.setStripTemporaryColor(c3)
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c2
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c3
                 }
 
                 ledStrip.clear()
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe -1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe 0
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe -1
@@ -863,14 +863,14 @@ class SetColorUtilsTests : StringSpec(
                 ledStrip.sectionManager.setStripFadeColor(c1)
                 ledStrip.sectionManager.setStripProlongedColor(c2)
                 ledStrip.sectionManager.setStripTemporaryColor(c3)
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c2
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c3
                 }
 
                 ledStrip.sectionManager.clear()
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe -1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe 0
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe -1
@@ -885,14 +885,14 @@ class SetColorUtilsTests : StringSpec(
                 testSection.setStripFadeColor(c1)
                 testSection.setStripProlongedColor(c2)
                 testSection.setStripTemporaryColor(c3)
-                for (pixel in testSection.validIndices) {
+                for (pixel in testSection.pixels) {
                     ledStrip.colorManager.pixelColors[pixel + 5].fadeColor shouldBe c1
                     ledStrip.colorManager.pixelColors[pixel + 5].prolongedColor shouldBe c2
                     ledStrip.colorManager.pixelColors[pixel + 5].temporaryColor shouldBe c3
                 }
 
                 testSection.clear()
-                for (pixel in testSection.validIndices) {
+                for (pixel in testSection.pixels) {
                     ledStrip.colorManager.pixelColors[pixel + 5].fadeColor shouldBe -1
                     ledStrip.colorManager.pixelColors[pixel + 5].prolongedColor shouldBe 0
                     ledStrip.colorManager.pixelColors[pixel + 5].temporaryColor shouldBe -1
@@ -905,14 +905,14 @@ class SetColorUtilsTests : StringSpec(
                 ledStrip.animationManager.setStripFadeColor(c1)
                 ledStrip.animationManager.setStripProlongedColor(c2)
                 ledStrip.animationManager.setStripTemporaryColor(c3)
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe c1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe c2
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe c3
                 }
 
                 ledStrip.animationManager.clear()
-                for (pixel in ledStrip.validIndices) {
+                for (pixel in ledStrip.pixelIndices) {
                     ledStrip.colorManager.pixelColors[pixel].fadeColor shouldBe -1
                     ledStrip.colorManager.pixelColors[pixel].prolongedColor shouldBe 0
                     ledStrip.colorManager.pixelColors[pixel].temporaryColor shouldBe -1

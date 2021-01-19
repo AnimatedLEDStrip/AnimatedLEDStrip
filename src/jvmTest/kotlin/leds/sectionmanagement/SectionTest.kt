@@ -54,19 +54,11 @@ class SectionTest : StringSpec(
             section.sections.shouldBeEmpty()
             section.subSections.shouldBeEmpty()
             section.name shouldBe ""
-            section.startPixel shouldBe 0
-            section.endPixel shouldBe 0
             section.numLEDs shouldBe 1
-            section.validIndices.shouldHaveSize(1)
+            section.pixels.shouldHaveSize(1)
 
             shouldThrow<UninitializedPropertyAccessException> {
                 section.stripManager
-            }
-        }
-
-        "construction start pixel greater than end pixel" {
-            shouldThrow<IllegalArgumentException> {
-                Section("test", 5, 3)
             }
         }
 
@@ -79,14 +71,14 @@ class SectionTest : StringSpec(
                 }
 
                 checkAll(Exhaustive.ints(0 until 49 - s)) { s2 ->
-                    val section2 = section.createSection("test$s$s2", s2, section.validIndices.last())
+                    val section2 = section.createSection("test$s$s2", s2, section.pixels.last())
 
                     checkAll(Exhaustive.ints(0 until 49 - s - s2)) { p ->
                         section2.getPhysicalIndex(p) shouldBe p + s + s2
                     }
                 }
 
-                checkAll(Arb.int().filter { it !in section.validIndices }) { p ->
+                checkAll(Arb.int().filter { it !in section.pixels }) { p ->
                     shouldThrow<IllegalArgumentException> {
                         section.getPhysicalIndex(p)
                     }
@@ -108,7 +100,7 @@ class SectionTest : StringSpec(
         "encode JSON" {
             checkAll<String, Int, Int>(100) { n, s, e ->
                 if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
-                Section(n, s, e).jsonString() shouldBe
+                Section(n, (s..e).toList()).jsonString() shouldBe
                         """{"type":"Section","name":"$n","startPixel":$s,"endPixel":$e};;;"""
             }
         }
@@ -118,30 +110,26 @@ class SectionTest : StringSpec(
                 if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
                 val json = """{"type":"Section","name":"$n","startPixel":$s,"endPixel":$e};;;"""
 
-                val correctData = Section(n, s, e)
+                val correctData = Section(n, (s..e).toList())
 
                 val decodedData = json.decodeJson() as Section
                 decodedData.name shouldBe correctData.name
-                decodedData.startPixel shouldBe correctData.startPixel
-                decodedData.endPixel shouldBe correctData.endPixel
                 decodedData.numLEDs shouldBe correctData.numLEDs
-                decodedData.validIndices shouldBe correctData.validIndices
+                decodedData.pixels shouldBe correctData.pixels
             }
         }
 
         "encode and decode JSON" {
             checkAll<String, Int, Int>(100) { n, s, e ->
                 if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
-                val sec1 = Section(n, s, e)
+                val sec1 = Section(n, (s..e).toList())
                 val secBytes = sec1.json()
 
                 val sec2 = secBytes.toUTF8String().decodeJson() as Section
 
                 sec2.name shouldBe sec1.name
-                sec2.startPixel shouldBe sec1.startPixel
-                sec2.endPixel shouldBe sec1.endPixel
                 sec2.numLEDs shouldBe sec1.numLEDs
-                sec2.validIndices shouldBe sec1.validIndices
+                sec2.pixels shouldBe sec1.pixels
             }
         }
     }

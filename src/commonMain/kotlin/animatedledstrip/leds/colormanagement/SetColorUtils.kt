@@ -454,28 +454,28 @@ fun AnimationManager.revertPixels(pixels: IntRange): Unit =
  * Set the strip's fade color
  */
 fun LEDStrip.setStripFadeColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelFadeColor(i, color)
+    for (i in pixelIndices) setPixelFadeColor(i, color)
 }
 
 /**
  * Set the strip's fade color
  */
 fun LEDStrip.setStripFadeColor(color: Int) {
-    for (i in validIndices) setPixelFadeColor(i, color)
+    for (i in pixelIndices) setPixelFadeColor(i, color)
 }
 
 /**
  * Set the section's fade color
  */
 fun SectionManager.setStripFadeColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelFadeColor(i, color)
+    for (i in pixels) setPixelFadeColor(i, color)
 }
 
 /**
  * Set the section's fade color
  */
 fun SectionManager.setStripFadeColor(color: Int) {
-    for (i in validIndices) setPixelFadeColor(i, color)
+    for (i in pixels) setPixelFadeColor(i, color)
 }
 
 /**
@@ -497,28 +497,28 @@ fun AnimationManager.setStripFadeColor(color: Int): Unit =
  * Set the strip's prolonged color
  */
 fun LEDStrip.setStripProlongedColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelProlongedColor(i, color)
+    for (i in pixelIndices) setPixelProlongedColor(i, color)
 }
 
 /**
  * Set the strip's prolonged color
  */
 fun LEDStrip.setStripProlongedColor(color: Int) {
-    for (i in validIndices) setPixelProlongedColor(i, color)
+    for (i in pixelIndices) setPixelProlongedColor(i, color)
 }
 
 /**
  * Set the section's prolonged color
  */
 fun SectionManager.setStripProlongedColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelProlongedColor(i, color)
+    for (i in pixels) setPixelProlongedColor(i, color)
 }
 
 /**
  * Set the section's prolonged color
  */
 fun SectionManager.setStripProlongedColor(color: Int) {
-    for (i in validIndices) setPixelProlongedColor(i, color)
+    for (i in pixels) setPixelProlongedColor(i, color)
 }
 
 /**
@@ -540,28 +540,28 @@ fun AnimationManager.setStripProlongedColor(color: Int): Unit =
  * Set the strip's temporary color
  */
 fun LEDStrip.setStripTemporaryColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelTemporaryColor(i, color)
+    for (i in pixelIndices) setPixelTemporaryColor(i, color)
 }
 
 /**
  * Set the strip's temporary color
  */
 fun LEDStrip.setStripTemporaryColor(color: Int) {
-    for (i in validIndices) setPixelTemporaryColor(i, color)
+    for (i in pixelIndices) setPixelTemporaryColor(i, color)
 }
 
 /**
  * Set the section's temporary color
  */
 fun SectionManager.setStripTemporaryColor(color: PreparedColorContainer) {
-    for (i in validIndices) setPixelTemporaryColor(i, color)
+    for (i in pixels) setPixelTemporaryColor(i, color)
 }
 
 /**
  * Set the section's temporary color
  */
 fun SectionManager.setStripTemporaryColor(color: Int) {
-    for (i in validIndices) setPixelTemporaryColor(i, color)
+    for (i in pixels) setPixelTemporaryColor(i, color)
 }
 
 /**
@@ -582,7 +582,7 @@ fun AnimationManager.setStripTemporaryColor(color: Int): Unit =
  * Clear the strip (set all pixels to 0)
  */
 fun LEDStrip.clear() {
-    for (i in validIndices) {
+    for (i in pixelIndices) {
         setPixelProlongedColor(i, 0)
         setPixelFadeColor(i, -1)
         setPixelTemporaryColor(i, -1)
@@ -593,7 +593,7 @@ fun LEDStrip.clear() {
  * Clear the section (set all pixels to 0)
  */
 fun SectionManager.clear() {
-    for (i in validIndices) {
+    for (i in pixels) {
         setPixelProlongedColor(i, 0)
         setPixelFadeColor(i, -1)
         setPixelTemporaryColor(i, -1)
