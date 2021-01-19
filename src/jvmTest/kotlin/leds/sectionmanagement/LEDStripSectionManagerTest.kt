@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.sectionmanagement
@@ -48,12 +47,9 @@ class LEDStripSectionManagerTest : StringSpec(
                 manager.subSections
             }
             manager.name shouldBe ""
-            manager.startPixel shouldBe 0
-            manager.endPixel shouldBe ledStrip.numLEDs - 1
-            manager.endPixel shouldBe 49
             manager.numLEDs shouldBe ledStrip.numLEDs
             manager.numLEDs shouldBe 50
-            manager.validIndices.shouldHaveSize(50)
+            manager.pixels.shouldHaveSize(50)
         }
 
         "physical index" {
@@ -72,11 +68,9 @@ class LEDStripSectionManagerTest : StringSpec(
             manager.getSection("test1") shouldBeSameInstanceAs sec
 
             manager.getSection("test2") shouldBeSameInstanceAs manager.fullStripSection
-            val sec2 = Section("test2", 0, 20)
+            val sec2 = Section("test2", (0..20).toList())
             manager.createSection(sec2)
             manager.getSection("test2").name shouldBe sec2.name
-            manager.getSection("test2").startPixel shouldBe sec2.startPixel
-            manager.getSection("test2").endPixel shouldBe sec2.endPixel
         }
 
         "get subsection" {

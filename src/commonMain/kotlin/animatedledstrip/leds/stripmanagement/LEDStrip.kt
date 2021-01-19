@@ -49,7 +49,7 @@ class LEDStrip(
     /**
      * A list of the valid pixel indices in this strip
      */
-    val validIndices: List<Int> = IntRange(0, stripInfo.numLEDs - 1).toList()
+    val pixelIndices: List<Int> = IntRange(0, stripInfo.numLEDs - 1).toList()
 
     /**
      * Manages colors on the strip

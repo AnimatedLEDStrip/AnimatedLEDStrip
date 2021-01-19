@@ -44,7 +44,7 @@ interface SectionManager {
     /**
      * The subsections managed by this section manager
      */
-    val subSections: MutableMap<Pair<Int, Int>, Section>
+    val subSections: MutableMap<Int, Section>
 
     /**
      * Get the appropriate index on the full strip for the specified pixel
@@ -57,51 +57,42 @@ interface SectionManager {
     val name: String
 
     /**
-     * The index in the parent section corresponding with index 0 in this section
-     */
-    val startPixel: Int
-
-    /**
-     * The index in the parent section corresponding with index `numLEDs - 1`
-     * in this section
-     */
-    val endPixel: Int
-
-    /**
      * The number of pixels in this section
      */
     val numLEDs: Int
 
     /**
-     * A list of all valid indices in this section
+     * A list of all pixels included in this section
      */
-    val validIndices: List<Int>
+    val pixels: List<Int>
 
     /**
      * @return A new section, identified by [name], starting at [startPixel]
      * and ending at [endPixel], with this section manager as its parent
      */
-    fun createSection(name: String, startPixel: Int, endPixel: Int): Section {
-        require(startPixel in validIndices) { "startPixel ($startPixel) must be within the parent section (${this.startPixel}..${this.endPixel})" }
-        require(endPixel in validIndices) { "endPixel ($endPixel) must be within the parent section (${this.startPixel}..${this.endPixel})" }
+    fun createSection(name: String, pixels: List<Int>): Section {
+        for (pixel in pixels)
+            require(pixel in this.pixels.indices) { "Pixel $pixel not in this section (${this.pixels.indices})" }
 
-        val newSection = Section(name, startPixel, endPixel, stripManager, this)
+        val newSection = Section(name, pixels.map { this.pixels[it] }, stripManager, this)
         sections[name] = newSection
         stripManager.newSectionCallback?.invoke(newSection)
         return newSection
     }
 
+    fun createSection(name: String, startPixel: Int, endPixel: Int): Section =
+        createSection(name, (startPixel..endPixel).toList())
+
     /**
-     * @return A new section, identified by [name], starting at [startPixel]
-     * and ending at [endPixel], with this section manager as its parent
+     * @return A new section, identified by [name], including [pixels],
+     * with this section manager as its parent
      */
     fun createSection(section: Section): Section = createSection(section.name,
-                                                                 section.startPixel,
-                                                                 section.endPixel)
+                                                                 section.pixels)
 
 
     /**
-     * Get the section specified for the animation. If it doesn't exist,
+     * Get the section specified by [sectionName]. If it doesn't exist,
      * return this section.
      */
     fun getSection(sectionName: String): Section
@@ -110,16 +101,22 @@ interface SectionManager {
      * @return A subsection for a subanimation running on a part of this section.
      * If the subsection already exists, reuse it, otherwise create a new one.
      */
-    fun getSubSection(startPixel: Int, endPixel: Int): Section {
-        require(startPixel in validIndices) { "startPixel ($startPixel) must be within the parent section (0..${this.numLEDs - 1})" }
-        require(endPixel in validIndices) { "endPixel ($endPixel) must be within the parent section (0..${this.numLEDs - 1})" }
+    fun getSubSection(pixels: List<Int>): Section {
+        for (pixel in pixels)
+            require(pixel in this.pixels.indices) { "Pixel $pixel must be in parent section (${this.pixels.indices})" }
 
-        return subSections.getOrPut(Pair(startPixel, endPixel)) {
-            Section("$name:$startPixel:$endPixel",
-                    startPixel,
-                    endPixel,
+        return subSections.getOrPut(pixels.hashCode()) {
+            Section("$name:${pixels.hashCode()}",
+                    pixels,
                     stripManager,
                     this)
         }
     }
+
+
+    /**
+     * @return A subsection for a subanimation running on a part of this section.
+     * If the subsection already exists, reuse it, otherwise create a new one.
+     */
+    fun getSubSection(startPixel: Int, endPixel: Int): Section = getSubSection((startPixel..endPixel).toList())
 }

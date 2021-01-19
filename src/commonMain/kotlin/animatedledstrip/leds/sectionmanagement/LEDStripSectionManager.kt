@@ -32,7 +32,7 @@ import animatedledstrip.leds.stripmanagement.LEDStrip
  */
 class LEDStripSectionManager(override val stripManager: LEDStrip) : SectionManager {
     override val sections: MutableMap<String, Section> = mutableMapOf()
-    override val subSections: MutableMap<Pair<Int, Int>, Section>
+    override val subSections: MutableMap<Int, Section>
         get() = error("LEDStripSectionManager should not be running any animations, and thus should not have any subsections. " +
                       "Animations on the full strip should be run on the Section identified with an empty string.")
 
@@ -43,15 +43,13 @@ class LEDStripSectionManager(override val stripManager: LEDStrip) : SectionManag
     override fun getPhysicalIndex(pixel: Int): Int = pixel
 
     override val name: String = ""
-    override val startPixel: Int = 0
-    override val endPixel: Int = stripManager.numLEDs - 1
     override val numLEDs: Int = stripManager.numLEDs
-    override val validIndices: List<Int> = IntRange(0, endPixel).toList()
+    override val pixels: List<Int> = IntRange(0, numLEDs - 1).toList()
 
     /**
      * The section that will actually run animations on the full strip
      */
-    internal val fullStripSection: Section = createSection("", 0, endPixel)
+    internal val fullStripSection: Section = createSection("", 0, numLEDs - 1)
 
     /**
      * @return The section specified for the animation. If it doesn't exist,

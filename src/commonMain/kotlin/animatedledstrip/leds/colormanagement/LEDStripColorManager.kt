@@ -51,7 +51,7 @@ class LEDStripColorManager(val stripManager: LEDStrip) {
      * @param colorType The color type to set (see [PixelColorType])
      */
     fun setPixelColor(pixel: Int, color: Int, colorType: PixelColorType) {
-        require(pixel in stripManager.validIndices) { "$pixel not in indices (${stripManager.validIndices.first()}..${stripManager.validIndices.last()})" }
+        require(pixel in stripManager.pixelIndices) { "$pixel not in indices (${stripManager.pixelIndices.first()}..${stripManager.pixelIndices.last()})" }
 
         pixelColors[pixel].setColor(color, colorType)
     }
@@ -69,7 +69,7 @@ class LEDStripColorManager(val stripManager: LEDStrip) {
      * @param colorType The color type to get (see [PixelColorType])
      */
     fun getPixelColor(pixel: Int, colorType: PixelColorType): Int {
-        require(pixel in stripManager.validIndices) { "$pixel not in indices (${stripManager.validIndices.first()}..${stripManager.validIndices.last()})" }
+        require(pixel in stripManager.pixelIndices) { "$pixel not in indices (${stripManager.pixelIndices.first()}..${stripManager.pixelIndices.last()})" }
 
         return pixelColors[pixel].getColor(colorType)
     }

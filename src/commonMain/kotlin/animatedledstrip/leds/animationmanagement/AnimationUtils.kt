@@ -34,7 +34,7 @@ val AnimationManager.numLEDs: Int
  * A list of all valid indices for the section that corresponds with this animation manager
  */
 val AnimationManager.validIndices: List<Int>
-    get() = sectionManager.validIndices
+    get() = sectionManager.pixels
 
 /**
  * Iterate over a range of indices
