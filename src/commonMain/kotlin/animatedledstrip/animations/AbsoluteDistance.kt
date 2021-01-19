@@ -22,10 +22,15 @@
 
 package animatedledstrip.animations
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.math.max
 
+/**
+ * A [Distance] with the exact distance in each direction
+ */
 @Serializable
+@SerialName("AbsoluteDistance")
 data class AbsoluteDistance(override val x: Double = 0.0, override val y: Double = 0.0, override val z: Double = 0.0) :
     Distance {
     constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())

@@ -22,10 +22,17 @@
 
 package animatedledstrip.animations
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.math.pow
 
+/**
+ * An equation of the form ax^0 + bx^1 ... mx^n.
+ * Each coefficient corresponds with x to the index of that coefficient,
+ * i.e. the coefficient at index 2 would be associated with x^2.
+ */
 @Serializable
+@SerialName("Equation")
 data class Equation(
     val coefficients: List<Double> = listOf(),
 ) {
