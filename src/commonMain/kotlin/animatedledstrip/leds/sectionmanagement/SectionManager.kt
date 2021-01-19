@@ -67,28 +67,32 @@ interface SectionManager {
     val pixels: List<Int>
 
     /**
-     * @return A new section, identified by [name], starting at [startPixel]
-     * and ending at [endPixel], with this section manager as its parent
+     * @return A new section, identified by [name], including [pixels],
+     * with this section manager as its parent
      */
-    fun createSection(name: String, pixels: List<Int>): Section {
+    fun createSection(name: String, pixels: List<Int>, parentSectionName: String = ""): Section {
         for (pixel in pixels)
             require(pixel in this.pixels.indices) { "Pixel $pixel not in this section (${this.pixels.indices})" }
 
-        val newSection = Section(name, pixels.map { this.pixels[it] }, stripManager, this)
+        val parentSection = getSection(parentSectionName)
+
+        val newSection = Section(name, pixels.map { this.pixels[it] }, stripManager, parentSection)
         sections[name] = newSection
         stripManager.newSectionCallback?.invoke(newSection)
         return newSection
     }
 
+    /**
+     * @return A new section, identified by [name], starting at [startPixel]
+     * and ending at [endPixel], with this section manager as its parent
+     */
     fun createSection(name: String, startPixel: Int, endPixel: Int): Section =
         createSection(name, (startPixel..endPixel).toList())
 
-    /**
-     * @return A new section, identified by [name], including [pixels],
-     * with this section manager as its parent
-     */
+
     fun createSection(section: Section): Section = createSection(section.name,
-                                                                 section.pixels)
+                                                                 section.pixels,
+                                                                 section.parentSectionName)
 
 
     /**
