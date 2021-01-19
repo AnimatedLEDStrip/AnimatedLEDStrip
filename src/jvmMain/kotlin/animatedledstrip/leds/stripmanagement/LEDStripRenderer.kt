@@ -45,7 +45,7 @@ actual class LEDStripRenderer actual constructor(
     @Suppress("EXPERIMENTAL_API_USAGE")
     private val renderThread = newSingleThreadContext("Render Thread")
 
-    actual var isRendering: Boolean = true
+    actual var isRendering: Boolean = false
 
     actual fun startRendering() {
         isRendering = true
