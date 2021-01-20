@@ -30,14 +30,12 @@ import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.pixelProlongedColorList
-import animatedledstrip.leds.colormanagement.pixelTemporaryColorList
 import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import io.kotest.matchers.Matcher
 import io.kotest.matchers.MatcherResult
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.*
-import kotlin.test.assertTrue
 
 val newRunningAnimationParams: RunningAnimationParams
     get() = RunningAnimationParams(color, "", listOf(), "", "", -1,
@@ -53,59 +51,59 @@ fun haveProlongedColors(colors: PreparedColorContainer) = object : Matcher<Secti
                                               "    ${value.pixelProlongedColorList}")
 }
 
-fun SectionManager.assertAllPixelProlongedColors(prolongedColor: Int) {
-    val colors = pixelProlongedColorList
-    colors.forEachIndexed { i, c ->
-        assertTrue(
-            "Pixel $i check failed (prolonged). Expected: $prolongedColor on all pixels. Actual: $colors"
-        ) { c == prolongedColor }
-    }
-}
+//fun SectionManager.assertAllPixelProlongedColors(prolongedColor: Int) {
+//    val colors = pixelProlongedColorList
+//    colors.forEachIndexed { i, c ->
+//        assertTrue(
+//            "Pixel $i check failed (prolonged). Expected: $prolongedColor on all pixels. Actual: $colors"
+//        ) { c == prolongedColor }
+//    }
+//}
 
-fun SectionManager.assertAllTemporaryPixels(color: Int) {
-    stripManager.pixelTemporaryColorList.forEachIndexed { i, c ->
-        assertTrue(
-            "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${
-                startPixel + getPhysicalIndex(0)
-            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
-        ) { c == color }
-    }
-}
+//fun SectionManager.assertAllTemporaryPixels(color: Int) {
+//    stripManager.pixelTemporaryColorList.forEachIndexed { i, c ->
+//        assertTrue(
+//            "Pixel $i check failed (temporary). Expected: $color on all pixels. Actual (${
+//                startPixel + getPhysicalIndex(0)
+//            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
+//        ) { c == color }
+//    }
+//}
+//
+//fun SectionManager.assertAllProlongedPixels(color: Int) {
+//    stripManager.pixelProlongedColorList.forEachIndexed { i, c ->
+//        assertTrue(
+//            "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${
+//                startPixel + getPhysicalIndex(0)
+//            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
+//        ) { c == color }
+//    }
+//}
+//
+//fun SectionManager.assertPixels(indices: IntRange, temporaryColor: Int, prolongedColor: Int) {
+//    assertTemporaryPixels(indices, temporaryColor)
+//    assertProlongedPixels(indices, prolongedColor)
+//}
 
-fun SectionManager.assertAllProlongedPixels(color: Int) {
-    stripManager.pixelProlongedColorList.forEachIndexed { i, c ->
-        assertTrue(
-            "Pixel $i check failed (prolonged). Expected: $color on all pixels. Actual (${
-                startPixel + getPhysicalIndex(0)
-            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
-        ) { c == color }
-    }
-}
-
-fun SectionManager.assertPixels(indices: IntRange, temporaryColor: Int, prolongedColor: Int) {
-    assertTemporaryPixels(indices, temporaryColor)
-    assertProlongedPixels(indices, prolongedColor)
-}
-
-fun SectionManager.assertTemporaryPixels(indices: IntRange, color: Int) {
-    indices.forEach {
-        assertTrue(
-            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
-                startPixel + getPhysicalIndex(0)
-            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
-        ) { stripManager.pixelTemporaryColorList[it] == color }
-    }
-}
-
-fun SectionManager.assertProlongedPixels(indices: IntRange, color: Int) {
-    indices.forEach {
-        assertTrue(
-            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
-                startPixel + getPhysicalIndex(0)
-            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
-        ) { stripManager.pixelProlongedColorList[it] == color }
-    }
-}
+//fun SectionManager.assertTemporaryPixels(indices: IntRange, color: Int) {
+//    indices.forEach {
+//        assertTrue(
+//            "Pixel $it check failed (temporary). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
+//                startPixel + getPhysicalIndex(0)
+//            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelTemporaryColorList}"
+//        ) { stripManager.pixelTemporaryColorList[it] == color }
+//    }
+//}
+//
+//fun SectionManager.assertProlongedPixels(indices: IntRange, color: Int) {
+//    indices.forEach {
+//        assertTrue(
+//            "Pixel $it check failed (prolonged). Expected: $color on pixels ${indices.first}..${indices.last}. Actual (${
+//                startPixel + getPhysicalIndex(0)
+//            }:${endPixel + getPhysicalIndex(0)}): ${stripManager.pixelProlongedColorList}"
+//        ) { stripManager.pixelProlongedColorList[it] == color }
+//    }
+//}
 
 val largeDoubleArb: Arb<Double> = arbitrary { rs ->
     val i = rs.random.nextInt(Int.MIN_VALUE + 1, Int.MAX_VALUE - 1)
@@ -134,12 +132,17 @@ val rotationArb: Arb<Rotation> =
         if (rOrD) RadiansRotation(x, y, z) else DegreesRotation(x, y, z)
     }
 
+val equationArb: Arb<Equation> =
+    Arb.bind(Arb.list(largeDoubleArb, 0..5), Arb.bool()) { c, _ ->
+        Equation(c)
+    }
+
 val colorContainerArb: Arb<ColorContainerInterface> =
     Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, cOrP ->
         if (cOrP) ColorContainer(c.toMutableList()) else PreparedColorContainer(c)
     }
 
-val filteredStringArb = Arb.string().filter { !it.contains("\"") && !it.contains("\\") }
+val filteredStringArb = Arb.string().map { it.replace("""["'#$\\]""".toRegex(), "") }
 val intArb = Arb.int()
 val dimensionalityArb = Arb.enum<Dimensionality>()
 val nullableIntArb = Arb.int().orNull()
@@ -148,6 +151,7 @@ val nullableStringArb = filteredStringArb.orNull()
 val nullableLocationArb = locationArb.orNull()
 val nullableDistanceArb = distanceArb.orNull()
 val nullableRotationArb = rotationArb.orNull()
+val nullableEquationArb = equationArb.orNull()
 
 val animIntParamArb: Arb<AnimationParameter<Int>> =
     arbitrary { rs ->
@@ -177,4 +181,9 @@ val animDistanceParamArb: Arb<AnimationParameter<Distance>> =
 val animRotationParamArb: Arb<AnimationParameter<Rotation>> =
     arbitrary { rs ->
         AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableRotationArb.next(rs))
+    }
+
+val animEquationParamArb: Arb<AnimationParameter<Equation>> =
+    arbitrary { rs ->
+        AnimationParameter(filteredStringArb.next(rs), filteredStringArb.next(rs), nullableEquationArb.next(rs))
     }
