@@ -33,7 +33,7 @@ val AnimationManager.numLEDs: Int
 /**
  * A list of all valid indices for the section that corresponds with this animation manager
  */
-val AnimationManager.validIndices: List<Int>
+val AnimationManager.pixels: List<Int>
     get() = sectionManager.pixels
 
 /**
@@ -60,22 +60,22 @@ inline fun iterateOver(
  * Iterate over each pixel, performing [operation] on each index
  */
 inline fun AnimationManager.iterateOverPixels(operation: (Int) -> Unit) {
-    for (q in validIndices) operation.invoke(q)
+    for (q in pixels) operation.invoke(q)
 }
 
 /**
  * Iterate over each pixel in reverse, performing [operation] on each index
  */
 inline fun AnimationManager.iterateOverPixelsReverse(operation: (Int) -> Unit) {
-    for (q in validIndices.reversed()) operation.invoke(q)
+    for (q in pixels.reversed()) operation.invoke(q)
 }
 
-fun AnimationManager.randomIndex(): Int = validIndices.random()
+fun AnimationManager.randomIndex(): Int = pixels.random()
 
 /**
  * @return A shuffled list of all valid indices for the section that corresponds with this animation manager
  */
-fun AnimationManager.shuffledIndices(): List<Int> = validIndices.shuffled()
+fun AnimationManager.shuffledIndices(): List<Int> = pixels.shuffled()
 
 /**
  * @return A random `Int`

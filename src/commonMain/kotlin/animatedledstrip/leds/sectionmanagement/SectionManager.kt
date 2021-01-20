@@ -86,8 +86,8 @@ interface SectionManager {
      * @return A new section, identified by [name], starting at [startPixel]
      * and ending at [endPixel], with this section manager as its parent
      */
-    fun createSection(name: String, startPixel: Int, endPixel: Int): Section =
-        createSection(name, (startPixel..endPixel).toList())
+    fun createSection(name: String, startPixel: Int, endPixel: Int, parentSectionName: String = ""): Section =
+        createSection(name, (startPixel..endPixel).toList(), parentSectionName)
 
 
     fun createSection(section: Section): Section = createSection(section.name,

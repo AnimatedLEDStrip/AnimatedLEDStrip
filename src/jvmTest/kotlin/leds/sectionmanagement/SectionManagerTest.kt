@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.leds.sectionmanagement
@@ -28,7 +27,9 @@ import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager
 import animatedledstrip.leds.sectionmanagement.Section
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 
@@ -46,11 +47,11 @@ class SectionManagerTest : StringSpec(
             val sec = manager.createSection("test1", 0, 15)
             manager.getSection("test1") shouldBeSameInstanceAs sec
 
-            val sec2 = Section("test2", 0, 20)
+            val sec2 = Section("test2", (0..20).toList())
             manager.createSection(sec2)
             manager.getSection("test2").name shouldBe sec2.name
-            manager.getSection("test2").startPixel shouldBe sec2.startPixel
-            manager.getSection("test2").endPixel shouldBe sec2.endPixel
+            manager.getSection("test2").pixels.shouldContainExactly(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+                                                                    10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
 
             shouldThrow<IllegalArgumentException> {
                 manager.createSection("test3", -10, 5)
@@ -72,16 +73,15 @@ class SectionManagerTest : StringSpec(
 
             val section = manager.createSection("A", 15, 40)
             val sSec = section.getSubSection(5, 10)
-            sSec.name shouldBe "A:5:10"
-            sSec.physicalStart shouldBe 20
-            sSec.startPixel shouldBe 5
-            sSec.endPixel shouldBe 10
+            sSec.name shouldBe "A:1036407076"
 
             val sSec2 = section.getSubSection(5, 10)
             sSec2 shouldBeSameInstanceAs sSec
+            sSec2.name shouldBe "A:1036407076"
 
             val sSec3 = section.getSubSection(5, 11)
             sSec3 shouldNotBeSameInstanceAs sSec
+            sSec3.name shouldNotBe "A:1036407076"
 
             shouldThrow<IllegalArgumentException> {
                 section.getSubSection(-5, 10)
