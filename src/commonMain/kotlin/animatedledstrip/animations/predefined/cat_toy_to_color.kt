@@ -68,7 +68,7 @@ val catToyToColor = DefinedAnimation(
 
         for (newPixel in pixels) {
             when {
-                oldPixel < newPixel ->
+                newPixel > oldPixel ->
                     iterateOver(oldPixel until newPixel) {
                         setPixelAndRevertAfterDelay(
                             it,

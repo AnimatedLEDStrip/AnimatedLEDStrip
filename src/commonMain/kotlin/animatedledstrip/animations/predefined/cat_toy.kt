@@ -22,13 +22,16 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.leds.animationmanagement.randomIndex
-import animatedledstrip.leds.animationmanagement.runSequential
 import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.setPixelAndRevertAfterDelay
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
-import animatedledstrip.leds.sectionmanagement.getSubSection
 import kotlinx.coroutines.delay
 
 val catToy = DefinedAnimation(
@@ -36,7 +39,7 @@ val catToy = DefinedAnimation(
         name = "Cat Toy",
         abbr = "CAT",
         description = "Entertain your cat with a pixel running back and forth to " +
-                      "random locations, waiting for up to `delay * 500` milliseconds between movements.\n" +
+                      "random locations, waiting for up to `maximumWait` milliseconds between movements.\n" +
                       "Works better on a shorter strip (~100 pixels).",
         runCountDefault = -1,
         minimumColors = 1,
@@ -52,6 +55,7 @@ val catToy = DefinedAnimation(
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val maximumWait = params.intParams.getValue("maximumWait")
 
     var doRevert = true
@@ -68,17 +72,13 @@ val catToy = DefinedAnimation(
 
         when {
             pixel > lastPixel ->
-                runSequential(
-                    animation = params.withModifications(animation = "Pixel Run",
-                                                         direction = Direction.FORWARD),
-                    section = getSubSection(lastPixel, pixel),
-                )
+                iterateOver(lastPixel until pixel) {
+                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
+                }
             pixel < lastPixel ->
-                runSequential(
-                    animation = params.withModifications(animation = "Pixel Run",
-                                                         direction = Direction.BACKWARD),
-                    section = getSubSection(pixel, lastPixel),
-                )
+                iterateOver(lastPixel downTo pixel + 1) {
+                    setPixelAndRevertAfterDelay(it, color, interMovementDelay)
+                }
             pixel == lastPixel -> doDelay = false
         }
 
