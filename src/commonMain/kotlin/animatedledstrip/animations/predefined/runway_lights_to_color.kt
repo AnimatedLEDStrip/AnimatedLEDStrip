@@ -23,9 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.iterateOver
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.locationmanagement.PixelsToModify
+import animatedledstrip.leds.locationmanagement.groupGroupsOfPixelsAlongLine
 import kotlinx.coroutines.delay
 
 val runwayLightsToColor = DefinedAnimation(
@@ -39,33 +40,66 @@ val runwayLightsToColor = DefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 150),
-                           AnimationParameter("spacing", "Spacing between lit pixels", 3)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 150)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 0.9),
+                              AnimationParameter("spacing",
+                                                 "Distance along the X axis between centers of lit points",
+                                                 5.0)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
-    val direction = params.direction
-    val spacing = params.intParams.getValue("spacing")
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+    val maximumInfluence = params.doubleParams.getValue("maximumInfluence")
+    val spacing = params.doubleParams.getValue("spacing")
+    val offset = params.distanceParams.getValue("offset")
+    val rotation = params.rotationParams.getValue("rotation")
+    val lineEquation = params.equationParams.getValue("lineEquation")
 
     leds.apply {
-        when (direction) {
-            Direction.FORWARD ->
-                iterateOver(spacing - 1 downTo 0) { s ->
-                    iterateOver(0 until numLEDs step spacing) { i ->
-                        if (i + s < numLEDs)
-                            setPixelProlongedColor(i + s, color)
-                    }
-                    delay(interMovementDelay)
+        val setPixels = mutableListOf<Int>()
+        val groupedPixels: List<PixelsToModify> = groupGroupsOfPixelsAlongLine(lineEquation,
+                                                                               rotation,
+                                                                               offset,
+                                                                               maximumInfluence,
+                                                                               movementPerIteration,
+                                                                               spacing).modLists
+
+        val pixelsToModifyPerIteration: MutableList<List<Int>> = mutableListOf()
+
+        for (modList in groupedPixels) {
+            val list = mutableListOf<Int>()
+            for ((pixel, _) in modList.setRevertList) {
+                if (pixel !in setPixels) {
+                    list.add(pixel)
+                    setPixels.add(pixel)
                 }
-            Direction.BACKWARD ->
-                iterateOver(0 until spacing) { s ->
-                    iterateOver(0 until numLEDs step spacing) { i ->
-                        if (i + s < numLEDs)
-                            setPixelProlongedColor(i + s, color)
-                    }
-                    delay(interMovementDelay)
+            }
+            for (pixel in modList.setPixels) {
+                if (pixel !in setPixels) {
+                    list.add(pixel)
+                    setPixels.add(pixel)
                 }
+            }
+            pixelsToModifyPerIteration.add(list.toList())
+            if (setPixels.size == numLEDs) break
+        }
+
+        for (i in pixelsToModifyPerIteration.indices) {
+            for (pair in pixelsToModifyPerIteration[i])
+                setPixelProlongedColor(pair, color)
+            delay(interMovementDelay)
         }
     }
 }
