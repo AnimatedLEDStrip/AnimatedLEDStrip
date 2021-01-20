@@ -26,10 +26,12 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.pixelActualColorList
-import animatedledstrip.leds.colormanagement.setStripFadeColor
-import animatedledstrip.leds.colormanagement.setStripProlongedColor
+import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.utils.Logger
 
 val fadeToColor = DefinedAnimation(
     Animation.AnimationInfo(
@@ -44,8 +46,11 @@ val fadeToColor = DefinedAnimation(
     )
 ) { leds, params, _ ->
     leds.apply {
-        val currentColor = sectionManager.pixelActualColorList.toMutableList()
-        setStripProlongedColor(params.colors[0])
-        setStripFadeColor(ColorContainer(currentColor).prepare(numLEDs))
+        val currentColor = ColorContainer(sectionManager.pixelActualColorList.toMutableList()).prepare(numLEDs)
+        leds.iterateOverPixels { index ->
+            setPixelProlongedColor(index, params.colors[0])
+            setPixelFadeColor(index, currentColor)
+            Logger.w { "A" }
+        }
     }
 }

@@ -29,6 +29,7 @@ import animatedledstrip.animations.RotationAxis
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.truncate
 
 /**
  * Rotate a point around the X axis by [rotation] radians using the matrix
@@ -99,6 +100,16 @@ fun List<Location>.transformLocations(offset: AbsoluteDistance, rotation: Radian
 
 val AnimationManager.pixelLocationManager: PixelLocationManager
     get() = sectionManager.stripManager.pixelLocationManager
+
+data class PixelsToModify(
+    val setRevertList: List<Pair<Int, Int>>,
+    val setPixels: List<Int>,
+    val revertPixels: List<Int>,
+)
+
+data class PixelModificationLists(
+    val modLists: List<PixelsToModify>,
+)
 
 fun AnimationManager.groupPixelsByXLocation(
     rotation: RadiansRotation,
@@ -178,4 +189,47 @@ fun AnimationManager.groupPixelsAlongLine(
     }
 
     return pixelsToModifyPerIteration.map { it.toList() }
+}
+
+fun AnimationManager.groupGroupsOfPixelsAlongLine(
+    line: Equation,
+    rotation: RadiansRotation,
+    offset: AbsoluteDistance,
+    influenceDistance: Double,
+    movementPerIteration: Double,
+    groupSpacing: Double,
+): PixelModificationLists {
+    // Negatives used because we want it to appear like the animation moved, not the pixels
+    val locationManager = PixelLocationManager(pixelLocationManager, offset = -offset, rotation = -rotation)
+    val pixelsToSetPerIteration: MutableList<List<Int>> = mutableListOf()
+    val pixelsToResetPerIteration: MutableList<List<Int>> = mutableListOf(listOf())
+
+    var iteration = 0
+    var currentBasePoint = locationManager.xMin
+    while (currentBasePoint < locationManager.xMax + movementPerIteration) {
+        val pixelsToSet: MutableList<Int> = mutableListOf()
+        var currentX =
+            currentBasePoint - (groupSpacing * (truncate((currentBasePoint - locationManager.xMin) / groupSpacing) + 1))
+        while (currentX < locationManager.xMax + influenceDistance) {
+            val currentLocation = Location(currentX, line.calculate(currentX))
+            for (pixel in locationManager.pixelLocations) {
+                if (pixel.location.distanceFrom(currentLocation) <= influenceDistance) {
+                    pixelsToSet.add(pixel.index)
+                }
+            }
+            currentX += groupSpacing
+        }
+        pixelsToSetPerIteration.add(pixelsToSet.toList())
+        if (iteration > 0)
+            pixelsToResetPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+        iteration++
+        currentBasePoint += movementPerIteration
+    }
+    pixelsToResetPerIteration[0] = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+
+    return PixelModificationLists(pixelsToSetPerIteration.mapIndexed { index: Int, list: List<Int> ->
+        val revertList = pixelsToResetPerIteration[index]
+        val setRevertList = list.zip(revertList)
+        PixelsToModify(setRevertList, list.drop(setRevertList.size), revertList.drop(setRevertList.size))
+    })
 }
