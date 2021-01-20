@@ -26,8 +26,8 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.leds.animationmanagement.pixels
 import animatedledstrip.leds.animationmanagement.randomDouble
-import animatedledstrip.leds.animationmanagement.validIndices
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
@@ -58,7 +58,7 @@ val sparkleToColor = DefinedAnimation(
     val maxDelayBeforeSparkle = params.intParams.getValue("maxDelayBeforeSparkle")
 
     leds.apply {
-        validIndices.map { n ->
+        pixels.map { n ->
             scope.launch {
                 delay((randomDouble() * maxDelayBeforeSparkle).toLong())
                 yield() // don't set color if the animation was cancelled during the delay

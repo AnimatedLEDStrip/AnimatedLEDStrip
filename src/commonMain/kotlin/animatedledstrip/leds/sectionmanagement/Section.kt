@@ -52,15 +52,6 @@ class Section(
     @Transient
     private lateinit var parentSection: SectionManager
 
-    /**
-     * Get the appropriate index on the full strip for the specified pixel
-     */
-    override fun getPhysicalIndex(pixel: Int): Int {
-        require(pixel in pixels.indices) { "$pixel not in section (${pixels.indices})" }
-
-        return parentSection.getPhysicalIndex(pixels[pixel])
-    }
-
     constructor(
         name: String,
         pixels: List<Int>,
@@ -69,6 +60,15 @@ class Section(
     ) : this(name, pixels, parentSection.name) {
         this.stripManager = stripManager
         this.parentSection = parentSection
+    }
+
+    /**
+     * Get the appropriate index on the full strip for the specified pixel
+     */
+    override fun getPhysicalIndex(pixel: Int): Int {
+        require(pixel in pixels.indices) { "$pixel not in section (${pixels.indices})" }
+
+        return parentSection.getPhysicalIndex(pixels[pixel])
     }
 
     @Transient
