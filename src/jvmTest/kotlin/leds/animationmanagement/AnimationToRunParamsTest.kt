@@ -24,6 +24,7 @@ package animatedledstrip.test.leds.animationmanagement
 
 import animatedledstrip.animations.Direction
 import animatedledstrip.animations.Distance
+import animatedledstrip.animations.Equation
 import animatedledstrip.animations.Rotation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
@@ -72,6 +73,7 @@ class AnimationToRunParamsTest : StringSpec(
             val locationParams: MutableMap<String, Location>,
             val distanceParams: MutableMap<String, Distance>,
             val rotationParams: MutableMap<String, Rotation>,
+            val equationParams: MutableMap<String, Equation>,
         )
 
         val animToRunColorsParamsArb: Arb<ArbToRunColorsParams> =
@@ -81,14 +83,16 @@ class AnimationToRunParamsTest : StringSpec(
                      Arb.map(filteredStringArb, filteredStringArb, 0, 5),
                      Arb.map(filteredStringArb, locationArb, 0, 5),
                      Arb.map(filteredStringArb, distanceArb, 0, 5),
-                     Arb.map(filteredStringArb, rotationArb, 0, 5)) { c, i, d, s, l, ds, r ->
+                     Arb.map(filteredStringArb, rotationArb, 0, 5),
+                     Arb.map(filteredStringArb, equationArb, 0, 5)) { c, i, d, s, l, ds, r, e ->
                 ArbToRunColorsParams(c.toMutableList(),
                                      i.toMutableMap(),
                                      d.toMutableMap(),
                                      s.toMutableMap(),
                                      l.toMutableMap(),
                                      ds.toMutableMap(),
-                                     r.toMutableMap())
+                                     r.toMutableMap(),
+                                     e.toMutableMap())
             }
 
         fun Map<String, Int>.encodeToString(): String =
@@ -109,6 +113,9 @@ class AnimationToRunParamsTest : StringSpec(
         fun Map<String, Rotation>.encodeToString(): String =
             this.toList().joinToString(",") { """"${it.first}":${serializer.encodeToString(it.second)}""" }
 
+        fun Map<String, Equation>.encodeToString(): String =
+            this.toList().joinToString(",") { """"${it.first}":${serializer.encodeToString(it.second)}""" }
+
 
         "encode JSON" {
             checkAll(animToRunInfoArb, animToRunColorsParamsArb) { i, cp ->
@@ -124,7 +131,7 @@ class AnimationToRunParamsTest : StringSpec(
                                      cp.locationParams,
                                      cp.distanceParams,
                                      cp.rotationParams,
-                                     mutableMapOf())
+                                     cp.equationParams)
                     .jsonString() shouldBe """{"type":"AnimationToRunParams",""" +
                         """"animation":"${i.animation}",""" +
                         """"colors":[${cp.colors.joinToString(",") { serializer.encodeToString(it) }}],""" +
@@ -138,7 +145,7 @@ class AnimationToRunParamsTest : StringSpec(
                         """"locationParams":{${cp.locationParams.encodeToString()}},""" +
                         """"distanceParams":{${cp.distanceParams.encodeToString()}},""" +
                         """"rotationParams":{${cp.rotationParams.encodeToString()}},""" +
-                        """"equationParams":{}};;;"""
+                        """"equationParams":{${cp.equationParams.encodeToString()}}};;;"""
             }
         }
 
@@ -157,8 +164,8 @@ class AnimationToRunParamsTest : StringSpec(
                            """"locationParams":{${cp.locationParams.encodeToString()}},""" +
                            """"distanceParams":{${cp.distanceParams.encodeToString()}},""" +
                            """"rotationParams":{${cp.rotationParams.encodeToString()}},""" +
-                           """"equationParams":{}};;;"""
-
+                           """"equationParams":{${cp.equationParams.encodeToString()}}};;;"""
+                println(json)
                 val correctData = AnimationToRunParams(i.animation,
                                                        cp.colors,
                                                        i.id,
@@ -171,7 +178,7 @@ class AnimationToRunParamsTest : StringSpec(
                                                        cp.locationParams,
                                                        cp.distanceParams,
                                                        cp.rotationParams,
-                                                       mutableMapOf())
+                                                       cp.equationParams)
 
                 json.decodeJson() as AnimationToRunParams shouldBe correctData
             }
@@ -191,7 +198,7 @@ class AnimationToRunParamsTest : StringSpec(
                                                    cp.locationParams,
                                                    cp.distanceParams,
                                                    cp.rotationParams,
-                                                   mutableMapOf())
+                                                   cp.equationParams)
                 val paramsBytes = params1.json()
 
                 val params2 = paramsBytes.toUTF8String().decodeJson() as AnimationToRunParams
