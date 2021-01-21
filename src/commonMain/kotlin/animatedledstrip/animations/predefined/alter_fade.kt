@@ -39,7 +39,6 @@ val alterFade = DefinedAnimation(
         2,
         true,
         Dimensionality.anyDimensional,
-        false,
         intParams = listOf(AnimationParameter("alternationPeriod",
                                               "Delay in milliseconds between alternations",
                                               1000)),

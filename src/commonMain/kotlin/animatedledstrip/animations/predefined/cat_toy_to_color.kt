@@ -48,7 +48,6 @@ val catToyToColor = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay",
                                               "Delay between movements in the pixel run animation",
                                               5),

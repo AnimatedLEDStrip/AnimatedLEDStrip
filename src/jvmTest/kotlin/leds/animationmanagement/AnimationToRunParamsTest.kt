@@ -22,7 +22,6 @@
 
 package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.animations.Distance
 import animatedledstrip.animations.Equation
 import animatedledstrip.animations.Rotation
@@ -53,7 +52,6 @@ class AnimationToRunParamsTest : StringSpec(
             val id: String,
             val section: String,
             val runCount: Int,
-            val direction: Direction,
         )
 
         val animToRunInfoArb: Arb<ArbToRunInfo> =
@@ -61,8 +59,7 @@ class AnimationToRunParamsTest : StringSpec(
                 ArbToRunInfo(filteredStringArb.next(rs),
                              filteredStringArb.next(rs),
                              filteredStringArb.next(rs),
-                             intArb.next(rs),
-                             Arb.enum<Direction>().next(rs))
+                             intArb.next(rs))
             }
 
         data class ArbToRunColorsParams(
@@ -124,7 +121,6 @@ class AnimationToRunParamsTest : StringSpec(
                                      i.id,
                                      i.section,
                                      i.runCount,
-                                     i.direction,
                                      cp.intParams,
                                      cp.doubleParams,
                                      cp.stringParams,
@@ -138,7 +134,6 @@ class AnimationToRunParamsTest : StringSpec(
                         """"id":"${i.id}",""" +
                         """"section":"${i.section}",""" +
                         """"runCount":${i.runCount},""" +
-                        """"direction":"${i.direction}",""" +
                         """"intParams":{${cp.intParams.encodeToString()}},""" +
                         """"doubleParams":{${cp.doubleParams.encodeToString()}},""" +
                         """"stringParams":{${cp.stringParams.encodeToString()}},""" +
@@ -157,7 +152,6 @@ class AnimationToRunParamsTest : StringSpec(
                            """"id":"${i.id}",""" +
                            """"section":"${i.section}",""" +
                            """"runCount":${i.runCount},""" +
-                           """"direction":"${i.direction}",""" +
                            """"intParams":{${cp.intParams.encodeToString()}},""" +
                            """"doubleParams":{${cp.doubleParams.encodeToString()}},""" +
                            """"stringParams":{${cp.stringParams.encodeToString()}},""" +
@@ -171,7 +165,6 @@ class AnimationToRunParamsTest : StringSpec(
                                                        i.id,
                                                        i.section,
                                                        i.runCount,
-                                                       i.direction,
                                                        cp.intParams,
                                                        cp.doubleParams,
                                                        cp.stringParams,
@@ -191,7 +184,6 @@ class AnimationToRunParamsTest : StringSpec(
                                                    i.id,
                                                    i.section,
                                                    i.runCount,
-                                                   i.direction,
                                                    cp.intParams,
                                                    cp.doubleParams,
                                                    cp.stringParams,
@@ -284,17 +276,14 @@ class AnimationToRunParamsTest : StringSpec(
 
         "prepare other params" {
             val anim = AnimationToRunParams(animation = "Color",
-                                            direction = Direction.BACKWARD,
                                             id = "ABCD",
                                             section = "EFGH")
 
             val prep = anim.prepare(stripSection)
 
             prep.animationName shouldBe "Color"
-            prep.direction shouldBe Direction.BACKWARD
             prep.id shouldBe "ABCD"
             prep.section shouldBe "EFGH"
         }
-
     }
 )

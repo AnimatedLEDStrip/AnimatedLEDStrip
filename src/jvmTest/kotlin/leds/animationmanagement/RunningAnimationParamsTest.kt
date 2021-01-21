@@ -23,7 +23,6 @@
 package animatedledstrip.test.leds.animationmanagement
 
 import animatedledstrip.animations.AbsoluteDistance
-import animatedledstrip.animations.Direction
 import animatedledstrip.animations.Equation
 import animatedledstrip.animations.RadiansRotation
 import animatedledstrip.colors.PreparedColorContainer
@@ -48,7 +47,6 @@ class RunningAnimationParamsTest : StringSpec(
             val id: String,
             val section: String,
             val runCount: Int,
-            val direction: Direction,
         )
 
         val animToRunInfoArb: Arb<ArbRunningInfo> =
@@ -56,8 +54,7 @@ class RunningAnimationParamsTest : StringSpec(
                 ArbRunningInfo(filteredStringArb.next(rs),
                                filteredStringArb.next(rs),
                                filteredStringArb.next(rs),
-                               intArb.next(rs),
-                               Arb.enum<Direction>().next(rs))
+                               intArb.next(rs))
             }
 
         data class ArbRunningColorsParams(
@@ -119,7 +116,6 @@ class RunningAnimationParamsTest : StringSpec(
                                        i.id,
                                        i.section,
                                        i.runCount,
-                                       i.direction,
                                        cp.intParams,
                                        cp.doubleParams,
                                        cp.stringParams,
@@ -134,7 +130,6 @@ class RunningAnimationParamsTest : StringSpec(
                         """"id":"${i.id}",""" +
                         """"section":"${i.section}",""" +
                         """"runCount":${i.runCount},""" +
-                        """"direction":"${i.direction}",""" +
                         """"intParams":{${cp.intParams.encodeToString()}},""" +
                         """"doubleParams":{${cp.doubleParams.encodeToString()}},""" +
                         """"stringParams":{${cp.stringParams.encodeToString()}},""" +
@@ -154,7 +149,6 @@ class RunningAnimationParamsTest : StringSpec(
                            """"id":"${i.id}",""" +
                            """"section":"${i.section}",""" +
                            """"runCount":${i.runCount},""" +
-                           """"direction":"${i.direction}",""" +
                            """"intParams":{${cp.intParams.encodeToString()}},""" +
                            """"doubleParams":{${cp.doubleParams.encodeToString()}},""" +
                            """"stringParams":{${cp.stringParams.encodeToString()}},""" +
@@ -169,7 +163,6 @@ class RunningAnimationParamsTest : StringSpec(
                                                          i.id,
                                                          i.section,
                                                          i.runCount,
-                                                         i.direction,
                                                          cp.intParams,
                                                          cp.doubleParams,
                                                          cp.stringParams,
@@ -190,7 +183,6 @@ class RunningAnimationParamsTest : StringSpec(
                                                      i.id,
                                                      i.section,
                                                      i.runCount,
-                                                     i.direction,
                                                      cp.intParams,
                                                      cp.doubleParams,
                                                      cp.stringParams,
@@ -217,14 +209,6 @@ class RunningAnimationParamsTest : StringSpec(
 
         "with colors modification" {
             // TODO
-        }
-
-        "with direction modification" {
-            newRunningAnimationParams.withModifications().direction shouldBe Direction.FORWARD
-
-            newRunningAnimationParams.withModifications(direction = Direction.FORWARD).direction shouldBe Direction.FORWARD
-
-            newRunningAnimationParams.withModifications(direction = Direction.BACKWARD).direction shouldBe Direction.BACKWARD
         }
 
         "with id modification" {

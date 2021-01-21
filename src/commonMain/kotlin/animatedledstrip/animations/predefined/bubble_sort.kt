@@ -43,7 +43,6 @@ val bubbleSort = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 5)),
     )
 ) { leds, params, _ ->

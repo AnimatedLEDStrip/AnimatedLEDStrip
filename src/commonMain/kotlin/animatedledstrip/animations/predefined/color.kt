@@ -36,7 +36,6 @@ val color = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
-        directional = false,
     )
 ) { leds, params, _ ->
     leds.apply {

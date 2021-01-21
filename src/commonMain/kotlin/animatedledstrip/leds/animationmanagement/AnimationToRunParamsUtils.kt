@@ -22,7 +22,6 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.animations.Distance
 import animatedledstrip.animations.Equation
 import animatedledstrip.animations.Rotation
@@ -202,32 +201,6 @@ fun AnimationToRunParams.runCount(runs: Int): AnimationToRunParams {
  */
 fun AnimationToRunParams.section(sectionId: String): AnimationToRunParams {
     this.section = sectionId
-    return this
-}
-
-
-/**
- * Set the `direction` parameter.
- *
- * @param direction A `Direction` value ([Direction].`FORWARD` or [Direction].`BACKWARD`)
- */
-fun AnimationToRunParams.direction(direction: Direction): AnimationToRunParams {
-    this.direction = direction
-    return this
-}
-
-/**
- * Set the `direction` parameter with a `Char`.
- *
- * @param direction A `Char` representing `Direction.FORWARD` ('`F`') or
- * `Direction.BACKWARD` ('`B`')
- */
-fun AnimationToRunParams.direction(direction: Char): AnimationToRunParams {
-    this.direction = when (direction) {
-        'F', 'f' -> Direction.FORWARD
-        'B', 'b' -> Direction.BACKWARD
-        else -> throw IllegalArgumentException("Direction chars can be 'F' or 'B'")
-    }
     return this
 }
 

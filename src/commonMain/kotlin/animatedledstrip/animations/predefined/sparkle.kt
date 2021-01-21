@@ -47,7 +47,6 @@ val sparkle = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("sparkleDuration", "Length of sparkle", 50),
                            AnimationParameter("maxDelayBeforeSparkle",
                                               "Maximum amount of time before a pixel will sparkle",

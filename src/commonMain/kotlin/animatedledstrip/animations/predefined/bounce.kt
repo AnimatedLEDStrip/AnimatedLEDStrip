@@ -43,7 +43,6 @@ val bounce = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay",
                                               "Delay between movements",
                                               5)),

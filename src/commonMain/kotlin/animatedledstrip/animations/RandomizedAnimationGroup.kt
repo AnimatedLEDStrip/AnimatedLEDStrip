@@ -81,7 +81,6 @@ class RandomizedAnimationGroup(
                              groupInfo.minimumColors,
                              groupInfo.unlimitedColors,
                              groupInfo.dimensionality,
-                             groupInfo.directional,
                              intParams,
                              doubleParams,
                              stringParams,
@@ -108,7 +107,6 @@ class RandomizedAnimationGroup(
                 id = params.id,
                 section = params.section,
                 runCount = 1,
-                direction = params.direction,
                 intParams = params.intParams.filter { it.key.endsWith(nextAnim.info.name) }
                     .map { it.key.removeSuffix("-${nextAnim.info.name}") to it.value }.toMap()
                     .toMutableMap(),

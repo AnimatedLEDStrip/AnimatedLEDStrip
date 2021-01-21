@@ -46,7 +46,6 @@ val ripple = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 30),
                            AnimationParameter("interAnimationDelay",
                                               "Time between start of one animation and start of the next",

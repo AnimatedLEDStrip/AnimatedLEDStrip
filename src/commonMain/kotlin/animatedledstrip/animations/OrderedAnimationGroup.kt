@@ -95,7 +95,6 @@ class OrderedAnimationGroup(
                              groupInfo.minimumColors,
                              groupInfo.unlimitedColors,
                              groupInfo.dimensionality,
-                             groupInfo.directional,
                              intParams,
                              doubleParams,
                              stringParams,
@@ -123,7 +122,6 @@ class OrderedAnimationGroup(
                 id = params.id,
                 section = params.section,
                 runCount = 1,
-                direction = params.direction,
                 intParams = params.intParams.filter { it.key.endsWith("${nextAnim.info.name} (${nextAnimIndex + 1})") }
                     .map { it.key.removeSuffix("-${nextAnim.info.name} (${nextAnimIndex + 1})") to it.value }.toMap()
                     .toMutableMap(),

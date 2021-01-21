@@ -49,7 +49,6 @@ val pixelMarathon = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = true,
         dimensionality = Dimensionality.oneDimensional,
-        directional = true,
         intParams = listOf(AnimationParameter("interMovementDelay",
                                               "Delay between movements in the pixel run animations",
                                               8),

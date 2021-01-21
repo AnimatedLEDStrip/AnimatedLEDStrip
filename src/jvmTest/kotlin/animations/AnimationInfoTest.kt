@@ -67,7 +67,6 @@ class AnimationInfoTest : StringSpec(
             val minimumColors: Int,
             val unlimitedColors: Boolean,
             val dimensionality: Set<Dimensionality>,
-            val directional: Boolean,
         )
 
         val animInfoArb: Arb<ArbInfo> =
@@ -80,8 +79,7 @@ class AnimationInfoTest : StringSpec(
                     intArb.next(rs),
                     intArb.next(rs),
                     Arb.bool().next(rs),
-                    Arb.set(dimensionalityArb, 1..3).next(rs),
-                    Arb.bool().next(rs))
+                    Arb.set(dimensionalityArb, 1..3).next(rs))
             }
 
         "encode JSON" {
@@ -93,7 +91,6 @@ class AnimationInfoTest : StringSpec(
                                         ai.minimumColors,
                                         ai.unlimitedColors,
                                         ai.dimensionality,
-                                        ai.directional,
                                         ap.intParams,
                                         ap.doubleParams,
                                         ap.stringParams,
@@ -109,7 +106,6 @@ class AnimationInfoTest : StringSpec(
                         """"minimumColors":${ai.minimumColors},""" +
                         """"unlimitedColors":${ai.unlimitedColors},""" +
                         """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],""" +
-                        """"directional":${ai.directional},""" +
                         """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
@@ -131,7 +127,6 @@ class AnimationInfoTest : StringSpec(
                     """"minimumColors":${ai.minimumColors},""" +
                     """"unlimitedColors":${ai.unlimitedColors},""" +
                     """"dimensionality":[${ai.dimensionality.joinToString(",") { "\"$it\"" }}],""" +
-                    """"directional":${ai.directional},""" +
                     """"intParams":[${ap.intParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"doubleParams":[${ap.doubleParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"stringParams":[${ap.stringParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
@@ -147,7 +142,6 @@ class AnimationInfoTest : StringSpec(
                                                           minimumColors = ai.minimumColors,
                                                           unlimitedColors = ai.unlimitedColors,
                                                           dimensionality = ai.dimensionality,
-                                                          directional = ai.directional,
                                                           intParams = ap.intParams,
                                                           doubleParams = ap.doubleParams,
                                                           stringParams = ap.stringParams,
@@ -169,7 +163,6 @@ class AnimationInfoTest : StringSpec(
                                                     minimumColors = ai.minimumColors,
                                                     unlimitedColors = ai.unlimitedColors,
                                                     dimensionality = ai.dimensionality,
-                                                    directional = ai.directional,
                                                     intParams = ap.intParams,
                                                     doubleParams = ap.doubleParams,
                                                     stringParams = ap.stringParams,
