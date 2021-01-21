@@ -44,7 +44,7 @@ import kotlin.math.abs
 class PixelLocationManagerTest : StringSpec(
     {
         "constructor locations defined" {
-            checkAll(Arb.list(locationArb, 1..5000)) { locs ->
+            checkAll(15, Arb.list(locationArb, 1..5000)) { locs ->
                 val newManager = PixelLocationManager(locs, locs.size)
                 for ((index, location) in newManager.pixelLocations.withIndex())
                     location shouldBe PixelLocation(index, locs[index])
@@ -58,14 +58,14 @@ class PixelLocationManagerTest : StringSpec(
         }
 
         "constructor no locations defined" {
-            checkAll(Arb.int(1..5000)) { nLocs ->
+            checkAll(15, Arb.int(1..5000)) { nLocs ->
                 TestLogger.startLogCapture()
                 val newManager = PixelLocationManager(null, nLocs)
                 for ((index, location) in newManager.pixelLocations.withIndex())
                     location shouldBe PixelLocation(index, Location(index))
                 TestLogger.logs.shouldContainExactly(
                     TestLogger.Log(Severity.Warn,
-                                   "No LED locations defined, assuming LEDs are in one dimensional strip with equal spacing",
+                                   "No LED locations defined, assuming LEDs are in a one dimensional strip with equal spacing",
                                    "Pixel Location Manager"))
                 TestLogger.stopLogCapture()
             }
