@@ -468,14 +468,14 @@ fun LEDStrip.setStripFadeColor(color: Int) {
  * Set the section's fade color
  */
 fun SectionManager.setStripFadeColor(color: PreparedColorContainer) {
-    for (i in pixels) setPixelFadeColor(i, color)
+    for (i in pixels.indices) setPixelFadeColor(i, color)
 }
 
 /**
  * Set the section's fade color
  */
 fun SectionManager.setStripFadeColor(color: Int) {
-    for (i in pixels) setPixelFadeColor(i, color)
+    for (i in pixels.indices) setPixelFadeColor(i, color)
 }
 
 /**
@@ -511,14 +511,14 @@ fun LEDStrip.setStripProlongedColor(color: Int) {
  * Set the section's prolonged color
  */
 fun SectionManager.setStripProlongedColor(color: PreparedColorContainer) {
-    for (i in pixels) setPixelProlongedColor(i, color)
+    for (i in pixels.indices) setPixelProlongedColor(i, color)
 }
 
 /**
  * Set the section's prolonged color
  */
 fun SectionManager.setStripProlongedColor(color: Int) {
-    for (i in pixels) setPixelProlongedColor(i, color)
+    for (i in pixels.indices) setPixelProlongedColor(i, color)
 }
 
 /**
@@ -554,14 +554,14 @@ fun LEDStrip.setStripTemporaryColor(color: Int) {
  * Set the section's temporary color
  */
 fun SectionManager.setStripTemporaryColor(color: PreparedColorContainer) {
-    for (i in pixels) setPixelTemporaryColor(i, color)
+    for (i in pixels.indices) setPixelTemporaryColor(i, color)
 }
 
 /**
  * Set the section's temporary color
  */
 fun SectionManager.setStripTemporaryColor(color: Int) {
-    for (i in pixels) setPixelTemporaryColor(i, color)
+    for (i in pixels.indices) setPixelTemporaryColor(i, color)
 }
 
 /**
@@ -593,7 +593,7 @@ fun LEDStrip.clear() {
  * Clear the section (set all pixels to 0)
  */
 fun SectionManager.clear() {
-    for (i in pixels) {
+    for (i in pixels.indices) {
         setPixelProlongedColor(i, 0)
         setPixelFadeColor(i, -1)
         setPixelTemporaryColor(i, -1)

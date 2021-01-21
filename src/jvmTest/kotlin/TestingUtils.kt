@@ -124,6 +124,11 @@ val distanceArb: Arb<Distance> =
         if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
     }
 
+val absoluteDistanceArb: Arb<AbsoluteDistance> =
+    Arb.bind(largeDoubleArb,
+             largeDoubleArb,
+             largeDoubleArb) { x, y, z -> AbsoluteDistance(x, y, z) }
+
 val rotationArb: Arb<Rotation> =
     Arb.bind(largeDoubleArb,
              largeDoubleArb,
@@ -132,14 +137,23 @@ val rotationArb: Arb<Rotation> =
         if (rOrD) RadiansRotation(x, y, z) else DegreesRotation(x, y, z)
     }
 
+val radiansRotationArb: Arb<RadiansRotation> =
+    Arb.bind(largeDoubleArb,
+             largeDoubleArb,
+             largeDoubleArb) { x, y, z -> RadiansRotation(x, y, z) }
+
 val equationArb: Arb<Equation> =
-    Arb.bind(Arb.list(largeDoubleArb, 0..5), Arb.bool()) { c, _ ->
-        Equation(c)
-    }
+    Arb.bind(Arb.list(largeDoubleArb, 0..5),
+             Arb.bool()) { c, _ -> Equation(c) }
 
 val colorContainerArb: Arb<ColorContainerInterface> =
     Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, cOrP ->
         if (cOrP) ColorContainer(c.toMutableList()) else PreparedColorContainer(c)
+    }
+
+val preparedColorContainerArb: Arb<PreparedColorContainer> =
+    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, _ ->
+        PreparedColorContainer(c)
     }
 
 val filteredStringArb = Arb.string().map { it.replace("""["'#$\\]""".toRegex(), "") }
