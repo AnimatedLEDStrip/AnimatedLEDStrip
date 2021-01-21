@@ -23,9 +23,11 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.colormanagement.revertPixels
-import animatedledstrip.leds.colormanagement.setPixelFadeColors
-import animatedledstrip.leds.colormanagement.setPixelTemporaryColors
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
+import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.locationmanagement.groupPixelsAlongLine
 import kotlinx.coroutines.delay
 
@@ -65,14 +67,23 @@ val meteor = DefinedAnimation(
     val lineEquation = params.equationParams.getValue("lineEquation")
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<List<Int>> =
-            groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+        val pixelsToModifyPerIteration: List<PixelsToModify> =
+            (params.extraData.getOrPut("modLists") {
+                groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+            } as PixelModificationLists).modLists
 
         for (i in pixelsToModifyPerIteration.indices) {
-            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
-            setPixelFadeColors(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i],
-                               color)
-            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i])
+            for ((sPixel, fPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
+                setPixelTemporaryColor(sPixel, color)
+                setPixelFadeColor(fPixel, color)
+                revertPixel(fPixel)
+            }
+            for (pixel in pixelsToModifyPerIteration[i].unpairedSetPixels)
+                setPixelTemporaryColor(pixel, color)
+            for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels) {
+                setPixelFadeColor(pixel, color)
+                revertPixel(pixel)
+            }
             delay(interMovementDelay)
         }
     }

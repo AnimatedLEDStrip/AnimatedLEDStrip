@@ -23,7 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.colors.offsetBy
+import animatedledstrip.colors.shift
 import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
@@ -45,7 +45,19 @@ val smoothChase = DefinedAnimation(
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
-        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 50)),
+        intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 0.9)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
@@ -56,14 +68,32 @@ val smoothChase = DefinedAnimation(
         when (direction) {
             Direction.FORWARD ->
                 iterateOverPixels { m ->
-                    setStripProlongedColor(color.offsetBy(m))
+                    setStripProlongedColor(color.shift(m))
                     delay(interMovementDelay)
                 }
             Direction.BACKWARD ->
                 iterateOverPixelsReverse { m ->
-                    setStripProlongedColor(color.offsetBy(m))
+                    setStripProlongedColor(color.shift(m))
                     delay(interMovementDelay)
                 }
         }
     }
+
+//    leds.apply {
+//        val pixelsToModifyPerIteration: List<PixelsToModify> =
+//            (params.extraData.getOrPut("modLists") {
+//                groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+//            } as PixelModificationLists).modLists
+//
+//        for (r in pixelsToModifyPerIteration.indices.reversed()) {
+//            for (i in 0 until r) {
+//                setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
+//                revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size] - pixelsToModifyPerIteration[i])
+//                delay(interMovementDelay)
+//            }
+//            setPixelProlongedColors(pixelsToModifyPerIteration[r], color)
+//            delay(interMovementDelay)
+//        }
+////        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
+//    }
 }

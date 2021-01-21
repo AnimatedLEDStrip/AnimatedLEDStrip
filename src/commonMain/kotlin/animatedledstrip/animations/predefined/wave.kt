@@ -26,7 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.colormanagement.setPixelFadeColors
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
+import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -61,12 +63,15 @@ val wave = DefinedAnimation(
     val rotation = params.rotationParams.getValue("rotation")
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<List<Int>> =
-            groupPixelsByXLocation(rotation, movementPerIteration)
+        val pixelsToModifyPerIteration: List<PixelsToModify> =
+            (params.extraData.getOrPut("modLists") {
+                groupPixelsByXLocation(rotation, movementPerIteration)
+            } as PixelModificationLists).modLists
 
         scope.launch {
-            for (pixelList in pixelsToModifyPerIteration) {
-                setPixelFadeColors(pixelList, color)
+            for (i in pixelsToModifyPerIteration.indices) {
+                for (pixel in pixelsToModifyPerIteration[i].allSetPixels)
+                    setPixelFadeColor(pixel, color)
                 delay(interMovementDelay)
             }
         }

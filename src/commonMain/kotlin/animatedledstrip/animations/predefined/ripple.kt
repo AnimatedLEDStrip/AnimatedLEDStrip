@@ -26,7 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.colormanagement.setPixelFadeColors
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
+import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.locationmanagement.groupPixelsByDistance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -64,12 +66,15 @@ val ripple = DefinedAnimation(
     val distance = params.distanceParams.getValue("distance")
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<List<Int>> =
-            groupPixelsByDistance(center, distance, movementPerIteration)
+        val pixelsToModifyPerIteration: List<PixelsToModify> =
+            (params.extraData.getOrPut("modLists") {
+                groupPixelsByDistance(center, distance, movementPerIteration)
+            } as PixelModificationLists).modLists
 
         scope.launch {
-            for (pixelList in pixelsToModifyPerIteration) {
-                setPixelFadeColors(pixelList, color)
+            for (i in pixelsToModifyPerIteration.indices) {
+                for (pixel in pixelsToModifyPerIteration[i].allSetPixels)
+                    setPixelFadeColor(pixel, color)
                 delay(interMovementDelay)
             }
         }

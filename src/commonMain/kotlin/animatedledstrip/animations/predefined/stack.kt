@@ -23,12 +23,14 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.iterateOverPixels
-import animatedledstrip.leds.animationmanagement.iterateOverPixelsReverse
-import animatedledstrip.leds.animationmanagement.numLEDs
-import animatedledstrip.leds.animationmanagement.runSequential
-import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.leds.sectionmanagement.getSubSection
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
+import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.revertPixels
+import animatedledstrip.leds.colormanagement.setPixelProlongedColors
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
+import animatedledstrip.leds.locationmanagement.groupPixelsAlongLine
+import kotlinx.coroutines.delay
 
 val stack = DefinedAnimation(
     Animation.AnimationInfo(
@@ -44,29 +46,49 @@ val stack = DefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = true,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 0.9)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]
-    val direction = params.direction
+    val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
+    val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
+    val maximumInfluence = params.doubleParams.getValue("maximumInfluence")
+    val offset = params.distanceParams.getValue("offset")
+    val rotation = params.rotationParams.getValue("rotation")
+    val lineEquation = params.equationParams.getValue("lineEquation")
 
     leds.apply {
-        when (direction) {
-            Direction.FORWARD ->
-                iterateOverPixelsReverse {
-                    runSequential(
-                        animation = params.withModifications(animation = "Pixel Run"),
-                        section = getSubSection(0, it),
-                    )
-                    setPixelProlongedColor(it, color)
+        val pixelsToModifyPerIteration: List<PixelsToModify> =
+            (params.extraData.getOrPut("modLists") {
+                groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
+            } as PixelModificationLists).modLists
+
+        for (r in pixelsToModifyPerIteration.indices.reversed()) {
+            for (i in 0 until r) {
+                for ((sPixel, rPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
+                    setPixelTemporaryColor(sPixel, color)
+                    revertPixel(rPixel)
                 }
-            Direction.BACKWARD ->
-                iterateOverPixels {
-                    runSequential(
-                        animation = params.withModifications(animation = "Pixel Run"),
-                        section = getSubSection(it, numLEDs - 1),
-                    )
-                    setPixelProlongedColor(it, color)
-                }
+                for (pixel in pixelsToModifyPerIteration[i].unpairedSetPixels)
+                    setPixelTemporaryColor(pixel, color)
+                for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels)
+                    revertPixel(pixel)
+                delay(interMovementDelay)
+            }
+            if (r > 0) revertPixels(pixelsToModifyPerIteration[r - 1].allRevertPixels)
+            setPixelProlongedColors(pixelsToModifyPerIteration[r].allSetPixels, color)
+            delay(interMovementDelay)
         }
     }
 }
