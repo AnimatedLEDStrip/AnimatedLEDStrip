@@ -32,6 +32,8 @@ import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.colormanagement.CurrentStripColor
 import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.stripmanagement.StripInfo
+import animatedledstrip.utils.Logger
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
@@ -81,6 +83,13 @@ val serializer: Json = Json {
 fun String?.decodeJson(): SendableData {
     requireNotNull(this)
     return serializer.decodeFromString(this.removeSuffix(DELIMITER))
+}
+
+fun String?.decodeJsonOrNull(): SendableData? = try {
+    decodeJson()
+} catch (e: SerializationException) {
+    Logger.e("JSON Decoder", e) { "Error decoding JSON" }
+    null
 }
 
 /**
