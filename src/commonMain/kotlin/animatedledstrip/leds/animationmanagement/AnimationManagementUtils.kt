@@ -27,6 +27,7 @@ import animatedledstrip.animations.prepareAnimIdentifier
 import animatedledstrip.leds.sectionmanagement.Section
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.Logger
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 
@@ -122,6 +123,7 @@ suspend fun AnimationManager.runParallelAndJoin(vararg animations: Pair<Animatio
  */
 suspend fun AnimationManager.runSequential(
     animation: AnimationToRunParams,
+    scope: CoroutineScope,
     section: SectionManager = sectionManager,
     runCount: Int = 1,
 ) {
@@ -130,7 +132,7 @@ suspend fun AnimationManager.runSequential(
 
     RunningAnimation(
         params,
-        animationScope,
+        scope,
         section,
         this,
     ).join()
