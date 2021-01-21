@@ -51,10 +51,9 @@ import kotlinx.serialization.Transient
  * @property equationParams A map of [Equation] parameters for the animation
  * @property sourceParams The [AnimationToRunParams] instance that created this [RunningAnimationParams]
  */
-@Suppress("DataClassPrivateConstructor")
 @Serializable
 @SerialName("RunningAnimationParams")
-data class RunningAnimationParams private constructor(
+data class RunningAnimationParams internal constructor(
     val animationName: String,
     val colors: List<PreparedColorContainer>,
     val id: String,

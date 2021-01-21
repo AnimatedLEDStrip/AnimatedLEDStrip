@@ -165,7 +165,7 @@ class AnimationToRunParamsTest : StringSpec(
                            """"distanceParams":{${cp.distanceParams.encodeToString()}},""" +
                            """"rotationParams":{${cp.rotationParams.encodeToString()}},""" +
                            """"equationParams":{${cp.equationParams.encodeToString()}}};;;"""
-                println(json)
+
                 val correctData = AnimationToRunParams(i.animation,
                                                        cp.colors,
                                                        i.id,
