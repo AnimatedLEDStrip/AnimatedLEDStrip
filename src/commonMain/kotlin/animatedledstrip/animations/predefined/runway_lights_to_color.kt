@@ -23,9 +23,9 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
+import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.leds.locationmanagement.PixelsToModify
 import animatedledstrip.leds.locationmanagement.groupGroupsOfPixelsAlongLine
 import kotlinx.coroutines.delay
 
@@ -80,13 +80,13 @@ val runwayLightsToColor = DefinedAnimation(
 
         for (modList in groupedPixels) {
             val list = mutableListOf<Int>()
-            for ((pixel, _) in modList.setRevertList) {
+            for ((pixel, _) in modList.pairedSetRevertPixels) {
                 if (pixel !in setPixels) {
                     list.add(pixel)
                     setPixels.add(pixel)
                 }
             }
-            for (pixel in modList.setPixels) {
+            for (pixel in modList.unpairedSetPixels) {
                 if (pixel !in setPixels) {
                     list.add(pixel)
                     setPixels.add(pixel)

@@ -26,8 +26,10 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.leds.colormanagement.revertPixels
-import animatedledstrip.leds.colormanagement.setPixelTemporaryColors
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
+import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
 
@@ -57,14 +59,24 @@ val planeRun = DefinedAnimation(
     val rotation = params.rotationParams.getValue("rotation")
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<List<Int>> =
-            groupPixelsByXLocation(rotation, movementPerIteration)
+        val pixelsToModifyPerIteration: List<PixelsToModify> =
+            (params.extraData.getOrPut("modLists") {
+                groupPixelsByXLocation(rotation, movementPerIteration)
+            } as PixelModificationLists).modLists
 
         for (i in pixelsToModifyPerIteration.indices) {
-            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
-            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
+            for ((sPixel, rPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
+                setPixelTemporaryColor(sPixel, color)
+                revertPixel(rPixel)
+            }
+            for (pixel in pixelsToModifyPerIteration[i].unpairedSetPixels)
+                setPixelTemporaryColor(pixel, color)
+            for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels)
+                revertPixel(pixel)
+//            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
+//            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
             delay(interMovementDelay)
         }
-        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1])
+//        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1].revertPixels)
     }
 }

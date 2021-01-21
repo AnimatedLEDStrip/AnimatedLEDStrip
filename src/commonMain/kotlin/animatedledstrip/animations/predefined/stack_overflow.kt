@@ -23,9 +23,6 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
-import animatedledstrip.leds.animationmanagement.AnimationToRunParams
-import animatedledstrip.leds.animationmanagement.animation
-import animatedledstrip.leds.animationmanagement.intParam
 import animatedledstrip.leds.animationmanagement.runParallelAndJoin
 
 val stackOverflow = DefinedAnimation(
@@ -43,30 +40,31 @@ val stackOverflow = DefinedAnimation(
         dimensionality = Dimensionality.oneDimensional,
         directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
+        doubleParams = listOf(AnimationParameter("movementPerIteration",
+                                                 "How far to move along the X axis during each iteration of the animation",
+                                                 1.0),
+                              AnimationParameter("maximumInfluence",
+                                                 "How far away from the line a pixel can be affected",
+                                                 0.9)),
+        distanceParams = listOf(AnimationParameter("offset",
+                                                   "Offset of the line in the XYZ directions",
+                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+        equationParams = listOf(AnimationParameter("lineEquation",
+                                                   "The equation representing the line the the pixel will follow")),
     )
 ) { leds, params, _ ->
-    val color0 = params.colors[0]
-    val color1 = params.colors[1]
-    val interMovementDelay = params.intParams.getValue("interMovementDelay")
-
     leds.apply {
-        val baseAnimation = AnimationToRunParams()
-            .animation("Stack")
-            .intParam("interMovementDelay", interMovementDelay)
-
         runParallelAndJoin(
             Pair(
-                baseAnimation.copy(
-                    colors = mutableListOf(color0),
-                    direction = Direction.FORWARD,
-                ),
+                params.withModifications(animation = "Stack", colors = listOf(params.colors[0])),
                 sectionManager,
             ),
             Pair(
-                baseAnimation.copy(
-                    colors = mutableListOf(color1),
-                    direction = Direction.BACKWARD,
-                ),
+                params.withModifications(animation = "Stack",
+                                         colors = listOf(params.colors[1]),
+                                         doubleParamMods = mapOf("movementPerIteration" to -params.doubleParams.getValue(
+                                             "movementPerIteration"))),
                 sectionManager,
             )
         )

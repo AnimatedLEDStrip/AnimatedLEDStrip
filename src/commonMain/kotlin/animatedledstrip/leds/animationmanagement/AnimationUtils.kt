@@ -86,3 +86,47 @@ fun randomInt(): Int = Random.nextInt()
  * @return A random `Double`
  */
 fun randomDouble(): Double = Random.nextDouble()
+
+/**
+ * Contains lists of pixels so the animation knows what pixels to set and
+ * revert during this iteration.
+ *
+ * @property allSetPixels All pixels that should be set
+ * @property allRevertPixels All pixels that should be reverted
+ * @property pairedSetRevertPixels A list of paired up pixels from the set and revert lists
+ *   (used by animations like Runway lights so pixels are set and reverted at
+ *   nearly the exact same time instead of setting all and then reverting all)
+ * @property unpairedSetPixels A list with any remaining pixels that should be set that are
+ *   not included in [pairedSetRevertPixels] (due to [allRevertPixels] being smaller than [allSetPixels])
+ * @property unpairedRevertPixels A list with any remaining pixels that should be reverted that are
+ *   not included in [pairedSetRevertPixels] (due to [allSetPixels] being smaller than [allRevertPixels])
+ */
+data class PixelsToModify(
+    val allSetPixels: List<Int>,
+    val allRevertPixels: List<Int>,
+) {
+    val pairedSetRevertPixels: List<Pair<Int, Int>> = allSetPixels.zip(allRevertPixels)
+    val unpairedSetPixels: List<Int> = allSetPixels.drop(pairedSetRevertPixels.size)
+    val unpairedRevertPixels: List<Int> = allRevertPixels.drop(pairedSetRevertPixels.size)
+}
+
+/**
+ * A list of [PixelsToModify] for an animation.
+ * A separate class was created so it can be saved in a map without worrying about
+ * type erasure and so the [PixelsToModify] instances can be created easily.
+ *
+ * [setLists] and [revertLists] should have the same size.
+ */
+data class PixelModificationLists(
+    val setLists: List<List<Int>>,
+    val revertLists: List<List<Int>>,
+) {
+    init {
+        require(setLists.size == revertLists.size)
+    }
+
+    val modLists: List<PixelsToModify> =
+        setLists
+            .zip(revertLists)
+            .map { lists -> PixelsToModify(lists.first, lists.second) }
+}

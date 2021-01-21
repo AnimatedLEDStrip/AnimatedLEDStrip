@@ -23,10 +23,10 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
+import animatedledstrip.leds.animationmanagement.PixelModificationLists
+import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
-import animatedledstrip.leds.locationmanagement.PixelModificationLists
-import animatedledstrip.leds.locationmanagement.PixelsToModify
 import animatedledstrip.leds.locationmanagement.groupGroupsOfPixelsAlongLine
 import kotlinx.coroutines.delay
 
@@ -77,13 +77,13 @@ val runwayLights = DefinedAnimation(
             } as PixelModificationLists).modLists
 
         for (i in pixelsToModifyPerIteration.indices) {
-            for (pair in pixelsToModifyPerIteration[i].setRevertList) {
-                setPixelTemporaryColor(pair.first, color)
-                revertPixel(pair.second)
+            for ((sPixel, rPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
+                setPixelTemporaryColor(sPixel, color)
+                revertPixel(rPixel)
             }
-            for (pixel in pixelsToModifyPerIteration[i].setPixels)
+            for (pixel in pixelsToModifyPerIteration[i].unpairedSetPixels)
                 setPixelTemporaryColor(pixel, color)
-            for (pixel in pixelsToModifyPerIteration[i].revertPixels)
+            for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels)
                 revertPixel(pixel)
             delay(interMovementDelay)
         }
