@@ -43,13 +43,14 @@ val alterFade = DefinedAnimation(
                                               "Delay in milliseconds between alternations",
                                               1000)),
     )
-) { leds, params, _ ->
+) { leds, params, scope ->
     val nextColorIndex = params.extraData.getOrPut("nextColorIndex") { 0 } as Int
     val alternationPeriod = params.intParams.getValue("alternationPeriod").toLong()
 
     leds.apply {
         runSequential(params.withModifications(animation = "Fade to Color",
-                                               colors = mutableListOf(params.colors[nextColorIndex])))
+                                               colors = mutableListOf(params.colors[nextColorIndex])),
+                      scope = scope)
     }
 
     delay(alternationPeriod)
