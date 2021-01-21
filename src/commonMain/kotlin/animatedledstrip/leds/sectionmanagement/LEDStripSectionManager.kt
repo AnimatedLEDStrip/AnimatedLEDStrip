@@ -51,6 +51,10 @@ class LEDStripSectionManager(override val stripManager: LEDStrip) : SectionManag
      */
     internal val fullStripSection: Section = Section("", (0 until numLEDs).toList(), stripManager, this)
 
+    init {
+        sections[""] = fullStripSection
+    }
+
     /**
      * @return The section specified for the animation. If it doesn't exist,
      * return the section representing the full strip
