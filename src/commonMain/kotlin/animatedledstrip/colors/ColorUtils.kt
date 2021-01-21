@@ -218,7 +218,7 @@ fun PreparedColorContainer.inverse(): PreparedColorContainer =
 fun PreparedColorContainer.inverse(vararg indices: Int): PreparedColorContainer {
     val temp = ColorContainer()
     for (i in indices)
-            if (colors.indices.contains(i)) temp += colors[i]
+        if (colors.indices.contains(i)) temp += colors[i]
     return temp.invert().prepare(size)
 }
 
@@ -249,12 +249,12 @@ operator fun PreparedColorContainer.unaryMinus(): PreparedColorContainer = inver
 
 /**
  * Create a [PreparedColorContainer] with the same colors as this
- * [PreparedColorContainer], only offset by `offset`.
+ * [PreparedColorContainer], shifted by `offset`.
  * The color at index `0` will be moved to index `offset`.
  * Negative offsets and offsets that are larger than the size of
  * `colors` are supported.
  */
-fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
+fun PreparedColorContainer.shift(offset: Int): PreparedColorContainer {
     val n = when {
         offset > colors.lastIndex -> size - (offset % size)
         -offset > colors.lastIndex -> -offset % size
@@ -263,11 +263,13 @@ fun PreparedColorContainer.offsetBy(offset: Int): PreparedColorContainer {
         else -> 0
     }
 
-    val temp = mutableListOf<Int>()
-    for (i in colors.indices) {
-        temp += colors[(i + n) % size]
-    }
-    return PreparedColorContainer(temp)
+//    val tmp = colors.drop(n) + colors.subList(0, n)
+//    val tmp = mutableListOf<Int>()
+//    for (i in colors.indices) {
+//        tmp += colors[(i + n) % size]
+//    }
+    return PreparedColorContainer(colors.drop(n) + colors.subList(0, n),
+                                  originalColors)
 }
 
 
