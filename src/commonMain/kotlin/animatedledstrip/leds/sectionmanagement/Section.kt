@@ -50,7 +50,7 @@ class Section(
 
     @Suppress("JoinDeclarationAndAssignment")
     @Transient
-    private lateinit var parentSection: SectionManager
+    lateinit var parentSection: SectionManager
 
     constructor(
         name: String,
@@ -63,12 +63,16 @@ class Section(
     }
 
     /**
-     * Get the appropriate index on the full strip for the specified pixel
+     * Get the appropriate index on the full strip for the specified pixel.
+     *
+     * During creation, [pixels] is populated with the physical index of the pixel
+     * on the strip, meaning we don't have to perform recursive calculations
+     * through all parent sections.
      */
     override fun getPhysicalIndex(pixel: Int): Int {
         require(pixel in pixels.indices) { "$pixel not in section (${pixels.indices})" }
 
-        return parentSection.getPhysicalIndex(pixels[pixel])
+        return pixels[pixel]
     }
 
     @Transient
