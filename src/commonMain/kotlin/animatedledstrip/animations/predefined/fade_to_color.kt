@@ -31,7 +31,6 @@ import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.pixelActualColorList
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
-import animatedledstrip.utils.Logger
 
 val fadeToColor = DefinedAnimation(
     Animation.AnimationInfo(
@@ -50,7 +49,6 @@ val fadeToColor = DefinedAnimation(
         leds.iterateOverPixels { index ->
             setPixelProlongedColor(index, params.colors[0])
             setPixelFadeColor(index, currentColor)
-            Logger.w { "A" }
         }
     }
 }

@@ -43,7 +43,7 @@ class FadeToColorTest : StringSpec(
 
         afterSpec { ledStrip.renderer.close() }
 
-        "Fade to Color" {
+        "Fade to Color".config(enabled = false) {
             val section = ledStrip.sectionManager.createSection("ftc", 0, 9)
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()

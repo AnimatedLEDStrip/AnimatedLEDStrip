@@ -33,7 +33,7 @@ import io.kotest.property.checkAll
 class EmulationUtilsTests : StringSpec(
     {
         "create new emulated strip with strip info" {
-            checkAll(Arb.int(1..50000)) { n ->
+            checkAll(15, Arb.int(1..50000)) { n ->
                 val newStrip = createNewEmulatedStrip(StripInfo(numLEDs = n))
                 newStrip.numLEDs shouldBe n
                 newStrip.nativeLEDStrip.numLEDs shouldBe n
@@ -42,7 +42,7 @@ class EmulationUtilsTests : StringSpec(
         }
 
         "create new emulated strip with num LEDs" {
-            checkAll(Arb.int(1..50000)) { n ->
+            checkAll(15, Arb.int(1..50000)) { n ->
                 val newStrip = createNewEmulatedStrip(n)
                 newStrip.numLEDs shouldBe n
                 newStrip.nativeLEDStrip.numLEDs shouldBe n

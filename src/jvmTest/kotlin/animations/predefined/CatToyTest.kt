@@ -44,7 +44,7 @@ class CatToyTest : StringSpec(
 
         afterSpec { ledStrip.renderer.close() }
 
-        "Cat Toy" {
+        "Cat Toy".config(enabled = false) {
             val section = ledStrip.sectionManager.createSection("cat", 0, 9)
 
             every { any<AnimationManager>().randomIndex() } returns

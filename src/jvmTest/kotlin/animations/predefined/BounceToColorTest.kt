@@ -45,7 +45,7 @@ class BounceToColorTest : StringSpec(
 
         afterSpec { ledStrip.renderer.close() }
 
-        "Bounce to Color even number of pixels" {
+        "Bounce to Color even number of pixels".config(enabled = false) {
             val section = ledStrip.sectionManager.createSection("btc-1", 0, 9)
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
@@ -117,7 +117,7 @@ class BounceToColorTest : StringSpec(
             }
         }
 
-        "Bounce to Color odd number of pixels" {
+        "Bounce to Color odd number of pixels".config(enabled = false) {
             val section = ledStrip.sectionManager.createSection("btc-2", 0, 10)
 
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
