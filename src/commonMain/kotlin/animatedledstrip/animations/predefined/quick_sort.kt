@@ -93,7 +93,6 @@ val quickSortParallel = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 50)),
     )
 ) { leds, params, scope ->
@@ -120,7 +119,6 @@ val quickSortSequential = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 25)),
     )
 ) { leds, params, scope ->

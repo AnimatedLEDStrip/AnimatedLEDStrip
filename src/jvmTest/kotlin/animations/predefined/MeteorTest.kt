@@ -22,7 +22,6 @@
 
 package animatedledstrip.test.animations.predefined
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
@@ -48,7 +47,6 @@ class MeteorTest : StringSpec(
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
                                                                     .animation("Meteor")
                                                                     .color(ColorContainer(0xFF, 0xFFFF))
-                                                                    .direction(Direction.FORWARD)
                                                                     .runCount(1)
                                                                     .section("met-1"))
 
@@ -81,7 +79,6 @@ class MeteorTest : StringSpec(
             val anim = ledStrip.animationManager.startAnimation(AnimationToRunParams()
                                                                     .animation("Meteor")
                                                                     .color(ColorContainer(0xFF, 0xFFFF))
-                                                                    .direction(Direction.BACKWARD)
                                                                     .runCount(1)
                                                                     .section("met-2"))
 

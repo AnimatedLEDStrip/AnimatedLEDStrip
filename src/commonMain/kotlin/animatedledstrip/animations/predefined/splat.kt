@@ -43,7 +43,6 @@ val splat = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.anyDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 15)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",

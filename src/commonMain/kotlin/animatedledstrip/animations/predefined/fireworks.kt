@@ -40,7 +40,6 @@ val fireworks = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = true,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay",
                                               "Delay between movements in the ripple animation",
                                               30),

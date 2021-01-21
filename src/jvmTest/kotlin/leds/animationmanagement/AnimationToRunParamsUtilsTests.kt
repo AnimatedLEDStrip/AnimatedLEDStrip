@@ -22,23 +22,19 @@
 
 package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.animations.Direction
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.test.distanceArb
 import animatedledstrip.test.locationArb
 import animatedledstrip.test.rotationArb
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.maps.shouldContainKey
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
-import io.kotest.property.Exhaustive
 import io.kotest.property.arbitrary.double
 import io.kotest.property.arbitrary.int
 import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
-import io.kotest.property.exhaustive.enum
 import kotlin.test.assertFailsWith
 
 class AnimationToRunParamsUtilsTests : StringSpec(
@@ -156,33 +152,6 @@ class AnimationToRunParamsUtilsTests : StringSpec(
             checkAll<Int> { r ->
                 testAnimation.runCount(r)
                 testAnimation.runCount shouldBe r
-            }
-        }
-
-        "set direction" {
-            val testAnimation = AnimationToRunParams()
-
-            testAnimation.direction shouldBe Direction.FORWARD
-
-            checkAll(Exhaustive.enum<Direction>()) { d ->
-                testAnimation.direction(d)
-                testAnimation.direction shouldBe d
-            }
-
-            testAnimation.direction('F')
-            testAnimation.direction shouldBe Direction.FORWARD
-
-            testAnimation.direction('B')
-            testAnimation.direction shouldBe Direction.BACKWARD
-
-            testAnimation.direction('f')
-            testAnimation.direction shouldBe Direction.FORWARD
-
-            testAnimation.direction('b')
-            testAnimation.direction shouldBe Direction.BACKWARD
-
-            shouldThrow<IllegalArgumentException> {
-                testAnimation.direction('G')
             }
         }
 

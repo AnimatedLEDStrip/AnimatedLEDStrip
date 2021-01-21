@@ -41,7 +41,6 @@ val alternate = DefinedAnimation(
         minimumColors = 2,
         unlimitedColors = true,
         dimensionality = Dimensionality.anyDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("alternationPeriod",
                                               "Delay in milliseconds between alternations",
                                               1000)),

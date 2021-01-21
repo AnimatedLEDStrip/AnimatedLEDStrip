@@ -79,7 +79,6 @@ val mergeSortParallel = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 50)),
     )
 ) { leds, params, scope ->
@@ -105,7 +104,6 @@ val mergeSortSequential = DefinedAnimation(
         minimumColors = 1,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between sorting movements", 25)),
     )
 ) { leds, params, scope ->

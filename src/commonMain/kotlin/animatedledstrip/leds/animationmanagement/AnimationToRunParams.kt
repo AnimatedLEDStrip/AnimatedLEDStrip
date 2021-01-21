@@ -45,7 +45,6 @@ import kotlinx.serialization.Serializable
  *   This is the section that ColorContainer blend preparation will be based upon.
  *   An empty string means the whole strip.
  * @property runCount The number of times the animation should be run. `-1` means until stopped.
- * @property direction The direction the animation will appear to move
  * @property intParams A map of integer parameters for the animation
  * @property doubleParams A map of double parameters for the animation
  * @property stringParams A map of string parameters for the animation
@@ -62,8 +61,6 @@ data class AnimationToRunParams(
     var id: String = "",
     var section: String = "",
     var runCount: Int = 0,
-    @Deprecated("Directional animations will be replaced by animations which can be rotated")
-    var direction: Direction = Direction.FORWARD,
     var intParams: MutableMap<String, Int> = mutableMapOf(),
     var doubleParams: MutableMap<String, Double> = mutableMapOf(),
     var stringParams: MutableMap<String, String> = mutableMapOf(),
@@ -164,7 +161,6 @@ data class AnimationToRunParams(
                                       id,
                                       section,
                                       calculatedRunCount,
-                                      direction,
                                       preparedIntParams,
                                       preparedDoubleParams,
                                       preparedStringParams,

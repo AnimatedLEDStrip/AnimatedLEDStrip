@@ -51,10 +51,9 @@ abstract class Animation {
      * @property name The name used to identify this animation
      * @property abbr The abbreviation that can be used to identify the animation
      * @property description A description of the animation
-     * @property signatureFile The name of the file that holds the signature of an example run of the animation
      * @property runCountDefault Default value for the `runCount` parameter
-     * @property minimumColors The number of required animatedledstrip.colors for this animation
-     * @property unlimitedColors Can this animation take an unlimited number of animatedledstrip.colors
+     * @property minimumColors The number of required colors for this animation
+     * @property unlimitedColors Can this animation take an unlimited number of colors
      * @property intParams A list of integer parameters the animation uses
      * @property doubleParams A list of double parameters the animation uses
      * @property locationParams A list of [Location] parameters the animation uses
@@ -72,8 +71,6 @@ abstract class Animation {
         val minimumColors: Int,
         val unlimitedColors: Boolean,
         val dimensionality: Set<Dimensionality>,
-        @Deprecated("Directional animations will be replaced by animations which can be rotated")
-        val directional: Boolean,
         val intParams: List<AnimationParameter<Int>> = listOf(),
         val doubleParams: List<AnimationParameter<Double>> = listOf(),
         val stringParams: List<AnimationParameter<String>> = listOf(),

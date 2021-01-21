@@ -38,7 +38,6 @@ val stackOverflow = DefinedAnimation(
         minimumColors = 2,
         unlimitedColors = false,
         dimensionality = Dimensionality.oneDimensional,
-        directional = false,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 10)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move along the X axis during each iteration of the animation",
