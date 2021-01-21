@@ -27,6 +27,7 @@ import animatedledstrip.communication.toUTF8String
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager
 import animatedledstrip.leds.sectionmanagement.Section
+import animatedledstrip.test.filteredStringArb
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
@@ -37,6 +38,8 @@ import io.kotest.property.Arb
 import io.kotest.property.Exhaustive
 import io.kotest.property.arbitrary.filter
 import io.kotest.property.arbitrary.int
+import io.kotest.property.arbitrary.list
+import io.kotest.property.arbitrary.string
 import io.kotest.property.checkAll
 import io.kotest.property.exhaustive.ints
 
@@ -54,8 +57,8 @@ class SectionTest : StringSpec(
             section.sections.shouldBeEmpty()
             section.subSections.shouldBeEmpty()
             section.name shouldBe ""
-            section.numLEDs shouldBe 1
-            section.pixels.shouldHaveSize(1)
+            section.numLEDs shouldBe 0
+            section.pixels.shouldHaveSize(0)
 
             shouldThrow<UninitializedPropertyAccessException> {
                 section.stripManager
@@ -64,21 +67,21 @@ class SectionTest : StringSpec(
 
         "get physical index" {
             checkAll(Exhaustive.ints(0 until 49)) { s ->
-                val section = LEDStripSectionManager(ledStrip).createSection("test$s", s, 49)
+                val section = LEDStripSectionManager(ledStrip).createSection("test:$s", s, 49)
 
                 checkAll(Exhaustive.ints(0 until 49 - s)) { p ->
                     section.getPhysicalIndex(p) shouldBe p + s
                 }
 
                 checkAll(Exhaustive.ints(0 until 49 - s)) { s2 ->
-                    val section2 = section.createSection("test$s$s2", s2, section.pixels.last())
+                    val section2 = section.createSection("test:$s:$s2", s2, section.pixels.lastIndex)
 
                     checkAll(Exhaustive.ints(0 until 49 - s - s2)) { p ->
                         section2.getPhysicalIndex(p) shouldBe p + s + s2
                     }
                 }
 
-                checkAll(Arb.int().filter { it !in section.pixels }) { p ->
+                checkAll(Arb.int().filter { it !in section.pixels.indices }) { p ->
                     shouldThrow<IllegalArgumentException> {
                         section.getPhysicalIndex(p)
                     }
@@ -98,19 +101,21 @@ class SectionTest : StringSpec(
         }
 
         "encode JSON" {
-            checkAll<String, Int, Int>(100) { n, s, e ->
-                if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
-                Section(n, (s..e).toList()).jsonString() shouldBe
-                        """{"type":"Section","name":"$n","startPixel":$s,"endPixel":$e};;;"""
+            checkAll(100, filteredStringArb, Arb.list(Arb.int(0..100000), 1..5000)) { n, p ->
+                Section(n, p).jsonString() shouldBe
+                        """{"type":"Section","name":"$n","pixels":${
+                            p.toString().replace(" ", "")
+                        },"parentSectionName":""};;;"""
             }
         }
 
         "decode JSON" {
-            checkAll<String, Int, Int>(100) { n, s, e ->
-                if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
-                val json = """{"type":"Section","name":"$n","startPixel":$s,"endPixel":$e};;;"""
+            checkAll(100, filteredStringArb, Arb.list(Arb.int(0..100000), 1..5000)) { n, p ->
+                val json = """{"type":"Section","name":"$n","pixels":${
+                    p.toString().replace(" ", "")
+                },"parentSectionName":""};;;"""
 
-                val correctData = Section(n, (s..e).toList())
+                val correctData = Section(n, p)
 
                 val decodedData = json.decodeJson() as Section
                 decodedData.name shouldBe correctData.name
@@ -120,9 +125,8 @@ class SectionTest : StringSpec(
         }
 
         "encode and decode JSON" {
-            checkAll<String, Int, Int>(100) { n, s, e ->
-                if (s > e || e - s > 1000 || n.contains("\"") || n.contains("\\")) return@checkAll
-                val sec1 = Section(n, (s..e).toList())
+            checkAll(100, Arb.string(), Arb.list(Arb.int(0..100000), 1..5000)) { n, p ->
+                val sec1 = Section(n, p)
                 val secBytes = sec1.json()
 
                 val sec2 = secBytes.toUTF8String().decodeJson() as Section

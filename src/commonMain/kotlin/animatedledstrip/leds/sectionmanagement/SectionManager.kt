@@ -76,7 +76,10 @@ interface SectionManager {
 
         val parentSection = getSection(parentSectionName)
 
-        val newSection = Section(name, pixels.map { this.pixels[it] }, stripManager, parentSection)
+        val newSection = Section(name,
+                                 pixels.map { this.pixels[it] }, // Allows us to directly find the physical index
+                                 stripManager,
+                                 parentSection)
         sections[name] = newSection
         stripManager.newSectionCallback?.invoke(newSection)
         return newSection
