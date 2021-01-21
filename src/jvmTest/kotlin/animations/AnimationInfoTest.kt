@@ -44,6 +44,7 @@ class AnimationInfoTest : StringSpec(
             val locationParams: List<AnimationParameter<Location>>,
             val distanceParams: List<AnimationParameter<Distance>>,
             val rotationParams: List<AnimationParameter<Rotation>>,
+            val equationParams: List<AnimationParameter<Equation>>,
         )
 
         val animParamsArb: Arb<ArbParams> =
@@ -52,8 +53,9 @@ class AnimationInfoTest : StringSpec(
                      Arb.list(animStringParamArb, 0..3),
                      Arb.list(animLocationParamArb, 0..3),
                      Arb.list(animDistanceParamArb, 0..3),
-                     Arb.list(animRotationParamArb, 0..3)) { i, d, s, l, ds, r ->
-                ArbParams(i, d, s, l, ds, r)
+                     Arb.list(animRotationParamArb, 0..3),
+                     Arb.list(animEquationParamArb, 0..3)) { i, d, s, l, ds, r, e ->
+                ArbParams(i, d, s, l, ds, r, e)
             }
 
         data class ArbInfo(
@@ -98,7 +100,7 @@ class AnimationInfoTest : StringSpec(
                                         ap.locationParams,
                                         ap.distanceParams,
                                         ap.rotationParams,
-                                        listOf())
+                                        ap.equationParams)
                     .jsonString() shouldBe """{"type":"AnimationInfo",""" +
                         """"name":"${ai.name}",""" +
                         """"abbr":"${ai.abbr}",""" +
@@ -114,7 +116,7 @@ class AnimationInfoTest : StringSpec(
                         """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                        """"equationParams":[]};;;"""
+                        """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}];;;"""
             }
         }
 
@@ -136,7 +138,7 @@ class AnimationInfoTest : StringSpec(
                     """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                    """"equationParams":[]};;;"""
+                    """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}];;;"""
 
                 val correctData = Animation.AnimationInfo(name = ai.name,
                                                           abbr = ai.abbr,
@@ -152,7 +154,7 @@ class AnimationInfoTest : StringSpec(
                                                           locationParams = ap.locationParams,
                                                           distanceParams = ap.distanceParams,
                                                           rotationParams = ap.rotationParams,
-                                                          equationParams = listOf())
+                                                          equationParams = ap.equationParams)
 
                 json.decodeJson() as Animation.AnimationInfo shouldBe correctData
             }
@@ -174,7 +176,7 @@ class AnimationInfoTest : StringSpec(
                                                     locationParams = ap.locationParams,
                                                     distanceParams = ap.distanceParams,
                                                     rotationParams = ap.rotationParams,
-                                                    equationParams = listOf())
+                                                    equationParams = ap.equationParams)
                 val infoBytes = info1.json()
 
                 val info2 = infoBytes.toUTF8String().decodeJson() as Animation.AnimationInfo
