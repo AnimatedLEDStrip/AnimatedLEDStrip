@@ -37,7 +37,7 @@ class MeteorTest : StringSpec(
 
         afterSpec { ledStrip.renderer.close() }
 
-        "Meteor Forward" {
+        "Meteor Forward".config(enabled = false) {
             mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
                         "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
                         "animatedledstrip.leds.colormanagement.SetColorUtilsKt",
@@ -70,7 +70,7 @@ class MeteorTest : StringSpec(
             }
         }
 
-        "Meteor Backward" {
+        "Meteor Backward".config(enabled = false) {
             mockkStatic("animatedledstrip.leds.animationmanagement.AnimationUtilsKt",
                         "animatedledstrip.leds.animationmanagement.AnimationManagementUtilsKt",
                         "animatedledstrip.leds.colormanagement.SetColorUtilsKt",

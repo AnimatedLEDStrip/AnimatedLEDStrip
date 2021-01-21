@@ -47,7 +47,7 @@ class CatToyToColorTest : StringSpec(
 
         afterSpec { ledStrip.renderer.close() }
 
-        "Cat Toy to Color" {
+        "Cat Toy to Color".config(enabled = false) {
             val section = ledStrip.sectionManager.createSection("ctc", 0, 9)
 
             every { any<AnimationManager>().shuffledIndices() } returns listOf(1, 9, 4, 2, 7, 0, 3, 6, 8, 5)

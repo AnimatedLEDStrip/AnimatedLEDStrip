@@ -33,7 +33,7 @@ import io.kotest.property.checkAll
 class EmulatedWS281xTest : StringSpec(
     {
         "strip info constructor" {
-            checkAll(Arb.int(0..50000)) { n ->
+            checkAll(15, Arb.int(0..50000)) { n ->
                 val newEmulation = EmulatedWS281x(StripInfo(numLEDs = n))
                 newEmulation.numLEDs shouldBe n
                 newEmulation.ledArray.size shouldBe n
@@ -41,7 +41,7 @@ class EmulatedWS281xTest : StringSpec(
         }
 
         "num LEDs constructor" {
-            checkAll(Arb.int(0..50000)) { n ->
+            checkAll(15, Arb.int(0..50000)) { n ->
                 val newEmulation = EmulatedWS281x(n)
                 newEmulation.numLEDs shouldBe n
                 newEmulation.ledArray.size shouldBe n
