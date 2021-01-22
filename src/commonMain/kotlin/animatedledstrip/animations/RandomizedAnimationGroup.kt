@@ -23,10 +23,7 @@
 package animatedledstrip.animations
 
 import animatedledstrip.communication.SendableData
-import animatedledstrip.leds.animationmanagement.AnimationManager
-import animatedledstrip.leds.animationmanagement.RunningAnimationParams
-import animatedledstrip.leds.animationmanagement.findAnimation
-import animatedledstrip.leds.animationmanagement.runSequential
+import animatedledstrip.leds.animationmanagement.*
 import animatedledstrip.leds.sectionmanagement.Section
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -57,12 +54,19 @@ class RandomizedAnimationGroup(
 
         leds.apply {
             if (animDuration < 0)
-                runSequential(prepareAnimationToRunParams(params, nextAnim.info, nextAnimIndex), scope)
+                runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
+                                                                                  nextAnim.info,
+                                                                                  nextAnimIndex),
+                                                      scope,
+                                                      sectionManager))
             else
                 scope.launch {
                     withTimeoutOrNull(animDuration) {
-                        runSequential(prepareAnimationToRunParams(params, nextAnim.info, nextAnimIndex),
-                                      scope = this)
+                        runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
+                                                                                          nextAnim.info,
+                                                                                          nextAnimIndex),
+                                                              this,
+                                                              sectionManager))
                     }
                 }.join()
         }

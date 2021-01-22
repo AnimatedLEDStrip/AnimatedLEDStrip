@@ -26,19 +26,20 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.leds.animationmanagement.SubAnimationToRunParams
 import animatedledstrip.leds.animationmanagement.runSequential
 import kotlinx.coroutines.delay
 
 val alterFade = DefinedAnimation(
     Animation.AnimationInfo(
-        "AlterFade",
-        "ALF",
-        "Strip fades* between each color in colors, " +
-        "delaying `alternationPeriod` milliseconds between changes.",
-        -1,
-        2,
-        true,
-        Dimensionality.anyDimensional,
+        name = "AlterFade",
+        abbr = "ALF",
+        description = "Strip fades between each color in colors, " +
+                      "delaying `alternationPeriod` milliseconds between changes.",
+        runCountDefault = -1,
+        minimumColors = 2,
+        unlimitedColors = true,
+        dimensionality = Dimensionality.anyDimensional,
         intParams = listOf(AnimationParameter("alternationPeriod",
                                               "Delay in milliseconds between alternations",
                                               1000)),
@@ -48,9 +49,11 @@ val alterFade = DefinedAnimation(
     val alternationPeriod = params.intParams.getValue("alternationPeriod").toLong()
 
     leds.apply {
-        runSequential(params.withModifications(animation = "Fade to Color",
-                                               colors = mutableListOf(params.colors[nextColorIndex])),
-                      scope = scope)
+        runSequential(SubAnimationToRunParams(
+            params.withModifications(animation = "Fade to Color",
+                                     colors = mutableListOf(params.colors[nextColorIndex])),
+            scope,
+            sectionManager))
     }
 
     delay(alternationPeriod)

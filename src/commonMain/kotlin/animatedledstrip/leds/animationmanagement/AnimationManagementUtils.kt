@@ -25,9 +25,7 @@ package animatedledstrip.leds.animationmanagement
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.prepareAnimIdentifier
 import animatedledstrip.leds.sectionmanagement.Section
-import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.Logger
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
 
@@ -78,23 +76,20 @@ fun AnimationManager.endAnimation(endAnimation: EndAnimation): Unit =
 /**
  * Run a new subanimation in a child coroutine
  *
- * @param animation Parameters for the animation
- * @param section The Section this animation should run on
- * @param runCount How many times the animation should run
+ * @param params Parameters for the animation
  * @return The now-running animation
  */
-fun AnimationManager.runParallel(
-    animation: AnimationToRunParams,
-    section: SectionManager = sectionManager,
-    runCount: Int = 1,
-): RunningAnimation {
-    val params = animation.copy(runCount = runCount, section = section.name).prepare(section as Section,
-                                                                                     sectionManager as Section)
+fun AnimationManager.runParallel(params: SubAnimationToRunParams): RunningAnimation {
+    val animParams: RunningAnimationParams =
+        params.animationParams.copy(runCount = params.runCount,
+                                    section = params.section.name)
+            .prepare(params.section as Section,
+                     sectionManager as Section)
 
     return RunningAnimation(
-        params,
-        animationScope,
-        section,
+        animParams,
+        params.scope,
+        params.section,
         this,
     )
 }
@@ -105,10 +100,10 @@ fun AnimationManager.runParallel(
  *
  * @param animations Parameters for the animations
  */
-suspend fun AnimationManager.runParallelAndJoin(vararg animations: Pair<AnimationToRunParams, SectionManager>) {
+suspend fun AnimationManager.runParallelAndJoin(vararg animations: SubAnimationToRunParams) {
     val jobs = mutableListOf<Job>()
     animations.forEach {
-        jobs += runParallel(it.first, it.second).job
+        jobs += runParallel(it).job
     }
     jobs.joinAll()
 }
@@ -117,26 +112,9 @@ suspend fun AnimationManager.runParallelAndJoin(vararg animations: Pair<Animatio
  * Run a new animation in a child coroutine and wait for it
  * to complete before returning
  *
- * @param animation Parameters for the animation
- * @param section The Section this animation should run on
- * @param runCount How many times the animation should run
+ * @param params Parameters for the animation
  */
-suspend fun AnimationManager.runSequential(
-    animation: AnimationToRunParams,
-    scope: CoroutineScope,
-    section: SectionManager = sectionManager,
-    runCount: Int = 1,
-) {
-    val params = animation.copy(runCount = runCount, section = section.name).prepare(section as Section,
-                                                                                     sectionManager as Section)
-
-    RunningAnimation(
-        params,
-        scope,
-        section,
-        this,
-    ).join()
-}
+suspend fun AnimationManager.runSequential(params: SubAnimationToRunParams): Unit = runParallel(params).join()
 
 fun Section.findAnimation(animId: String): Animation =
     this.findAnimationOrNull(animId)!!

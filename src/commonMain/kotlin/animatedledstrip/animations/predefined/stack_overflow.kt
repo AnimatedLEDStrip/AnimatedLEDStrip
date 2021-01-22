@@ -23,6 +23,7 @@
 package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
+import animatedledstrip.leds.animationmanagement.SubAnimationToRunParams
 import animatedledstrip.leds.animationmanagement.runParallelAndJoin
 
 val stackOverflow = DefinedAnimation(
@@ -30,7 +31,7 @@ val stackOverflow = DefinedAnimation(
         name = "Stack Overflow",
         abbr = "STO",
         description = "Two [Stack](Stack) animations are started from opposite " +
-                      "ends of the strip.\n" +
+                      "ends of a line through space.\n" +
                       "The stacks meet in the middle and 'overflow' their half.\n" +
                       "And yes, the pun was very much intended.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
@@ -52,18 +53,22 @@ val stackOverflow = DefinedAnimation(
         equationParams = listOf(AnimationParameter("lineEquation",
                                                    "The equation representing the line the the pixel will follow")),
     )
-) { leds, params, _ ->
+) { leds, params, scope ->
     leds.apply {
         runParallelAndJoin(
-            Pair(
-                params.withModifications(animation = "Stack", colors = listOf(params.colors[0])),
+            SubAnimationToRunParams(
+                params.withModifications(animation = "Stack",
+                                         colors = listOf(params.colors[0])),
+                scope,
                 sectionManager,
             ),
-            Pair(
-                params.withModifications(animation = "Stack",
-                                         colors = listOf(params.colors[1]),
-                                         doubleParamMods = mapOf("movementPerIteration" to -params.doubleParams.getValue(
-                                             "movementPerIteration"))),
+            SubAnimationToRunParams(
+                params.withModifications(
+                    animation = "Stack",
+                    colors = listOf(params.colors[1]),
+                    doubleParamMods = mapOf("movementPerIteration" to -params.doubleParams.getValue("movementPerIteration"))
+                ),
+                scope,
                 sectionManager,
             )
         )
