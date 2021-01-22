@@ -24,6 +24,7 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
+import animatedledstrip.leds.animationmanagement.SubAnimationToRunParams
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.leds.animationmanagement.runParallel
 import kotlinx.coroutines.delay
@@ -68,13 +69,16 @@ val pixelMarathon = DefinedAnimation(
         equationParams = listOf(AnimationParameter("lineEquation",
                                                    "The equation representing the line the the pixel will follow")),
     )
-) { leds, params, _ ->
+) { leds, params, scope ->
     val color = params.colors.random()
     val maxInterAnimationDelay = params.intParams.getValue("maxInterAnimationDelay")
 
     leds.apply {
         if (color.isNotEmpty()) {
-            runParallel(params.withModifications(animation = "Pixel Run", colors = mutableListOf(color)))
+            runParallel(SubAnimationToRunParams(params.withModifications(animation = "Pixel Run",
+                                                                         colors = mutableListOf(color)),
+                                                scope,
+                                                sectionManager))
             delay((randomDouble() * maxInterAnimationDelay).toLong())
         }
     }

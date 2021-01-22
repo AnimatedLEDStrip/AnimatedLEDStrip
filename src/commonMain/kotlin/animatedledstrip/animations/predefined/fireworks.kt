@@ -24,6 +24,7 @@ package animatedledstrip.animations.predefined
 
 import animatedledstrip.animations.*
 import animatedledstrip.colors.isNotEmpty
+import animatedledstrip.leds.animationmanagement.SubAnimationToRunParams
 import animatedledstrip.leds.animationmanagement.runParallel
 import animatedledstrip.leds.colormanagement.randomColor
 import animatedledstrip.leds.locationmanagement.pixelLocationManager
@@ -53,18 +54,21 @@ val fireworks = DefinedAnimation(
                                                    "Distance each firework should travel",
                                                    PercentDistance(0.1, 0.1, 0.1))),
     )
-) { leds, params, _ ->
+) { leds, params, scope ->
     val color = params.randomColor()
     val interAnimationDelay = params.intParams.getValue("interAnimationDelay").toLong()
 
     leds.apply {
         if (color.isNotEmpty()) {
-            runParallel(params.withModifications(
-                animation = "Ripple",
-                colors = listOf(color),
-                locationParamMods = mapOf("center" to pixelLocationManager.randomLocation()),
-                distanceParamMods = mapOf("distance" to params.distanceParams.getValue("distance") / 2)
-            ))
+            runParallel(SubAnimationToRunParams(
+                params.withModifications(
+                    animation = "Ripple",
+                    colors = listOf(color),
+                    locationParamMods = mapOf("center" to pixelLocationManager.randomLocation()),
+                    distanceParamMods = mapOf("distance" to params.distanceParams.getValue("distance") / 2)
+                ),
+                scope,
+                sectionManager))
             delay(interAnimationDelay)
         }
     }
