@@ -48,7 +48,6 @@ definedAnimations.forEach {
     file.append("|minimum colors|`${info.minimumColors}`|\n")
     file.append("|unlimited colors|`${info.unlimitedColors}`|\n")
     file.append("|dimensionality|`${info.dimensionality}`|\n")
-    file.append("|directional|`${info.directional}`|\n")
     file.append("\n")
     file.append("|Parameter|Type|Default Value|Description|\n")
     file.append("|:-:|:-:|:-:|:-:|\n")
