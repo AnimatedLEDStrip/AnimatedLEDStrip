@@ -53,7 +53,7 @@ jobs:
       script: skip
       deploy:
         - provider: script
-          script: ./gradlew publish --stacktrace -i
+          script: ./gradlew publish --stacktrace
 
     - stage: deploy docs
       install: skip
@@ -65,7 +65,7 @@ jobs:
         - git add -f dokka
       deploy:
         - provider: pages
-          skip_cleanup: true
+          cleanup: false
           github_token: $GITHUB_TOKEN
           keep_history: true
           verbose: true
@@ -92,7 +92,7 @@ jobs:
       deploy:
         - provider: script
           script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
-          skip_cleanup: true
+          cleanup: false
           on:
             all_branches: true
             condition: $DEPLOY_DOCS

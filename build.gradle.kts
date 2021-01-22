@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre2-SNAPSHOT"
+version = "1.0.0-pre2"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -123,7 +123,8 @@ tasks.named<Test>("jvmTest") {
         showExceptions = true
         showStandardStreams = true
         events = setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                       org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED)
+                       org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+                       org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
     systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
