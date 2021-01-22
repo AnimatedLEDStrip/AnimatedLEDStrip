@@ -72,10 +72,7 @@ val planeRun = DefinedAnimation(
                 setPixelTemporaryColor(pixel, color)
             for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels)
                 revertPixel(pixel)
-//            setPixelTemporaryColors(pixelsToModifyPerIteration[i], color)
-//            revertPixels(pixelsToModifyPerIteration[(i - 1 + pixelsToModifyPerIteration.size) % pixelsToModifyPerIteration.size])
             delay(interMovementDelay)
         }
-//        revertPixels(pixelsToModifyPerIteration[pixelsToModifyPerIteration.size - 1].revertPixels)
     }
 }
