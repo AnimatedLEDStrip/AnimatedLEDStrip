@@ -48,7 +48,7 @@ val pixelMarathon = DefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
-        dimensionality = Dimensionality.oneDimensional,
+        dimensionality = Dimensionality.anyDimensional,
         intParams = listOf(AnimationParameter("interMovementDelay",
                                               "Delay between movements in the pixel run animations",
                                               8),
@@ -74,7 +74,7 @@ val pixelMarathon = DefinedAnimation(
 
     leds.apply {
         if (color.isNotEmpty()) {
-            runParallel(params.withModifications(colors = mutableListOf(color)))
+            runParallel(params.withModifications(animation = "Pixel Run", colors = mutableListOf(color)))
             delay((randomDouble() * maxInterAnimationDelay).toLong())
         }
     }

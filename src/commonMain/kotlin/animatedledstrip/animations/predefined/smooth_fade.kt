@@ -38,7 +38,7 @@ val smoothFade = DefinedAnimation(
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,
-        dimensionality = Dimensionality.oneDimensional,
+        dimensionality = Dimensionality.anyDimensional,
         intParams = listOf(AnimationParameter("interColorChangeDelay", "Delay between color changes", 50),
                            AnimationParameter("colorsToFadeThrough",
                                               "Number of colors to fade through (used to prepare the ColorContainer)",

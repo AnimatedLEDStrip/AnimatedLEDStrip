@@ -38,7 +38,7 @@ val runwayLightsToColor = DefinedAnimation(
         runCountDefault = 1,
         minimumColors = 1,
         unlimitedColors = false,
-        dimensionality = Dimensionality.oneDimensional,
+        dimensionality = Dimensionality.anyDimensional,
         intParams = listOf(AnimationParameter("interMovementDelay", "Delay between movements in the animation", 150)),
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move along the X axis during each iteration of the animation",

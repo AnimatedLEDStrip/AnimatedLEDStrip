@@ -65,7 +65,7 @@ jobs:
         - git add -f dokka
       deploy:
         - provider: pages
-          cleanup: false
+          skip_cleanup: true
           github_token: $GITHUB_TOKEN
           keep_history: true
           verbose: true
@@ -92,7 +92,7 @@ jobs:
       deploy:
         - provider: script
           script: git push -u https://maxnz:$GITHUB_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
-          cleanup: false
+          skip_cleanup: true
           on:
             all_branches: true
             condition: $DEPLOY_DOCS
