@@ -35,10 +35,16 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("RandomizedAnimationGroup")
 class RandomizedAnimationGroup(
-    val groupInfo: AnimationInfo,
+    override val groupInfo: AnimationInfo,
     val animationList: List<String>,
-) : Animation(), SendableData {
-    override val info: AnimationInfo = prepareGroupParameters(groupInfo, animationList)
+) : AnimationGroup(), SendableData {
+
+    override lateinit var info: AnimationInfo
+
+    constructor(unpreparedAnim: RandomizedAnimationGroup, animationManager: LEDStripAnimationManager)
+            : this(unpreparedAnim.groupInfo, unpreparedAnim.animationList) {
+        info = prepareGroupParameters(animationManager, groupInfo, animationList)
+    }
 
     override suspend fun runAnimation(
         leds: AnimationManager,

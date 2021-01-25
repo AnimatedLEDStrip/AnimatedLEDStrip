@@ -22,7 +22,6 @@
 
 package animatedledstrip.leds.stripmanagement
 
-import animatedledstrip.animations.definedAnimationNames
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.locationmanagement.Location
 import kotlinx.serialization.SerialName
@@ -58,8 +57,4 @@ data class StripInfo(
     val is2DSupported: Boolean = false,
     val is3DSupported: Boolean = false,
     val ledLocations: List<Location>? = null,
-) : SendableData {
-
-    val supportedAnimations: List<String>
-        get() = definedAnimationNames
-}
+) : SendableData
