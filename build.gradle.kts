@@ -55,16 +55,16 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
-//    js(LEGACY) {
-//        browser {
-//            testTask {
-//                useKarma {
-//                    useChromeHeadless()
-//                    webpackConfig.cssSupport.enabled = true
-//                }
-//            }
-//        }
-//    }
+    js(LEGACY) {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                    webpackConfig.cssSupport.enabled = true
+                }
+            }
+        }
+    }
 //    val hostOs = System.getProperty("os.name")
 //    val isMingwX64 = hostOs.startsWith("Windows")
 //    val nativeTarget = when {
