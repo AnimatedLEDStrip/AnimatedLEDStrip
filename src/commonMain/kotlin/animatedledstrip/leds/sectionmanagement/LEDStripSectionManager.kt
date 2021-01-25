@@ -53,6 +53,7 @@ class LEDStripSectionManager(override val stripManager: LEDStrip) : SectionManag
 
     init {
         sections[""] = fullStripSection
+        sections["fullStrip"] = fullStripSection
     }
 
     /**
