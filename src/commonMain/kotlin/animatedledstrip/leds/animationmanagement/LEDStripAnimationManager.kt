@@ -22,11 +22,9 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.Animation
-import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.definedAnimations
-import animatedledstrip.animations.definedAnimationsByAbbr
+import animatedledstrip.animations.*
 import animatedledstrip.leds.sectionmanagement.SectionManager
+import animatedledstrip.utils.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.GlobalScope
 
@@ -45,17 +43,49 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
     override val animationScope: CoroutineScope
         get() = GlobalScope
 
-    val supportedAnimations: MutableMap<String, Animation> =
-        definedAnimations.filter {
-            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
-            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
-            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
-        }.toMutableMap()
+    val supportedAnimations: MutableMap<String, Animation> = mutableMapOf()
+    val supportedAnimationsByAbbr: MutableMap<String, Animation> = mutableMapOf()
 
-    val supportedAnimationsByAbbr: MutableMap<String, Animation> =
-        definedAnimationsByAbbr.filter {
-            (it.value.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
-            (it.value.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
-            (it.value.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
-        }.toMutableMap()
+    init {
+        predefinedAnimations.filter {
+            (it.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
+            (it.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
+            (it.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
+        }.forEach { addNewAnimation(it) }
+
+        predefinedGroups.filter {
+            (it.groupInfo.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
+            (it.groupInfo.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
+            (it.groupInfo.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
+        }.forEach { addNewAnimation(it) }
+    }
+
+    fun findAnimation(animId: String): Animation =
+        this.findAnimationOrNull(animId)!!
+
+    fun findAnimationOrNull(animId: String): Animation? =
+        supportedAnimations[prepareAnimIdentifier(animId)]
+        ?: supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
+
+    fun addNewAnimation(anim: Animation) {
+        val preparedAnim = when (anim) {
+            is OrderedAnimationGroup ->
+                OrderedAnimationGroup(anim, this)
+            is RandomizedAnimationGroup ->
+                RandomizedAnimationGroup(anim, this)
+            else -> anim
+        }
+        if (supportedAnimations.containsKey(prepareAnimIdentifier(preparedAnim.info.name))) {
+            Logger.e { "Animation ${preparedAnim.info.name} already defined" }
+            return
+        }
+        if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(preparedAnim.info.abbr))) {
+            Logger.e { "Animation with abbreviation ${preparedAnim.info.abbr} already defined" }
+            return
+        }
+
+        supportedAnimations[prepareAnimIdentifier(preparedAnim.info.name)] = preparedAnim
+        supportedAnimationsByAbbr[prepareAnimIdentifier(preparedAnim.info.abbr)] = preparedAnim
+        Logger.d { "Added animation ${preparedAnim.info.name}" }
+    }
 }

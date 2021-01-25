@@ -23,11 +23,16 @@
 package animatedledstrip.animations
 
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
+import animatedledstrip.leds.animationmanagement.LEDStripAnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.utils.Logger
 
-fun prepareGroupParameters(groupInfo: Animation.AnimationInfo, animationList: List<String>): Animation.AnimationInfo {
+fun prepareGroupParameters(
+    manager: LEDStripAnimationManager,
+    groupInfo: Animation.AnimationInfo,
+    animationList: List<String>,
+): Animation.AnimationInfo {
     val intParams: MutableList<AnimationParameter<Int>> = mutableListOf()
     val doubleParams: MutableList<AnimationParameter<Double>> = mutableListOf()
     val stringParams: MutableList<AnimationParameter<String>> = mutableListOf()
@@ -37,7 +42,7 @@ fun prepareGroupParameters(groupInfo: Animation.AnimationInfo, animationList: Li
 
     var animCount = 0
     animationList.forEach { n ->
-        findAnimationOrNull(n)?.apply {
+        manager.findAnimationOrNull(n)?.apply {
             intParams.add(AnimationParameter("postAnimationDelay-${this.info.name} ($animCount)",
                                              "Delay after this animation before the next animation starts",
                                              1000))

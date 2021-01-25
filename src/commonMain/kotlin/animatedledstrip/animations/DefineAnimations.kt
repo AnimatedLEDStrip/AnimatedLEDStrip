@@ -78,11 +78,11 @@ val predefinedAnimations: List<Animation> = listOf(
     stackOverflow,
     wave,
     wipe,
-).onEach { addNewAnimation(it) }
+)
 
-val predefinedGroups: List<Animation> = listOf(
+val predefinedGroups: List<AnimationGroup> = listOf(
     sortingAnimations,
-).onEach { addNewAnimation(it) }
+)
 
 fun prepareAnimIdentifier(name: String): String =
     name.removeWhitespace()
