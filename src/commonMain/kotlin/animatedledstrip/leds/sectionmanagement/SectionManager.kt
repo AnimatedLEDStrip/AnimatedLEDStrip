@@ -104,6 +104,8 @@ interface SectionManager {
      */
     fun getSection(sectionName: String): Section
 
+    fun getSectionOrNull(sectionName: String): Section? = sections[sectionName]
+
     /**
      * @return A subsection for a subanimation running on a part of this section.
      * If the subsection already exists, reuse it, otherwise create a new one.
