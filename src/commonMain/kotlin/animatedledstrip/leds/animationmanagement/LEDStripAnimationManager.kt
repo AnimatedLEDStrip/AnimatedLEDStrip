@@ -23,6 +23,8 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.*
+import animatedledstrip.animations.groups.AnimationGroup
+import animatedledstrip.animations.groups.prepareGroupParameters
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.Logger
 import kotlinx.coroutines.CoroutineScope
@@ -57,7 +59,7 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
             (it.groupInfo.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
             (it.groupInfo.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
             (it.groupInfo.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
-        }.forEach { addNewAnimation(it) }
+        }.forEach { addNewAnimation(prepareGroupAnimation(it)) }
     }
 
     fun findAnimation(animId: String): Animation =
@@ -67,25 +69,24 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
         supportedAnimations[prepareAnimIdentifier(animId)]
         ?: supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
+    fun prepareGroupAnimation(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup =
+        AnimationGroup(
+            prepareGroupParameters(this, anim.groupInfo, anim.animationList),
+            anim.groupType,
+            anim.animationList)
+
     fun addNewAnimation(anim: Animation) {
-        val preparedAnim = when (anim) {
-            is OrderedAnimationGroup ->
-                OrderedAnimationGroup(anim, this)
-            is RandomizedAnimationGroup ->
-                RandomizedAnimationGroup(anim, this)
-            else -> anim
-        }
-        if (supportedAnimations.containsKey(prepareAnimIdentifier(preparedAnim.info.name))) {
-            Logger.e { "Animation ${preparedAnim.info.name} already defined" }
+        if (supportedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
+            Logger.e { "Animation ${anim.info.name} already defined" }
             return
         }
-        if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(preparedAnim.info.abbr))) {
-            Logger.e { "Animation with abbreviation ${preparedAnim.info.abbr} already defined" }
+        if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
+            Logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
             return
         }
 
-        supportedAnimations[prepareAnimIdentifier(preparedAnim.info.name)] = preparedAnim
-        supportedAnimationsByAbbr[prepareAnimIdentifier(preparedAnim.info.abbr)] = preparedAnim
-        Logger.d { "Added animation ${preparedAnim.info.name}" }
+        supportedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
+        supportedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
+        Logger.d { "Added animation ${anim.info.name}" }
     }
 }

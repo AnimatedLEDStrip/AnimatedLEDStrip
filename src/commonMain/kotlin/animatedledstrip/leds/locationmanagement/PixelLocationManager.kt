@@ -22,8 +22,8 @@
 
 package animatedledstrip.leds.locationmanagement
 
-import animatedledstrip.animations.AbsoluteDistance
-import animatedledstrip.animations.RadiansRotation
+import animatedledstrip.animations.parameters.AbsoluteDistance
+import animatedledstrip.animations.parameters.RadiansRotation
 import animatedledstrip.leds.animationmanagement.randomDouble
 import animatedledstrip.utils.Logger
 import kotlin.math.abs

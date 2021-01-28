@@ -22,7 +22,7 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.PercentDistance
+import animatedledstrip.animations.parameters.PercentDistance
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb

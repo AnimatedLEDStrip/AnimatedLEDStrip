@@ -20,8 +20,12 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.groups
 
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.Rotation
+import animatedledstrip.animations.parameters.Distance
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.LEDStripAnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams

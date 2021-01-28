@@ -22,7 +22,11 @@
 
 package animatedledstrip.animations.predefined
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.DefinedAnimation
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.AbsoluteDistance
 import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor

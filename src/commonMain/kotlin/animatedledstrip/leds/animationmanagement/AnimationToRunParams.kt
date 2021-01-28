@@ -22,7 +22,8 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Rotation
+import animatedledstrip.animations.parameters.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer

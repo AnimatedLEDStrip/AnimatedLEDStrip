@@ -22,7 +22,7 @@
 
 package animatedledstrip.leds.locationmanagement
 
-import animatedledstrip.animations.AbsoluteDistance
+import animatedledstrip.animations.parameters.AbsoluteDistance
 import kotlinx.serialization.Serializable
 import kotlin.math.pow
 

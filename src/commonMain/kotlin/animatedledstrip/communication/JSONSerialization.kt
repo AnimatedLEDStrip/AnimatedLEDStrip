@@ -22,7 +22,9 @@
 
 package animatedledstrip.communication
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.groups.AnimationGroup
+import animatedledstrip.animations.parameters.*
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
@@ -44,6 +46,7 @@ const val DELIMITER = ";;;"
 
 private val serializerModule: SerializersModule = SerializersModule {
     polymorphic(SendableData::class) {
+        subclass(AnimationGroup::class)
         subclass(Animation.AnimationInfo::class)
         subclass(AnimationToRunParams::class)
         subclass(ClientParams::class)
@@ -51,8 +54,7 @@ private val serializerModule: SerializersModule = SerializersModule {
         subclass(CurrentStripColor::class)
         subclass(EndAnimation::class)
         subclass(Message::class)
-        subclass(OrderedAnimationGroup::class)
-        subclass(RandomizedAnimationGroup::class)
+        subclass(AnimationGroup.NewAnimationGroupInfo::class)
         subclass(RunningAnimationParams::class)
         subclass(Section::class)
         subclass(StripInfo::class)

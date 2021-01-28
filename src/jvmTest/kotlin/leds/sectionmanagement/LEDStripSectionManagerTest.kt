@@ -41,8 +41,9 @@ class LEDStripSectionManagerTest : StringSpec(
         "construction" {
             val manager = LEDStripSectionManager(ledStrip)
 
-            manager.sections.shouldHaveSize(1)
-            manager.sections.shouldContainExactly(mapOf("" to manager.fullStripSection))
+            manager.sections.shouldHaveSize(2)
+            manager.sections.shouldContainExactly(mapOf("" to manager.fullStripSection,
+                                                        "fullStrip" to manager.fullStripSection))
             shouldThrow<IllegalStateException> {
                 manager.subSections
             }

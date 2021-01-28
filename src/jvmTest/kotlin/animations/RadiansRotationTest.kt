@@ -22,8 +22,8 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.RadiansRotation
-import animatedledstrip.animations.RotationAxis
+import animatedledstrip.animations.parameters.RadiansRotation
+import animatedledstrip.animations.parameters.RotationAxis
 import animatedledstrip.test.largeDoubleArb
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactly

@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
 interface Rotation {
     val xRotation: Double
