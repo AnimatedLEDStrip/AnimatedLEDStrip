@@ -101,7 +101,7 @@ kotlin {
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")
             }
         }
-//        val jsMain by getting
+        val jsMain by getting
 //        val jsTest by getting {
 //            dependencies {
 //                implementation(kotlin("test-js"))
@@ -153,10 +153,12 @@ tasks.jacocoTestReport {
     }
 }
 
+val javadoc = tasks.named("javadoc")
+
 val javadocJar by tasks.creating(Jar::class) {
     dependsOn.add(tasks.dokkaJavadoc)
     archiveClassifier.set("javadoc")
-    from(tasks.dokkaJavadoc)
+    from(javadoc)
 }
 
 publishing {
@@ -215,4 +217,10 @@ nexusPublishing {
 
 tasks.dokkaHtml.configure {
     outputDirectory.set(projectDir.resolve("dokka"))
+}
+
+tasks.dokkaJavadoc {
+    dokkaSourceSets {
+
+    }
 }
