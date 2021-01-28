@@ -20,10 +20,15 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
-enum class RotationAxis {
-    ROTATE_X,
-    ROTATE_Y,
-    ROTATE_Z,
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+/**
+ * A [Distance] that specifies a percentage of the full distance covered by LEDs
+ * in that direction that should be traveled
+ */
+@Serializable
+@SerialName("PercentDistance")
+data class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance

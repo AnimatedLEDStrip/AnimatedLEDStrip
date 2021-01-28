@@ -24,9 +24,11 @@ package animatedledstrip.animations.predefinedgroups
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.RandomizedAnimationGroup
+import animatedledstrip.animations.groups.AnimationGroup
+import animatedledstrip.animations.groups.GroupType
 
-val sortingAnimations = RandomizedAnimationGroup(
+val sortingAnimations = AnimationGroup.NewAnimationGroupInfo(
+    groupType = GroupType.RANDOMIZED,
     groupInfo = Animation.AnimationInfo(name = "Sorting",
                                         abbr = "SRT",
                                         description = "Runs all of the different sorting animations currently defined.",

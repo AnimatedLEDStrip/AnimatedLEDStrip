@@ -20,8 +20,26 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
-abstract class AnimationGroup : Animation() {
-    abstract val groupInfo: AnimationInfo
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlin.math.pow
+
+/**
+ * An equation of the form ax^0 + bx^1 ... mx^n.
+ * Each coefficient corresponds with x to the index of that coefficient,
+ * i.e. the coefficient at index 2 would be associated with x^2.
+ */
+@Serializable
+@SerialName("Equation")
+data class Equation(
+    val coefficients: List<Double> = listOf(),
+) {
+    constructor(vararg coefficients: Double) : this(coefficients.toList())
+
+    fun calculate(value: Double): Double =
+        coefficients.reduceIndexedOrNull { power, acc, c ->
+            acc + (value.pow(power) * c)
+        } ?: 0.0
 }

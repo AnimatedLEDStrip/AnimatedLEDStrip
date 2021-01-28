@@ -22,61 +22,50 @@
 
 package animatedledstrip.animations
 
-import animatedledstrip.communication.SendableData
-import animatedledstrip.leds.animationmanagement.*
-import animatedledstrip.leds.sectionmanagement.Section
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeoutOrNull
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-@SerialName("RandomizedAnimationGroup")
-class RandomizedAnimationGroup(
-    override val groupInfo: AnimationInfo,
-    val animationList: List<String>,
-) : AnimationGroup(), SendableData {
-
-    override lateinit var info: AnimationInfo
-
-    constructor(unpreparedAnim: RandomizedAnimationGroup, animationManager: LEDStripAnimationManager)
-            : this(unpreparedAnim.groupInfo, unpreparedAnim.animationList) {
-        info = prepareGroupParameters(animationManager, groupInfo, animationList)
-    }
-
-    override suspend fun runAnimation(
-        leds: AnimationManager,
-        params: RunningAnimationParams,
-        scope: CoroutineScope,
-    ) {
-        val nextAnimIndex = animationList.indices.random()
-        val nextAnim = (leds.sectionManager as Section).findAnimation(animationList[nextAnimIndex])
-        val animDuration =
-            params.intParams.getValue("animationDuration-${nextAnim.info.name} ($nextAnimIndex)").toLong()
-        val postAnimationDelay =
-            params.intParams.getValue("postAnimationDelay-${nextAnim.info.name} ($nextAnimIndex)").toLong()
-
-        leds.apply {
-            if (animDuration < 0)
-                runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
-                                                                                  nextAnim.info,
-                                                                                  nextAnimIndex),
-                                                      scope,
-                                                      sectionManager))
-            else
-                scope.launch {
-                    withTimeoutOrNull(animDuration) {
-                        runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
-                                                                                          nextAnim.info,
-                                                                                          nextAnimIndex),
-                                                              this,
-                                                              sectionManager))
-                    }
-                }.join()
-        }
-
-        delay(postAnimationDelay)
-    }
-}
+//@Serializable
+//@SerialName("RandomizedAnimationGroup")
+//class RandomizedAnimationGroup(
+//    override val info: AnimationInfo,
+//    val animationList: List<String>,
+//) : AnimationGroup(), SendableData {
+//
+//    constructor(groupInfo: NewAnimationGroupInfo, animationManager: LEDStripAnimationManager)
+//            : this(prepareGroupParameters(animationManager,
+//                                          groupInfo.groupInfo,
+//                                          groupInfo.animationList),
+//                   groupInfo.animationList)
+//
+//    override suspend fun runAnimation(
+//        leds: AnimationManager,
+//        params: RunningAnimationParams,
+//        scope: CoroutineScope,
+//    ) {
+//        val nextAnimIndex = animationList.indices.random()
+//        val nextAnim = (leds.sectionManager as Section).findAnimation(animationList[nextAnimIndex])
+//        val animDuration =
+//            params.intParams.getValue("animationDuration-${nextAnim.info.name} ($nextAnimIndex)").toLong()
+//        val postAnimationDelay =
+//            params.intParams.getValue("postAnimationDelay-${nextAnim.info.name} ($nextAnimIndex)").toLong()
+//
+//        leds.apply {
+//            if (animDuration < 0)
+//                runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
+//                                                                                  nextAnim.info,
+//                                                                                  nextAnimIndex),
+//                                                      scope,
+//                                                      sectionManager))
+//            else
+//                scope.launch {
+//                    withTimeoutOrNull(animDuration) {
+//                        runSequential(SubAnimationToRunParams(prepareAnimationToRunParams(params,
+//                                                                                          nextAnim.info,
+//                                                                                          nextAnimIndex),
+//                                                              this,
+//                                                              sectionManager))
+//                    }
+//                }.join()
+//        }
+//
+//        delay(postAnimationDelay)
+//    }
+//}

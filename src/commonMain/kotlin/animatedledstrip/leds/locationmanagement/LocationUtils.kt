@@ -22,10 +22,10 @@
 
 package animatedledstrip.leds.locationmanagement
 
-import animatedledstrip.animations.AbsoluteDistance
-import animatedledstrip.animations.Equation
-import animatedledstrip.animations.RadiansRotation
-import animatedledstrip.animations.RotationAxis
+import animatedledstrip.animations.parameters.AbsoluteDistance
+import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.RadiansRotation
+import animatedledstrip.animations.parameters.RotationAxis
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import animatedledstrip.leds.animationmanagement.PixelModificationLists
 import kotlin.math.abs

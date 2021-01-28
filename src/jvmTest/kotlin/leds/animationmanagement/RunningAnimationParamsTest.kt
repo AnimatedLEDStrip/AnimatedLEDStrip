@@ -22,9 +22,9 @@
 
 package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.animations.AbsoluteDistance
-import animatedledstrip.animations.Equation
-import animatedledstrip.animations.RadiansRotation
+import animatedledstrip.animations.parameters.AbsoluteDistance
+import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.RadiansRotation
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.serializer

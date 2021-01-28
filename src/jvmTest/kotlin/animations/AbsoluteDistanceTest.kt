@@ -22,7 +22,7 @@
 
 package animatedledstrip.test.animations
 
-import animatedledstrip.animations.AbsoluteDistance
+import animatedledstrip.animations.parameters.AbsoluteDistance
 import animatedledstrip.test.largeDoubleArb
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

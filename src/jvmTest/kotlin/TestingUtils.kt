@@ -22,7 +22,9 @@
 
 package animatedledstrip.test
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.AnimationParameter
+import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.*
 import animatedledstrip.animations.predefined.color
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface

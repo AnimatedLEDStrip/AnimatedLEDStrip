@@ -20,26 +20,22 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
+import animatedledstrip.animations.Rotation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.math.pow
 
 /**
- * An equation of the form ax^0 + bx^1 ... mx^n.
- * Each coefficient corresponds with x to the index of that coefficient,
- * i.e. the coefficient at index 2 would be associated with x^2.
+ * A [Rotation] specified in radians
  */
 @Serializable
-@SerialName("Equation")
-data class Equation(
-    val coefficients: List<Double> = listOf(),
-) {
-    constructor(vararg coefficients: Double) : this(coefficients.toList())
-
-    fun calculate(value: Double): Double =
-        coefficients.reduceIndexedOrNull { power, acc, c ->
-            acc + (value.pow(power) * c)
-        } ?: 0.0
+@SerialName("RadiansRotation")
+data class RadiansRotation(
+    override val xRotation: Double = 0.0,
+    override val yRotation: Double = 0.0,
+    override val zRotation: Double = 0.0,
+    override val rotationOrder: List<RotationAxis> = listOf(RotationAxis.ROTATE_Z, RotationAxis.ROTATE_X),
+) : Rotation {
+    operator fun unaryMinus(): RadiansRotation = RadiansRotation(-xRotation, -yRotation, -zRotation, rotationOrder)
 }

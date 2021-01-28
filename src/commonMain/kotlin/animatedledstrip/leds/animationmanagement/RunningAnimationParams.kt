@@ -22,7 +22,12 @@
 
 package animatedledstrip.leds.animationmanagement
 
-import animatedledstrip.animations.*
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Rotation
+import animatedledstrip.animations.parameters.AbsoluteDistance
+import animatedledstrip.animations.parameters.Distance
+import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.RadiansRotation
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.communication.SendableData

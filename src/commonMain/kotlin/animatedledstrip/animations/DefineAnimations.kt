@@ -22,6 +22,7 @@
 
 package animatedledstrip.animations
 
+import animatedledstrip.animations.groups.AnimationGroup
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.animations.predefinedgroups.sortingAnimations
 import animatedledstrip.leds.animationmanagement.removeWhitespace
@@ -80,7 +81,7 @@ val predefinedAnimations: List<Animation> = listOf(
     wipe,
 )
 
-val predefinedGroups: List<AnimationGroup> = listOf(
+val predefinedGroups: List<AnimationGroup.NewAnimationGroupInfo> = listOf(
     sortingAnimations,
 )
 

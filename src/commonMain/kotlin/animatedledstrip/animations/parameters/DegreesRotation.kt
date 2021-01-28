@@ -20,21 +20,27 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
+import animatedledstrip.animations.Rotation
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.math.PI
 
 /**
- * A [Distance] with the exact distance in each direction
+ * A [Rotation] specified in degrees
  */
 @Serializable
-@SerialName("AbsoluteDistance")
-data class AbsoluteDistance(override val x: Double = 0.0, override val y: Double = 0.0, override val z: Double = 0.0) :
-    Distance {
-    constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())
-
-    operator fun unaryMinus(): AbsoluteDistance = AbsoluteDistance(-x, -y, -z)
-
-    operator fun div(divisor: Int): AbsoluteDistance = AbsoluteDistance(x / divisor, y / divisor, z / divisor)
+@SerialName("DegreesRotation")
+data class DegreesRotation(
+    override val xRotation: Double = 0.0,
+    override val yRotation: Double = 0.0,
+    override val zRotation: Double = 0.0,
+    override val rotationOrder: List<RotationAxis> = listOf(RotationAxis.ROTATE_Z, RotationAxis.ROTATE_X),
+) : Rotation {
+    fun toRadiansRotation(): RadiansRotation =
+        RadiansRotation(xRotation * PI / 180,
+                        yRotation * PI / 180,
+                        zRotation * PI / 180,
+                        rotationOrder)
 }

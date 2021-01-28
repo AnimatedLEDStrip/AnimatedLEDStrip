@@ -20,25 +20,9 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.groups
 
-import kotlin.math.max
-
-interface Distance {
-    val x: Double
-    val y: Double
-    val z: Double
-
-    val coordinates: String
-        get() = "$x, $y, $z"
-
-    operator fun times(multiplier: Distance): Distance =
-        AbsoluteDistance(x * multiplier.x,
-                         y * multiplier.y,
-                         z * multiplier.z)
-
-    val maxDistance: Double
-        get() = max(x, max(y, z))
-
-    fun asAbsoluteDistance(): AbsoluteDistance = AbsoluteDistance(x, y, z)
+enum class GroupType {
+    ORDERED,
+    RANDOMIZED,
 }

@@ -20,15 +20,25 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import kotlin.math.max
 
-/**
- * A [Distance] that specifies a percentage of the full distance covered by LEDs
- * in that direction that should be traveled
- */
-@Serializable
-@SerialName("PercentDistance")
-data class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance
+interface Distance {
+    val x: Double
+    val y: Double
+    val z: Double
+
+    val coordinates: String
+        get() = "$x, $y, $z"
+
+    operator fun times(multiplier: Distance): Distance =
+        AbsoluteDistance(x * multiplier.x,
+                         y * multiplier.y,
+                         z * multiplier.z)
+
+    val maxDistance: Double
+        get() = max(x, max(y, z))
+
+    fun asAbsoluteDistance(): AbsoluteDistance = AbsoluteDistance(x, y, z)
+}

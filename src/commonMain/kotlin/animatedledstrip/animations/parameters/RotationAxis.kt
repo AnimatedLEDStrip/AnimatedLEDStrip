@@ -20,26 +20,10 @@
  * THE SOFTWARE.
  */
 
-package animatedledstrip.animations
+package animatedledstrip.animations.parameters
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlin.math.PI
-
-/**
- * A [Rotation] specified in degrees
- */
-@Serializable
-@SerialName("DegreesRotation")
-data class DegreesRotation(
-    override val xRotation: Double = 0.0,
-    override val yRotation: Double = 0.0,
-    override val zRotation: Double = 0.0,
-    override val rotationOrder: List<RotationAxis> = listOf(RotationAxis.ROTATE_Z, RotationAxis.ROTATE_X),
-) : Rotation {
-    fun toRadiansRotation(): RadiansRotation =
-        RadiansRotation(xRotation * PI / 180,
-                        yRotation * PI / 180,
-                        zRotation * PI / 180,
-                        rotationOrder)
+enum class RotationAxis {
+    ROTATE_X,
+    ROTATE_Y,
+    ROTATE_Z,
 }
