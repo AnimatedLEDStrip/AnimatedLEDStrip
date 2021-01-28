@@ -24,6 +24,7 @@ package animatedledstrip.animations
 
 import animatedledstrip.animations.parameters.Distance
 import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.communication.SendableData
 import animatedledstrip.leds.animationmanagement.AnimationManager
 import animatedledstrip.leds.animationmanagement.RunningAnimationParams
