@@ -24,7 +24,6 @@ package animatedledstrip.animations
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.math.max
 
 /**
  * A [Distance] that specifies a percentage of the full distance covered by LEDs
@@ -32,8 +31,4 @@ import kotlin.math.max
  */
 @Serializable
 @SerialName("PercentDistance")
-data class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance {
-    override val coordinates: String = "$x, $y, $z"
-
-    override val maxDistance: Double = max(x, max(y, z))
-}
+data class PercentDistance(override val x: Double, override val y: Double, override val z: Double) : Distance

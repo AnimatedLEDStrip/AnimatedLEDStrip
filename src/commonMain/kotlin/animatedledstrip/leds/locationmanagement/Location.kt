@@ -41,7 +41,8 @@ data class Location(
 ) {
     constructor(x: Int = 0, y: Int = 0, z: Int = 0) : this(x.toDouble(), y.toDouble(), z.toDouble())
 
-    val coordinates: String = "$x, $y, $z"
+    val coordinates: String
+        get() = "$x, $y, $z"
 
     fun distanceFrom(other: Location): Double = ((x - other.x).pow(2) +
                                                  (y - other.y).pow(2) +
