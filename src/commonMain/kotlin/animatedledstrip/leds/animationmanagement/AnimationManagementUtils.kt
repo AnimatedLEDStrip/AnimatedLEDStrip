@@ -23,8 +23,10 @@
 package animatedledstrip.leds.animationmanagement
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.groups.AnimationGroup
 import animatedledstrip.animations.prepareAnimIdentifier
 import animatedledstrip.leds.sectionmanagement.Section
+import animatedledstrip.leds.stripmanagement.LEDStrip
 import animatedledstrip.utils.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.joinAll
@@ -115,6 +117,17 @@ suspend fun AnimationManager.runParallelAndJoin(vararg animations: SubAnimationT
  * @param params Parameters for the animation
  */
 suspend fun AnimationManager.runSequential(params: SubAnimationToRunParams): Unit = runParallel(params).join()
+
+/**
+ * Add a new animation to the list of supported animations
+ */
+fun LEDStrip.addNewAnimation(anim: Animation) = animationManager.addNewAnimation(anim)
+
+/**
+ * Add a new animation group to the list of supported animations
+ */
+fun LEDStrip.addNewGroup(anim: AnimationGroup.NewAnimationGroupInfo) =
+    animationManager.addNewGroup(anim)
 
 fun Section.findAnimation(animId: String): Animation =
     this.findAnimationOrNull(animId)!!
