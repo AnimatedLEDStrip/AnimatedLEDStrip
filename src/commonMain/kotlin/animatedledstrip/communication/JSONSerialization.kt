@@ -76,6 +76,7 @@ private val serializerModule: SerializersModule = SerializersModule {
 val serializer: Json = Json {
     encodeDefaults = true
     serializersModule = serializerModule
+    ignoreUnknownKeys = true
 }
 
 
