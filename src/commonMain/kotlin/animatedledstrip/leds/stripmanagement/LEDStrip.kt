@@ -46,6 +46,10 @@ class LEDStrip(
      */
     val numLEDs: Int = stripInfo.numLEDs
 
+    init {
+        require(numLEDs > 0) { "Number of LEDs must be greater than 0" }
+    }
+
     /**
      * A list of the valid pixel indices in this strip
      */
