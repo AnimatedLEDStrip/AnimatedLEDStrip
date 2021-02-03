@@ -59,22 +59,36 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
             (it.groupInfo.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
             (it.groupInfo.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
             (it.groupInfo.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
-        }.forEach { addNewAnimation(prepareGroupAnimation(it)) }
+        }.forEach { addNewGroup(it) }
     }
 
+    /**
+     * Find a supported animation
+     *
+     * @return The animation if it is found
+     * @throws NullPointerException if the animation is not found
+     */
     fun findAnimation(animId: String): Animation =
         this.findAnimationOrNull(animId)!!
 
+    /**
+     * Find a supported animation
+     *
+     * @return The animation, or null if it is not found
+     */
     fun findAnimationOrNull(animId: String): Animation? =
         supportedAnimations[prepareAnimIdentifier(animId)]
         ?: supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
-    fun prepareGroupAnimation(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup =
+    private fun prepareGroupAnimation(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup =
         AnimationGroup(
             prepareGroupParameters(this, anim.groupInfo, anim.animationList),
             anim.groupType,
             anim.animationList)
 
+    /**
+     * Add a new animation to the list of supported animations
+     */
     fun addNewAnimation(anim: Animation) {
         if (supportedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
             Logger.e { "Animation ${anim.info.name} already defined" }
@@ -89,4 +103,10 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
         supportedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
         Logger.d { "Added animation ${anim.info.name}" }
     }
+
+    /**
+     * Add a new animation group to the list of supported animations
+     */
+    fun addNewGroup(anim: AnimationGroup.NewAnimationGroupInfo) =
+        addNewAnimation(prepareGroupAnimation(anim))
 }
