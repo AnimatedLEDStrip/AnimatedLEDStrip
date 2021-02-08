@@ -26,7 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.PercentDistance
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
+import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.locationmanagement.PixelLocation
 import kotlinx.coroutines.delay
 
@@ -47,8 +49,9 @@ val splat = DefinedAnimation(
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
                                                  10.0)),
-        locationParams = listOf(AnimationParameter("center", "The center of the splat")),
-        distanceParams = listOf(AnimationParameter("distance", "How far the splat should reach")),
+        locationParams = listOf(AnimationParameter("center", "The center of the splat", Location.CENTER)),
+        distanceParams = listOf(AnimationParameter("distance", "How far the splat should reach",
+                                                   PercentDistance(100.0, 100.0, 100.0))),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]

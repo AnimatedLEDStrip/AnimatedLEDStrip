@@ -27,7 +27,8 @@ import kotlinx.serialization.Serializable
 
 /**
  * A [Distance] that specifies a percentage of the full distance covered by LEDs
- * in that direction that should be traveled
+ * in that direction that should be traveled.
+ * 100.0 represents the full distance.
  */
 @Serializable
 @SerialName("PercentDistance")

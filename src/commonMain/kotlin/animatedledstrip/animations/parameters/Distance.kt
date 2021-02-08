@@ -32,13 +32,13 @@ interface Distance {
     val coordinates: String
         get() = "$x, $y, $z"
 
-    operator fun times(multiplier: Distance): Distance =
-        AbsoluteDistance(x * multiplier.x,
-                         y * multiplier.y,
-                         z * multiplier.z)
-
     val maxDistance: Double
         get() = max(x, max(y, z))
 
     fun asAbsoluteDistance(): AbsoluteDistance = AbsoluteDistance(x, y, z)
+
+    companion object {
+        val NO_DISTANCE: Distance
+            get() = AbsoluteDistance(0.0, 0.0, 0.0)
+    }
 }

@@ -26,7 +26,9 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.parameters.AbsoluteDistance
+import animatedledstrip.animations.parameters.Distance
+import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.leds.animationmanagement.SubAnimationToRunParams
 import animatedledstrip.leds.animationmanagement.runParallelAndJoin
 
@@ -52,10 +54,12 @@ val stackOverflow = DefinedAnimation(
                                                  0.9)),
         distanceParams = listOf(AnimationParameter("offset",
                                                    "Offset of the line in the XYZ directions",
-                                                   AbsoluteDistance(0.0, 0.0, 0.0))),
-        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes")),
+                                                   Distance.NO_DISTANCE)),
+        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes",
+                                                   Rotation.NO_ROTATION)),
         equationParams = listOf(AnimationParameter("lineEquation",
-                                                   "The equation representing the line the the pixel will follow")),
+                                                   "The equation representing the line the the pixel will follow",
+                                                   Equation())),
     )
 ) { leds, params, scope ->
     leds.apply {

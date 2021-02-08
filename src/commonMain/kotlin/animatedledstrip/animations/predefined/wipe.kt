@@ -26,6 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.leds.animationmanagement.PixelModificationLists
 import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.colormanagement.setPixelProlongedColor
@@ -47,7 +48,9 @@ val wipe = DefinedAnimation(
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
                                                  1.0)),
-        rotationParams = listOf(AnimationParameter("rotation", "Rotation of the plane around the XYZ axes")),
+        rotationParams = listOf(AnimationParameter("rotation",
+                                                   "Rotation of the plane around the XYZ axes",
+                                                   Rotation.NO_ROTATION)),
     )
 ) { leds, params, _ ->
     val color = params.colors[0]

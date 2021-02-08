@@ -56,7 +56,7 @@ val fireworks = DefinedAnimation(
                                                  1.0)),
         distanceParams = listOf(AnimationParameter("distance",
                                                    "Distance each firework should travel",
-                                                   PercentDistance(0.1, 0.1, 0.1))),
+                                                   PercentDistance(10.0, 10.0, 10.0))),
     )
 ) { leds, params, scope ->
     val color = params.randomColor()

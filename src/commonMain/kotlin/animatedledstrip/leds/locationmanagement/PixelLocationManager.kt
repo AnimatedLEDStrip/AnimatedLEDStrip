@@ -70,7 +70,7 @@ class PixelLocationManager(ledLocations: List<Location>?, val numLEDs: Int) {
     val zAvg: Double = (zMin + zMax) / 2
 
     val defaultLocation = Location(xAvg, yAvg, zAvg)
-    val defaultDistance = AbsoluteDistance(abs(xMin) + abs(xMax), abs(yMin) + abs(yMax), abs(zMin) + abs(zMax))
+    val maximumDistance = AbsoluteDistance(abs(xMin) + abs(xMax), abs(yMin) + abs(yMax), abs(zMin) + abs(zMax))
 
     fun randomLocation(): Location =
         Location(abs(xMin - xMax) * randomDouble() + xMin,

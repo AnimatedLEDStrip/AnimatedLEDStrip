@@ -27,4 +27,9 @@ interface Rotation {
     val yRotation: Double
     val zRotation: Double
     val rotationOrder: List<RotationAxis>
+
+    companion object {
+        val NO_ROTATION: Rotation
+            get() = RadiansRotation(0.0, 0.0, 0.0)
+    }
 }

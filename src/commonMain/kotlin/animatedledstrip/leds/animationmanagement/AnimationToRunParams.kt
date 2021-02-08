@@ -122,16 +122,18 @@ data class AnimationToRunParams(
         for (distanceParam in definedAnimation.info.distanceParams)
             preparedDistanceParams[distanceParam.name] =
                 when (val paramValue = distanceParams[distanceParam.name]) {
-                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance *
+                    null -> sectionRunningAnimation.stripManager.pixelLocationManager.maximumDistance *
                             (distanceParam.default ?: AbsoluteDistance(1.0, 1.0, 1.0))
-                    is PercentDistance -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultDistance *
+                    is PercentDistance -> sectionRunningAnimation.stripManager.pixelLocationManager.maximumDistance *
                                           paramValue
                     else -> paramValue
                 }.asAbsoluteDistance()
 
         for (locationParam in definedAnimation.info.locationParams)
             preparedLocationParams[locationParam.name] =
-                when (val paramValue = locationParams[locationParam.name] ?: locationParam.default) {
+                when (val paramValue = locationParams[locationParam.name]
+                                       ?: locationParam.default
+                                       ?: Location.CENTER) {
                     null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultLocation
                     else -> paramValue
                 }
@@ -140,7 +142,7 @@ data class AnimationToRunParams(
             preparedRotationParams[rotationParam.name] =
                 when (val paramValue = rotationParams[rotationParam.name]
                                        ?: rotationParam.default
-                                       ?: RadiansRotation(0.0, 0.0, 0.0)) {
+                                       ?: Rotation.NO_ROTATION) {
                     is DegreesRotation -> paramValue.toRadiansRotation()
                     else -> paramValue as RadiansRotation
                 }
