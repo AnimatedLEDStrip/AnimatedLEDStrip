@@ -104,11 +104,11 @@ class PixelLocationManagerTest : StringSpec(
         "default distance" {
             checkAll(100, Arb.list(locationArb, 1..5000)) { locs ->
                 val newManager = PixelLocationManager(locs, locs.size)
-                newManager.defaultDistance.x shouldBe ((abs(locs.minByOrNull { it.x }?.x ?: 0.0) +
+                newManager.maximumDistance.x shouldBe ((abs(locs.minByOrNull { it.x }?.x ?: 0.0) +
                                                         abs(locs.maxByOrNull { it.x }?.x ?: 0.0)) plusOrMinus 0.01)
-                newManager.defaultDistance.y shouldBe ((abs(locs.minByOrNull { it.y }?.y ?: 0.0) +
+                newManager.maximumDistance.y shouldBe ((abs(locs.minByOrNull { it.y }?.y ?: 0.0) +
                                                         abs(locs.maxByOrNull { it.y }?.y ?: 0.0)) plusOrMinus 0.01)
-                newManager.defaultDistance.z shouldBe ((abs(locs.minByOrNull { it.z }?.z ?: 0.0) +
+                newManager.maximumDistance.z shouldBe ((abs(locs.minByOrNull { it.z }?.z ?: 0.0) +
                                                         abs(locs.maxByOrNull { it.z }?.z ?: 0.0)) plusOrMinus 0.01)
             }
         }

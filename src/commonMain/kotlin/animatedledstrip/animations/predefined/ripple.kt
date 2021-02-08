@@ -26,9 +26,11 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.PercentDistance
 import animatedledstrip.leds.animationmanagement.PixelModificationLists
 import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.colormanagement.setPixelFadeColor
+import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.leds.locationmanagement.groupPixelsByDistance
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -53,8 +55,10 @@ val ripple = DefinedAnimation(
         doubleParams = listOf(AnimationParameter("movementPerIteration",
                                                  "How far to move during each iteration of the animation",
                                                  1.0)),
-        locationParams = listOf(AnimationParameter("center", "The center of the ripple")),
-        distanceParams = listOf(AnimationParameter("distance", "How far the ripple should travel")),
+        locationParams = listOf(AnimationParameter("center", "The center of the ripple", Location.CENTER)),
+        distanceParams = listOf(AnimationParameter("distance",
+                                                   "How far the ripple should travel",
+                                                   PercentDistance(100.0, 100.0, 100.0))),
     )
 ) { leds, params, scope ->
     val color = params.colors[0]

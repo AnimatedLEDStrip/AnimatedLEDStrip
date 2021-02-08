@@ -28,5 +28,5 @@ import kotlinx.serialization.Serializable
 data class AnimationParameter<T>(
     val name: String,
     val description: String,
-    val default: T? = null,
+    val default: T?,
 )

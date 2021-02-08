@@ -51,4 +51,12 @@ data class Location(
     fun offsetBy(offset: AbsoluteDistance): Location = Location(x + offset.x,
                                                                 y + offset.y,
                                                                 z + offset.z)
+
+    companion object {
+        /**
+         * Used by animation defaults to specify that the location should be the
+         * center of all LED locations
+         */
+        val CENTER: Location? = null
+    }
 }
