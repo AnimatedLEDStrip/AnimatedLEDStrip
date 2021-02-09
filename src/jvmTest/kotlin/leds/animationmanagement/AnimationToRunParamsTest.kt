@@ -22,9 +22,9 @@
 
 package animatedledstrip.test.leds.animationmanagement
 
-import animatedledstrip.animations.Rotation
 import animatedledstrip.animations.parameters.Distance
 import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ColorContainerInterface
 import animatedledstrip.communication.decodeJson

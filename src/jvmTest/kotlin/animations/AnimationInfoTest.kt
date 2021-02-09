@@ -25,9 +25,9 @@ package animatedledstrip.test.animations
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.Dimensionality
-import animatedledstrip.animations.Rotation
 import animatedledstrip.animations.parameters.Distance
 import animatedledstrip.animations.parameters.Equation
+import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.communication.decodeJson
 import animatedledstrip.communication.serializer
 import animatedledstrip.communication.toUTF8String
