@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0-pre4-SNAPSHOT"
+version = "1.0.0-pre3"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -156,7 +156,7 @@ tasks.jacocoTestReport {
 val javadoc = tasks.named("javadoc")
 
 val javadocJar by tasks.creating(Jar::class) {
-    dependsOn.add(tasks.dokkaJavadoc)
+//    dependsOn.add(tasks.dokkaJavadoc)
     archiveClassifier.set("javadoc")
     from(javadoc)
 }
