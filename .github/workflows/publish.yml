@@ -60,6 +60,7 @@ jobs:
 
       - name: Create documentation
         run: |
+          VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
           KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
           kotlinc-jvm -script create_docs.kts -cp "build/libs/animatedledstrip-core-jvm-${VERSION}.jar:$KERMIT_JAR"
 
