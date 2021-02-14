@@ -49,4 +49,9 @@ data class AbsoluteDistance(override val x: Double = 0.0, override val y: Double
                              y * multiplier.y,
                              z * multiplier.z)
     }
+
+    companion object {
+        val NO_DISTANCE: AbsoluteDistance
+            get() = AbsoluteDistance(0.0, 0.0, 0.0)
+    }
 }

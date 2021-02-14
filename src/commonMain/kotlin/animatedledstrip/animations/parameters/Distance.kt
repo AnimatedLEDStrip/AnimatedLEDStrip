@@ -39,6 +39,6 @@ interface Distance {
 
     companion object {
         val NO_DISTANCE: Distance
-            get() = AbsoluteDistance(0.0, 0.0, 0.0)
+            get() = AbsoluteDistance.NO_DISTANCE
     }
 }
