@@ -26,6 +26,7 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.AnimationParameter
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
+import animatedledstrip.animations.parameters.AbsoluteDistance
 import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.leds.animationmanagement.PixelModificationLists
 import animatedledstrip.leds.animationmanagement.PixelsToModify
@@ -66,7 +67,7 @@ val wave = DefinedAnimation(
     leds.apply {
         val pixelsToModifyPerIteration: List<PixelsToModify> =
             (params.extraData.getOrPut("modLists") {
-                groupPixelsByXLocation(rotation, movementPerIteration)
+                groupPixelsByXLocation(AbsoluteDistance.NO_DISTANCE, rotation, movementPerIteration)
             } as PixelModificationLists).modLists
 
         scope.launch {

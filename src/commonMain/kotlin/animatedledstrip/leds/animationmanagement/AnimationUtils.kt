@@ -118,8 +118,8 @@ data class PixelsToModify(
  * [setLists] and [revertLists] should have the same size.
  */
 data class PixelModificationLists(
-    val setLists: List<List<Int>>,
-    val revertLists: List<List<Int>>,
+    private val setLists: List<List<Int>>,
+    private val revertLists: List<List<Int>>,
 ) {
     init {
         require(setLists.size == revertLists.size)
