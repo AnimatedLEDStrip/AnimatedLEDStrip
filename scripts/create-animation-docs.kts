@@ -22,7 +22,7 @@
 
 import animatedledstrip.animations.*
 import animatedledstrip.animations.groups.*
-import java.io.FileReader
+import animatedledstrip.animations.parameters.*
 import java.io.FileWriter
 
 val animList = mutableListOf<String>()
@@ -32,7 +32,7 @@ fun String.toFileName(): String = replace(" ", "-").replace("(", "").replace(")"
 fun createFile(info: Animation.AnimationInfo): FileWriter {
     val fileName = info.name.toFileName()
 
-    animList.add("- [${info.name}]($fileName)")
+    animList.add("- [${info.name}](animations/$fileName)")
 
     return FileWriter("animations/$fileName.md")
 }
@@ -49,44 +49,52 @@ fun createHeader(file: FileWriter, info: Animation.AnimationInfo) {
     file.append("# ${info.name}\n\n")
 }
 
+val Animation.AnimationInfo.parameterCount: Int
+    get() = intParams.size + doubleParams.size + stringParams.size + locationParams.size +
+            distanceParams.size + rotationParams.size + equationParams.size
+
+fun Distance.toFormattedString(): String = if (this is PercentDistance) "$x%, $y%, $z%" else "$x, $y, $z"
+
 fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
     file.append("## Animation Info\n\n")
 
     file.append("|Quality|Value|\n")
     file.append("|:-:|:-:|\n")
-    file.append("|name|`${info.name}`|\n")
-    file.append("|abbr|`${info.abbr}`|\n")
-    file.append("|runCountDefault|${if (info.runCountDefault != -1) "`${info.runCountDefault}`" else "Endless"}|\n")
-    file.append("|minimum colors|`${info.minimumColors}`|\n")
-    file.append("|unlimited colors|`${info.unlimitedColors}`|\n")
-    file.append("|dimensionality|`${info.dimensionality}`|\n")
+    file.append("|name|${info.name}|\n")
+    file.append("|abbr|${info.abbr}|\n")
+    file.append("|runCount default|${if (info.runCountDefault != -1) "${info.runCountDefault}" else "Endless"}|\n")
+    file.append("|minimum colors|${info.minimumColors}|\n")
+    file.append("|unlimited colors|${info.unlimitedColors}|\n")
+    file.append("|dimensionality|${info.dimensionality.joinToString()}|\n")
     file.append("\n")
-    file.append("|Parameter|Type|Default Value|Description|\n")
-    file.append("|:-:|:-:|:-:|:-:|\n")
-    for (param in info.intParams)
-        file.append("|${param.name}|`Int`|`${param.default ?: "0"}`|${param.description}|\n")
-    for (param in info.doubleParams)
-        file.append("|${param.name}|`Double`|`${param.default ?: "0.0"}`|${param.description}|\n")
-    for (param in info.stringParams)
-        file.append("|${param.name}|`String`|`${param.default ?: "\"\""}`|${param.description}|\n")
-    for (param in info.locationParams)
-        file.append("|${param.name}|`Location`|`${param.default?.coordinates ?: "Center of all pixels"}`|${param.description}|\n")
-    for (param in info.distanceParams)
-        file.append("|${param.name}|`Distance`|`${param.default ?: "Enough to encompass all pixels"}`|${param.description}|\n")
-    for (param in info.rotationParams)
-        file.append("|${param.name}|`Rotation`|`${param.default ?: ""}`|${param.description}|\n")
-    for (param in info.equationParams)
-        file.append("|${param.name}|`Equation`|`${param.default ?: ""}`|${param.description}|\n")
+    if (info.parameterCount > 0) {
+        file.append("|Parameter|Type|Default Value|Description|\n")
+        file.append("|:-:|:-:|:-:|:-:|\n")
+        for (param in info.intParams)
+            file.append("|${param.name}|Int|${param.default ?: "0"}|${param.description}|\n")
+        for (param in info.doubleParams)
+            file.append("|${param.name}|Double|${param.default ?: "0.0"}|${param.description}|\n")
+        for (param in info.stringParams)
+            file.append("|${param.name}|String|\"${param.default ?: ""}\"|${param.description}|\n")
+        for (param in info.locationParams)
+            file.append("|${param.name}|Location|${param.default?.coordinates ?: "Center of all pixels"}|${param.description}|\n")
+        for (param in info.distanceParams)
+            file.append("|${param.name}|Distance|${param.default?.toFormattedString() ?: "Enough to encompass all pixels"}|${param.description}|\n")
+        for (param in info.rotationParams)
+            file.append("|${param.name}|Rotation|${param.default ?: ""}|${param.description}|\n")
+        for (param in info.equationParams)
+            file.append("|${param.name}|Equation|${param.default ?: ""}|${param.description}|\n")
+        file.append("\n")
+    }
 
-    file.append("\n")
     file.append("## Description\n")
     file.append(info.description)
-
-    val sigName = "(?<=[a-zA-Z ])[A-Z]|(?<=[ ])[a-z]|\\(".toRegex().replace(info.name) {
-        "_${it.value}"
-    }.replace("[\\s()]".toRegex(), "").toLowerCase()
-
     file.append("\n\n")
+
+//    val sigName = "(?<=[a-zA-Z ])[A-Z]|(?<=[ ])[a-z]|\\(".toRegex().replace(info.name) {
+//        "_${it.value}"
+//    }.replace("[\\s()]".toRegex(), "").toLowerCase()
+
 //    file.append("## [Animation Signature](Animation-Signatures)\n")
 //    file.append("![${info.name} Signature](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/blob/master/animation-signatures/${sigName}.png)\n\n")
 }
@@ -98,7 +106,7 @@ fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimation
     }
 
     file.append("## Included Animations\n")
-    file.append(info.animationList.map { "- [$it](${it.toFileName()})" }.joinToString("\n"))
+    file.append(info.animationList.map { "- [$it](animations/${it.toFileName()})" }.joinToString("\n"))
     file.append("\n\n")
 
     createInfoDocumentation(file, info.groupInfo)
@@ -127,6 +135,7 @@ val animationListWriter = FileWriter("animations.md")
 animationListWriter.append("---\n")
 animationListWriter.append("title: Animations\n")
 animationListWriter.append("nav_order: 2\n")
+animationListWriter.append("has_children: true\n")
 animationListWriter.append("---\n\n")
 animationListWriter.append("# Animations\n\n")
 animationListWriter.append(animationList)

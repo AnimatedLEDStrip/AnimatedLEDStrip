@@ -28,7 +28,10 @@ git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wik
 
 scripts/create-animation-docs.bash
 
-git add .
-git commit --allow-empty -m "Update animation documentation"
-git push -u "https://$GH_PAT_USER:$GH_PERSONAL_ACCESS_TOKEN@github.com/AnimatedLEDStrip/animatedledstrip.github.io.git" master
-
+(
+  cd wiki || exit
+  git add .
+  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  git config --local user.name "github-actions[bot]"
+  git commit --allow-empty -m "Update animation documentation"
+)

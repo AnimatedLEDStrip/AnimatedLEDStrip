@@ -1,5 +1,6 @@
 #! /bin/bash
 
+#
 # Copyright (c) 2018-2021 AnimatedLEDStrip
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,6 +20,9 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+#
+
+./gradlew jvmJar
 
 VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
 ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
