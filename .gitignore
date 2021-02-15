@@ -1,7 +1,9 @@
 build/
 dokka/
 out/
+signature-creation/
 target/
+venv/
 wiki/
 .idea/
 .gradle/
