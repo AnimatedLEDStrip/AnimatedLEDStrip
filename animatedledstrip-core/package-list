@@ -1,7 +1,13 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
-
+$dokka.location:animatedledstrip.leds.colormanagement/LEDStripColorLogger/stripColorManager/#/PointingToDeclaration/animatedledstrip.leds.colormanagement/-l-e-d-strip-color-logger/[jvm]strip-color-manager.html
+$dokka.location:animatedledstrip.leds.stripmanagement/LEDStripRenderer/close/#/PointingToDeclaration/animatedledstrip.leds.stripmanagement/-l-e-d-strip-renderer/[jvm]close.html
+$dokka.location:animatedledstrip.leds.stripmanagement/LEDStripRenderer/ledStrip/#/PointingToDeclaration/animatedledstrip.leds.stripmanagement/-l-e-d-strip-renderer/[jvm]led-strip.html
+$dokka.location:animatedledstrip.leds.stripmanagement/LEDStripRenderer/renderDelay/#/PointingToDeclaration/animatedledstrip.leds.stripmanagement/-l-e-d-strip-renderer/[jvm]render-delay.html
+$dokka.location:animatedledstrip.leds.stripmanagement/LEDStripRenderer/stripColorManager/#/PointingToDeclaration/animatedledstrip.leds.stripmanagement/-l-e-d-strip-renderer/[jvm]strip-color-manager.html
 animatedledstrip.animations
+animatedledstrip.animations.groups
+animatedledstrip.animations.parameters
 animatedledstrip.animations.predefined
 animatedledstrip.animations.predefinedgroups
 animatedledstrip.colors
