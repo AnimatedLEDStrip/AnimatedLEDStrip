@@ -99,13 +99,13 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
         for (param in info.stringParams)
             file.append("|${param.name}|String|\"${param.default ?: ""}\"|${param.description}|\n")
         for (param in info.locationParams)
-            file.append("|${param.name}|[Location](core/new-animations#location)|${param.default?.coordinates ?: "Center of all pixels"}|${param.description}|\n")
+            file.append("|${param.name}|[Location](/core/new-animations.html#location)|${param.default?.coordinates ?: "Center of all pixels"}|${param.description}|\n")
         for (param in info.distanceParams)
-            file.append("|${param.name}|[Distance](core/new-animations#distance)|${param.default?.toFormattedString() ?: "Enough to encompass all pixels"}|${param.description}|\n")
+            file.append("|${param.name}|[Distance](/core/new-animations.html#distance)|${param.default?.toFormattedString() ?: "Enough to encompass all pixels"}|${param.description}|\n")
         for (param in info.rotationParams)
-            file.append("|${param.name}|[Rotation](core/new-animations#rotation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
+            file.append("|${param.name}|[Rotation](/core/new-animations.html#rotation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
         for (param in info.equationParams)
-            file.append("|${param.name}|[Equation](core/new-animations#equation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
+            file.append("|${param.name}|[Equation](/core/new-animations.html#equation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
         file.append("\n")
     }
 
