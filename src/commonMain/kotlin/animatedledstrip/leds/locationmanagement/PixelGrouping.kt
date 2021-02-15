@@ -31,7 +31,12 @@ import kotlin.math.abs
 import kotlin.math.truncate
 
 /**
-tra
+ * Group pixels based on their location along the X axis after a transformation is performed.
+ *
+ * Used by animations such as Plane Run, Wave, and Wipe.
+ *
+ * @param rotation How to rotate the animation
+ * @param movementPerIteration How far to move along the X axis in each iteration
  * @return Lists of pixels to modify in each iteration as a [PixelModificationLists]
  */
 fun AnimationManager.groupPixelsByXLocation(

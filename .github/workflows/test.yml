@@ -7,17 +7,17 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 13
-      uses: actions/setup-java@v1
-      with:
-        java-version: 12
-    - name: Cache Gradle packages
+      - uses: actions/checkout@v2
+      - name: Set up JDK 13
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12
+      - name: Cache Gradle packages
       uses: actions/cache@v2
       with:
         path: |
@@ -26,9 +26,10 @@ jobs:
         key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
         restore-keys: |
           ${{ runner.os }}-gradle-
-    - name: Create test classes for testing
-      run: ./gradlew jvmTestClasses
-    - name: Test animations
+      - name: Create test classes for testing
+        run: ./gradlew jvmTestClasses
+
+      - name: Test animations
       run: |
         ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
         mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
