@@ -59,7 +59,7 @@ val pixelRun = DefinedAnimation(
         rotationParams = listOf(AnimationParameter("rotation", "Rotation of the line around the XYZ axes",
                                                    Rotation.NO_ROTATION)),
         equationParams = listOf(AnimationParameter("lineEquation",
-                                                   "The equation representing the line the the pixel will follow",
+                                                   "The equation representing the line the pixel will follow",
                                                    Equation())),
     )
 ) { leds, params, _ ->

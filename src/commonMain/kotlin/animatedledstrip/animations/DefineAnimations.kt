@@ -26,25 +26,6 @@ import animatedledstrip.animations.groups.AnimationGroup
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.animations.predefinedgroups.sortingAnimations
 import animatedledstrip.leds.animationmanagement.removeWhitespace
-import animatedledstrip.utils.Logger
-
-val definedAnimations = mutableMapOf<String, Animation>()
-val definedAnimationsByAbbr = mutableMapOf<String, Animation>()
-
-fun addNewAnimation(anim: Animation) {
-    if (definedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-        Logger.e { "Animation ${anim.info.name} already defined" }
-        return
-    }
-    if (definedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-        Logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
-        return
-    }
-
-    definedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
-    definedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
-    Logger.d { "Added animation ${anim.info.name}" }
-}
 
 val predefinedAnimations: List<Animation> = listOf(
     alterFade,
@@ -89,11 +70,3 @@ fun prepareAnimIdentifier(name: String): String =
     name.removeWhitespace()
         .replace("[-_()]".toRegex(), "")
         .toLowerCase()
-
-fun findAnimation(animId: String): Animation = findAnimationOrNull(animId)!!
-
-fun findAnimationOrNull(animId: String): Animation? =
-    definedAnimations[prepareAnimIdentifier(animId)] ?: definedAnimationsByAbbr[prepareAnimIdentifier(animId)]
-
-val definedAnimationNames: List<String>
-    get() = definedAnimations.keys.toList()

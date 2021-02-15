@@ -55,6 +55,28 @@ val Animation.AnimationInfo.parameterCount: Int
 
 fun Distance.toFormattedString(): String = if (this is PercentDistance) "$x%, $y%, $z%" else "$x, $y, $z"
 
+fun Rotation.toFormattedString(): String =
+    if (this is DegreesRotation) "$xRotation°, $yRotation°, $zRotation°, $rotationOrder"
+    else "$xRotation rad, $yRotation rad, $zRotation rad, $rotationOrder"
+
+val superscriptMap: Map<Char, Char> = mapOf('0' to '⁰',
+                                            '1' to '¹',
+                                            '2' to '²',
+                                            '3' to '³',
+                                            '4' to '⁴',
+                                            '5' to '⁵',
+                                            '6' to '⁶',
+                                            '7' to '⁷',
+                                            '8' to '⁸',
+                                            '9' to '⁹')
+
+fun Int.toSuperscript(): String =
+    toString().map { superscriptMap[it]!! }.joinToString("") { it.toString() }
+
+fun Equation.toFormattedString(): String =
+    if (coefficients.isEmpty()) "0x⁰"
+    else coefficients.mapIndexed { index, value -> "${value}x${index.toSuperscript()}" }.joinToString(" + ")
+
 fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
     file.append("## Animation Info\n\n")
 
@@ -62,7 +84,7 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
     file.append("|:-:|:-:|\n")
     file.append("|name|${info.name}|\n")
     file.append("|abbr|${info.abbr}|\n")
-    file.append("|runCount default|${if (info.runCountDefault != -1) "${info.runCountDefault}" else "Endless"}|\n")
+    file.append("|runCount default|${if (info.runCountDefault != -1) info.runCountDefault else "Endless"}|\n")
     file.append("|minimum colors|${info.minimumColors}|\n")
     file.append("|unlimited colors|${info.unlimitedColors}|\n")
     file.append("|dimensionality|${info.dimensionality.joinToString()}|\n")
@@ -77,13 +99,13 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
         for (param in info.stringParams)
             file.append("|${param.name}|String|\"${param.default ?: ""}\"|${param.description}|\n")
         for (param in info.locationParams)
-            file.append("|${param.name}|Location|${param.default?.coordinates ?: "Center of all pixels"}|${param.description}|\n")
+            file.append("|${param.name}|[Location](core/new-animations#location)|${param.default?.coordinates ?: "Center of all pixels"}|${param.description}|\n")
         for (param in info.distanceParams)
-            file.append("|${param.name}|Distance|${param.default?.toFormattedString() ?: "Enough to encompass all pixels"}|${param.description}|\n")
+            file.append("|${param.name}|[Distance](core/new-animations#distance)|${param.default?.toFormattedString() ?: "Enough to encompass all pixels"}|${param.description}|\n")
         for (param in info.rotationParams)
-            file.append("|${param.name}|Rotation|${param.default ?: ""}|${param.description}|\n")
+            file.append("|${param.name}|[Rotation](core/new-animations#rotation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
         for (param in info.equationParams)
-            file.append("|${param.name}|Equation|${param.default ?: ""}|${param.description}|\n")
+            file.append("|${param.name}|[Equation](core/new-animations#equation)|${param.default?.toFormattedString() ?: ""}|${param.description}|\n")
         file.append("\n")
     }
 

@@ -39,11 +39,10 @@ val ripple = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Ripple",
         abbr = "RPL",
-        description = "Starts two [Meteor](Meteor) animations running in opposite " +
-                      "directions from `center`, stopping after traveling `distance` " +
-                      "or at the end of the strip/section, whichever comes first.\n" +
-                      "Does not wait for the Meteor animations to be complete before " +
-                      "returning, giving a ripple-like appearance when run continuously.",
+        description = "Starts at a center point and travels in a sphere (or circle or two points) " +
+                      "away from that center, setting LEDs that then fade back.\n" +
+                      "Does not wait for the ripple to complete before starting the next, " +
+                      "only waiting `interAnimationDelay` milliseconds.",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = false,

@@ -39,19 +39,10 @@ val pixelMarathon = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Pixel Marathon",
         abbr = "PXM",
-        description = "Watch pixels race each other along the strip.\n" +
-                      "A color is chosen randomly, then a pixel is sent down the strip.\n" +
+        description = "Watch pixels race each other along a line.\n" +
+                      "A color is chosen randomly from `colors`, then a pixel is sent down the strip.\n" +
                       "After waiting for up to `maxInterAnimationDelay` milliseconds, " +
-                      "another pixel is sent.\n\n" +
-                      "Note that in the animation signature that there are a couple " +
-                      "points where the slope of the line gets shallower (meaning the " +
-                      "pixel is 'moving' faster).\n" +
-                      "If you look closely, you'll see that there are actually two " +
-                      "[Pixel Run](Pixel-Run) subanimations at the same spot engaged " +
-                      "in a race condition - quite fitting for this animation.\n" +
-                      "This happens because when an animation such as Pixel Run changes " +
-                      "a pixel's temporary color, it puts a lock on that pixel so the " +
-                      "pixel's color doesn't change until it's done with that pixel.",
+                      "another pixel is sent.",
         runCountDefault = -1,
         minimumColors = 1,
         unlimitedColors = true,
@@ -75,7 +66,7 @@ val pixelMarathon = DefinedAnimation(
                                                    "Rotation of the line around the XYZ axes",
                                                    Rotation.NO_ROTATION)),
         equationParams = listOf(AnimationParameter("lineEquation",
-                                                   "The equation representing the line the the pixel will follow",
+                                                   "The equation representing the line the pixel will follow",
                                                    Equation())),
     )
 ) { leds, params, scope ->
