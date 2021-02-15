@@ -22,6 +22,8 @@
 # THE SOFTWARE.
 #
 
+set -e
+
 rm -rf wiki
 
 git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
@@ -39,7 +41,6 @@ scripts/create-animation-pages.bash
 scripts/create-animation-signatures.bash
 
 cp signature-creation/*.png wiki/signatures
-rm -rf signature-creation
 
 (
   cd wiki || exit

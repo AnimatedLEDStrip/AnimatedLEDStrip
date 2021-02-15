@@ -22,6 +22,8 @@
 # THE SOFTWARE.
 #
 
+set -e
+
 ./gradlew jvmJar
 
 VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')

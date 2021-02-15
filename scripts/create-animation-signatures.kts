@@ -101,7 +101,7 @@ runBlocking {
             val anim = ledStrip.animationManager.startAnimation(it)
 
             anim.join()
-            delay(1000)
+            delay(200)
             ledStrip.renderer.stopRendering()
             ledStrip.renderer.close()
         }
