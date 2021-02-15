@@ -52,24 +52,12 @@ jobs:
           candidate: kotlin
           version: 1.4.30
 
-      - name: Create JVM Jar
-        run: ./gradlew jvmJar
+      - name: Prepare documentation for upload
+        run: scripts/commit-animation-docs.bash
 
-      - name: Clone wiki
-        run: git clone https://github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git wiki
-
-      - name: Create documentation
-        run: |
-          VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
-          KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
-          kotlinc-jvm -script create_docs.kts -cp "build/libs/animatedledstrip-core-jvm-${VERSION}.jar:$KERMIT_JAR"
-
-      - name: Upload Documentation to Wiki
-        run: |
-          cd wiki
-          git add .
-          git commit --allow-empty -m "Update animation documentation"
-          git push -u https://$GH_PAT_USER:$GH_PERSONAL_ACCESS_TOKEN@github.com/AnimatedLEDStrip/AnimatedLEDStrip.wiki.git master
-        env:
-          GH_PAT_USER: ${{ secrets.GH_PAT_USER }}
-          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+      - name: Upload documentation
+        uses: ad-m/github-push-action@0.6.0
+        with:
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          directory: wiki
+          repository: AnimatedLEDStrip/animatedledstrip.github.io
