@@ -42,8 +42,7 @@ val stack = DefinedAnimation(
     Animation.AnimationInfo(
         name = "Stack",
         abbr = "STK",
-        description = "Pixels are run from one end of the strip to the " +
-                      "other, 'stacking' up.\n" +
+        description = "Pixels are run along a specified line through the LEDs, stacking up at the end.\n" +
                       "Each pixel has to travel a shorter distance than the last.\n\n" +
                       "Note that this animation has a quadratic time complexity.",
         runCountDefault = 1,

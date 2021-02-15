@@ -31,7 +31,7 @@ val sortingAnimations = AnimationGroup.NewAnimationGroupInfo(
     groupType = GroupType.RANDOMIZED,
     groupInfo = Animation.AnimationInfo(name = "Sorting",
                                         abbr = "SRT",
-                                        description = "Runs all of the different sorting animations currently defined.",
+                                        description = "Runs all of the sorting animations currently defined.",
                                         runCountDefault = -1,
                                         minimumColors = 1,
                                         unlimitedColors = false,
