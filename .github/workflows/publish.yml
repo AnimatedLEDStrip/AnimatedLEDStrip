@@ -51,6 +51,9 @@ jobs:
         with:
           candidate: kotlin
           version: 1.4.30
+      - run: |
+          export SDKMAN_DIR="~/.sdkman"
+          [[ -s "~/.sdkman/bin/sdkman-init.sh" ]] && source "~/.sdkman/bin/sdkman-init.sh"
 
       - uses: actions/setup-python@v2
       - name: Install python packages
