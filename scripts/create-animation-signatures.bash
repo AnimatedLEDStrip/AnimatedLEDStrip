@@ -26,8 +26,15 @@
 
 VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
 ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
-KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
+KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar" | tail -n 1)"
+COROUTINES_JAR="$(find ~/.gradle -name "kotlinx-coroutines-core-jvm-*.jar" | tail -n 1)"
+
+rm -rf signature-creation
+mkdir signature-creation
 (
-  cd wiki || exit
-  kotlinc-jvm -script ../scripts/create-animation-docs.kts -cp "$ALS_JAR:$KERMIT_JAR"
+  cd signature-creation || exit
+  kotlinc-jvm -script ../scripts/create-animation-signatures.kts -cp "$ALS_JAR:$KERMIT_JAR:$COROUTINES_JAR"
+  # shellcheck disable=SC2046
+  # shellcheck disable=SC2035
+  python3 ../scripts/CSVtoPNG.py $(ls *.csv)
 )

@@ -29,6 +29,11 @@ val animList = mutableListOf<String>()
 
 fun String.toFileName(): String = replace(" ", "-").replace("(", "").replace(")", "")
 
+fun String.createSigName(): String =
+    "(?<=[a-zA-Z ])[A-Z]|(?<=[ ])[a-z]|\\(".toRegex().replace(this) {
+        "_${it.value}"
+    }.replace("[\\s()]".toRegex(), "").toLowerCase()
+
 fun createFile(info: Animation.AnimationInfo): FileWriter {
     val fileName = info.name.toFileName()
 
@@ -113,12 +118,8 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
     file.append(info.description)
     file.append("\n\n")
 
-//    val sigName = "(?<=[a-zA-Z ])[A-Z]|(?<=[ ])[a-z]|\\(".toRegex().replace(info.name) {
-//        "_${it.value}"
-//    }.replace("[\\s()]".toRegex(), "").toLowerCase()
-
-//    file.append("## [Animation Signature](Animation-Signatures)\n")
-//    file.append("![${info.name} Signature](https://github.com/AnimatedLEDStrip/AnimatedLEDStrip/blob/master/animation-signatures/${sigName}.png)\n\n")
+    file.append("## [Animation Signature](Animation-Signatures)\n")
+    file.append("![${info.name} Signature](/signatures/${info.name.createSigName()}.png)\n\n")
 }
 
 fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimationGroupInfo) {

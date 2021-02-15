@@ -22,27 +22,12 @@
 # THE SOFTWARE.
 #
 
-rm -rf wiki
+./gradlew jvmJar
 
-git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
-
-scripts/create-animation-pages.bash
-
+VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
+ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
+KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
 (
   cd wiki || exit
-  git add animations animations.md
-  git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-  git config --local user.name "github-actions[bot]"
-  git commit --allow-empty -m "Update animation pages"
-)
-
-scripts/create-animation-signatures.bash
-
-cp signature-creation/*.png wiki/signatures
-rm -rf signature-creation
-
-(
-  cd wiki || exit
-  git add signatures
-  git commit --allow-empty -m "Update animation signatures"
+  kotlinc-jvm -script ../scripts/create-animation-pages.kts -cp "$ALS_JAR:$KERMIT_JAR"
 )

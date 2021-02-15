@@ -41,7 +41,7 @@ jobs:
           clean: false
 
   deploy-anim-documentation:
-    needs: [publish]
+    needs: publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.1
@@ -52,7 +52,16 @@ jobs:
           candidate: kotlin
           version: 1.4.30
 
-      - name: Prepare documentation for upload
+      - uses: actions/setup-python@v2
+      - name: Install python packages
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            argparse
+            pillow
+            tqdm
+
+      - name: Prepare pages and signatures for upload
         run: scripts/commit-animation-docs.bash
 
       - name: Upload documentation

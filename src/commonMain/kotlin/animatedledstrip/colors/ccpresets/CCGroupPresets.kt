@@ -23,6 +23,7 @@
 package animatedledstrip.colors.ccpresets
 
 import animatedledstrip.colors.ColorContainer
+import animatedledstrip.colors.ColorContainerInterface
 
 /*
  * Presets taken from FastLED color palettes
@@ -178,3 +179,8 @@ val CCGroupPresets: List<ColorContainer> = listOf(
 
 val ColorContainer.Companion.groupPresets: List<ColorContainer>
     get() = CCGroupPresets
+
+fun ColorContainer.Companion.randomColorList(numColors: Int = 1): MutableList<ColorContainerInterface> =
+    mutableListOf<ColorContainerInterface>().apply {
+        for (i in 0 until numColors) add(ColorContainer.Random)
+    }
