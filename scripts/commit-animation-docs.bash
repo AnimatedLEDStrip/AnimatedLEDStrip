@@ -23,7 +23,7 @@
 #
 
 set -e
-ls /home/runner/.sdkman/candidates/kotlin/current/bin
+echo $PATH
 rm -rf wiki
 
 git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
