@@ -49,12 +49,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.1
 
-      - name: Install kotlin compiler
-        run: |
-          curl -s https://get.sdkman.io | bash
-          source "/home/runner/.sdkman/bin/sdkman-init.sh"
-          sdk install kotlin
-          ls /home/runner/.sdkman/candidates/kotlin/current/bin
+      #      - name: Install kotlin compiler
+      #        run: |
+      #          curl -s https://get.sdkman.io | bash
+      #          source "/home/runner/.sdkman/bin/sdkman-init.sh"
+      #          sdk install kotlin
+      #          ls /home/runner/.sdkman/candidates/kotlin/current/bin
 
       - uses: actions/setup-python@v2
       - name: Install python packages
