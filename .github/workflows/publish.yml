@@ -17,13 +17,13 @@ jobs:
         with:
           java-version: 13
 
-      - name: Publish to Maven Central
-        run: ./gradlew publish --stacktrace
-        env:
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
-          ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
-          ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
+  #      - name: Publish to Maven Central
+  #        run: ./gradlew publish --stacktrace
+  #        env:
+  #          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
+  #          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+  #          ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
+  #          ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
 
   deploy-documentation:
     needs: publish
@@ -36,12 +36,12 @@ jobs:
           ./gradlew dokkaHtml
           git add -f dokka
 
-      - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@4.0.0
-        with:
-          branch: gh-pages
-          folder: dokka
-          clean: false
+  #      - name: Deploy documentation
+  #        uses: JamesIves/github-pages-deploy-action@4.0.0
+  #        with:
+  #          branch: gh-pages
+  #          folder: dokka
+  #          clean: false
 
   deploy-anim-documentation:
     needs: publish
@@ -70,9 +70,9 @@ jobs:
       - name: Prepare pages and signatures for upload
         run: scripts/commit-animation-docs.bash
 
-      - name: Upload documentation
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          directory: wiki
-          repository: AnimatedLEDStrip/animatedledstrip.github.io
+#      - name: Upload documentation
+#        uses: ad-m/github-push-action@v0.6.0
+#        with:
+#          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+#          directory: wiki
+#          repository: AnimatedLEDStrip/animatedledstrip.github.io
