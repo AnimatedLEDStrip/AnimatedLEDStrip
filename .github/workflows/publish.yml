@@ -54,7 +54,7 @@ jobs:
           curl -s https://get.sdkman.io | bash
           source "/home/runner/.sdkman/bin/sdkman-init.sh"
           sdk install kotlin
-          which kotlinc-jvm
+          ls /home/runner/.sdkman/candidates/kotlin/current/bin
 
       - uses: actions/setup-python@v2
       - name: Install python packages
