@@ -23,7 +23,7 @@
 #
 
 set -e
-
+which kotlinc-jvm
 rm -rf wiki
 
 git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
