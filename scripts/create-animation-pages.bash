@@ -26,10 +26,7 @@ set -e
 
 ./gradlew jvmJar
 
-VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
-ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
-KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar")"
 (
-  cd wiki || exit
-  kotlinc-jvm -script ../scripts/create-animation-pages.kts -cp "$ALS_JAR:$KERMIT_JAR"
+  cd wiki || exit 1
+  ../scripts/create-animation-pages.main.kts
 )

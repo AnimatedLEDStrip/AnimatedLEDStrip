@@ -1,3 +1,5 @@
+#!/usr/bin/env kotlin
+
 /*
  * Copyright (c) 2018-2021 AnimatedLEDStrip
  *
@@ -20,9 +22,15 @@
  * THE SOFTWARE.
  */
 
-import animatedledstrip.animations.*
-import animatedledstrip.animations.groups.*
+@file:DependsOn("co.touchlab:kermit-jvm:0.1.8")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.1.jar")
+
+import animatedledstrip.animations.Animation
+import animatedledstrip.animations.groups.AnimationGroup
+import animatedledstrip.animations.groups.GroupType
 import animatedledstrip.animations.parameters.*
+import animatedledstrip.animations.predefinedAnimations
+import animatedledstrip.animations.predefinedGroups
 import java.io.FileWriter
 
 val animList = mutableListOf<String>()

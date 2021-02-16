@@ -24,10 +24,8 @@
 
 set -e
 
-if ! which kotlinc-jvm
-then
-  if ! which sdk
-  then
+if ! which kotlinc-jvm >/dev/null; then
+  if ! which sdk >/dev/null; then
     curl -s https://get.sdkman.io | bash
     source "$HOME/.sdkman/bin/sdkman-init.sh"
   fi
@@ -35,13 +33,12 @@ then
 fi
 
 rm -rf wiki
-
 git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
 
 scripts/create-animation-pages.bash
 
 (
-  cd wiki || exit
+  cd wiki || exit 1
   git add animations animations.md
   git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
   git config --local user.name "github-actions[bot]"
@@ -53,7 +50,7 @@ scripts/create-animation-signatures.bash
 cp signature-creation/*.png wiki/signatures
 
 (
-  cd wiki || exit
+  cd wiki || exit 1
   git add signatures
   git commit --allow-empty -m "Update animation signatures"
 )
