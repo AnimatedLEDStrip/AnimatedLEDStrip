@@ -1,3 +1,5 @@
+#!/usr/bin/env kotlin
+
 /*
  * Copyright (c) 2018-2021 AnimatedLEDStrip
  *
@@ -20,8 +22,14 @@
  * THE SOFTWARE.
  */
 
+@file:DependsOn("co.touchlab:kermit-jvm:0.1.8")
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
+@file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.1.jar")
+
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.colors.ccpresets.*
+import animatedledstrip.colors.ccpresets.RainbowColors
+import animatedledstrip.colors.ccpresets.randomColorList
 import animatedledstrip.leds.animationmanagement.AnimationToRunParams
 import animatedledstrip.leds.animationmanagement.startAnimation
 import animatedledstrip.leds.emulation.createNewEmulatedStrip
@@ -86,7 +94,7 @@ val anims = listOf(
 runBlocking {
     anims.map {
         launch {
-            val ledStrip = newLEDStrip("${it.animation.createSigName()}")
+            val ledStrip = newLEDStrip(it.animation.createSigName())
 
             ledStrip.startAnimationCallback = {
                 println("Running ${it.animationName}")
