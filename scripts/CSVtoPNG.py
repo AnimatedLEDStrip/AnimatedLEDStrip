@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #  Copyright (c) 2018-2021 AnimatedLEDStrip
 #
 #  Permission is hereby granted, free of charge, to any person obtaining a copy
