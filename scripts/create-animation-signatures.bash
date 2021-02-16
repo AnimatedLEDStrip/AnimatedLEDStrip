@@ -30,7 +30,9 @@ VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
 ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
 KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar" | tail -n 1)"
 COROUTINES_JAR="$(find ~/.gradle -name "kotlinx-coroutines-core-jvm-*.jar" | tail -n 1)"
-
+echo $ALS_JAR
+echo $KERMIT_JAR
+echo $COROUTINES_JAR
 rm -rf signature-creation
 mkdir signature-creation
 (

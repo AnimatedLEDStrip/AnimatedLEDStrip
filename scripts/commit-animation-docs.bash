@@ -23,8 +23,8 @@
 #
 
 set -e
-echo $USER
-pwd
+echo ~
+
 which sdk || curl -s https://get.sdkman.io | bash && source "/home/runner/.sdkman/bin/sdkman-init.sh"
 
 which kotlinc-jvm || sdk install kotlin
