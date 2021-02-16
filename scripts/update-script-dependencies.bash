@@ -33,9 +33,11 @@ sed -i "s/@file:DependsOn(\"co.touchlab:kermit-jvm:.*\")/@file:DependsOn(\"$KERM
 sed -i "s/@file:DependsOn(\"co.touchlab:kermit-jvm:.*\")/@file:DependsOn(\"$KERMIT_DEPENDENCY\")/" scripts/create-animation-signatures.main.kts
 
 COROUTINES_DEPENDENCY=$(./gradlew dependencies --configuration jvmCompileClasspath | grep kotlinx-coroutines-core-jvm | sed 's/ \+/ /g' | cut -d ' ' -f 3)
+sed -i "s/@file:DependsOn(\"org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:.*\")/@file:DependsOn(\"$COROUTINES_DEPENDENCY\")/" scripts/create-animation-pages.main.kts
 sed -i "s/@file:DependsOn(\"org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:.*\")/@file:DependsOn(\"$COROUTINES_DEPENDENCY\")/" scripts/create-animation-signatures.main.kts
 
 SERIALIZATION_DEPENDENCY=$(./gradlew dependencies --configuration jvmCompileClasspath | grep kotlinx-serialization-json-jvm | sed 's/ \+/ /g' | cut -d ' ' -f 3)
+sed -i "s/@file:DependsOn(\"org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:.*\")/@file:DependsOn(\"$SERIALIZATION_DEPENDENCY\")/" scripts/create-animation-pages.main.kts
 sed -i "s/@file:DependsOn(\"org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:.*\")/@file:DependsOn(\"$SERIALIZATION_DEPENDENCY\")/" scripts/create-animation-signatures.main.kts
 
 if ! git diff-index --quiet HEAD
