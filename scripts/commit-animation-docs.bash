@@ -23,12 +23,16 @@
 #
 
 set -e
-echo ~
 
-which sdk || curl -s https://get.sdkman.io | bash && source "/home/runner/.sdkman/bin/sdkman-init.sh"
-
-which kotlinc-jvm || sdk install kotlin
-
+if ! which kotlinc-jvm
+then
+  if ! which sdk
+  then
+    curl -s https://get.sdkman.io | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+  fi
+  sdk install kotlin
+fi
 
 rm -rf wiki
 
