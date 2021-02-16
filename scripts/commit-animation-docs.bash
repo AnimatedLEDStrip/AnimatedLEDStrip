@@ -23,7 +23,13 @@
 #
 
 set -e
-echo $PATH
+echo $USER
+pwd
+which sdk || curl -s https://get.sdkman.io | bash && source "/home/runner/.sdkman/bin/sdkman-init.sh"
+
+which kotlinc-jvm || sdk install kotlin
+
+
 rm -rf wiki
 
 git clone https://github.com/AnimatedLEDStrip/animatedledstrip.github.io.git wiki
