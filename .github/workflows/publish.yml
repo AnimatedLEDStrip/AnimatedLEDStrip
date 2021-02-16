@@ -52,11 +52,9 @@ jobs:
       - name: Install kotlin compiler
         run: |
           curl -s https://get.sdkman.io | bash
-          echo $PATH
           source "/home/runner/.sdkman/bin/sdkman-init.sh"
-          echo $PATH
           sdk install kotlin
-          echo $PATH
+          ls /home/runner/.sdkman/candidates/kotlin/current/bin
 
       - uses: actions/setup-python@v2
       - name: Install python packages
