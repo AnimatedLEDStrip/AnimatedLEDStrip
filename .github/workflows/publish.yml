@@ -48,13 +48,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.3.1
-
-      #      - name: Install kotlin compiler
-      #        run: |
-      #          curl -s https://get.sdkman.io | bash
-      #          source "/home/runner/.sdkman/bin/sdkman-init.sh"
-      #          sdk install kotlin
-      #          ls /home/runner/.sdkman/candidates/kotlin/current/bin
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
       - uses: actions/setup-python@v2
       - name: Install python packages
@@ -64,6 +60,9 @@ jobs:
             argparse
             pillow
             tqdm
+
+      - name: Update script dependencies
+        run: scripts/update-script-dependencies.bash
 
       - name: Prepare pages and signatures for upload
         run: scripts/commit-animation-docs.bash

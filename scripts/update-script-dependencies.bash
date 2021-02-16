@@ -40,4 +40,6 @@ sed -i "s/@file:DependsOn(\"org.jetbrains.kotlinx:kotlinx-serialization-json-jvm
 
 if ! git diff-index --quiet HEAD
 then
-  git
+  echo "Warning: Script dependencies are not up to date with build.gradle.kts"
+  echo "This does not affect this run, but could cause confusion later"
+fi
