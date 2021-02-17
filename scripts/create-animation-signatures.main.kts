@@ -25,7 +25,7 @@
 @file:DependsOn("co.touchlab:kermit-jvm:0.1.8")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
-@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.1.jar")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
 
 import animatedledstrip.colors.ColorContainer
 import animatedledstrip.colors.ccpresets.RainbowColors
@@ -37,6 +37,7 @@ import animatedledstrip.leds.stripmanagement.LEDStrip
 import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.ALSLogger
 import co.touchlab.kermit.Severity
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
@@ -91,7 +92,19 @@ val anims = listOf(
     AnimationToRunParams("Wipe", ColorContainer.randomColorList(), runCount = 1),
 )
 
+val progressChannel = Channel<String>()
+
 runBlocking {
+    launch {
+        val total = anims.size
+        var completed = 0
+        for (p in progressChannel) {
+            completed++
+            println("Completed $p ($completed/$total)")
+            if (completed >= total) break
+        }
+    }
+
     anims.map {
         launch {
             val ledStrip = newLEDStrip(it.animation.createSigName())
@@ -99,9 +112,11 @@ runBlocking {
             ledStrip.startAnimationCallback = {
                 println("Running ${it.animationName}")
             }
-
+            val scope = this
             ledStrip.endAnimationCallback = {
-                println("${it.animationName} complete")
+                scope.launch {
+                    progressChannel.send(it.animation.info.name)
+                }
             }
 
             ledStrip.renderer.startRendering()
