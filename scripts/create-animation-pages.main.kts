@@ -25,7 +25,7 @@
 @file:DependsOn("co.touchlab:kermit-jvm:0.1.8")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
-@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.1.jar")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
 
 import animatedledstrip.animations.Animation
 import animatedledstrip.animations.groups.AnimationGroup
@@ -139,7 +139,7 @@ fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimation
     }
 
     file.append("## Included Animations\n")
-    file.append(info.animationList.map { "- [$it](animations/${it.toFileName()})" }.joinToString("\n"))
+    file.append(info.animationList.joinToString("\n") { "- [$it](animations/${it.toFileName()})" })
     file.append("\n\n")
 
     createInfoDocumentation(file, info.groupInfo)
