@@ -25,10 +25,8 @@ package animatedledstrip.leds.colormanagement
 import animatedledstrip.colors.b
 import animatedledstrip.colors.g
 import animatedledstrip.colors.r
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.launch
 import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
@@ -54,20 +52,18 @@ actual class LEDStripColorLogger actual constructor(
     private val saveStateBuffer = StringBuilder()
     private val saveStateChannel: Channel<String> = Channel(Channel.UNLIMITED)
 
+    var renderNum = 0
+        private set
+
     init {
         // Coroutine that handles collecting and saving the state data
         GlobalScope.launch {
-            var renderNum = 0
-
             for (saveState in saveStateChannel) {
                 renderNum++
                 if (stripColorManager.stripManager.stripInfo.isRenderLoggingEnabled) {
                     saveStateBuffer.appendLine(saveState)
                     if (renderNum >= stripColorManager.stripManager.stripInfo.rendersBetweenLogSaves) {
-                        launch(Dispatchers.IO) {
-                            FileWriter(fileName, true).append(saveStateBuffer.toString()).close()
-                            saveStateBuffer.clear()
-                        }.join()
+                        saveToFile(this).join()
                         renderNum = 0
                     }
                 }
@@ -83,4 +79,11 @@ actual class LEDStripColorLogger actual constructor(
             stripColorManager.pixelActualColorList.joinToString(separator = ",") { "${it.r},${it.g},${it.b}" }
         )
     }
+
+    private fun saveToFile(scope: CoroutineScope): Job =
+        scope.launch(Dispatchers.IO) {
+            FileWriter(fileName, true).append(saveStateBuffer.toString()).close()
+            saveStateBuffer.clear()
+        }
+
 }

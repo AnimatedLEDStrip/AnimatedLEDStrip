@@ -39,5 +39,8 @@ mkdir signature-creation
   ../scripts/create-animation-signatures.main.kts
   # shellcheck disable=SC2046
   # shellcheck disable=SC2035
-  python3 ../scripts/CSVtoPNG.py $(ls *.csv)
+  ../scripts/CSVtoPNG.py $(ls *-1D.csv)
+  # shellcheck disable=SC2046
+  # shellcheck disable=SC2035
+  ../scripts/CSVtoGIF.py --width 100 --height 100 --led-locations locations.csv $(ls *-2D.csv)
 )

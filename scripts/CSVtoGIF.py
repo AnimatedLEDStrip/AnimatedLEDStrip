@@ -22,13 +22,17 @@
 
 import argparse
 import csv
-import math
 import os
 import threading
 from concurrent.futures import as_completed, ThreadPoolExecutor
 
+import imageio
+import numpy
 import tqdm
 from PIL import Image, ImageDraw
+from pygifsicle import optimize
+
+base_dir = os.getcwd()
 
 
 # https://stackoverflow.com/q/845058/1944087
@@ -41,78 +45,74 @@ def file_len(fname):
 
 
 def set_point(draw: 'ImageDraw', x: int, y: int, r: int, g: int, b: int):
-    draw.point((x, y), fill=(r, g, b))
+    draw.point((2 * x, 2 * y), fill=(r, g, b))
+    draw.point((2 * x, 2 * y + 1), fill=(r, g, b))
+    draw.point((2 * x + 1, 2 * y), fill=(r, g, b))
+    draw.point((2 * x + 1, 2 * y + 1), fill=(r, g, b))
 
 
-def get_height_by_render_count(render_count: int) -> int:
-    if render_count > 30000:
-        return 3000
-    elif render_count > 10000:
-        return 2000
-    elif render_count > 2000:
-        return 1000
-    else:
-        return render_count
-
-
-def create_png(fname):
+def create_gif(fname, height, width, numLEDs):
     try:
         thread_id = int(threading.current_thread().name.split('_')[-1]) + 1
     except ValueError:
         thread_id = 1
 
     renders = file_len(fname)
+
     file_name = fname[:-7]
 
-    num_leds = args['num_leds'][0]
-
-    height = get_height_by_render_count(renders) if not args['height'] else args['height']
-    columns = math.ceil(renders / height)
-    width = columns * num_leds + 10 * (columns - 1)
-
-    multi_column = height != renders
-
-    image = Image.new('RGB', (width, height))
-    drawing = ImageDraw.Draw(image)
+    gif_out = imageio.get_writer(os.path.join(base_dir, "{}.gif".format(file_name)), format='GIF', mode='I', fps=50)
 
     with open(fname, 'r') as f:
         reader = csv.reader(f)
-        i = 0
         with tqdm.tqdm(total=renders, desc=file_name,
                        position=thread_id, leave=False) as progress:
+            i = 1
             for row in reader:
-                for v in range(0, num_leds - 1):
+                image = Image.new('RGB', (width * 2, height * 2))
+                drawing = ImageDraw.Draw(image)
+                for v in range(0, numLEDs - 1):
                     set_point(draw=drawing,
-                              x=(v + ((num_leds + 10) * math.floor(i / height))),
-                              y=(i % height),
+                              x=locations[v][0],
+                              y=locations[v][1],
                               r=int(row[3 * v]),
                               g=int(row[3 * v + 1]),
                               b=int(row[3 * v + 2]))
-                if multi_column:
-                    for v in range(0, 10):
-                        set_point(draw=drawing,
-                                  x=(v + ((num_leds + 10) * math.floor(i / height)) + num_leds),
-                                  y=(i % height),
-                                  r=32, g=32, b=32)
-                i += 1
+                gif_out.append_data(numpy.array(image))
+                i = i + 1
                 progress.update(1)
 
-    image.save("{}.png".format(file_name))
+    gif_out.close()
+    optimize("{}.gif".format(file_name), options=['-w'])
 
 
-parser = argparse.ArgumentParser(description='Convert an AnimatedLEDStrip render log file into a PNG')
+parser = argparse.ArgumentParser(description='Convert an AnimatedLEDStrip render log file into a GIF')
 parser.add_argument('file', nargs='+', metavar='FILE', help='The file to convert')
-parser.add_argument('--height', nargs=1, metavar='ROWS', type=int, help='Manually set the height of the picture')
-parser.add_argument('--num-leds', nargs=1, metavar='LEDS', type=int, help='Number of LEDs', default=[240])
+parser.add_argument('--height', nargs=1, metavar='ROWS', type=int,
+                    help='Manually set the height of the matrix', default=[100])
+parser.add_argument('--width', nargs=1, metavar='COLUMNS', type=int,
+                    help='Manually set the width of the matrix', default=[100])
+parser.add_argument('--led-locations', nargs=1, metavar='FILE', type=str, help='File with LED locations', required=True)
 parser.add_argument('--workers', nargs=1, metavar='#', type=int, help='Number of parallel jobs to execute',
                     default=[os.cpu_count()])
 
 args = vars(parser.parse_args())
+locations_file = args['led_locations'][0]
 files = args['file']
+height_arg = args['height'][0]
+width_arg = args['width'][0]
+numLEDs_calc = height_arg * width_arg
 workers = args['workers'][0]
 
-with tqdm.tqdm(total=len(files), desc='Processed 1D Anims', position=0) as file_progress:
+locations = []
+
+with open(locations_file, 'r') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        locations = locations + [(int(float(row[0])), int(float(row[1])), int(float(row[2])))]
+
+with tqdm.tqdm(total=len(files), desc='Processed 2D Anims', position=0) as file_progress:
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = [pool.submit(create_png, file) for file in files]
+        futures = [pool.submit(create_gif, file, height_arg, width_arg, numLEDs_calc) for file in files]
         for future in as_completed(futures):
             file_progress.update(1)

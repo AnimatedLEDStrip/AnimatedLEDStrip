@@ -55,7 +55,10 @@ jobs:
         with:
           packages: |
             argparse
+            numpy
+            imageio
             pillow
+            pygifsicle
             tqdm
 
       - name: Update script dependencies
