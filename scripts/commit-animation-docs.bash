@@ -47,7 +47,7 @@ scripts/create-animation-pages.bash
 
 scripts/create-animation-signatures.bash
 
-cp signature-creation/*.png wiki/signatures
+cp signature-creation/*.{png,gif} wiki/signatures
 
 (
   cd wiki || exit 1

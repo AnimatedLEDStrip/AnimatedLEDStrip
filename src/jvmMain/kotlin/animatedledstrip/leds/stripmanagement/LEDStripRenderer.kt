@@ -62,26 +62,34 @@ actual class LEDStripRenderer actual constructor(
 
     private val job = GlobalScope.launch(renderThread) {
         var renderTime = 0
-        val renderDelay = renderDelay / 5
-        while (true) {
-            if (isRendering)
-                try {
-                    stripColorManager.pixelColors.forEach {
-                        it.sendColorToStrip(
-                            ledStrip,
-                            doFade = renderTime % 2 == 0, // 2 * 5 iterations = 10 ms between fades
-                        )
+        val loopsBetweenRenders = renderDelay / 5
+        val rolloverValue = loopsBetweenRenders * 1000000
+        try {
+            while (true) {
+                if (isRendering)
+                    try {
+                        stripColorManager.pixelColors.forEach {
+                            it.sendColorToStrip(
+                                ledStrip,
+                                doFade = renderTime % 2 == 0, // 2 * 5 iterations = 10 ms between fades
+                            )
+                        }
+                        if (renderTime % loopsBetweenRenders == 0L) {
+                            ledStrip.render()
+                            stripColorLogger.saveStripState()
+                        }
+                    } catch (e: NullPointerException) {
+                        Logger.e("Renderer") { "LEDStrip NullPointerException when rendering" }
+                        delay(1000)
                     }
-                    if (renderTime % renderDelay == 0L) ledStrip.render()
-                    stripColorLogger.saveStripState()
-                } catch (e: NullPointerException) {
-                    Logger.e("Renderer") { "LEDStrip NullPointerException when rendering" }
-                    delay(1000)
-                }
-            delay(5)
-            renderTime++
-            if (renderTime >= renderDelay * 1000000) // A very big number divisible by renderDelay
-                renderTime = 0
+                delay(5)
+                renderTime++
+                if (renderTime >= rolloverValue)
+                    renderTime = 0
+            }
+        } finally {
+            while (stripColorLogger.renderNum < stripColorManager.stripManager.stripInfo.rendersBetweenLogSaves)
+                stripColorLogger.saveStripState()
         }
     }
 }
