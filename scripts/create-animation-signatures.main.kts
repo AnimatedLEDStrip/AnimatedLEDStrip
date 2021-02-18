@@ -166,8 +166,8 @@ val anims2D = listOf(
 )
 
 // Semaphores are used to prevent heap space errors, especially for 2D animations (which use 10k pixels)
-val semaphore1D = Semaphore(8)
-val semaphore2D = Semaphore(2)
+val semaphore1D = Semaphore(4)
+val semaphore2D = Semaphore(1)
 
 val progressChannel = Channel<String>()
 
