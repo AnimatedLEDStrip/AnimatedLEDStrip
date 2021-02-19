@@ -42,8 +42,11 @@ import animatedledstrip.leds.stripmanagement.LEDStrip
 import animatedledstrip.leds.stripmanagement.StripInfo
 import animatedledstrip.utils.ALSLogger
 import co.touchlab.kermit.Severity
-import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import java.io.FileWriter
@@ -166,7 +169,7 @@ val anims2D = listOf(
 )
 
 // Semaphores are used to prevent heap space errors, especially for 2D animations (which use 10k pixels)
-val semaphore1D = Semaphore(4)
+val semaphore1D = Semaphore(12)
 val semaphore2D = Semaphore(1)
 
 val progressChannel = Channel<String>()
@@ -181,8 +184,8 @@ runBlocking {
             if (completed >= total) break
         }
     }
-    val jobs = mutableListOf<Job>()
-    jobs.addAll(anims1D.map {
+
+    anims1D.map {
         launch {
             semaphore1D.withPermit {
                 val ledStrip = new1DStrip(it.animation.createSigName())
@@ -207,8 +210,8 @@ runBlocking {
                 ledStrip.renderer.close()
             }
         }
-    })
-    jobs.addAll(anims2D.map {
+    }.joinAll()
+    anims2D.map {
         launch {
             semaphore2D.withPermit {
                 val ledStrip = new2DStrip(it.animation.createSigName())
@@ -233,9 +236,7 @@ runBlocking {
                 ledStrip.renderer.close()
             }
         }
-    })
-
-    jobs.joinAll()
+    }.joinAll()
 
     delay(5000)
 }
