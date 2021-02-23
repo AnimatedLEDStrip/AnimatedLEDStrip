@@ -132,9 +132,9 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
 
     file.append("## [Animation Signature](Animation-Signatures)\n")
     if (info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL))
-        file.append("![${info.name} Signature](/signatures/${info.name.createSigName()}.png)\n\n")
+        file.append("### One Dimensional\n\n![${info.name} Signature](/signatures/${info.name.createSigName()}.png)\n\n")
     if (info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL))
-        file.append("![${info.name} 2D Signature](/signatures/${info.name.createSigName()}.gif\n\n")
+        file.append("### Two Dimensional\n\n![${info.name} 2D Signature](/signatures/${info.name.createSigName()}.gif)\n\n")
 }
 
 fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimationGroupInfo) {
