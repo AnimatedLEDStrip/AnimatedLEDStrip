@@ -50,15 +50,15 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
 
     init {
         predefinedAnimations.filter {
-            (it.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
-            (it.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
-            (it.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
+            (sectionManager.stripManager.stripInfo.is1DSupported && it.info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL)) ||
+            (sectionManager.stripManager.stripInfo.is2DSupported && it.info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL)) ||
+            (sectionManager.stripManager.stripInfo.is3DSupported && it.info.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL))
         }.forEach { addNewAnimation(it) }
 
         predefinedGroups.filter {
-            (it.groupInfo.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is1DSupported) ||
-            (it.groupInfo.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is2DSupported) ||
-            (it.groupInfo.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL) && sectionManager.stripManager.stripInfo.is3DSupported)
+            (sectionManager.stripManager.stripInfo.is1DSupported && it.groupInfo.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL)) ||
+            (sectionManager.stripManager.stripInfo.is2DSupported && it.groupInfo.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL)) ||
+            (sectionManager.stripManager.stripInfo.is3DSupported && it.groupInfo.dimensionality.contains(Dimensionality.THREE_DIMENSIONAL))
         }.forEach { addNewGroup(it) }
     }
 
@@ -91,17 +91,17 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
      */
     fun addNewAnimation(anim: Animation): Animation? {
         if (supportedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-            Logger.e { "Animation ${anim.info.name} already defined" }
+            Logger.e("Animation Manager") { "Animation ${anim.info.name} already defined" }
             return null
         }
         if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-            Logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
+            Logger.e("Animation Manager") { "Animation with abbreviation ${anim.info.abbr} already defined" }
             return null
         }
 
         supportedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
         supportedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
-        Logger.d { "Added animation ${anim.info.name}" }
+        Logger.d("Animation Manager") { "Added animation ${anim.info.name}" }
         return anim
     }
 
