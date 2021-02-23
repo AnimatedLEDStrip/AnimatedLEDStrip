@@ -26,8 +26,10 @@
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
 @file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
+//@file:DependsOn("c:/Users/mnmax/IdeaProjects/AnimatedLEDStrip/build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
 
 import animatedledstrip.animations.Animation
+import animatedledstrip.animations.Dimensionality
 import animatedledstrip.animations.groups.AnimationGroup
 import animatedledstrip.animations.groups.GroupType
 import animatedledstrip.animations.parameters.*
@@ -129,7 +131,10 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
     file.append("\n\n")
 
     file.append("## [Animation Signature](Animation-Signatures)\n")
-    file.append("![${info.name} Signature](/signatures/${info.name.createSigName()}.png)\n\n")
+    if (info.dimensionality.contains(Dimensionality.ONE_DIMENSIONAL))
+        file.append("![${info.name} Signature](/signatures/${info.name.createSigName()}.png)\n\n")
+    if (info.dimensionality.contains(Dimensionality.TWO_DIMENSIONAL))
+        file.append("![${info.name} 2D Signature](/signatures/${info.name.createSigName()}.gif\n\n")
 }
 
 fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimationGroupInfo) {

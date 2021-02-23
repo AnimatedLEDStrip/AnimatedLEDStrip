@@ -1,0 +1,25 @@
+name: Publish Code Documentation
+
+on:
+  workflow_run:
+    workflows: [ publish-release ]
+    types: [ completed ]
+
+
+jobs:
+  deploy-code-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+
+      - name: Create documentation
+        run: |
+          ./gradlew dokkaHtml
+          git add -f dokka
+
+      - name: Deploy documentation
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          branch: gh-pages
+          folder: dokka
+          clean: false

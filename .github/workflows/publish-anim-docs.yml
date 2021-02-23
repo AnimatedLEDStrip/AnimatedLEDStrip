@@ -1,0 +1,38 @@
+name: Publish Animation Documentation
+
+on:
+  workflow_run:
+    workflows: [ publish-release ]
+    types: [ completed ]
+
+
+jobs:
+  deploy-anim-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+
+      - uses: actions/setup-python@v2
+      - name: Install python packages
+        uses: BSFishy/pip-action@v1
+        with:
+          packages: |
+            argparse
+            numpy
+            imageio
+            pillow
+            pygifsicle
+            tqdm
+
+      - name: Update script dependencies
+        run: scripts/update-script-dependencies.bash
+
+      - name: Prepare pages and signatures for upload
+        run: scripts/commit-animation-docs.bash
+
+      - name: Upload documentation
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          directory: wiki
+          repository: AnimatedLEDStrip/animatedledstrip.github.io
