@@ -37,10 +37,18 @@ mkdir signature-creation
 (
   cd signature-creation || exit 1
   ../scripts/create-animation-signatures.main.kts
-  # shellcheck disable=SC2046
   # shellcheck disable=SC2035
-  ../scripts/CSVtoPNG.py $(ls *-1D.csv)
-  # shellcheck disable=SC2046
+  if ls *-1D.csv 1> /dev/null 2>&1
+  then
+    # shellcheck disable=SC2046
+    # shellcheck disable=SC2035
+    ../scripts/CSVtoPNG.py $(ls *-1D.csv)
+  fi
   # shellcheck disable=SC2035
-  ../scripts/CSVtoGIF.py --width 100 --height 100 --led-locations locations.csv $(ls *-2D.csv)
+  if ls *-2D.csv 1> /dev/null 2>&1
+  then
+    # shellcheck disable=SC2046
+    # shellcheck disable=SC2035
+    ../scripts/CSVtoGIF.py --width 100 --height 100 --led-locations locations.csv $(ls *-2D.csv)
+  fi
 )
