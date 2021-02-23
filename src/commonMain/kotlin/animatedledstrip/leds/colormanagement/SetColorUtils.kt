@@ -43,7 +43,7 @@ fun LEDStrip.setPixelFadeColor(pixel: Int, color: Int): Unit =
     colorManager.setPixelColor(pixel, color, PixelColorType.FADE)
 
 /**
- * Set a pixel's fade color
+ * Set multiple pixel's fade color
  */
 fun LEDStrip.setPixelFadeColors(pixels: List<Int>, color: PreparedColorContainer) {
     for (pixel in pixels) setPixelFadeColor(pixel, color)

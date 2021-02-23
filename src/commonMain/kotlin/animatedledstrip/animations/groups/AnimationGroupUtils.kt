@@ -32,6 +32,15 @@ import animatedledstrip.leds.animationmanagement.RunningAnimationParams
 import animatedledstrip.leds.locationmanagement.Location
 import animatedledstrip.utils.Logger
 
+/**
+ * Combine all parameters from all animations included, adding suffixes
+ * to distinguish which parameters are associated with which animation.
+ *
+ * @param manager The LEDStripAnimationManager that will be used to look up the selected animations
+ * @param groupInfo The base information about this group
+ * @param animationList The list of animations
+ * @return A new AnimationInfo for the group
+ */
 fun prepareGroupParameters(
     manager: LEDStripAnimationManager,
     groupInfo: Animation.AnimationInfo,
@@ -103,11 +112,23 @@ fun prepareGroupParameters(
                                    rotationParams)
 }
 
+/**
+ * Filter out parameters that are for the specific animation being run by the group
+ */
 fun <V> Map<String, V>.filterGroupParams(animName: String, animIndex: Int): MutableMap<String, V> =
     filter { it.key.endsWith("$animName ($animIndex)") }
         .map { it.key.removeSuffix("-$animName ($animIndex)") to it.value }.toMap()
         .toMutableMap()
 
+/**
+ * Create an AnimationToRunParams for a subanimation of the group.
+ * Suffixes are removed from parameters so they can be detected by the animation
+ *
+ * @param params The RunningAnimationParams for the running group
+ * @param animInfo The AnimationInfo for the group
+ * @param animIndex The index of the animation that is being run
+ * @return A new AnimationToRunParams
+ */
 fun prepareAnimationToRunParams(
     params: RunningAnimationParams,
     animInfo: Animation.AnimationInfo,

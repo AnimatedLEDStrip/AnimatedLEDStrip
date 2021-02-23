@@ -33,6 +33,13 @@ import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Represents a group of animations that can be run
+ *
+ * @property info Information about the group
+ * @property groupType Identifies how the animations will be run
+ * @property animationList The list of animations to run
+ */
 @Serializable
 @SerialName("AnimationGroup")
 class AnimationGroup(
@@ -82,6 +89,13 @@ class AnimationGroup(
 
     }
 
+    /**
+     * Stores information about a new animation group to create
+     *
+     * @property groupType Identifies how the animations will be run
+     * @property groupInfo Information about the group
+     * @property animationList The list of animations to run
+     */
     @Serializable
     @SerialName("NewAnimationGroupInfo")
     data class NewAnimationGroupInfo(
