@@ -39,6 +39,7 @@ val predefinedAnimations: List<Animation> = listOf(
     fadeToColor,
     fireworks,
     heapSort,
+    insertionSort,
     mergeSortParallel,
     mergeSortSequential,
     meteor,

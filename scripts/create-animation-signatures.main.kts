@@ -88,7 +88,7 @@ fun String.createSigName(): String =
         "_${it.value}"
     }.replace("[\\s()]".toRegex(), "").toLowerCase()
 
-val anims1D = listOf(
+val anims1D: List<AnimationToRunParams> = listOf(
     AnimationToRunParams("AlterFade", ColorContainer.randomColorList(3), runCount = 6),
     AnimationToRunParams("Alternate", ColorContainer.randomColorList(3), runCount = 6),
     AnimationToRunParams("Bounce", ColorContainer.randomColorList(), runCount = 1),
@@ -100,6 +100,7 @@ val anims1D = listOf(
     AnimationToRunParams("Fade to Color", ColorContainer.randomColorList(), runCount = 1),
     AnimationToRunParams("Fireworks", ColorContainer.randomColorList(5), runCount = 10),
     AnimationToRunParams("Heap Sort", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
+    AnimationToRunParams("Insertion Sort", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Merge Sort Parallel", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Merge Sort Sequential", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Meteor", ColorContainer.randomColorList(), runCount = 1),
@@ -123,7 +124,7 @@ val anims1D = listOf(
     AnimationToRunParams("Wipe", ColorContainer.randomColorList(), runCount = 1),
 )
 
-val anims2D = listOf(
+val anims2D: List<AnimationToRunParams> = listOf(
     AnimationToRunParams("AlterFade", ColorContainer.randomColorList(3), runCount = 6),
     AnimationToRunParams("Alternate", ColorContainer.randomColorList(3), runCount = 6),
     AnimationToRunParams("Color", ColorContainer.randomColorList(), runCount = 1),
