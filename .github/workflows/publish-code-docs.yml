@@ -3,8 +3,7 @@ name: publish-code-docs
 on:
   workflow_run:
     workflows: [ "publish-release" ]
-    types:
-      - completed
+    types: [ completed ]
 
 
 jobs:
