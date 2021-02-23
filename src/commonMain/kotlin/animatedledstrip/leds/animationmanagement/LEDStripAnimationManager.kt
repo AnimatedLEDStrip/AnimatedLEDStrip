@@ -89,24 +89,27 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
     /**
      * Add a new animation to the list of supported animations
      */
-    fun addNewAnimation(anim: Animation) {
+    fun addNewAnimation(anim: Animation): Animation? {
         if (supportedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
             Logger.e { "Animation ${anim.info.name} already defined" }
-            return
+            return null
         }
         if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
             Logger.e { "Animation with abbreviation ${anim.info.abbr} already defined" }
-            return
+            return null
         }
 
         supportedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
         supportedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
         Logger.d { "Added animation ${anim.info.name}" }
+        return anim
     }
 
     /**
      * Add a new animation group to the list of supported animations
      */
-    fun addNewGroup(anim: AnimationGroup.NewAnimationGroupInfo) =
-        addNewAnimation(prepareGroupAnimation(anim))
+    fun addNewGroup(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup? {
+        val group = prepareGroupAnimation(anim)
+        return if (addNewAnimation(group) == null) null else group
+    }
 }
