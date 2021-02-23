@@ -1,9 +1,10 @@
-name: Publish Code Documentation
+name: publish-code-docs
 
 on:
   workflow_run:
-    workflows: [ "Publish to Maven Central" ]
-    types: [ completed ]
+    workflows: [ "publish-release" ]
+    types:
+      - completed
 
 
 jobs:

@@ -1,8 +1,8 @@
-name: Publish Animation Documentation
+name: publish-anim-docs
 
 on:
   workflow_run:
-    workflows: [ "Publish to Maven Central" ]
+    workflows: [ "publish-release" ]
     types: [ completed ]
 
 
