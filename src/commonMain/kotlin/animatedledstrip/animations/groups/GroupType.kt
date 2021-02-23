@@ -22,7 +22,17 @@
 
 package animatedledstrip.animations.groups
 
+/**
+ * Identifies how animations will be run in an [AnimationGroup]
+ */
 enum class GroupType {
+    /**
+     * Run the animations in the order they are listed in `animationList`
+     */
     ORDERED,
+
+    /**
+     * Choose a random animation from `animationList` before each iteration
+     */
     RANDOMIZED,
 }

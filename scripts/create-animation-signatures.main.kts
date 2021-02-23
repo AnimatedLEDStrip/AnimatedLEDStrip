@@ -26,7 +26,6 @@
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
 @file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
-//@file:DependsOn("c:/Users/mnmax/IdeaProjects/AnimatedLEDStrip/build/libs/animatedledstrip-core-jvm-1.0.0-pre3.3.jar")
 
 import animatedledstrip.animations.parameters.DegreesRotation
 import animatedledstrip.animations.parameters.Equation
