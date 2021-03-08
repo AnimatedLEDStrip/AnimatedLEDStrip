@@ -97,7 +97,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("io.mockk:mockk:1.10.4")
-                implementation("io.kotest:kotest-runner-junit5:4.3.2")
+                implementation("io.kotest:kotest-runner-junit5:4.4.3")
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")
             }
         }
