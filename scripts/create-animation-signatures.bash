@@ -26,11 +26,6 @@ set -e
 
 ./gradlew jvmJar
 
-#VERSION=$(./gradlew properties | grep '^version:' | sed 's/version: //g')
-#ALS_JAR=$(find "$(pwd)/build/libs" -name "animatedledstrip-core-jvm-${VERSION}.jar")
-#KERMIT_JAR="$(find ~/.gradle -name "kermit-jvm-*.jar" | tail -n 1)"
-#COROUTINES_JAR="$(find ~/.gradle -name "kotlinx-coroutines-core-jvm-*.jar" | tail -n 1)"
-
 rm -rf signature-creation
 mkdir signature-creation
 
@@ -38,15 +33,13 @@ mkdir signature-creation
   cd signature-creation || exit 1
   ../scripts/create-animation-signatures.main.kts
   # shellcheck disable=SC2035
-  if ls *-1D.csv 1> /dev/null 2>&1
-  then
+  if ls *-1D.csv 1>/dev/null 2>&1; then
     # shellcheck disable=SC2046
     # shellcheck disable=SC2035
     ../scripts/CSVtoPNG.py $(ls *-1D.csv)
   fi
   # shellcheck disable=SC2035
-  if ls *-2D.csv 1> /dev/null 2>&1
-  then
+  if ls *-2D.csv 1>/dev/null 2>&1; then
     # shellcheck disable=SC2046
     # shellcheck disable=SC2035
     ../scripts/CSVtoGIF.py --width 100 --height 100 --led-locations locations.csv $(ls *-2D.csv)

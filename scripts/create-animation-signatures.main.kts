@@ -112,6 +112,7 @@ val anims1D: List<AnimationToRunParams> = listOf(
     AnimationToRunParams("Ripple", ColorContainer.randomColorList(), runCount = 10),
     AnimationToRunParams("Runway Lights", ColorContainer.randomColorList(), runCount = 1),
     AnimationToRunParams("Runway Lights to Color", ColorContainer.randomColorList(), runCount = 1),
+    AnimationToRunParams("Shell Sort", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Smooth Chase", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Smooth Fade", mutableListOf(ColorContainer.RainbowColors), runCount = 1),
     AnimationToRunParams("Sparkle", ColorContainer.randomColorList(), runCount = 1),

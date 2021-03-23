@@ -51,6 +51,7 @@ val predefinedAnimations: List<Animation> = listOf(
     ripple,
     runwayLights,
     runwayLightsToColor,
+    shellSort,
     smoothChase,
     smoothFade,
     sparkle,
