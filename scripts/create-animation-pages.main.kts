@@ -149,7 +149,7 @@ fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimation
     file.append(info.animationList.joinToString("\n") { "- [$it](animations/${it.toFileName()})" })
     file.append("\n\n")
 
-    val preparedInfo = ledStrip.animationManager.prepareGroupAnimation(info.groupInfo)
+    val preparedInfo = ledStrip.animationManager.prepareGroupAnimation(info)
 
     createInfoDocumentation(file, preparedInfo.info)
 }
