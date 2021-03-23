@@ -74,7 +74,7 @@ fun AnimationManager.groupPixelsByXLocation(
         iteration++
         currentX += movementDistance
     }
-    pixelsToRevertPerIteration[0] = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -137,7 +137,7 @@ fun AnimationManager.groupPixelsByDistance(
             currentDistance -= movementDistance
         }
     }
-    pixelsToRevertPerIteration[0] = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -188,7 +188,7 @@ fun AnimationManager.groupPixelsAlongLine(
         iteration++
         currentX += movementDistance
     }
-    pixelsToRevertPerIteration[0] = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -247,7 +247,7 @@ fun AnimationManager.groupGroupsOfPixelsAlongLine(
         iteration++
         currentBasePoint += movementDistance
     }
-    pixelsToResetPerIteration[0] = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToResetPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToResetPerIteration)
 }
