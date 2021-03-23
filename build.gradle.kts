@@ -25,8 +25,8 @@ tasks.wrapper {
 }
 
 plugins {
-    kotlin("multiplatform") version "1.4.21"
-    kotlin("plugin.serialization") version "1.4.21"
+    kotlin("multiplatform") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
     id("org.jetbrains.dokka") version "1.4.20"
     id("io.kotest") version "0.2.6"
     jacoco
@@ -88,7 +88,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.3.2")
-                implementation("io.kotest:kotest-property:4.3.2")
+                implementation("io.kotest:kotest-property:4.4.3")
             }
         }
         val jvmMain by getting {
@@ -96,7 +96,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-                implementation("io.mockk:mockk:1.10.4")
+                implementation("io.mockk:mockk:1.11.0")
                 implementation("io.kotest:kotest-runner-junit5:4.3.2")
                 implementation("io.kotest:kotest-framework-engine-jvm:4.3.2")
             }
