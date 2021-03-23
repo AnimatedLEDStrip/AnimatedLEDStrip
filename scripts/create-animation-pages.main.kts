@@ -34,6 +34,7 @@ import animatedledstrip.animations.groups.GroupType
 import animatedledstrip.animations.parameters.*
 import animatedledstrip.animations.predefinedAnimations
 import animatedledstrip.animations.predefinedGroups
+import animatedledstrip.leds.emulation.createNewEmulatedStrip
 import java.io.FileWriter
 
 val animList = mutableListOf<String>()
@@ -136,6 +137,8 @@ fun createInfoDocumentation(file: FileWriter, info: Animation.AnimationInfo) {
         file.append("### Two Dimensional\n\n![${info.name} 2D Signature](/signatures/${info.name.createSigName()}.gif)\n\n")
 }
 
+val ledStrip = createNewEmulatedStrip(10)
+
 fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimationGroupInfo) {
     when (info.groupType) {
         GroupType.ORDERED -> file.append("![Ordered](https://img.shields.io/badge/-ordered-green)\n\n")
@@ -146,7 +149,9 @@ fun createGroupDocumentation(file: FileWriter, info: AnimationGroup.NewAnimation
     file.append(info.animationList.joinToString("\n") { "- [$it](animations/${it.toFileName()})" })
     file.append("\n\n")
 
-    createInfoDocumentation(file, info.groupInfo)
+    val preparedInfo = ledStrip.animationManager.prepareGroupAnimation(info.groupInfo)
+
+    createInfoDocumentation(file, preparedInfo.info)
 }
 
 predefinedAnimations.forEach {

@@ -80,7 +80,7 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
         supportedAnimations[prepareAnimIdentifier(animId)]
         ?: supportedAnimationsByAbbr[prepareAnimIdentifier(animId)]
 
-    private fun prepareGroupAnimation(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup =
+    fun prepareGroupAnimation(anim: AnimationGroup.NewAnimationGroupInfo): AnimationGroup =
         AnimationGroup(
             prepareGroupParameters(this, anim.groupInfo, anim.animationList),
             anim.groupType,
