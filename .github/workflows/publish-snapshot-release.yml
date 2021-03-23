@@ -19,7 +19,7 @@ jobs:
         run: "echo \"::set-output name=als_version::$(./gradlew properties | grep '^version:' | sed 's/version: //g')\""
 
       - name: Publish to Maven Snapshots
-        if: endsWith(steps.version_number.outputs.als_version, "-SNAPSHOT")
+        if: endsWith(steps.version_number.outputs.als_version, '-SNAPSHOT')
         run: ./gradlew publish --stacktrace
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
