@@ -4,13 +4,12 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.animatedledstrip/animatedledstrip-core)
 
 # AnimatedLEDStrip
-This is the core of the AnimatedLEDStrip libraries.
+This is the core of the [AnimatedLEDStrip](https://animatedledstrip.github.io) libraries.
 
 Functionality:
 - Abstract the communication with a generic LED strip (`LEDStripRenderer`, `NativeLEDStrip`)
 - Define animations (`DefinedAnimation`)
-- Define animation groups (`OrderedAnimationGroup`, `RandomizedAnimationGroup`)
+- Define animation groups (`AnimationGroup`)
 - Handle the running of animations (`LEDStripAnimationManager`)
 - Specify how to handle colors (`ColorContainer`)
 - Provide an option for emulating an LED strip (`EmulatedWS281x`)
-- Specify what can be sent between servers and clients and how it should be formatted (`SendableData`) 
