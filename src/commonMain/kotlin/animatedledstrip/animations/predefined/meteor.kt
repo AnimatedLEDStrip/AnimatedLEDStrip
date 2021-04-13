@@ -72,12 +72,14 @@ val meteor = DefinedAnimation(
     val offset = params.distanceParams.getValue("offset")
     val rotation = params.rotationParams.getValue("rotation")
     val lineEquation = params.equationParams.getValue("lineEquation")
+    val completedRuns = params.extraData["completedRuns"]!! as Int
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<PixelsToModify> =
+        val pixelModLists =
             (params.extraData.getOrPut("modLists") {
                 groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
-            } as PixelModificationLists).modLists
+            } as PixelModificationLists)
+        val pixelsToModifyPerIteration: List<PixelsToModify> = pixelModLists.modLists
 
         for (i in pixelsToModifyPerIteration.indices) {
             for ((sPixel, fPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
@@ -93,5 +95,11 @@ val meteor = DefinedAnimation(
             }
             delay(interMovementDelay)
         }
+
+        if (completedRuns + 1 == params.runCount)
+            for (pixel in pixelModLists.lastRevertList) {
+                setPixelFadeColor(pixel, color)
+                revertPixel(pixel)
+            }
     }
 }

@@ -55,7 +55,7 @@ actual class LEDStripRenderer actual constructor(
         isRendering = false
     }
 
-    fun close() {
+    actual fun close() {
         job.cancel()
         renderThread.close()
     }

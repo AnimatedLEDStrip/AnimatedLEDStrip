@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.0"
+version = "1.0.1-SNAPSHOT"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -61,6 +61,16 @@ kotlin {
                 useKarma {
                     useChromeHeadless()
                     webpackConfig.cssSupport.enabled = true
+                }
+                testLogging {
+                    showExceptions = true
+                    showStandardStreams = true
+                    events = org.gradle.api.tasks.testing.logging.TestLogEvent.values().toSet()
+//                    setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED,
+//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
+                    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
                 }
             }
         }
@@ -89,24 +99,24 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.4.3")
                 implementation("io.kotest:kotest-property:4.4.3")
+                implementation("io.mockk:mockk-common:1.11.0")
             }
         }
         val jvmMain by getting {
         }
         val jvmTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
+                implementation(kotlin("test-junit5"))
                 implementation("io.mockk:mockk:1.11.0")
-                implementation("io.kotest:kotest-runner-junit5:4.4.3")
-                implementation("io.kotest:kotest-framework-engine-jvm:4.4.3")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
         }
         val jsMain by getting
-//        val jsTest by getting {
-//            dependencies {
-//                implementation(kotlin("test-js"))
-//            }
-//        }
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test-js"))
+            }
+        }
 //        val nativeMain by getting
 //        val nativeTest by getting
     }
@@ -122,12 +132,14 @@ tasks.named<Test>("jvmTest") {
     testLogging {
         showExceptions = true
         showStandardStreams = true
-        events = setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                       org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                       org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
+        events = org.gradle.api.tasks.testing.logging.TestLogEvent.values().toSet()
+//            setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+//                       org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+//                       org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
     systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
+    systemProperty("kotest.proptest.default.iteration.count", 10)
 }
 
 tasks.jacocoTestReport {

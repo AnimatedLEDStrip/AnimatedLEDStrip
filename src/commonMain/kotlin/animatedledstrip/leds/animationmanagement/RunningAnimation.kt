@@ -70,6 +70,7 @@ data class RunningAnimation(
         try {
             var runs = 0
             while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+                params.extraData["completedRuns"] = runs
                 params.animation.runAnimation(leds = this@RunningAnimation,
                                               params = params,
                                               this)

@@ -55,4 +55,9 @@ expect class LEDStripRenderer(
      * Stop/pause rendering the strip
      */
     fun stopRendering()
+
+    /**
+     * Perform cleanup
+     */
+    fun close()
 }

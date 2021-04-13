@@ -22,14 +22,17 @@
 
 package animatedledstrip.communication
 
-import kotlinx.serialization.encodeToString
+import kotlinx.serialization.PolymorphicSerializer
 
 /**
  * Represents a class that can be sent over sockets between servers and clients.
  * Handles conversion of class to json.
  */
 interface SendableData {
-    fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
+//    fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
+
+    fun jsonString(): String =
+        "${serializer.encodeToString(PolymorphicSerializer(SendableData::class), this)}$DELIMITER"
 
     fun json(): ByteArray = this.jsonString().encodeToByteArray()
 }

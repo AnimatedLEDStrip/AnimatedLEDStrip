@@ -122,11 +122,13 @@ data class PixelModificationLists(
     private val revertLists: List<List<Int>>,
 ) {
     init {
-        require(setLists.size == revertLists.size)
+        require(setLists.size == revertLists.size - 1) { "${setLists.size} set lists and ${revertLists.size} revert lists found" }
     }
 
     val modLists: List<PixelsToModify> =
         setLists
             .zip(revertLists)
             .map { lists -> PixelsToModify(lists.first, lists.second) }
+
+    val lastRevertList: List<Int> = revertLists.last()
 }

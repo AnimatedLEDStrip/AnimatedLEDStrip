@@ -74,7 +74,9 @@ fun AnimationManager.groupPixelsByXLocation(
         iteration++
         currentX += movementDistance
     }
-    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration[0] = lastRevert
+    pixelsToRevertPerIteration.add(lastRevert)
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -137,7 +139,9 @@ fun AnimationManager.groupPixelsByDistance(
             currentDistance -= movementDistance
         }
     }
-    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration[0] = lastRevert
+    pixelsToRevertPerIteration.add(lastRevert)
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -188,7 +192,9 @@ fun AnimationManager.groupPixelsAlongLine(
         iteration++
         currentX += movementDistance
     }
-    pixelsToRevertPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration[0] = lastRevert
+    pixelsToRevertPerIteration.add(lastRevert)
 
     return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }
@@ -222,7 +228,7 @@ fun AnimationManager.groupGroupsOfPixelsAlongLine(
                                                rotation = -rotation,
                                                invertX = movementPerIteration < 0.0)
     val pixelsToSetPerIteration: MutableList<List<Int>> = mutableListOf()
-    val pixelsToResetPerIteration: MutableList<List<Int>> = mutableListOf(listOf())
+    val pixelsToRevertPerIteration: MutableList<List<Int>> = mutableListOf(listOf())
 
     val movementDistance = abs(movementPerIteration)
 
@@ -243,11 +249,13 @@ fun AnimationManager.groupGroupsOfPixelsAlongLine(
         }
         pixelsToSetPerIteration.add(pixelsToSet.toList())
         if (iteration > 0)
-            pixelsToResetPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+            pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
         iteration++
         currentBasePoint += movementDistance
     }
-    pixelsToResetPerIteration.add(pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0])
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    pixelsToRevertPerIteration[0] = lastRevert
+    pixelsToRevertPerIteration.add(lastRevert)
 
-    return PixelModificationLists(pixelsToSetPerIteration, pixelsToResetPerIteration)
+    return PixelModificationLists(pixelsToSetPerIteration, pixelsToRevertPerIteration)
 }

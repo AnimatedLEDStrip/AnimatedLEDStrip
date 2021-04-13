@@ -31,6 +31,7 @@ import animatedledstrip.animations.parameters.Rotation
 import animatedledstrip.leds.animationmanagement.PixelModificationLists
 import animatedledstrip.leds.animationmanagement.PixelsToModify
 import animatedledstrip.leds.colormanagement.revertPixel
+import animatedledstrip.leds.colormanagement.revertPixels
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.locationmanagement.groupPixelsByXLocation
 import kotlinx.coroutines.delay
@@ -59,12 +60,14 @@ val planeRun = DefinedAnimation(
     val interMovementDelay = params.intParams.getValue("interMovementDelay").toLong()
     val movementPerIteration = params.doubleParams.getValue("movementPerIteration")
     val rotation = params.rotationParams.getValue("rotation")
+    val completedRuns = params.extraData["completedRuns"]!! as Int
 
     leds.apply {
-        val pixelsToModifyPerIteration: List<PixelsToModify> =
+        val pixelModLists =
             (params.extraData.getOrPut("modLists") {
                 groupPixelsByXLocation(AbsoluteDistance.NO_DISTANCE, rotation, movementPerIteration)
-            } as PixelModificationLists).modLists
+            } as PixelModificationLists)
+        val pixelsToModifyPerIteration: List<PixelsToModify> = pixelModLists.modLists
 
         for (i in pixelsToModifyPerIteration.indices) {
             for ((sPixel, rPixel) in pixelsToModifyPerIteration[i].pairedSetRevertPixels) {
@@ -77,5 +80,7 @@ val planeRun = DefinedAnimation(
                 revertPixel(pixel)
             delay(interMovementDelay)
         }
+
+        if (completedRuns + 1 == params.runCount) revertPixels(pixelModLists.lastRevertList)
     }
 }
