@@ -31,7 +31,7 @@ import io.kotest.property.checkAll
 class PixelLocationTest : StringSpec(
     {
         "constructor" {
-            checkAll<Int, Double, Double, Double> { n, x, y, z ->
+            checkAll<Int, Double, Double, Double>(15) { n, x, y, z ->
                 val newLoc = PixelLocation(n, Location(x, y, z))
                 newLoc.index shouldBe n
                 newLoc.location shouldBe Location(x, y, z)

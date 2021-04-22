@@ -31,7 +31,7 @@ import kotlin.math.pow
 class LocationTest : StringSpec(
     {
         "double constructor" {
-            checkAll<Double, Double, Double> { x, y, z ->
+            checkAll<Double, Double, Double>(15) { x, y, z ->
                 val newLocation = Location(x, y, z)
                 newLocation.x shouldBe x
                 newLocation.y shouldBe y
@@ -54,18 +54,18 @@ class LocationTest : StringSpec(
         }
 
         "coordinates" {
-            checkAll<Double, Double, Double> { x, y, z ->
+            checkAll<Double, Double, Double>(15) { x, y, z ->
                 Location(x, y, z).coordinates shouldBe "$x, $y, $z"
             }
         }
 
         "distanceFrom" {
-            checkAll<Double, Double, Double, Double, Double, Double> { x1, y1, z1, x2, y2, z2 ->
+            checkAll<Double, Double, Double, Double, Double, Double>(15) { x1, y1, z1, x2, y2, z2 ->
                 val loc1 = Location(x1, y1, z1)
                 val loc2 = Location(x2, y2, z2)
                 loc1.distanceFrom(loc2) shouldBe ((loc1.x - loc2.x).pow(2) +
-                                                  (loc1.y - loc2.y).pow(2) +
-                                                  (loc1.z - loc2.z).pow(2)).pow(0.5)
+                        (loc1.y - loc2.y).pow(2) +
+                        (loc1.z - loc2.z).pow(2)).pow(0.5)
                 loc1.distanceFrom(loc2) shouldBe loc2.distanceFrom(loc1)
             }
         }

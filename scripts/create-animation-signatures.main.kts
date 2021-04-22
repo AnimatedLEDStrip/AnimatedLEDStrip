@@ -25,7 +25,7 @@
 @file:DependsOn("co.touchlab:kermit-jvm:0.1.8")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.0.1")
-@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.0.jar")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.1.jar")
 
 import animatedledstrip.animations.parameters.DegreesRotation
 import animatedledstrip.animations.parameters.Equation

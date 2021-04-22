@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.1-SNAPSHOT"
+version = "1.0.1"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
@@ -65,11 +65,11 @@ kotlin {
                 testLogging {
                     showExceptions = true
                     showStandardStreams = true
-                    events = org.gradle.api.tasks.testing.logging.TestLogEvent.values().toSet()
-//                    setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.STARTED,
-//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-//                                   org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
+                    events = setOf(
+                        org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+                        org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+                        org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+                    )
                     exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
                 }
             }
@@ -108,6 +108,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit5"))
                 implementation("io.mockk:mockk:1.11.0")
+                implementation("io.kotest:kotest-runner-junit5:4.4.3")
+                implementation("io.kotest:kotest-framework-engine-jvm:4.4.3")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
         }
@@ -132,10 +134,11 @@ tasks.named<Test>("jvmTest") {
     testLogging {
         showExceptions = true
         showStandardStreams = true
-        events = org.gradle.api.tasks.testing.logging.TestLogEvent.values().toSet()
-//            setOf(org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-//                       org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-//                       org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED)
+        events = setOf(
+            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+        )
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
     systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
