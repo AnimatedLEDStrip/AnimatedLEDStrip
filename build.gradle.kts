@@ -28,7 +28,7 @@ plugins {
     kotlin("multiplatform") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
     id("org.jetbrains.dokka") version "1.4.30"
-    id("io.kotest") version "0.2.6"
+    id("io.kotest") version "0.3.8"
     jacoco
     id("java-library")
     signing
