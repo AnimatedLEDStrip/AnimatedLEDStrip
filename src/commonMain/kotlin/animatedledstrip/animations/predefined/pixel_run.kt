@@ -35,6 +35,7 @@ import animatedledstrip.leds.colormanagement.revertPixel
 import animatedledstrip.leds.colormanagement.revertPixels
 import animatedledstrip.leds.colormanagement.setPixelTemporaryColor
 import animatedledstrip.leds.locationmanagement.groupPixelsAlongLine
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 
 val pixelRun = DefinedAnimation(
@@ -89,7 +90,11 @@ val pixelRun = DefinedAnimation(
                 setPixelTemporaryColor(pixel, color)
             for (pixel in pixelsToModifyPerIteration[i].unpairedRevertPixels)
                 revertPixel(pixel)
-            delay(interMovementDelay)
+            try {
+                delay(interMovementDelay)
+            } catch (e: CancellationException) {
+                revertPixels(pixelsToModifyPerIteration[i].allSetPixels)
+            }
         }
 
         if (completedRuns + 1 == params.runCount) revertPixels(pixelModLists.lastRevertList)
