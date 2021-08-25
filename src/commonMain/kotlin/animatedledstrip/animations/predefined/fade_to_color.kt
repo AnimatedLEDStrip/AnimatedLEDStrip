@@ -45,7 +45,7 @@ val fadeToColor = DefinedAnimation(
 ) { leds, params, _ ->
     leds.apply {
         val currentColor = ColorContainer(sectionManager.pixelActualColorList.toMutableList()).prepare(numLEDs)
-        leds.iterateOverPixels { index ->
+        for (index in 0 until numLEDs) {
             setPixelProlongedColor(index, params.colors[0])
             setPixelFadeColor(index, currentColor)
         }

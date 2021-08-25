@@ -44,6 +44,9 @@ class Section(
     @Transient
     override val numLEDs: Int = pixels.size
 
+    @Transient
+    override val pixelIndices: List<Int> = IntRange(0, numLEDs - 1).toList()
+
     @Suppress("JoinDeclarationAndAssignment")
     @Transient
     override lateinit var stripManager: LEDStrip
