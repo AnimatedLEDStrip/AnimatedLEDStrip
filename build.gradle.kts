@@ -27,7 +27,7 @@ tasks.wrapper {
 plugins {
     kotlin("multiplatform") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
-    id("org.jetbrains.dokka") version "1.4.30"
+    id("org.jetbrains.dokka") version "1.5.31"
     id("io.kotest") version "0.2.6"
     jacoco
     id("java-library")
