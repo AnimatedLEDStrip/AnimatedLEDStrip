@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.4.0
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
@@ -54,7 +54,7 @@ jobs:
 #    runs-on: ubuntu-latest
 #    needs: test
 #    steps:
-#      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v2.4.0
 #      - name: version_number
 #        run: "echo \"::set-output name=als_version::$(./gradlew properties | grep '^version:' | sed 's/version: //g')\""
 #
