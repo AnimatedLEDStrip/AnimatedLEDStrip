@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ val pixelRun = DefinedAnimation(
     val lineEquation = params.equationParams.getValue("lineEquation")
     val completedRuns = params.extraData["completedRuns"]!! as Int
 
-    leds.apply {
+    with(leds) {
         val pixelModLists =
             (params.extraData.getOrPut("modLists") {
                 groupPixelsAlongLine(lineEquation, rotation, offset, maximumInfluence, movementPerIteration)
