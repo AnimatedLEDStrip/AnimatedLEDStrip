@@ -109,7 +109,7 @@ kotlin {
                 implementation(kotlin("test-junit5"))
                 implementation("io.mockk:mockk:1.11.0")
                 implementation("io.kotest:kotest-runner-junit5:4.4.3")
-                implementation("io.kotest:kotest-framework-engine-jvm:4.4.3")
+                implementation("io.kotest:kotest-framework-engine-jvm:5.1.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
         }
