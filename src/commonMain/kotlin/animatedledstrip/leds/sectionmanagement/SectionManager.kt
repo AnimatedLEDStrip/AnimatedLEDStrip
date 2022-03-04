@@ -67,6 +67,11 @@ interface SectionManager {
     val pixels: List<Int>
 
     /**
+     * A list of the indices of the pixels in this section (range from 0 to numLEDs - 1)
+     */
+    val pixelIndices: List<Int>
+
+    /**
      * @return A new section, identified by [name], including [pixels],
      * with this section manager as its parent
      */

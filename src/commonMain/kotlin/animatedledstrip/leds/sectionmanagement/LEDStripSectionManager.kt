@@ -45,6 +45,7 @@ class LEDStripSectionManager(override val stripManager: LEDStrip) : SectionManag
     override val name: String = ""
     override val numLEDs: Int = stripManager.numLEDs
     override val pixels: List<Int> = IntRange(0, numLEDs - 1).toList()
+    override val pixelIndices: List<Int> = IntRange(0, numLEDs - 1).toList()
 
     /**
      * The section that will actually run animations on the full strip

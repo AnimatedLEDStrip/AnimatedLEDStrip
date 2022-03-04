@@ -93,14 +93,16 @@ data class AnimationToRunParams(
             calculatedColors.add(ColorContainer.Black.prepare(numLEDs = sectionRunningFullAnimation.numLEDs))
         }
 
-        val calculatedAndTrimmedColors = mutableListOf<PreparedColorContainer>()
-
-        calculatedColors.forEach {
-            calculatedAndTrimmedColors += PreparedColorContainer(
-                colors = it.colors.filterIndexed { index, _ -> index in sectionRunningAnimation.pixels },
-                originalColors = it.originalColors,
-            )
-        }
+        val calculatedAndTrimmedColors = calculatedColors
+//            if (sectionRunningAnimation === sectionRunningFullAnimation)
+//                calculatedColors
+//            else
+//                calculatedColors.map {
+//                    PreparedColorContainer(
+//                        colors = it.colors.filterIndexed { index, _ -> index in sectionRunningAnimation.pixels },
+//                        originalColors = it.originalColors,
+//                    )
+//                }
 
         val preparedIntParams: MutableMap<String, Int> = mutableMapOf()
         val preparedDoubleParams: MutableMap<String, Double> = mutableMapOf()
@@ -125,15 +127,15 @@ data class AnimationToRunParams(
                     null -> sectionRunningAnimation.stripManager.pixelLocationManager.maximumDistance *
                             (distanceParam.default ?: AbsoluteDistance(1.0, 1.0, 1.0))
                     is PercentDistance -> sectionRunningAnimation.stripManager.pixelLocationManager.maximumDistance *
-                                          paramValue
+                            paramValue
                     else -> paramValue
                 }.asAbsoluteDistance()
 
         for (locationParam in definedAnimation.info.locationParams)
             preparedLocationParams[locationParam.name] =
                 when (val paramValue = locationParams[locationParam.name]
-                                       ?: locationParam.default
-                                       ?: Location.CENTER) {
+                    ?: locationParam.default
+                    ?: Location.CENTER) {
                     null -> sectionRunningAnimation.stripManager.pixelLocationManager.defaultLocation
                     else -> paramValue
                 }
@@ -141,8 +143,8 @@ data class AnimationToRunParams(
         for (rotationParam in definedAnimation.info.rotationParams)
             preparedRotationParams[rotationParam.name] =
                 when (val paramValue = rotationParams[rotationParam.name]
-                                       ?: rotationParam.default
-                                       ?: Rotation.NO_ROTATION) {
+                    ?: rotationParam.default
+                    ?: Rotation.NO_ROTATION) {
                     is DegreesRotation -> paramValue.toRadiansRotation()
                     else -> paramValue as RadiansRotation
                 }
@@ -157,19 +159,21 @@ data class AnimationToRunParams(
         val calculatedRunCount = if (runCount <= 0) definedAnimation.info.runCountDefault
         else runCount
 
-        return RunningAnimationParams(definedAnimation,
-                                      animation,
-                                      calculatedAndTrimmedColors,
-                                      id,
-                                      section,
-                                      calculatedRunCount,
-                                      preparedIntParams,
-                                      preparedDoubleParams,
-                                      preparedStringParams,
-                                      preparedLocationParams,
-                                      preparedDistanceParams,
-                                      preparedRotationParams,
-                                      preparedEquationParams,
-                                      this)
+        return RunningAnimationParams(
+            definedAnimation,
+            animation,
+            calculatedAndTrimmedColors,
+            id,
+            section,
+            calculatedRunCount,
+            preparedIntParams,
+            preparedDoubleParams,
+            preparedStringParams,
+            preparedLocationParams,
+            preparedDistanceParams,
+            preparedRotationParams,
+            preparedEquationParams,
+            this
+        )
     }
 }
