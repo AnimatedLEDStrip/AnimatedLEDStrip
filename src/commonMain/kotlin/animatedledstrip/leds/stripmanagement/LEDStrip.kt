@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -88,6 +88,16 @@ class LEDStrip(
      * animation is removed from `animationManager.runningAnimations`)
      */
     var endAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
+
+    /**
+     * Callback run when an animation is paused
+     */
+    var pauseAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
+
+    /**
+     * Callback run when an animation is resumed
+     */
+    var resumeAnimationCallback: ((RunningAnimationParams) -> Any?)? = null
 
     /**
      * Callback to run when a new section is created

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,7 @@ data class RunningAnimation(
     override val sectionManager: SectionManager,
     val parentManager: AnimationManager,
     val topLevelAnimation: Boolean = false,
+    var paused: Boolean = false,
 ) : AnimationManager {
 
     /**
@@ -57,6 +58,16 @@ data class RunningAnimation(
      */
     fun endAnimation(): Unit = job.cancel("End of Animation")
 
+    fun pause() {
+        paused = true
+        sectionManager.stripManager.pauseAnimationCallback?.invoke(params)
+    }
+
+    fun resume() {
+        paused = false
+        sectionManager.stripManager.resumeAnimationCallback?.invoke(params)
+    }
+
     /**
      * The `Job` running the animation
      */
@@ -70,14 +81,21 @@ data class RunningAnimation(
         try {
             var runs = 0
             while (isActive && (params.runCount == -1 || runs < params.runCount)) {
+                if (paused) {
+                    delay(10)
+                    continue
+                }
                 params.extraData["completedRuns"] = runs
-                params.animation.runAnimation(leds = this@RunningAnimation,
-                                              params = params,
-                                              this)
+                params.animation.runAnimation(
+                    leds = this@RunningAnimation,
+                    params = params,
+                    this,
+                )
                 runs++
             }
         } catch (e: Exception) {
-            if (e !is CancellationException) Logger.e("Running Animation") { "Animation ${params.id} errored with\n${e.stackTraceToString()}" }
+            if (e !is CancellationException)
+                Logger.e("Running Animation") { "Animation ${params.id} errored with\n${e.stackTraceToString()}" }
         } finally {
             if (topLevelAnimation) {
                 sectionManager.stripManager.endAnimationCallback?.invoke(params)

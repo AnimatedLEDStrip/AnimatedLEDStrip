@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -18,7 +18,6 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
  */
 
 package animatedledstrip.test.communication
@@ -37,31 +36,31 @@ class JSONSerializationTests : StringSpec(
 
         "bytearray to utf8 string length specified" {
             ByteArray(5).apply {
-                this[0] = 't'.toByte()
-                this[1] = 'e'.toByte()
-                this[2] = 's'.toByte()
-                this[3] = 't'.toByte()
-                this[4] = 's'.toByte()
+                this[0] = 't'.code.toByte()
+                this[1] = 'e'.code.toByte()
+                this[2] = 's'.code.toByte()
+                this[3] = 't'.code.toByte()
+                this[4] = 's'.code.toByte()
             }.toUTF8String(5) shouldBe "tests"
         }
 
         "bytearray to utf8 string take only part of array" {
             ByteArray(5).apply {
-                this[0] = 't'.toByte()
-                this[1] = 'e'.toByte()
-                this[2] = 's'.toByte()
-                this[3] = 't'.toByte()
-                this[4] = 's'.toByte()
+                this[0] = 't'.code.toByte()
+                this[1] = 'e'.code.toByte()
+                this[2] = 's'.code.toByte()
+                this[3] = 't'.code.toByte()
+                this[4] = 's'.code.toByte()
             }.toUTF8String(3) shouldBe "tes"
         }
 
         "bytearray to utf8 string length inferred" {
             ByteArray(5).apply {
-                this[0] = 't'.toByte()
-                this[1] = 'e'.toByte()
-                this[2] = 's'.toByte()
-                this[3] = 't'.toByte()
-                this[4] = 's'.toByte()
+                this[0] = 't'.code.toByte()
+                this[1] = 'e'.code.toByte()
+                this[2] = 's'.code.toByte()
+                this[3] = 't'.code.toByte()
+                this[4] = 's'.code.toByte()
             }.toUTF8String() shouldBe "tests"
         }
 

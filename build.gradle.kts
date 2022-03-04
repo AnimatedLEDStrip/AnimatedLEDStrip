@@ -55,26 +55,26 @@ kotlin {
             kotlinOptions.jvmTarget = "1.8"
         }
     }
-    js(LEGACY) {
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadless()
-                    webpackConfig.cssSupport.enabled = true
-                }
-                testLogging {
-                    showExceptions = true
-                    showStandardStreams = true
-                    events = setOf(
-                        org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-                        org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-                        org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
-                    )
-                    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-                }
-            }
-        }
-    }
+//    js(LEGACY) {
+//        browser {
+//            testTask {
+//                useKarma {
+//                    useChromeHeadless()
+//                    webpackConfig.cssSupport.enabled = true
+//                }
+//                testLogging {
+//                    showExceptions = true
+//                    showStandardStreams = true
+//                    events = setOf(
+//                        org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+//                        org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
+//                        org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+//                    )
+//                    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+//                }
+//            }
+//        }
+//    }
 //    val hostOs = System.getProperty("os.name")
 //    val isMingwX64 = hostOs.startsWith("Windows")
 //    val nativeTarget = when {
@@ -113,12 +113,12 @@ kotlin {
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
         }
-        val jsMain by getting
-        val jsTest by getting {
-            dependencies {
-                implementation(kotlin("test-js"))
-            }
-        }
+//        val jsMain by getting
+//        val jsTest by getting {
+//            dependencies {
+//                implementation(kotlin("test-js"))
+//            }
+//        }
 //        val nativeMain by getting
 //        val nativeTest by getting
     }

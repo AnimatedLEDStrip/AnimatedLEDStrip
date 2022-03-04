@@ -28,7 +28,6 @@ import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.colors.PreparedColorContainer
 import animatedledstrip.leds.animationmanagement.numLEDs
-import animatedledstrip.leds.animationmanagement.pixels
 import animatedledstrip.leds.animationmanagement.randomInt
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
@@ -53,7 +52,7 @@ val christmasTwinkle = DefinedAnimation(
         val colors = (if (params.extraData["colors"] != null) {
             params.extraData["colors"] as PreparedColorContainer
         } else {
-            PreparedColorContainer(pixels.map { params.colors.random()[0] })
+            PreparedColorContainer(sectionManager.pixels.map { params.colors.random()[0] })
         }).toColorContainer()
 
         val numPixelsToChange = params.intParams["numberToChangePerIteration"]!!

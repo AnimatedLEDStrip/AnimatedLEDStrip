@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -59,21 +59,23 @@ class PixelLocationManager(ledLocations: List<Location>?, val numLEDs: Int) {
         pixelLocations = tempLocationList.toList()
     }
 
-    val xMin: Double = pixelLocations.map { it.location.x }.minOrNull() ?: 0.0
-    val xMax: Double = pixelLocations.map { it.location.x }.maxOrNull() ?: 0.0
+    val xMin: Double = pixelLocations.minOfOrNull { it.location.x } ?: 0.0
+    val xMax: Double = pixelLocations.maxOfOrNull { it.location.x } ?: 0.0
     val xAvg: Double = (xMin + xMax) / 2
-    val yMin: Double = pixelLocations.map { it.location.y }.minOrNull() ?: 0.0
-    val yMax: Double = pixelLocations.map { it.location.y }.maxOrNull() ?: 0.0
+    val yMin: Double = pixelLocations.minOfOrNull { it.location.y } ?: 0.0
+    val yMax: Double = pixelLocations.maxOfOrNull { it.location.y } ?: 0.0
     val yAvg: Double = (yMin + yMax) / 2
-    val zMin: Double = pixelLocations.map { it.location.z }.minOrNull() ?: 0.0
-    val zMax: Double = pixelLocations.map { it.location.z }.maxOrNull() ?: 0.0
+    val zMin: Double = pixelLocations.minOfOrNull { it.location.z } ?: 0.0
+    val zMax: Double = pixelLocations.maxOfOrNull { it.location.z } ?: 0.0
     val zAvg: Double = (zMin + zMax) / 2
 
     val defaultLocation = Location(xAvg, yAvg, zAvg)
     val maximumDistance = AbsoluteDistance(abs(xMin) + abs(xMax), abs(yMin) + abs(yMax), abs(zMin) + abs(zMax))
 
     fun randomLocation(): Location =
-        Location(abs(xMin - xMax) * randomDouble() + xMin,
-                 abs(yMin - yMax) * randomDouble() + yMin,
-                 abs(zMin - zMax) * randomDouble() + zMin)
+        Location(
+            abs(xMin - xMax) * randomDouble() + xMin,
+            abs(yMin - yMax) * randomDouble() + yMin,
+            abs(zMin - zMax) * randomDouble() + zMin
+        )
 }

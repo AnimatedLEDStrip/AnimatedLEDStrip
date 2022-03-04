@@ -26,7 +26,6 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.colors.PreparedColorContainer
-import animatedledstrip.leds.animationmanagement.pixels
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 
 val christmas = DefinedAnimation(
@@ -41,7 +40,7 @@ val christmas = DefinedAnimation(
     )
 ) { leds, params, _ ->
     leds.apply {
-        val colors = PreparedColorContainer(pixels.map { params.colors.random()[0] })
+        val colors = PreparedColorContainer(sectionManager.pixels.map { params.colors.random()[0] })
         setStripProlongedColor(colors)
     }
 }
