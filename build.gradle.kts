@@ -98,7 +98,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.4.3")
-                implementation("io.kotest:kotest-property:4.4.3")
+                implementation("io.kotest:kotest-property:5.2.1")
                 implementation("io.mockk:mockk-common:1.11.0")
             }
         }
