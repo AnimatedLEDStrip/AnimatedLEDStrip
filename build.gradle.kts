@@ -88,7 +88,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
                 api("co.touchlab:kermit:0.1.8")
             }
@@ -99,7 +99,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.4.3")
                 implementation("io.kotest:kotest-property:5.3.0")
-                implementation("io.mockk:mockk-common:1.11.0")
+                implementation("io.mockk:mockk-common:1.12.4")
             }
         }
         val jvmMain by getting {
@@ -108,7 +108,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit5"))
                 implementation("io.mockk:mockk:1.11.0")
-                implementation("io.kotest:kotest-runner-junit5:4.4.3")
+                implementation("io.kotest:kotest-runner-junit5:5.3.0")
                 implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
