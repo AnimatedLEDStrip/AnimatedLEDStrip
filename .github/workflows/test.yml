@@ -16,16 +16,18 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3.1.0
         with:
+          distribution: "temurin"
           java-version: 13
-      - name: Cache Gradle packages
-        uses: actions/cache@v3.0.1
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          cache: "gradle"
+      #      - name: Cache Gradle packages
+      #        uses: actions/cache@v3.0.1
+      #        with:
+      #          path: |
+      #            ~/.gradle/caches
+      #            ~/.gradle/wrapper
+      #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      #          restore-keys: |
+      #            ${{ runner.os }}-gradle-
       - name: Create test classes for testing
         run: ./gradlew jvmTestClasses
 
@@ -45,10 +47,10 @@ jobs:
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
           mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
-      - name: Cleanup Gradle Cache
-        run: |
-          rm -f ~/.gradle/caches/modules-2/modules-2.lock
-          rm -f ~/.gradle/caches/modules-2/gc.properties
+#      - name: Cleanup Gradle Cache
+#        run: |
+#          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+#          rm -f ~/.gradle/caches/modules-2/gc.properties
 
 #  release-snapshot:
 #    runs-on: ubuntu-latest
