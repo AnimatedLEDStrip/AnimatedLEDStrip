@@ -97,7 +97,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("io.kotest:kotest-assertions-core:4.4.3")
+                implementation("io.kotest:kotest-assertions-core:5.3.0")
                 implementation("io.kotest:kotest-property:5.3.0")
                 implementation("io.mockk:mockk-common:1.12.4")
             }
@@ -108,7 +108,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit5"))
                 implementation("io.mockk:mockk:1.11.0")
-                implementation("io.kotest:kotest-runner-junit5:4.4.3")
+                implementation("io.kotest:kotest-runner-junit5:5.3.0")
                 implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
             }
