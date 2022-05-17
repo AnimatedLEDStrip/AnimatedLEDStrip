@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,12 @@
 
 package animatedledstrip.utils
 
-import co.touchlab.kermit.Kermit
+import co.touchlab.kermit.LogWriter
 import co.touchlab.kermit.Logger
+import co.touchlab.kermit.LoggerConfig
 import co.touchlab.kermit.Severity
 
-object ALSLogger : Logger() {
+object ALSLogger : LogWriter() {
     var minSeverity: Severity = Severity.Warn
 
     override fun isLoggable(severity: Severity): Boolean = severity >= minSeverity
@@ -36,7 +37,7 @@ object ALSLogger : Logger() {
     }
 }
 
-object TestLogger : Logger() {
+object TestLogger : LogWriter() {
     private var trackLogs: Boolean = false
     var minSeverity: Severity = Severity.Warn
 
@@ -60,6 +61,5 @@ object TestLogger : Logger() {
     }
 }
 
-// TODO Support additional loggers
-val Logger = Kermit(ALSLogger, TestLogger).withTag("LEDs")
+val Logger = Logger(LoggerConfig.default.copy(logWriterList = listOf(ALSLogger, TestLogger))).withTag("LEDs")
 
