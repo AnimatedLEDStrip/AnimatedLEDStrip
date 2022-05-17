@@ -27,7 +27,7 @@ tasks.wrapper {
 plugins {
     kotlin("multiplatform") version "1.6.10"
     kotlin("plugin.serialization") version "1.6.10"
-    id("org.jetbrains.dokka") version "1.4.30"
+    id("org.jetbrains.dokka") version "1.6.21"
     id("io.kotest") version "0.3.9"
     jacoco
     id("java-library")
@@ -88,7 +88,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
                 api("co.touchlab:kermit:0.1.8")
             }
