@@ -26,6 +26,7 @@ import animatedledstrip.animations.groups.AnimationGroup
 import animatedledstrip.animations.predefined.*
 import animatedledstrip.animations.predefinedgroups.sortingAnimations
 import animatedledstrip.leds.animationmanagement.removeWhitespace
+import java.util.*
 
 val predefinedAnimations: List<Animation> = listOf(
     alterFade,
@@ -73,4 +74,4 @@ val predefinedGroups: List<AnimationGroup.NewAnimationGroupInfo> = listOf(
 fun prepareAnimIdentifier(name: String): String =
     name.removeWhitespace()
         .replace("[-_()]".toRegex(), "")
-        .toLowerCase()
+        .lowercase(Locale.getDefault())

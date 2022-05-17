@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ import animatedledstrip.animations.Animation
 import animatedledstrip.animations.DefinedAnimation
 import animatedledstrip.animations.Dimensionality
 import animatedledstrip.colors.ColorContainer
-import animatedledstrip.leds.animationmanagement.iterateOverPixels
 import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.colormanagement.pixelActualColorList
 import animatedledstrip.leds.colormanagement.setPixelFadeColor

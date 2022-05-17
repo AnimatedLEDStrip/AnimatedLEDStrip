@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -91,7 +91,7 @@ fun String?.decodeJson(): SendableData {
 fun String?.decodeJsonOrNull(): SendableData? = try {
     decodeJson()
 } catch (e: SerializationException) {
-    Logger.e("JSON Decoder", e) { "Error decoding JSON" }
+    Logger.e("JSON Decoder: Error decoding JSON", e)
     null
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -91,17 +91,17 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
      */
     fun addNewAnimation(anim: Animation): Animation? {
         if (supportedAnimations.containsKey(prepareAnimIdentifier(anim.info.name))) {
-            Logger.e("Animation Manager") { "Animation ${anim.info.name} already defined" }
+            Logger.e("Animation Manager: Animation ${anim.info.name} already defined")
             return null
         }
         if (supportedAnimationsByAbbr.containsKey(prepareAnimIdentifier(anim.info.abbr))) {
-            Logger.e("Animation Manager") { "Animation with abbreviation ${anim.info.abbr} already defined" }
+            Logger.e("Animation Manager: Animation with abbreviation ${anim.info.abbr} already defined")
             return null
         }
 
         supportedAnimations[prepareAnimIdentifier(anim.info.name)] = anim
         supportedAnimationsByAbbr[prepareAnimIdentifier(anim.info.abbr)] = anim
-        Logger.d("Animation Manager") { "Added animation ${anim.info.name}" }
+        Logger.d("Animation Manager: Added animation ${anim.info.name}")
         return anim
     }
 

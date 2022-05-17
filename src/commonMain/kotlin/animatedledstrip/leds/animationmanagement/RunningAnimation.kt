@@ -76,7 +76,7 @@ data class RunningAnimation(
             sectionManager.stripManager.startAnimationCallback?.invoke(params)
         }
 
-        Logger.v("Running Animation") { "Starting $params" }
+        Logger.v("Running Animation: Starting $params")
 
         try {
             var runs = 0
@@ -95,13 +95,13 @@ data class RunningAnimation(
             }
         } catch (e: Exception) {
             if (e !is CancellationException)
-                Logger.e("Running Animation") { "Animation ${params.id} errored with\n${e.stackTraceToString()}" }
+                Logger.e("Running Animation: Animation ${params.id} errored with\n${e.stackTraceToString()}")
         } finally {
             if (topLevelAnimation) {
                 sectionManager.stripManager.endAnimationCallback?.invoke(params)
             }
             parentManager.runningAnimations.remove(params.id)
-            Logger.v("Running Animation") { "Animation ${params.id} complete" }
+            Logger.v("Running Animation: Animation ${params.id} complete")
         }
     }
 }

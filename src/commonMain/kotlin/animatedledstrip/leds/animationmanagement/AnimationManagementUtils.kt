@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ fun AnimationManager.startAnimation(params: AnimationToRunParams, animId: String
 fun AnimationManager.endAnimation(id: String) {
     runningAnimations[id]?.endAnimation()
     ?: run {
-        Logger.w { "Animation $id is not running" }
+        Logger.w("Animation $id is not running")
         runningAnimations.remove(id)
         return
     }

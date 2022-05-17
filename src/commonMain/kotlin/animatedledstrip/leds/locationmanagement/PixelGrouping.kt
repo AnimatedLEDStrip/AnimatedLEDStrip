@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ fun AnimationManager.groupPixelsByXLocation(
         iteration++
         currentX += movementDistance
     }
-    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0].toSet()
     pixelsToRevertPerIteration[0] = lastRevert
     pixelsToRevertPerIteration.add(lastRevert)
 
@@ -118,7 +118,7 @@ fun AnimationManager.groupPixelsByDistance(
             }
             pixelsToSetPerIteration.add(pixelsToSet.toList())
             if (iteration > 0)
-                pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+                pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet.toSet())
             iteration++
             currentDistance += movementDistance
         }
@@ -134,12 +134,12 @@ fun AnimationManager.groupPixelsByDistance(
             }
             pixelsToSetPerIteration.add(pixelsToSet.toList())
             if (iteration > 0)
-                pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+                pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet.toSet())
             iteration++
             currentDistance -= movementDistance
         }
     }
-    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0].toSet()
     pixelsToRevertPerIteration[0] = lastRevert
     pixelsToRevertPerIteration.add(lastRevert)
 
@@ -188,11 +188,11 @@ fun AnimationManager.groupPixelsAlongLine(
         }
         pixelsToSetPerIteration.add(pixelsToSet.toList())
         if (iteration > 0)
-            pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+            pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet.toSet())
         iteration++
         currentX += movementDistance
     }
-    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0].toSet()
     pixelsToRevertPerIteration[0] = lastRevert
     pixelsToRevertPerIteration.add(lastRevert)
 
@@ -249,11 +249,11 @@ fun AnimationManager.groupGroupsOfPixelsAlongLine(
         }
         pixelsToSetPerIteration.add(pixelsToSet.toList())
         if (iteration > 0)
-            pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet)
+            pixelsToRevertPerIteration.add(pixelsToSetPerIteration[iteration - 1] - pixelsToSet.toSet())
         iteration++
         currentBasePoint += movementDistance
     }
-    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0]
+    val lastRevert = pixelsToSetPerIteration.last() - pixelsToSetPerIteration[0].toSet()
     pixelsToRevertPerIteration[0] = lastRevert
     pixelsToRevertPerIteration.add(lastRevert)
 

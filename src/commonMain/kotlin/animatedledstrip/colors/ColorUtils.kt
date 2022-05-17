@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,8 @@
  */
 
 package animatedledstrip.colors
+
+import java.util.*
 
 /* Grayscale */
 
@@ -328,7 +330,7 @@ fun parseHexOrDefault(string: String, default: Int = 0x0): Int =
 /**
  * Helper function for removing the 0x prefix from a hex string
  */
-fun String.remove0xPrefix(): String = this.toUpperCase().removePrefix("0X")
+fun String.remove0xPrefix(): String = this.uppercase(Locale.getDefault()).removePrefix("0X")
 
 
 /* RGB Components of a 24-bit Color */

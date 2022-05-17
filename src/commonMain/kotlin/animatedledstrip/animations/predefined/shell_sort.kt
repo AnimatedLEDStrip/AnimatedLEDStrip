@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import animatedledstrip.leds.animationmanagement.numLEDs
 import animatedledstrip.leds.animationmanagement.removeWhitespace
 import animatedledstrip.leds.colormanagement.setStripProlongedColor
 import kotlinx.coroutines.delay
+import java.util.*
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.log
@@ -68,7 +69,7 @@ val shellSort = DefinedAnimation(
         when (val name = params.stringParams.getValue("gapSequence")
             .removeWhitespace()
             .replace("[-_()]".toRegex(), "")
-            .toLowerCase()
+            .lowercase(Locale.getDefault())
         ) {
             "shell" -> {
                 fun formula(k: Int): Double = floor(n / 2.0.pow(k))

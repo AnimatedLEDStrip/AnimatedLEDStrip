@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -79,7 +79,7 @@ actual class LEDStripRenderer actual constructor(
                             stripColorLogger.saveStripState()
                         }
                     } catch (e: NullPointerException) {
-                        Logger.e("Renderer") { "LEDStrip NullPointerException when rendering" }
+                        Logger.e("Renderer: LEDStrip NullPointerException when rendering")
                         delay(1000)
                     }
                 delay(5)
