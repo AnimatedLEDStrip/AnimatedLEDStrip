@@ -88,7 +88,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
                 api("co.touchlab:kermit:0.1.8")
             }
