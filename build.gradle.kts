@@ -99,7 +99,7 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
                 implementation("io.kotest:kotest-assertions-core:4.4.3")
                 implementation("io.kotest:kotest-property:5.3.0")
-                implementation("io.mockk:mockk-common:1.11.0")
+                implementation("io.mockk:mockk-common:1.12.4")
             }
         }
         val jvmMain by getting {
