@@ -89,7 +89,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
                 api("co.touchlab:kermit:1.1.1")
             }
         }
