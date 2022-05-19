@@ -146,6 +146,14 @@ tasks.named<Test>("jvmTest") {
     systemProperty("kotest.proptest.default.iteration.count", 10)
 }
 
+tasks.test {
+    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+        isDisabled = false
+        binaryReportFile.set(file("$buildDir/custom/result.bin"))
+        includes = listOf("animatedledstrip.*")
+    }
+}
+
 //tasks.jacocoTestReport {
 //    val coverageSourceDirs = arrayOf(
 //        "${projectDir}/src/commonMain/kotlin",
