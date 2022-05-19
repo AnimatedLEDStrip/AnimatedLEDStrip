@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +45,14 @@ class PixelLocationManagerTest : StringSpec(
     {
         "constructor locations defined" {
             checkAll(15, Arb.list(locationArb, 1..5000)) { locs ->
-                val newManager = PixelLocationManager(locs, locs.size)
-                for ((index, location) in newManager.pixelLocations.withIndex())
-                    location shouldBe PixelLocation(index, locs[index])
+                try {
+                    val newManager = PixelLocationManager(locs, locs.size)
+                    for ((index, location) in newManager.pixelLocations.withIndex())
+                        location shouldBe PixelLocation(index, locs[index])
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("Two pixels cannot have the same coordinates") != true)
+                        throw e
+                }
             }
         }
 
@@ -64,28 +69,36 @@ class PixelLocationManagerTest : StringSpec(
                 for ((index, location) in newManager.pixelLocations.withIndex())
                     location shouldBe PixelLocation(index, Location(index))
                 TestLogger.logs.shouldContainExactly(
-                    TestLogger.Log(Severity.Warn,
-                                   "No LED locations defined, assuming LEDs are in a one dimensional strip with equal spacing",
-                                   "Pixel Location Manager"))
+                    TestLogger.Log(
+                        Severity.Warn,
+                        "No LED locations defined, assuming LEDs are in a one dimensional strip with equal spacing",
+                        "LEDs"
+                    )
+                )
                 TestLogger.stopLogCapture()
             }
         }
 
         "min max avg" {
             checkAll(100, Arb.list(locationArb, 1..5000)) { locs ->
-                val newManager = PixelLocationManager(locs, locs.size)
-                newManager.xMin shouldBe locs.minByOrNull { it.x }?.x
-                newManager.xMax shouldBe locs.maxByOrNull { it.x }?.x
-                newManager.yMin shouldBe locs.minByOrNull { it.y }?.y
-                newManager.yMax shouldBe locs.maxByOrNull { it.y }?.y
-                newManager.zMin shouldBe locs.minByOrNull { it.z }?.z
-                newManager.zMax shouldBe locs.maxByOrNull { it.z }?.z
-                newManager.xAvg shouldBe (((locs.minByOrNull { it.x }?.x ?: 0.0) +
-                                           (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
-                newManager.yAvg shouldBe (((locs.minByOrNull { it.y }?.y ?: 0.0) +
-                                           (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
-                newManager.zAvg shouldBe (((locs.minByOrNull { it.z }?.z ?: 0.0) +
-                                           (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
+                try {
+                    val newManager = PixelLocationManager(locs, locs.size)
+                    newManager.xMin shouldBe locs.minByOrNull { it.x }?.x
+                    newManager.xMax shouldBe locs.maxByOrNull { it.x }?.x
+                    newManager.yMin shouldBe locs.minByOrNull { it.y }?.y
+                    newManager.yMax shouldBe locs.maxByOrNull { it.y }?.y
+                    newManager.zMin shouldBe locs.minByOrNull { it.z }?.z
+                    newManager.zMax shouldBe locs.maxByOrNull { it.z }?.z
+                    newManager.xAvg shouldBe (((locs.minByOrNull { it.x }?.x ?: 0.0) +
+                            (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
+                    newManager.yAvg shouldBe (((locs.minByOrNull { it.y }?.y ?: 0.0) +
+                            (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
+                    newManager.zAvg shouldBe (((locs.minByOrNull { it.z }?.z ?: 0.0) +
+                            (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("Two pixels cannot have the same coordinates") != true)
+                        throw e
+                }
             }
         }
 
@@ -93,23 +106,28 @@ class PixelLocationManagerTest : StringSpec(
             checkAll(100, Arb.list(locationArb, 1..5000)) { locs ->
                 val newManager = PixelLocationManager(locs, locs.size)
                 newManager.defaultLocation.x shouldBe (((locs.minByOrNull { it.x }?.x ?: 0.0) +
-                                                        (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
+                        (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
                 newManager.defaultLocation.y shouldBe (((locs.minByOrNull { it.y }?.y ?: 0.0) +
-                                                        (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
+                        (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
                 newManager.defaultLocation.z shouldBe (((locs.minByOrNull { it.z }?.z ?: 0.0) +
-                                                        (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
+                        (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
             }
         }
 
         "default distance" {
             checkAll(100, Arb.list(locationArb, 1..5000)) { locs ->
-                val newManager = PixelLocationManager(locs, locs.size)
-                newManager.maximumDistance.x shouldBe ((abs(locs.minByOrNull { it.x }?.x ?: 0.0) +
-                                                        abs(locs.maxByOrNull { it.x }?.x ?: 0.0)) plusOrMinus 0.01)
-                newManager.maximumDistance.y shouldBe ((abs(locs.minByOrNull { it.y }?.y ?: 0.0) +
-                                                        abs(locs.maxByOrNull { it.y }?.y ?: 0.0)) plusOrMinus 0.01)
-                newManager.maximumDistance.z shouldBe ((abs(locs.minByOrNull { it.z }?.z ?: 0.0) +
-                                                        abs(locs.maxByOrNull { it.z }?.z ?: 0.0)) plusOrMinus 0.01)
+                try {
+                    val newManager = PixelLocationManager(locs, locs.size)
+                    newManager.maximumDistance.x shouldBe ((abs(locs.minByOrNull { it.x }?.x ?: 0.0) +
+                            abs(locs.maxByOrNull { it.x }?.x ?: 0.0)) plusOrMinus 0.01)
+                    newManager.maximumDistance.y shouldBe ((abs(locs.minByOrNull { it.y }?.y ?: 0.0) +
+                            abs(locs.maxByOrNull { it.y }?.y ?: 0.0)) plusOrMinus 0.01)
+                    newManager.maximumDistance.z shouldBe ((abs(locs.minByOrNull { it.z }?.z ?: 0.0) +
+                            abs(locs.maxByOrNull { it.z }?.z ?: 0.0)) plusOrMinus 0.01)
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("Two pixels cannot have the same coordinates") != true)
+                        throw e
+                }
             }
         }
 
