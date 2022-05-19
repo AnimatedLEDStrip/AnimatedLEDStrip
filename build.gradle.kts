@@ -29,16 +29,17 @@ plugins {
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jetbrains.dokka") version "1.6.21"
     id("io.kotest") version "0.3.9"
-    jacoco
+    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+//    jacoco
     id("java-library")
     signing
     id("de.marcphilipp.nexus-publish") version "0.4.0"
     id("io.codearte.nexus-staging") version "0.30.0"
 }
 
-jacoco {
-    toolVersion = "0.8.6"
-}
+//jacoco {
+//    toolVersion = "0.8.6"
+//}
 
 repositories {
     jcenter()
@@ -127,7 +128,7 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
+//    finalizedBy(tasks.jacocoTestReport)
     filter {
         isFailOnNoMatchingTests = false
     }
@@ -145,28 +146,28 @@ tasks.named<Test>("jvmTest") {
     systemProperty("kotest.proptest.default.iteration.count", 10)
 }
 
-tasks.jacocoTestReport {
-    val coverageSourceDirs = arrayOf(
-        "${projectDir}/src/commonMain/kotlin",
-        "${projectDir}/src/jvmMain/kotlin"
-    )
-
-    val classFiles = File("${buildDir}/classes/kotlin/jvm/main/")
-        .walkBottomUp()
-        .toSet()
-
-
-    classDirectories.setFrom(classFiles)
-    sourceDirectories.setFrom(files(coverageSourceDirs))
-
-    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
-
-    reports {
-        xml.isEnabled = true
-        csv.isEnabled = true
-        html.isEnabled = true
-    }
-}
+//tasks.jacocoTestReport {
+//    val coverageSourceDirs = arrayOf(
+//        "${projectDir}/src/commonMain/kotlin",
+//        "${projectDir}/src/jvmMain/kotlin"
+//    )
+//
+//    val classFiles = File("${buildDir}/classes/kotlin/jvm/main/")
+//        .walkBottomUp()
+//        .toSet()
+//
+//
+//    classDirectories.setFrom(classFiles)
+//    sourceDirectories.setFrom(files(coverageSourceDirs))
+//
+//    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
+//
+//    reports {
+//        xml.isEnabled = true
+//        csv.isEnabled = true
+//        html.isEnabled = true
+//    }
+//}
 
 val javadoc = tasks.named("javadoc")
 
