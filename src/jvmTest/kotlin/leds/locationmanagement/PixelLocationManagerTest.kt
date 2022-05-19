@@ -104,13 +104,18 @@ class PixelLocationManagerTest : StringSpec(
 
         "default location" {
             checkAll(100, Arb.list(locationArb, 1..5000)) { locs ->
-                val newManager = PixelLocationManager(locs, locs.size)
-                newManager.defaultLocation.x shouldBe (((locs.minByOrNull { it.x }?.x ?: 0.0) +
-                        (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
-                newManager.defaultLocation.y shouldBe (((locs.minByOrNull { it.y }?.y ?: 0.0) +
-                        (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
-                newManager.defaultLocation.z shouldBe (((locs.minByOrNull { it.z }?.z ?: 0.0) +
-                        (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
+                try {
+                    val newManager = PixelLocationManager(locs, locs.size)
+                    newManager.defaultLocation.x shouldBe (((locs.minByOrNull { it.x }?.x ?: 0.0) +
+                            (locs.maxByOrNull { it.x }?.x ?: 0.0)) / 2 plusOrMinus 0.01)
+                    newManager.defaultLocation.y shouldBe (((locs.minByOrNull { it.y }?.y ?: 0.0) +
+                            (locs.maxByOrNull { it.y }?.y ?: 0.0)) / 2 plusOrMinus 0.01)
+                    newManager.defaultLocation.z shouldBe (((locs.minByOrNull { it.z }?.z ?: 0.0) +
+                            (locs.maxByOrNull { it.z }?.z ?: 0.0)) / 2 plusOrMinus 0.01)
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("Two pixels cannot have the same coordinates") != true)
+                        throw e
+                }
             }
         }
 
@@ -133,14 +138,19 @@ class PixelLocationManagerTest : StringSpec(
 
         "random location" {
             checkAll(Arb.list(locationArb, 1..500)) { locs ->
-                val newManager = PixelLocationManager(locs, locs.size)
-                val rLoc = newManager.randomLocation()
-                rLoc.x shouldBeGreaterThanOrEqual newManager.xMin
-                rLoc.x shouldBeLessThanOrEqual newManager.xMax
-                rLoc.y shouldBeGreaterThanOrEqual newManager.yMin
-                rLoc.y shouldBeLessThanOrEqual newManager.yMax
-                rLoc.z shouldBeGreaterThanOrEqual newManager.zMin
-                rLoc.z shouldBeLessThanOrEqual newManager.zMax
+                try {
+                    val newManager = PixelLocationManager(locs, locs.size)
+                    val rLoc = newManager.randomLocation()
+                    rLoc.x shouldBeGreaterThanOrEqual newManager.xMin
+                    rLoc.x shouldBeLessThanOrEqual newManager.xMax
+                    rLoc.y shouldBeGreaterThanOrEqual newManager.yMin
+                    rLoc.y shouldBeLessThanOrEqual newManager.yMax
+                    rLoc.z shouldBeGreaterThanOrEqual newManager.zMin
+                    rLoc.z shouldBeLessThanOrEqual newManager.zMax
+                } catch (e: IllegalArgumentException) {
+                    if (e.message?.contains("Two pixels cannot have the same coordinates") != true)
+                        throw e
+                }
             }
         }
 
