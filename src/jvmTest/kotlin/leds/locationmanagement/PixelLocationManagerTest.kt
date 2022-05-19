@@ -71,7 +71,7 @@ class PixelLocationManagerTest : StringSpec(
                 TestLogger.logs.shouldContainExactly(
                     TestLogger.Log(
                         Severity.Warn,
-                        "No LED locations defined, assuming LEDs are in a one dimensional strip with equal spacing",
+                        "Pixel Location Manager: No LED locations defined, assuming LEDs are in a one dimensional strip with equal spacing",
                         "LEDs"
                     )
                 )
