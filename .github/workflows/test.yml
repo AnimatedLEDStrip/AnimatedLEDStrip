@@ -34,19 +34,19 @@ jobs:
       - name: Test animations
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
-          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
+#          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
       - name: Test colors
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-colors.xml
+      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-colors.xml
       - name: Test communication
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
-          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-communication.xml
+      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-communication.xml
       - name: Test leds
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
+#          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
 #      - name: Cleanup Gradle Cache
 #        run: |
 #          rm -f ~/.gradle/caches/modules-2/modules-2.lock
