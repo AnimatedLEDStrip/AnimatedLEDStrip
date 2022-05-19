@@ -51,9 +51,9 @@ description = "A library designed to simplify running animations on WS281x strip
 
 kotlin {
     jvm {
-        compilations.all {
-            kotlinOptions.jvmTarget = "1.8"
-        }
+//        compilations.all {
+//            kotlinOptions.jvmTarget = "1.8"
+//        }
     }
 //    js(LEGACY) {
 //        browser {
