@@ -21,7 +21,7 @@
  */
 
 tasks.wrapper {
-    gradleVersion = "6.7.1"
+    gradleVersion = "7.4.2"
 }
 
 plugins {
