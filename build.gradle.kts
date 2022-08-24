@@ -29,7 +29,7 @@ plugins {
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jetbrains.dokka") version "1.6.21"
     id("io.kotest") version "0.3.9"
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.jetbrains.kotlinx.kover") version "0.6.0"
 //    jacoco
     id("java-library")
     signing
