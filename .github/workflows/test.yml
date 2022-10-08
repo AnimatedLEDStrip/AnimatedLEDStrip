@@ -49,8 +49,7 @@ jobs:
       #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
       - name: Merge coverage
         run: ./gradlew koverMergedXmlReport
-      - uses: codecov/codecov-action@v2
-        with: files
+      - uses: codecov/codecov-action@v3
 #      - name: Cleanup Gradle Cache
 #        run: |
 #          rm -f ~/.gradle/caches/modules-2/modules-2.lock
