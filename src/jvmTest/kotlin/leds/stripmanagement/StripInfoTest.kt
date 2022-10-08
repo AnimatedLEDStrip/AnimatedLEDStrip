@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -38,15 +38,19 @@ import kotlinx.serialization.encodeToString
 class StripInfoTest : StringSpec(
     {
         "encode JSON" {
-            checkAll(Arb.int(),
-                     Arb.int().orNull(),
-                     Arb.long(),
-                     Arb.bool(),
-                     filteredStringArb.orNull(),
-                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
+            checkAll(
+                Arb.int(),
+                Arb.int().orNull(),
+                Arb.int(0, 255),
+                Arb.long(),
+                Arb.bool(),
+                filteredStringArb.orNull(),
+                Arb.list(locationArb).orNull()
+            ) { i, ni, br, l, b, s, loc ->
                 StripInfo(
                     numLEDs = i,
                     pin = ni,
+                    brightness = br,
                     renderDelay = l,
                     isRenderLoggingEnabled = b,
                     renderLogFile = s,
@@ -61,13 +65,16 @@ class StripInfoTest : StringSpec(
             }
         }
 
-        "decode JSON"{
-            checkAll(Arb.int(),
-                     Arb.int().orNull(),
-                     Arb.long(),
-                     Arb.bool(),
-                     filteredStringArb.orNull(),
-                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
+        "decode JSON" {
+            checkAll(
+                Arb.int(),
+                Arb.int().orNull(),
+                Arb.int(0, 255),
+                Arb.long(),
+                Arb.bool(),
+                filteredStringArb.orNull(),
+                Arb.list(locationArb).orNull()
+            ) { i, ni, br, l, b, s, loc ->
 
                 val json =
                     """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
@@ -77,6 +84,7 @@ class StripInfoTest : StringSpec(
                 val correctData = StripInfo(
                     numLEDs = i,
                     pin = ni,
+                    brightness = br,
                     renderDelay = l,
                     isRenderLoggingEnabled = b,
                     renderLogFile = s,
@@ -92,15 +100,19 @@ class StripInfoTest : StringSpec(
         }
 
         "encode and decode JSON" {
-            checkAll(Arb.int(),
-                     Arb.int().orNull(),
-                     Arb.long(),
-                     Arb.bool(),
-                     Arb.string().orNull(),
-                     Arb.list(locationArb).orNull()) { i, ni, l, b, s, loc ->
+            checkAll(
+                Arb.int(),
+                Arb.int().orNull(),
+                Arb.int(0, 255),
+                Arb.long(),
+                Arb.bool(),
+                Arb.string().orNull(),
+                Arb.list(locationArb).orNull()
+            ) { i, ni, br, l, b, s, loc ->
                 val info1 = StripInfo(
                     numLEDs = i,
                     pin = ni,
+                    brightness = br,
                     renderDelay = l,
                     isRenderLoggingEnabled = b,
                     renderLogFile = s,
