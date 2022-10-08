@@ -46,7 +46,11 @@ jobs:
       - name: Test leds
         run: |
           ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-#          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
+      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
+      - name: Merge coverage
+        run: ./gradlew koverMergedXmlReport
+      - uses: codecov/codecov-action@v2
+        with: files
 #      - name: Cleanup Gradle Cache
 #        run: |
 #          rm -f ~/.gradle/caches/modules-2/modules-2.lock

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,7 @@ import kotlinx.serialization.Serializable
  *
  * @property numLEDs Number of LEDs in the strip
  * @property pin Physical pin the strip is connected to
+ * @property brightness The brightness of the LEDs, a value between 0 and 255
  * @property renderDelay Delay between renders sent to the strip
  * @property isRenderLoggingEnabled If logging should be enabled
  * @property renderLogFile File to write log output to
@@ -49,6 +50,7 @@ import kotlinx.serialization.Serializable
 data class StripInfo(
     val numLEDs: Int = 0,
     val pin: Int? = null,
+    val brightness: Int = 255,
     val renderDelay: Long = 10,
     val isRenderLoggingEnabled: Boolean = false,
     val renderLogFile: String? = null,

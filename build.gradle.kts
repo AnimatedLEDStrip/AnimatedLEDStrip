@@ -42,7 +42,6 @@ plugins {
 //}
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
@@ -149,7 +148,7 @@ tasks.named<Test>("jvmTest") {
 tasks.test {
     extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
         isDisabled = false
-        binaryReportFile.set(file("$buildDir/custom/result.bin"))
+        binaryReportFile.set(file("$buildDir/reports/result.bin"))
         includes = listOf("animatedledstrip.*")
     }
 }
