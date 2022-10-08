@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,11 +46,17 @@ val newRunningAnimationParams: RunningAnimationParams
 
 fun haveProlongedColors(colors: PreparedColorContainer) = object : Matcher<SectionManager> {
     override fun test(value: SectionManager) =
-        MatcherResult(passed = value.pixelProlongedColorList == colors.colors,
-                      failureMessage = "Prolonged colors do not match:\nExpected:\n" +
-                                       "    ${colors.colors}\nActual:\n    ${value.pixelProlongedColorList}",
-                      negatedFailureMessage = "Prolonged colors match:\n" +
-                                              "    ${value.pixelProlongedColorList}")
+        MatcherResult(
+            passed = value.pixelProlongedColorList == colors.colors,
+            failureMessageFn = {
+                "Prolonged colors do not match:\nExpected:\n" +
+                        "    ${colors.colors}\nActual:\n    ${value.pixelProlongedColorList}"
+            },
+            negatedFailureMessageFn = {
+                "Prolonged colors match:\n" +
+                        "    ${value.pixelProlongedColorList}"
+            }
+        )
 }
 
 //fun SectionManager.assertAllPixelProlongedColors(prolongedColor: Int) {
@@ -119,10 +125,12 @@ val locationArb: Arb<Location> =
              largeDoubleArb) { x, y, z -> Location(x, y, z) }
 
 val distanceArb: Arb<Distance> =
-    Arb.bind(largeDoubleArb,
-             largeDoubleArb,
-             largeDoubleArb,
-             Arb.bool()) { x, y, z, aOrP ->
+    Arb.bind(
+        largeDoubleArb,
+        largeDoubleArb,
+        largeDoubleArb,
+        Arb.boolean()
+    ) { x, y, z, aOrP ->
         if (aOrP) AbsoluteDistance(x, y, z) else PercentDistance(x, y, z)
     }
 
@@ -132,10 +140,12 @@ val absoluteDistanceArb: Arb<AbsoluteDistance> =
              largeDoubleArb) { x, y, z -> AbsoluteDistance(x, y, z) }
 
 val rotationArb: Arb<Rotation> =
-    Arb.bind(largeDoubleArb,
-             largeDoubleArb,
-             largeDoubleArb,
-             Arb.bool()) { x, y, z, rOrD ->
+    Arb.bind(
+        largeDoubleArb,
+        largeDoubleArb,
+        largeDoubleArb,
+        Arb.boolean()
+    ) { x, y, z, rOrD ->
         if (rOrD) RadiansRotation(x, y, z) else DegreesRotation(x, y, z)
     }
 
@@ -145,16 +155,18 @@ val radiansRotationArb: Arb<RadiansRotation> =
              largeDoubleArb) { x, y, z -> RadiansRotation(x, y, z) }
 
 val equationArb: Arb<Equation> =
-    Arb.bind(Arb.list(largeDoubleArb, 0..5),
-             Arb.bool()) { c, _ -> Equation(c) }
+    Arb.bind(
+        Arb.list(largeDoubleArb, 0..5),
+        Arb.boolean()
+    ) { c, _ -> Equation(c) }
 
 val colorContainerArb: Arb<ColorContainerInterface> =
-    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, cOrP ->
+    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.boolean()) { c, cOrP ->
         if (cOrP) ColorContainer(c.toMutableList()) else PreparedColorContainer(c)
     }
 
 val preparedColorContainerArb: Arb<PreparedColorContainer> =
-    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.bool()) { c, _ ->
+    Arb.bind(Arb.list(Arb.int(0..0xFFFFFF)), Arb.boolean()) { c, _ ->
         PreparedColorContainer(c)
     }
 

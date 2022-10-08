@@ -43,7 +43,7 @@ class StripInfoTest : StringSpec(
                 Arb.int().orNull(),
                 Arb.int(0, 255),
                 Arb.long(),
-                Arb.bool(),
+                Arb.boolean(),
                 filteredStringArb.orNull(),
                 Arb.list(locationArb).orNull()
             ) { i, ni, br, l, b, s, loc ->
@@ -59,7 +59,7 @@ class StripInfoTest : StringSpec(
                     is2DSupported = b,
                     is3DSupported = b,
                     ledLocations = loc,
-                ).jsonString() shouldBe """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
+                ).jsonString() shouldBe """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"brightness":$br,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
                     loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
                 }};;;"""
             }
@@ -71,13 +71,13 @@ class StripInfoTest : StringSpec(
                 Arb.int().orNull(),
                 Arb.int(0, 255),
                 Arb.long(),
-                Arb.bool(),
+                Arb.boolean(),
                 filteredStringArb.orNull(),
                 Arb.list(locationArb).orNull()
             ) { i, ni, br, l, b, s, loc ->
 
                 val json =
-                    """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
+                    """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"brightness":$br,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
                         loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
                     }};;;"""
 
@@ -105,7 +105,7 @@ class StripInfoTest : StringSpec(
                 Arb.int().orNull(),
                 Arb.int(0, 255),
                 Arb.long(),
-                Arb.bool(),
+                Arb.boolean(),
                 Arb.string().orNull(),
                 Arb.list(locationArb).orNull()
             ) { i, ni, br, l, b, s, loc ->

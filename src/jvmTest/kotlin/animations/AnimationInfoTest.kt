@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -83,8 +83,9 @@ class AnimationInfoTest : StringSpec(
                     filteredStringArb.next(rs),
                     intArb.next(rs),
                     intArb.next(rs),
-                    Arb.bool().next(rs),
-                    Arb.set(dimensionalityArb, 1..3).next(rs))
+                    Arb.boolean().next(rs),
+                    Arb.set(dimensionalityArb, 1..3).next(rs)
+                )
             }
 
         "encode JSON" {

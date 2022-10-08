@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import animatedledstrip.communication.toUTF8String
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Arb
-import io.kotest.property.arbitrary.bool
+import io.kotest.property.arbitrary.boolean
 import io.kotest.property.arbitrary.enum
 import io.kotest.property.arbitrary.long
 import io.kotest.property.checkAll
@@ -37,14 +37,14 @@ import io.kotest.property.checkAll
 class ClientParamsTest : StringSpec(
     {
         "encode JSON" {
-            checkAll(Arb.bool(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 ClientParams(b, b, b, b, m, m, m, b, l).jsonString() shouldBe
                         """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
             }
         }
 
         "decode JSON" {
-            checkAll(Arb.bool(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 val json =
                     """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
 
@@ -55,7 +55,7 @@ class ClientParamsTest : StringSpec(
         }
 
         "encode and decode JSON" {
-            checkAll(Arb.bool(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 val params1 = ClientParams(b, b, b, b, m, m, m, b, l)
                 val paramsBytes = params1.json()
 
