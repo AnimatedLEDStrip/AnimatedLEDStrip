@@ -41,6 +41,11 @@ jobs:
       - name: Test leds
         run: ./gradlew koverXmlReport -DtestSet=leds
       - uses: codecov/codecov-action@v3
+        files:
+          - build/kover/report-animations.xml
+          - build/kover/report-colors.xml
+          - build/kover/report-communication.xml
+          - build/kover/report-leds.xml
 #      - name: Cleanup Gradle Cache
 #        run: |
 #          rm -f ~/.gradle/caches/modules-2/modules-2.lock

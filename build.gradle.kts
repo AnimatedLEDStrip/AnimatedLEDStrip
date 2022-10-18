@@ -152,13 +152,13 @@ tasks.named<Test>("jvmTest") {
     systemProperty("kotest.proptest.default.iteration.count", 10)
 }
 
-tasks.test {
-    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-        isDisabled.set(false)
-        reportFile.set(file("$buildDir/reports/result-${System.getProperty("testSet")}.bin"))
-        includes.addAll("animatedledstrip.*")
-    }
-}
+//tasks.test {
+//    extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
+//        isDisabled.set(false)
+//        reportFile.set(file("$buildDir/reports/result-${System.getProperty("testSet")}.bin"))
+//        includes.addAll("animatedledstrip.*")
+//    }
+//}
 
 kover {
     xmlReport {
