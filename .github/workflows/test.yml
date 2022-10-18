@@ -32,23 +32,15 @@ jobs:
         run: ./gradlew jvmTestClasses
 
       - name: Test animations
-        run: |
-          ./gradlew jvmTest --tests "animatedledstrip.test.animations.*"
-#          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-animations.xml
+        run: ./gradlew koverXmlReport -DtestSet=animations
       - name: Test colors
-        run: |
-          ./gradlew jvmTest --tests "animatedledstrip.test.colors.*"
-      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-colors.xml
+        run: ./gradlew koverXmlReport -DtestSet=colors
       - name: Test communication
-        run: |
-          ./gradlew jvmTest --tests "animatedledstrip.test.communication.*"
-      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-communication.xml
+        run: ./gradlew koverXmlReport -DtestSet=communication
       - name: Test leds
-        run: |
-          ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
-      #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
+        run: ./gradlew koverXmlReport -DtestSet=leds
       - name: Merge coverage
-        run: ./gradlew koverMergedXmlReport -x jvmTest
+        run: ./gradlew koverXmlReport -x jvmTest
       - uses: codecov/codecov-action@v3
 #      - name: Cleanup Gradle Cache
 #        run: |

@@ -29,7 +29,7 @@ plugins {
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jetbrains.dokka") version "1.6.21"
     id("io.kotest") version "0.3.9"
-    id("org.jetbrains.kotlinx.kover") version "0.5.0"
+    id("org.jetbrains.kotlinx.kover") version "0.6.1"
 //    jacoco
     id("java-library")
     signing
@@ -102,8 +102,7 @@ kotlin {
                 implementation("io.mockk:mockk-common:1.12.4")
             }
         }
-        val jvmMain by getting {
-        }
+        val jvmMain by getting {}
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit5"))
@@ -127,9 +126,17 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-//    finalizedBy(tasks.jacocoTestReport)
     filter {
         isFailOnNoMatchingTests = false
+        includeTestsMatching(
+            when (System.getProperty("testSet")) {
+                "animations" -> "animatedledstrip.test.animations.*"
+                "colors" -> "animatedledstrip.test.colors.*"
+                "communication" -> "animatedledstrip.test.communication.*"
+                "leds" -> "animatedledstrip.test.leds.*"
+                else -> "animatedledstrip.test.*"
+            }
+        )
     }
     testLogging {
         showExceptions = true
@@ -137,7 +144,7 @@ tasks.named<Test>("jvmTest") {
         events = setOf(
             org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
             org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
+            org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED,
         )
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
@@ -147,34 +154,17 @@ tasks.named<Test>("jvmTest") {
 
 tasks.test {
     extensions.configure(kotlinx.kover.api.KoverTaskExtension::class) {
-        isDisabled = false
-        binaryReportFile.set(file("$buildDir/reports/result.bin"))
-        includes = listOf("animatedledstrip.*")
+        isDisabled.set(false)
+        reportFile.set(file("$buildDir/reports/result-${System.getProperty("testSet")}.bin"))
+        includes.addAll("animatedledstrip.*")
     }
 }
 
-//tasks.jacocoTestReport {
-//    val coverageSourceDirs = arrayOf(
-//        "${projectDir}/src/commonMain/kotlin",
-//        "${projectDir}/src/jvmMain/kotlin"
-//    )
-//
-//    val classFiles = File("${buildDir}/classes/kotlin/jvm/main/")
-//        .walkBottomUp()
-//        .toSet()
-//
-//
-//    classDirectories.setFrom(classFiles)
-//    sourceDirectories.setFrom(files(coverageSourceDirs))
-//
-//    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
-//
-//    reports {
-//        xml.isEnabled = true
-//        csv.isEnabled = true
-//        html.isEnabled = true
-//    }
-//}
+kover {
+    xmlReport {
+        reportFile.set(layout.buildDirectory.file("kover/report-${System.getProperty("testSet")}.xml"))
+    }
+}
 
 val javadoc = tasks.named("javadoc")
 
