@@ -28,6 +28,7 @@ jobs:
       #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
       #          restore-keys: |
       #            ${{ runner.os }}-gradle-
+      - run: pwd
       - name: Create test classes for testing
         run: ./gradlew jvmTestClasses
 
@@ -39,8 +40,6 @@ jobs:
         run: ./gradlew koverXmlReport -DtestSet=communication
       - name: Test leds
         run: ./gradlew koverXmlReport -DtestSet=leds
-      - name: Merge coverage
-        run: ./gradlew koverXmlReport -x jvmTest
       - uses: codecov/codecov-action@v3
 #      - name: Cleanup Gradle Cache
 #        run: |
