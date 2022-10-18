@@ -29,7 +29,6 @@ import animatedledstrip.utils.Logger
 import kotlin.math.abs
 
 class PixelLocationManager(ledLocations: List<Location>?, val numLEDs: Int) {
-
     constructor(
         oldLocations: PixelLocationManager,
         offset: AbsoluteDistance = AbsoluteDistance(0, 0, 0),

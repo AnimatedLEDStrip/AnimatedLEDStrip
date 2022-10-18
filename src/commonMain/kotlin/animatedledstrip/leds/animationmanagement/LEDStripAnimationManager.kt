@@ -28,7 +28,7 @@ import animatedledstrip.animations.groups.prepareGroupParameters
 import animatedledstrip.leds.sectionmanagement.SectionManager
 import animatedledstrip.utils.Logger
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 
 /**
  * Manages animations running on the entire strip and is the parent manager to all animations
@@ -42,8 +42,7 @@ class LEDStripAnimationManager(override val sectionManager: SectionManager) : An
     /**
      * The `CoroutineScope` all animations managed by this instance will run in
      */
-    override val animationScope: CoroutineScope
-        get() = GlobalScope
+    override val animationScope: CoroutineScope = MainScope()
 
     val supportedAnimations: MutableMap<String, Animation> = mutableMapOf()
     val supportedAnimationsByAbbr: MutableMap<String, Animation> = mutableMapOf()

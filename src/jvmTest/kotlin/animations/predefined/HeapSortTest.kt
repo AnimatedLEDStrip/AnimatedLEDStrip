@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018-2021 AnimatedLEDStrip
+ * Copyright (c) 2018-2022 AnimatedLEDStrip
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ class HeapSortTest : StringSpec(
 
         val ledStrip = createNewEmulatedStrip(10)
 
-        afterSpec { ledStrip.renderer.close() }
+        afterSpec { ledStrip.close() }
 
         "Heap Sort" {
             val section = ledStrip.sectionManager.createSection("hps", 0, 9)

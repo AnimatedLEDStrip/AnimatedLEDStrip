@@ -25,10 +25,7 @@ package animatedledstrip.leds.stripmanagement
 import animatedledstrip.leds.colormanagement.LEDStripColorLogger
 import animatedledstrip.leds.colormanagement.LEDStripColorManager
 import animatedledstrip.utils.Logger
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
+import kotlinx.coroutines.*
 
 /**
  * Manages rendering the colors on the strip
@@ -42,7 +39,7 @@ actual class LEDStripRenderer actual constructor(
 ) {
     actual val stripColorLogger = LEDStripColorLogger(stripColorManager)
 
-    @Suppress("EXPERIMENTAL_API_USAGE")
+    @OptIn(DelicateCoroutinesApi::class)
     private val renderThread = newSingleThreadContext("Render Thread")
 
     actual var isRendering: Boolean = false
@@ -60,6 +57,7 @@ actual class LEDStripRenderer actual constructor(
         renderThread.close()
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private val job = GlobalScope.launch(renderThread) {
         var renderTime = 0
         val loopsBetweenRenders = renderDelay / 5

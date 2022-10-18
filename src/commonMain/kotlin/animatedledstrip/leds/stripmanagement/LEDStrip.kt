@@ -28,6 +28,7 @@ import animatedledstrip.leds.colormanagement.LEDStripColorManager
 import animatedledstrip.leds.locationmanagement.PixelLocationManager
 import animatedledstrip.leds.sectionmanagement.LEDStripSectionManager
 import animatedledstrip.leds.sectionmanagement.Section
+import kotlinx.coroutines.cancel
 
 /**
  * Manages the managers that manage all aspects of the strip, from animations
@@ -103,4 +104,9 @@ class LEDStrip(
      * Callback to run when a new section is created
      */
     var newSectionCallback: ((Section) -> Any?)? = null
+
+    fun close() {
+        renderer.close()
+        animationManager.animationScope.cancel()
+    }
 }
