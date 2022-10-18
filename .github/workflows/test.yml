@@ -48,7 +48,7 @@ jobs:
           ./gradlew jvmTest --tests "animatedledstrip.test.leds.*"
       #          mv build/reports/jacoco/test/jacocoTestReport.xml build/reports/jacoco/test/jacocoTestReport-leds.xml
       - name: Merge coverage
-        run: ./gradlew koverMergedXmlReport
+        run: ./gradlew koverMergedXmlReport -x jvmTest
       - uses: codecov/codecov-action@v3
 #      - name: Cleanup Gradle Cache
 #        run: |
