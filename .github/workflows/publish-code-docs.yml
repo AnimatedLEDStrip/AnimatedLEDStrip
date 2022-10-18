@@ -11,7 +11,7 @@ jobs:
   deploy-code-documentation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
 
       - name: Create documentation
         run: |
