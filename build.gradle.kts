@@ -106,7 +106,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit5"))
-                implementation("io.mockk:mockk:1.11.0")
+                implementation("io.mockk:mockk:1.13.3")
                 implementation("io.kotest:kotest-runner-junit5:5.3.0")
                 implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
                 runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
