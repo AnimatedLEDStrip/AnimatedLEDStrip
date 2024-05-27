@@ -21,15 +21,15 @@
  */
 
 tasks.wrapper {
-    gradleVersion = "7.4.2"
+    gradleVersion = "8.7"
 }
 
 plugins {
-    kotlin("multiplatform") version "1.6.21"
-    kotlin("plugin.serialization") version "1.6.21"
-    id("org.jetbrains.dokka") version "1.6.21"
+    kotlin("multiplatform") version "1.9.23"
+    kotlin("plugin.serialization") version "1.9.23"
+    id("org.jetbrains.dokka") version "1.9.20"
     id("io.kotest") version "0.3.9"
-    id("org.jetbrains.kotlinx.kover") version "0.6.1"
+    id("org.jetbrains.kotlinx.kover") version "0.7.6"
 //    jacoco
     id("java-library")
     signing
@@ -50,6 +50,7 @@ version = "1.0.2-SNAPSHOT"
 description = "A library designed to simplify running animations on WS281x strips"
 
 kotlin {
+    jvmToolchain(8)
     jvm {
 //        compilations.all {
 //            kotlinOptions.jvmTarget = "1.8"
@@ -88,28 +89,28 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
-                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
-                api("co.touchlab:kermit:1.1.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+                api("co.touchlab:kermit:1.2.3")
             }
         }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("io.kotest:kotest-assertions-core:5.3.0")
-                implementation("io.kotest:kotest-property:5.3.0")
-                implementation("io.mockk:mockk-common:1.12.4")
+                implementation("io.kotest:kotest-assertions-core:5.9.0")
+                implementation("io.kotest:kotest-property:5.9.0")
+                implementation("io.mockk:mockk-common:1.12.5")
             }
         }
         val jvmMain by getting {}
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit5"))
-                implementation("io.mockk:mockk:1.11.0")
-                implementation("io.kotest:kotest-runner-junit5:5.3.0")
-                implementation("io.kotest:kotest-framework-engine-jvm:5.3.0")
-                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+                implementation("io.mockk:mockk:1.13.11")
+                implementation("io.kotest:kotest-runner-junit5:5.9.0")
+                implementation("io.kotest:kotest-framework-engine-jvm:5.9.0")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
             }
         }
 //        val jsMain by getting
@@ -148,7 +149,7 @@ tasks.named<Test>("jvmTest") {
         )
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
-    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
+//    systemProperties = System.getProperties().map { it.key.toString() to it.value }.toMap()
     systemProperty("kotest.proptest.default.iteration.count", 10)
 }
 
@@ -160,9 +161,11 @@ tasks.named<Test>("jvmTest") {
 //    }
 //}
 
-kover {
-    xmlReport {
-        reportFile.set(layout.buildDirectory.file("kover/report-${System.getProperty("testSet")}.xml"))
+koverReport {
+    defaults {
+        xml {
+            setReportFile(layout.buildDirectory.file("kover/report-${System.getProperty("testSet")}.xml"))
+        }
     }
 }
 
