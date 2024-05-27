@@ -11,7 +11,7 @@ jobs:
   deploy-code-documentation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v4.1.6
 
       - name: Create documentation
         run: |
@@ -19,7 +19,7 @@ jobs:
           git add -f dokka
 
       - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        uses: JamesIves/github-pages-deploy-action@v4.6.1
         with:
           branch: gh-pages
           folder: dokka

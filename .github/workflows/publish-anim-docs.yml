@@ -11,9 +11,9 @@ jobs:
   deploy-anim-documentation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v4.1.6
 
-      - uses: actions/setup-python@v3.1.1
+      - uses: actions/setup-python@v5.1.0
       - name: Install python packages
         uses: BSFishy/pip-action@v1
         with:
@@ -32,7 +32,7 @@ jobs:
         run: scripts/commit-animation-docs.bash
 
       - name: Upload documentation
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
           directory: wiki
