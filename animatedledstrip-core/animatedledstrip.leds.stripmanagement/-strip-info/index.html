@@ -1,261 +1,307 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html class="no-js">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>StripInfo</title>
-<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
-        <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="animatedledstrip-core::animatedledstrip.leds.stripmanagement/StripInfo///PointingToDeclaration//-313996110">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a>/<a href="../index.html">animatedledstrip.leds.stripmanagement</a>/<a href="index.html">StripInfo</a></div>
-            <div class="pull-right d-flex">
-              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button></div>
-              <div id="searchBar"></div>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            animatedledstrip-core
+                    </a>
             </div>
-          </div>
-          <div class="cover ">
-            <h1 class="cover"><span>Strip</span><wbr></wbr><span>Info</span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">data class <a href="index.html">StripInfo</a>(numLEDs: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pin: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>?, renderDelay: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, isRenderLoggingEnabled: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, renderLogFile: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>?, rendersBetweenLogSaves: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, is1DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, is2DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, is3DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, ledLocations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a>&gt;?) : <a href="../../animatedledstrip.communication/-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Data class for setting properties of a LED strip. (Done this way to simplify device libraries so they don't break if more properties are added)</p></div></div>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
-            <div class="tabs-section-body">
-              <h2 class="tabbedcontent">Constructors</h2>
-              <div class="table" data-togglable="Constructors"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FStripInfo%2F%23kotlin.Int%23kotlin.Int%3F%23kotlin.Long%23kotlin.Boolean%23kotlin.String%3F%23kotlin.Int%23kotlin.Boolean%23kotlin.Boolean%23kotlin.Boolean%23kotlin.collections.List%5Banimatedledstrip.leds.locationmanagement.Location%5D%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" anchor-label="StripInfo" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FStripInfo%2F%23kotlin.Int%23kotlin.Int%3F%23kotlin.Long%23kotlin.Boolean%23kotlin.String%3F%23kotlin.Int%23kotlin.Boolean%23kotlin.Boolean%23kotlin.Boolean%23kotlin.collections.List%5Banimatedledstrip.leds.locationmanagement.Location%5D%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue TabbedContent">
-                    <div class=""><span class="inline-flex"><a href="-strip-info.html">StripInfo</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FStripInfo%2F%23kotlin.Int%23kotlin.Int%3F%23kotlin.Long%23kotlin.Boolean%23kotlin.String%3F%23kotlin.Int%23kotlin.Boolean%23kotlin.Boolean%23kotlin.Boolean%23kotlin.collections.List%5Banimatedledstrip.leds.locationmanagement.Location%5D%3F%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="-strip-info.html">StripInfo</a>(numLEDs: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0, pin: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>? = null, renderDelay: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a> = 10, isRenderLoggingEnabled: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false, renderLogFile: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>? = null, rendersBetweenLogSaves: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 1000, is1DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = true, is2DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false, is3DSupported: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false, ledLocations: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a>&gt;? = null)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="%5Banimatedledstrip.communication%2FSendableData%2Fjson%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="json" id="%5Banimatedledstrip.communication%2FSendableData%2Fjson%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../../animatedledstrip.communication/-sendable-data/json.html">json</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FSendableData%2Fjson%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open fun <a href="../../animatedledstrip.communication/-sendable-data/json.html">json</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+            <div class="library-version">
+1.0.2            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="animatedledstrip-core::animatedledstrip.leds.stripmanagement/StripInfo///PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a><span class="delimiter">/</span><a href="../index.html">animatedledstrip.leds.stripmanagement</a><span class="delimiter">/</span><span class="current">StripInfo</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Strip</span><wbr></wbr><span><span>Info</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">StripInfo</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>numLEDs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pin<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>brightness<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">255</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>renderDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>isRenderLoggingEnabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>renderLogFile<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rendersBetweenLogSaves<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1000</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>is1DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>is2DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>is3DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>ledLocations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="../../animatedledstrip.communication/-sendable-data/index.html">SendableData</a></div><p class="paragraph">Data class for setting properties of a LED strip. (Done this way to simplify device libraries so they don't break if more properties are added)</p></div></div>
   </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2FSendableData%2FjsonString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="jsonString" id="%5Banimatedledstrip.communication%2FSendableData%2FjsonString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../../animatedledstrip.communication/-sendable-data/json-string.html">jsonString</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FSendableData%2FjsonString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open fun <a href="../../animatedledstrip.communication/-sendable-data/json-string.html">jsonString</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is1DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="is1-d-supported.html">is1DSupported</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is1DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="is1-d-supported.html">is1DSupported</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = true<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is1DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis1DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Should 1D animations be included in the supported animations list</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is2DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="is2-d-supported.html">is2DSupported</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is2DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="is2-d-supported.html">is2DSupported</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is2DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis2DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Should 2D animations be included in the supported animations list</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is3DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="is3-d-supported.html">is3DSupported</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is3DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="is3-d-supported.html">is3DSupported</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="is3DSupported" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fis3DSupported%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Should 3D animations be included in the supported animations list</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="isRenderLoggingEnabled" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="is-render-logging-enabled.html">isRenderLoggingEnabled</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="isRenderLoggingEnabled" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="is-render-logging-enabled.html">isRenderLoggingEnabled</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a> = false<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="isRenderLoggingEnabled" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FisRenderLoggingEnabled%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>If logging should be enabled</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="ledLocations" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="led-locations.html">ledLocations</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="ledLocations" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="led-locations.html">ledLocations</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a>&gt;? = null<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="ledLocations" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FledLocations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Locations in 3D space of all LEDs.</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="numLEDs" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="num-l-e-ds.html">numLEDs</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="numLEDs" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="num-l-e-ds.html">numLEDs</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 0<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="numLEDs" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FnumLEDs%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Number of LEDs in the strip</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="pin" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="pin.html">pin</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="pin" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="pin.html">pin</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>? = null<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="pin" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2Fpin%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Physical pin the strip is connected to</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderDelay" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="render-delay.html">renderDelay</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderDelay" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="render-delay.html">renderDelay</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a> = 10<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderDelay" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderDelay%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Delay between renders sent to the strip</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderLogFile" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="render-log-file.html">renderLogFile</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderLogFile" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="render-log-file.html">renderLogFile</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>? = null<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="renderLogFile" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrenderLogFile%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>File to write log output to</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="rendersBetweenLogSaves" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="renders-between-log-saves.html">rendersBetweenLogSaves</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="rendersBetweenLogSaves" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="renders-between-log-saves.html">rendersBetweenLogSaves</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 1000<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="rendersBetweenLogSaves" id="%5Banimatedledstrip.leds.stripmanagement%2FStripInfo%2FrendersBetweenLogSaves%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Renders between log saves</div></div></div>
-                      </div>
-                    </div>
-                  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1134642509%2FConstructors%2F788909594" anchor-label="StripInfo" id="1134642509%2FConstructors%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-strip-info.html"><span>Strip</span><wbr></wbr><span><span>Info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1134642509%2FConstructors%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">numLEDs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">pin<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">brightness<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">255</span><span class="token punctuation">, </span></span><span class="parameter ">renderDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">10</span><span class="token punctuation">, </span></span><span class="parameter ">isRenderLoggingEnabled<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">renderLogFile<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">rendersBetweenLogSaves<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1000</span><span class="token punctuation">, </span></span><span class="parameter ">is1DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">is2DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">is3DSupported<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">ledLocations<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1392059783%2FProperties%2F788909594" anchor-label="brightness" id="1392059783%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="brightness.html"><span><span>brightness</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1392059783%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="brightness.html">brightness</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">255</span></div><div class="brief "><p class="paragraph">The brightness of the LEDs, a value between 0 and 255</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="79461809%2FProperties%2F788909594" anchor-label="is1DSupported" id="79461809%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is1-d-supported.html"><span><span>is1DSupported</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="79461809%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="is1-d-supported.html">is1DSupported</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span></div><div class="brief "><p class="paragraph">Should 1D animations be included in the supported animations list</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2029762064%2FProperties%2F788909594" anchor-label="is2DSupported" id="2029762064%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is2-d-supported.html"><span><span>is2DSupported</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2029762064%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="is2-d-supported.html">is2DSupported</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></div><div class="brief "><p class="paragraph">Should 2D animations be included in the supported animations list</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-314904977%2FProperties%2F788909594" anchor-label="is3DSupported" id="-314904977%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is3-d-supported.html"><span><span>is3DSupported</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-314904977%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="is3-d-supported.html">is3DSupported</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></div><div class="brief "><p class="paragraph">Should 3D animations be included in the supported animations list</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="465059862%2FProperties%2F788909594" anchor-label="isRenderLoggingEnabled" id="465059862%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-render-logging-enabled.html"><span>is</span><wbr></wbr><span>Render</span><wbr></wbr><span>Logging</span><wbr></wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="465059862%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="is-render-logging-enabled.html">isRenderLoggingEnabled</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></div><div class="brief "><p class="paragraph">If logging should be enabled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1853037509%2FProperties%2F788909594" anchor-label="ledLocations" id="1853037509%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="led-locations.html"><span>led</span><wbr></wbr><span><span>Locations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1853037509%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="led-locations.html">ledLocations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a><span class="token operator">&gt;</span><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><p class="paragraph">Locations in 3D space of all LEDs. If null, strip is assumed to be one dimensional and with LEDs spaced equally.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2069464052%2FProperties%2F788909594" anchor-label="numLEDs" id="2069464052%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="num-l-e-ds.html"><span>num</span><wbr></wbr><span><span>LEDs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2069464052%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="num-l-e-ds.html">numLEDs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></div><div class="brief "><p class="paragraph">Number of LEDs in the strip</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1217075411%2FProperties%2F788909594" anchor-label="pin" id="-1217075411%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pin.html"><span><span>pin</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1217075411%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="pin.html">pin</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><p class="paragraph">Physical pin the strip is connected to</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1148766923%2FProperties%2F788909594" anchor-label="renderDelay" id="-1148766923%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="render-delay.html"><span>render</span><wbr></wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1148766923%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="render-delay.html">renderDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">10</span></div><div class="brief "><p class="paragraph">Delay between renders sent to the strip</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1651082312%2FProperties%2F788909594" anchor-label="renderLogFile" id="-1651082312%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="render-log-file.html"><span>render</span><wbr></wbr><span>Log</span><wbr></wbr><span><span>File</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1651082312%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="render-log-file.html">renderLogFile</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</div><div class="brief "><p class="paragraph">File to write log output to</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="29750363%2FProperties%2F788909594" anchor-label="rendersBetweenLogSaves" id="29750363%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="renders-between-log-saves.html"><span>renders</span><wbr></wbr><span>Between</span><wbr></wbr><span>Log</span><wbr></wbr><span><span>Saves</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="29750363%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="renders-between-log-saves.html">rendersBetweenLogSaves</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">1000</span></div><div class="brief "><p class="paragraph">Renders between log saves</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1705570743%2FFunctions%2F788909594" anchor-label="json" id="-1705570743%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.communication/-sendable-data/json.html"><span><span>json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1705570743%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../../animatedledstrip.communication/-sendable-data/json.html"><span class="token function">json</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-506195400%2FFunctions%2F788909594" anchor-label="jsonString" id="-506195400%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.communication/-sendable-data/json-string.html"><span>json</span><wbr></wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-506195400%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">fun </span><a href="../../animatedledstrip.communication/-sendable-data/json-string.html"><span class="token function">jsonString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-

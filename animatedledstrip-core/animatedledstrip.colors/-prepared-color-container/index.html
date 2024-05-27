@@ -1,403 +1,412 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html class="no-js">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>PreparedColorContainer</title>
-<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
-        <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="animatedledstrip-core::animatedledstrip.colors/PreparedColorContainer///PointingToDeclaration//-313996110">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a>/<a href="../index.html">animatedledstrip.colors</a>/<a href="index.html">PreparedColorContainer</a></div>
-            <div class="pull-right d-flex">
-              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button></div>
-              <div id="searchBar"></div>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            animatedledstrip-core
+                    </a>
             </div>
-          </div>
-          <div class="cover ">
-            <h1 class="cover"><span>Prepared</span><wbr></wbr><span>Color</span><wbr></wbr><span>Container</span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">class <a href="index.html">PreparedColorContainer</a>(colors: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;, originalColors: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;) : <a href="../-color-container-interface/index.html">ColorContainerInterface</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">A set of colors ready for use with a LED strip. Colors blend from one to the next along the length of the strip.</p></div></div>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button><button class="section-tab" data-togglable="Extensions">Extensions</button><button class="section-tab" data-togglable="See also">See also</button></div>
-            <div class="tabs-section-body">
-              <h2 class="">See also</h2>
-              <div data-togglable="See also">
-                <div class="platform-hinted WithExtraAttributes" data-platform-hinted="data-platform-hinted" data-togglable="See also"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div data-togglable="See also"><div class="table" data-togglable="See also"><div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="main-subrow keyValue WithExtraAttributes RowTitle"><div class=""><span class="inline-flex"><a href="../-color-container/prepare.html">animatedledstrip.colors.ColorContainer</a></span><span class="inline-flex"><div data-togglable="See also"></div></span></div><div></div></div></div></div></div></div></div>
-              </div>
-              <h2 class="tabbedcontent">Constructors</h2>
-              <div class="table" data-togglable="Constructors"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FPreparedColorContainer%2F%23kotlin.collections.List%5Bkotlin.Int%5D%23kotlin.collections.List%5Bkotlin.Int%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" anchor-label="PreparedColorContainer" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FPreparedColorContainer%2F%23kotlin.collections.List%5Bkotlin.Int%5D%23kotlin.collections.List%5Bkotlin.Int%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue TabbedContent">
-                    <div class=""><span class="inline-flex"><a href="-prepared-color-container.html">PreparedColorContainer</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FPreparedColorContainer%2F%23kotlin.collections.List%5Bkotlin.Int%5D%23kotlin.collections.List%5Bkotlin.Int%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="-prepared-color-container.html">PreparedColorContainer</a>(colors: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;, originalColors: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt; = listOf())<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="contains" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="contains.html">contains</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">operator fun <a href="contains.html">contains</a>(value: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+            <div class="library-version">
+1.0.2            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="animatedledstrip-core::animatedledstrip.colors/PreparedColorContainer///PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a><span class="delimiter">/</span><a href="../index.html">animatedledstrip.colors</a><span class="delimiter">/</span><span class="current">PreparedColorContainer</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Prepared</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Container</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>colors<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>originalColors<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token operator"> = </span>listOf()</span></span><span class="token punctuation">)</span> : <a href="../-color-container-interface/index.html">ColorContainerInterface</a></div><p class="paragraph">A set of colors ready for use with a LED strip. Colors blend from one to the next along the length of the strip.</p><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-color-container/prepare.html"><span>Color</span><wbr></wbr><span>Container.</span><wbr></wbr><span>prepare</span></a></div></span></div><div></div></div></div></div></div></div>
   </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="contains" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="contains" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcontains%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Checks if the specified color is in <a href="colors.html">colors</a></div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="equals" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="equals.html">equals</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open operator override fun <a href="equals.html">equals</a>(other: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a>?): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="equals" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="equals" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fequals%2F%23kotlin.Any%3F%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Compares this <code>PreparedColorContainer</code> against another <code>ColorContainer</code> or an <code>Int</code>.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="get" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="get.html">get</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">operator fun <a href="get.html">get</a>(index: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="get" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="get" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fget%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Get the color in <a href="colors.html">colors</a> at the specified index.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="hashCode" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="hash-code.html">hashCode</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FhashCode%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open override fun <a href="hash-code.html">hashCode</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fiterator%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="iterator" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fiterator%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="iterator.html">iterator</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fiterator%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">operator fun <a href="iterator.html">iterator</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterator/index.html">Iterator</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="originalColorContainer" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="original-color-container.html">originalColorContainer</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="original-color-container.html">originalColorContainer</a>(): <a href="../-color-container/index.html">ColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="prepare" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="prepare.html">prepare</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open override fun <a href="prepare.html">prepare</a>(numLEDs: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="prepare" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="prepare" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fprepare%2F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>If this <code>PreparedColorContainer</code> is the correct size, return this instance, otherwise a new instance of the correct size</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toColorContainer" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-color-container.html">toColorContainer</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoColorContainer%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open override fun <a href="to-color-container.html">toColorContainer</a>(): <a href="../-color-container/index.html">ColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toString" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-string.html">toString</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open override fun <a href="to-string.html">toString</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toString" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toString" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2FtoString%2F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Create a string representation of this <code>PreparedColorContainer</code>.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="color" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="color.html">color</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="color" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="color.html">color</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="color" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolor%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Override for <code>color</code> that only returns <code>0</code></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="colors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="colors.html">colors</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="colors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="colors.html">colors</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="colors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fcolors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>The <code>List</code> of colors in this <code>PreparedColorContainer</code></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="originalColors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="original-colors.html">originalColors</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="originalColors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="original-colors.html">originalColors</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="originalColors" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2ForiginalColors%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>The colors that were used to prepare this <code>PreparedColorContainer</code></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="size" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="size.html">size</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="size" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="size.html">size</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="size" id="%5Banimatedledstrip.colors%2FPreparedColorContainer%2Fsize%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="tabbedcontent">Extensions</h2>
-              <div class="table" data-togglable="Extensions"><a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../inverse.html">inverse</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%2C+animatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="index.html">PreparedColorContainer</a>.<a href="../inverse.html">inverse</a>(): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, but inverted.</div></div>
-<div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="index.html">PreparedColorContainer</a>.<a href="../inverse.html">inverse</a>(vararg indices: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.IntArray%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, inverted, but only including the indices specified.</div></div>
-<div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="index.html">PreparedColorContainer</a>.<a href="../inverse.html">inverse</a>(vararg indices: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a>): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="inverse" id="%5Banimatedledstrip.colors%2F%2Finverse%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Array%5Bkotlin.ranges.IntRange%5D%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, inverted, but only including the ranges of indices specified.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="shift" id="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../shift.html">shift</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="index.html">PreparedColorContainer</a>.<a href="../shift.html">shift</a>(offset: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="shift" id="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="shift" id="%5Banimatedledstrip.colors%2F%2Fshift%2Fanimatedledstrip.colors.PreparedColorContainer%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Create a <a href="index.html">PreparedColorContainer</a> with the same colors as this <a href="index.html">PreparedColorContainer</a>, shifted by <code>offset</code>.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="toSortableList" id="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../../animatedledstrip.animations/to-sortable-list.html">toSortableList</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="index.html">PreparedColorContainer</a>.<a href="../../animatedledstrip.animations/to-sortable-list.html">toSortableList</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a>&lt;<a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="toSortableList" id="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="toSortableList" id="%5Banimatedledstrip.animations%2F%2FtoSortableList%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Convert a <a href="index.html">PreparedColorContainer</a> into a shuffled list of <a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a>s</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="unaryMinus" id="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="../unary-minus.html">unaryMinus</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">operator fun <a href="index.html">PreparedColorContainer</a>.<a href="../unary-minus.html">unaryMinus</a>(): <a href="index.html">PreparedColorContainer</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="unaryMinus" id="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" anchor-label="unaryMinus" id="%5Banimatedledstrip.colors%2F%2FunaryMinus%2Fanimatedledstrip.colors.PreparedColorContainer%23%2FPointingToDeclaration%2F%5D%2FExtensions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Operator overload that returns a new <a href="../-color-container/index.html">ColorContainer</a> containing the inverse of the colors in this <a href="../-color-container/index.html">ColorContainer</a>.</div></div>
-</div>
-                    </div>
-                  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1044035698%2FConstructors%2F788909594" anchor-label="PreparedColorContainer" id="-1044035698%2FConstructors%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-prepared-color-container.html"><span>Prepared</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1044035698%2FConstructors%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">colors<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">originalColors<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token operator"> = </span>listOf()</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="1966252909%2FProperties%2F788909594" anchor-label="color" id="1966252909%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="color.html"><span><span>color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1966252909%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="color.html">color</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Override for <code class="lang-kotlin">color</code> that only returns <code class="lang-kotlin">0</code></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1904414470%2FProperties%2F788909594" anchor-label="colors" id="-1904414470%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="colors.html"><span><span>colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1904414470%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="colors.html">colors</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">The <code class="lang-kotlin">List</code> of colors in this <code class="lang-kotlin">PreparedColorContainer</code></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="16213993%2FProperties%2F788909594" anchor-label="originalColors" id="16213993%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="original-colors.html"><span>original</span><wbr></wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="16213993%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="original-colors.html">originalColors</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">The colors that were used to prepare this <code class="lang-kotlin">PreparedColorContainer</code></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1093834039%2FProperties%2F788909594" anchor-label="size" id="-1093834039%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="size.html"><span><span>size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1093834039%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="size.html">size</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="2001134537%2FFunctions%2F788909594" anchor-label="contains" id="2001134537%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="contains.html"><span><span>contains</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2001134537%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="contains.html"><span class="token function">contains</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Checks if the specified color is in <a href="colors.html">colors</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-97590889%2FFunctions%2F788909594" anchor-label="equals" id="-97590889%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="equals.html"><span><span>equals</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-97590889%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="equals.html"><span class="token function">equals</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Compares this <code class="lang-kotlin">PreparedColorContainer</code> against another <code class="lang-kotlin">ColorContainer</code> or an <code class="lang-kotlin">Int</code>. If <code class="lang-kotlin">other</code> is a <code class="lang-kotlin">ColorContainer</code>, the <a href="original-colors.html">originalColors</a> parameter is compared to the <code class="lang-kotlin">originalColors</code> parameter. If <code class="lang-kotlin">other</code> is a <code class="lang-kotlin">PreparedColorContainer</code>, the <a href="original-colors.html">originalColors</a> parameters are compared. If <code class="lang-kotlin">other</code> is an <code class="lang-kotlin">Int</code>, the <a href="color.html">color</a> parameter is compared to the <code class="lang-kotlin">Int</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1349754040%2FFunctions%2F788909594" anchor-label="get" id="1349754040%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get.html"><span><span>get</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1349754040%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="get.html"><span class="token function">get</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">index<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Get the color in <a href="colors.html">colors</a> at the specified index. Checks if <code class="lang-kotlin">index</code> is a valid index of <code class="lang-kotlin">colors</code> and if so, returns the color stored there, if not, returns <code class="lang-kotlin">0</code> (black).</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1343213935%2FFunctions%2F788909594" anchor-label="hashCode" id="1343213935%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="hash-code.html"><span>hash</span><wbr></wbr><span><span>Code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1343213935%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="hash-code.html"><span class="token function">hashCode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1570846336%2FFunctions%2F788909594" anchor-label="inverse" id="-1570846336%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../inverse.html"><span><span>inverse</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1570846336%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../inverse.html"><span class="token function">inverse</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, but inverted.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../inverse.html"><span class="token function">inverse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>indices<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, inverted, but only including the ranges of indices specified.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../inverse.html"><span class="token function">inverse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>indices<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">Returns a new <a href="../-color-container/index.html">ColorContainer</a> with the same colors as this instance, inverted, but only including the indices specified.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1684050929%2FFunctions%2F788909594" anchor-label="isEmpty" id="-1684050929%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../is-empty.html"><span>is</span><wbr></wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1684050929%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-color-container-interface/index.html">ColorContainerInterface</a><span class="token punctuation">.</span><a href="../is-empty.html"><span class="token function">isEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Report whether <code class="lang-kotlin">colors</code> is empty</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-276176276%2FFunctions%2F788909594" anchor-label="isNotEmpty" id="-276176276%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../is-not-empty.html"><span>is</span><wbr></wbr><span>Not</span><wbr></wbr><span><span>Empty</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-276176276%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-color-container-interface/index.html">ColorContainerInterface</a><span class="token punctuation">.</span><a href="../is-not-empty.html"><span class="token function">isNotEmpty</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Report whether <code class="lang-kotlin">colors</code> is not empty</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-445192068%2FFunctions%2F788909594" anchor-label="iterator" id="-445192068%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="iterator.html"><span><span>iterator</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-445192068%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="iterator.html"><span class="token function">iterator</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-iterator/index.html">Iterator</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2008550213%2FFunctions%2F788909594" anchor-label="originalColorContainer" id="-2008550213%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="original-color-container.html"><span>original</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2008550213%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="original-color-container.html"><span class="token function">originalColorContainer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-color-container/index.html">ColorContainer</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2033412071%2FFunctions%2F788909594" anchor-label="prepare" id="2033412071%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="prepare.html"><span><span>prepare</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2033412071%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="prepare.html"><span class="token function">prepare</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">numLEDs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">If this <code class="lang-kotlin">PreparedColorContainer</code> is the correct size, return this instance, otherwise a new instance of the correct size</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="864791490%2FFunctions%2F788909594" anchor-label="shift" id="864791490%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../shift.html"><span><span>shift</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="864791490%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../shift.html"><span class="token function">shift</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">Create a <a href="index.html">PreparedColorContainer</a> with the same colors as this <a href="index.html">PreparedColorContainer</a>, shifted by <code class="lang-kotlin">offset</code>. The color at index <code class="lang-kotlin">0</code> will be moved to index <code class="lang-kotlin">offset</code>. Negative offsets and offsets that are larger than the size of <code class="lang-kotlin">colors</code> are supported.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1442376126%2FFunctions%2F788909594" anchor-label="shuffledWithIndices" id="-1442376126%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../shuffled-with-indices.html"><span>shuffled</span><wbr></wbr><span>With</span><wbr></wbr><span><span>Indices</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1442376126%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-color-container-interface/index.html">ColorContainerInterface</a><span class="token punctuation">.</span><a href="../shuffled-with-indices.html"><span class="token function">shuffledWithIndices</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1584048785%2FFunctions%2F788909594" anchor-label="toColorContainer" id="1584048785%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-color-container.html"><span>to</span><wbr></wbr><span>Color</span><wbr></wbr><span><span>Container</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1584048785%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-color-container.html"><span class="token function">toColorContainer</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-color-container/index.html">ColorContainer</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1645989382%2FFunctions%2F788909594" anchor-label="toSortableList" id="-1645989382%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations/to-sortable-list.html"><span>to</span><wbr></wbr><span>Sortable</span><wbr></wbr><span><span>List</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1645989382%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations/to-sortable-list.html"><span class="token function">toSortableList</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Convert a <a href="index.html">PreparedColorContainer</a> into a shuffled list of <a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a>s</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1165047870%2FFunctions%2F788909594" anchor-label="toString" id="1165047870%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr></wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1165047870%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Create a string representation of this <code class="lang-kotlin">PreparedColorContainer</code>. The hexadecimal representation of each color in <a href="colors.html">colors</a> is listed in comma delimited format, between brackets <code class="lang-kotlin">[</code>&<code class="lang-kotlin">]</code>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1280935721%2FFunctions%2F788909594" anchor-label="unaryMinus" id="1280935721%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../unary-minus.html"><span>unary</span><wbr></wbr><span><span>Minus</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1280935721%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="index.html">PreparedColorContainer</a><span class="token punctuation">.</span><a href="../unary-minus.html"><span class="token function">unaryMinus</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">PreparedColorContainer</a></div><div class="brief "><p class="paragraph">Operator overload that returns a new <a href="../-color-container/index.html">ColorContainer</a> containing the inverse of the colors in this <a href="../-color-container/index.html">ColorContainer</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-

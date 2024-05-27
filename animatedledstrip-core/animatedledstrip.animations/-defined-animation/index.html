@@ -1,113 +1,157 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html class="no-js">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>DefinedAnimation</title>
-<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
-        <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="animatedledstrip-core::animatedledstrip.animations/DefinedAnimation///PointingToDeclaration//-313996110">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a>/<a href="../index.html">animatedledstrip.animations</a>/<a href="index.html">DefinedAnimation</a></div>
-            <div class="pull-right d-flex">
-              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button></div>
-              <div id="searchBar"></div>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            animatedledstrip-core
+                    </a>
             </div>
-          </div>
-          <div class="cover ">
-            <h1 class="cover"><span>Defined</span><wbr></wbr><span>Animation</span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">class <a href="index.html">DefinedAnimation</a>(info: <a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a>, animation: suspend (<a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a>, <a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a>, <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span>) -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>) : <a href="../-animation/index.html">Animation</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">An animation that is defined in the library and compiled into the jar</p></div></div>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
-            <div class="tabs-section-body">
-              <h2 class="tabbedcontent">Constructors</h2>
-              <div class="table" data-togglable="Constructors"><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2FDefinedAnimation%2F%23animatedledstrip.animations.Animation.AnimationInfo%23kotlin.coroutines.SuspendFunction3%5Banimatedledstrip.leds.animationmanagement.AnimationManager%2Canimatedledstrip.leds.animationmanagement.RunningAnimationParams%2Ckotlinx.coroutines.CoroutineScope%2Ckotlin.Unit%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" anchor-label="DefinedAnimation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2FDefinedAnimation%2F%23animatedledstrip.animations.Animation.AnimationInfo%23kotlin.coroutines.SuspendFunction3%5Banimatedledstrip.leds.animationmanagement.AnimationManager%2Canimatedledstrip.leds.animationmanagement.RunningAnimationParams%2Ckotlinx.coroutines.CoroutineScope%2Ckotlin.Unit%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue TabbedContent">
-                    <div class=""><span class="inline-flex"><a href="-defined-animation.html">DefinedAnimation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.animations%2FDefinedAnimation%2FDefinedAnimation%2F%23animatedledstrip.animations.Animation.AnimationInfo%23kotlin.coroutines.SuspendFunction3%5Banimatedledstrip.leds.animationmanagement.AnimationManager%2Canimatedledstrip.leds.animationmanagement.RunningAnimationParams%2Ckotlinx.coroutines.CoroutineScope%2Ckotlin.Unit%5D%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="-defined-animation.html">DefinedAnimation</a>(info: <a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a>, animation: suspend (<a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a>, <a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a>, <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span>) -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="runAnimation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="run-animation.html">runAnimation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">open suspend override fun <a href="run-animation.html">runAnimation</a>(leds: <a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a>, params: <a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a>, scope: <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+            <div class="library-version">
+1.0.2            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="animatedledstrip-core::animatedledstrip.animations/DefinedAnimation///PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a><span class="delimiter">/</span><a href="../index.html">animatedledstrip.animations</a><span class="delimiter">/</span><span class="current">DefinedAnimation</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Defined</span><wbr></wbr><span><span>Animation</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">DefinedAnimation</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>info<span class="token operator">: </span><a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>animation<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a><span class="token punctuation">, </span><a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a><span class="token punctuation">, </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span> : <a href="../-animation/index.html">Animation</a></div><p class="paragraph">An animation that is defined in the library and compiled into the jar</p></div></div>
   </div>
-<a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="runAnimation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="runAnimation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2FrunAnimation%2F%23animatedledstrip.leds.animationmanagement.AnimationManager%23animatedledstrip.leds.animationmanagement.RunningAnimationParams%23kotlinx.coroutines.CoroutineScope%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Run the animation, passing it the AnimationManager running it, parameters specifying how to run the animation, and the CoroutineScope the animation is running in</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2Fanimation%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="animation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2Fanimation%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="animation.html">animation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.animations%2FDefinedAnimation%2Fanimation%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2Fanimation%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="animation" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2Fanimation%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="animation.html">animation</a>: suspend (<a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a>, <a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a>, <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span>) -&gt; <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="info" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="info.html">info</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="info" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="info.html">info</a>: <a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="info" id="%5Banimatedledstrip.animations%2FDefinedAnimation%2Finfo%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Information about the animation</div></div></div>
-                      </div>
-                    </div>
-                  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="962263984%2FConstructors%2F788909594" anchor-label="DefinedAnimation" id="962263984%2FConstructors%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-defined-animation.html"><span>Defined</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="962263984%2FConstructors%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">info<span class="token operator">: </span><a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a><span class="token punctuation">, </span></span><span class="parameter ">animation<span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a><span class="token punctuation">, </span><a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a><span class="token punctuation">, </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="977661483%2FProperties%2F788909594" anchor-label="animation" id="977661483%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="animation.html"><span><span>animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="977661483%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="animation.html">animation</a><span class="token operator">: </span><span class="token keyword">suspend </span><span class="token punctuation">(</span><a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a><span class="token punctuation">, </span><a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a><span class="token punctuation">, </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1703709155%2FProperties%2F788909594" anchor-label="info" id="-1703709155%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="info.html"><span><span>info</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1703709155%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="info.html">info</a><span class="token operator">: </span><a href="../-animation/-animation-info/index.html">Animation.AnimationInfo</a></div><div class="brief "><p class="paragraph">Information about the animation</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="678660308%2FFunctions%2F788909594" anchor-label="runAnimation" id="678660308%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="run-animation.html"><span>run</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="678660308%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">suspend override </span><span class="token keyword">fun </span><a href="run-animation.html"><span class="token function">runAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">leds<span class="token operator">: </span><a href="../../animatedledstrip.leds.animationmanagement/-animation-manager/index.html">AnimationManager</a><span class="token punctuation">, </span></span><span class="parameter ">params<span class="token operator">: </span><a href="../../animatedledstrip.leds.animationmanagement/-running-animation-params/index.html">RunningAnimationParams</a><span class="token punctuation">, </span></span><span class="parameter ">scope<span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Run the animation, passing it the AnimationManager running it, parameters specifying how to run the animation, and the CoroutineScope the animation is running in</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-

@@ -1,241 +1,937 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html class="no-js">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>LEDStripAnimationManager</title>
-<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
-        <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="animatedledstrip-core::animatedledstrip.leds.animationmanagement/LEDStripAnimationManager///PointingToDeclaration//-313996110">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a>/<a href="../index.html">animatedledstrip.leds.animationmanagement</a>/<a href="index.html">LEDStripAnimationManager</a></div>
-            <div class="pull-right d-flex">
-              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button></div>
-              <div id="searchBar"></div>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            animatedledstrip-core
+                    </a>
             </div>
-          </div>
-          <div class="cover ">
-            <h1 class="cover"><span>L</span><wbr></wbr><span>E</span><wbr></wbr><span>D</span><wbr></wbr><span>Strip</span><wbr></wbr><span>Animation</span><wbr></wbr><span>Manager</span></h1>
-            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">class <a href="index.html">LEDStripAnimationManager</a>(sectionManager: <a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a>) : <a href="../-animation-manager/index.html">AnimationManager</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">Manages animations running on the entire strip and is the parent manager to all animations</p></div></div>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
-            <div class="tabs-section-body">
-              <h2 class="tabbedcontent">Constructors</h2>
-              <div class="table" data-togglable="Constructors"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FLEDStripAnimationManager%2F%23animatedledstrip.leds.sectionmanagement.SectionManager%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" anchor-label="LEDStripAnimationManager" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FLEDStripAnimationManager%2F%23animatedledstrip.leds.sectionmanagement.SectionManager%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue TabbedContent">
-                    <div class=""><span class="inline-flex"><a href="-l-e-d-strip-animation-manager.html">LEDStripAnimationManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FLEDStripAnimationManager%2F%23animatedledstrip.leds.sectionmanagement.SectionManager%2FPointingToDeclaration%2F%5D%2FConstructors%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="-l-e-d-strip-animation-manager.html">LEDStripAnimationManager</a>(sectionManager: <a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="add-new-animation.html">addNewAnimation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="add-new-animation.html">addNewAnimation</a>(anim: <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a>): <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+            <div class="library-version">
+1.0.2            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="animatedledstrip-core::animatedledstrip.leds.animationmanagement/LEDStripAnimationManager///PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../../index.html">animatedledstrip-core</a><span class="delimiter">/</span><a href="../index.html">animatedledstrip.leds.animationmanagement</a><span class="delimiter">/</span><span class="current">LEDStripAnimationManager</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>LEDStrip</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Manager</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">LEDStripAnimationManager</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>sectionManager<span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a></span></span><span class="token punctuation">)</span> : <a href="../-animation-manager/index.html">AnimationManager</a></div><p class="paragraph">Manages animations running on the entire strip and is the parent manager to all animations</p></div></div>
   </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewAnimation%2F%23animatedledstrip.animations.Animation%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Add a new animation to the list of supported animations</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewGroup" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="add-new-group.html">addNewGroup</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="add-new-group.html">addNewGroup</a>(anim: <a href="../../animatedledstrip.animations.groups/-animation-group/-new-animation-group-info/index.html">AnimationGroup.NewAnimationGroupInfo</a>): <a href="../../animatedledstrip.animations.groups/-animation-group/index.html">AnimationGroup</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewGroup" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="addNewGroup" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FaddNewGroup%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Add a new animation group to the list of supported animations</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="find-animation.html">findAnimation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="find-animation.html">findAnimation</a>(animId: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>): <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimation%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Find a supported animation</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimationOrNull" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="find-animation-or-null.html">findAnimationOrNull</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="find-animation-or-null.html">findAnimationOrNull</a>(animId: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>): <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimationOrNull" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="findAnimationOrNull" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FfindAnimationOrNull%2F%23kotlin.String%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Find a supported animation</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FprepareGroupAnimation%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="prepareGroupAnimation" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FprepareGroupAnimation%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="prepare-group-animation.html">prepareGroupAnimation</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FprepareGroupAnimation%2F%23animatedledstrip.animations.groups.AnimationGroup.NewAnimationGroupInfo%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="prepare-group-animation.html">prepareGroupAnimation</a>(anim: <a href="../../animatedledstrip.animations.groups/-animation-group/-new-animation-group-info/index.html">AnimationGroup.NewAnimationGroupInfo</a>): <a href="../../animatedledstrip.animations.groups/-animation-group/index.html">AnimationGroup</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="animationScope" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="animation-scope.html">animationScope</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="animationScope" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="animation-scope.html">animationScope</a>: <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="animationScope" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FanimationScope%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>The <code>CoroutineScope</code> all animations managed by this instance will run in</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="runningAnimations" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="running-animations.html">runningAnimations</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="runningAnimations" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="running-animations.html">runningAnimations</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>, <a href="../-running-animation/index.html">RunningAnimation</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="runningAnimations" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FrunningAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Tracks the currently running animations managed by this instance</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="sectionManager" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="section-manager.html">sectionManager</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="sectionManager" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">open override val <a href="section-manager.html">sectionManager</a>: <a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="sectionManager" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsectionManager%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>The section associated with this instance</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="supportedAnimations" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="supported-animations.html">supportedAnimations</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="supportedAnimations" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimations%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="supported-animations.html">supportedAnimations</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>, <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimationsByAbbr%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="supportedAnimationsByAbbr" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimationsByAbbr%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="supported-animations-by-abbr.html">supportedAnimationsByAbbr</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimationsByAbbr%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimationsByAbbr%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="supportedAnimationsByAbbr" id="%5Banimatedledstrip.leds.animationmanagement%2FLEDStripAnimationManager%2FsupportedAnimationsByAbbr%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="supported-animations-by-abbr.html">supportedAnimationsByAbbr</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a>&lt;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>, <a href="../../animatedledstrip.animations/-animation/index.html">Animation</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1082873464%2FConstructors%2F788909594" anchor-label="LEDStripAnimationManager" id="-1082873464%2FConstructors%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-l-e-d-strip-animation-manager.html"><span>LEDStrip</span><wbr></wbr><span>Animation</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1082873464%2FConstructors%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sectionManager<span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-1908660252%2FProperties%2F788909594" anchor-label="animationScope" id="-1908660252%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="animation-scope.html"><span>animation</span><wbr></wbr><span><span>Scope</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1908660252%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="animation-scope.html">animationScope</a><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">The <code class="lang-kotlin">CoroutineScope</code> all animations managed by this instance will run in</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1379598054%2FProperties%2F788909594" anchor-label="numLEDs" id="1379598054%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../num-l-e-ds.html"><span>num</span><wbr></wbr><span><span>LEDs</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1379598054%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../num-l-e-ds.html">numLEDs</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of LEDs in the section that corresponds with this animation manager</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1614589867%2FProperties%2F788909594" anchor-label="pixelIndices" id="-1614589867%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../pixel-indices.html"><span>pixel</span><wbr></wbr><span><span>Indices</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1614589867%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../pixel-indices.html">pixelIndices</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A list of all valid indices for the section that corresponds with this animation manager</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="205794627%2FProperties%2F788909594" anchor-label="pixelLocationManager" id="205794627%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.locationmanagement/pixel-location-manager.html"><span>pixel</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="205794627%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.locationmanagement/pixel-location-manager.html">pixelLocationManager</a><span class="token operator">: </span><a href="../../animatedledstrip.leds.locationmanagement/-pixel-location-manager/index.html">PixelLocationManager</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-257461192%2FProperties%2F788909594" anchor-label="runningAnimations" id="-257461192%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="running-animations.html"><span>running</span><wbr></wbr><span><span>Animations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-257461192%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="running-animations.html">runningAnimations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="../-running-animation/index.html">RunningAnimation</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Tracks the currently running animations managed by this instance</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="720397068%2FProperties%2F788909594" anchor-label="sectionManager" id="720397068%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="section-manager.html"><span>section</span><wbr></wbr><span><span>Manager</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="720397068%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">val </span><a href="section-manager.html">sectionManager</a><span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section-manager/index.html">SectionManager</a></div><div class="brief "><p class="paragraph">The section associated with this instance</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1616930985%2FProperties%2F788909594" anchor-label="supportedAnimations" id="1616930985%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="supported-animations.html"><span>supported</span><wbr></wbr><span><span>Animations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1616930985%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="supported-animations.html">supportedAnimations</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1967518879%2FProperties%2F788909594" anchor-label="supportedAnimationsByAbbr" id="-1967518879%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="supported-animations-by-abbr.html"><span>supported</span><wbr></wbr><span>Animations</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Abbr</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1967518879%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="supported-animations-by-abbr.html">supportedAnimationsByAbbr</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html">MutableMap</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-2055811426%2FFunctions%2F788909594" anchor-label="addNewAnimation" id="-2055811426%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-new-animation.html"><span>add</span><wbr></wbr><span>New</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2055811426%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-new-animation.html"><span class="token function">addNewAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">anim<span class="token operator">: </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Add a new animation to the list of supported animations</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1636981427%2FFunctions%2F788909594" anchor-label="addNewGroup" id="-1636981427%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-new-group.html"><span>add</span><wbr></wbr><span>New</span><wbr></wbr><span><span>Group</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1636981427%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="add-new-group.html"><span class="token function">addNewGroup</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">anim<span class="token operator">: </span><a href="../../animatedledstrip.animations.groups/-animation-group/-new-animation-group-info/index.html">AnimationGroup.NewAnimationGroupInfo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.animations.groups/-animation-group/index.html">AnimationGroup</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Add a new animation group to the list of supported animations</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1387471162%2FFunctions%2F788909594" anchor-label="clear" id="-1387471162%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/clear.html"><span><span>clear</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1387471162%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/clear.html"><span class="token function">clear</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Clear the strip/section (set all pixels to 0)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1643293544%2FFunctions%2F788909594" anchor-label="createSection" id="-1643293544%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.sectionmanagement/create-section.html"><span>create</span><wbr></wbr><span><span>Section</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1643293544%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.sectionmanagement/create-section.html"><span class="token function">createSection</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">startPixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">endPixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section/index.html">Section</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="790040526%2FFunctions%2F788909594" anchor-label="endAnimation" id="790040526%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../end-animation.html"><span>end</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="790040526%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../end-animation.html"><span class="token function">endAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">endAnimation<span class="token operator">: </span><a href="../-end-animation/index.html">EndAnimation</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../end-animation.html"><span class="token function">endAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">End a currently running animation</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1667557065%2FFunctions%2F788909594" anchor-label="findAnimation" id="1667557065%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="find-animation.html"><span>find</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1667557065%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="find-animation.html"><span class="token function">findAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">animId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a></div><div class="brief "><p class="paragraph">Find a supported animation</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="401387507%2FFunctions%2F788909594" anchor-label="findAnimationOrNull" id="401387507%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="find-animation-or-null.html"><span>find</span><wbr></wbr><span>Animation</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="401387507%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="find-animation-or-null.html"><span class="token function">findAnimationOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">animId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.animations/-animation/index.html">Animation</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Find a supported animation</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2063583788%2FFunctions%2F788909594" anchor-label="getPixelActualColor" id="2063583788%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-actual-color.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Actual</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2063583788%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-actual-color.html"><span class="token function">getPixelActualColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1926934142%2FFunctions%2F788909594" anchor-label="getPixelActualColorOrNull" id="-1926934142%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-actual-color-or-null.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Actual</span><wbr></wbr><span>Color</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1926934142%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-actual-color-or-null.html"><span class="token function">getPixelActualColorOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="591027994%2FFunctions%2F788909594" anchor-label="getPixelFadeColor" id="591027994%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-fade-color.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="591027994%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-fade-color.html"><span class="token function">getPixelFadeColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-366216208%2FFunctions%2F788909594" anchor-label="getPixelFadeColorOrNull" id="-366216208%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-fade-color-or-null.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Fade</span><wbr></wbr><span>Color</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-366216208%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-fade-color-or-null.html"><span class="token function">getPixelFadeColorOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="62595338%2FFunctions%2F788909594" anchor-label="getPixelProlongedColor" id="62595338%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-prolonged-color.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Prolonged</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="62595338%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-prolonged-color.html"><span class="token function">getPixelProlongedColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1792046624%2FFunctions%2F788909594" anchor-label="getPixelProlongedColorOrNull" id="-1792046624%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-prolonged-color-or-null.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Prolonged</span><wbr></wbr><span>Color</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1792046624%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-prolonged-color-or-null.html"><span class="token function">getPixelProlongedColorOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="68215827%2FFunctions%2F788909594" anchor-label="getPixelTemporaryColor" id="68215827%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-temporary-color.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Temporary</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="68215827%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-temporary-color.html"><span class="token function">getPixelTemporaryColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2097095209%2FFunctions%2F788909594" anchor-label="getPixelTemporaryColorOrNull" id="2097095209%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/get-pixel-temporary-color-or-null.html"><span>get</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Temporary</span><wbr></wbr><span>Color</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2097095209%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/get-pixel-temporary-color-or-null.html"><span class="token function">getPixelTemporaryColorOrNull</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2073376354%2FFunctions%2F788909594" anchor-label="getSection" id="-2073376354%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.sectionmanagement/get-section.html"><span>get</span><wbr></wbr><span><span>Section</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2073376354%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.sectionmanagement/get-section.html"><span class="token function">getSection</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sectionName<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section/index.html">Section</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1141799195%2FFunctions%2F788909594" anchor-label="getSubSection" id="-1141799195%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.sectionmanagement/get-sub-section.html"><span>get</span><wbr></wbr><span>Sub</span><wbr></wbr><span><span>Section</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1141799195%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.sectionmanagement/get-sub-section.html"><span class="token function">getSubSection</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">startPixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">endPixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.leds.sectionmanagement/-section/index.html">Section</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1853650685%2FFunctions%2F788909594" anchor-label="groupGroupsOfPixelsAlongLine" id="1853650685%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.locationmanagement/group-groups-of-pixels-along-line.html"><span>group</span><wbr></wbr><span>Groups</span><wbr></wbr><span>Of</span><wbr></wbr><span>Pixels</span><wbr></wbr><span>Along</span><wbr></wbr><span><span>Line</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1853650685%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.locationmanagement/group-groups-of-pixels-along-line.html"><span class="token function">groupGroupsOfPixelsAlongLine</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">line<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-equation/index.html">Equation</a><span class="token punctuation">, </span></span><span class="parameter ">rotation<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-radians-rotation/index.html">RadiansRotation</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-absolute-distance/index.html">AbsoluteDistance</a><span class="token punctuation">, </span></span><span class="parameter ">influenceDistance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">movementPerIteration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">groupSpacing<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-pixel-modification-lists/index.html">PixelModificationLists</a></div><div class="brief "><p class="paragraph">Group pixels into groups spaced apart by <a href="../../animatedledstrip.leds.locationmanagement/group-groups-of-pixels-along-line.html">groupSpacing</a> based on their location along the X axis and distance from a line after an offset and a rotation are performed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="144756333%2FFunctions%2F788909594" anchor-label="groupPixelsAlongLine" id="144756333%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-along-line.html"><span>group</span><wbr></wbr><span>Pixels</span><wbr></wbr><span>Along</span><wbr></wbr><span><span>Line</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="144756333%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-along-line.html"><span class="token function">groupPixelsAlongLine</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">line<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-equation/index.html">Equation</a><span class="token punctuation">, </span></span><span class="parameter ">rotation<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-radians-rotation/index.html">RadiansRotation</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-absolute-distance/index.html">AbsoluteDistance</a><span class="token punctuation">, </span></span><span class="parameter ">influenceDistance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">movementPerIteration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-pixel-modification-lists/index.html">PixelModificationLists</a></div><div class="brief "><p class="paragraph">Group pixels based on their location along the X axis and distance from a line after an offset and a rotation are performed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1721425115%2FFunctions%2F788909594" anchor-label="groupPixelsByDistance" id="1721425115%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-by-distance.html"><span>group</span><wbr></wbr><span>Pixels</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Distance</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1721425115%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-by-distance.html"><span class="token function">groupPixelsByDistance</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">center<span class="token operator">: </span><a href="../../animatedledstrip.leds.locationmanagement/-location/index.html">Location</a><span class="token punctuation">, </span></span><span class="parameter ">maximumDistance<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-absolute-distance/index.html">AbsoluteDistance</a><span class="token punctuation">, </span></span><span class="parameter ">movementPerIteration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-pixel-modification-lists/index.html">PixelModificationLists</a></div><div class="brief "><p class="paragraph">Group pixels based on their distance from a central point.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1441730415%2FFunctions%2F788909594" anchor-label="groupPixelsByXLocation" id="1441730415%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-by-x-location.html"><span>group</span><wbr></wbr><span>Pixels</span><wbr></wbr><span>By</span><wbr></wbr><span><span>XLocation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1441730415%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.locationmanagement/group-pixels-by-x-location.html"><span class="token function">groupPixelsByXLocation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">offset<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-absolute-distance/index.html">AbsoluteDistance</a><span class="token punctuation">, </span></span><span class="parameter ">rotation<span class="token operator">: </span><a href="../../animatedledstrip.animations.parameters/-radians-rotation/index.html">RadiansRotation</a><span class="token punctuation">, </span></span><span class="parameter ">movementPerIteration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-pixel-modification-lists/index.html">PixelModificationLists</a></div><div class="brief "><p class="paragraph">Group pixels based on their location along the X axis after a transformation is performed.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1591535346%2FFunctions%2F788909594" anchor-label="iterateOverPixels" id="1591535346%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../iterate-over-pixels.html"><span>iterate</span><wbr></wbr><span>Over</span><wbr></wbr><span><span>Pixels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1591535346%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../iterate-over-pixels.html"><span class="token function">iterateOverPixels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">operation<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Iterate over each pixel, performing <a href="../iterate-over-pixels.html">operation</a> on each index</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1465751576%2FFunctions%2F788909594" anchor-label="iterateOverPixelsReverse" id="-1465751576%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../iterate-over-pixels-reverse.html"><span>iterate</span><wbr></wbr><span>Over</span><wbr></wbr><span>Pixels</span><wbr></wbr><span><span>Reverse</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1465751576%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../iterate-over-pixels-reverse.html"><span class="token function">iterateOverPixelsReverse</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">operation<span class="token operator">: </span><span class="token punctuation">(</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Iterate over each pixel in reverse, performing <a href="../iterate-over-pixels-reverse.html">operation</a> on each index</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-802354150%2FFunctions%2F788909594" anchor-label="mergeSort" id="-802354150%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations.predefined/merge-sort.html"><span>merge</span><wbr></wbr><span><span>Sort</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-802354150%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations.predefined/merge-sort.html"><span class="token function">mergeSort</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sortablePixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">scope<span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">startIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">endIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">interMovementDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">parallel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="463407357%2FFunctions%2F788909594" anchor-label="partition" id="463407357%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations.predefined/partition.html"><span><span>partition</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="463407357%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations.predefined/partition.html"><span class="token function">partition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sortablePixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">startIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">endIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">interMovementDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1321530183%2FFunctions%2F788909594" anchor-label="prepareGroupAnimation" id="-1321530183%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="prepare-group-animation.html"><span>prepare</span><wbr></wbr><span>Group</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1321530183%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="prepare-group-animation.html"><span class="token function">prepareGroupAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">anim<span class="token operator">: </span><a href="../../animatedledstrip.animations.groups/-animation-group/-new-animation-group-info/index.html">AnimationGroup.NewAnimationGroupInfo</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../animatedledstrip.animations.groups/-animation-group/index.html">AnimationGroup</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1931105423%2FFunctions%2F788909594" anchor-label="quickSort" id="1931105423%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations.predefined/quick-sort.html"><span>quick</span><wbr></wbr><span><span>Sort</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1931105423%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations.predefined/quick-sort.html"><span class="token function">quickSort</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">sortablePixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">scope<span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">startIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">endIndex<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">interMovementDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">parallel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="383284325%2FFunctions%2F788909594" anchor-label="randomIndex" id="383284325%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../random-index.html"><span>random</span><wbr></wbr><span><span>Index</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="383284325%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../random-index.html"><span class="token function">randomIndex</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1952194097%2FFunctions%2F788909594" anchor-label="revertPixel" id="-1952194097%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/revert-pixel.html"><span>revert</span><wbr></wbr><span><span>Pixel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1952194097%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/revert-pixel.html"><span class="token function">revertPixel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Revert a pixel's color (reset its temporary color)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1017887353%2FFunctions%2F788909594" anchor-label="revertPixels" id="1017887353%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/revert-pixels.html"><span>revert</span><wbr></wbr><span><span>Pixels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1017887353%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/revert-pixels.html"><span class="token function">revertPixels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/revert-pixels.html"><span class="token function">revertPixels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Revert multiple pixels' color (reset their temporary colors)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2024486685%2FFunctions%2F788909594" anchor-label="runParallel" id="2024486685%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../run-parallel.html"><span>run</span><wbr></wbr><span><span>Parallel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2024486685%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../run-parallel.html"><span class="token function">runParallel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">params<span class="token operator">: </span><a href="../-sub-animation-to-run-params/index.html">SubAnimationToRunParams</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-running-animation/index.html">RunningAnimation</a></div><div class="brief "><p class="paragraph">Run a new subanimation in a child coroutine</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1930391058%2FFunctions%2F788909594" anchor-label="runParallelAndJoin" id="1930391058%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../run-parallel-and-join.html"><span>run</span><wbr></wbr><span>Parallel</span><wbr></wbr><span>And</span><wbr></wbr><span><span>Join</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1930391058%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../run-parallel-and-join.html"><span class="token function">runParallelAndJoin</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">vararg </span>animations<span class="token operator">: </span><a href="../-sub-animation-to-run-params/index.html">SubAnimationToRunParams</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Run many new subanimations in child coroutines and wait for all to complete before returning</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="291451669%2FFunctions%2F788909594" anchor-label="runSequential" id="291451669%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../run-sequential.html"><span>run</span><wbr></wbr><span><span>Sequential</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="291451669%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../run-sequential.html"><span class="token function">runSequential</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">params<span class="token operator">: </span><a href="../-sub-animation-to-run-params/index.html">SubAnimationToRunParams</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Run a new animation in a child coroutine and wait for it to complete before returning</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1729325419%2FFunctions%2F788909594" anchor-label="setPixelAndRevertAfterDelay" id="1729325419%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-and-revert-after-delay.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>And</span><wbr></wbr><span>Revert</span><wbr></wbr><span>After</span><wbr></wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1729325419%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-and-revert-after-delay.html"><span class="token function">setPixelAndRevertAfterDelay</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a><span class="token punctuation">, </span></span><span class="parameter ">delay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set a pixel's temporary color and revert (reset its temporary color) after a delay</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1231962151%2FFunctions%2F788909594" anchor-label="setPixelFadeColor" id="-1231962151%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-color.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1231962151%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-color.html"><span class="token function">setPixelFadeColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-color.html"><span class="token function">setPixelFadeColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set a pixel's fade color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="181939008%2FFunctions%2F788909594" anchor-label="setPixelFadeColors" id="181939008%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-colors.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="181939008%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-colors.html"><span class="token function">setPixelFadeColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-colors.html"><span class="token function">setPixelFadeColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-colors.html"><span class="token function">setPixelFadeColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-fade-colors.html"><span class="token function">setPixelFadeColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set multiple pixels' fade color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="814129029%2FFunctions%2F788909594" anchor-label="setPixelProlongedColor" id="814129029%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-color.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Prolonged</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="814129029%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-color.html"><span class="token function">setPixelProlongedColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-color.html"><span class="token function">setPixelProlongedColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set a pixel's prolonged color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1750968382%2FFunctions%2F788909594" anchor-label="setPixelProlongedColors" id="-1750968382%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-colors.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Prolonged</span><wbr></wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1750968382%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-colors.html"><span class="token function">setPixelProlongedColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-colors.html"><span class="token function">setPixelProlongedColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-colors.html"><span class="token function">setPixelProlongedColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-prolonged-colors.html"><span class="token function">setPixelProlongedColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set multiple pixels' prolonged color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-262972635%2FFunctions%2F788909594" anchor-label="setPixelTemporaryColor" id="-262972635%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-color.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Temporary</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-262972635%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-color.html"><span class="token function">setPixelTemporaryColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-color.html"><span class="token function">setPixelTemporaryColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixel<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set a pixel's temporary color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1777590068%2FFunctions%2F788909594" anchor-label="setPixelTemporaryColors" id="1777590068%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-colors.html"><span>set</span><wbr></wbr><span>Pixel</span><wbr></wbr><span>Temporary</span><wbr></wbr><span><span>Colors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1777590068%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-colors.html"><span class="token function">setPixelTemporaryColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-colors.html"><span class="token function">setPixelTemporaryColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-colors.html"><span class="token function">setPixelTemporaryColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-pixel-temporary-colors.html"><span class="token function">setPixelTemporaryColors</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">pixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.ranges/-int-range/index.html">IntRange</a><span class="token punctuation">, </span></span><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set multiple pixels' temporary color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-390412315%2FFunctions%2F788909594" anchor-label="setStripFadeColor" id="-390412315%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-strip-fade-color.html"><span>set</span><wbr></wbr><span>Strip</span><wbr></wbr><span>Fade</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-390412315%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-fade-color.html"><span class="token function">setStripFadeColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-fade-color.html"><span class="token function">setStripFadeColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set the strip's/section's fade color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2081900605%2FFunctions%2F788909594" anchor-label="setStripProlongedColor" id="-2081900605%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-strip-prolonged-color.html"><span>set</span><wbr></wbr><span>Strip</span><wbr></wbr><span>Prolonged</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2081900605%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-prolonged-color.html"><span class="token function">setStripProlongedColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-prolonged-color.html"><span class="token function">setStripProlongedColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set the strip's/section's prolonged color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1480727083%2FFunctions%2F788909594" anchor-label="setStripTemporaryColor" id="-1480727083%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.leds.colormanagement/set-strip-temporary-color.html"><span>set</span><wbr></wbr><span>Strip</span><wbr></wbr><span>Temporary</span><wbr></wbr><span><span>Color</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1480727083%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-temporary-color.html"><span class="token function">setStripTemporaryColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="../../animatedledstrip.colors/-prepared-color-container/index.html">PreparedColorContainer</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.leds.colormanagement/set-strip-temporary-color.html"><span class="token function">setStripTemporaryColor</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">color<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Set the strip's/section's temporary color</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2001991825%2FFunctions%2F788909594" anchor-label="shiftPixel" id="2001991825%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations/shift-pixel.html"><span>shift</span><wbr></wbr><span><span>Pixel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2001991825%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations/shift-pixel.html"><span class="token function">shiftPixel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">from<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">to<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">sortablePixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html">MutableList</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Shift a pixel in the <a href="../../animatedledstrip.animations/shift-pixel.html">sortablePixels</a> list from the <a href="../../animatedledstrip.animations/shift-pixel.html">from</a> index to the <a href="../../animatedledstrip.animations/shift-pixel.html">to</a> index, showing the movement on the strip</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-989147912%2FFunctions%2F788909594" anchor-label="shuffledIndices" id="-989147912%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../shuffled-indices.html"><span>shuffled</span><wbr></wbr><span><span>Indices</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-989147912%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../shuffled-indices.html"><span class="token function">shuffledIndices</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-102215125%2FFunctions%2F788909594" anchor-label="startAnimation" id="-102215125%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../start-animation.html"><span>start</span><wbr></wbr><span><span>Animation</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-102215125%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../start-animation.html"><span class="token function">startAnimation</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">params<span class="token operator">: </span><a href="../-animation-to-run-params/index.html">AnimationToRunParams</a><span class="token punctuation">, </span></span><span class="parameter ">animId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-running-animation/index.html">RunningAnimation</a></div><div class="brief "><p class="paragraph">Start running a new animation</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1568990057%2FFunctions%2F788909594" anchor-label="updateColorAtIndex" id="-1568990057%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../animatedledstrip.animations/update-color-at-index.html"><span>update</span><wbr></wbr><span>Color</span><wbr></wbr><span>At</span><wbr></wbr><span><span>Index</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1568990057%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="../-animation-manager/index.html">AnimationManager</a><span class="token punctuation">.</span><a href="../../animatedledstrip.animations/update-color-at-index.html"><span class="token function">updateColorAtIndex</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">index<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">sortablePixels<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../../animatedledstrip.animations/-sortable-pixel/index.html">SortablePixel</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the color of the pixel at <a href="../../animatedledstrip.animations/update-color-at-index.html">index</a> with the appropriate color in <a href="../../animatedledstrip.animations/update-color-at-index.html">sortablePixels</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-

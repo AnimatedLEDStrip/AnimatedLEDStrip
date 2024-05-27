@@ -1,236 +1,246 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html class="no-js">
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>animatedledstrip.communication</title>
-<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script><script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
-        <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="animatedledstrip-core::animatedledstrip.communication////PointingToDeclaration//-313996110">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../index.html">animatedledstrip-core</a>/<a href="index.html">animatedledstrip.communication</a></div>
-            <div class="pull-right d-flex">
-              <div class="filter-section" id="filter-section"><button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button></div>
-              <div id="searchBar"></div>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../index.html">
+                            animatedledstrip-core
+                    </a>
+            </div>
+            <div class="library-version">
+1.0.2            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":dokkaHtml/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="package" id="content" pageIds="animatedledstrip-core::animatedledstrip.communication////PointingToDeclaration//788909594">
+  <div class="breadcrumbs"><a href="../../index.html">animatedledstrip-core</a><span class="delimiter">/</span><span class="current">animatedledstrip.communication</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button><button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">Properties</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="905590313%2FClasslikes%2F788909594" anchor-label="ClientParams" id="905590313%2FClasslikes%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-client-params/index.html"><span>Client</span><wbr></wbr><span><span>Params</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="905590313%2FClasslikes%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-client-params/index.html">ClientParams</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">var </span>sendDefinedAnimationInfoOnConnection<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendRunningAnimationInfoOnConnection<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendSectionInfoOnConnection<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendStripInfoOnConnection<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendAnimationStart<span class="token operator">: </span><a href="-message-frequency/index.html">MessageFrequency</a><span class="token operator"> = </span>MessageFrequency.IMMEDIATE<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendAnimationEnd<span class="token operator">: </span><a href="-message-frequency/index.html">MessageFrequency</a><span class="token operator"> = </span>MessageFrequency.IMMEDIATE<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendSectionCreation<span class="token operator">: </span><a href="-message-frequency/index.html">MessageFrequency</a><span class="token operator"> = </span>MessageFrequency.IMMEDIATE<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>sendLogs<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">var </span>bufferedMessageInterval<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">500</span></span></span><span class="token punctuation">)</span> : <a href="-sendable-data/index.html">SendableData</a></div><div class="brief "><p class="paragraph">Settings for a server-client connection.</p></div></div></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="cover ">
-            <h1 class="cover"><span>Package animatedledstrip.</span><wbr></wbr><span>communication</span></h1>
+<a data-name="-504454243%2FClasslikes%2F788909594" anchor-label="Command" id="-504454243%2FClasslikes%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-command/index.html"><span><span>Command</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-504454243%2FClasslikes%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-command/index.html">Command</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>command<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;&quot;</span></span></span><span class="token punctuation">)</span> : <a href="-sendable-data/index.html">SendableData</a></div><div class="brief "><p class="paragraph">Send a command for the server to execute</p></div></div></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
-            <div class="tabs-section-body">
-              <h2 class="">Types</h2>
-              <div class="table" data-togglable="Types"><a data-name="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="ClientParams" id="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-client-params/index.html">ClientParams</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">data class <a href="-client-params/index.html">ClientParams</a>(sendDefinedAnimationInfoOnConnection: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, sendRunningAnimationInfoOnConnection: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, sendSectionInfoOnConnection: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, sendStripInfoOnConnection: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, sendAnimationStart: <a href="-message-frequency/index.html">MessageFrequency</a>, sendAnimationEnd: <a href="-message-frequency/index.html">MessageFrequency</a>, sendSectionCreation: <a href="-message-frequency/index.html">MessageFrequency</a>, sendLogs: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, bufferedMessageInterval: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>) : <a href="-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="ClientParams" id="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="ClientParams" id="%5Banimatedledstrip.communication%2FClientParams%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Settings for a server-client connection.</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="Command" id="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-command/index.html">Command</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">data class <a href="-command/index.html">Command</a>(command: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>) : <a href="-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="Command" id="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="Command" id="%5Banimatedledstrip.communication%2FCommand%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Send a command for the server to execute</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2FMessage%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="Message" id="%5Banimatedledstrip.communication%2FMessage%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-message/index.html">Message</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FMessage%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">data class <a href="-message/index.html">Message</a>(message: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>) : <a href="-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="MessageFrequency" id="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-message-frequency/index.html">MessageFrequency</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">enum <a href="-message-frequency/index.html">MessageFrequency</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-message-frequency/index.html">MessageFrequency</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="MessageFrequency" id="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="MessageFrequency" id="%5Banimatedledstrip.communication%2FMessageFrequency%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Represents the frequency at which messages about a certain subject should be sent</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="SendableData" id="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-sendable-data/index.html">SendableData</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">interface <a href="-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="SendableData" id="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" anchor-label="SendableData" id="%5Banimatedledstrip.communication%2FSendableData%2F%2F%2FPointingToDeclaration%2F%5D%2FClasslikes%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Represents a class that can be sent over sockets between servers and clients.</div></div>
-</div>
-                    </div>
-                  </div>
+<a data-name="-817459615%2FClasslikes%2F788909594" anchor-label="Message" id="-817459615%2FClasslikes%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-message/index.html"><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-817459615%2FClasslikes%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-message/index.html">Message</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>message<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;&quot;</span></span></span><span class="token punctuation">)</span> : <a href="-sendable-data/index.html">SendableData</a></div></div></div>
                 </div>
               </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="decodeJson" id="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="decode-json.html">decodeJson</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>?.<a href="decode-json.html">decodeJson</a>(): <a href="-sendable-data/index.html">SendableData</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="decodeJson" id="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="decodeJson" id="%5Banimatedledstrip.communication%2F%2FdecodeJson%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Convert a json string into a class</div></div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2F%2FdecodeJsonOrNull%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="decodeJsonOrNull" id="%5Banimatedledstrip.communication%2F%2FdecodeJsonOrNull%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="decode-json-or-null.html">decodeJsonOrNull</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2F%2FdecodeJsonOrNull%2Fkotlin.String%3F%23%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a>?.<a href="decode-json-or-null.html">decodeJsonOrNull</a>(): <a href="-sendable-data/index.html">SendableData</a>?<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toUTF8String" id="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-u-t-f8-string.html">toUTF8String</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace">fun <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a>?.<a href="to-u-t-f8-string.html">toUTF8String</a>(size: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = this?.size ?: 0): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-<a data-name="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toUTF8String" id="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="brief "><a data-name="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" anchor-label="toUTF8String" id="%5Banimatedledstrip.communication%2F%2FtoUTF8String%2Fkotlin.ByteArray%3F%23kotlin.Int%2FPointingToDeclaration%2F%5D%2FFunctions%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>Create a <code>String</code> from a <code>ByteArray</code> using the UTF-8 charset</div></div>
-</div>
-                    </div>
-                  </div>
+            </div>
+          </div>
+<a data-name="-1871721915%2FClasslikes%2F788909594" anchor-label="MessageFrequency" id="-1871721915%2FClasslikes%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-message-frequency/index.html"><span>Message</span><wbr></wbr><span><span>Frequency</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1871721915%2FClasslikes%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-message-frequency/index.html">MessageFrequency</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-message-frequency/index.html">MessageFrequency</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Represents the frequency at which messages about a certain subject should be sent</p></div></div></div>
                 </div>
               </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="%5Banimatedledstrip.communication%2F%2FDELIMITER%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="DELIMITER" id="%5Banimatedledstrip.communication%2F%2FDELIMITER%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-d-e-l-i-m-i-t-e-r.html">DELIMITER</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2F%2FDELIMITER%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.communication%2F%2FDELIMITER%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="DELIMITER" id="%5Banimatedledstrip.communication%2F%2FDELIMITER%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">const val <a href="-d-e-l-i-m-i-t-e-r.html">DELIMITER</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="%5Banimatedledstrip.communication%2F%2Fserializer%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="serializer" id="%5Banimatedledstrip.communication%2F%2Fserializer%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a>
-                <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="serializer.html">serializer</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="%5Banimatedledstrip.communication%2F%2Fserializer%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="platform-tags ">
-                        <div class="platform-tag common-like">common</div>
-                      </div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><a data-name="%5Banimatedledstrip.communication%2F%2Fserializer%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" anchor-label="serializer" id="%5Banimatedledstrip.communication%2F%2Fserializer%2F%23%2FPointingToDeclaration%2F%5D%2FProperties%2F-313996110" data-filterable-set=":dokkaHtml/commonMain"></a><div class="symbol monospace">val <a href="serializer.html">serializer</a>: <span data-unresolved-link="kotlinx.serialization.json/Json///PointingToDeclaration/">Json</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+            </div>
+          </div>
+<a data-name="1614608398%2FClasslikes%2F788909594" anchor-label="SendableData" id="1614608398%2FClasslikes%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-sendable-data/index.html"><span>Sendable</span><wbr></wbr><span><span>Data</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1614608398%2FClasslikes%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-sendable-data/index.html">SendableData</a></div><div class="brief "><p class="paragraph">Represents a class that can be sent over sockets between servers and clients. Handles conversion of class to json.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-925018482%2FProperties%2F788909594" anchor-label="DELIMITER" id="-925018482%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-d-e-l-i-m-i-t-e-r.html"><span><span>DELIMITER</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-925018482%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="-d-e-l-i-m-i-t-e-r.html">DELIMITER</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="566528659%2FProperties%2F788909594" anchor-label="serializer" id="566528659%2FProperties%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="serializer.html"><span><span>serializer</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="566528659%2FProperties%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">val </span><a href="serializer.html">serializer</a><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="EXTENSION_FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-486212048%2FFunctions%2F788909594" anchor-label="decodeJson" id="-486212048%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="decode-json.html"><span>decode</span><wbr></wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-486212048%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">.</span><a href="decode-json.html"><span class="token function">decodeJson</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-sendable-data/index.html">SendableData</a></div><div class="brief "><p class="paragraph">Convert a json string into a class</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="572808006%2FFunctions%2F788909594" anchor-label="decodeJsonOrNull" id="572808006%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="decode-json-or-null.html"><span>decode</span><wbr></wbr><span>Json</span><wbr></wbr><span>Or</span><wbr></wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="572808006%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">.</span><a href="decode-json-or-null.html"><span class="token function">decodeJsonOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-sendable-data/index.html">SendableData</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="549520589%2FFunctions%2F788909594" anchor-label="toUTF8String" id="549520589%2FFunctions%2F788909594" data-filterable-set=":dokkaHtml/commonMain"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/commonMain" data-filterable-set=":dokkaHtml/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-u-t-f8-string.html"><span>to</span><wbr></wbr><span><span>UTF8String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="549520589%2FFunctions%2F788909594"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token operator">?</span><span class="token punctuation">.</span><a href="to-u-t-f8-string.html"><span class="token function">toUTF8String</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>this?.size ?: 0</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Create a <code class="lang-kotlin">String</code> from a <code class="lang-kotlin">ByteArray</code> using the UTF-8 charset</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
-
