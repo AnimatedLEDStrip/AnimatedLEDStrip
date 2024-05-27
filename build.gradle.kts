@@ -33,8 +33,8 @@ plugins {
 //    jacoco
     id("java-library")
     signing
-    id("de.marcphilipp.nexus-publish") version "0.4.0"
-    id("io.codearte.nexus-staging") version "0.30.0"
+    id("maven-publish")
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
 //jacoco {
@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.3"
+version = "1.0.4"
 description = "A library for running animations on WS281x strips"
 
 kotlin {
