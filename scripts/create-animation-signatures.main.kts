@@ -25,7 +25,7 @@
 @file:DependsOn("co.touchlab:kermit-jvm:1.2.3")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.1")
 @file:DependsOn("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.6.3")
-@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.2.jar")
+@file:DependsOn("../build/libs/animatedledstrip-core-jvm-1.0.3.jar")
 
 import animatedledstrip.animations.parameters.DegreesRotation
 import animatedledstrip.animations.parameters.Equation
@@ -49,6 +49,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import java.io.FileWriter
+import java.util.Locale
 
 ALSLogger.minSeverity = Severity.Error
 
