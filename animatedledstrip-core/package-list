@@ -338,7 +338,7 @@ $dokka.location:animatedledstrip.colors.ccpresets//Yellow/[Error type: Unresolve
 $dokka.location:animatedledstrip.colors.ccpresets//YellowGreen/[Error type: Unresolved type for ColorContainer.Companion]#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors.ccpresets/-yellow-green.html
 $dokka.location:animatedledstrip.colors.ccpresets//groupPresets/[Error type: Unresolved type for ColorContainer.Companion]#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors.ccpresets/group-presets.html
 $dokka.location:animatedledstrip.colors.ccpresets//presets/[Error type: Unresolved type for ColorContainer.Companion]#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors.ccpresets/presets.html
-$dokka.location:animatedledstrip.colors.ccpresets//randomColorList/[Error type: Unresolved type for ColorContainer.Companion]#kotlin.Int/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors.ccpresets/random-color-list.html
+$dokka.location:animatedledstrip.colors.ccpresets//randomColorList/[Error type: Unresolved type for ColorContainer.Companion]#kotlin.Int#kotlin.Int/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors.ccpresets/random-color-list.html
 $dokka.location:animatedledstrip.colors////PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors/index.html
 $dokka.location:animatedledstrip.colors//b/kotlin.Int#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors/b.html
 $dokka.location:animatedledstrip.colors//base/kotlin.Int#kotlin.Int/PointingToDeclaration/animatedledstrip-core/animatedledstrip.colors/base.html
