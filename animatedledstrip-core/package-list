@@ -451,6 +451,8 @@ $dokka.location:animatedledstrip.communication/MessageFrequency/values/#/Pointin
 $dokka.location:animatedledstrip.communication/SendableData///PointingToDeclaration/animatedledstrip-core/animatedledstrip.communication/-sendable-data/index.html
 $dokka.location:animatedledstrip.communication/SendableData/json/#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.communication/-sendable-data/json.html
 $dokka.location:animatedledstrip.communication/SendableData/jsonString/#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.communication/-sendable-data/json-string.html
+$dokka.location:animatedledstrip.communication/SendableData/jsonStringWithDelimiter/#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.communication/-sendable-data/json-string-with-delimiter.html
+$dokka.location:animatedledstrip.communication/SendableData/jsonWithDelimiter/#/PointingToDeclaration/animatedledstrip-core/animatedledstrip.communication/-sendable-data/json-with-delimiter.html
 $dokka.location:animatedledstrip.leds.animationmanagement////PointingToDeclaration/animatedledstrip-core/animatedledstrip.leds.animationmanagement/index.html
 $dokka.location:animatedledstrip.leds.animationmanagement//addColor/animatedledstrip.leds.animationmanagement.AnimationToRunParams#animatedledstrip.colors.ColorContainerInterface/PointingToDeclaration/animatedledstrip-core/animatedledstrip.leds.animationmanagement/add-color.html
 $dokka.location:animatedledstrip.leds.animationmanagement//addColor/animatedledstrip.leds.animationmanagement.AnimationToRunParams#kotlin.Int/PointingToDeclaration/animatedledstrip-core/animatedledstrip.leds.animationmanagement/add-color.html
