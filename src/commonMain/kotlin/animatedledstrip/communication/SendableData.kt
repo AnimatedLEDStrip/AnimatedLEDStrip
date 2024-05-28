@@ -32,7 +32,11 @@ interface SendableData {
 //    fun jsonString(): String = "${serializer.encodeToString(this)}$DELIMITER"
 
     fun jsonString(): String =
-        "${serializer.encodeToString(PolymorphicSerializer(SendableData::class), this)}$DELIMITER"
+        serializer.encodeToString(PolymorphicSerializer(SendableData::class), this)
 
     fun json(): ByteArray = this.jsonString().encodeToByteArray()
+
+    fun jsonStringWithDelimiter(): String = "${jsonString()}$DELIMITER"
+
+    fun jsonWithDelimiter(): ByteArray = this.jsonStringWithDelimiter().encodeToByteArray()
 }

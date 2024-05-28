@@ -37,14 +37,14 @@ class MessageTest : StringSpec(
         "encode JSON" {
             checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
                 Message(m).jsonString() shouldBe
-                        """{"type":"Message","message":"$m"};;;"""
+                        """{"type":"Message","message":"$m"}"""
             }
         }
 
         "decode JSON" {
             checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
                 val json =
-                    """{"type":"Message","message":"$m"};;;"""
+                    """{"type":"Message","message":"$m"}"""
 
                 val correctData = Message(m)
 
@@ -56,6 +56,35 @@ class MessageTest : StringSpec(
             checkAll<String> { m ->
                 val msg1 = Message(m)
                 val msgBytes = msg1.json()
+
+                val msg2 = msgBytes.toUTF8String().decodeJson() as Message
+
+                msg2 shouldBe msg1
+            }
+        }
+
+        "encode JSON with delimiter" {
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
+                Message(m).jsonStringWithDelimiter() shouldBe
+                        """{"type":"Message","message":"$m"};;;"""
+            }
+        }
+
+        "decode JSON with delimiter" {
+            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { m ->
+                val json =
+                    """{"type":"Message","message":"$m"};;;"""
+
+                val correctData = Message(m)
+
+                json.decodeJson() as Message shouldBe correctData
+            }
+        }
+
+        "encode and decode JSON with delimiter" {
+            checkAll<String> { m ->
+                val msg1 = Message(m)
+                val msgBytes = msg1.jsonWithDelimiter()
 
                 val msg2 = msgBytes.toUTF8String().decodeJson() as Message
 

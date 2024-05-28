@@ -46,7 +46,7 @@ repositories {
 }
 
 group = "io.github.animatedledstrip"
-version = "1.0.4"
+version = "1.0.5"
 description = "A library for running animations on WS281x strips"
 
 kotlin {

@@ -39,14 +39,14 @@ class ClientParamsTest : StringSpec(
         "encode JSON" {
             checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 ClientParams(b, b, b, b, m, m, m, b, l).jsonString() shouldBe
-                        """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
+                        """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l}"""
             }
         }
 
         "decode JSON" {
             checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 val json =
-                    """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
+                    """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l}"""
 
                 val correctData = ClientParams(b, b, b, b, m, m, m, b, l)
 
@@ -58,6 +58,35 @@ class ClientParamsTest : StringSpec(
             checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
                 val params1 = ClientParams(b, b, b, b, m, m, m, b, l)
                 val paramsBytes = params1.json()
+
+                val params2 = paramsBytes.toUTF8String().decodeJson() as ClientParams
+
+                params2 shouldBe params1
+            }
+        }
+
+        "encode JSON with delimiter" {
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+                ClientParams(b, b, b, b, m, m, m, b, l).jsonStringWithDelimiter() shouldBe
+                        """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
+            }
+        }
+
+        "decode JSON with delimiter" {
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+                val json =
+                    """{"type":"ClientParams","sendDefinedAnimationInfoOnConnection":$b,"sendRunningAnimationInfoOnConnection":$b,"sendSectionInfoOnConnection":$b,"sendStripInfoOnConnection":$b,"sendAnimationStart":"$m","sendAnimationEnd":"$m","sendSectionCreation":"$m","sendLogs":$b,"bufferedMessageInterval":$l};;;"""
+
+                val correctData = ClientParams(b, b, b, b, m, m, m, b, l)
+
+                json.decodeJson() as ClientParams shouldBe correctData
+            }
+        }
+
+        "encode and decode JSON with delimiter" {
+            checkAll(Arb.boolean(), Arb.enum<MessageFrequency>(), Arb.long()) { b, m, l ->
+                val params1 = ClientParams(b, b, b, b, m, m, m, b, l)
+                val paramsBytes = params1.jsonWithDelimiter()
 
                 val params2 = paramsBytes.toUTF8String().decodeJson() as ClientParams
 
