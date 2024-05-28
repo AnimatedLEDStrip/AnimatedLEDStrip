@@ -32,13 +32,13 @@ class EndAnimationTest : StringSpec(
     {
         "encode JSON" {
             EndAnimation("test").jsonString() shouldBe
-                    """{"type":"EndAnimation","id":"test"};;;"""
+                    """{"type":"EndAnimation","id":"test"}"""
 
         }
 
         "decode JSON" {
             val json =
-                """{"type":"EndAnimation", "id":"12345"};;;"""
+                """{"type":"EndAnimation", "id":"12345"}"""
 
             val correctData = EndAnimation("12345")
 

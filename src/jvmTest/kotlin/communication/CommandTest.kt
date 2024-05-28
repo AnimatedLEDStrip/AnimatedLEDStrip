@@ -61,33 +61,5 @@ class CommandTest : StringSpec(
                 cmd2 shouldBe cmd1
             }
         }
-
-        "encode JSON with delimiter" {
-            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { c ->
-                Command(c).jsonStringWithDelimiter() shouldBe
-                        """{"type":"Command","command":"$c"};;;"""
-            }
-        }
-
-        "decode JSON with delimiter" {
-            checkAll(Arb.string().filter { !it.contains("\"") && !it.contains("\\") }) { c ->
-                val json =
-                    """{"type":"Command", "command":"$c"};;;"""
-
-                val correctData = Command(c)
-                json.decodeJson() as Command shouldBe correctData
-            }
-        }
-
-        "encode and decode JSON with delimiter" {
-            checkAll<String> { c ->
-                val cmd1 = Command(c)
-                val cmdBytes = cmd1.jsonWithDelimiter()
-
-                val cmd2 = cmdBytes.toUTF8String().decodeJson() as Command
-
-                cmd2 shouldBe cmd1
-            }
-        }
     }
 )

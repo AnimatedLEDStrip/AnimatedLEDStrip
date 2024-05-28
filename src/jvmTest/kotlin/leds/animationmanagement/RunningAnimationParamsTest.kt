@@ -137,7 +137,7 @@ class RunningAnimationParamsTest : StringSpec(
                         """"distanceParams":{${cp.distanceParams.encodeToString()}},""" +
                         """"rotationParams":{${cp.rotationParams.encodeToString()}},""" +
                         """"equationParams":{${cp.equationParams.encodeToString()}},""" +
-                        """"sourceParams":${serializer.encodeToString(AnimationToRunParams())}};;;"""
+                        """"sourceParams":${serializer.encodeToString(AnimationToRunParams())}}"""
             }
         }
 
@@ -156,7 +156,7 @@ class RunningAnimationParamsTest : StringSpec(
                            """"distanceParams":{${cp.distanceParams.encodeToString()}},""" +
                            """"rotationParams":{${cp.rotationParams.encodeToString()}},""" +
                            """"equationParams":{${cp.equationParams.encodeToString()}},""" +
-                           """"sourceParams":${serializer.encodeToString(AnimationToRunParams())}};;;"""
+                           """"sourceParams":${serializer.encodeToString(AnimationToRunParams())}}"""
 
                 val correctData = RunningAnimationParams(i.animationName,
                                                          cp.colors,

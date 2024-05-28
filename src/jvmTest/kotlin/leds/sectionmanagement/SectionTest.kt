@@ -105,7 +105,7 @@ class SectionTest : StringSpec(
                 Section(n, p).jsonString() shouldBe
                         """{"type":"Section","name":"$n","pixels":${
                             p.toString().replace(" ", "")
-                        },"parentSectionName":""};;;"""
+                        },"parentSectionName":""}"""
             }
         }
 
@@ -113,7 +113,7 @@ class SectionTest : StringSpec(
             checkAll(100, filteredStringArb, Arb.list(Arb.int(0..100000), 1..5000)) { n, p ->
                 val json = """{"type":"Section","name":"$n","pixels":${
                     p.toString().replace(" ", "")
-                },"parentSectionName":""};;;"""
+                },"parentSectionName":""}"""
 
                 val correctData = Section(n, p)
 

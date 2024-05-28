@@ -118,7 +118,7 @@ class AnimationInfoTest : StringSpec(
                         """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                         """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                        """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}]};;;"""
+                        """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}]}"""
             }
         }
 
@@ -139,7 +139,7 @@ class AnimationInfoTest : StringSpec(
                     """"locationParams":[${ap.locationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"distanceParams":[${ap.distanceParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
                     """"rotationParams":[${ap.rotationParams.joinToString(",") { serializer.encodeToString(it) }}],""" +
-                    """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}]};;;"""
+                    """"equationParams":[${ap.equationParams.joinToString(",") { serializer.encodeToString(it) }}]}"""
 
                 val correctData = Animation.AnimationInfo(name = ai.name,
                                                           abbr = ai.abbr,

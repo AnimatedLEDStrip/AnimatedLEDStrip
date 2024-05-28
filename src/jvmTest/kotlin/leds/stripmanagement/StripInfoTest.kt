@@ -61,7 +61,7 @@ class StripInfoTest : StringSpec(
                     ledLocations = loc,
                 ).jsonString() shouldBe """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"brightness":$br,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
                     loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
-                }};;;"""
+                }}"""
             }
         }
 
@@ -79,7 +79,7 @@ class StripInfoTest : StringSpec(
                 val json =
                     """{"type":"StripInfo","numLEDs":$i,"pin":$ni,"brightness":$br,"renderDelay":$l,"isRenderLoggingEnabled":$b,"renderLogFile":${if (s == null) s else "\"$s\""},"rendersBetweenLogSaves":$i,"is1DSupported":$b,"is2DSupported":$b,"is3DSupported":$b,"ledLocations":${
                         loc?.joinToString(",", prefix = "[", postfix = "]") { serializer.encodeToString(it) }
-                    }};;;"""
+                    }}"""
 
                 val correctData = StripInfo(
                     numLEDs = i,

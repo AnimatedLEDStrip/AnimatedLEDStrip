@@ -40,12 +40,12 @@ class CurrentStripColorTest : StringSpec(
 
         "encode JSON" {
             CurrentStripColor(listOf(0xFF, 0xFFFF, 0x1234)).jsonString() shouldBe
-                    """{"type":"CurrentStripColor","color":[255,65535,4660]};;;"""
+                    """{"type":"CurrentStripColor","color":[255,65535,4660]}"""
         }
 
         "decode JSON" {
             val json =
-                """{"type":"CurrentStripColor","color":[10769581,12585646,11519448,381541,415164]};;;"""
+                """{"type":"CurrentStripColor","color":[10769581,12585646,11519448,381541,415164]}"""
 
             val correctData = CurrentStripColor(listOf(0xA454AD, 0xC00AAE, 0xAFC5D8,
                                                        0x05D265, 0x0655BC))
