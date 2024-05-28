@@ -28,7 +28,7 @@ plugins {
     kotlin("multiplatform") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
     id("org.jetbrains.dokka") version "1.9.20"
-    id("io.kotest") version "0.3.9"
+    id("io.kotest") version "0.4.11"
     id("org.jetbrains.kotlinx.kover") version "0.7.6"
 //    jacoco
     id("java-library")
