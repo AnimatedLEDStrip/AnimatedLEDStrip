@@ -91,7 +91,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-                api("co.touchlab:kermit:1.2.3")
+                api("co.touchlab:kermit:2.0.4")
             }
         }
         val commonTest by getting {
