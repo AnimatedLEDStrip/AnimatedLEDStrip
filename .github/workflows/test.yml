@@ -40,7 +40,7 @@ jobs:
         run: ./gradlew koverXmlReport -DtestSet=communication
       - name: Test leds
         run: ./gradlew koverXmlReport -DtestSet=leds
-      - uses: codecov/codecov-action@v3
+      - uses: codecov/codecov-action@v4
         with:
           files: build/kover/report-animations.xml,build/kover/report-colors.xml,build/kover/report-communication.xml,build/kover/report-leds.xml
 #      - name: Cleanup Gradle Cache
